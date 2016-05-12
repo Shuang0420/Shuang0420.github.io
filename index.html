@@ -195,7 +195,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Github-Page优点"><a href="#Github-Page优点" class="headerlink" title="Github Page优点"></a>Github Page优点</h1><ul>
+        <h1 id="为什么用Github-Pages-Hexo"><a href="#为什么用Github-Pages-Hexo" class="headerlink" title="为什么用Github Pages + Hexo"></a>为什么用Github Pages + Hexo</h1><h2 id="Github-Page优点"><a href="#Github-Page优点" class="headerlink" title="Github Page优点"></a>Github Page优点</h2><ul>
 <li>轻量级的博客系统，没有麻烦的配置</li>
 <li>使用标记语言，比如<a href="http://markdown.tw/" target="_blank" rel="external">Markdown</a></li>
 <li>无需自己搭建服务器</li>
@@ -203,7 +203,7 @@
 <li>可以绑定自己的域名</li>
 </ul>
 <p>Github Page有两种page模式，User/Organization Pages（个人或公司站点）和Project Pages（项目站点）。这里我们用的是user/Organization Pages，要求使用自己的用户名，每个用户名下面只能建立一个，资源命名必须符合这样的规则username/username.github.com，主干上内容被用来构建和发布页面</p>
-<h1 id="Hexo优点"><a href="#Hexo优点" class="headerlink" title="Hexo优点"></a>Hexo优点</h1><ul>
+<h2 id="Hexo优点"><a href="#Hexo优点" class="headerlink" title="Hexo优点"></a>Hexo优点</h2><ul>
 <li>用于搭建博客网站框架，可以简单实现优美的博客网站;</li>
 <li>在本地端搭建，就可脱机查阅;</li>
 <li>架构不依托于其他门户网站，不再担心门户网站倒闭，不担心博文丢失或难以导出;</li>
@@ -211,7 +211,7 @@
 <li>可部署在github上；</li>
 <li>创造者来自中国台湾，所以几乎所有模板都关注到了中文的兼容性，很适合使用汉语的码农。</li>
 </ul>
-<h1 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h1><h3 id="新建github-repository"><a href="#新建github-repository" class="headerlink" title="新建github repository"></a>新建github repository</h3><p>在github上新建repository，name为username.github.io，一个用户只能建立一个这样的User &amp; Organization Pages。</p>
+<h1 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h1><h3 id="新建github-repository"><a href="#新建github-repository" class="headerlink" title="新建github repository"></a>新建github repository</h3><p>在github上新建repository，name为username.github.io。</p>
 <h2 id="Hexo安装"><a href="#Hexo安装" class="headerlink" title="Hexo安装"></a>Hexo安装</h2><p>先安装git和node.js</p>
 <pre>brew install git
 brew install node</pre>
@@ -225,18 +225,20 @@ npm -v</pre>
 <pre> hexo init #新建博客目录
  hexo g #根据当前目录下文件生成静态网页
  hexo s #启动服务器</pre>
-现在就可以到浏览器输入localhost:4000查看啦。
 
-简单介绍一下文件目录
-- public：执行hexo generate命令，输出的静态网页内容目录
-- scaffolds：layout模板文件目录，其中的md文件可以添加编辑
-- scripts：扩展脚本目录，这里可以自定义一些javascript脚本
-- source：文章源码目录，该目录下的markdown和html文件均会被hexo处理。该页面对应repo的根目录，404文件、favicon.ico文件，CNAME文件等都应该放这里，该目录下可新建页面目录。
-- drafts：草稿文章_posts：发布文章themes：主题文件目录
-- config.yml：全局配置文件，大多数的设置都在这里package.json：应用程序数据，指明hexo的版本等信息，类似于一般软件中的 关于 按钮
-
-## Hexo复制主题
-<pre> hexo clean
+<p>现在就可以到浏览器输入localhost:4000查看啦。</p>
+<p>简单介绍一下文件目录</p>
+<ul>
+<li>public：执行hexo generate命令，输出的静态网页内容目录</li>
+<li>scaffolds：layout模板文件目录，其中的md文件可以添加编辑</li>
+<li>scripts：扩展脚本目录，这里可以自定义一些javascript脚本</li>
+<li>source：文章源码目录，该目录下的markdown和html文件均会被hexo处理。该页面对应repo的根目录，404文件、favicon.ico文件，CNAME文件等都应该放这里，该目录下可新建页面目录。</li>
+<li>drafts：草稿文章</li>
+<li>posts：发布文章themes：主题文件目录</li>
+<li>config.yml：全局配置文件，大多数的设置都在这里</li>
+<li>package.json：应用程序数据，指明hexo的版本等信息，类似于一般软件中的 关于 按钮</li>
+</ul>
+<h2 id="Hexo复制主题"><a href="#Hexo复制主题" class="headerlink" title="Hexo复制主题"></a>Hexo复制主题</h2><pre> hexo clean
  hexo g
  hexo s
  git clone https://github.com/cnfeat/cnfeat.git themes/jacman</pre>
@@ -252,12 +254,16 @@ npm -v</pre>
 <h2 id="Hexo本地调试"><a href="#Hexo本地调试" class="headerlink" title="Hexo本地调试"></a>Hexo本地调试</h2><pre> hexo g #生成
  hexo s #启动本地服务，进行文章预览调试
  hexo d -g #或者直接作用组合命令</pre>
- 浏览器输入http://localhost:4000，即可查看搭建效果。每次变更_onfig.yml 文件或者上传文件都可以先用此命令调试。
 
-## Hexo部署到github
-<pre>npm install hexo-deployer-git --save</pre>在 Hexo 文件夹下找到 config.yml 文件, 找到其中的 deploy 标签，改成下图所示形式，并保存。注意：冒号后面要加上一个空格，否则会报错。
-![Paste_Image.png](http://upload-images.jianshu.io/upload_images/2063403-2e8f5e97af0567a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-运行如下命令：
+<p>浏览器输入localhost:4000，即可查看搭建效果。每次变更config.yml 文件或者上传文件都可以先用此命令调试。</p>
+<h2 id="Hexo部署到github"><a href="#Hexo部署到github" class="headerlink" title="Hexo部署到github"></a>Hexo部署到github</h2><pre>npm install hexo-deployer-git --save</pre>
+在 Hexo 文件夹下找到 config.yml 文件, 找到其中的 deploy 标签，改成下图所示形式，并保存。注意：冒号后面要加上一个空格，否则会报错
+<pre>
+deploy:
+  type: git
+  repo: https://github.com/Shuang0420/Shuang0420.github.io.git</pre>
+
+<p>运行如下命令：</p>
 <pre>hexo clean
 hexo generate
 hexo deploy</pre>
@@ -265,7 +271,7 @@ hexo deploy</pre>
 
 <h2 id="发博文"><a href="#发博文" class="headerlink" title="发博文"></a>发博文</h2><pre> hexo clean
  hexo generate
- (若要本地预览就先执行 hexo server)
+ # (若要本地预览就先执行 hexo server)
  hexo deploy</pre>
 
 <h2 id="快捷命令："><a href="#快捷命令：" class="headerlink" title="快捷命令："></a>快捷命令：</h2><pre> hexo g == hexo generate
