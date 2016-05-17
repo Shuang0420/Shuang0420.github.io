@@ -4,21 +4,21 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Hello World | Hexo</title>
+  <title>JGibbLDA实战 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+  <meta name="description" content="尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。命令：
+java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/n">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2016/05/12/hello-world/index.html">
+<meta property="og:title" content="JGibbLDA实战">
+<meta property="og:url" content="http://yoursite.com/2016/05/16/JGibbLDA实战/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2016-05-12T04:07:21.000Z">
+<meta property="og:description" content="尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。命令：
+java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/n">
+<meta property="og:updated_time" content="2016-05-17T01:30:45.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="JGibbLDA实战">
+<meta name="twitter:description" content="尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。命令：
+java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/n">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -70,11 +70,11 @@ Quick">
 				<div class="tips-box hide">
 					<div class="tips-arrow"></div>
 					<ul class="tips-inner">
-						<li>Menu</li>
+						<li>菜单</li>
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>A propos</li>
 						
 					</ul>
 				</div>
@@ -109,7 +109,7 @@ Quick">
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a>
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA-machine-learning/" style="font-size: 10px;">LDA, machine learning</a>
 					</div>
 				</section>
 				
@@ -171,11 +171,11 @@ Quick">
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-JGibbLDA实战" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/12/hello-world/" class="article-date">
-  	<time datetime="2016-05-12T04:07:21.000Z" itemprop="datePublished">2016-05-12</time>
+      <a href="/2016/05/16/JGibbLDA实战/" class="article-date">
+  	<time datetime="2016-05-16T12:50:23.000Z" itemprop="datePublished">2016-05-16</time>
 </a>
     </div>
   
@@ -188,7 +188,7 @@ Quick">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      JGibbLDA实战
     </h1>
   
 
@@ -196,6 +196,10 @@ Quick">
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA-machine-learning/">LDA, machine learning</a></li></ul>
+	</div>
+
         
 
         <div class="clearfix"></div>
@@ -204,15 +208,50 @@ Quick">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。<br>命令：</p>
+<pre>java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/newdocs.dat</pre>
+错误信息：
+
+
+
+![err](/source/img/err.png)
+
+
+于是尝试导入eclipse运行手动配置，成功，过程如下。
+
+1. 下载JGibbLDA的jar包并解压；
+网址：http://jgibblda.sourceforge.net/#Griffiths04
+
+2. 导入eclipse，确保jar包在目录中
+
+3. 找到LDACmdOption.java文件， 修改部分代码
+<pre> @Option(name="-dir", usage="Specify directory")
+    public String dir = "models/casestudy-en";
+
+    @Option(name="-dfile", usage="Specify data file")
+    public String dfile = "models/casestudy-en/newdocs.dat";</pre>
+
+<p>  值得注意的是，dfile的格式必须是👇这个样子：</p>
+<pre>[M]
+[document1]
+[document2]
+...
+[documentM]</pre>
+
+<p>  第一行[M]是documents的总数，之后的每一行是一个document，每个document是一个word list，或者说是bag of words。</p>
+<pre>[document i] = [word i1] [word i2] ... [word iNi]</pre>
+
+<p>  各参数含义：<br>  <strong>-est </strong>从训练语料中评估出LDA模型<br>  <strong>-alpha</strong> LDA模型中的alpha数值，默认为50/K(K是主题数目)<br>  <strong>-beta</strong> LDA模型中的beta数值，默认是0.1<br>  <strong>-ntopics</strong> 主题数目，默认值是100<br>  <strong>-niters</strong> GIbbs采样的迭代数目，默认值为2000<br>  <strong>-savestep</strong> 指定开始保存LDA模型的迭代次数<br>  <strong>-dir</strong> 训练语料目录<br>  <strong>-dfile</strong> 训练语料文件名称</p>
+<ol>
+<li><p>修改项目的Run Configurations，在Java Application中选择LDA，点击(x)=Arguments，输入</p>
+<pre>-est -alpha 0.2 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 100 -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "newdocs.dat"</pre>
+</li>
+<li><p>Run<br>输出文件主要有：<br><strong><model_name>.others</model_name></strong>  文件存储LDA模型参数，如alpha、beta等。<br><strong><model_name>.phi </model_name></strong> 每个topic内对doc的分布情况。文件存储词语-主题分布，每一行是一个主题，列内容为词语。<br><strong><model_name>.theta </model_name></strong> 每个doc内对应上面的n个topic的分布情况。文件主题文档分布，每一行是一个文档，列内容是主题概率。<br><strong><model_name>.tassign</model_name></strong>  文件是训练预料中单词的主题指定（归属），每一行是一个语料文档。<br><strong><model_name>.twords</model_name></strong>  n个topic，以及每个topic下面包含的具体的字词<br><strong>wordmap.txt</strong>  词-id映射<br>其中<model_name>根据采样迭代次数来指定，如model-00800，最后一次采样名称命名为model-final。</model_name></p>
+</li>
+</ol>
+<blockquote>
+<p>参考链接：<br><a href="http://www.ithao123.cn/content-4208214.html" target="_blank" rel="external">http://www.ithao123.cn/content-4208214.html</a><br><a href="http://jgibblda.sourceforge.net/" target="_blank" rel="external">http://jgibblda.sourceforge.net/</a></p>
+</blockquote>
 
       
     </div>
@@ -222,15 +261,11 @@ Quick">
     
 <nav id="article-nav">
   
-    <a href="/2016/05/12/Github-Pages-Hexo搭建个人博客/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Github Pages+Hexo搭建个人博客
-        
-      </div>
-    </a>
   
+    <a href="/2016/05/12/Github-Pages-Hexo搭建个人博客/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Github Pages+Hexo搭建个人博客</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 
@@ -241,7 +276,7 @@ Quick">
 <div class="share_jia">
 	<!-- JiaThis Button BEGIN -->
 	<div class="jiathis_style">
-		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<span class="jiathis_txt">分享到: &nbsp; </span>
 		<a class="jiathis_button_facebook"></a> 
     <a class="jiathis_button_twitter"></a>
     <a class="jiathis_button_plus"></a> 
@@ -263,7 +298,7 @@ Quick">
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="hello-world" data-title="Hello World" data-url="http://yoursite.com/2016/05/12/hello-world/"></div>
+	<div class="ds-thread" data-thread-key="JGibbLDA实战" data-title="JGibbLDA实战" data-url="http://yoursite.com/2016/05/16/JGibbLDA实战/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
