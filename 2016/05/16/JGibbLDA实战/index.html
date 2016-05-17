@@ -14,11 +14,13 @@ java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。命令：
 java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/n">
-<meta property="og:updated_time" content="2016-05-17T02:05:18.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2063403-8a8ecc4611b6fd92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-05-17T02:06:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JGibbLDA实战">
 <meta name="twitter:description" content="尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。命令：
 java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/n">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2063403-8a8ecc4611b6fd92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -210,40 +212,34 @@ java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1
       
         <p>尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。<br>命令：</p>
 <pre>java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/newdocs.dat</pre>
-错误信息：
 
-
-
-![](http://upload-images.jianshu.io/upload_images/2063403-8a8ecc4611b6fd92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-
-于是尝试导入eclipse运行手动配置，成功，过程如下。
-
-1. 下载JGibbLDA的jar包并解压；
-网址：http://jgibblda.sourceforge.net/#Griffiths04
-
-2. 导入eclipse，确保jar包在目录中
-
-3. 找到LDACmdOption.java文件， 修改部分代码
+<p>错误信息：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2063403-8a8ecc4611b6fd92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>于是尝试导入eclipse运行手动配置，成功，过程如下。</p>
+<ol>
+<li><p>下载JGibbLDA的jar包并解压；<br>网址：<a href="http://jgibblda.sourceforge.net/#Griffiths04" target="_blank" rel="external">http://jgibblda.sourceforge.net/#Griffiths04</a></p>
+</li>
+<li><p>导入eclipse，确保jar包在目录中</p>
+</li>
+<li><p>找到LDACmdOption.java文件， 修改部分代码</p>
 <pre> @Option(name="-dir", usage="Specify directory")
-    public String dir = "models/casestudy-en";
+ public String dir = "models/casestudy-en";
 
-    @Option(name="-dfile", usage="Specify data file")
-    public String dfile = "models/casestudy-en/newdocs.dat";</pre>
+ @Option(name="-dfile", usage="Specify data file")
+ public String dfile = "models/casestudy-en/newdocs.dat";</pre>
 
-<p>  值得注意的是，dfile的格式必须是👇这个样子：</p>
+<p>值得注意的是，dfile的格式必须是👇这个样子：</p>
 <pre>[M]
 [document1]
 [document2]
 ...
 [documentM]</pre>
 
-<p>  第一行[M]是documents的总数，之后的每一行是一个document，每个document是一个word list，或者说是bag of words。</p>
+<p>第一行[M]是documents的总数，之后的每一行是一个document，每个document是一个word list，或者说是bag of words。</p>
 <pre>[document i] = [word i1] [word i2] ... [word iNi]</pre>
 
-<p>  各参数含义：<br>  <strong>-est </strong>从训练语料中评估出LDA模型<br>  <strong>-alpha</strong> LDA模型中的alpha数值，默认为50/K(K是主题数目)<br>  <strong>-beta</strong> LDA模型中的beta数值，默认是0.1<br>  <strong>-ntopics</strong> 主题数目，默认值是100<br>  <strong>-niters</strong> GIbbs采样的迭代数目，默认值为2000<br>  <strong>-savestep</strong> 指定开始保存LDA模型的迭代次数<br>  <strong>-dir</strong> 训练语料目录<br>  <strong>-dfile</strong> 训练语料文件名称</p>
-<ol>
+<p>各参数含义：<br><strong>-est </strong>从训练语料中评估出LDA模型<br><strong>-alpha</strong> LDA模型中的alpha数值，默认为50/K(K是主题数目)<br><strong>-beta</strong> LDA模型中的beta数值，默认是0.1<br><strong>-ntopics</strong> 主题数目，默认值是100<br><strong>-niters</strong> GIbbs采样的迭代数目，默认值为2000<br><strong>-savestep</strong> 指定开始保存LDA模型的迭代次数<br><strong>-dir</strong> 训练语料目录<br><strong>-dfile</strong> 训练语料文件名称</p>
+</li>
 <li><p>修改项目的Run Configurations，在Java Application中选择LDA，点击(x)=Arguments，输入</p>
 <pre>-est -alpha 0.2 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 100 -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "newdocs.dat"</pre>
 </li>
