@@ -386,16 +386,12 @@ model.print_topics(-1, 5)</pre>
 <p> 若利用已训练的LDA模型预测，输入以下参数：</p>
 <pre>-inf -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "test.txt"</pre>
 
-<p> 注意，进行预测时，当前目录下必须包含已有的LDA训练输出文件，包括model-final.others、model-final.phi、model-final.tassign、model-final.theta、model-final.twords、wordmap.txt文件，如果运行报错，尝试修改LDACmdOption.java的modelName，确保和文件名的modelname部分一致。     </p>
-</li>
-</ol>
-<p><pre>@Option(name=”-model”, usage=”Specify the model name”)<br>    public String modelName = “model-final”;</pre>   </p>
-<p>如果出现java heap limited的问题，在VM arguments下添加</p>
+<p> 注意，进行预测时，当前目录下必须包含已有的LDA训练输出文件，包括model-final.others、model-final.phi、model-final.tassign、model-final.theta、model-final.twords、wordmap.txt文件，如果运行报错，尝试修改LDACmdOption.java的modelName，确保和文件名的modelname部分一致。<br><pre>@Option(name=”-model”, usage=”Specify the model name”)<br> public String modelName = “model-final”;</pre>   </p>
+<p> 如果出现java heap limited的问题，在VM arguments下添加</p>
 <pre>-Xms1g -Xmx1g -Xmn512m</pre>
-
-
-<ol>
-<li>Run<br>输出文件主要有：<br><strong><model_name>.others</model_name></strong>  文件存储LDA模型参数，如alpha、beta等。<br><strong><model_name>.phi </model_name></strong> 每个topic内对doc的分布情况。文件存储词语-主题分布，每一行是一个主题，列内容为词语。<br><strong><model_name>.theta </model_name></strong> 每个doc内对应上面的n个topic的分布情况。文件主题文档分布，每一行是一个文档，列内容是主题概率。<br><strong><model_name>.tassign</model_name></strong>  文件是训练预料中单词的主题指定（归属），每一行是一个语料文档。<br><strong><model_name>.twords</model_name></strong>  n个topic，以及每个topic下面包含的具体的字词<br><strong>wordmap.txt</strong>  词-id映射<br>其中<model_name>根据采样迭代次数来指定，如model-00800，最后一次采样名称命名为model-final。</model_name></li>
+</li>
+<li><p>Run<br>输出文件主要有：<br><strong><model_name>.others</model_name></strong>  文件存储LDA模型参数，如alpha、beta等。<br><strong><model_name>.phi </model_name></strong> 每个topic内对doc的分布情况。文件存储词语-主题分布，每一行是一个主题，列内容为词语。<br><strong><model_name>.theta </model_name></strong> 每个doc内对应上面的n个topic的分布情况。文件主题文档分布，每一行是一个文档，列内容是主题概率。<br><strong><model_name>.tassign</model_name></strong>  文件是训练预料中单词的主题指定（归属），每一行是一个语料文档。<br><strong><model_name>.twords</model_name></strong>  n个topic，以及每个topic下面包含的具体的字词<br><strong>wordmap.txt</strong>  词-id映射<br>其中<model_name>根据采样迭代次数来指定，如model-00800，最后一次采样名称命名为model-final。</model_name></p>
+</li>
 </ol>
 <blockquote>
 <p>参考链接：<br><a href="http://www.ithao123.cn/content-4208214.html" target="_blank" rel="external">http://www.ithao123.cn/content-4208214.html</a><br><a href="http://jgibblda.sourceforge.net/" target="_blank" rel="external">http://jgibblda.sourceforge.net/</a></p>
