@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 10px;">LDA</a>
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 20px;">LDA</a> <a href="/tags/cluster/" style="font-size: 10px;">cluster</a> <a href="/tags/gensim/" style="font-size: 10px;">gensim</a> <a href="/tags/machine-learning/" style="font-size: 10px;">machine learning</a>
 					</div>
 				</section>
 				
@@ -169,6 +169,161 @@
 
       <div class="body-wrap">
   
+    <article id="post-Gensim-and-LDA-Training-and-Prediction" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/18/Gensim-and-LDA-Training-and-Prediction/" class="article-date">
+  	<time datetime="2016-05-18T12:46:16.000Z" itemprop="datePublished">2016-05-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/18/Gensim-and-LDA-Training-and-Prediction/">Gensim and LDA--Training and Prediction</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre>
+# install the related python packages
+pip install numpy
+pip install scipy
+pip install gensim
+pip install jieba
+
+from gensim import corpora, models, similarities
+import logging
+import jieba
+
+# configuration
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
+# load data from file
+f = open('newfile.txt', 'r')
+documents = f.readlines()
+
+＃ tokenize
+texts = [[word for word in jieba.cut(document, cut_all = False)] for document in documents]
+
+# load id->word mapping (the dictionary)
+dictionary = corpora.Dictionary(texts)
+
+# word must appear >10 times, and no more than 40% documents
+dictionary.filter_extremes(no_below=40, no_above=0.1)
+
+# save dictionary
+dictionary.save('dict_v1.dict')
+
+# load corpus
+corpus = [dictionary.doc2bow(text) for text in texts]
+
+# initialize a model
+tfidf = models.TfidfModel(corpus)
+
+# use the model to transform vectors, apply a transformation to a whole corpus
+corpus_tfidf = tfidf[corpus]
+
+# extract 100 LDA topics, using 1 pass and updating once every 1 chunk (10,000 documents), using 500 iterations
+lda = models.LdaModel(corpus_tfidf, id2word=dictionary, num_topics=100, iterations=500)
+
+# save model to files
+lda.save('mylda_v1.pkl')
+
+# print topics composition, and their scores, for the first document. You will see that only few topics are represented; the others have a nil score.
+for index, score in sorted(lda[corpus_tfidf[0]], key=lambda tup: -1*tup[1]):
+    print "Score: {}\t Topic: {}".format(score, lda.print_topic(index, 10))
+
+# print the most contributing words for 100 randomly selected topics
+lda.print_topics(100)
+
+# load model and dictionary
+model = models.LdaModel.load('mylda_v1.pkl')
+dictionary = corpora.Dictionary.load('dict_v1.dict')
+
+# predict unseen data
+query = "未收到奖励"
+query_bow = dictionary.doc2bow(jieba.cut(query, cut_all = False))
+for index, score in sorted(model[query_bow], key=lambda tup: -1*tup[1]):
+    print "Score: {}\t Topic: {}".format(score, model.print_topic(index, 20))
+
+# if you want to predict many lines of data in a file, do the followings
+f = open('newfile.txt', 'r')
+documents = f.readlines()
+texts = [[word for word in jieba.cut(document, cut_all = False)] for document in documents]
+corpus = [dictionary.doc2bow(text) for text in texts]
+
+# only print the topic with the highest score
+for c in corpus:
+    flag = True
+    for index, score in sorted(model[c], key=lambda tup: -1*tup[1]):
+        if flag:
+            print "Score: {}\t Topic: {}".format(score, model.print_topic(index, 20))</pre>
+
+<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips:"></a>Tips:</h1><p>If you occur encoding problems, you can try the following code</p>
+<pre>
+add it at the beginning of your python file
+# -*- coding: utf-8 -*-
+
+# also, do the followings
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+# the following code may lead to encoding problem when there're Chinese characters
+model.show_topics(-1, 5)
+
+# use this instead
+model.print_topics(-1, 5)</pre>
+
+
+<blockquote>
+<p>References:<br><a href="https://radimrehurek.com/gensim/tut2.html" target="_blank" rel="external">https://radimrehurek.com/gensim/tut2.html</a><br><a href="https://radimrehurek.com/gensim/tut2.html" target="_blank" rel="external">https://radimrehurek.com/gensim/tut2.html</a><br><a href="https://radimrehurek.com/gensim/wiki.html#latent-dirichlet-allocation" target="_blank" rel="external">https://radimrehurek.com/gensim/wiki.html#latent-dirichlet-allocation</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cluster/">cluster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gensim/">gensim</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/">machine learning</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-JGibbLDA实战" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -227,9 +382,19 @@
 </li>
 <li><p>修改项目的Run Configurations，在Java Application中选择LDA，点击(x)=Arguments，输入</p>
 <pre>-est -alpha 0.2 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 100 -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "newdocs.dat"</pre>
+
 </li>
-<li><p>Run<br>输出文件主要有：<br><strong><model_name>.others</model_name></strong>  文件存储LDA模型参数，如alpha、beta等。<br><strong><model_name>.phi </model_name></strong> 每个topic内对doc的分布情况。文件存储词语-主题分布，每一行是一个主题，列内容为词语。<br><strong><model_name>.theta </model_name></strong> 每个doc内对应上面的n个topic的分布情况。文件主题文档分布，每一行是一个文档，列内容是主题概率。<br><strong><model_name>.tassign</model_name></strong>  文件是训练预料中单词的主题指定（归属），每一行是一个语料文档。<br><strong><model_name>.twords</model_name></strong>  n个topic，以及每个topic下面包含的具体的字词<br><strong>wordmap.txt</strong>  词-id映射<br>其中<model_name>根据采样迭代次数来指定，如model-00800，最后一次采样名称命名为model-final。</model_name></p>
-</li>
+</ol>
+<p>若利用已训练的LDA模型预测，输入以下参数：</p>
+<pre>-inf -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "test.txt"</pre>
+
+<p>注意，进行预测时，当前目录下必须包含已有的LDA训练输出文件，包括model-final.others、model-final.phi、model-final.tassign、model-final.theta、model-final.twords、wordmap.txt文件，如果运行报错，尝试修改LDACmdOption.java的modelName，确保和文件名的modelname部分一致。<br><pre>@Option(name=”-model”, usage=”Specify the model name”)<br>    public String modelName = “model-final”;</pre>   </p>
+<p>如果出现java heap limited的问题，在VM arguments下添加</p>
+<pre>-Xms1g -Xmx1g -Xmn512m</pre>
+
+
+<ol>
+<li>Run<br>输出文件主要有：<br><strong><model_name>.others</model_name></strong>  文件存储LDA模型参数，如alpha、beta等。<br><strong><model_name>.phi </model_name></strong> 每个topic内对doc的分布情况。文件存储词语-主题分布，每一行是一个主题，列内容为词语。<br><strong><model_name>.theta </model_name></strong> 每个doc内对应上面的n个topic的分布情况。文件主题文档分布，每一行是一个文档，列内容是主题概率。<br><strong><model_name>.tassign</model_name></strong>  文件是训练预料中单词的主题指定（归属），每一行是一个语料文档。<br><strong><model_name>.twords</model_name></strong>  n个topic，以及每个topic下面包含的具体的字词<br><strong>wordmap.txt</strong>  词-id映射<br>其中<model_name>根据采样迭代次数来指定，如model-00800，最后一次采样名称命名为model-final。</model_name></li>
 </ol>
 <blockquote>
 <p>参考链接：<br><a href="http://www.ithao123.cn/content-4208214.html" target="_blank" rel="external">http://www.ithao123.cn/content-4208214.html</a><br><a href="http://jgibblda.sourceforge.net/" target="_blank" rel="external">http://jgibblda.sourceforge.net/</a></p>
