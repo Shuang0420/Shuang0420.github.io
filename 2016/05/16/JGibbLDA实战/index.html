@@ -15,7 +15,7 @@ java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1
 <meta property="og:description" content="尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。命令：
 java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/n">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/err.png">
-<meta property="og:updated_time" content="2016-05-18T13:27:02.000Z">
+<meta property="og:updated_time" content="2016-05-18T13:29:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JGibbLDA实战">
 <meta name="twitter:description" content="尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。命令：
@@ -76,7 +76,7 @@ java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -247,12 +247,13 @@ java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1
 <li><p>修改项目的Run Configurations，在Java Application中选择LDA，点击(x)=Arguments，输入</p>
 <pre>-est -alpha 0.2 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 100 -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "newdocs.dat"</pre>
 
-</li>
-</ol>
-<p>若利用已训练的LDA模型预测，输入以下参数：</p>
+<p> 若利用已训练的LDA模型预测，输入以下参数：</p>
 <pre>-inf -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "test.txt"</pre>
 
-<p>注意，进行预测时，当前目录下必须包含已有的LDA训练输出文件，包括model-final.others、model-final.phi、model-final.tassign、model-final.theta、model-final.twords、wordmap.txt文件，如果运行报错，尝试修改LDACmdOption.java的modelName，确保和文件名的modelname部分一致。<br><pre>@Option(name=”-model”, usage=”Specify the model name”)<br>    public String modelName = “model-final”;</pre>   </p>
+<p> 注意，进行预测时，当前目录下必须包含已有的LDA训练输出文件，包括model-final.others、model-final.phi、model-final.tassign、model-final.theta、model-final.twords、wordmap.txt文件，如果运行报错，尝试修改LDACmdOption.java的modelName，确保和文件名的modelname部分一致。     </p>
+</li>
+</ol>
+<p><pre>@Option(name=”-model”, usage=”Specify the model name”)<br>    public String modelName = “model-final”;</pre>   </p>
 <p>如果出现java heap limited的问题，在VM arguments下添加</p>
 <pre>-Xms1g -Xmx1g -Xmn512m</pre>
 
