@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>短句归一化--LSI模型 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="LSI 理解LSI(Latent Semantic Indexing)，中文意译是潜在语义索引，即通过海量文献找出词汇之间的关系。基本理念是当两个词或一组词大量出现在一个文档中时，这些词之间就是语义相关的。
+
+潜在语义索引是一种用奇异值分解方法获得在文本中术语和概念之间关系的索引和获取方法。该方法的主要依据是在相同文章中的词语一般有类似的含义。该方法可以可以从一篇文章中提取术语关系，从而建立起主要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="短句归一化--LSI模型">
+<meta property="og:url" content="http://yoursite.com/2016/05/25/短问题归一化-LSI模型/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="LSI 理解LSI(Latent Semantic Indexing)，中文意译是潜在语义索引，即通过海量文献找出词汇之间的关系。基本理念是当两个词或一组词大量出现在一个文档中时，这些词之间就是语义相关的。
+
+潜在语义索引是一种用奇异值分解方法获得在文本中术语和概念之间关系的索引和获取方法。该方法的主要依据是在相同文章中的词语一般有类似的含义。该方法可以可以从一篇文章中提取术语关系，从而建立起主要">
+<meta property="og:updated_time" content="2016-05-25T13:57:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="短句归一化--LSI模型">
+<meta name="twitter:description" content="LSI 理解LSI(Latent Semantic Indexing)，中文意译是潜在语义索引，即通过海量文献找出词汇之间的关系。基本理念是当两个词或一组词大量出现在一个文档中时，这些词之间就是语义相关的。
+
+潜在语义索引是一种用奇异值分解方法获得在文本中术语和概念之间关系的索引和获取方法。该方法的主要依据是在相同文章中的词语一般有类似的含义。该方法可以可以从一篇文章中提取术语关系，从而建立起主要">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://cdn.petpictures.xyz/2016/02/07/so-pretty-dogs-photo-14940252-fanpop.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Shuang</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">Homepage</a></li>
+				        
+							<li><a href="/archives">Posts</a></li>
+				        
+							<li><a href="/categories">Categories</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Shuang0420" title="github">github</a>
+					        
+								<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/shuang-xu-7008b894?trk=hp-identity-name" title="linkedin">linkedin</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 20px;">LDA</a> <a href="/tags/cluster/" style="font-size: 20px;">cluster</a> <a href="/tags/gensim/" style="font-size: 15px;">gensim</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/python-debug/" style="font-size: 10px;">python debug</a> <a href="/tags/topic-modeling/" style="font-size: 20px;">topic modeling</a> <a href="/tags/中文分词/" style="font-size: 10px;">中文分词</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">颜色不一样的烟火…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Shuang</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://cdn.petpictures.xyz/2016/02/07/so-pretty-dogs-photo-14940252-fanpop.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Shuang</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">Homepage</a></li>
+		        
+					<li><a href="/archives">Posts</a></li>
+		        
+					<li><a href="/categories">Categories</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Shuang0420" title="github">github</a>
+			        
+						<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/shuang-xu-7008b894?trk=hp-identity-name" title="linkedin">linkedin</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-短问题归一化-LSI模型" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/25/短问题归一化-LSI模型/" class="article-date">
+  	<time datetime="2016-05-25T12:59:36.000Z" itemprop="datePublished">2016-05-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      短句归一化--LSI模型
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cluster/">cluster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/">machine learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/topic-modeling/">topic modeling</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="LSI-理解"><a href="#LSI-理解" class="headerlink" title="LSI 理解"></a>LSI 理解</h3><p>LSI(Latent Semantic Indexing)，中文意译是潜在语义索引，即通过海量文献找出词汇之间的关系。基本理念是当两个词或一组词大量出现在一个文档中时，这些词之间就是语义相关的。</p>
+<blockquote>
+<p>潜在语义索引是一种用奇异值分解方法获得在文本中术语和概念之间关系的索引和获取方法。该方法的主要依据是在相同文章中的词语一般有类似的含义。该方法可以可以从一篇文章中提取术语关系，从而建立起主要概念内容。</p>
+</blockquote>
+<h3 id="降维过程"><a href="#降维过程" class="headerlink" title="降维过程"></a>降维过程</h3><p>将文档库表示成VSM模型的词-文档矩阵Am×n(词-文档矩阵那就是词作为行，文档作为列，这是矩阵先行后列的表示决定的，当然如果表示成文档-词矩阵的话，后面的计算就要用该矩阵的转置了),其中m表示文档库中包含的所有不同的词的个(行数是不同词的个数)，即行向量表示一个词在不同文档出现的次数，n 表示文档库中的文档数(列数是不同文档的个数)，即列向量表示的是不同的文档.A表示为A = [α ij ],在此矩阵中 ,α ij为非负值 , 表示第 i 个词在第j 个文档中出现的频度。显然，A是稀疏矩阵(这是VSM和文档决定的)。</p>
+<p>利用奇异值分解SVD(Singular Value Decomposition)求A的只有K个正交因子的降秩矩阵，该过程就是降维的过程。SVD的重要作用是把词和文档映射到同一个语义空间中，将词和文档表示为K个因子的形式。显然，这会丢失信息，但主要的信息却被保留了。为什么该过程可以降维呢？因为该过程解决了同义和多义现象。可以看出，K的取值对整个分类结果的影响很大。因为，K过小，则丢失信息就越多；K过大，信息虽然多，但可能有冗余且计算消耗大。K的选择也是值得研究的，不过一般取值为100-300，不绝对。</p>
+<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>对于 LSI/PLSI 来说，聚类的意义不在于文档，而在于单词。所以对于聚类的一种变型用法是，当 k 设的足够大时，LSI/PLSI 能够给出落在不同子空间的单词序列，基本上这些单词之间拥有较为紧密的语义联系。其实这种用法本质上还是在利用降维做单词相关度计算。</p>
+<ol>
+<li><p>特征降维<br>LSI 本质上是把每个特征映射到了一个更低维的子空间（sub space)，所以用来做降维可以说是天造地设。TFIDF是另一个通用的降维方法，通过一个简单的公式（两个整数相乘）得到不同单词的重要程度，并取前k个最重要的单词，而丢弃其它单词，只有信息的丢失，并没有信息的改变。从执行效率上 TFIDF 远远高于 LSI，不过从效果上（至少在学术界）LSI 要优于TFIDF。<br>不过必须提醒的是，无论是上述哪一种降维方法，都会造成信息的偏差，进而影响后续分类/聚类的准确率。 降维是希望以可接受的效果损失下，大大提高运行效率和节省内存空间。然而能不降维的时候还是不要降维（比如你只有几千篇文档要处理，那样真的没有必要降维）。</p>
+</li>
+<li><p>单词相关度计算<br>LSI 的结果通过简单变换就能得到不同单词之间的相关度( 0 ~ 1 之间的一个实数），相关度非常高的单词往往拥有相同的含义。不过不要被“潜在语义”的名称所迷惑，所谓的潜在语义只不过是统计意义上的相似，如果想得到同义词还是使用同义词词典靠谱。LSI 得到的近义词的特点是它们不一定是同义词（甚至词性都可能不同），但它们往往出现在同类情景下（比如“魔兽” 和 “dota”)。不过事实上直接使用LSI做单词相关度计算的并不多，一方面在于现在有一些灰常好用的同义词词典，另外相对无监督的学习大家还是更信任有监督的学习（分类）得到的结果。</p>
+</li>
+<li><p>聚类<br>直接用 LSI 聚类的情景还没有见过，但使用该系列算法的后续变种 PLSI, LDA 进行聚类的的确有一些。其中LDA聚类还有些道理（因为它本身就假设了潜在topic的联合概率分布），用 LSI 进行聚类其实并不合适。本质上 LSI 在找特征子空间，而聚类方法要找的是实例分组。 LSI 虽然能得到看起来貌似是聚类的结果，但其意义不见得是聚类所想得到的。一个明显的例子就是，对于分布不平均的样本集（比如新闻类的文章有1000篇，而文学类的文章只有10篇）， LSI/PLSI 得到的往往是相对平均的结果(A类500篇，B类600篇)，这种情况下根本无法得到好的聚类结果。相对传统聚类方法k-means， LSI 系列算法不仅存在信息的偏差（丢失和改变），而且不能处理分布不均的样本集。</p>
+</li>
+</ol>
+<h3 id="实验说明"><a href="#实验说明" class="headerlink" title="实验说明"></a>实验说明</h3><p>用了python的gensim包<br>现有的数据是438条标准问题以及3300条人工问题（可以转化为438条标准问题），现在需要对人工问题做一个归一化。<br>这里采用LSI模型进行建模实验，步骤如下。</p>
+<h3 id="导入包"><a href="#导入包" class="headerlink" title="导入包"></a>导入包</h3><pre>
+# -*- coding: utf-8 -*-
+from gensim import corpora, models, similarities
+import logging
+import jieba
+import jieba.posseg as pseg
+# 防止乱码
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+# 打印log信息
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)</pre>
+
+
+<h3 id="文本预处理"><a href="#文本预处理" class="headerlink" title="文本预处理"></a>文本预处理</h3><pre>
+# 标准FAQ，一行对应一条问句
+f = open('FAQuniq.txt', 'r')
+# 对问句进行分词
+texts = [[word for word in jieba.cut(document, cut_all = False)] for document in f]
+
+# 抽取一个bag-of-words，将文档的token映射为id
+dictionary = corpora.Dictionary(texts)
+# 保存词典
+dictionary.save('LSI.dict')
+
+# 产生文档向量，将用字符串表示的文档转换为用id和词频表示的文档向量
+corpus = [dictionary.doc2bow(text) for text in texts]
+
+# 基于这些“训练文档”计算一个TF-IDF模型
+tfidf = models.TfidfModel(corpus)
+
+# 转化文档向量，将用词频表示的文档向量表示为一个用tf-idf值表示的文档向量
+corpus_tfidf = tfidf[corpus]
+
+# 训练LSI模型 即将训练文档向量组成的矩阵SVD分解，并做一个秩为2的近似SVD分解
+lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=100)
+
+# 保存模型
+lsi.save('LSI.pkl')
+lsi.print_topics(20)</pre>
+
+
+<h3 id="初始化验证performance的文件"><a href="#初始化验证performance的文件" class="headerlink" title="初始化验证performance的文件"></a>初始化验证performance的文件</h3><p>checkFile的每行格式为：</p>
+<pre>原始问题的docid：对应的标准问题的topicid</pre>
+
+<p>把它存到checkDict这个dictionary中，key是docid，value是topicid。</p>
+<pre>
+checkDict=dict()
+def getCheckId():
+    fcheck=open('checkFile.txt')
+    for line in fcheck:
+        line=line.strip('\n')
+        if (len(line)==0):
+            continue
+        docid=line.split(":")[0]
+        topicid=line.split(":")[1]
+        checkDict[int(docid)]=int(topicid)
+getCheckId()</pre>
+
+<h3 id="归一化／计算文档相似度"><a href="#归一化／计算文档相似度" class="headerlink" title="归一化／计算文档相似度"></a>归一化／计算文档相似度</h3><pre>
+# 建索引
+index = similarities.MatrixSimilarity(lsi[corpus])
+
+# 初始化分数
+score1=0
+score2=0
+score3=0
+
+# 读取文件，文件的每行格式为一个原始问句
+f2=open('ORIFAQ3330.txt','r')
+# count的作用是和checkFile的docid，即checkDict的key对应
+count=1
+for query in f2:
+    # 获取该原始问句本应对应的正确标准问句
+    if (not checkDict.has_key(count)):
+        count+=1
+        continue
+    checkId=checkDict[count]
+    # 将问句向量化
+    query_bow = dictionary.doc2bow(jieba.cut(query, cut_all = False))
+    # 再用之前训练好的LSI模型将其映射到二维的topic空间：
+    query_lsi = lsi[query_bow]
+    # 计算其和index中doc的余弦相似度了：
+    sims = index[query_lsi]
+    sort_sims = sorted(enumerate(sims), key=lambda item: -item[1])
+    # 找出最相关的三篇文档，计算这三篇文档是否包括标准问句，如果文档就是标准问句，对应的分数加1
+    if (checkId==sort_sims[0][0]):
+        score1+=1
+    elif (checkId==sort_sims[1][0]):
+        score2+=1
+    elif (checkId==sort_sims[2][0]):
+        score3+=1
+    count+=1</pre>
+
+<h3 id="打印分数"><a href="#打印分数" class="headerlink" title="打印分数"></a>打印分数</h3><pre>
+print "Score1: ".format(score1*1.0/count)
+print "Score2: ".format(score2*1.0/count)
+print "Score3: ".format(score3*1.0/count)</pre>
+
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>其实这里的结果非常差，原因是文档（每一条问句）太短，只有十几个字，另外文档数太少，LSI降维牺牲了准确率，下一个实验LDA的准确率相比会高很多。<br>另外，本次实验所用的样本分布并不均匀，“未收到奖励”类似问题出现的频率比“软件无声音”类似问题出现的频率要高很多。<strong><em>重申：LSI/PLSI 得到的往往是相对平均的结果(A类500篇，B类600篇)，这种情况下根本无法得到好的聚类结果。相对传统聚类方法k-means， LSI 系列算法不仅存在信息的偏差（丢失和改变），而且不能处理分布不均的样本集。</em></strong></p>
+<h3 id="LSI-缺陷"><a href="#LSI-缺陷" class="headerlink" title="LSI 缺陷"></a>LSI 缺陷</h3><p>常用的VSM文本表示模型中有两个主要的缺陷：</p>
+<ol>
+<li><p>该模型假设所有特征词条之间是相互独立、互不影响的（朴素贝叶斯也是这个思想），即该模型还是基于“词袋”模型（应该说所有利用VSM模型没有进行潜在语义分析的算法都是基于“词袋”假设）。</p>
+</li>
+<li><p>没有进行特征降维，特征维数可能会很高，向量空间可能很大，对存储和计算资源要求会比较高。</p>
+</li>
+</ol>
+<p>LSI的基本思想是文本中的词与词之间不是孤立的，存在着某种潜在的语义关系，通过对样本数据的统计分析，让机器自动挖掘出这些潜在的语义关系，并把这些关系表示成计算机可以”理解”的模型。它可以消除词匹配过程中的同义和多义现象。它可以将传统的VSM降秩到一个低维的语义空间中，在该语义空间中计算文档的相似度等。总的说来，LSI就是利用词的语义关系对VSM模型进行降维，并提高分类的效果。</p>
+<blockquote>
+<p>参考链接<br><a href="http://www.zwbk.org/MyLemmaShow.aspx?lid=257113" target="_blank" rel="external">http://www.zwbk.org/MyLemmaShow.aspx?lid=257113</a><br><a href="http://www.52nlp.cn/%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E4%B8%A4%E4%B8%AA%E6%96%87%E6%A1%A3%E7%9A%84%E7%9B%B8%E4%BC%BC%E5%BA%A6%E4%BA%8C" target="_blank" rel="external">http://www.52nlp.cn/%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E4%B8%A4%E4%B8%AA%E6%96%87%E6%A1%A3%E7%9A%84%E7%9B%B8%E4%BC%BC%E5%BA%A6%E4%BA%8C</a></p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/05/25/GibbsLDA-A-C-C-使用心得/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">GibbsLDA++: A C/C++ 使用心得</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="短问题归一化-LSI模型" data-title="短句归一化--LSI模型" data-url="http://yoursite.com/2016/05/25/短问题归一化-LSI模型/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Shuang
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
