@@ -70,7 +70,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>A propos</li>
 						
 					</ul>
 				</div>
@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 20px;">LDA</a> <a href="/tags/cluster/" style="font-size: 20px;">cluster</a> <a href="/tags/gensim/" style="font-size: 15px;">gensim</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/topic-modeling/" style="font-size: 20px;">topic modeling</a> <a href="/tags/word2vec/" style="font-size: 10px;">word2vec</a>
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 16.67px;">LDA</a> <a href="/tags/cluster/" style="font-size: 16.67px;">cluster</a> <a href="/tags/gensim/" style="font-size: 13.33px;">gensim</a> <a href="/tags/machine-learning/" style="font-size: 16.67px;">machine learning</a> <a href="/tags/topic-modeling/" style="font-size: 16.67px;">topic modeling</a> <a href="/tags/word2vec/" style="font-size: 20px;">word2vec</a>
 					</div>
 				</section>
 				
@@ -169,11 +169,205 @@
 
       <div class="body-wrap">
   
+    <article id="post-word2vec详解之六-若干源码细节" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/29/word2vec详解之六-若干源码细节/" class="article-date">
+  	<time datetime="2016-05-29T08:28:23.000Z" itemprop="datePublished">2016-05-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/29/word2vec详解之六-若干源码细节/">word2vec详解之六 -- 若干源码细节</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<hr>
+
+
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/61.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/62.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/63.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/64.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/65.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/66.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/67.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/68.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/word2vec/">word2vec</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-word2vec详解之五-基于-Negative-Sampling-的模型" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/29/word2vec详解之五-基于-Negative-Sampling-的模型/" class="article-date">
+  	<time datetime="2016-05-29T07:22:03.000Z" itemprop="datePublished">2016-05-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/29/word2vec详解之五-基于-Negative-Sampling-的模型/">word2vec详解之五 -- 基于 Negative Sampling 的模型</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<p><hr><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/51.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/52.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/53.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/54.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/55.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/56.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/57.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/58.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/59.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/510.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/511.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/word2vec/">word2vec</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-word2vec详解之三-背景知识" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/29/word2vec详解之三-背景知识/" class="article-date">
+  	<time datetime="2016-05-29T06:04:41.000Z" itemprop="datePublished">2016-05-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/29/word2vec详解之三-背景知识/">word2vec详解之三 -- 背景知识</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<hr>
+
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/32.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/33.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/34.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/35.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/36.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/37.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/38.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/39.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/310.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/311.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/word2vec/">word2vec</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-word2vec详解之四-基于Hierarchical-Softmax-的模型" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/" class="article-date">
-  	<time datetime="2016-05-29T03:40:03.000Z" itemprop="datePublished">2016-05-29</time>
+  	<time datetime="2016-05-29T05:05:03.000Z" itemprop="datePublished">2016-05-29</time>
 </a>
     </div>
   
@@ -199,6 +393,134 @@
 <hr>
 
 <p><img src="http://7xu83c.com1.z0.glb.clouddn.com/6.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/7.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/8.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/9.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/10.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/11.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/12.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/1.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/2.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/3.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/4.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/5.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/word2vec/">word2vec</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-word2vec详解之二-预备知识" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/29/word2vec详解之二-预备知识/" class="article-date">
+  	<time datetime="2016-05-29T04:21:21.000Z" itemprop="datePublished">2016-05-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/29/word2vec详解之二-预备知识/">word2vec详解之二 -- 预备知识</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<hr>
+
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/21.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/22.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/23.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/24.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/25.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/26.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/27.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/word2vec/">word2vec</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-word2vec详解之一-目录和前言" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/28/word2vec详解之一-目录和前言/" class="article-date">
+  	<time datetime="2016-05-28T06:33:10.000Z" itemprop="datePublished">2016-05-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/28/word2vec详解之一-目录和前言/">word2vec详解之一 -- 目录和前言</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<p><hr><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/11.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/12.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/13.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/14.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/15.jpg" alt=""></p>
 <p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
 
       
@@ -559,488 +881,6 @@ print "Score3: ".format(score3*1.0/count)</pre>
       
       
       
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-AP聚类" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/19/AP聚类/" class="article-date">
-  	<time datetime="2016-05-19T13:42:04.000Z" itemprop="datePublished">2016-05-19</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/19/AP聚类/">AP聚类</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。</p>
-<p>Affinity Propagation (AP) 聚类是最近在Science杂志上提出的一种新的聚类算法。它根据N个数据点之间的相似度进行聚类,这些相似度可以是对称的,即两个数据点互相之间的相似度一样(如欧氏距离);也可以是不对称的,即两个数据点互相之间的相似度不等。这些相似度组成N×N的相似度矩阵S(其中N为有N个数据点)。AP算法不需要事先指定聚类数目,相反它将所有的数据点都作为潜在的聚类中心,称之为exemplar。以S矩阵的对角线上的数值s(k, k)作为k点能否成为聚类中心的评判标准,这意味着该值越大,这个点成为聚类中心的可能性也就越大,这个值又称作参考度p (preference)。<br>在这里介绍几个文中常出现的名词：<br>exemplar：指的是聚类中心。<br>similarity：数据点i和点j的相似度记为S(i，j)。是指点j作为点i的聚类中心的相似度。一般使用欧氏距离来计算，如－|| ||。文中，所有点与点的相似度值全部取为负值。因为我们可以看到，相似度值越大说明点与点的距离越近，便于后面的比较计算。<br>preference：数据点i的参考度称为P(i)或S(i,i)。是指点i作为聚类中心的参考度。一般取S相似度值的中值。<br>Responsibility:R(i,k)用来描述点k适合作为数据点i的聚类中心的程度。<br>Availability:A(i,k)用来描述点i选择点k作为其聚类中心的适合程度。</p>
-<p>Script output:<br>Estimated number of clusters: 3<br>Homogeneity: 0.872<br>Completeness: 0.872<br>V-measure: 0.872<br>Adjusted Rand Index: 0.912<br>Adjusted Mutual Information: 0.871<br>Silhouette Coefficient: 0.753</p>
-<p>Python source code: plot_affinity_propagation.py<br>print(<strong>doc</strong>)</p>
-<p>from sklearn.cluster import AffinityPropagation<br>from sklearn import metrics<br>from sklearn.datasets.samples_generator import make_blobs</p>
-<p>##############################################################################</p>
-<h1 id="Generate-sample-data"><a href="#Generate-sample-data" class="headerlink" title="Generate sample data"></a>Generate sample data</h1><p>centers = [[1, 1], [-1, -1], [1, -1]]<br>X, labels_true = make_blobs(n_samples=300, centers=centers, cluster_std=0.5,<br>                            random_state=0)</p>
-<p>##############################################################################</p>
-<h1 id="Compute-Affinity-Propagation"><a href="#Compute-Affinity-Propagation" class="headerlink" title="Compute Affinity Propagation"></a>Compute Affinity Propagation</h1><p>af = AffinityPropagation(preference=-50).fit(X)<br>cluster_centers_indices = af.cluster_centers<em>indices</em><br>labels = af.labels_</p>
-<p>n<em>clusters</em> = len(cluster_centers_indices)</p>
-<p>print(‘Estimated number of clusters: %d’ % n<em>clusters</em>)<br>print(“Homogeneity: %0.3f” % metrics.homogeneity_score(labels_true, labels))<br>print(“Completeness: %0.3f” % metrics.completeness_score(labels_true, labels))<br>print(“V-measure: %0.3f” % metrics.v_measure_score(labels_true, labels))<br>print(“Adjusted Rand Index: %0.3f”<br>      % metrics.adjusted_rand_score(labels_true, labels))<br>print(“Adjusted Mutual Information: %0.3f”<br>      % metrics.adjusted_mutual_info_score(labels_true, labels))<br>print(“Silhouette Coefficient: %0.3f”<br>      % metrics.silhouette_score(X, labels, metric=’sqeuclidean’))</p>
-<p>##############################################################################</p>
-<h1 id="Plot-result"><a href="#Plot-result" class="headerlink" title="Plot result"></a>Plot result</h1><p>import matplotlib.pyplot as plt<br>from itertools import cycle</p>
-<p>plt.close(‘all’)<br>plt.figure(1)<br>plt.clf()</p>
-<p>colors = cycle(‘bgrcmykbgrcmykbgrcmykbgrcmyk’)<br>for k, col in zip(range(n<em>clusters</em>), colors):<br>    class_members = labels == k<br>    cluster_center = X[cluster_centers_indices[k]]<br>    plt.plot(X[class_members, 0], X[class_members, 1], col + ‘.’)<br>    plt.plot(cluster_center[0], cluster_center[1], ‘o’, markerfacecolor=col,<br>             markeredgecolor=’k’, markersize=14)<br>    for x in X[class_members]:<br>        plt.plot([cluster_center[0], x[0]], [cluster_center[1], x[1]], col)</p>
-<p>plt.title(‘Estimated number of clusters: %d’ % n<em>clusters</em>)<br>plt.show()</p>
-<blockquote>
-<p>参考链接<br><a href="http://scikit-learn.org/stable/modules/clustering.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/clustering.html</a><br><a href="http://blog.csdn.net/u010695420/article/details/42239465" target="_blank" rel="external">http://blog.csdn.net/u010695420/article/details/42239465</a></p>
-</blockquote>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-LDA验证" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/19/LDA验证/" class="article-date">
-  	<time datetime="2016-05-19T13:14:42.000Z" itemprop="datePublished">2016-05-19</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/19/LDA验证/">LDA验证</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Gensim-and-LDA-Training-and-Prediction" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/18/Gensim-and-LDA-Training-and-Prediction/" class="article-date">
-  	<time datetime="2016-05-18T12:46:16.000Z" itemprop="datePublished">2016-05-18</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/18/Gensim-and-LDA-Training-and-Prediction/">Gensim and LDA--Training and Prediction</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <pre>
-# install the related python packages
->>> pip install numpy
->>> pip install scipy
->>> pip install gensim
->>> pip install jieba
-
-from gensim import corpora, models, similarities
-import logging
-import jieba
-
-# configuration
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-
-# load data from file
-f = open('newfile.txt', 'r')
-documents = f.readlines()
-
-＃ tokenize
-texts = [[word for word in jieba.cut(document, cut_all = False)] for document in documents]
-
-# load id->word mapping (the dictionary)
-dictionary = corpora.Dictionary(texts)
-
-# word must appear >10 times, and no more than 40% documents
-dictionary.filter_extremes(no_below=40, no_above=0.1)
-
-# save dictionary
-dictionary.save('dict_v1.dict')
-
-# load corpus
-corpus = [dictionary.doc2bow(text) for text in texts]
-
-# initialize a model
-tfidf = models.TfidfModel(corpus)
-
-# use the model to transform vectors, apply a transformation to a whole corpus
-corpus_tfidf = tfidf[corpus]
-
-# extract 100 LDA topics, using 1 pass and updating once every 1 chunk (10,000 documents), using 500 iterations
-lda = models.LdaModel(corpus_tfidf, id2word=dictionary, num_topics=100, iterations=500)
-
-# save model to files
-lda.save('mylda_v1.pkl')
-
-# print topics composition, and their scores, for the first document. You will see that only few topics are represented; the others have a nil score.
-for index, score in sorted(lda[corpus_tfidf[0]], key=lambda tup: -1*tup[1]):
-    print "Score: {}\t Topic: {}".format(score, lda.print_topic(index, 10))
-
-# print the most contributing words for 100 randomly selected topics
-lda.print_topics(100)
-
-# load model and dictionary
-model = models.LdaModel.load('mylda_v1.pkl')
-dictionary = corpora.Dictionary.load('dict_v1.dict')
-
-# predict unseen data
-query = "未收到奖励"
-query_bow = dictionary.doc2bow(jieba.cut(query, cut_all = False))
-for index, score in sorted(model[query_bow], key=lambda tup: -1*tup[1]):
-    print "Score: {}\t Topic: {}".format(score, model.print_topic(index, 20))
-
-# if you want to predict many lines of data in a file, do the followings
-f = open('newfile.txt', 'r')
-documents = f.readlines()
-texts = [[word for word in jieba.cut(document, cut_all = False)] for document in documents]
-corpus = [dictionary.doc2bow(text) for text in texts]
-
-# only print the topic with the highest score
-for c in corpus:
-    flag = True
-    for index, score in sorted(model[c], key=lambda tup: -1*tup[1]):
-        if flag:
-            print "Score: {}\t Topic: {}".format(score, model.print_topic(index, 20))</pre>
-
-<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips:"></a>Tips:</h1><p>If you occur encoding problems, you can try the following code</p>
-<pre>
-add it at the beginning of your python file
-# -*- coding: utf-8 -*-
-
-# also, do the followings
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
-# the following code may lead to encoding problem when there're Chinese characters
-model.show_topics(-1, 5)
-
-# use this instead
-model.print_topics(-1, 5)</pre>
-
-
-<p>You can see step-by-step output by the following references.</p>
-<blockquote>
-<p>References:<br><a href="https://radimrehurek.com/gensim/tut2.html" target="_blank" rel="external">https://radimrehurek.com/gensim/tut2.html</a> official guide (en)<br><a href="http://blog.csdn.net/questionfish/article/details/46725475" target="_blank" rel="external">http://blog.csdn.net/questionfish/article/details/46725475</a>  official guide (ch)<br><a href="https://radimrehurek.com/gensim/wiki.html#latent-dirichlet-allocation" target="_blank" rel="external">https://radimrehurek.com/gensim/wiki.html#latent-dirichlet-allocation</a></p>
-</blockquote>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cluster/">cluster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gensim/">gensim</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/">machine learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/topic-modeling/">topic modeling</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Gensim-用Python做主题模型" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/18/Gensim-用Python做主题模型/" class="article-date">
-  	<time datetime="2016-05-18T02:22:31.000Z" itemprop="datePublished">2016-05-18</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/18/Gensim-用Python做主题模型/">Gensim-用Python做主题模型</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensim中的算法包括：LSA(Latent Semantic Analysis), LDA(Latent Dirichlet Allocation), RP (Random Projections), 通过在一个训练文档语料库中，检查词汇统计联合出现模式, 可以用来发掘文档语义结构，这些算法属于非监督学习，可以处理原始的，非结构化的文本（”plain text”）。</p>
-<h3 id="gensim有着如下特性"><a href="#gensim有着如下特性" class="headerlink" title="gensim有着如下特性"></a>gensim有着如下特性</h3><ul>
-<li>内存独立- 对于训练语料来说，没必要在任何时间将整个语料都驻留在RAM中</li>
-<li>有效实现了许多流行的向量空间算法－包括tf-idf，分布式LSA, 分布式LDA 以及 RP；并且很容易添加新算法</li>
-<li>对流行的数据格式进行了IO封装和转换</li>
-<li>在其语义表达中，可以相似查询</li>
-<li>gensim的创建的目的是，由于缺乏简单的（java很复杂）实现主题建模的可扩展软件框架.</li>
-</ul>
-<h3 id="gensim的设计原则"><a href="#gensim的设计原则" class="headerlink" title="gensim的设计原则"></a>gensim的设计原则</h3><ul>
-<li>简单的接口，学习曲线低。对于原型实现很方便</li>
-<li>根据输入的语料的size来说，内存各自独立；基于流的算法操作，一次访问一个文档.</li>
-</ul>
-<h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><p>gensim的整个package会涉及三个概念：corpus, vector, model.</p>
-<ul>
-<li>语库(corpus)<br>文档集合，用于自动推出文档结构，以及它们的主题等，也可称作训练语料。</li>
-</ul>
-<ul>
-<li><p>向量(vector)</p>
-<p>在向量空间模型(VSM)中，每个文档被表示成一个特征数组。例如，一个单一特征可以被表示成一个问答对(question-answer pair):</p>
-<p>[1].在文档中单词”splonge”出现的次数？ 0个<br>[2].文档中包含了多少句子？ 2个<br>[3].文档中使用了多少字体? 5种<br>这里的问题可以表示成整型id (比如：1,2,3等), 因此，上面的文档可以表示成：(1, 0.0), (2, 2.0), (3, 5.0). 如果我们事先知道所有的问题，我们可以显式地写成这样：(0.0, 2.0, 5.0). 这个answer序列可以认为是一个多维矩阵（3维）. 对于实际目的，只有question对应的answer是一个实数.</p>
-<p>对于每个文档来说，answer是类似的. 因而，对于两个向量来说（分别表示两个文档），我们希望可以下类似的结论：“如果两个向量中的实数是相似的，那么，原始的文档也可以认为是相似的”。当然，这样的结论依赖于我们如何去选取我们的question。</p>
-</li>
-</ul>
-<ul>
-<li><p>稀疏矩阵(Sparse vector)</p>
-<p>通常，大多数answer的值都是0.0. 为了节省空间，我们需要从文档表示中忽略它们，只需要写：(2, 2.0), (3, 5.0) 即可(注意：这里忽略了(1, 0.0)). 由于所有的问题集事先都知道，那么在稀疏矩阵的文档表示中所有缺失的特性可以认为都是0.0.</p>
-<p>gensim的特别之处在于，它没有限定任何特定的语料格式；语料可以是任何格式，当迭代时，通过稀疏矩阵来完成即可。例如，集合 ([(2, 2.0), (3, 5.0)], ([0, -1.0], [3, -1.0])) 是一个包含两个文档的语料，每个都有两个非零的 pair。</p>
-</li>
-</ul>
-<ul>
-<li><p>模型(model)</p>
-<p>对于我们来说，一个模型就是一个变换(transformation)，将一种文档表示转换成另一种。初始和目标表示都是向量－－它们只在question和answer之间有区别。这个变换可以通过训练的语料进行自动学习，无需人工监督，最终的文档表示将更加紧凑和有用；相似的文档具有相似的表示。</p>
-</li>
-</ul>
-<h3 id="演示代码见-http-shuang0420-github-io-2016-05-18-Gensim-and-LDA-Training-and-Prediction"><a href="#演示代码见-http-shuang0420-github-io-2016-05-18-Gensim-and-LDA-Training-and-Prediction" class="headerlink" title="演示代码见 http://shuang0420.github.io/2016/05/18/Gensim-and-LDA-Training-and-Prediction/"></a>演示代码见 <a href="http://shuang0420.github.io/2016/05/18/Gensim-and-LDA-Training-and-Prediction/" target="_blank" rel="external">http://shuang0420.github.io/2016/05/18/Gensim-and-LDA-Training-and-Prediction/</a></h3><blockquote>
-<p>参考链接<br><a href="http://d0evi1.github.io/gensim/" target="_blank" rel="external">http://d0evi1.github.io/gensim/</a></p>
-</blockquote>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cluster/">cluster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gensim/">gensim</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/">machine learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/topic-modeling/">topic modeling</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-JGibbLDA实战" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/16/JGibbLDA实战/" class="article-date">
-  	<time datetime="2016-05-16T12:50:23.000Z" itemprop="datePublished">2016-05-16</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/16/JGibbLDA实战/">JGibbLDA实战</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。<br>命令：</p>
-<pre>java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/newdocs.dat</pre>
-
-<p>错误信息：</p>
-<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/err.png" alt=""></p>
-<p>于是尝试导入eclipse运行手动配置，成功，过程如下。</p>
-<ol>
-<li><p>下载JGibbLDA的jar包并解压；<br>网址：<a href="http://jgibblda.sourceforge.net/#Griffiths04" target="_blank" rel="external">http://jgibblda.sourceforge.net/#Griffiths04</a></p>
-</li>
-<li><p>导入eclipse，确保jar包在目录中</p>
-</li>
-<li><p>找到LDACmdOption.java文件， 修改部分代码</p>
-<pre> @Option(name="-dir", usage="Specify directory")
- public String dir = "models/casestudy-en";
-
- @Option(name="-dfile", usage="Specify data file")
- public String dfile = "models/casestudy-en/newdocs.dat";</pre>
-
-<p>值得注意的是，dfile的格式必须是👇这个样子：</p>
-<pre>[M]
-[document1]
-[document2]
-...
-[documentM]</pre>
-
-<p>第一行[M]是documents的总数，之后的每一行是一个document，每个document是一个word list，或者说是bag of words。</p>
-<pre>[document i] = [word i1] [word i2] ... [word iNi]</pre>
-
-<p>各参数含义：<br><strong>-est </strong>从训练语料中评估出LDA模型<br><strong>-alpha</strong> LDA模型中的alpha数值，默认为50/K(K是主题数目)<br><strong>-beta</strong> LDA模型中的beta数值，默认是0.1<br><strong>-ntopics</strong> 主题数目，默认值是100<br><strong>-niters</strong> GIbbs采样的迭代数目，默认值为2000<br><strong>-savestep</strong> 指定开始保存LDA模型的迭代次数<br><strong>-dir</strong> 训练语料目录<br><strong>-dfile</strong> 训练语料文件名称</p>
-</li>
-<li><p>修改项目的Run Configurations，在Java Application中选择LDA，点击(x)=Arguments，输入</p>
-<pre>-est -alpha 0.2 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 100 -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "newdocs.dat"</pre>
-
-<p> 若利用已训练的LDA模型预测，输入以下参数：</p>
-<pre>-inf -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "test.txt"</pre>
-
-<p> 注意，进行预测时，当前目录下必须包含已有的LDA训练输出文件，包括model-final.others、model-final.phi、model-final.tassign、model-final.theta、model-final.twords、wordmap.txt文件，如果运行报错，尝试修改LDACmdOption.java的modelName，确保和文件名的modelname部分一致。<br><pre>@Option(name=”-model”, usage=”Specify the model name”)<br> public String modelName = “model-final”;</pre>   </p>
-<p> 如果出现java heap limited的问题，在VM arguments下添加</p>
-<pre>-Xms1g -Xmx1g -Xmn512m</pre>
-</li>
-<li><p>Run<br>输出文件主要有：<br><strong><model_name>.others</model_name></strong>  文件存储LDA模型参数，如alpha、beta等。<br><strong><model_name>.phi </model_name></strong> 每个topic内对doc的分布情况。文件存储词语-主题分布，每一行是一个主题，列内容为词语。<br><strong><model_name>.theta </model_name></strong> 每个doc内对应上面的n个topic的分布情况。文件主题文档分布，每一行是一个文档，列内容是主题概率。<br><strong><model_name>.tassign</model_name></strong>  文件是训练预料中单词的主题指定（归属），每一行是一个语料文档。<br><strong><model_name>.twords</model_name></strong>  n个topic，以及每个topic下面包含的具体的字词<br><strong>wordmap.txt</strong>  词-id映射<br>其中<model_name>根据采样迭代次数来指定，如model-00800，最后一次采样名称命名为model-final。</model_name></p>
-</li>
-</ol>
-<blockquote>
-<p>参考链接：<br><a href="http://www.ithao123.cn/content-4208214.html" target="_blank" rel="external">http://www.ithao123.cn/content-4208214.html</a><br><a href="http://jgibblda.sourceforge.net/" target="_blank" rel="external">http://jgibblda.sourceforge.net/</a></p>
-</blockquote>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cluster/">cluster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/">machine learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/topic-modeling/">topic modeling</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
-	</div>
-
 
       
       <div class="clearfix"></div>

@@ -4,18 +4,30 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>AP聚类 | Hexo</title>
+  <title>word2vec详解之三 -- 背景知识 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即">
+  <meta name="description" content="word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AP聚类">
-<meta property="og:url" content="http://yoursite.com/2016/05/19/AP聚类/index.html">
+<meta property="og:title" content="word2vec详解之三 -- 背景知识">
+<meta property="og:url" content="http://yoursite.com/2016/05/29/word2vec详解之三-背景知识/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即">
-<meta property="og:updated_time" content="2016-05-19T13:46:58.000Z">
+<meta property="og:description" content="word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/32.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/33.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/34.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/35.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/36.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/37.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/38.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/39.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/310.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/311.jpg">
+<meta property="og:updated_time" content="2016-05-29T06:08:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AP聚类">
-<meta name="twitter:description" content="AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即">
+<meta name="twitter:title" content="word2vec详解之三 -- 背景知识">
+<meta name="twitter:description" content="word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -168,11 +180,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-AP聚类" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-word2vec详解之三-背景知识" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/19/AP聚类/" class="article-date">
-  	<time datetime="2016-05-19T13:42:04.000Z" itemprop="datePublished">2016-05-19</time>
+      <a href="/2016/05/29/word2vec详解之三-背景知识/" class="article-date">
+  	<time datetime="2016-05-29T06:04:41.000Z" itemprop="datePublished">2016-05-29</time>
 </a>
     </div>
   
@@ -185,7 +197,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      AP聚类
+      word2vec详解之三 -- 背景知识
     </h1>
   
 
@@ -193,7 +205,15 @@
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/word2vec/">word2vec</a></li></ul>
+	</div>
+
         
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+	</div>
+
 
         <div class="clearfix"></div>
       </div>
@@ -201,25 +221,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。</p>
-<p>Affinity Propagation (AP) 聚类是最近在Science杂志上提出的一种新的聚类算法。它根据N个数据点之间的相似度进行聚类,这些相似度可以是对称的,即两个数据点互相之间的相似度一样(如欧氏距离);也可以是不对称的,即两个数据点互相之间的相似度不等。这些相似度组成N×N的相似度矩阵S(其中N为有N个数据点)。AP算法不需要事先指定聚类数目,相反它将所有的数据点都作为潜在的聚类中心,称之为exemplar。以S矩阵的对角线上的数值s(k, k)作为k点能否成为聚类中心的评判标准,这意味着该值越大,这个点成为聚类中心的可能性也就越大,这个值又称作参考度p (preference)。<br>在这里介绍几个文中常出现的名词：<br>exemplar：指的是聚类中心。<br>similarity：数据点i和点j的相似度记为S(i，j)。是指点j作为点i的聚类中心的相似度。一般使用欧氏距离来计算，如－|| ||。文中，所有点与点的相似度值全部取为负值。因为我们可以看到，相似度值越大说明点与点的距离越近，便于后面的比较计算。<br>preference：数据点i的参考度称为P(i)或S(i,i)。是指点i作为聚类中心的参考度。一般取S相似度值的中值。<br>Responsibility:R(i,k)用来描述点k适合作为数据点i的聚类中心的程度。<br>Availability:A(i,k)用来描述点i选择点k作为其聚类中心的适合程度。</p>
-<p>Script output:<br>Estimated number of clusters: 3<br>Homogeneity: 0.872<br>Completeness: 0.872<br>V-measure: 0.872<br>Adjusted Rand Index: 0.912<br>Adjusted Mutual Information: 0.871<br>Silhouette Coefficient: 0.753</p>
-<p>Python source code: plot_affinity_propagation.py<br>print(<strong>doc</strong>)</p>
-<p>from sklearn.cluster import AffinityPropagation<br>from sklearn import metrics<br>from sklearn.datasets.samples_generator import make_blobs</p>
-<p>##############################################################################</p>
-<h1 id="Generate-sample-data"><a href="#Generate-sample-data" class="headerlink" title="Generate sample data"></a>Generate sample data</h1><p>centers = [[1, 1], [-1, -1], [1, -1]]<br>X, labels_true = make_blobs(n_samples=300, centers=centers, cluster_std=0.5,<br>                            random_state=0)</p>
-<p>##############################################################################</p>
-<h1 id="Compute-Affinity-Propagation"><a href="#Compute-Affinity-Propagation" class="headerlink" title="Compute Affinity Propagation"></a>Compute Affinity Propagation</h1><p>af = AffinityPropagation(preference=-50).fit(X)<br>cluster_centers_indices = af.cluster_centers<em>indices</em><br>labels = af.labels_</p>
-<p>n<em>clusters</em> = len(cluster_centers_indices)</p>
-<p>print(‘Estimated number of clusters: %d’ % n<em>clusters</em>)<br>print(“Homogeneity: %0.3f” % metrics.homogeneity_score(labels_true, labels))<br>print(“Completeness: %0.3f” % metrics.completeness_score(labels_true, labels))<br>print(“V-measure: %0.3f” % metrics.v_measure_score(labels_true, labels))<br>print(“Adjusted Rand Index: %0.3f”<br>      % metrics.adjusted_rand_score(labels_true, labels))<br>print(“Adjusted Mutual Information: %0.3f”<br>      % metrics.adjusted_mutual_info_score(labels_true, labels))<br>print(“Silhouette Coefficient: %0.3f”<br>      % metrics.silhouette_score(X, labels, metric=’sqeuclidean’))</p>
-<p>##############################################################################</p>
-<h1 id="Plot-result"><a href="#Plot-result" class="headerlink" title="Plot result"></a>Plot result</h1><p>import matplotlib.pyplot as plt<br>from itertools import cycle</p>
-<p>plt.close(‘all’)<br>plt.figure(1)<br>plt.clf()</p>
-<p>colors = cycle(‘bgrcmykbgrcmykbgrcmykbgrcmyk’)<br>for k, col in zip(range(n<em>clusters</em>), colors):<br>    class_members = labels == k<br>    cluster_center = X[cluster_centers_indices[k]]<br>    plt.plot(X[class_members, 0], X[class_members, 1], col + ‘.’)<br>    plt.plot(cluster_center[0], cluster_center[1], ‘o’, markerfacecolor=col,<br>             markeredgecolor=’k’, markersize=14)<br>    for x in X[class_members]:<br>        plt.plot([cluster_center[0], x[0]], [cluster_center[1], x[1]], col)</p>
-<p>plt.title(‘Estimated number of clusters: %d’ % n<em>clusters</em>)<br>plt.show()</p>
-<blockquote>
-<p>参考链接<br><a href="http://scikit-learn.org/stable/modules/clustering.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/clustering.html</a><br><a href="http://blog.csdn.net/u010695420/article/details/42239465" target="_blank" rel="external">http://blog.csdn.net/u010695420/article/details/42239465</a></p>
-</blockquote>
+        <p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<hr>
+
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/32.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/33.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/34.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/35.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/36.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/37.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/38.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/39.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/310.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/311.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
 
       
     </div>
@@ -229,18 +235,18 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/05/25/GibbsLDA-A-C-C-使用心得/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/05/29/word2vec详解之五-基于-Negative-Sampling-的模型/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          GibbsLDA++: A C/C++ 使用心得
+          word2vec详解之五 -- 基于 Negative Sampling 的模型
         
       </div>
     </a>
   
   
-    <a href="/2016/05/19/LDA验证/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">LDA验证</div>
+    <a href="/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">word2vec详解之四 -- 基于Hierarchical Softmax 的模型</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -275,7 +281,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="AP聚类" data-title="AP聚类" data-url="http://yoursite.com/2016/05/19/AP聚类/"></div>
+	<div class="ds-thread" data-thread-key="word2vec详解之三-背景知识" data-title="word2vec详解之三 -- 背景知识" data-url="http://yoursite.com/2016/05/29/word2vec详解之三-背景知识/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
