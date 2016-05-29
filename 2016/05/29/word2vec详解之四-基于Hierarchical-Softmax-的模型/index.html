@@ -4,48 +4,31 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>python快捷通道 -- MYSQL | Hexo</title>
+  <title>word2vec详解之四 -- 基于Hierarchical Softmax 的模型 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="连接 mysql
-import MySQLdb
-conn= MySQLdb.connect(
-        host=&apos;127.0.0.1&apos;,
-        port = 3306,
-        user=&apos;root&apos;,
-        passwd=&apos;&apos;,
-        db =&apos;FAQsys&apos;,
-        charset=&apos;utf8&apos;,
-        )
-cur = conn">
+  <meta name="description" content="word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python快捷通道 -- MYSQL">
-<meta property="og:url" content="http://yoursite.com/2016/05/18/python快捷通道/index.html">
+<meta property="og:title" content="word2vec详解之四 -- 基于Hierarchical Softmax 的模型">
+<meta property="og:url" content="http://yoursite.com/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="连接 mysql
-import MySQLdb
-conn= MySQLdb.connect(
-        host=&apos;127.0.0.1&apos;,
-        port = 3306,
-        user=&apos;root&apos;,
-        passwd=&apos;&apos;,
-        db =&apos;FAQsys&apos;,
-        charset=&apos;utf8&apos;,
-        )
-cur = conn">
-<meta property="og:updated_time" content="2016-05-26T01:58:03.000Z">
+<meta property="og:description" content="word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/6.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/7.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/8.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/9.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/10.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/11.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/12.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/1.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/2.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/3.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/4.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/5.jpg">
+<meta property="og:updated_time" content="2016-05-29T03:51:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python快捷通道 -- MYSQL">
-<meta name="twitter:description" content="连接 mysql
-import MySQLdb
-conn= MySQLdb.connect(
-        host=&apos;127.0.0.1&apos;,
-        port = 3306,
-        user=&apos;root&apos;,
-        passwd=&apos;&apos;,
-        db =&apos;FAQsys&apos;,
-        charset=&apos;utf8&apos;,
-        )
-cur = conn">
+<meta name="twitter:title" content="word2vec详解之四 -- 基于Hierarchical Softmax 的模型">
+<meta name="twitter:description" content="word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/6.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -101,7 +84,7 @@ cur = conn">
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -136,7 +119,7 @@ cur = conn">
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 20px;">LDA</a> <a href="/tags/cluster/" style="font-size: 20px;">cluster</a> <a href="/tags/gensim/" style="font-size: 15px;">gensim</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/python-debug/" style="font-size: 10px;">python debug</a> <a href="/tags/topic-modeling/" style="font-size: 20px;">topic modeling</a> <a href="/tags/中文分词/" style="font-size: 10px;">中文分词</a>
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 20px;">LDA</a> <a href="/tags/cluster/" style="font-size: 20px;">cluster</a> <a href="/tags/gensim/" style="font-size: 15px;">gensim</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/topic-modeling/" style="font-size: 20px;">topic modeling</a> <a href="/tags/word2vec/" style="font-size: 10px;">word2vec</a>
 					</div>
 				</section>
 				
@@ -198,11 +181,11 @@ cur = conn">
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-python快捷通道" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-word2vec详解之四-基于Hierarchical-Softmax-的模型" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/18/python快捷通道/" class="article-date">
-  	<time datetime="2016-05-18T01:42:48.000Z" itemprop="datePublished">2016-05-18</time>
+      <a href="/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/" class="article-date">
+  	<time datetime="2016-05-29T03:40:03.000Z" itemprop="datePublished">2016-05-29</time>
 </a>
     </div>
   
@@ -215,7 +198,7 @@ cur = conn">
         
   
     <h1 class="article-title" itemprop="name">
-      python快捷通道 -- MYSQL
+      word2vec详解之四 -- 基于Hierarchical Softmax 的模型
     </h1>
   
 
@@ -224,12 +207,12 @@ cur = conn">
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/word2vec/">word2vec</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/快捷通道/">快捷通道</a>
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
 	</div>
 
 
@@ -239,62 +222,9 @@ cur = conn">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="连接-mysql"><a href="#连接-mysql" class="headerlink" title="连接 mysql"></a>连接 mysql</h3><pre>
-import MySQLdb
-conn= MySQLdb.connect(
-        host='127.0.0.1',
-        port = 3306,
-        user='root',
-        passwd='',
-        db ='FAQsys',
-        charset='utf8',
-        )
-cur = conn.cursor()
-cur.execute("USE yibotDB")</pre>
-
-<h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><pre>
-try:
-    cur.execute("SELECT Question FROM Questions")
-    results=cur.fetchall()
-    # result = cur.fetchone()
-    # result = cur.fetchmany()
-    for row in results:
-        question = row[0]
-        # print question
-except:
-   # Rollback in case there is any error
-   conn.rollback()
-</pre>
-
-<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><p><strong>如果是插入数据，要执行commit操作，不然数据不会被写入数据库。最好是执行完所有的sql语句之后再commit，实践证明，这样会带来很大的速度提升。</strong></p>
-<pre>
-def insertIntoOriginalQuestion():
-    f = open('newfileWithIndex.txt', 'r')
-    for line in f:
-        try:
-            cur.execute("INSERT IGNORE INTO `yibotDB`.`originalQuestion` (`originalQuestion`) VALUES ('" + line + "')")
-        except:
-           # Rollback in case there is any error
-           conn.rollback()
-    conn.commit()</pre>
-
-
-<h3 id="乱码？"><a href="#乱码？" class="headerlink" title="乱码？"></a>乱码？</h3><p>在连接数据库时设置了charset=’utf8’,数据库里表的编码也是’utf8’，然而在mysql查看数据时还是会乱码，怎么办？！之前以为是python的问题，找了很久bug才发现其实是mysql的问题！在sql里查询数据的时候一定要注意！！！</p>
-<pre>
-    mysql> select * from 15_04_14_node_rtt;
-    +--------+------+---------+------+--------+
-    | node   | rtt  | rtt_avg | vist | user   |
-    +--------+------+---------+------+--------+
-    | ?????? | ?    | ???     | ???? | ?????? |
-    +--------+------+---------+------+--------+
-    1 row in set (0.00 sec)
-
-    mysql> set names utf8;     #原因由于终端和客户端所用绘画不一样
-    Query OK, 0 rows affected (0.00 sec)</pre>
-
-<blockquote>
-<p>参考链接<br><a href="http://www.runoob.com/python/python-mysql.html" target="_blank" rel="external">http://www.runoob.com/python/python-mysql.html</a></p>
-</blockquote>
+        <p>word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/6.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/7.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/8.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/9.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/10.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/11.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/12.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/1.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/2.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/3.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/4.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/5.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
 
       
     </div>
@@ -304,18 +234,9 @@ def insertIntoOriginalQuestion():
     
 <nav id="article-nav">
   
-    <a href="/2016/05/18/Gensim-用Python做主题模型/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Gensim-用Python做主题模型
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/05/16/JGibbLDA实战/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JGibbLDA实战</div>
+    <a href="/2016/05/26/在Mac-OS-El-Capitan下用pip安装Scrapy-失败/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在Mac OS El Capitan下用pip安装Scrapy 失败</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -350,7 +271,7 @@ def insertIntoOriginalQuestion():
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="python快捷通道" data-title="python快捷通道 -- MYSQL" data-url="http://yoursite.com/2016/05/18/python快捷通道/"></div>
+	<div class="ds-thread" data-thread-key="word2vec详解之四-基于Hierarchical-Softmax-的模型" data-title="word2vec详解之四 -- 基于Hierarchical Softmax 的模型" data-url="http://yoursite.com/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

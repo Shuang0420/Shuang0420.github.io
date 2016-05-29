@@ -70,7 +70,7 @@
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 20px;">LDA</a> <a href="/tags/cluster/" style="font-size: 20px;">cluster</a> <a href="/tags/gensim/" style="font-size: 15px;">gensim</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/python-debug/" style="font-size: 10px;">python debug</a> <a href="/tags/topic-modeling/" style="font-size: 20px;">topic modeling</a> <a href="/tags/中文分词/" style="font-size: 10px;">中文分词</a>
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 20px;">LDA</a> <a href="/tags/cluster/" style="font-size: 20px;">cluster</a> <a href="/tags/gensim/" style="font-size: 15px;">gensim</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/topic-modeling/" style="font-size: 20px;">topic modeling</a> <a href="/tags/word2vec/" style="font-size: 10px;">word2vec</a>
 					</div>
 				</section>
 				
@@ -168,6 +168,173 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-word2vec详解之四-基于Hierarchical-Softmax-的模型" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/" class="article-date">
+  	<time datetime="2016-05-29T03:40:03.000Z" itemprop="datePublished">2016-05-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/">word2vec详解之四 -- 基于Hierarchical Softmax 的模型</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/6.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/7.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/8.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/9.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/10.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/11.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/12.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/1.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/2.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/3.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/4.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/5.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/word2vec/">word2vec</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-在Mac-OS-El-Capitan下用pip安装Scrapy-失败" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/26/在Mac-OS-El-Capitan下用pip安装Scrapy-失败/" class="article-date">
+  	<time datetime="2016-05-26T07:47:25.000Z" itemprop="datePublished">2016-05-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/26/在Mac-OS-El-Capitan下用pip安装Scrapy-失败/">在Mac OS El Capitan下用pip安装Scrapy 失败</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-PHP连接数据库js可视化数据" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/26/PHP连接数据库js可视化数据/" class="article-date">
+  	<time datetime="2016-05-26T02:09:56.000Z" itemprop="datePublished">2016-05-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/26/PHP连接数据库js可视化数据/">PHP连接数据库js可视化数据</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-短问题归一化-LSI模型" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -390,115 +557,6 @@ print "Score3: ".format(score3*1.0/count)</pre>
       
       
       
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-那些年我遇过的python的坑" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/25/那些年我遇过的python的坑/" class="article-date">
-  	<time datetime="2016-05-25T03:39:53.000Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/那些年我遇过的python的坑/">那些年我遇过的python的坑</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="tag-读文件-强转"><a href="#tag-读文件-强转" class="headerlink" title="tag: 读文件 强转"></a>tag: 读文件 强转</h2><p><strong>文件的行格式：</strong></p>
-<pre>0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000 0.010000</pre>
-
-<p><strong>要求：</strong> 把文件中的每一行转成float的list<br><strong>错误代码：</strong></p>
-<pre>
-for line in f:
-  v=[float(i) for i in line.split(" ")]</pre>
-
-<p><strong>错误：</strong></p>
-<pre>Traceback (most recent call last):
-  File "<stdin>", line 2, in <module>
-ValueError: could not convert string to float: </module></stdin></pre>
-
-<p><strong>原因：</strong> 按行读取文件下的换行符问题引起。研究👇一个官方示例：</p>
-<pre>str = "Line1-abcdef \nLine2-abc \nLine4-abcd";
-print str.split( );
-print str.split(' ', 1 );</pre>
-
-<p>输出结果如下：</p>
-<pre>
-['Line1-abcdef', 'Line2-abc', 'Line4-abcd']
-['Line1-abcdef', '\nLine2-abc \nLine4-abcd']</pre>
-
-<p>也就是说按第二种split方法出来的list元素包含了\n</p>
-<p><strong>解决：</strong></p>
-<pre>line=line.strip('\n')</pre>
-
-<p>或者直接</p>
-<pre>line=line.split()</pre>
-
-<p><strong>一段完整代码如下：</strong></p>
-<pre>
-FAQlist=dict()
-f=open('FAQuniq.txt.gbk.seg.pos.theta','r')
-count=0
-for line in f:
-    if(count==0):
-        print line
-        line=line.strip('\n')
-        try:
-            vector=[float(i) for i in line.split()]
-            FAQlist[count]=vector
-        except ValueError,e:
-            print "error"
-    count+=1</pre>
-
-<p><strong>效果：</strong></p>
-<pre>
-  [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]</pre>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python-debug/">python debug</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/python/">python</a>
-	</div>
-
 
       
       <div class="clearfix"></div>
@@ -796,307 +854,6 @@ model.print_topics(-1, 5)</pre>
 
 
   
-    <article id="post-python-jieba分词" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/18/python-jieba分词/" class="article-date">
-  	<time datetime="2016-05-18T03:51:17.000Z" itemprop="datePublished">2016-05-18</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/18/python-jieba分词/">python-jieba 分词 -- 官方文档截取</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="jieba"><a href="#jieba" class="headerlink" title="jieba"></a>jieba</h1><p>“结巴”中文分词：做最好的 Python 中文分词组件</p>
-<h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h1><ul>
-<li>支持三种分词模式：</li>
-</ul>
-<ol>
-<li>精确模式，试图将句子最精确地切开，适合文本分析；</li>
-<li>全模式，把句子中所有的可以成词的词语都扫描出来, 速度非常快，但是不能解决歧义；</li>
-<li>搜索引擎模式，在精确模式的基础上，对长词再次切分，提高召回率，适合用于搜索引擎分词。</li>
-</ol>
-<ul>
-<li><p>支持繁体分词</p>
-</li>
-<li><p>支持自定义词典</p>
-</li>
-</ul>
-<h1 id="安装说明"><a href="#安装说明" class="headerlink" title="安装说明"></a>安装说明</h1><p>代码对 Python 2/3 均兼容</p>
-<ul>
-<li>全自动安装：easy_install jieba 或者 pip install jieba / pip3 install jieba</li>
-<li>半自动安装：先下载 <a href="http://pypi.python.org/pypi/jieba/" target="_blank" rel="external">http://pypi.python.org/pypi/jieba/</a> ，解压后运行 python setup.py install</li>
-<li>手动安装：将 jieba 目录放置于当前目录或者 site-packages 目录</li>
-</ul>
-<p>通过 import jieba 来引用</p>
-<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><ul>
-<li>基于前缀词典实现高效的词图扫描，生成句子中汉字所有可能成词情况所构成的有向无环图 (DAG)</li>
-<li>采用了动态规划查找最大概率路径, 找出基于词频的最大切分组合</li>
-<li>对于未登录词，采用了基于汉字成词能力的 HMM 模型，使用了 Viterbi 算法</li>
-</ul>
-<h1 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h1><h3 id="分词"><a href="#分词" class="headerlink" title="分词"></a>分词</h3><p>jieba.cut 方法接受三个输入参数: 需要分词的字符串；cut_all 参数用来控制是否采用全模式；HMM 参数用来控制是否使用 HMM 模型<br>jieba.cut_for_search 方法接受两个参数：需要分词的字符串；是否使用 HMM 模型。该方法适合用于搜索引擎构建倒排索引的分词，粒度比较细<br>待分词的字符串可以是 unicode 或 UTF-8 字符串、GBK 字符串。注意：不建议直接输入 GBK 字符串，可能无法预料地错误解码成 UTF-8<br>jieba.cut 以及 jieba.cut_for_search 返回的结构都是一个可迭代的 generator，可以使用 for 循环来获得分词后得到的每一个词语(unicode)，或者用 jieba.lcut 以及 jieba.lcut_for_search 直接返回 list<br>jieba.Tokenizer(dictionary=DEFAULT_DICT) 新建自定义分词器，可用于同时使用不同词典。jieba.dt 为默认分词器，所有全局分词相关函数都是该分词器的映射。</p>
-<p>代码示例</p>
-<pre>
-# encoding=utf-8
-import jieba
-
-seg_list = jieba.cut("我来到北京清华大学", cut_all=True)
-print("Full Mode: " + "/ ".join(seg_list))  # 全模式
-
-seg_list = jieba.cut("我来到北京清华大学", cut_all=False)
-print("Default Mode: " + "/ ".join(seg_list))  # 精确模式
-
-seg_list = jieba.cut("他来到了网易杭研大厦")  # 默认是精确模式
-print(", ".join(seg_list))
-
-seg_list = jieba.cut_for_search("小明硕士毕业于中国科学院计算所，后在日本京都大学深造")  # 搜索引擎模式
-print(", ".join(seg_list))</pre>
-
-<p>输出:</p>
-<p>【全模式】: 我/ 来到/ 北京/ 清华/ 清华大学/ 华大/ 大学</p>
-<p>【精确模式】: 我/ 来到/ 北京/ 清华大学</p>
-<p>【新词识别】：他, 来到, 了, 网易, 杭研, 大厦    (此处，“杭研”并没有在词典中，但是也被Viterbi算法识别出来了)</p>
-<p>【搜索引擎模式】： 小明, 硕士, 毕业, 于, 中国, 科学, 学院, 科学院, 中国科学院, 计算, 计算所, 后, 在, 日本, 京都, 大学, 日本京都大学, 深造</p>
-<h3 id="添加自定义词典"><a href="#添加自定义词典" class="headerlink" title="添加自定义词典"></a>添加自定义词典</h3><p>载入词典</p>
-<p>开发者可以指定自己自定义的词典，以便包含 jieba 词库里没有的词。虽然 jieba 有新词识别能力，但是自行添加新词可以保证更高的正确率<br>用法：</p>
-<pre>jieba.load_userdict(file_name) # file_name 为文件类对象或自定义词典的路径</pre>
-
-<p>词典格式和 dict.txt 一样，一个词占一行；每一行分三部分：词语、词频（可省略）、词性（可省略），用空格隔开，顺序不可颠倒。file_name 若为路径或二进制方式打开的文件，则文件必须为 UTF-8 编码。<br>词频省略时使用自动计算的能保证分出该词的词频。</p>
-<p>例如：</p>
-<p>创新办 3 i<br>云计算 5<br>凱特琳 nz<br>台中<br>更改分词器（默认为 jieba.dt）的 tmp_dir 和 cache_file 属性，可分别指定缓存文件所在的文件夹及其文件名，用于受限的文件系统。</p>
-<p>范例：</p>
-<p>自定义词典：<a href="https://github.com/fxsjy/jieba/blob/master/test/userdict.txt" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/userdict.txt</a></p>
-<p>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/test_userdict.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/test_userdict.py</a></p>
-<p>之前： 李小福 / 是 / 创新 / 办 / 主任 / 也 / 是 / 云 / 计算 / 方面 / 的 / 专家 /</p>
-<p>加载自定义词库后：　李小福 / 是 / 创新办 / 主任 / 也 / 是 / 云计算 / 方面 / 的 / 专家 /</p>
-<p>调整词典</p>
-<p>使用 add_word(word, freq=None, tag=None) 和 del_word(word) 可在程序中动态修改词典。<br>使用 suggest_freq(segment, tune=True) 可调节单个词语的词频，使其能（或不能）被分出来。</p>
-<p>注意：自动计算的词频在使用 HMM 新词发现功能时可能无效。</p>
-<p>代码示例：</p>
-<pre>
->>> print('/'.join(jieba.cut('如果放到post中将出错。', HMM=False)))
-如果/放到/post/中将/出错/。
->>> jieba.suggest_freq(('中', '将'), True)
-494
->>> print('/'.join(jieba.cut('如果放到post中将出错。', HMM=False)))
-如果/放到/post/中/将/出错/。
->>> print('/'.join(jieba.cut('「台中」正确应该不会被切开', HMM=False)))
-「/台/中/」/正确/应该/不会/被/切开
->>> jieba.suggest_freq('台中', True)
-69
->>> print('/'.join(jieba.cut('「台中」正确应该不会被切开', HMM=False)))
-「/台中/」/正确/应该/不会/被/切开
-"通过用户自定义词典来增强歧义纠错能力" --- https://github.com/fxsjy/jieba/issues/14
-</pre>
-
-<h3 id="关键词提取"><a href="#关键词提取" class="headerlink" title="关键词提取"></a>关键词提取</h3><p>基于 TF-IDF 算法的关键词抽取</p>
-<pre>
-import jieba.analyse
-
-jieba.analyse.extract_tags(sentence, topK=20, withWeight=False, allowPOS=())</pre>
-
-<p>sentence 为待提取的文本<br>topK 为返回几个 TF/IDF 权重最大的关键词，默认值为 20<br>withWeight 为是否一并返回关键词权重值，默认值为 False<br>allowPOS 仅包括指定词性的词，默认值为空，即不筛选<br>jieba.analyse.TFIDF(idf_path=None) 新建 TFIDF 实例，idf_path 为 IDF 频率文件</p>
-<p>代码示例 （关键词提取）</p>
-<p><a href="https://github.com/fxsjy/jieba/blob/master/test/extract_tags.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/extract_tags.py</a></p>
-<p>关键词提取所使用逆向文件频率（IDF）文本语料库可以切换成自定义语料库的路径</p>
-<p>用法： <pre>jieba.analyse.set_idf_path(file_name) # file_name为自定义语料库的路径</pre></p>
-<p>自定义语料库示例：<a href="https://github.com/fxsjy/jieba/blob/master/extra_dict/idf.txt.big" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/extra_dict/idf.txt.big</a><br>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/extract_tags_idfpath.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/extract_tags_idfpath.py</a></p>
-<p>关键词提取所使用停止词（Stop Words）文本语料库可以切换成自定义语料库的路径</p>
-<p>用法： <pre>jieba.analyse.set_stop_words(file_name) # file_name为自定义语料库的路径</pre></p>
-<p>自定义语料库示例：<a href="https://github.com/fxsjy/jieba/blob/master/extra_dict/stop_words.txt" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/extra_dict/stop_words.txt</a><br>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/extract_tags_stop_words.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/extract_tags_stop_words.py</a></p>
-<p>关键词一并返回关键词权重值示例</p>
-<p>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/extract_tags_with_weight.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/extract_tags_with_weight.py</a></p>
-<p>基于 TextRank 算法的关键词抽取</p>
-<pre>jieba.analyse.textrank(sentence, topK=20, withWeight=False, allowPOS=('ns', 'n', 'vn', 'v')) #直接使用，接口相同，注意默认过滤词性。</pre>
-<pre>jieba.analyse.TextRank() #新建自定义 TextRank 实例</pre>
-
-<p>算法论文： TextRank: Bringing Order into Texts</p>
-<p><strong>基本思想:</strong></p>
-<ul>
-<li>将待抽取关键词的文本进行分词</li>
-<li>以固定窗口大小(默认为5，通过span属性调整)，词之间的共现关系，构建图</li>
-<li>计算图中节点的PageRank，注意是无向带权图</li>
-</ul>
-<p>使用示例:</p>
-<p>见 test/demo.py</p>
-<h3 id="词性标注"><a href="#词性标注" class="headerlink" title="词性标注"></a>词性标注</h3><p>jieba.posseg.POSTokenizer(tokenizer=None) 新建自定义分词器，tokenizer 参数可指定内部使用的 jieba.Tokenizer 分词器。jieba.posseg.dt 为默认词性标注分词器。<br>标注句子分词后每个词的词性，采用和 ictclas 兼容的标记法。<br>用法示例</p>
-<pre>
->>> import jieba.posseg as pseg
->>> words = pseg.cut("我爱北京天安门")
->>> for word, flag in words:
-...    print('%s %s' % (word, flag))
-...
-我 r
-爱 v
-北京 ns
-天安门 ns
-</pre>
-
-<h3 id="并行分词"><a href="#并行分词" class="headerlink" title="并行分词"></a>并行分词</h3><p>原理：将目标文本按行分隔后，把各行文本分配到多个 Python 进程并行分词，然后归并结果，从而获得分词速度的可观提升<br>基于 python 自带的 multiprocessing 模块，目前暂不支持 Windows<br>用法：</p>
-<pre>
-jieba.enable_parallel(4) # 开启并行分词模式，参数为并行进程数
-jieba.disable_parallel() # 关闭并行分词模式
-</pre>
-
-<p>例子：<a href="https://github.com/fxsjy/jieba/blob/master/test/parallel/test_file.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/parallel/test_file.py</a></p>
-<p>实验结果：在 4 核 3.4GHz Linux 机器上，对金庸全集进行精确分词，获得了 1MB/s 的速度，是单进程版的 3.3 倍。</p>
-<p>注意：并行分词仅支持默认分词器 jieba.dt 和 jieba.posseg.dt。</p>
-<h3 id="Tokenize：返回词语在原文的起止位置"><a href="#Tokenize：返回词语在原文的起止位置" class="headerlink" title="Tokenize：返回词语在原文的起止位置"></a>Tokenize：返回词语在原文的起止位置</h3><p>注意，输入参数只接受 unicode</p>
-<pre>
-# 默认模式
-result = jieba.tokenize(u'永和服装饰品有限公司')
-for tk in result:
-    print("word %s\t\t start: %d \t\t end:%d" % (tk[0],tk[1],tk[2]))
-word 永和                start: 0                end:2
-word 服装                start: 2                end:4
-word 饰品                start: 4                end:6
-word 有限公司            start: 6                end:10
-
-# 搜索模式
-result = jieba.tokenize(u'永和服装饰品有限公司', mode='search')
-for tk in result:
-    print("word %s\t\t start: %d \t\t end:%d" % (tk[0],tk[1],tk[2]))
-word 永和                start: 0                end:2
-word 服装                start: 2                end:4
-word 饰品                start: 4                end:6
-word 有限                start: 6                end:8
-word 公司                start: 8                end:10
-word 有限公司            start: 6                end:10
-</pre>
-
-
-<h3 id="ChineseAnalyzer-for-Whoosh-搜索引擎"><a href="#ChineseAnalyzer-for-Whoosh-搜索引擎" class="headerlink" title="ChineseAnalyzer for Whoosh 搜索引擎"></a>ChineseAnalyzer for Whoosh 搜索引擎</h3><p>引用： from jieba.analyse import ChineseAnalyzer<br>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/test_whoosh.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/test_whoosh.py</a></p>
-<h3 id="命令行分词"><a href="#命令行分词" class="headerlink" title="命令行分词"></a>命令行分词</h3><p>使用示例：</p>
-<pre>python -m jieba news.txt > cut_result.txt</pre>
-
-<p>命令行选项（翻译）：</p>
-<p>使用:</p>
-<pre>python -m jieba [options] filename</pre>
-
-<p>如果没有指定文件名，则使用标准输入。<br>–help 选项输出：</p>
-<pre>
-$> python -m jieba --help
-Jieba command line interface.
-
-positional arguments:
-  filename              input file
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -d [DELIM], --delimiter [DELIM]
-                        use DELIM instead of ' / ' for word delimiter; or a
-                        space if it is used without DELIM
-  -p [DELIM], --pos [DELIM]
-                        enable POS tagging; if DELIM is specified, use DELIM
-                        instead of '\_' for POS delimiter
-  -D DICT, --dict DICT  use DICT as dictionary
-  -u USER_DICT, --user-dict USER_DICT
-                        use USER_DICT together with the default dictionary or
-                        DICT (if specified)
-  -a, --cut-all         full pattern cutting (ignored with POS tagging)
-  -n, --no-hmm          don't use the Hidden Markov Model
-  -q, --quiet           don't print loading messages to stderr
-  -V, --version         show program's version number and exit
-</pre>
-
-<p>If no filename specified, use STDIN instead.</p>
-<h3 id="延迟加载机制"><a href="#延迟加载机制" class="headerlink" title="延迟加载机制"></a>延迟加载机制</h3><p>jieba 采用延迟加载，import jieba 和 jieba.Tokenizer() 不会立即触发词典的加载，一旦有必要才开始加载词典构建前缀字典。如果你想手工初始 jieba，也可以手动初始化。</p>
-<p>import jieba<br>jieba.initialize()  # 手动初始化（可选）<br>在 0.28 之前的版本是不能指定主词典的路径的，有了延迟加载机制后，你可以改变主词典的路径:</p>
-<p>jieba.set_dictionary(‘data/dict.txt.big’)<br>例子： <a href="https://github.com/fxsjy/jieba/blob/master/test/test_change_dictpath.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/test_change_dictpath.py</a></p>
-<h3 id="其他词典"><a href="#其他词典" class="headerlink" title="其他词典"></a>其他词典</h3><p>占用内存较小的词典文件 <a href="https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.small" target="_blank" rel="external">https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.small</a></p>
-<p>支持繁体分词更好的词典文件 <a href="https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.big" target="_blank" rel="external">https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.big</a></p>
-<p>下载你所需要的词典，然后覆盖 jieba/dict.txt 即可；或者用 jieba.set_dictionary(‘data/dict.txt.big’)</p>
-<h3 id="其他语言实现"><a href="#其他语言实现" class="headerlink" title="其他语言实现"></a>其他语言实现</h3><p>结巴分词 Java 版本</p>
-<p>作者：piaolingxue 地址：<a href="https://github.com/huaban/jieba-analysis" target="_blank" rel="external">https://github.com/huaban/jieba-analysis</a></p>
-<p>结巴分词 C++ 版本</p>
-<p>作者：yanyiwu 地址：<a href="https://github.com/yanyiwu/cppjieba" target="_blank" rel="external">https://github.com/yanyiwu/cppjieba</a></p>
-<p>结巴分词 Node.js 版本</p>
-<p>作者：yanyiwu 地址：<a href="https://github.com/yanyiwu/nodejieba" target="_blank" rel="external">https://github.com/yanyiwu/nodejieba</a></p>
-<p>结巴分词 Erlang 版本</p>
-<p>作者：falood 地址：<a href="https://github.com/falood/exjieba" target="_blank" rel="external">https://github.com/falood/exjieba</a></p>
-<p>结巴分词 R 版本</p>
-<p>作者：qinwf 地址：<a href="https://github.com/qinwf/jiebaR" target="_blank" rel="external">https://github.com/qinwf/jiebaR</a></p>
-<p>结巴分词 iOS 版本</p>
-<p>作者：yanyiwu 地址：<a href="https://github.com/yanyiwu/iosjieba" target="_blank" rel="external">https://github.com/yanyiwu/iosjieba</a></p>
-<p>结巴分词 PHP 版本</p>
-<p>作者：fukuball 地址：<a href="https://github.com/fukuball/jieba-php" target="_blank" rel="external">https://github.com/fukuball/jieba-php</a></p>
-<p>结巴分词 .NET(C#) 版本</p>
-<p>作者：anderscui 地址：<a href="https://github.com/anderscui/jieba.NET/" target="_blank" rel="external">https://github.com/anderscui/jieba.NET/</a></p>
-<p>系统集成</p>
-<p>Solr: <a href="https://github.com/sing1ee/jieba-solr" target="_blank" rel="external">https://github.com/sing1ee/jieba-solr</a><br>分词速度</p>
-<p>1.5 MB / Second in Full Mode<br>400 KB / Second in Default Mode<br>测试环境: Intel(R) Core(TM) i7-2600 CPU @ 3.4GHz；《围城》.txt</p>
-<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><ul>
-<li>模型的数据是如何生成的？</li>
-</ul>
-<p>详见： <a href="https://github.com/fxsjy/jieba/issues/7" target="_blank" rel="external">https://github.com/fxsjy/jieba/issues/7</a></p>
-<ul>
-<li>“台中”总是被切成“台 中”？（以及类似情况）</li>
-</ul>
-<p>P(台中) ＜ P(台)×P(中)，“台中”词频不够导致其成词概率较低</p>
-<p>解决方法：强制调高词频</p>
-<p>jieba.add_word(‘台中’) 或者 jieba.suggest_freq(‘台中’, True)</p>
-<ul>
-<li>“今天天气 不错”应该被切成“今天 天气 不错”？（以及类似情况）</li>
-</ul>
-<p>解决方法：强制调低词频</p>
-<p>jieba.suggest_freq((‘今天’, ‘天气’), True)</p>
-<p>或者直接删除该词 jieba.del_word(‘今天天气’)</p>
-<ul>
-<li>切出了词典中没有的词语，效果不理想？</li>
-</ul>
-<p>解决方法：关闭新词发现</p>
-<p>jieba.cut(‘丰田太省了’, HMM=False) jieba.cut(‘我们中出了一个叛徒’, HMM=False)</p>
-<p>更多问题请点击：<a href="https://github.com/fxsjy/jieba/issues?sort=updated&amp;state=closed" target="_blank" rel="external">https://github.com/fxsjy/jieba/issues?sort=updated&amp;state=closed</a></p>
-<p>修订历史</p>
-<p><a href="https://github.com/fxsjy/jieba/blob/master/Changelog" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/Changelog</a></p>
-<blockquote>
-<p><a href="https://github.com/fxsjy/jieba" target="_blank" rel="external">https://github.com/fxsjy/jieba</a></p>
-</blockquote>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/中文分词/">中文分词</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-Gensim-用Python做主题模型" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1174,122 +931,6 @@ optional arguments:
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-python快捷通道" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/18/python快捷通道/" class="article-date">
-  	<time datetime="2016-05-18T01:42:48.000Z" itemprop="datePublished">2016-05-18</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/18/python快捷通道/">python快捷通道 -- MYSQL</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="连接-mysql"><a href="#连接-mysql" class="headerlink" title="连接 mysql"></a>连接 mysql</h3><pre>
-import MySQLdb
-conn= MySQLdb.connect(
-        host='127.0.0.1',
-        port = 3306,
-        user='root',
-        passwd='',
-        db ='FAQsys',
-        charset='utf8',
-        )
-cur = conn.cursor()
-cur.execute("USE yibotDB")</pre>
-
-<h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><pre>
-try:
-    cur.execute("SELECT Question FROM Questions")
-    results=cur.fetchall()
-    # result = cur.fetchone()
-    # result = cur.fetchmany()
-    for row in results:
-        question = row[0]
-        # print question
-except:
-   # Rollback in case there is any error
-   conn.rollback()
-</pre>
-
-<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><p><strong>如果是插入数据，要执行commit操作，不然数据不会被写入数据库。最好是执行完所有的sql语句之后再commit，实践证明，这样会带来很大的速度提升。</strong></p>
-<pre>
-def insertIntoOriginalQuestion():
-    f = open('newfileWithIndex.txt', 'r')
-    for line in f:
-        try:
-            cur.execute("INSERT IGNORE INTO `yibotDB`.`originalQuestion` (`originalQuestion`) VALUES ('" + line + "')")
-        except:
-           # Rollback in case there is any error
-           conn.rollback()
-    conn.commit()</pre>
-
-
-<h3 id="乱码？"><a href="#乱码？" class="headerlink" title="乱码？"></a>乱码？</h3><p>在连接数据库时设置了charset=’utf8’,数据库里表的编码也是’utf8’，然而在mysql查看数据时还是会乱码，怎么办？！之前以为是python的问题，找了很久bug才发现其实是mysql的问题！在sql里查询数据的时候一定要注意！！！</p>
-<pre>
-    mysql> select * from 15_04_14_node_rtt;
-    +--------+------+---------+------+--------+
-    | node   | rtt  | rtt_avg | vist | user   |
-    +--------+------+---------+------+--------+
-    | ?????? | ?    | ???     | ???? | ?????? |
-    +--------+------+---------+------+--------+
-    1 row in set (0.00 sec)
-
-    mysql> set names utf8;     #原因由于终端和客户端所用绘画不一样
-    Query OK, 0 rows affected (0.00 sec)</pre>
-
-<blockquote>
-<p>参考链接<br><a href="http://www.runoob.com/python/python-mysql.html" target="_blank" rel="external">http://www.runoob.com/python/python-mysql.html</a></p>
-</blockquote>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/快捷通道/">快捷通道</a>
 	</div>
 
 
