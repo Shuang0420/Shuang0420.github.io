@@ -70,7 +70,7 @@
 						<li>Tags</li>
 						
 						
-						<li>A propos</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -298,11 +298,11 @@
 
 
   
-    <article id="post-word2vec详解之三-背景知识" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-word2vec详解之四-基于Hierarchical-Softmax-的模型" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/29/word2vec详解之三-背景知识/" class="article-date">
-  	<time datetime="2016-05-29T06:04:41.000Z" itemprop="datePublished">2016-05-29</time>
+      <a href="/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/" class="article-date">
+  	<time datetime="2016-05-29T06:08:03.000Z" itemprop="datePublished">2016-05-29</time>
 </a>
     </div>
   
@@ -315,7 +315,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/29/word2vec详解之三-背景知识/">word2vec详解之三 -- 背景知识</a>
+      <a class="article-title" href="/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/">word2vec详解之四 -- 基于Hierarchical Softmax 的模型</a>
     </h1>
   
 
@@ -327,7 +327,7 @@
         <p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
 <hr>
 
-<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/32.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/33.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/34.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/35.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/36.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/37.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/38.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/39.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/310.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/311.jpg" alt=""></p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/6.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/7.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/8.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/9.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/10.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/11.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/12.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/1.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/2.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/3.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/4.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/5.jpg" alt=""></p>
 <p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
 
       
@@ -363,11 +363,11 @@
 
 
   
-    <article id="post-word2vec详解之四-基于Hierarchical-Softmax-的模型" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-word2vec详解之三-背景知识" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/" class="article-date">
-  	<time datetime="2016-05-29T05:05:03.000Z" itemprop="datePublished">2016-05-29</time>
+      <a href="/2016/05/29/word2vec详解之三-背景知识/" class="article-date">
+  	<time datetime="2016-05-29T06:04:41.000Z" itemprop="datePublished">2016-05-29</time>
 </a>
     </div>
   
@@ -380,7 +380,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/">word2vec详解之四 -- 基于Hierarchical Softmax 的模型</a>
+      <a class="article-title" href="/2016/05/29/word2vec详解之三-背景知识/">word2vec详解之三 -- 背景知识</a>
     </h1>
   
 
@@ -392,7 +392,7 @@
         <p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
 <hr>
 
-<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/6.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/7.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/8.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/9.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/10.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/11.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/12.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/1.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/2.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/3.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/4.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/5.jpg" alt=""></p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/32.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/33.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/34.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/35.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/36.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/37.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/38.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/39.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/310.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/311.jpg" alt=""></p>
 <p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
 
       
