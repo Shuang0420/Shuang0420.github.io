@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>gensim-doc2vec实战 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="gensim的doc2vec找不到多少资料，根据官方api探索性的做了些尝试。本文介绍了利用gensim的doc2vec来训练模型，infer新文档向量，infer相似度等方法，有一些不成熟的地方，后期会继续改进。
+导入模块
+# -*- coding: utf-8 -*-
+import sys
+reload(sys)
+sys.setdefaultencoding(&apos;utf8&apos;)
+import ge">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gensim-doc2vec实战">
+<meta property="og:url" content="http://yoursite.com/2016/06/01/gensim-doc2vec实战/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="gensim的doc2vec找不到多少资料，根据官方api探索性的做了些尝试。本文介绍了利用gensim的doc2vec来训练模型，infer新文档向量，infer相似度等方法，有一些不成熟的地方，后期会继续改进。
+导入模块
+# -*- coding: utf-8 -*-
+import sys
+reload(sys)
+sys.setdefaultencoding(&apos;utf8&apos;)
+import ge">
+<meta property="og:updated_time" content="2016-06-01T04:24:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gensim-doc2vec实战">
+<meta name="twitter:description" content="gensim的doc2vec找不到多少资料，根据官方api探索性的做了些尝试。本文介绍了利用gensim的doc2vec来训练模型，infer新文档向量，infer相似度等方法，有一些不成熟的地方，后期会继续改进。
+导入模块
+# -*- coding: utf-8 -*-
+import sys
+reload(sys)
+sys.setdefaultencoding(&apos;utf8&apos;)
+import ge">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://cdn.petpictures.xyz/2016/02/07/so-pretty-dogs-photo-14940252-fanpop.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Shuang</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">Homepage</a></li>
+				        
+							<li><a href="/archives">Posts</a></li>
+				        
+							<li><a href="/categories">Categories</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Shuang0420" title="github">github</a>
+					        
+								<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/shuang-xu-7008b894?trk=hp-identity-name" title="linkedin">linkedin</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 16.67px;">LDA</a> <a href="/tags/cluster/" style="font-size: 16.67px;">cluster</a> <a href="/tags/doc2vec-gensim/" style="font-size: 10px;">doc2vec gensim</a> <a href="/tags/gensim/" style="font-size: 13.33px;">gensim</a> <a href="/tags/machine-learning/" style="font-size: 16.67px;">machine learning</a> <a href="/tags/topic-modeling/" style="font-size: 16.67px;">topic modeling</a> <a href="/tags/word2vec/" style="font-size: 20px;">word2vec</a> <a href="/tags/word2vec-gensim/" style="font-size: 10px;">word2vec gensim</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">颜色不一样的烟火…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Shuang</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://cdn.petpictures.xyz/2016/02/07/so-pretty-dogs-photo-14940252-fanpop.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Shuang</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">Homepage</a></li>
+		        
+					<li><a href="/archives">Posts</a></li>
+		        
+					<li><a href="/categories">Categories</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Shuang0420" title="github">github</a>
+			        
+						<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/shuang-xu-7008b894?trk=hp-identity-name" title="linkedin">linkedin</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-gensim-doc2vec实战" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/01/gensim-doc2vec实战/" class="article-date">
+  	<time datetime="2016-06-01T02:22:06.000Z" itemprop="datePublished">2016-06-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      gensim-doc2vec实战
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/doc2vec-gensim/">doc2vec gensim</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>gensim的doc2vec找不到多少资料，根据官方api探索性的做了些尝试。本文介绍了利用gensim的doc2vec来训练模型，infer新文档向量，infer相似度等方法，有一些不成熟的地方，后期会继续改进。</p>
+<h3 id="导入模块"><a href="#导入模块" class="headerlink" title="导入模块"></a>导入模块</h3><pre>
+# -*- coding: utf-8 -*-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+import gensim, logging
+import os
+import jieba
+
+# logging information
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+</pre>
+
+<h3 id="得到文件"><a href="#得到文件" class="headerlink" title="得到文件"></a>得到文件</h3><pre>
+# get input file, text format
+f = open('trainingdata.txt','r')
+input = f.readlines()
+count = len(input)
+print count
+</pre>
+
+<h3 id="文件预处理，分词等"><a href="#文件预处理，分词等" class="headerlink" title="文件预处理，分词等"></a>文件预处理，分词等</h3><pre>
+# read file and separate words
+alldocs=[] # for the sake of check, can be removed
+count=0 # for the sake of check, can be removed
+for line in input:
+    line=line.strip('\n')
+    seg_list = jieba.cut(line)
+    output.write(' '.join(seg_list) + '\n')
+    alldocs.append(gensim.models.doc2vec.TaggedDocument(seg_list,count)) # for the sake of check, can be removed
+    count+=1 # for the sake of check, can be removed
+</pre>
+
+<h3 id="训练并保存模型"><a href="#训练并保存模型" class="headerlink" title="训练并保存模型"></a>训练并保存模型</h3><pre>
+# train and save the model
+sentences= gensim.models.doc2vec.TaggedLineDocument('output.seq')
+model = gensim.models.Doc2Vec(sentences,size=100, window=3)
+model.train(sentences)
+model.save('all_model.txt')
+</pre>
+
+<h3 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h3><p>gensim Doc2Vec 提供了 DM 和 DBOW 两个模型。gensim 的说明文档建议多次训练数据集并调整学习速率或在每次训练中打乱输入信息的顺序以求获得最佳效果。</p>
+<pre>
+# PV-DM w/concatenation - window=5 (both sides) approximates paper's 10-word total window size
+Doc2Vec(sentences,dm=1, dm_concat=1, size=100, window=2, hs=0, min_count=2, workers=cores)
+# PV-DBOW  
+Doc2Vec(sentences,dm=0, size=100, hs=0, min_count=2, workers=cores)
+# PV-DM w/average
+Doc2Vec(sentences,dm=1, dm_mean=1, size=100, window=2, hs=0, min_count=2, workers=cores)
+</pre>
+
+<h3 id="保存文档向量"><a href="#保存文档向量" class="headerlink" title="保存文档向量"></a>保存文档向量</h3><pre>
+# save vectors
+out=open("all_vector.txt","wb")
+for num in range(0,count):
+    docvec =model.docvecs[num]
+    out.write(docvec)
+    #print num
+    #print docvec
+out.close()
+</pre>
+
+<h3 id="检验-计算训练文档中的文档相似度"><a href="#检验-计算训练文档中的文档相似度" class="headerlink" title="检验 计算训练文档中的文档相似度"></a>检验 计算训练文档中的文档相似度</h3><pre>
+# test, calculate the similarity
+# 注意 docid 是从0开始计数的
+# 计算与训练集中第一篇文档最相似的文档
+sims = model.docvecs.most_similar(0)
+print sims
+# get similarity between doc1 and doc2 in the training data
+sims = model.docvecs.similarity(1,2)
+print sims
+</pre>
+
+<h3 id="infer向量，查看某个untrained-data与trained-dataset中文档的相似度"><a href="#infer向量，查看某个untrained-data与trained-dataset中文档的相似度" class="headerlink" title="infer向量，查看某个untrained data与trained dataset中文档的相似度"></a>infer向量，查看某个untrained data与trained dataset中文档的相似度</h3><p>下面的代码用于检验模型正确性，随机挑一篇trained dataset中的文档，用模型重新infer，再计算与trained dataset中文档相似度，如果模型良好，相似度第一位应该就是挑出的文档。</p>
+<pre>
+# check
+#############################################################################
+# A good check is to re-infer a vector for a document already in the model. #
+# if the model is well-trained,                                             #
+# the nearest doc should (usually) be the same document.                    #
+#############################################################################
+
+print 'examing'
+doc_id = np.random.randint(model.docvecs.count)  # pick random doc; re-run cell for more examples
+print('for doc %d...' % doc_id)
+inferred_docvec = model.infer_vector(alldocs[doc_id].words)
+print('%s:\n %s' % (model, model.docvecs.most_similar([inferred_docvec], topn=3)))
+</pre>
+
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>👇两个错误还在探索中，根据官方指南是可以运行的，然而我遇到了错误并没能解决。<br>第一段错误代码，关于train the model</p>
+<pre>
+alldocs=[]
+count=0
+for line in input:
+    #print line
+    line=line.strip('\n')
+    seg_list = jieba.cut(line)
+    #output.write(line)
+    output.write(' '.join(seg_list) + '\n')
+    alldocs.append(gensim.models.doc2vec.TaggedDocument(seg_list,count))
+    count+=1
+
+model = Doc2Vec(alldocs,size=100, window=2, min_count=5, workers=4)
+model.train(alldocs)
+</pre>
+
+<p>报错信息</p>
+<pre>
+Traceback (most recent call last):
+  File "d2vTestv5.py", line 59, in <module>
+    model = Doc2Vec(alldocs[0],size=100, window=2, min_count=5, workers=4)
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 596, in __init__
+    self.build_vocab(documents, trim_rule=trim_rule)
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/word2vec.py", line 508, in build_vocab
+    self.scan_vocab(sentences, trim_rule=trim_rule)  # initial survey
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 639, in scan_vocab
+    document_length = len(document.words)
+AttributeError: 'generator' object has no attribute 'words'
+</module></pre>
+
+<p>第二段错误代码，关于infer</p>
+<pre>
+doc_words1=['验证','失败','验证码','未','收到']
+doc_words2=['今天','奖励','有','哪些','呢']
+# get infered vector
+invec1 = model.infer_vector(doc_words1, alpha=0.1, min_alpha=0.0001, steps=5)
+invec2 = model.infer_vector(doc_words2, alpha=0.1, min_alpha=0.0001, steps=5)
+print invec1
+print invec2
+
+# get similarity
+# the output docid is supposed to be 0
+sims = model.docvecs.most_similar([invec1])
+print sims
+
+# according to official guide, the following codes are supposed to be fine, but it fails to run
+sims= model.docvecs.similarity(invec1,invec2)
+print model.similarity(['今天','有','啥','奖励'],['今天','奖励','有','哪些','呢'])
+</pre>
+
+<p>最后两行代码报错，错误信息</p>
+<pre>
+raceback (most recent call last):
+  File "d2vTestv5.py", line 110, in <module>
+    sims= model.docvecs.similarity(invec1,invec2)
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 484, in similarity
+    return dot(matutils.unitvec(self[d1]), matutils.unitvec(self[d2]))
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 341, in __getitem__
+    return vstack([self[i] for i in index])
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 341, in __getitem__
+    return vstack([self[i] for i in index])
+TypeError: 'numpy.float32' object is not iterable
+</module></pre>
+
+<blockquote>
+<p>参考链接<br><a href="https://radimrehurek.com/gensim/models/doc2vec.html" target="_blank" rel="external">https://radimrehurek.com/gensim/models/doc2vec.html</a><br><a href="https://github.com/piskvorky/gensim/blob/develop/docs/notebooks/doc2vec-IMDB.ipynb" target="_blank" rel="external">https://github.com/piskvorky/gensim/blob/develop/docs/notebooks/doc2vec-IMDB.ipynb</a></p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/05/30/gensim-word2vec实战/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">gensim: word2vec实战</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="gensim-doc2vec实战" data-title="gensim-doc2vec实战" data-url="http://yoursite.com/2016/06/01/gensim-doc2vec实战/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Shuang
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

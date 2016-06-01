@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 16.67px;">LDA</a> <a href="/tags/cluster/" style="font-size: 16.67px;">cluster</a> <a href="/tags/gensim/" style="font-size: 13.33px;">gensim</a> <a href="/tags/machine-learning/" style="font-size: 16.67px;">machine learning</a> <a href="/tags/topic-modeling/" style="font-size: 16.67px;">topic modeling</a> <a href="/tags/word2vec/" style="font-size: 20px;">word2vec</a>
+						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 16.67px;">LDA</a> <a href="/tags/cluster/" style="font-size: 16.67px;">cluster</a> <a href="/tags/doc2vec-gensim/" style="font-size: 10px;">doc2vec gensim</a> <a href="/tags/gensim/" style="font-size: 13.33px;">gensim</a> <a href="/tags/machine-learning/" style="font-size: 16.67px;">machine learning</a> <a href="/tags/topic-modeling/" style="font-size: 16.67px;">topic modeling</a> <a href="/tags/word2vec/" style="font-size: 20px;">word2vec</a> <a href="/tags/word2vec-gensim/" style="font-size: 10px;">word2vec gensim</a>
 					</div>
 				</section>
 				
@@ -168,6 +168,342 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-gensim-doc2vec实战" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/01/gensim-doc2vec实战/" class="article-date">
+  	<time datetime="2016-06-01T02:22:06.000Z" itemprop="datePublished">2016-06-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/01/gensim-doc2vec实战/">gensim-doc2vec实战</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>gensim的doc2vec找不到多少资料，根据官方api探索性的做了些尝试。本文介绍了利用gensim的doc2vec来训练模型，infer新文档向量，infer相似度等方法，有一些不成熟的地方，后期会继续改进。</p>
+<h3 id="导入模块"><a href="#导入模块" class="headerlink" title="导入模块"></a>导入模块</h3><pre>
+# -*- coding: utf-8 -*-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+import gensim, logging
+import os
+import jieba
+
+# logging information
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+</pre>
+
+<h3 id="得到文件"><a href="#得到文件" class="headerlink" title="得到文件"></a>得到文件</h3><pre>
+# get input file, text format
+f = open('trainingdata.txt','r')
+input = f.readlines()
+count = len(input)
+print count
+</pre>
+
+<h3 id="文件预处理，分词等"><a href="#文件预处理，分词等" class="headerlink" title="文件预处理，分词等"></a>文件预处理，分词等</h3><pre>
+# read file and separate words
+alldocs=[] # for the sake of check, can be removed
+count=0 # for the sake of check, can be removed
+for line in input:
+    line=line.strip('\n')
+    seg_list = jieba.cut(line)
+    output.write(' '.join(seg_list) + '\n')
+    alldocs.append(gensim.models.doc2vec.TaggedDocument(seg_list,count)) # for the sake of check, can be removed
+    count+=1 # for the sake of check, can be removed
+</pre>
+
+<h3 id="训练并保存模型"><a href="#训练并保存模型" class="headerlink" title="训练并保存模型"></a>训练并保存模型</h3><pre>
+# train and save the model
+sentences= gensim.models.doc2vec.TaggedLineDocument('output.seq')
+model = gensim.models.Doc2Vec(sentences,size=100, window=3)
+model.train(sentences)
+model.save('all_model.txt')
+</pre>
+
+<h3 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h3><p>gensim Doc2Vec 提供了 DM 和 DBOW 两个模型。gensim 的说明文档建议多次训练数据集并调整学习速率或在每次训练中打乱输入信息的顺序以求获得最佳效果。</p>
+<pre>
+# PV-DM w/concatenation - window=5 (both sides) approximates paper's 10-word total window size
+Doc2Vec(sentences,dm=1, dm_concat=1, size=100, window=2, hs=0, min_count=2, workers=cores)
+# PV-DBOW  
+Doc2Vec(sentences,dm=0, size=100, hs=0, min_count=2, workers=cores)
+# PV-DM w/average
+Doc2Vec(sentences,dm=1, dm_mean=1, size=100, window=2, hs=0, min_count=2, workers=cores)
+</pre>
+
+<h3 id="保存文档向量"><a href="#保存文档向量" class="headerlink" title="保存文档向量"></a>保存文档向量</h3><pre>
+# save vectors
+out=open("all_vector.txt","wb")
+for num in range(0,count):
+    docvec =model.docvecs[num]
+    out.write(docvec)
+    #print num
+    #print docvec
+out.close()
+</pre>
+
+<h3 id="检验-计算训练文档中的文档相似度"><a href="#检验-计算训练文档中的文档相似度" class="headerlink" title="检验 计算训练文档中的文档相似度"></a>检验 计算训练文档中的文档相似度</h3><pre>
+# test, calculate the similarity
+# 注意 docid 是从0开始计数的
+# 计算与训练集中第一篇文档最相似的文档
+sims = model.docvecs.most_similar(0)
+print sims
+# get similarity between doc1 and doc2 in the training data
+sims = model.docvecs.similarity(1,2)
+print sims
+</pre>
+
+<h3 id="infer向量，查看某个untrained-data与trained-dataset中文档的相似度"><a href="#infer向量，查看某个untrained-data与trained-dataset中文档的相似度" class="headerlink" title="infer向量，查看某个untrained data与trained dataset中文档的相似度"></a>infer向量，查看某个untrained data与trained dataset中文档的相似度</h3><p>下面的代码用于检验模型正确性，随机挑一篇trained dataset中的文档，用模型重新infer，再计算与trained dataset中文档相似度，如果模型良好，相似度第一位应该就是挑出的文档。</p>
+<pre>
+# check
+#############################################################################
+# A good check is to re-infer a vector for a document already in the model. #
+# if the model is well-trained,                                             #
+# the nearest doc should (usually) be the same document.                    #
+#############################################################################
+
+print 'examing'
+doc_id = np.random.randint(model.docvecs.count)  # pick random doc; re-run cell for more examples
+print('for doc %d...' % doc_id)
+inferred_docvec = model.infer_vector(alldocs[doc_id].words)
+print('%s:\n %s' % (model, model.docvecs.most_similar([inferred_docvec], topn=3)))
+</pre>
+
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>👇两个错误还在探索中，根据官方指南是可以运行的，然而我遇到了错误并没能解决。<br>第一段错误代码，关于train the model</p>
+<pre>
+alldocs=[]
+count=0
+for line in input:
+    #print line
+    line=line.strip('\n')
+    seg_list = jieba.cut(line)
+    #output.write(line)
+    output.write(' '.join(seg_list) + '\n')
+    alldocs.append(gensim.models.doc2vec.TaggedDocument(seg_list,count))
+    count+=1
+
+model = Doc2Vec(alldocs,size=100, window=2, min_count=5, workers=4)
+model.train(alldocs)
+</pre>
+
+<p>报错信息</p>
+<pre>
+Traceback (most recent call last):
+  File "d2vTestv5.py", line 59, in <module>
+    model = Doc2Vec(alldocs[0],size=100, window=2, min_count=5, workers=4)
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 596, in __init__
+    self.build_vocab(documents, trim_rule=trim_rule)
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/word2vec.py", line 508, in build_vocab
+    self.scan_vocab(sentences, trim_rule=trim_rule)  # initial survey
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 639, in scan_vocab
+    document_length = len(document.words)
+AttributeError: 'generator' object has no attribute 'words'
+</module></pre>
+
+<p>第二段错误代码，关于infer</p>
+<pre>
+doc_words1=['验证','失败','验证码','未','收到']
+doc_words2=['今天','奖励','有','哪些','呢']
+# get infered vector
+invec1 = model.infer_vector(doc_words1, alpha=0.1, min_alpha=0.0001, steps=5)
+invec2 = model.infer_vector(doc_words2, alpha=0.1, min_alpha=0.0001, steps=5)
+print invec1
+print invec2
+
+# get similarity
+# the output docid is supposed to be 0
+sims = model.docvecs.most_similar([invec1])
+print sims
+
+# according to official guide, the following codes are supposed to be fine, but it fails to run
+sims= model.docvecs.similarity(invec1,invec2)
+print model.similarity(['今天','有','啥','奖励'],['今天','奖励','有','哪些','呢'])
+</pre>
+
+<p>最后两行代码报错，错误信息</p>
+<pre>
+raceback (most recent call last):
+  File "d2vTestv5.py", line 110, in <module>
+    sims= model.docvecs.similarity(invec1,invec2)
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 484, in similarity
+    return dot(matutils.unitvec(self[d1]), matutils.unitvec(self[d2]))
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 341, in __getitem__
+    return vstack([self[i] for i in index])
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 341, in __getitem__
+    return vstack([self[i] for i in index])
+TypeError: 'numpy.float32' object is not iterable
+</module></pre>
+
+<blockquote>
+<p>参考链接<br><a href="https://radimrehurek.com/gensim/models/doc2vec.html" target="_blank" rel="external">https://radimrehurek.com/gensim/models/doc2vec.html</a><br><a href="https://github.com/piskvorky/gensim/blob/develop/docs/notebooks/doc2vec-IMDB.ipynb" target="_blank" rel="external">https://github.com/piskvorky/gensim/blob/develop/docs/notebooks/doc2vec-IMDB.ipynb</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/doc2vec-gensim/">doc2vec gensim</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-gensim-word2vec实战" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/30/gensim-word2vec实战/" class="article-date">
+  	<time datetime="2016-05-30T03:13:52.000Z" itemprop="datePublished">2016-05-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/30/gensim-word2vec实战/">gensim: word2vec实战</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre>
+
+# -*- coding: utf-8 -*-
+import gensim
+from gensim.corpora import WikiCorpus
+from gensim.models import Word2Vec
+from gensim.models.word2vec import LineSentence
+import os
+import logging
+import jieba
+import re
+import multiprocessing
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+# logging information
+logging.basicConfig(format='%(asctime)s: %(levelname)s: %(message)s')
+logging.root.setLevel(level=logging.INFO)
+
+# get input file, text format
+inp = sys.argv[1]
+input = open(inp, 'r')
+output = open('output.seq', 'w')
+
+if len(sys.argv) < 2:
+    print(globals()['__doc__'] % locals())
+    sys.exit(1)
+
+# read file and separate words
+for line in input.readlines():
+    line=line.strip('\n')
+    seg_list = jieba.cut(line)
+    output.write(' '.join(seg_list) + '\n')
+
+output.close()
+output= open('output.seq', 'r')
+
+# initialize the model
+# size = the dimensionality of the feature vectors
+# window = the maximum distance between the current and predicted word within a sentence
+# min_count = ignore all words with total frequency lower than this.
+model = Word2Vec(LineSentence(output), size=100, window=3, min_count=5,workers=multiprocessing.cpu_count())
+
+# save model
+model.save('output.model')
+model.save_word2vec_format('output.vector', binary=False)
+
+# test
+model=gensim.models.Word2Vec.load('output.model')
+x = model.most_similar([u'奖励'])
+for i in x:
+    print "Word: {}\t Similarity: {}".format(i[0], i[1])
+
+
+
+
+</pre>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/word2vec-gensim/">word2vec gensim</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-word2vec详解之六-若干源码细节" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -626,245 +962,6 @@
   
     <h1 itemprop="name">
       <a class="article-title" href="/2016/05/26/PHP连接数据库js可视化数据/">PHP连接数据库js可视化数据</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-短问题归一化-LSI模型" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/25/短问题归一化-LSI模型/" class="article-date">
-  	<time datetime="2016-05-25T12:59:36.000Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/短问题归一化-LSI模型/">短句归一化--LSI模型</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="LSI-理解"><a href="#LSI-理解" class="headerlink" title="LSI 理解"></a>LSI 理解</h3><p>LSI(Latent Semantic Indexing)，中文意译是潜在语义索引，即通过海量文献找出词汇之间的关系。基本理念是当两个词或一组词大量出现在一个文档中时，这些词之间就是语义相关的。</p>
-<blockquote>
-<p>潜在语义索引是一种用奇异值分解方法获得在文本中术语和概念之间关系的索引和获取方法。该方法的主要依据是在相同文章中的词语一般有类似的含义。该方法可以可以从一篇文章中提取术语关系，从而建立起主要概念内容。</p>
-</blockquote>
-<h3 id="降维过程"><a href="#降维过程" class="headerlink" title="降维过程"></a>降维过程</h3><p>将文档库表示成VSM模型的词-文档矩阵Am×n(词-文档矩阵那就是词作为行，文档作为列，这是矩阵先行后列的表示决定的，当然如果表示成文档-词矩阵的话，后面的计算就要用该矩阵的转置了),其中m表示文档库中包含的所有不同的词的个(行数是不同词的个数)，即行向量表示一个词在不同文档出现的次数，n 表示文档库中的文档数(列数是不同文档的个数)，即列向量表示的是不同的文档.A表示为A = [α ij ],在此矩阵中 ,α ij为非负值 , 表示第 i 个词在第j 个文档中出现的频度。显然，A是稀疏矩阵(这是VSM和文档决定的)。</p>
-<p>利用奇异值分解SVD(Singular Value Decomposition)求A的只有K个正交因子的降秩矩阵，该过程就是降维的过程。SVD的重要作用是把词和文档映射到同一个语义空间中，将词和文档表示为K个因子的形式。显然，这会丢失信息，但主要的信息却被保留了。为什么该过程可以降维呢？因为该过程解决了同义和多义现象。可以看出，K的取值对整个分类结果的影响很大。因为，K过小，则丢失信息就越多；K过大，信息虽然多，但可能有冗余且计算消耗大。K的选择也是值得研究的，不过一般取值为100-300，不绝对。</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>对于 LSI/PLSI 来说，聚类的意义不在于文档，而在于单词。所以对于聚类的一种变型用法是，当 k 设的足够大时，LSI/PLSI 能够给出落在不同子空间的单词序列，基本上这些单词之间拥有较为紧密的语义联系。其实这种用法本质上还是在利用降维做单词相关度计算。</p>
-<ol>
-<li><p>特征降维<br>LSI 本质上是把每个特征映射到了一个更低维的子空间（sub space)，所以用来做降维可以说是天造地设。TFIDF是另一个通用的降维方法，通过一个简单的公式（两个整数相乘）得到不同单词的重要程度，并取前k个最重要的单词，而丢弃其它单词，只有信息的丢失，并没有信息的改变。从执行效率上 TFIDF 远远高于 LSI，不过从效果上（至少在学术界）LSI 要优于TFIDF。<br>不过必须提醒的是，无论是上述哪一种降维方法，都会造成信息的偏差，进而影响后续分类/聚类的准确率。 降维是希望以可接受的效果损失下，大大提高运行效率和节省内存空间。然而能不降维的时候还是不要降维（比如你只有几千篇文档要处理，那样真的没有必要降维）。</p>
-</li>
-<li><p>单词相关度计算<br>LSI 的结果通过简单变换就能得到不同单词之间的相关度( 0 ~ 1 之间的一个实数），相关度非常高的单词往往拥有相同的含义。不过不要被“潜在语义”的名称所迷惑，所谓的潜在语义只不过是统计意义上的相似，如果想得到同义词还是使用同义词词典靠谱。LSI 得到的近义词的特点是它们不一定是同义词（甚至词性都可能不同），但它们往往出现在同类情景下（比如“魔兽” 和 “dota”)。不过事实上直接使用LSI做单词相关度计算的并不多，一方面在于现在有一些灰常好用的同义词词典，另外相对无监督的学习大家还是更信任有监督的学习（分类）得到的结果。</p>
-</li>
-<li><p>聚类<br>直接用 LSI 聚类的情景还没有见过，但使用该系列算法的后续变种 PLSI, LDA 进行聚类的的确有一些。其中LDA聚类还有些道理（因为它本身就假设了潜在topic的联合概率分布），用 LSI 进行聚类其实并不合适。本质上 LSI 在找特征子空间，而聚类方法要找的是实例分组。 LSI 虽然能得到看起来貌似是聚类的结果，但其意义不见得是聚类所想得到的。一个明显的例子就是，对于分布不平均的样本集（比如新闻类的文章有1000篇，而文学类的文章只有10篇）， LSI/PLSI 得到的往往是相对平均的结果(A类500篇，B类600篇)，这种情况下根本无法得到好的聚类结果。相对传统聚类方法k-means， LSI 系列算法不仅存在信息的偏差（丢失和改变），而且不能处理分布不均的样本集。</p>
-</li>
-</ol>
-<h3 id="实验说明"><a href="#实验说明" class="headerlink" title="实验说明"></a>实验说明</h3><p>用了python的gensim包<br>现有的数据是438条标准问题以及3300条人工问题（可以转化为438条标准问题），现在需要对人工问题做一个归一化。<br>这里采用LSI模型进行建模实验，步骤如下。</p>
-<h3 id="导入包"><a href="#导入包" class="headerlink" title="导入包"></a>导入包</h3><pre>
-# -*- coding: utf-8 -*-
-from gensim import corpora, models, similarities
-import logging
-import jieba
-import jieba.posseg as pseg
-# 防止乱码
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
-# 打印log信息
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)</pre>
-
-
-<h3 id="文本预处理"><a href="#文本预处理" class="headerlink" title="文本预处理"></a>文本预处理</h3><pre>
-# 标准FAQ，一行对应一条问句
-f = open('FAQuniq.txt', 'r')
-# 对问句进行分词
-texts = [[word for word in jieba.cut(document, cut_all = False)] for document in f]
-
-# 抽取一个bag-of-words，将文档的token映射为id
-dictionary = corpora.Dictionary(texts)
-# 保存词典
-dictionary.save('LSI.dict')
-
-# 产生文档向量，将用字符串表示的文档转换为用id和词频表示的文档向量
-corpus = [dictionary.doc2bow(text) for text in texts]
-
-# 基于这些“训练文档”计算一个TF-IDF模型
-tfidf = models.TfidfModel(corpus)
-
-# 转化文档向量，将用词频表示的文档向量表示为一个用tf-idf值表示的文档向量
-corpus_tfidf = tfidf[corpus]
-
-# 训练LSI模型 即将训练文档向量组成的矩阵SVD分解，并做一个秩为2的近似SVD分解
-lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=100)
-
-# 保存模型
-lsi.save('LSI.pkl')
-lsi.print_topics(20)</pre>
-
-
-<h3 id="初始化验证performance的文件"><a href="#初始化验证performance的文件" class="headerlink" title="初始化验证performance的文件"></a>初始化验证performance的文件</h3><p>checkFile的每行格式为：</p>
-<pre>原始问题的docid：对应的标准问题的topicid</pre>
-
-<p>把它存到checkDict这个dictionary中，key是docid，value是topicid。</p>
-<pre>
-checkDict=dict()
-def getCheckId():
-    fcheck=open('checkFile.txt')
-    for line in fcheck:
-        line=line.strip('\n')
-        if (len(line)==0):
-            continue
-        docid=line.split(":")[0]
-        topicid=line.split(":")[1]
-        checkDict[int(docid)]=int(topicid)
-getCheckId()</pre>
-
-<h3 id="归一化／计算文档相似度"><a href="#归一化／计算文档相似度" class="headerlink" title="归一化／计算文档相似度"></a>归一化／计算文档相似度</h3><pre>
-# 建索引
-index = similarities.MatrixSimilarity(lsi[corpus])
-
-# 初始化分数
-score1=0
-score2=0
-score3=0
-
-# 读取文件，文件的每行格式为一个原始问句
-f2=open('ORIFAQ3330.txt','r')
-# count的作用是和checkFile的docid，即checkDict的key对应
-count=1
-for query in f2:
-    # 获取该原始问句本应对应的正确标准问句
-    if (not checkDict.has_key(count)):
-        count+=1
-        continue
-    checkId=checkDict[count]
-    # 将问句向量化
-    query_bow = dictionary.doc2bow(jieba.cut(query, cut_all = False))
-    # 再用之前训练好的LSI模型将其映射到二维的topic空间：
-    query_lsi = lsi[query_bow]
-    # 计算其和index中doc的余弦相似度了：
-    sims = index[query_lsi]
-    sort_sims = sorted(enumerate(sims), key=lambda item: -item[1])
-    # 找出最相关的三篇文档，计算这三篇文档是否包括标准问句，如果文档就是标准问句，对应的分数加1
-    if (checkId==sort_sims[0][0]):
-        score1+=1
-    elif (checkId==sort_sims[1][0]):
-        score2+=1
-    elif (checkId==sort_sims[2][0]):
-        score3+=1
-    count+=1</pre>
-
-<h3 id="打印分数"><a href="#打印分数" class="headerlink" title="打印分数"></a>打印分数</h3><pre>
-print "Score1: ".format(score1*1.0/count)
-print "Score2: ".format(score2*1.0/count)
-print "Score3: ".format(score3*1.0/count)</pre>
-
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>其实这里的结果非常差，原因是文档（每一条问句）太短，只有十几个字，另外文档数太少，LSI降维牺牲了准确率，下一个实验LDA的准确率相比会高很多。<br>另外，本次实验所用的样本分布并不均匀，“未收到奖励”类似问题出现的频率比“软件无声音”类似问题出现的频率要高很多。<strong><em>重申：LSI/PLSI 得到的往往是相对平均的结果(A类500篇，B类600篇)，这种情况下根本无法得到好的聚类结果。相对传统聚类方法k-means， LSI 系列算法不仅存在信息的偏差（丢失和改变），而且不能处理分布不均的样本集。</em></strong></p>
-<h3 id="LSI-缺陷"><a href="#LSI-缺陷" class="headerlink" title="LSI 缺陷"></a>LSI 缺陷</h3><p>常用的VSM文本表示模型中有两个主要的缺陷：</p>
-<ol>
-<li><p>该模型假设所有特征词条之间是相互独立、互不影响的（朴素贝叶斯也是这个思想），即该模型还是基于“词袋”模型（应该说所有利用VSM模型没有进行潜在语义分析的算法都是基于“词袋”假设）。</p>
-</li>
-<li><p>没有进行特征降维，特征维数可能会很高，向量空间可能很大，对存储和计算资源要求会比较高。</p>
-</li>
-</ol>
-<p>LSI的基本思想是文本中的词与词之间不是孤立的，存在着某种潜在的语义关系，通过对样本数据的统计分析，让机器自动挖掘出这些潜在的语义关系，并把这些关系表示成计算机可以”理解”的模型。它可以消除词匹配过程中的同义和多义现象。它可以将传统的VSM降秩到一个低维的语义空间中，在该语义空间中计算文档的相似度等。总的说来，LSI就是利用词的语义关系对VSM模型进行降维，并提高分类的效果。</p>
-<blockquote>
-<p>参考链接<br><a href="http://www.zwbk.org/MyLemmaShow.aspx?lid=257113" target="_blank" rel="external">http://www.zwbk.org/MyLemmaShow.aspx?lid=257113</a><br><a href="http://www.52nlp.cn/%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E4%B8%A4%E4%B8%AA%E6%96%87%E6%A1%A3%E7%9A%84%E7%9B%B8%E4%BC%BC%E5%BA%A6%E4%BA%8C" target="_blank" rel="external">http://www.52nlp.cn/%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E4%B8%A4%E4%B8%AA%E6%96%87%E6%A1%A3%E7%9A%84%E7%9B%B8%E4%BC%BC%E5%BA%A6%E4%BA%8C</a></p>
-</blockquote>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cluster/">cluster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/">machine learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/topic-modeling/">topic modeling</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-GibbsLDA-A-C-C-使用心得" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/25/GibbsLDA-A-C-C-使用心得/" class="article-date">
-  	<time datetime="2016-05-25T04:20:35.000Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/GibbsLDA-A-C-C-使用心得/">GibbsLDA++: A C/C++ 使用心得</a>
     </h1>
   
 
