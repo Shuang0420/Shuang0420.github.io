@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-06-09T12:09:08.000Z</updated>
+  <updated>2016-06-09T12:26:12.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,22 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Github-Pages-Hexo主题配置</title>
+    <link href="http://yoursite.com/2016/06/09/Github-Pages-Hexo%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/"/>
+    <id>http://yoursite.com/2016/06/09/Github-Pages-Hexo主题配置/</id>
+    <published>2016-06-09T12:26:12.000Z</published>
+    <updated>2016-06-09T12:26:12.000Z</updated>
+    
+    <content type="html"></content>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>gensim-doc2vec实战</title>
@@ -1338,129 +1354,6 @@ hexo d -g&lt;/pre&gt;
     
     
       <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>让进程在后台可靠运行的几种方法</title>
-    <link href="http://yoursite.com/2016/04/22/%E8%AE%A9%E8%BF%9B%E7%A8%8B%E5%9C%A8%E5%90%8E%E5%8F%B0%E5%8F%AF%E9%9D%A0%E8%BF%90%E8%A1%8C%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/"/>
-    <id>http://yoursite.com/2016/04/22/让进程在后台可靠运行的几种方法/</id>
-    <published>2016-04-22T08:55:07.000Z</published>
-    <updated>2016-06-09T12:08:45.000Z</updated>
-    
-    <content type="html">&lt;p&gt;当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略 HUP 信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;nohup&quot;&gt;&lt;a href=&quot;#nohup&quot; class=&quot;headerlink&quot; title=&quot;nohup&quot;&gt;&lt;/a&gt;nohup&lt;/h3&gt;&lt;p&gt;只需在要处理的命令前加上 nohup 即可，标准输出和标准错误缺省会被重定向到 nohup.out 文件中。同时可在结尾加上”&amp;amp;”来将命令同时放入后台运行，也可用”&amp;gt;filename 2&amp;gt;&amp;amp;1”来更改缺省的重定向文件名。&lt;/p&gt;
-&lt;pre&gt;
-$ nohup ping www.ibm.com &amp;
-[1] 6982
-$ nohup: appending output to `nohup.out&#39;
-$ ps -ef |grep www.ibm.com
-  501  6982  5823   0  4:23下午 ttys000    0:00.03 ping www.ibm.com
-  501  7120  5823   0  4:26下午 ttys000    0:00.01 grep www.ibm.com
-&lt;/pre&gt;
-
-&lt;h3 id=&quot;setsid&quot;&gt;&lt;a href=&quot;#setsid&quot; class=&quot;headerlink&quot; title=&quot;setsid&quot;&gt;&lt;/a&gt;setsid&lt;/h3&gt;&lt;p&gt;nohup 能通过忽略 HUP 信号来使我们的进程避免中途被中断，换个角度思考，如果我们的进程不属于接受 HUP 信号的终端的子进程，那么自然也就不会受到 HUP 信号的影响了。setsid 就能帮助我们做到这一点。&lt;/p&gt;
-&lt;pre&gt;
-$ setsid ping www.ibm.com
-$ ps -ef |grep www.ibm.com
-root     31094     1  0 07:28 ?        00:00:00 ping www.ibm.com
-root     31102 29217  0 07:29 pts/4    00:00:00 grep www.ibm.com
-&lt;/pre&gt;
-
-&lt;p&gt;  值得注意的是，上例中我们的进程 ID(PID)为31094，而它的父 ID（PPID）为1（即为 init 进程 ID），并不是当前终端的进程 ID。请将此例与nohup 例中的父 ID 做比较。&lt;/p&gt;
-&lt;h3 id=&quot;disown&quot;&gt;&lt;a href=&quot;#disown&quot; class=&quot;headerlink&quot; title=&quot;disown&quot;&gt;&lt;/a&gt;disown&lt;/h3&gt;&lt;p&gt;如果未加任何处理就已经提交了命令，该如何补救才能让它避免 HUP 信号的影响呢？&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;用disown -h jobspec来使某个作业忽略HUP信号。&lt;/li&gt;
-&lt;li&gt;用disown -ah 来使所有的作业都忽略HUP信号。&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;用disown -rh 来使正在运行的作业忽略HUP信号。&lt;/p&gt;
-&lt;p&gt;需要注意的是，当使用过 disown 之后，会将把目标作业从作业列表中移除，我们将不能再使用jobs来查看它，但是依然能够用ps -ef查找到它。&lt;br&gt;但是还有一个问题，这种方法的操作对象是作业，如果我们在运行命令时在结尾加了”&amp;amp;”来使它成为一个作业并在后台运行，那么就万事大吉了，我们可以通过jobs命令来得到所有作业的列表。但是如果并没有把当前命令作为作业来运行，如何才能得到它的作业号呢？答案就是用 CTRL-z（按住Ctrl键的同时按住z键）了！&lt;br&gt;CTRL-z 的用途就是将当前进程挂起（Suspend），然后我们就可以用jobs命令来查询它的作业号，再用bg jobspec来将它放入后台并继续运行。需要注意的是，如果挂起会影响当前进程的运行结果，请慎用此方法。&lt;/p&gt;
-&lt;p&gt;disown 示例1（如果提交命令时已经用“&amp;amp;”将命令放入后台运行，则可以直接使用“disown”）&lt;/p&gt;
-&lt;pre&gt;$ cp -r testLargeFile largeFile &amp;
-[1] 4825
-$ jobs
-[1]+  Running                 cp -i -r testLargeFile largeFile &amp;
-$ disown -h %1
-$ ps -ef |grep largeFile
-root      4825   968  1 09:46 pts/4    00:00:00 cp -i -r testLargeFile largeFile
-root      4853   968  0 09:46 pts/4    00:00:00 grep largeFile
-$ logout&lt;/pre&gt;
-
-&lt;p&gt;disown 示例2（如果提交命令时未使用“&amp;amp;”将命令放入后台运行，可使用 CTRL-z 和“bg”将其放入后台，再使用“disown”）&lt;/p&gt;
-&lt;pre&gt;$ cp -r testLargeFile largeFile2
-[1]+  Stopped                 cp -i -r testLargeFile largeFile2
-$ bg %1
-[1]+ cp -i -r testLargeFile largeFile2 &amp;
-$ jobs
-[1]+  Running                 cp -i -r testLargeFile largeFile2 &amp;
-$ disown -h %1
-$ ps -ef |grep largeFile2
-root      5790  5577  1 10:04 pts/3    00:00:00 cp -i -r testLargeFile largeFile2
-root      5824  5577  0 10:05 pts/3    00:00:00 grep largeFile2&lt;/pre&gt;
-
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;screen&quot;&gt;&lt;a href=&quot;#screen&quot; class=&quot;headerlink&quot; title=&quot;screen&quot;&gt;&lt;/a&gt;screen&lt;/h3&gt;&lt;p&gt;如果有大量这种命令需要在稳定的后台里运行，如何避免对每条命令都做这样的操作呢？&lt;br&gt;此时最方便的方法就是 screen 了。简单的说，screen 提供了 ANSI/VT100 的终端模拟器，使它能够在一个真实终端下运行多个全屏的伪终端。screen 的参数很多，具有很强大的功能，我们在此仅介绍其常用功能以及简要分析一下为什么使用 screen 能够避免 HUP 信号的影响。&lt;br&gt;使用 screen 很方便，有以下几个常用选项：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;用screen -dmS session name来建立一个处于断开模式下的会话（并指定其会话名）。&lt;/li&gt;
-&lt;li&gt;用screen -list 来列出所有会话。&lt;/li&gt;
-&lt;li&gt;用screen -r session name来重新连接指定会话。&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;用快捷键CTRL-a d 来暂时断开当前会话。&lt;/p&gt;
-&lt;p&gt;screen 示例&lt;/p&gt;
-&lt;pre&gt;$ screen -dmS Urumchi
-$ screen -list
-There is a screen on:
-      12842.Urumchi   (Detached)
-1 Socket in /tmp/screens/S-root.
-$ screen -r Urumchi&lt;/pre&gt;
-
-&lt;p&gt;当我们用“-r”连接到 screen 会话后，我们就可以在这个伪终端里面为所欲为，再也不用担心 HUP 信号会对我们的进程造成影响，也不用给每个命令前都加上“nohup”或者“setsid”了。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;未使用 screen 时新进程的进程树&lt;/p&gt;
-&lt;pre&gt;$ ping www.google.com &amp;
-[1] 9499
-$ pstree -H 9499
-init─┬─Xvnc
-  ├─acpid
-  ├─atd
-  ├─2*[sendmail]
-  ├─sshd─┬─sshd───bash───pstree
-  │       └─sshd───bash───ping&lt;/pre&gt;
-
-&lt;p&gt;我们可以看出，未使用 screen 时我们所处的 bash 是 sshd 的子进程，当 ssh 断开连接时，HUP 信号自然会影响到它下面的所有子进程（包括我们新建立的 ping 进程）。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;使用了 screen 后新进程的进程树&lt;/p&gt;
-&lt;pre&gt;$screen -r Urumchi
-$ ping www.ibm.com &amp;
-[1] 9488
-$ pstree -H 9488
-init─┬─Xvnc
-  ├─acpid
-  ├─atd
-  ├─screen───bash───ping
-  ├─2*[sendmail]&lt;/pre&gt;
-
-&lt;p&gt;而使用了 screen 后就不同了，此时 bash 是 screen 的子进程，而 screen 是 init（PID为1）的子进程。那么当 ssh 断开连接时，HUP 信号自然不会影响到 screen 下面的子进程了。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;blockquote&gt;
-&lt;p&gt;参考链接&lt;br&gt;&lt;a href=&quot;http://www.ibm.com/developerworks/cn/linux/l-cn-nohup/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.ibm.com/developerworks/cn/linux/l-cn-nohup/&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略 HUP 信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
-    
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
-    
-      <category term="c" scheme="http://yoursite.com/tags/c/"/>
     
   </entry>
   

@@ -4,6 +4,12 @@
   
     
     <entry>
+      <title><![CDATA[Github-Pages-Hexo主题配置]]></title>
+      <url>http://yoursite.com/2016/06/09/Github-Pages-Hexo%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[gensim-doc2vec实战]]></title>
       <url>http://yoursite.com/2016/06/01/gensim-doc2vec%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<p>gensim的doc2vec找不到多少资料，根据官方api探索性的做了些尝试。本文介绍了利用gensim的doc2vec来训练模型，infer新文档向量，infer相似度等方法，有一些不成熟的地方，后期会继续改进。</p>

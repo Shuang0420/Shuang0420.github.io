@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -86,16 +86,16 @@
 
 
 
-<meta name="description" content="一直想有个美美的博客，CSDN实在无法满足。看了一些大神的 github 博客，非常艳羡，自己学着搭了个，看在它这么好看的份上，我也会坚持写写写！">
+<meta name="description" content="宿命星动">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Github Pages+Hexo搭建个人博客">
-<meta property="og:url" content="http://yoursite.com/2016/05/12/Github-Pages-Hexo搭建个人博客/index.html">
+<meta property="og:title" content="Github-Pages-Hexo主题配置">
+<meta property="og:url" content="http://yoursite.com/2016/06/09/Github-Pages-Hexo主题配置/index.html">
 <meta property="og:site_name" content="徐阿衡">
-<meta property="og:description" content="一直想有个美美的博客，CSDN实在无法满足。看了一些大神的 github 博客，非常艳羡，自己学着搭了个，看在它这么好看的份上，我也会坚持写写写！">
-<meta property="og:updated_time" content="2016-06-09T12:15:56.000Z">
+<meta property="og:description" content="宿命星动">
+<meta property="og:updated_time" content="2016-06-09T12:26:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Github Pages+Hexo搭建个人博客">
-<meta name="twitter:description" content="一直想有个美美的博客，CSDN实在无法满足。看了一些大神的 github 博客，非常艳羡，自己学着搭了个，看在它这么好看的份上，我也会坚持写写写！">
+<meta name="twitter:title" content="Github-Pages-Hexo主题配置">
+<meta name="twitter:description" content="宿命星动">
 
 
 
@@ -116,9 +116,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/05/12/Github-Pages-Hexo搭建个人博客/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/06/09/Github-Pages-Hexo主题配置/"/>
 
-  <title> Github Pages+Hexo搭建个人博客 | 徐阿衡 </title>
+  <title> Github-Pages-Hexo主题配置 | 徐阿衡 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -271,7 +271,7 @@
             
             
               
-                Github Pages+Hexo搭建个人博客
+                Github-Pages-Hexo主题配置
               
             
           </h1>
@@ -283,38 +283,19 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-05-12T16:55:07+08:00" content="2016-05-12">
-              2016-05-12
+            <time itemprop="dateCreated" datetime="2016-06-09T20:26:12+08:00" content="2016-06-09">
+              2016-06-09
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Configuration/" itemprop="url" rel="index">
-                    <span itemprop="name">Configuration</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/12/Github-Pages-Hexo搭建个人博客/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/05/12/Github-Pages-Hexo搭建个人博客/" itemprop="commentsCount"></span>
+                <a href="/2016/06/09/Github-Pages-Hexo主题配置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/06/09/Github-Pages-Hexo主题配置/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -342,103 +323,7 @@
       
 
       
-        <p>一直想有个美美的博客，CSDN实在无法满足。看了一些大神的 github 博客，非常艳羡，自己学着搭了个，看在它这么好看的份上，我也会坚持写写写！<br><a id="more"></a></p>
-<h1 id="为什么用Github-Pages-Hexo"><a href="#为什么用Github-Pages-Hexo" class="headerlink" title="为什么用Github Pages + Hexo"></a>为什么用Github Pages + Hexo</h1><h2 id="Github-Page优点"><a href="#Github-Page优点" class="headerlink" title="Github Page优点"></a>Github Page优点</h2><ul>
-<li>轻量级的博客系统，没有麻烦的配置</li>
-<li>使用标记语言，比如<a href="http://markdown.tw/" target="_blank" rel="external">Markdown</a></li>
-<li>无需自己搭建服务器</li>
-<li>根据Github的限制，对应的每个站有300MB空间</li>
-<li>可以绑定自己的域名</li>
-</ul>
-<p>Github Page有两种page模式，User/Organization Pages（个人或公司站点）和Project Pages（项目站点）。这里我们用的是user/Organization Pages，要求使用自己的用户名，每个用户名下面只能建立一个，资源命名必须符合这样的规则username/username.github.com，主干上内容被用来构建和发布页面</p>
-<h2 id="Hexo优点"><a href="#Hexo优点" class="headerlink" title="Hexo优点"></a>Hexo优点</h2><ul>
-<li>用于搭建博客网站框架，可以简单实现优美的博客网站;</li>
-<li>在本地端搭建，就可脱机查阅;</li>
-<li>架构不依托于其他门户网站，不再担心门户网站倒闭，不担心博文丢失或难以导出;</li>
-<li>博文为markdown格式，通用，容易上手，便于快速书写;</li>
-<li>可部署在github上；</li>
-<li>创造者来自中国台湾，所以几乎所有模板都关注到了中文的兼容性，很适合使用汉语的码农。</li>
-</ul>
-<h1 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h1><h2 id="新建github-repository"><a href="#新建github-repository" class="headerlink" title="新建github repository"></a>新建github repository</h2><p>在github上新建repository，name为username.github.io。</p>
-<h2 id="Hexo安装"><a href="#Hexo安装" class="headerlink" title="Hexo安装"></a>Hexo安装</h2><p>先安装git和node.js</p>
-<pre>brew install git
-brew install node</pre>
-验证是否安装成功
-<pre>node -v
-npm -v</pre>
-安装Hexo
-<pre>npm install -g hexo #-g表示全局安装, npm默认为当前项目安装</pre>
-
-<h2 id="Hexo部署"><a href="#Hexo部署" class="headerlink" title="Hexo部署"></a>Hexo部署</h2><p>新建文件夹并打开，在文件夹内操作。</p>
-<pre> hexo init #新建博客目录
- hexo g #根据当前目录下文件生成静态网页
- hexo s #启动服务器</pre>
-
-<p>现在就可以到浏览器输入localhost:4000查看啦。</p>
-<p>简单介绍一下文件目录</p>
-<ul>
-<li>public：执行hexo generate命令，输出的静态网页内容目录</li>
-<li>scaffolds：layout模板文件目录，其中的md文件可以添加编辑</li>
-<li>scripts：扩展脚本目录，这里可以自定义一些javascript脚本</li>
-<li>source：文章源码目录，该目录下的markdown和html文件均会被hexo处理。该页面对应repo的根目录，404文件、favicon.ico文件，CNAME文件等都应该放这里，该目录下可新建页面目录。</li>
-<li>drafts：草稿文章</li>
-<li>posts：发布文章themes：主题文件目录</li>
-<li>config.yml：全局配置文件，大多数的设置都在这里</li>
-<li>package.json：应用程序数据，指明hexo的版本等信息，类似于一般软件中的 关于 按钮</li>
-</ul>
-<h2 id="Hexo复制主题"><a href="#Hexo复制主题" class="headerlink" title="Hexo复制主题"></a>Hexo复制主题</h2><pre> hexo clean
- hexo g
- hexo s
- git clone https://github.com/cnfeat/cnfeat.git themes/jacman</pre>
-
-<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><p>修改Hexo目录下的config.yml配置文件中的theme属性，将其设置为jacman。</p>
-<pre>theme: jacman #或你的主题名，注意冒号后有一个空格</pre>
-
-<p>注意：Hexo有两个config.yml文件，一个在根目录，一个在theme下，此时修改的是在根目录下的。</p>
-<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><pre> cd themes/jacman
- git pull</pre>
-
-<p>注意：为避免出错，请先备份你的_config.yml 文件后再升级</p>
-<h2 id="Hexo本地调试"><a href="#Hexo本地调试" class="headerlink" title="Hexo本地调试"></a>Hexo本地调试</h2><pre> hexo g #生成
- hexo s #启动本地服务，进行文章预览调试
- hexo d -g #或者直接作用组合命令</pre>
-
-<p>浏览器输入localhost:4000，即可查看搭建效果。每次变更config.yml 文件或者上传文件都可以先用此命令调试。</p>
-<h2 id="Hexo部署到github"><a href="#Hexo部署到github" class="headerlink" title="Hexo部署到github"></a>Hexo部署到github</h2><pre>npm install hexo-deployer-git --save</pre>
-在 Hexo 文件夹下找到 config.yml 文件, 找到其中的 deploy 标签，改成下图所示形式，并保存。注意：冒号后面要加上一个空格，否则会报错
-<pre>
-deploy:
-  type: git
-  repo: https://github.com/Shuang0420/Shuang0420.github.io.git</pre>
-
-<p>运行如下命令：</p>
-<pre>hexo clean
-hexo generate
-hexo deploy</pre>
-
-
-<h2 id="发博文"><a href="#发博文" class="headerlink" title="发博文"></a>发博文</h2><pre>
- hexo new "postname" #然后在posts目录下的postname.md文件中编辑博客
- hexo clean
- hexo generate
- # (若要本地预览就先执行 hexo server)
- hexo deploy</pre>
-
-<h2 id="快捷命令"><a href="#快捷命令" class="headerlink" title="快捷命令"></a>快捷命令</h2><pre> hexo g == hexo generate
- hexo d == hexo deploy
- hexo s == hexo server
- hexo n == hexo new
-# 还能组合使用，如：
-hexo d -g</pre>
-
-<blockquote>
-<p>参考链接：</p>
-<blockquote>
-<p><a href="http://mozhenhau.com/2015/03/05/%E5%9C%A8Mac%E9%80%9A%E8%BF%87Hexo%E5%9C%A8github%E4%B8%8A%E5%BB%BA%E7%AB%8B%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/" target="_blank" rel="external">http://mozhenhau.com/2015/03/05/%E5%9C%A8Mac%E9%80%9A%E8%BF%87Hexo%E5%9C%A8github%E4%B8%8A%E5%BB%BA%E7%AB%8B%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</a></p>
-<p><a href="http://evakasch.github.io/2016/05/04/hexo-setup/" target="_blank" rel="external">http://evakasch.github.io/2016/05/04/hexo-setup/</a></p>
-</blockquote>
-</blockquote>
-
+        
       
     </div>
 
@@ -473,28 +358,18 @@ hexo d -g</pre>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Hexo/" rel="tag">#Hexo</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/22/让进程在后台可靠运行的几种方法/" rel="next" title="让进程在后台可靠运行的几种方法">
-                <i class="fa fa-chevron-left"></i> 让进程在后台可靠运行的几种方法
+              <a href="/2016/06/01/gensim-doc2vec实战/" rel="next" title="gensim-doc2vec实战">
+                <i class="fa fa-chevron-left"></i> gensim-doc2vec实战
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/13/gollum:-github上搭建个人wiki/" rel="prev" title="gollum/-github上搭建个人wiki">
-                gollum/-github上搭建个人wiki <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -642,7 +517,7 @@ hexo d -g</pre>
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么用Github-Pages-Hexo"><span class="nav-number">1.</span> <span class="nav-text">为什么用Github Pages + Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Github-Page优点"><span class="nav-number">1.1.</span> <span class="nav-text">Github Page优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo优点"><span class="nav-number">1.2.</span> <span class="nav-text">Hexo优点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搭建步骤"><span class="nav-number">2.</span> <span class="nav-text">搭建步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#新建github-repository"><span class="nav-number">2.1.</span> <span class="nav-text">新建github repository</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo安装"><span class="nav-number">2.2.</span> <span class="nav-text">Hexo安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo部署"><span class="nav-number">2.3.</span> <span class="nav-text">Hexo部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo复制主题"><span class="nav-number">2.4.</span> <span class="nav-text">Hexo复制主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启用主题"><span class="nav-number">2.5.</span> <span class="nav-text">启用主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新主题"><span class="nav-number">2.6.</span> <span class="nav-text">更新主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo本地调试"><span class="nav-number">2.7.</span> <span class="nav-text">Hexo本地调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo部署到github"><span class="nav-number">2.8.</span> <span class="nav-text">Hexo部署到github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发博文"><span class="nav-number">2.9.</span> <span class="nav-text">发博文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快捷命令"><span class="nav-number">2.10.</span> <span class="nav-text">快捷命令</span></a></li></ol></li></ol></div>
+              <p class="post-toc-empty">This post does not have a Table of Contents</p>
             
           </div>
         </section>
@@ -778,9 +653,9 @@ hexo d -g</pre>
 
     <script type="text/javascript">
       var disqus_shortname = 'httpshuang0420githubio';
-      var disqus_identifier = '2016/05/12/Github-Pages-Hexo搭建个人博客/';
-      var disqus_title = "Github Pages+Hexo搭建个人博客";
-      var disqus_url = 'http://yoursite.com/2016/05/12/Github-Pages-Hexo搭建个人博客/';
+      var disqus_identifier = '2016/06/09/Github-Pages-Hexo主题配置/';
+      var disqus_title = "Github-Pages-Hexo主题配置";
+      var disqus_url = 'http://yoursite.com/2016/06/09/Github-Pages-Hexo主题配置/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
