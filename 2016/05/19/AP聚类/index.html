@@ -92,7 +92,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/05/19/AP聚类/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即">
-<meta property="og:updated_time" content="2016-05-19T13:46:58.000Z">
+<meta property="og:updated_time" content="2016-06-09T12:12:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AP聚类">
 <meta name="twitter:description" content="AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即">
@@ -323,7 +323,7 @@
       
 
       
-        <p>AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。</p>
+        <p>AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。<br><a id="more"></a></p>
 <p>Affinity Propagation (AP) 聚类是最近在Science杂志上提出的一种新的聚类算法。它根据N个数据点之间的相似度进行聚类,这些相似度可以是对称的,即两个数据点互相之间的相似度一样(如欧氏距离);也可以是不对称的,即两个数据点互相之间的相似度不等。这些相似度组成N×N的相似度矩阵S(其中N为有N个数据点)。AP算法不需要事先指定聚类数目,相反它将所有的数据点都作为潜在的聚类中心,称之为exemplar。以S矩阵的对角线上的数值s(k, k)作为k点能否成为聚类中心的评判标准,这意味着该值越大,这个点成为聚类中心的可能性也就越大,这个值又称作参考度p (preference)。<br>在这里介绍几个文中常出现的名词：<br>exemplar：指的是聚类中心。<br>similarity：数据点i和点j的相似度记为S(i，j)。是指点j作为点i的聚类中心的相似度。一般使用欧氏距离来计算，如－|| ||。文中，所有点与点的相似度值全部取为负值。因为我们可以看到，相似度值越大说明点与点的距离越近，便于后面的比较计算。<br>preference：数据点i的参考度称为P(i)或S(i,i)。是指点i作为聚类中心的参考度。一般取S相似度值的中值。<br>Responsibility:R(i,k)用来描述点k适合作为数据点i的聚类中心的程度。<br>Availability:A(i,k)用来描述点i选择点k作为其聚类中心的适合程度。</p>
 <p>Script output:<br>Estimated number of clusters: 3<br>Homogeneity: 0.872<br>Completeness: 0.872<br>V-measure: 0.872<br>Adjusted Rand Index: 0.912<br>Adjusted Mutual Information: 0.871<br>Silhouette Coefficient: 0.753</p>
 <p>Python source code: plot_affinity_propagation.py<br>print(<strong>doc</strong>)</p>

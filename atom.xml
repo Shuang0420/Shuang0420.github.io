@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-06-09T09:29:38.000Z</updated>
+  <updated>2016-06-09T12:09:08.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,9 +20,10 @@
     <link href="http://yoursite.com/2016/06/01/gensim-doc2vec%E5%AE%9E%E6%88%98/"/>
     <id>http://yoursite.com/2016/06/01/gensim-doc2vec实战/</id>
     <published>2016-06-01T02:22:06.000Z</published>
-    <updated>2016-06-09T09:29:38.000Z</updated>
+    <updated>2016-06-09T12:09:08.000Z</updated>
     
     <content type="html">&lt;p&gt;gensim的doc2vec找不到多少资料，根据官方api探索性的做了些尝试。本文介绍了利用gensim的doc2vec来训练模型，infer新文档向量，infer相似度等方法，有一些不成熟的地方，后期会继续改进。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h3 id=&quot;导入模块&quot;&gt;&lt;a href=&quot;#导入模块&quot; class=&quot;headerlink&quot; title=&quot;导入模块&quot;&gt;&lt;/a&gt;导入模块&lt;/h3&gt;&lt;pre&gt;
 # -*- coding: utf-8 -*-
 import sys
@@ -188,7 +189,6 @@ TypeError: &#39;numpy.float32&#39; object is not iterable
     <summary type="html">
     
       &lt;p&gt;gensim的doc2vec找不到多少资料，根据官方api探索性的做了些尝试。本文介绍了利用gensim的doc2vec来训练模型，infer新文档向量，infer相似度等方法，有一些不成熟的地方，后期会继续改进。&lt;/p&gt;
-&lt;h3 id=&quot;导入模块&quot;&gt;&lt;a href=&quot;#导
     
     </summary>
     
@@ -206,10 +206,10 @@ TypeError: &#39;numpy.float32&#39; object is not iterable
     <link href="http://yoursite.com/2016/05/30/gensim-word2vec%E5%AE%9E%E6%88%98/"/>
     <id>http://yoursite.com/2016/05/30/gensim-word2vec实战/</id>
     <published>2016-05-30T03:13:52.000Z</published>
-    <updated>2016-06-09T09:28:21.000Z</updated>
+    <updated>2016-06-09T12:11:08.000Z</updated>
     
-    <content type="html">&lt;pre&gt;
-
+    <content type="html">&lt;p&gt;介绍如何利用 gensim 库建立简单的 word2vec 模型。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;
 # -*- coding: utf-8 -*-
 import gensim
 from gensim.corpora import WikiCorpus
@@ -268,13 +268,7 @@ for i in x:
     
     <summary type="html">
     
-      &lt;pre&gt;
-
-# -*- coding: utf-8 -*-
-import gensim
-from gensim.corpora import WikiCorpus
-from gensim.models import Word2Vec
-from gensim.models.wor
+      &lt;p&gt;介绍如何利用 gensim 库建立简单的 word2vec 模型。&lt;br&gt;
     
     </summary>
     
@@ -292,9 +286,9 @@ from gensim.models.wor
     <link href="http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%85%AD-%E8%8B%A5%E5%B9%B2%E6%BA%90%E7%A0%81%E7%BB%86%E8%8A%82/"/>
     <id>http://yoursite.com/2016/05/29/word2vec详解之六-若干源码细节/</id>
     <published>2016-05-29T08:28:23.000Z</published>
-    <updated>2016-05-29T06:29:52.000Z</updated>
+    <updated>2016-06-09T12:11:43.000Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 
 
@@ -304,7 +298,7 @@ from gensim.models.wor
     
     <summary type="html">
     
-      &lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中
+      &lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;br&gt;
     
     </summary>
     
@@ -320,16 +314,16 @@ from gensim.models.wor
     <link href="http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%94-%E5%9F%BA%E4%BA%8E-Negative-Sampling-%E7%9A%84%E6%A8%A1%E5%9E%8B/"/>
     <id>http://yoursite.com/2016/05/29/word2vec详解之五-基于-Negative-Sampling-的模型/</id>
     <published>2016-05-29T07:22:03.000Z</published>
-    <updated>2016-05-29T06:30:00.000Z</updated>
+    <updated>2016-06-09T12:11:34.000Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;hr&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/51.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/52.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/53.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/54.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/55.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/56.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/57.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/58.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/59.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/510.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/511.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;作者: peghoty&lt;br&gt;出处: &lt;a href=&quot;http://blog.csdn.net/itplus/article/details/37969979&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.csdn.net/itplus/article/details/37969979&lt;/a&gt;&lt;br&gt;欢迎转载/分享, 但请务必声明文章出处.&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中
+      &lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;br&gt;
     
     </summary>
     
@@ -345,9 +339,9 @@ from gensim.models.wor
     <link href="http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9B%9B-%E5%9F%BA%E4%BA%8EHierarchical-Softmax-%E7%9A%84%E6%A8%A1%E5%9E%8B/"/>
     <id>http://yoursite.com/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/</id>
     <published>2016-05-29T06:08:03.000Z</published>
-    <updated>2016-05-29T06:38:06.000Z</updated>
+    <updated>2016-06-09T12:12:19.000Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/6.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/7.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/8.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/9.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/10.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/11.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/12.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/2.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/3.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/4.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/5.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
@@ -356,7 +350,7 @@ from gensim.models.wor
     
     <summary type="html">
     
-      &lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中
+      &lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;br&gt;
     
     </summary>
     
@@ -372,9 +366,9 @@ from gensim.models.wor
     <link href="http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%89-%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86/"/>
     <id>http://yoursite.com/2016/05/29/word2vec详解之三-背景知识/</id>
     <published>2016-05-29T06:04:41.000Z</published>
-    <updated>2016-05-29T06:38:08.000Z</updated>
+    <updated>2016-06-09T12:11:51.000Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/31.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/32.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/33.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/34.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/35.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/36.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/37.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/38.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/39.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/310.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/311.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
@@ -383,7 +377,7 @@ from gensim.models.wor
     
     <summary type="html">
     
-      &lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中
+      &lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;br&gt;
     
     </summary>
     
@@ -399,9 +393,9 @@ from gensim.models.wor
     <link href="http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/"/>
     <id>http://yoursite.com/2016/05/29/word2vec详解之二-预备知识/</id>
     <published>2016-05-29T04:21:21.000Z</published>
-    <updated>2016-05-29T06:08:19.000Z</updated>
+    <updated>2016-06-09T12:12:13.000Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/21.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/22.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/23.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/24.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/25.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/26.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/27.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
@@ -410,7 +404,7 @@ from gensim.models.wor
     
     <summary type="html">
     
-      &lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中
+      &lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;br&gt;
     
     </summary>
     
@@ -426,16 +420,17 @@ from gensim.models.wor
     <link href="http://yoursite.com/2016/05/28/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80-%E7%9B%AE%E5%BD%95%E5%92%8C%E5%89%8D%E8%A8%80/"/>
     <id>http://yoursite.com/2016/05/28/word2vec详解之一-目录和前言/</id>
     <published>2016-05-28T06:33:10.000Z</published>
-    <updated>2016-05-29T06:34:41.000Z</updated>
+    <updated>2016-06-09T12:11:23.000Z</updated>
     
     <content type="html">&lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;&lt;hr&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/11.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/12.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/13.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/14.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/15.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;作者: peghoty&lt;br&gt;出处: &lt;a href=&quot;http://blog.csdn.net/itplus/article/details/37969979&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.csdn.net/itplus/article/details/37969979&lt;/a&gt;&lt;br&gt;欢迎转载/分享, 但请务必声明文章出处.&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中
+      &lt;p&gt;&lt;strong&gt;word2vec&lt;/strong&gt; 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。&lt;/p&gt;
     
     </summary>
     
@@ -467,9 +462,10 @@ from gensim.models.wor
     <link href="http://yoursite.com/2016/05/25/%E7%9F%AD%E9%97%AE%E9%A2%98%E5%BD%92%E4%B8%80%E5%8C%96-LSI%E6%A8%A1%E5%9E%8B/"/>
     <id>http://yoursite.com/2016/05/25/短问题归一化-LSI模型/</id>
     <published>2016-05-25T12:59:36.000Z</published>
-    <updated>2016-05-25T13:57:30.000Z</updated>
+    <updated>2016-06-09T12:12:01.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;LSI-理解&quot;&gt;&lt;a href=&quot;#LSI-理解&quot; class=&quot;headerlink&quot; title=&quot;LSI 理解&quot;&gt;&lt;/a&gt;LSI 理解&lt;/h3&gt;&lt;p&gt;LSI(Latent Semantic Indexing)，中文意译是潜在语义索引，即通过海量文献找出词汇之间的关系。基本理念是当两个词或一组词大量出现在一个文档中时，这些词之间就是语义相关的。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;blockquote&gt;
 &lt;p&gt;潜在语义索引是一种用奇异值分解方法获得在文本中术语和概念之间关系的索引和获取方法。该方法的主要依据是在相同文章中的词语一般有类似的含义。该方法可以可以从一篇文章中提取术语关系，从而建立起主要概念内容。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -600,7 +596,7 @@ print &quot;Score3: &quot;.format(score3*1.0/count)&lt;/pre&gt;
     
     <summary type="html">
     
-      &lt;h3 id=&quot;LSI-理解&quot;&gt;&lt;a href=&quot;#LSI-理解&quot; class=&quot;headerlink&quot; title=&quot;LSI 理解&quot;&gt;&lt;/a&gt;LSI 理解&lt;/h3&gt;&lt;p&gt;LSI(Latent Semantic Indexing)，中文意译是潜在语义索引，即通过海量文献找出词汇之
+      &lt;h3 id=&quot;LSI-理解&quot;&gt;&lt;a href=&quot;#LSI-理解&quot; class=&quot;headerlink&quot; title=&quot;LSI 理解&quot;&gt;&lt;/a&gt;LSI 理解&lt;/h3&gt;&lt;p&gt;LSI(Latent Semantic Indexing)，中文意译是潜在语义索引，即通过海量文献找出词汇之间的关系。基本理念是当两个词或一组词大量出现在一个文档中时，这些词之间就是语义相关的。&lt;/p&gt;
     
     </summary>
     
@@ -638,9 +634,10 @@ print &quot;Score3: &quot;.format(score3*1.0/count)&lt;/pre&gt;
     <link href="http://yoursite.com/2016/05/22/%E5%9C%A8c%E9%87%8C%E8%B0%83%E7%94%A8python/"/>
     <id>http://yoursite.com/2016/05/22/在c里调用python/</id>
     <published>2016-05-22T08:55:07.000Z</published>
-    <updated>2016-06-09T09:09:38.000Z</updated>
+    <updated>2016-06-09T12:08:57.000Z</updated>
     
     <content type="html">&lt;p&gt;这一个例子是c调用了python的函数，函数返回值是list，包含了100个float值。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;pre&gt;
 #include &lt;python2.7 python.h=&quot;&quot;&gt;
 #include &lt;stdio.h&gt;
@@ -719,11 +716,6 @@ def getDocVec(doc_words):
     <summary type="html">
     
       &lt;p&gt;这一个例子是c调用了python的函数，函数返回值是list，包含了100个float值。&lt;/p&gt;
-&lt;pre&gt;
-#include &lt;python2.7 python.h=&quot;&quot;&gt;
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-void test
     
     </summary>
     
@@ -741,9 +733,9 @@ void test
     <link href="http://yoursite.com/2016/05/19/AP%E8%81%9A%E7%B1%BB/"/>
     <id>http://yoursite.com/2016/05/19/AP聚类/</id>
     <published>2016-05-19T13:42:04.000Z</published>
-    <updated>2016-05-19T13:46:58.000Z</updated>
+    <updated>2016-06-09T12:12:25.000Z</updated>
     
-    <content type="html">&lt;p&gt;AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。&lt;/p&gt;
+    <content type="html">&lt;p&gt;AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Affinity Propagation (AP) 聚类是最近在Science杂志上提出的一种新的聚类算法。它根据N个数据点之间的相似度进行聚类,这些相似度可以是对称的,即两个数据点互相之间的相似度一样(如欧氏距离);也可以是不对称的,即两个数据点互相之间的相似度不等。这些相似度组成N×N的相似度矩阵S(其中N为有N个数据点)。AP算法不需要事先指定聚类数目,相反它将所有的数据点都作为潜在的聚类中心,称之为exemplar。以S矩阵的对角线上的数值s(k, k)作为k点能否成为聚类中心的评判标准,这意味着该值越大,这个点成为聚类中心的可能性也就越大,这个值又称作参考度p (preference)。&lt;br&gt;在这里介绍几个文中常出现的名词：&lt;br&gt;exemplar：指的是聚类中心。&lt;br&gt;similarity：数据点i和点j的相似度记为S(i，j)。是指点j作为点i的聚类中心的相似度。一般使用欧氏距离来计算，如－|| ||。文中，所有点与点的相似度值全部取为负值。因为我们可以看到，相似度值越大说明点与点的距离越近，便于后面的比较计算。&lt;br&gt;preference：数据点i的参考度称为P(i)或S(i,i)。是指点i作为聚类中心的参考度。一般取S相似度值的中值。&lt;br&gt;Responsibility:R(i,k)用来描述点k适合作为数据点i的聚类中心的程度。&lt;br&gt;Availability:A(i,k)用来描述点i选择点k作为其聚类中心的适合程度。&lt;/p&gt;
 &lt;p&gt;Script output:&lt;br&gt;Estimated number of clusters: 3&lt;br&gt;Homogeneity: 0.872&lt;br&gt;Completeness: 0.872&lt;br&gt;V-measure: 0.872&lt;br&gt;Adjusted Rand Index: 0.912&lt;br&gt;Adjusted Mutual Information: 0.871&lt;br&gt;Silhouette Coefficient: 0.753&lt;/p&gt;
 &lt;p&gt;Python source code: plot_affinity_propagation.py&lt;br&gt;print(&lt;strong&gt;doc&lt;/strong&gt;)&lt;/p&gt;
@@ -766,7 +758,7 @@ void test
     
     <summary type="html">
     
-      &lt;p&gt;AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A
+      &lt;p&gt;AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。&lt;br&gt;
     
     </summary>
     
@@ -794,9 +786,10 @@ void test
     <link href="http://yoursite.com/2016/05/18/Gensim-and-LDA-Training-and-Prediction/"/>
     <id>http://yoursite.com/2016/05/18/Gensim-and-LDA-Training-and-Prediction/</id>
     <published>2016-05-18T12:46:16.000Z</published>
-    <updated>2016-06-09T09:01:10.000Z</updated>
+    <updated>2016-06-09T12:19:41.000Z</updated>
     
-    <content type="html">&lt;pre&gt;
+    <content type="html">&lt;p&gt;用 Gensim 实现 LDA，相比 JGibbLDA 的使用 Gensim 略为麻烦，然而感觉更清晰易懂，也就更灵活。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;
 # install the related python packages
 &gt;&gt;&gt; pip install numpy
 &gt;&gt;&gt; pip install scipy
@@ -901,14 +894,7 @@ model.print_topics(-1, 5)&lt;/pre&gt;
     
     <summary type="html">
     
-      &lt;pre&gt;
-# install the related python packages
-&gt;&gt;&gt; pip install numpy
-&gt;&gt;&gt; pip install scipy
-&gt;&gt;&gt; pip install gensim
-&gt;&gt;&gt; pip install jieba
-
-from g
+      &lt;p&gt;用 Gensim 实现 LDA，相比 JGibbLDA 的使用 Gensim 略为麻烦，然而感觉更清晰易懂，也就更灵活。&lt;br&gt;
     
     </summary>
     
@@ -932,9 +918,9 @@ from g
     <link href="http://yoursite.com/2016/05/18/Gensim-%E7%94%A8Python%E5%81%9A%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B/"/>
     <id>http://yoursite.com/2016/05/18/Gensim-用Python做主题模型/</id>
     <published>2016-05-18T02:22:31.000Z</published>
-    <updated>2016-06-09T11:47:12.000Z</updated>
+    <updated>2016-06-09T12:12:34.000Z</updated>
     
-    <content type="html">&lt;h3 id=&quot;gensim-介绍&quot;&gt;&lt;a href=&quot;#gensim-介绍&quot; class=&quot;headerlink&quot; title=&quot;gensim 介绍&quot;&gt;&lt;/a&gt;gensim 介绍&lt;/h3&gt;&lt;p&gt;gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensim中的算法包括：LSA(Latent Semantic Analysis), LDA(Latent Dirichlet Allocation), RP (Random Projections), 通过在一个训练文档语料库中，检查词汇统计联合出现模式, 可以用来发掘文档语义结构，这些算法属于非监督学习，可以处理原始的，非结构化的文本（”plain text”）。&lt;/p&gt;
+    <content type="html">&lt;h3 id=&quot;gensim-介绍&quot;&gt;&lt;a href=&quot;#gensim-介绍&quot; class=&quot;headerlink&quot; title=&quot;gensim 介绍&quot;&gt;&lt;/a&gt;gensim 介绍&lt;/h3&gt;&lt;p&gt;gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensim中的算法包括：LSA(Latent Semantic Analysis), LDA(Latent Dirichlet Allocation), RP (Random Projections), 通过在一个训练文档语料库中，检查词汇统计联合出现模式, 可以用来发掘文档语义结构，这些算法属于非监督学习，可以处理原始的，非结构化的文本（”plain text”）。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&quot;gensim-特性&quot;&gt;&lt;a href=&quot;#gensim-特性&quot; class=&quot;headerlink&quot; title=&quot;gensim 特性&quot;&gt;&lt;/a&gt;gensim 特性&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;内存独立- 对于训练语料来说，没必要在任何时间将整个语料都驻留在RAM中&lt;/li&gt;
 &lt;li&gt;有效实现了许多流行的向量空间算法－包括tf-idf，分布式LSA, 分布式LDA 以及 RP；并且很容易添加新算法&lt;/li&gt;
@@ -979,7 +965,7 @@ from g
     
     <summary type="html">
     
-      &lt;h3 id=&quot;gensim-介绍&quot;&gt;&lt;a href=&quot;#gensim-介绍&quot; class=&quot;headerlink&quot; title=&quot;gensim 介绍&quot;&gt;&lt;/a&gt;gensim 介绍&lt;/h3&gt;&lt;p&gt;gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensi
+      &lt;h3 id=&quot;gensim-介绍&quot;&gt;&lt;a href=&quot;#gensim-介绍&quot; class=&quot;headerlink&quot; title=&quot;gensim 介绍&quot;&gt;&lt;/a&gt;gensim 介绍&lt;/h3&gt;&lt;p&gt;gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensim中的算法包括：LSA(Latent Semantic Analysis), LDA(Latent Dirichlet Allocation), RP (Random Projections), 通过在一个训练文档语料库中，检查词汇统计联合出现模式, 可以用来发掘文档语义结构，这些算法属于非监督学习，可以处理原始的，非结构化的文本（”plain text”）。&lt;br&gt;
     
     </summary>
     
@@ -1003,9 +989,10 @@ from g
     <link href="http://yoursite.com/2016/05/16/JGibbLDA%E5%AE%9E%E6%88%98/"/>
     <id>http://yoursite.com/2016/05/16/JGibbLDA实战/</id>
     <published>2016-05-16T12:50:23.000Z</published>
-    <updated>2016-06-09T11:50:28.000Z</updated>
+    <updated>2016-06-09T12:09:14.000Z</updated>
     
     <content type="html">&lt;p&gt;尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h3 id=&quot;错误&quot;&gt;&lt;a href=&quot;#错误&quot; class=&quot;headerlink&quot; title=&quot;错误&quot;&gt;&lt;/a&gt;错误&lt;/h3&gt;&lt;p&gt;命令：&lt;/p&gt;
 &lt;pre&gt;java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/newdocs.dat&lt;/pre&gt;
 
@@ -1057,8 +1044,6 @@ from g
     <summary type="html">
     
       &lt;p&gt;尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。&lt;/p&gt;
-&lt;h3 id=&quot;错误&quot;&gt;&lt;a href=&quot;#错误&quot; class=&quot;headerlink&quot; title=&quot;错误&quot;&gt;&lt;/a&gt;错误&lt;/h3&gt;&lt;p&gt;命令：&lt;/p&gt;
-&lt;pre&gt;java -mx51
     
     </summary>
     
@@ -1080,9 +1065,10 @@ from g
     <link href="http://yoursite.com/2016/05/13/gollum:-github%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BAwiki/"/>
     <id>http://yoursite.com/2016/05/13/gollum:-github上搭建个人wiki/</id>
     <published>2016-05-13T08:55:07.000Z</published>
-    <updated>2016-06-09T11:53:17.000Z</updated>
+    <updated>2016-06-09T12:08:26.000Z</updated>
     
     <content type="html">&lt;p&gt;博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h3 id=&quot;开通Wiki&quot;&gt;&lt;a href=&quot;#开通Wiki&quot; class=&quot;headerlink&quot; title=&quot;开通Wiki&quot;&gt;&lt;/a&gt;开通Wiki&lt;/h3&gt;&lt;p&gt;登陆Github，找到你所开通的Github项目的Settings栏目，开通Wikis，如果只希望别人可读不可写，勾选：Restrict edits to Collaborators only。如下图所示：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%884.56.12.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;h3 id=&quot;git-clone-相应维基的git地址&quot;&gt;&lt;a href=&quot;#git-clone-相应维基的git地址&quot; class=&quot;headerlink&quot; title=&quot;git clone 相应维基的git地址&quot;&gt;&lt;/a&gt;git clone 相应维基的git地址&lt;/h3&gt;&lt;pre&gt; git clone git@github.com:Shuang0420/Shuang0420.github.io.wiki.git wiki&lt;/pre&gt;
@@ -1227,7 +1213,6 @@ git push&lt;/pre&gt;
     <summary type="html">
     
       &lt;p&gt;博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。&lt;/p&gt;
-&lt;h3 id=&quot;开通Wiki&quot;&gt;&lt;a href=&quot;#开通Wiki&quot; class=&quot;headerlin
     
     </summary>
     
@@ -1243,9 +1228,10 @@ git push&lt;/pre&gt;
     <link href="http://yoursite.com/2016/05/12/Github-Pages-Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
     <id>http://yoursite.com/2016/05/12/Github-Pages-Hexo搭建个人博客/</id>
     <published>2016-05-12T08:55:07.000Z</published>
-    <updated>2016-06-09T11:54:00.000Z</updated>
+    <updated>2016-06-09T12:15:56.000Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;为什么用Github-Pages-Hexo&quot;&gt;&lt;a href=&quot;#为什么用Github-Pages-Hexo&quot; class=&quot;headerlink&quot; title=&quot;为什么用Github Pages + Hexo&quot;&gt;&lt;/a&gt;为什么用Github Pages + Hexo&lt;/h1&gt;&lt;h2 id=&quot;Github-Page优点&quot;&gt;&lt;a href=&quot;#Github-Page优点&quot; class=&quot;headerlink&quot; title=&quot;Github Page优点&quot;&gt;&lt;/a&gt;Github Page优点&lt;/h2&gt;&lt;ul&gt;
+    <content type="html">&lt;p&gt;一直想有个美美的博客，CSDN实在无法满足。看了一些大神的 github 博客，非常艳羡，自己学着搭了个，看在它这么好看的份上，我也会坚持写写写！&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;为什么用Github-Pages-Hexo&quot;&gt;&lt;a href=&quot;#为什么用Github-Pages-Hexo&quot; class=&quot;headerlink&quot; title=&quot;为什么用Github Pages + Hexo&quot;&gt;&lt;/a&gt;为什么用Github Pages + Hexo&lt;/h1&gt;&lt;h2 id=&quot;Github-Page优点&quot;&gt;&lt;a href=&quot;#Github-Page优点&quot; class=&quot;headerlink&quot; title=&quot;Github Page优点&quot;&gt;&lt;/a&gt;Github Page优点&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;轻量级的博客系统，没有麻烦的配置&lt;/li&gt;
 &lt;li&gt;使用标记语言，比如&lt;a href=&quot;http://markdown.tw/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Markdown&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;无需自己搭建服务器&lt;/li&gt;
@@ -1344,7 +1330,7 @@ hexo d -g&lt;/pre&gt;
     
     <summary type="html">
     
-      &lt;h1 id=&quot;为什么用Github-Pages-Hexo&quot;&gt;&lt;a href=&quot;#为什么用Github-Pages-Hexo&quot; class=&quot;headerlink&quot; title=&quot;为什么用Github Pages + Hexo&quot;&gt;&lt;/a&gt;为什么用Github Pages + He
+      &lt;p&gt;一直想有个美美的博客，CSDN实在无法满足。看了一些大神的 github 博客，非常艳羡，自己学着搭了个，看在它这么好看的份上，我也会坚持写写写！&lt;br&gt;
     
     </summary>
     
@@ -1360,9 +1346,9 @@ hexo d -g&lt;/pre&gt;
     <link href="http://yoursite.com/2016/04/22/%E8%AE%A9%E8%BF%9B%E7%A8%8B%E5%9C%A8%E5%90%8E%E5%8F%B0%E5%8F%AF%E9%9D%A0%E8%BF%90%E8%A1%8C%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/"/>
     <id>http://yoursite.com/2016/04/22/让进程在后台可靠运行的几种方法/</id>
     <published>2016-04-22T08:55:07.000Z</published>
-    <updated>2016-06-09T09:09:27.000Z</updated>
+    <updated>2016-06-09T12:08:45.000Z</updated>
     
-    <content type="html">&lt;p&gt;当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略 HUP 信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。&lt;/p&gt;
+    <content type="html">&lt;p&gt;当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略 HUP 信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&quot;nohup&quot;&gt;&lt;a href=&quot;#nohup&quot; class=&quot;headerlink&quot; title=&quot;nohup&quot;&gt;&lt;/a&gt;nohup&lt;/h3&gt;&lt;p&gt;只需在要处理的命令前加上 nohup 即可，标准输出和标准错误缺省会被重定向到 nohup.out 文件中。同时可在结尾加上”&amp;amp;”来将命令同时放入后台运行，也可用”&amp;gt;filename 2&amp;gt;&amp;amp;1”来更改缺省的重定向文件名。&lt;/p&gt;
 &lt;pre&gt;
 $ nohup ping www.ibm.com &amp;
@@ -1465,8 +1451,7 @@ init─┬─Xvnc
     
     <summary type="html">
     
-      &lt;p&gt;当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略 HUP 信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。&lt;/p&gt;
-&lt;h3 id=&quot;nohup&quot;&gt;&lt;a hre
+      &lt;p&gt;当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略 HUP 信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。&lt;br&gt;
     
     </summary>
     

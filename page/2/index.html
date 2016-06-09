@@ -324,8 +324,14 @@
       
         
           
-            
           
+          
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/25/GibbsLDA-A-C-C-使用心得/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -442,83 +448,12 @@
 
       
         
-          
-            <p>这一个例子是c调用了python的函数，函数返回值是list，包含了100个float值。</p>
-<pre>
-#include <python2.7 python.h="">
-#include <stdio.h>
-#include <stdlib.h>
-void test1(){
-  Py_Initialize();//初始化python
-  char *test = "奖励";
-  PyObject * pModule = NULL;
-  PyObject * pModule1 = NULL;
-  PyObject * pFunc = NULL;
-  PyObject * pArg    = NULL;
-  PyObject * result;
-  pModule = PyImport_ImportModule("inferSingleDocVec");//引入模块
-  pFunc = PyObject_GetAttrString(pModule, "getDocVec");//直接获取模块中的函数
-  pArg= Py_BuildValue("(s)", test);
-  result = PyEval_CallObject(pFunc, pArg); //调用直接获得的函数，并传递参数；这里得到的是一个list
-  <code>for (int i = 0; i < PyList_Size(result); i++) {</code>
-    printf("%f\t", PyFloat_AsDouble(PyList_GetItem(result, (Py_ssize_t)i)));//打印每一个元素
-  }
-  //下面代码适用于返回值为字符串的情况
-  //char* s=NULL;
-  //PyArg_Parse(result, "s", &s);
-  //for (int i=0;s[i]!='\0';i++){
-   // printf("%c",s[i]);
- // }
-  Py_Finalize(); //释放python
-//  return;
-}
-int main(int argc, char* argv[])
-{
-    test1();
-    return 0;
-}
-</stdlib.h></stdio.h></python2.7></pre>
-
-<p>编译运行</p>
-<pre>
-$ gcc -I/usr/local/lib/python2.7.11 -o inferDocVec inferDocVec.c -lpython2.7
-$ ./inferDocVec
-</pre>
-
-<p>调用的inferSingleDocVec文件</p>
-<pre>
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-### for infer
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
-import gensim, logging
-from gensim.models import Doc2Vec
-import os
-import jieba
-import multiprocessing
-import numpy as np
-import base64
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-
-def getDocVec(doc_words):
-    docwords=[word for word in jieba.cut(doc_words, cut_all = False)]
-    model = Doc2Vec.load('all_model_v2.txt')
-    invec = model.infer_vector(docwords, alpha=0.1, min_alpha=0.0001, steps=5)
-    return (list)(invec)
-</pre>
-
-<p>关于如何将python文件转为模块，详见之前的一篇博文<a href="https://github.com/Shuang0420/Shuang0420.github.io/wiki/python----%E5%B0%86%E8%87%AA%E5%B7%B1%E5%86%99%E7%9A%84py%E6%96%87%E4%BB%B6%E4%BD%9C%E4%B8%BA%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%85%A5" target="_blank" rel="external">python 将自己写的py文件作为模块导入</a></p>
-<blockquote>
-<p>参考链接</p>
-<blockquote>
-<p><a href="https://www.daniweb.com/programming/software-development/threads/237529/what-does-pyarg_parse-do-in-detail" target="_blank" rel="external">https://www.daniweb.com/programming/software-development/threads/237529/what-does-pyarg_parse-do-in-detail</a></p>
-<p><a href="http://stackoverflow.com/questions/5079570/writing-a-python-c-extension-how-to-correctly-load-a-pylistobject" target="_blank" rel="external">http://stackoverflow.com/questions/5079570/writing-a-python-c-extension-how-to-correctly-load-a-pylistobject</a></p>
-</blockquote>
-</blockquote>
-
-          
+          <p>这一个例子是c调用了python的函数，函数返回值是list，包含了100个float值。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/22/在c里调用python/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -616,28 +551,12 @@ def getDocVec(doc_words):
 
       
         
-          
-            <p>AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。</p>
-<p>Affinity Propagation (AP) 聚类是最近在Science杂志上提出的一种新的聚类算法。它根据N个数据点之间的相似度进行聚类,这些相似度可以是对称的,即两个数据点互相之间的相似度一样(如欧氏距离);也可以是不对称的,即两个数据点互相之间的相似度不等。这些相似度组成N×N的相似度矩阵S(其中N为有N个数据点)。AP算法不需要事先指定聚类数目,相反它将所有的数据点都作为潜在的聚类中心,称之为exemplar。以S矩阵的对角线上的数值s(k, k)作为k点能否成为聚类中心的评判标准,这意味着该值越大,这个点成为聚类中心的可能性也就越大,这个值又称作参考度p (preference)。<br>在这里介绍几个文中常出现的名词：<br>exemplar：指的是聚类中心。<br>similarity：数据点i和点j的相似度记为S(i，j)。是指点j作为点i的聚类中心的相似度。一般使用欧氏距离来计算，如－|| ||。文中，所有点与点的相似度值全部取为负值。因为我们可以看到，相似度值越大说明点与点的距离越近，便于后面的比较计算。<br>preference：数据点i的参考度称为P(i)或S(i,i)。是指点i作为聚类中心的参考度。一般取S相似度值的中值。<br>Responsibility:R(i,k)用来描述点k适合作为数据点i的聚类中心的程度。<br>Availability:A(i,k)用来描述点i选择点k作为其聚类中心的适合程度。</p>
-<p>Script output:<br>Estimated number of clusters: 3<br>Homogeneity: 0.872<br>Completeness: 0.872<br>V-measure: 0.872<br>Adjusted Rand Index: 0.912<br>Adjusted Mutual Information: 0.871<br>Silhouette Coefficient: 0.753</p>
-<p>Python source code: plot_affinity_propagation.py<br>print(<strong>doc</strong>)</p>
-<p>from sklearn.cluster import AffinityPropagation<br>from sklearn import metrics<br>from sklearn.datasets.samples_generator import make_blobs</p>
-<p>##############################################################################</p>
-<h1 id="Generate-sample-data"><a href="#Generate-sample-data" class="headerlink" title="Generate sample data"></a>Generate sample data</h1><p>centers = [[1, 1], [-1, -1], [1, -1]]<br>X, labels_true = make_blobs(n_samples=300, centers=centers, cluster_std=0.5,<br>                            random_state=0)</p>
-<p>##############################################################################</p>
-<h1 id="Compute-Affinity-Propagation"><a href="#Compute-Affinity-Propagation" class="headerlink" title="Compute Affinity Propagation"></a>Compute Affinity Propagation</h1><p>af = AffinityPropagation(preference=-50).fit(X)<br>cluster_centers_indices = af.cluster_centers<em>indices</em><br>labels = af.labels_</p>
-<p>n<em>clusters</em> = len(cluster_centers_indices)</p>
-<p>print(‘Estimated number of clusters: %d’ % n<em>clusters</em>)<br>print(“Homogeneity: %0.3f” % metrics.homogeneity_score(labels_true, labels))<br>print(“Completeness: %0.3f” % metrics.completeness_score(labels_true, labels))<br>print(“V-measure: %0.3f” % metrics.v_measure_score(labels_true, labels))<br>print(“Adjusted Rand Index: %0.3f”<br>      % metrics.adjusted_rand_score(labels_true, labels))<br>print(“Adjusted Mutual Information: %0.3f”<br>      % metrics.adjusted_mutual_info_score(labels_true, labels))<br>print(“Silhouette Coefficient: %0.3f”<br>      % metrics.silhouette_score(X, labels, metric=’sqeuclidean’))</p>
-<p>##############################################################################</p>
-<h1 id="Plot-result"><a href="#Plot-result" class="headerlink" title="Plot result"></a>Plot result</h1><p>import matplotlib.pyplot as plt<br>from itertools import cycle</p>
-<p>plt.close(‘all’)<br>plt.figure(1)<br>plt.clf()</p>
-<p>colors = cycle(‘bgrcmykbgrcmykbgrcmykbgrcmyk’)<br>for k, col in zip(range(n<em>clusters</em>), colors):<br>    class_members = labels == k<br>    cluster_center = X[cluster_centers_indices[k]]<br>    plt.plot(X[class_members, 0], X[class_members, 1], col + ‘.’)<br>    plt.plot(cluster_center[0], cluster_center[1], ‘o’, markerfacecolor=col,<br>             markeredgecolor=’k’, markersize=14)<br>    for x in X[class_members]:<br>        plt.plot([cluster_center[0], x[0]], [cluster_center[1], x[1]], col)</p>
-<p>plt.title(‘Estimated number of clusters: %d’ % n<em>clusters</em>)<br>plt.show()</p>
-<blockquote>
-<p>参考链接<br><a href="http://scikit-learn.org/stable/modules/clustering.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/clustering.html</a><br><a href="http://blog.csdn.net/u010695420/article/details/42239465" target="_blank" rel="external">http://blog.csdn.net/u010695420/article/details/42239465</a></p>
-</blockquote>
-
-          
+          <p>AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/19/AP聚类/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -736,8 +655,14 @@ def getDocVec(doc_words):
       
         
           
-            
           
+          
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/19/LDA验证/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -854,110 +779,12 @@ def getDocVec(doc_words):
 
       
         
-          
-            <pre>
-# install the related python packages
->>> pip install numpy
->>> pip install scipy
->>> pip install gensim
->>> pip install jieba
-
-from gensim import corpora, models, similarities
-import logging
-import jieba
-
-# configuration
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-
-# load data from file
-f = open('newfile.txt', 'r')
-documents = f.readlines()
-
-＃ tokenize
-texts = [[word for word in jieba.cut(document, cut_all = False)] for document in documents]
-
-# load id->word mapping (the dictionary)
-dictionary = corpora.Dictionary(texts)
-
-# word must appear >10 times, and no more than 40% documents
-dictionary.filter_extremes(no_below=40, no_above=0.1)
-
-# save dictionary
-dictionary.save('dict_v1.dict')
-
-# load corpus
-corpus = [dictionary.doc2bow(text) for text in texts]
-
-# initialize a model
-tfidf = models.TfidfModel(corpus)
-
-# use the model to transform vectors, apply a transformation to a whole corpus
-corpus_tfidf = tfidf[corpus]
-
-# extract 100 LDA topics, using 1 pass and updating once every 1 chunk (10,000 documents), using 500 iterations
-lda = models.LdaModel(corpus_tfidf, id2word=dictionary, num_topics=100, iterations=500)
-
-# save model to files
-lda.save('mylda_v1.pkl')
-
-# print topics composition, and their scores, for the first document. You will see that only few topics are represented; the others have a nil score.
-for index, score in sorted(lda[corpus_tfidf[0]], key=lambda tup: -1*tup[1]):
-    print "Score: {}\t Topic: {}".format(score, lda.print_topic(index, 10))
-
-# print the most contributing words for 100 randomly selected topics
-lda.print_topics(100)
-
-# load model and dictionary
-model = models.LdaModel.load('mylda_v1.pkl')
-dictionary = corpora.Dictionary.load('dict_v1.dict')
-
-# predict unseen data
-query = "未收到奖励"
-query_bow = dictionary.doc2bow(jieba.cut(query, cut_all = False))
-for index, score in sorted(model[query_bow], key=lambda tup: -1*tup[1]):
-    print "Score: {}\t Topic: {}".format(score, model.print_topic(index, 20))
-
-# if you want to predict many lines of data in a file, do the followings
-f = open('newfile.txt', 'r')
-documents = f.readlines()
-texts = [[word for word in jieba.cut(document, cut_all = False)] for document in documents]
-corpus = [dictionary.doc2bow(text) for text in texts]
-
-# only print the topic with the highest score
-for c in corpus:
-    flag = True
-    for index, score in sorted(model[c], key=lambda tup: -1*tup[1]):
-        if flag:
-            print "Score: {}\t Topic: {}".format(score, model.print_topic(index, 20))</pre>
-
-<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips:"></a>Tips:</h1><p>If you occur encoding problems, you can try the following code</p>
-<pre>
-add it at the beginning of your python file
-# -*- coding: utf-8 -*-
-
-# also, do the followings
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
-# the following code may lead to encoding problem when there're Chinese characters
-model.show_topics(-1, 5)
-
-# use this instead
-model.print_topics(-1, 5)</pre>
-
-
-<p>You can see step-by-step output by the following references.</p>
-<blockquote>
-<p>References:</p>
-<blockquote>
-<p><a href="https://radimrehurek.com/gensim/tut2.html" target="_blank" rel="external">https://radimrehurek.com/gensim/tut2.html</a> official guide (en)</p>
-<p><a href="http://blog.csdn.net/questionfish/article/details/46725475" target="_blank" rel="external">http://blog.csdn.net/questionfish/article/details/46725475</a>  official guide (ch)</p>
-<p><a href="https://radimrehurek.com/gensim/wiki.html#latent-dirichlet-allocation" target="_blank" rel="external">https://radimrehurek.com/gensim/wiki.html#latent-dirichlet-allocation</a></p>
-</blockquote>
-</blockquote>
-
-          
+          <p>用 Gensim 实现 LDA，相比 JGibbLDA 的使用 Gensim 略为麻烦，然而感觉更清晰易懂，也就更灵活。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/18/Gensim-and-LDA-Training-and-Prediction/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1074,50 +901,12 @@ model.print_topics(-1, 5)</pre>
 
       
         
-          
-            <h3 id="gensim-介绍"><a href="#gensim-介绍" class="headerlink" title="gensim 介绍"></a>gensim 介绍</h3><p>gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensim中的算法包括：LSA(Latent Semantic Analysis), LDA(Latent Dirichlet Allocation), RP (Random Projections), 通过在一个训练文档语料库中，检查词汇统计联合出现模式, 可以用来发掘文档语义结构，这些算法属于非监督学习，可以处理原始的，非结构化的文本（”plain text”）。</p>
-<h3 id="gensim-特性"><a href="#gensim-特性" class="headerlink" title="gensim 特性"></a>gensim 特性</h3><ul>
-<li>内存独立- 对于训练语料来说，没必要在任何时间将整个语料都驻留在RAM中</li>
-<li>有效实现了许多流行的向量空间算法－包括tf-idf，分布式LSA, 分布式LDA 以及 RP；并且很容易添加新算法</li>
-<li>对流行的数据格式进行了IO封装和转换</li>
-<li>在其语义表达中，可以相似查询</li>
-<li>gensim的创建的目的是，由于缺乏简单的（java很复杂）实现主题建模的可扩展软件框架.</li>
-</ul>
-<h3 id="gensim-设计原则"><a href="#gensim-设计原则" class="headerlink" title="gensim 设计原则"></a>gensim 设计原则</h3><ul>
-<li>简单的接口，学习曲线低。对于原型实现很方便</li>
-<li>根据输入的语料的size来说，内存各自独立；基于流的算法操作，一次访问一个文档.</li>
-</ul>
-<h3 id="gensim-核心概念"><a href="#gensim-核心概念" class="headerlink" title="gensim 核心概念"></a>gensim 核心概念</h3><p>gensim的整个package会涉及三个概念：corpus, vector, model.</p>
-<ul>
-<li>语库(corpus)<br>文档集合，用于自动推出文档结构，以及它们的主题等，也可称作训练语料。</li>
-</ul>
-<ul>
-<li><p>向量(vector)</p>
-<p>在向量空间模型(VSM)中，每个文档被表示成一个特征数组。例如，一个单一特征可以被表示成一个问答对(question-answer pair):</p>
-<p>[1].在文档中单词”splonge”出现的次数？ 0个<br>[2].文档中包含了多少句子？ 2个<br>[3].文档中使用了多少字体? 5种<br>这里的问题可以表示成整型id (比如：1,2,3等), 因此，上面的文档可以表示成：(1, 0.0), (2, 2.0), (3, 5.0). 如果我们事先知道所有的问题，我们可以显式地写成这样：(0.0, 2.0, 5.0). 这个answer序列可以认为是一个多维矩阵（3维）. 对于实际目的，只有question对应的answer是一个实数.</p>
-<p>对于每个文档来说，answer是类似的. 因而，对于两个向量来说（分别表示两个文档），我们希望可以下类似的结论：“如果两个向量中的实数是相似的，那么，原始的文档也可以认为是相似的”。当然，这样的结论依赖于我们如何去选取我们的question。</p>
-</li>
-</ul>
-<ul>
-<li><p>稀疏矩阵(Sparse vector)</p>
-<p>通常，大多数answer的值都是0.0. 为了节省空间，我们需要从文档表示中忽略它们，只需要写：(2, 2.0), (3, 5.0) 即可(注意：这里忽略了(1, 0.0)). 由于所有的问题集事先都知道，那么在稀疏矩阵的文档表示中所有缺失的特性可以认为都是0.0.</p>
-<p>gensim的特别之处在于，它没有限定任何特定的语料格式；语料可以是任何格式，当迭代时，通过稀疏矩阵来完成即可。例如，集合 ([(2, 2.0), (3, 5.0)], ([0, -1.0], [3, -1.0])) 是一个包含两个文档的语料，每个都有两个非零的 pair。</p>
-</li>
-</ul>
-<ul>
-<li><p>模型(model)</p>
-<p>对于我们来说，一个模型就是一个变换(transformation)，将一种文档表示转换成另一种。初始和目标表示都是向量－－它们只在question和answer之间有区别。这个变换可以通过训练的语料进行自动学习，无需人工监督，最终的文档表示将更加紧凑和有用；相似的文档具有相似的表示。</p>
-</li>
-</ul>
-<h3 id="演示代码"><a href="#演示代码" class="headerlink" title="演示代码"></a>演示代码</h3><p><a href="http://shuang0420.github.io/2016/05/18/Gensim-and-LDA-Training-and-Prediction/" target="_blank" rel="external">演示代码</a></p>
-<blockquote>
-<p>参考链接</p>
-<blockquote>
-<p><a href="http://d0evi1.github.io/gensim/" target="_blank" rel="external">http://d0evi1.github.io/gensim/</a></p>
-</blockquote>
-</blockquote>
-
-          
+          <h3 id="gensim-介绍"><a href="#gensim-介绍" class="headerlink" title="gensim 介绍"></a>gensim 介绍</h3><p>gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensim中的算法包括：LSA(Latent Semantic Analysis), LDA(Latent Dirichlet Allocation), RP (Random Projections), 通过在一个训练文档语料库中，检查词汇统计联合出现模式, 可以用来发掘文档语义结构，这些算法属于非监督学习，可以处理原始的，非结构化的文本（”plain text”）。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/18/Gensim-用Python做主题模型/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1234,56 +1023,12 @@ model.print_topics(-1, 5)</pre>
 
       
         
-          
-            <p>尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。</p>
-<h3 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h3><p>命令：</p>
-<pre>java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/newdocs.dat</pre>
-
-<p>错误信息：</p>
-<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/err.png" alt=""></p>
-<h3 id="手动配置"><a href="#手动配置" class="headerlink" title="手动配置"></a>手动配置</h3><p>于是尝试导入eclipse运行手动配置，成功，过程如下。</p>
-<ol>
-<li><p>下载JGibbLDA的jar包并解压；<br>网址：<a href="http://jgibblda.sourceforge.net/#Griffiths04" target="_blank" rel="external">http://jgibblda.sourceforge.net/#Griffiths04</a></p>
-</li>
-<li><p>导入eclipse，确保jar包在目录中</p>
-</li>
-<li><p>找到LDACmdOption.java文件， 修改部分代码</p>
-<pre> @Option(name="-dir", usage="Specify directory")
- public String dir = "models/casestudy-en";
-
- @Option(name="-dfile", usage="Specify data file")
- public String dfile = "models/casestudy-en/newdocs.dat";</pre>
-
-<p>值得注意的是，dfile的格式必须是👇这个样子：</p>
-<pre>[M]
-[document1]
-[document2]
-...
-[documentM]</pre>
-
-<p>第一行[M]是documents的总数，之后的每一行是一个document，每个document是一个word list，或者说是bag of words。</p>
-<pre>[document i] = [word i1] [word i2] ... [word iNi]</pre>
-
-<p>各参数含义：<br><strong>-est </strong>从训练语料中评估出LDA模型<br><strong>-alpha</strong> LDA模型中的alpha数值，默认为50/K(K是主题数目)<br><strong>-beta</strong> LDA模型中的beta数值，默认是0.1<br><strong>-ntopics</strong> 主题数目，默认值是100<br><strong>-niters</strong> GIbbs采样的迭代数目，默认值为2000<br><strong>-savestep</strong> 指定开始保存LDA模型的迭代次数<br><strong>-dir</strong> 训练语料目录<br><strong>-dfile</strong> 训练语料文件名称</p>
-</li>
-<li><p>修改项目的Run Configurations，在Java Application中选择LDA，点击(x)=Arguments，输入</p>
-<pre>-est -alpha 0.2 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 100 -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "newdocs.dat"</pre>
-
-<p> 若利用已训练的LDA模型预测，输入以下参数：</p>
-<pre>-inf -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "test.txt"</pre>
-
-<p> 注意，进行预测时，当前目录下必须包含已有的LDA训练输出文件，包括model-final.others、model-final.phi、model-final.tassign、model-final.theta、model-final.twords、wordmap.txt文件，如果运行报错，尝试修改LDACmdOption.java的modelName，确保和文件名的modelname部分一致。<br><pre>@Option(name=”-model”, usage=”Specify the model name”)<br> public String modelName = “model-final”;</pre>   </p>
-<p> 如果出现java heap limited的问题，在VM arguments下添加</p>
-<pre>-Xms1g -Xmx1g -Xmn512m</pre>
-</li>
-<li><p>Run<br>输出文件主要有：<br><strong><model_name>.others</model_name></strong>  文件存储LDA模型参数，如alpha、beta等。<br><strong><model_name>.phi </model_name></strong> 每个topic内对doc的分布情况。文件存储词语-主题分布，每一行是一个主题，列内容为词语。<br><strong><model_name>.theta </model_name></strong> 每个doc内对应上面的n个topic的分布情况。文件主题文档分布，每一行是一个文档，列内容是主题概率。<br><strong><model_name>.tassign</model_name></strong>  文件是训练预料中单词的主题指定（归属），每一行是一个语料文档。<br><strong><model_name>.twords</model_name></strong>  n个topic，以及每个topic下面包含的具体的字词<br><strong>wordmap.txt</strong>  词-id映射<br>其中<model_name>根据采样迭代次数来指定，如model-00800，最后一次采样名称命名为model-final。</model_name></p>
-</li>
-</ol>
-<blockquote>
-<p>参考链接：<br><a href="http://www.ithao123.cn/content-4208214.html" target="_blank" rel="external">http://www.ithao123.cn/content-4208214.html</a><br><a href="http://jgibblda.sourceforge.net/" target="_blank" rel="external">http://jgibblda.sourceforge.net/</a></p>
-</blockquote>
-
-          
+          <p>尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/16/JGibbLDA实战/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1400,149 +1145,12 @@ model.print_topics(-1, 5)</pre>
 
       
         
-          
-            <p>博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。</p>
-<h3 id="开通Wiki"><a href="#开通Wiki" class="headerlink" title="开通Wiki"></a>开通Wiki</h3><p>登陆Github，找到你所开通的Github项目的Settings栏目，开通Wikis，如果只希望别人可读不可写，勾选：Restrict edits to Collaborators only。如下图所示：</p>
-<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%884.56.12.png" alt=""></p>
-<h3 id="git-clone-相应维基的git地址"><a href="#git-clone-相应维基的git地址" class="headerlink" title="git clone 相应维基的git地址"></a>git clone 相应维基的git地址</h3><pre> git clone git@github.com:Shuang0420/Shuang0420.github.io.wiki.git wiki</pre>
-
-<p>如果你之前没有设置git密钥，可以参照以下步骤先做配置，如果已经设置，请忽略。</p>
-<ol>
-<li><p>查看是否已经有了ssh密钥：<br><pre>cd ~/.ssh</pre><br>如果没有密钥则不会有此文件夹，有则备份删除</p>
-</li>
-<li><p>生成密钥，得到两个文件：id_rsa 和 id_rsa.pub</p>
-<pre>ssh-keygen -t rsa -C “haiyan.xu.vip@gmail.com”</pre>
-</li>
-<li><p>添加密钥到ssh：ssh-add id_rsa</p>
-</li>
-<li><p>在github上settings中添加ssh密钥，即“id_rsa.pub”里的公钥。</p>
-</li>
-<li><p>测试：ssh git@github.com</p>
-</li>
-</ol>
-<h3 id="配置个人wiki"><a href="#配置个人wiki" class="headerlink" title="配置个人wiki"></a>配置个人wiki</h3><ol>
-<li><p>在wiki目录下，安装bundler</p>
-<pre>gem install bundler</pre>
-
-<p>   如果安装没有问题，可以跳过以下错误解决。</p>
-   <pre>
-   ERROR:  Could not find a valid gem 'bundler' (>= 0), here is why:
-             Unable to download data from https://rubygems.org/ - Errno::EPIPE: Broken pipe - SSL_connect (https://rubygems.org/latest_specs.4.8.gz)</pre>
-
-<p>   解决：</p>
-   <pre>gem source -a http://rubygems.org/
-   gem install bundler</pre>
-
-<p>   然而还是有错误：</p>
-   <pre>Fetching: bundler-1.12.5.gem (100%)^[[A
-   ERROR:  While executing gem ... (Gem::FilePermissionError)
-       You don't have write permissions for the /Library/Ruby/Gems/2.0.0 directory.</pre>
-
-<p>   因为没有sudo：</p>
-   <pre>sudo gem install bundler</pre>
-</li>
-<li><p>新建Gemfile文件，内容如下：</p>
-   <pre>
-   source "http://rubygems.org"
-   gem 'redcarpet'
-   gem "grit", '~> 2.5.0', git: 'https://github.com/gitlabhq/grit.git', ref: '42297cdcee16284d2e4eff23d41377f52fc28b9d'
-   gem 'gollum', git: 'https://github.com/gollum/gollum.git'</pre></li>
-<li><p>运行：</p>
-   <pre>
-   # 安装项目依赖的所有gem包;此命令会尝试更新系统中已存在的gem包
-   bundle install</pre>
-
-<p>   时间有点久，耐心等待。<br>   然而最后出现error,</p>
-   <pre>An error occurred while installing charlock_holmes (0.7.3), and Bundler cannot continue.
-   Make sure that `gem install charlock_holmes -v '0.7.3'` succeeds before bundling.</pre>
-
-<p>   好。那就按要求安装。</p>
-   <pre>sudo gem install charlock_holmes -v '0.7.3'</pre>
-
-<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%885.25.54.png" alt=""></p>
-<p>   好。继续按要求安装。</p>
-   <pre>brew install icu4c</pre>
-
-<p>   再重来</p>
-   <pre>sudo gem install charlock_holmes -v '0.7.3'</pre>
-
-   <pre>bundle install</pre>
-
-<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-27%20%E4%B8%8A%E5%8D%889.46.38.png" alt=""></p>
-<p>   因为没有安装bundle</p>
-   <pre>gem install bundle</pre>
-
-<p>   安装后再次尝试运行</p>
-   <pre>bundle install</pre>
-
-<p>   error</p>
-   <pre>Could not reach host index.rubygems.org. Check your network connection and try again.</pre>
-   出现这种错误可以尝试把Gemfile里的https改成http（互相转化进行尝试）
-
-   <pre>bundle install</pre>
-
-<p>   终于成功！</p>
-</li>
-<li><p>已安装成功gollum等。然后运行：</p>
-   <pre>gollum</pre>
-
-<p>   走到这一步了本人还是遇到了万恶的失败。<br>   看着已经安装好了</p>
-   <pre>
-   Installing nokogiri 1.6.7.2 with native extensions
-   Installing rack-protection 1.5.3
-   Installing gollum-grit_adapter 1.0.1
-   Installing sanitize 2.1.0
-   Installing sinatra 1.4.7
-   Installing gollum-lib 4.2.0
-   Using gollum 4.0.1 from https://github.com/gollum/gollum.git (at master@5a5e56a)
-   Bundle complete! 3 Gemfile dependencies, 24 gems now installed.
-   Use `bundle show [gemname]` to see where a bundled gem is installed.
-   </pre>
-
-<p>   然而实际并没有</p>
-   <pre>
-   $ gollum
-   -bash: gollum: command not found</pre>
-
-<p>   大写的忧伤。最后通过直接安装gollum解决。</p>
-   <pre>sudo gem install gollum</pre>
-
-   <pre>gollum</pre>
-</li>
-<li><p>终于可以在本地启动成功维基。打开网址：<a href="http://0.0.0.0:4567/，可以直接在浏览器中编辑。" target="_blank" rel="external">http://0.0.0.0:4567/，可以直接在浏览器中编辑。</a></p>
-<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%886.26.05.png" alt=""></p>
-<p>   如果发现不能如下错误，请尝试更新ruby。</p>
-<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%889.31.07.png" alt=""></p>
-<p>   更新ruby步骤<br>   安装 RVM<br>   RVM:Ruby Version Manager,Ruby版本管理器，包括Ruby的版本管理和Gem库管理(gemset)</p>
-   <pre>curl -L get.rvm.io | bash -s stable</pre>
-
-   <pre>source ~/.bashrc  
-   source ~/.bash_profile </pre>
-
-<p>   测试是否安装正常</p>
-   <pre>rvm -v  </pre>
-
-<p>   用RVM升级Ruby</p>
-   <pre>
-   #查看当前ruby版本  
-   ruby -v  
-   #列出已知的ruby版本  
-   rvm list known  
-   #安装ruby 2.3.0
-   rvm install 2.3.0 </pre>
-
-<p>   安装完成之后ruby -v查看是否安装成功。</p>
-<p>   重新安装完毕后回到第3步。</p>
-</li>
-</ol>
-<h3 id="github同步"><a href="#github同步" class="headerlink" title="github同步"></a>github同步</h3><p>在wiki目录下面，进行git库操作，提交本地对维基内容的修改。一切将自动保存在你的Github上的个人博客网站的wiki目录下面。</p>
-<pre>
-cd ~/wiki
-git add .
-git commit -am"first commit"
-git push</pre>
-
-          
+          <p>博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/13/gollum:-github上搭建个人wiki/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1659,104 +1267,12 @@ git push</pre>
 
       
         
-          
-            <h1 id="为什么用Github-Pages-Hexo"><a href="#为什么用Github-Pages-Hexo" class="headerlink" title="为什么用Github Pages + Hexo"></a>为什么用Github Pages + Hexo</h1><h2 id="Github-Page优点"><a href="#Github-Page优点" class="headerlink" title="Github Page优点"></a>Github Page优点</h2><ul>
-<li>轻量级的博客系统，没有麻烦的配置</li>
-<li>使用标记语言，比如<a href="http://markdown.tw/" target="_blank" rel="external">Markdown</a></li>
-<li>无需自己搭建服务器</li>
-<li>根据Github的限制，对应的每个站有300MB空间</li>
-<li>可以绑定自己的域名</li>
-</ul>
-<p>Github Page有两种page模式，User/Organization Pages（个人或公司站点）和Project Pages（项目站点）。这里我们用的是user/Organization Pages，要求使用自己的用户名，每个用户名下面只能建立一个，资源命名必须符合这样的规则username/username.github.com，主干上内容被用来构建和发布页面</p>
-<h2 id="Hexo优点"><a href="#Hexo优点" class="headerlink" title="Hexo优点"></a>Hexo优点</h2><ul>
-<li>用于搭建博客网站框架，可以简单实现优美的博客网站;</li>
-<li>在本地端搭建，就可脱机查阅;</li>
-<li>架构不依托于其他门户网站，不再担心门户网站倒闭，不担心博文丢失或难以导出;</li>
-<li>博文为markdown格式，通用，容易上手，便于快速书写;</li>
-<li>可部署在github上；</li>
-<li>创造者来自中国台湾，所以几乎所有模板都关注到了中文的兼容性，很适合使用汉语的码农。</li>
-</ul>
-<h1 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h1><h2 id="新建github-repository"><a href="#新建github-repository" class="headerlink" title="新建github repository"></a>新建github repository</h2><p>在github上新建repository，name为username.github.io。</p>
-<h2 id="Hexo安装"><a href="#Hexo安装" class="headerlink" title="Hexo安装"></a>Hexo安装</h2><p>先安装git和node.js</p>
-<pre>brew install git
-brew install node</pre>
-验证是否安装成功
-<pre>node -v
-npm -v</pre>
-安装Hexo
-<pre>npm install -g hexo #-g表示全局安装, npm默认为当前项目安装</pre>
-
-<h2 id="Hexo部署"><a href="#Hexo部署" class="headerlink" title="Hexo部署"></a>Hexo部署</h2><p>新建文件夹并打开，在文件夹内操作。</p>
-<pre> hexo init #新建博客目录
- hexo g #根据当前目录下文件生成静态网页
- hexo s #启动服务器</pre>
-
-<p>现在就可以到浏览器输入localhost:4000查看啦。</p>
-<p>简单介绍一下文件目录</p>
-<ul>
-<li>public：执行hexo generate命令，输出的静态网页内容目录</li>
-<li>scaffolds：layout模板文件目录，其中的md文件可以添加编辑</li>
-<li>scripts：扩展脚本目录，这里可以自定义一些javascript脚本</li>
-<li>source：文章源码目录，该目录下的markdown和html文件均会被hexo处理。该页面对应repo的根目录，404文件、favicon.ico文件，CNAME文件等都应该放这里，该目录下可新建页面目录。</li>
-<li>drafts：草稿文章</li>
-<li>posts：发布文章themes：主题文件目录</li>
-<li>config.yml：全局配置文件，大多数的设置都在这里</li>
-<li>package.json：应用程序数据，指明hexo的版本等信息，类似于一般软件中的 关于 按钮</li>
-</ul>
-<h2 id="Hexo复制主题"><a href="#Hexo复制主题" class="headerlink" title="Hexo复制主题"></a>Hexo复制主题</h2><pre> hexo clean
- hexo g
- hexo s
- git clone https://github.com/cnfeat/cnfeat.git themes/jacman</pre>
-
-<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><p>修改Hexo目录下的config.yml配置文件中的theme属性，将其设置为jacman。</p>
-<pre>theme: jacman #或你的主题名，注意冒号后有一个空格</pre>
-
-<p>注意：Hexo有两个config.yml文件，一个在根目录，一个在theme下，此时修改的是在根目录下的。</p>
-<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><pre> cd themes/jacman
- git pull</pre>
-
-<p>注意：为避免出错，请先备份你的_config.yml 文件后再升级</p>
-<h2 id="Hexo本地调试"><a href="#Hexo本地调试" class="headerlink" title="Hexo本地调试"></a>Hexo本地调试</h2><pre> hexo g #生成
- hexo s #启动本地服务，进行文章预览调试
- hexo d -g #或者直接作用组合命令</pre>
-
-<p>浏览器输入localhost:4000，即可查看搭建效果。每次变更config.yml 文件或者上传文件都可以先用此命令调试。</p>
-<h2 id="Hexo部署到github"><a href="#Hexo部署到github" class="headerlink" title="Hexo部署到github"></a>Hexo部署到github</h2><pre>npm install hexo-deployer-git --save</pre>
-在 Hexo 文件夹下找到 config.yml 文件, 找到其中的 deploy 标签，改成下图所示形式，并保存。注意：冒号后面要加上一个空格，否则会报错
-<pre>
-deploy:
-  type: git
-  repo: https://github.com/Shuang0420/Shuang0420.github.io.git</pre>
-
-<p>运行如下命令：</p>
-<pre>hexo clean
-hexo generate
-hexo deploy</pre>
-
-
-<h2 id="发博文"><a href="#发博文" class="headerlink" title="发博文"></a>发博文</h2><pre>
- hexo new "postname" #然后在posts目录下的postname.md文件中编辑博客
- hexo clean
- hexo generate
- # (若要本地预览就先执行 hexo server)
- hexo deploy</pre>
-
-<h2 id="快捷命令"><a href="#快捷命令" class="headerlink" title="快捷命令"></a>快捷命令</h2><pre> hexo g == hexo generate
- hexo d == hexo deploy
- hexo s == hexo server
- hexo n == hexo new
-# 还能组合使用，如：
-hexo d -g</pre>
-
-<blockquote>
-<p>参考链接：</p>
-<blockquote>
-<p><a href="http://mozhenhau.com/2015/03/05/%E5%9C%A8Mac%E9%80%9A%E8%BF%87Hexo%E5%9C%A8github%E4%B8%8A%E5%BB%BA%E7%AB%8B%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/" target="_blank" rel="external">http://mozhenhau.com/2015/03/05/%E5%9C%A8Mac%E9%80%9A%E8%BF%87Hexo%E5%9C%A8github%E4%B8%8A%E5%BB%BA%E7%AB%8B%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</a></p>
-<p><a href="http://evakasch.github.io/2016/05/04/hexo-setup/" target="_blank" rel="external">http://evakasch.github.io/2016/05/04/hexo-setup/</a></p>
-</blockquote>
-</blockquote>
-
-          
+          <p>一直想有个美美的博客，CSDN实在无法满足。看了一些大神的 github 博客，非常艳羡，自己学着搭了个，看在它这么好看的份上，我也会坚持写写写！<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/12/Github-Pages-Hexo搭建个人博客/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1873,108 +1389,12 @@ hexo d -g</pre>
 
       
         
-          
-            <p>当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略 HUP 信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。</p>
-<h3 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h3><p>只需在要处理的命令前加上 nohup 即可，标准输出和标准错误缺省会被重定向到 nohup.out 文件中。同时可在结尾加上”&amp;”来将命令同时放入后台运行，也可用”&gt;filename 2&gt;&amp;1”来更改缺省的重定向文件名。</p>
-<pre>
-$ nohup ping www.ibm.com &
-[1] 6982
-$ nohup: appending output to `nohup.out'
-$ ps -ef |grep www.ibm.com
-  501  6982  5823   0  4:23下午 ttys000    0:00.03 ping www.ibm.com
-  501  7120  5823   0  4:26下午 ttys000    0:00.01 grep www.ibm.com
-</pre>
-
-<h3 id="setsid"><a href="#setsid" class="headerlink" title="setsid"></a>setsid</h3><p>nohup 能通过忽略 HUP 信号来使我们的进程避免中途被中断，换个角度思考，如果我们的进程不属于接受 HUP 信号的终端的子进程，那么自然也就不会受到 HUP 信号的影响了。setsid 就能帮助我们做到这一点。</p>
-<pre>
-$ setsid ping www.ibm.com
-$ ps -ef |grep www.ibm.com
-root     31094     1  0 07:28 ?        00:00:00 ping www.ibm.com
-root     31102 29217  0 07:29 pts/4    00:00:00 grep www.ibm.com
-</pre>
-
-<p>  值得注意的是，上例中我们的进程 ID(PID)为31094，而它的父 ID（PPID）为1（即为 init 进程 ID），并不是当前终端的进程 ID。请将此例与nohup 例中的父 ID 做比较。</p>
-<h3 id="disown"><a href="#disown" class="headerlink" title="disown"></a>disown</h3><p>如果未加任何处理就已经提交了命令，该如何补救才能让它避免 HUP 信号的影响呢？</p>
-<ul>
-<li>用disown -h jobspec来使某个作业忽略HUP信号。</li>
-<li>用disown -ah 来使所有的作业都忽略HUP信号。</li>
-<li><p>用disown -rh 来使正在运行的作业忽略HUP信号。</p>
-<p>需要注意的是，当使用过 disown 之后，会将把目标作业从作业列表中移除，我们将不能再使用jobs来查看它，但是依然能够用ps -ef查找到它。<br>但是还有一个问题，这种方法的操作对象是作业，如果我们在运行命令时在结尾加了”&amp;”来使它成为一个作业并在后台运行，那么就万事大吉了，我们可以通过jobs命令来得到所有作业的列表。但是如果并没有把当前命令作为作业来运行，如何才能得到它的作业号呢？答案就是用 CTRL-z（按住Ctrl键的同时按住z键）了！<br>CTRL-z 的用途就是将当前进程挂起（Suspend），然后我们就可以用jobs命令来查询它的作业号，再用bg jobspec来将它放入后台并继续运行。需要注意的是，如果挂起会影响当前进程的运行结果，请慎用此方法。</p>
-<p>disown 示例1（如果提交命令时已经用“&amp;”将命令放入后台运行，则可以直接使用“disown”）</p>
-<pre>$ cp -r testLargeFile largeFile &
-[1] 4825
-$ jobs
-[1]+  Running                 cp -i -r testLargeFile largeFile &
-$ disown -h %1
-$ ps -ef |grep largeFile
-root      4825   968  1 09:46 pts/4    00:00:00 cp -i -r testLargeFile largeFile
-root      4853   968  0 09:46 pts/4    00:00:00 grep largeFile
-$ logout</pre>
-
-<p>disown 示例2（如果提交命令时未使用“&amp;”将命令放入后台运行，可使用 CTRL-z 和“bg”将其放入后台，再使用“disown”）</p>
-<pre>$ cp -r testLargeFile largeFile2
-[1]+  Stopped                 cp -i -r testLargeFile largeFile2
-$ bg %1
-[1]+ cp -i -r testLargeFile largeFile2 &
-$ jobs
-[1]+  Running                 cp -i -r testLargeFile largeFile2 &
-$ disown -h %1
-$ ps -ef |grep largeFile2
-root      5790  5577  1 10:04 pts/3    00:00:00 cp -i -r testLargeFile largeFile2
-root      5824  5577  0 10:05 pts/3    00:00:00 grep largeFile2</pre>
-
-</li>
-</ul>
-<h3 id="screen"><a href="#screen" class="headerlink" title="screen"></a>screen</h3><p>如果有大量这种命令需要在稳定的后台里运行，如何避免对每条命令都做这样的操作呢？<br>此时最方便的方法就是 screen 了。简单的说，screen 提供了 ANSI/VT100 的终端模拟器，使它能够在一个真实终端下运行多个全屏的伪终端。screen 的参数很多，具有很强大的功能，我们在此仅介绍其常用功能以及简要分析一下为什么使用 screen 能够避免 HUP 信号的影响。<br>使用 screen 很方便，有以下几个常用选项：</p>
-<ul>
-<li>用screen -dmS session name来建立一个处于断开模式下的会话（并指定其会话名）。</li>
-<li>用screen -list 来列出所有会话。</li>
-<li>用screen -r session name来重新连接指定会话。</li>
-<li><p>用快捷键CTRL-a d 来暂时断开当前会话。</p>
-<p>screen 示例</p>
-<pre>$ screen -dmS Urumchi
-$ screen -list
-There is a screen on:
-      12842.Urumchi   (Detached)
-1 Socket in /tmp/screens/S-root.
-$ screen -r Urumchi</pre>
-
-<p>当我们用“-r”连接到 screen 会话后，我们就可以在这个伪终端里面为所欲为，再也不用担心 HUP 信号会对我们的进程造成影响，也不用给每个命令前都加上“nohup”或者“setsid”了。</p>
-</li>
-</ul>
-<ol>
-<li><p>未使用 screen 时新进程的进程树</p>
-<pre>$ ping www.google.com &
-[1] 9499
-$ pstree -H 9499
-init─┬─Xvnc
-  ├─acpid
-  ├─atd
-  ├─2*[sendmail]
-  ├─sshd─┬─sshd───bash───pstree
-  │       └─sshd───bash───ping</pre>
-
-<p>我们可以看出，未使用 screen 时我们所处的 bash 是 sshd 的子进程，当 ssh 断开连接时，HUP 信号自然会影响到它下面的所有子进程（包括我们新建立的 ping 进程）。</p>
-</li>
-<li><p>使用了 screen 后新进程的进程树</p>
-<pre>$screen -r Urumchi
-$ ping www.ibm.com &
-[1] 9488
-$ pstree -H 9488
-init─┬─Xvnc
-  ├─acpid
-  ├─atd
-  ├─screen───bash───ping
-  ├─2*[sendmail]</pre>
-
-<p>而使用了 screen 后就不同了，此时 bash 是 screen 的子进程，而 screen 是 init（PID为1）的子进程。那么当 ssh 断开连接时，HUP 信号自然不会影响到 screen 下面的子进程了。</p>
-</li>
-</ol>
-<blockquote>
-<p>参考链接<br><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-nohup/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/linux/l-cn-nohup/</a></p>
-</blockquote>
-
-          
+          <p>当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略 HUP 信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/22/让进程在后台可靠运行的几种方法/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
         
       
     </div>

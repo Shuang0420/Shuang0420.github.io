@@ -7,6 +7,7 @@
       <title><![CDATA[gensim-doc2vec实战]]></title>
       <url>http://yoursite.com/2016/06/01/gensim-doc2vec%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<p>gensim的doc2vec找不到多少资料，根据官方api探索性的做了些尝试。本文介绍了利用gensim的doc2vec来训练模型，infer新文档向量，infer相似度等方法，有一些不成熟的地方，后期会继续改进。</p>
+<a id="more"></a>
 <h3 id="导入模块"><a href="#导入模块" class="headerlink" title="导入模块"></a>导入模块</h3><pre>
 # -*- coding: utf-8 -*-
 import sys
@@ -173,8 +174,8 @@ TypeError: 'numpy.float32' object is not iterable
     <entry>
       <title><![CDATA[gensim: word2vec实战]]></title>
       <url>http://yoursite.com/2016/05/30/gensim-word2vec%E5%AE%9E%E6%88%98/</url>
-      <content type="html"><![CDATA[<pre>
-
+      <content type="html"><![CDATA[<p>介绍如何利用 gensim 库建立简单的 word2vec 模型。<br><a id="more"></a></p>
+<pre>
 # -*- coding: utf-8 -*-
 import gensim
 from gensim.corpora import WikiCorpus
@@ -235,7 +236,7 @@ for i in x:
     <entry>
       <title><![CDATA[word2vec详解之六 -- 若干源码细节]]></title>
       <url>http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%85%AD-%E8%8B%A5%E5%B9%B2%E6%BA%90%E7%A0%81%E7%BB%86%E8%8A%82/</url>
-      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。<br><a id="more"></a></p>
 <hr>
 
 
@@ -247,7 +248,7 @@ for i in x:
     <entry>
       <title><![CDATA[word2vec详解之五 -- 基于 Negative Sampling 的模型]]></title>
       <url>http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%94-%E5%9F%BA%E4%BA%8E-Negative-Sampling-%E7%9A%84%E6%A8%A1%E5%9E%8B/</url>
-      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。<br><a id="more"></a></p>
 <p><hr><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/51.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/52.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/53.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/54.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/55.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/56.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/57.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/58.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/59.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/510.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/511.jpg" alt=""></p>
 <p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
 ]]></content>
@@ -256,7 +257,7 @@ for i in x:
     <entry>
       <title><![CDATA[word2vec详解之四 -- 基于Hierarchical Softmax 的模型]]></title>
       <url>http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9B%9B-%E5%9F%BA%E4%BA%8EHierarchical-Softmax-%E7%9A%84%E6%A8%A1%E5%9E%8B/</url>
-      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。<br><a id="more"></a></p>
 <hr>
 
 <p><img src="http://7xu83c.com1.z0.glb.clouddn.com/6.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/7.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/8.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/9.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/10.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/11.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/12.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/1.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/2.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/3.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/4.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/5.jpg" alt=""></p>
@@ -267,7 +268,7 @@ for i in x:
     <entry>
       <title><![CDATA[word2vec详解之三 -- 背景知识]]></title>
       <url>http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%89-%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86/</url>
-      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。<br><a id="more"></a></p>
 <hr>
 
 <p><img src="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/32.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/33.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/34.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/35.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/36.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/37.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/38.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/39.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/310.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/311.jpg" alt=""></p>
@@ -278,7 +279,7 @@ for i in x:
     <entry>
       <title><![CDATA[word2vec详解之二 -- 预备知识]]></title>
       <url>http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/</url>
-      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。<br><a id="more"></a></p>
 <hr>
 
 <p><img src="http://7xu83c.com1.z0.glb.clouddn.com/21.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/22.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/23.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/24.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/25.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/26.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/27.jpg" alt=""></p>
@@ -290,6 +291,7 @@ for i in x:
       <title><![CDATA[word2vec详解之一 -- 目录和前言]]></title>
       <url>http://yoursite.com/2016/05/28/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80-%E7%9B%AE%E5%BD%95%E5%92%8C%E5%89%8D%E8%A8%80/</url>
       <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<a id="more"></a>
 <p><hr><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/11.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/12.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/13.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/14.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/15.jpg" alt=""></p>
 <p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
 ]]></content>
@@ -305,6 +307,7 @@ for i in x:
       <title><![CDATA[短句归一化--LSI模型]]></title>
       <url>http://yoursite.com/2016/05/25/%E7%9F%AD%E9%97%AE%E9%A2%98%E5%BD%92%E4%B8%80%E5%8C%96-LSI%E6%A8%A1%E5%9E%8B/</url>
       <content type="html"><![CDATA[<h3 id="LSI-理解"><a href="#LSI-理解" class="headerlink" title="LSI 理解"></a>LSI 理解</h3><p>LSI(Latent Semantic Indexing)，中文意译是潜在语义索引，即通过海量文献找出词汇之间的关系。基本理念是当两个词或一组词大量出现在一个文档中时，这些词之间就是语义相关的。</p>
+<a id="more"></a>
 <blockquote>
 <p>潜在语义索引是一种用奇异值分解方法获得在文本中术语和概念之间关系的索引和获取方法。该方法的主要依据是在相同文章中的词语一般有类似的含义。该方法可以可以从一篇文章中提取术语关系，从而建立起主要概念内容。</p>
 </blockquote>
@@ -444,6 +447,7 @@ print "Score3: ".format(score3*1.0/count)</pre>
       <title><![CDATA[在c里调用python]]></title>
       <url>http://yoursite.com/2016/05/22/%E5%9C%A8c%E9%87%8C%E8%B0%83%E7%94%A8python/</url>
       <content type="html"><![CDATA[<p>这一个例子是c调用了python的函数，函数返回值是list，包含了100个float值。</p>
+<a id="more"></a>
 <pre>
 #include <python2.7 python.h="">
 #include <stdio.h>
@@ -523,7 +527,7 @@ def getDocVec(doc_words):
     <entry>
       <title><![CDATA[AP聚类]]></title>
       <url>http://yoursite.com/2016/05/19/AP%E8%81%9A%E7%B1%BB/</url>
-      <content type="html"><![CDATA[<p>AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。</p>
+      <content type="html"><![CDATA[<p>AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。<br><a id="more"></a></p>
 <p>Affinity Propagation (AP) 聚类是最近在Science杂志上提出的一种新的聚类算法。它根据N个数据点之间的相似度进行聚类,这些相似度可以是对称的,即两个数据点互相之间的相似度一样(如欧氏距离);也可以是不对称的,即两个数据点互相之间的相似度不等。这些相似度组成N×N的相似度矩阵S(其中N为有N个数据点)。AP算法不需要事先指定聚类数目,相反它将所有的数据点都作为潜在的聚类中心,称之为exemplar。以S矩阵的对角线上的数值s(k, k)作为k点能否成为聚类中心的评判标准,这意味着该值越大,这个点成为聚类中心的可能性也就越大,这个值又称作参考度p (preference)。<br>在这里介绍几个文中常出现的名词：<br>exemplar：指的是聚类中心。<br>similarity：数据点i和点j的相似度记为S(i，j)。是指点j作为点i的聚类中心的相似度。一般使用欧氏距离来计算，如－|| ||。文中，所有点与点的相似度值全部取为负值。因为我们可以看到，相似度值越大说明点与点的距离越近，便于后面的比较计算。<br>preference：数据点i的参考度称为P(i)或S(i,i)。是指点i作为聚类中心的参考度。一般取S相似度值的中值。<br>Responsibility:R(i,k)用来描述点k适合作为数据点i的聚类中心的程度。<br>Availability:A(i,k)用来描述点i选择点k作为其聚类中心的适合程度。</p>
 <p>Script output:<br>Estimated number of clusters: 3<br>Homogeneity: 0.872<br>Completeness: 0.872<br>V-measure: 0.872<br>Adjusted Rand Index: 0.912<br>Adjusted Mutual Information: 0.871<br>Silhouette Coefficient: 0.753</p>
 <p>Python source code: plot_affinity_propagation.py<br>print(<strong>doc</strong>)</p>
@@ -554,7 +558,8 @@ def getDocVec(doc_words):
     <entry>
       <title><![CDATA[Gensim and LDA--Training and Prediction]]></title>
       <url>http://yoursite.com/2016/05/18/Gensim-and-LDA-Training-and-Prediction/</url>
-      <content type="html"><![CDATA[<pre>
+      <content type="html"><![CDATA[<p>用 Gensim 实现 LDA，相比 JGibbLDA 的使用 Gensim 略为麻烦，然而感觉更清晰易懂，也就更灵活。<br><a id="more"></a></p>
+<pre>
 # install the related python packages
 >>> pip install numpy
 >>> pip install scipy
@@ -661,7 +666,7 @@ model.print_topics(-1, 5)</pre>
     <entry>
       <title><![CDATA[Gensim-用Python做主题模型]]></title>
       <url>http://yoursite.com/2016/05/18/Gensim-%E7%94%A8Python%E5%81%9A%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B/</url>
-      <content type="html"><![CDATA[<h3 id="gensim-介绍"><a href="#gensim-介绍" class="headerlink" title="gensim 介绍"></a>gensim 介绍</h3><p>gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensim中的算法包括：LSA(Latent Semantic Analysis), LDA(Latent Dirichlet Allocation), RP (Random Projections), 通过在一个训练文档语料库中，检查词汇统计联合出现模式, 可以用来发掘文档语义结构，这些算法属于非监督学习，可以处理原始的，非结构化的文本（”plain text”）。</p>
+      <content type="html"><![CDATA[<h3 id="gensim-介绍"><a href="#gensim-介绍" class="headerlink" title="gensim 介绍"></a>gensim 介绍</h3><p>gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensim中的算法包括：LSA(Latent Semantic Analysis), LDA(Latent Dirichlet Allocation), RP (Random Projections), 通过在一个训练文档语料库中，检查词汇统计联合出现模式, 可以用来发掘文档语义结构，这些算法属于非监督学习，可以处理原始的，非结构化的文本（”plain text”）。<br><a id="more"></a></p>
 <h3 id="gensim-特性"><a href="#gensim-特性" class="headerlink" title="gensim 特性"></a>gensim 特性</h3><ul>
 <li>内存独立- 对于训练语料来说，没必要在任何时间将整个语料都驻留在RAM中</li>
 <li>有效实现了许多流行的向量空间算法－包括tf-idf，分布式LSA, 分布式LDA 以及 RP；并且很容易添加新算法</li>
@@ -709,6 +714,7 @@ model.print_topics(-1, 5)</pre>
       <title><![CDATA[JGibbLDA实战]]></title>
       <url>http://yoursite.com/2016/05/16/JGibbLDA%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<p>尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。</p>
+<a id="more"></a>
 <h3 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h3><p>命令：</p>
 <pre>java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/newdocs.dat</pre>
 
@@ -762,6 +768,7 @@ model.print_topics(-1, 5)</pre>
       <title><![CDATA[gollum/-github上搭建个人wiki]]></title>
       <url>http://yoursite.com/2016/05/13/gollum:-github%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BAwiki/</url>
       <content type="html"><![CDATA[<p>博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。</p>
+<a id="more"></a>
 <h3 id="开通Wiki"><a href="#开通Wiki" class="headerlink" title="开通Wiki"></a>开通Wiki</h3><p>登陆Github，找到你所开通的Github项目的Settings栏目，开通Wikis，如果只希望别人可读不可写，勾选：Restrict edits to Collaborators only。如下图所示：</p>
 <p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%884.56.12.png" alt=""></p>
 <h3 id="git-clone-相应维基的git地址"><a href="#git-clone-相应维基的git地址" class="headerlink" title="git clone 相应维基的git地址"></a>git clone 相应维基的git地址</h3><pre> git clone git@github.com:Shuang0420/Shuang0420.github.io.wiki.git wiki</pre>
@@ -907,7 +914,8 @@ git push</pre>
     <entry>
       <title><![CDATA[Github Pages+Hexo搭建个人博客]]></title>
       <url>http://yoursite.com/2016/05/12/Github-Pages-Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-      <content type="html"><![CDATA[<h1 id="为什么用Github-Pages-Hexo"><a href="#为什么用Github-Pages-Hexo" class="headerlink" title="为什么用Github Pages + Hexo"></a>为什么用Github Pages + Hexo</h1><h2 id="Github-Page优点"><a href="#Github-Page优点" class="headerlink" title="Github Page优点"></a>Github Page优点</h2><ul>
+      <content type="html"><![CDATA[<p>一直想有个美美的博客，CSDN实在无法满足。看了一些大神的 github 博客，非常艳羡，自己学着搭了个，看在它这么好看的份上，我也会坚持写写写！<br><a id="more"></a></p>
+<h1 id="为什么用Github-Pages-Hexo"><a href="#为什么用Github-Pages-Hexo" class="headerlink" title="为什么用Github Pages + Hexo"></a>为什么用Github Pages + Hexo</h1><h2 id="Github-Page优点"><a href="#Github-Page优点" class="headerlink" title="Github Page优点"></a>Github Page优点</h2><ul>
 <li>轻量级的博客系统，没有麻烦的配置</li>
 <li>使用标记语言，比如<a href="http://markdown.tw/" target="_blank" rel="external">Markdown</a></li>
 <li>无需自己搭建服务器</li>
@@ -1008,7 +1016,7 @@ hexo d -g</pre>
     <entry>
       <title><![CDATA[让进程在后台可靠运行的几种方法]]></title>
       <url>http://yoursite.com/2016/04/22/%E8%AE%A9%E8%BF%9B%E7%A8%8B%E5%9C%A8%E5%90%8E%E5%8F%B0%E5%8F%AF%E9%9D%A0%E8%BF%90%E8%A1%8C%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
-      <content type="html"><![CDATA[<p>当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略 HUP 信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。</p>
+      <content type="html"><![CDATA[<p>当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略 HUP 信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。<br><a id="more"></a></p>
 <h3 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h3><p>只需在要处理的命令前加上 nohup 即可，标准输出和标准错误缺省会被重定向到 nohup.out 文件中。同时可在结尾加上”&amp;”来将命令同时放入后台运行，也可用”&gt;filename 2&gt;&amp;1”来更改缺省的重定向文件名。</p>
 <pre>
 $ nohup ping www.ibm.com &
@@ -1114,6 +1122,7 @@ init─┬─Xvnc
       <title><![CDATA[python-jieba-分词----官方文档截取]]></title>
       <url>http://yoursite.com/2016/04/01/python-jieba-%E5%88%86%E8%AF%8D----%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E6%88%AA%E5%8F%96/</url>
       <content type="html"><![CDATA[<h1 id="jieba"><a href="#jieba" class="headerlink" title="jieba"></a>jieba</h1><p>“结巴”中文分词：做最好的 Python 中文分词组件</p>
+<a id="more"></a>
 <h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h1><ul>
 <li>支持三种分词模式：</li>
 </ul>
@@ -1365,6 +1374,7 @@ optional arguments:
       <title><![CDATA[linux-python转码问题]]></title>
       <url>http://yoursite.com/2016/03/22/linux-python%E8%BD%AC%E7%A0%81%E9%97%AE%E9%A2%98/</url>
       <content type="html"><![CDATA[<p>之前用的一直是utf-8编码，几乎不会出现乱码问题。奈何公司的分词软件支持的输入和输出编码都是gbk，因此必须进行转码，一个非常痛苦的过程，如实记录下遇到的问题，供以后参考</p>
+<a id="more"></a>
 <h3 id="标准utf8输出"><a href="#标准utf8输出" class="headerlink" title="标准utf8输出"></a>标准utf8输出</h3><pre>
 #!/usr/bin/python
 # -*- coding: utf8 -*-
