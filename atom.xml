@@ -932,21 +932,21 @@ from g
     <link href="http://yoursite.com/2016/05/18/Gensim-%E7%94%A8Python%E5%81%9A%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B/"/>
     <id>http://yoursite.com/2016/05/18/Gensim-用Python做主题模型/</id>
     <published>2016-05-18T02:22:31.000Z</published>
-    <updated>2016-06-09T09:00:52.000Z</updated>
+    <updated>2016-06-09T11:47:12.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;gensim-介绍&quot;&gt;&lt;a href=&quot;#gensim-介绍&quot; class=&quot;headerlink&quot; title=&quot;gensim 介绍&quot;&gt;&lt;/a&gt;gensim 介绍&lt;/h3&gt;&lt;p&gt;gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensim中的算法包括：LSA(Latent Semantic Analysis), LDA(Latent Dirichlet Allocation), RP (Random Projections), 通过在一个训练文档语料库中，检查词汇统计联合出现模式, 可以用来发掘文档语义结构，这些算法属于非监督学习，可以处理原始的，非结构化的文本（”plain text”）。&lt;/p&gt;
-&lt;h3 id=&quot;gensim-的特性&quot;&gt;&lt;a href=&quot;#gensim-的特性&quot; class=&quot;headerlink&quot; title=&quot;gensim 的特性&quot;&gt;&lt;/a&gt;gensim 的特性&lt;/h3&gt;&lt;ul&gt;
+&lt;h3 id=&quot;gensim-特性&quot;&gt;&lt;a href=&quot;#gensim-特性&quot; class=&quot;headerlink&quot; title=&quot;gensim 特性&quot;&gt;&lt;/a&gt;gensim 特性&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;内存独立- 对于训练语料来说，没必要在任何时间将整个语料都驻留在RAM中&lt;/li&gt;
 &lt;li&gt;有效实现了许多流行的向量空间算法－包括tf-idf，分布式LSA, 分布式LDA 以及 RP；并且很容易添加新算法&lt;/li&gt;
 &lt;li&gt;对流行的数据格式进行了IO封装和转换&lt;/li&gt;
 &lt;li&gt;在其语义表达中，可以相似查询&lt;/li&gt;
 &lt;li&gt;gensim的创建的目的是，由于缺乏简单的（java很复杂）实现主题建模的可扩展软件框架.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&quot;gensim-的设计原则&quot;&gt;&lt;a href=&quot;#gensim-的设计原则&quot; class=&quot;headerlink&quot; title=&quot;gensim 的设计原则&quot;&gt;&lt;/a&gt;gensim 的设计原则&lt;/h3&gt;&lt;ul&gt;
+&lt;h3 id=&quot;gensim-设计原则&quot;&gt;&lt;a href=&quot;#gensim-设计原则&quot; class=&quot;headerlink&quot; title=&quot;gensim 设计原则&quot;&gt;&lt;/a&gt;gensim 设计原则&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;简单的接口，学习曲线低。对于原型实现很方便&lt;/li&gt;
 &lt;li&gt;根据输入的语料的size来说，内存各自独立；基于流的算法操作，一次访问一个文档.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&quot;gensim-的核心概念&quot;&gt;&lt;a href=&quot;#gensim-的核心概念&quot; class=&quot;headerlink&quot; title=&quot;gensim 的核心概念&quot;&gt;&lt;/a&gt;gensim 的核心概念&lt;/h3&gt;&lt;p&gt;gensim的整个package会涉及三个概念：corpus, vector, model.&lt;/p&gt;
+&lt;h3 id=&quot;gensim-核心概念&quot;&gt;&lt;a href=&quot;#gensim-核心概念&quot; class=&quot;headerlink&quot; title=&quot;gensim 核心概念&quot;&gt;&lt;/a&gt;gensim 核心概念&lt;/h3&gt;&lt;p&gt;gensim的整个package会涉及三个概念：corpus, vector, model.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;语库(corpus)&lt;br&gt;文档集合，用于自动推出文档结构，以及它们的主题等，也可称作训练语料。&lt;/li&gt;
 &lt;/ul&gt;
@@ -1003,14 +1003,15 @@ from g
     <link href="http://yoursite.com/2016/05/16/JGibbLDA%E5%AE%9E%E6%88%98/"/>
     <id>http://yoursite.com/2016/05/16/JGibbLDA实战/</id>
     <published>2016-05-16T12:50:23.000Z</published>
-    <updated>2016-05-19T02:33:53.000Z</updated>
+    <updated>2016-06-09T11:50:28.000Z</updated>
     
-    <content type="html">&lt;p&gt;尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。&lt;br&gt;命令：&lt;/p&gt;
+    <content type="html">&lt;p&gt;尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。&lt;/p&gt;
+&lt;h3 id=&quot;错误&quot;&gt;&lt;a href=&quot;#错误&quot; class=&quot;headerlink&quot; title=&quot;错误&quot;&gt;&lt;/a&gt;错误&lt;/h3&gt;&lt;p&gt;命令：&lt;/p&gt;
 &lt;pre&gt;java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/newdocs.dat&lt;/pre&gt;
 
 &lt;p&gt;错误信息：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/err.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;于是尝试导入eclipse运行手动配置，成功，过程如下。&lt;/p&gt;
+&lt;h3 id=&quot;手动配置&quot;&gt;&lt;a href=&quot;#手动配置&quot; class=&quot;headerlink&quot; title=&quot;手动配置&quot;&gt;&lt;/a&gt;手动配置&lt;/h3&gt;&lt;p&gt;于是尝试导入eclipse运行手动配置，成功，过程如下。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;下载JGibbLDA的jar包并解压；&lt;br&gt;网址：&lt;a href=&quot;http://jgibblda.sourceforge.net/#Griffiths04&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://jgibblda.sourceforge.net/#Griffiths04&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
@@ -1055,8 +1056,9 @@ from g
     
     <summary type="html">
     
-      &lt;p&gt;尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。&lt;br&gt;命令：&lt;/p&gt;
-&lt;pre&gt;java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 
+      &lt;p&gt;尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。&lt;/p&gt;
+&lt;h3 id=&quot;错误&quot;&gt;&lt;a href=&quot;#错误&quot; class=&quot;headerlink&quot; title=&quot;错误&quot;&gt;&lt;/a&gt;错误&lt;/h3&gt;&lt;p&gt;命令：&lt;/p&gt;
+&lt;pre&gt;java -mx51
     
     </summary>
     

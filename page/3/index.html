@@ -380,7 +380,7 @@
 <li>采用了动态规划查找最大概率路径, 找出基于词频的最大切分组合</li>
 <li>对于未登录词，采用了基于汉字成词能力的 HMM 模型，使用了 Viterbi 算法</li>
 </ul>
-<h1 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h1><h3 id="分词"><a href="#分词" class="headerlink" title="分词"></a>分词</h3><p>jieba.cut 方法接受三个输入参数: 需要分词的字符串；cut_all 参数用来控制是否采用全模式；HMM 参数用来控制是否使用 HMM 模型<br>jieba.cut_for_search 方法接受两个参数：需要分词的字符串；是否使用 HMM 模型。该方法适合用于搜索引擎构建倒排索引的分词，粒度比较细<br>待分词的字符串可以是 unicode 或 UTF-8 字符串、GBK 字符串。注意：不建议直接输入 GBK 字符串，可能无法预料地错误解码成 UTF-8<br>jieba.cut 以及 jieba.cut_for_search 返回的结构都是一个可迭代的 generator，可以使用 for 循环来获得分词后得到的每一个词语(unicode)，或者用 jieba.lcut 以及 jieba.lcut_for_search 直接返回 list<br>jieba.Tokenizer(dictionary=DEFAULT_DICT) 新建自定义分词器，可用于同时使用不同词典。jieba.dt 为默认分词器，所有全局分词相关函数都是该分词器的映射。</p>
+<h1 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h1><h2 id="分词"><a href="#分词" class="headerlink" title="分词"></a>分词</h2><p>jieba.cut 方法接受三个输入参数: 需要分词的字符串；cut_all 参数用来控制是否采用全模式；HMM 参数用来控制是否使用 HMM 模型<br>jieba.cut_for_search 方法接受两个参数：需要分词的字符串；是否使用 HMM 模型。该方法适合用于搜索引擎构建倒排索引的分词，粒度比较细<br>待分词的字符串可以是 unicode 或 UTF-8 字符串、GBK 字符串。注意：不建议直接输入 GBK 字符串，可能无法预料地错误解码成 UTF-8<br>jieba.cut 以及 jieba.cut_for_search 返回的结构都是一个可迭代的 generator，可以使用 for 循环来获得分词后得到的每一个词语(unicode)，或者用 jieba.lcut 以及 jieba.lcut_for_search 直接返回 list<br>jieba.Tokenizer(dictionary=DEFAULT_DICT) 新建自定义分词器，可用于同时使用不同词典。jieba.dt 为默认分词器，所有全局分词相关函数都是该分词器的映射。</p>
 <p>代码示例</p>
 <pre>
 # encoding=utf-8
@@ -403,7 +403,7 @@ print(", ".join(seg_list))</pre>
 <p>【精确模式】: 我/ 来到/ 北京/ 清华大学</p>
 <p>【新词识别】：他, 来到, 了, 网易, 杭研, 大厦    (此处，“杭研”并没有在词典中，但是也被Viterbi算法识别出来了)</p>
 <p>【搜索引擎模式】： 小明, 硕士, 毕业, 于, 中国, 科学, 学院, 科学院, 中国科学院, 计算, 计算所, 后, 在, 日本, 京都, 大学, 日本京都大学, 深造</p>
-<h3 id="添加自定义词典"><a href="#添加自定义词典" class="headerlink" title="添加自定义词典"></a>添加自定义词典</h3><p>载入词典</p>
+<h2 id="添加自定义词典"><a href="#添加自定义词典" class="headerlink" title="添加自定义词典"></a>添加自定义词典</h2><p>载入词典</p>
 <p>开发者可以指定自己自定义的词典，以便包含 jieba 词库里没有的词。虽然 jieba 有新词识别能力，但是自行添加新词可以保证更高的正确率<br>用法：</p>
 <pre>jieba.load_userdict(file_name) # file_name 为文件类对象或自定义词典的路径</pre>
 
@@ -435,7 +435,7 @@ print(", ".join(seg_list))</pre>
 "通过用户自定义词典来增强歧义纠错能力" --- https://github.com/fxsjy/jieba/issues/14
 </pre>
 
-<h3 id="关键词提取"><a href="#关键词提取" class="headerlink" title="关键词提取"></a>关键词提取</h3><p>基于 TF-IDF 算法的关键词抽取</p>
+<h2 id="关键词提取"><a href="#关键词提取" class="headerlink" title="关键词提取"></a>关键词提取</h2><p>基于 TF-IDF 算法的关键词抽取</p>
 <pre>
 import jieba.analyse
 
@@ -465,7 +465,7 @@ jieba.analyse.extract_tags(sentence, topK=20, withWeight=False, allowPOS=())</pr
 </ul>
 <p>使用示例:</p>
 <p>见 test/demo.py</p>
-<h3 id="词性标注"><a href="#词性标注" class="headerlink" title="词性标注"></a>词性标注</h3><p>jieba.posseg.POSTokenizer(tokenizer=None) 新建自定义分词器，tokenizer 参数可指定内部使用的 jieba.Tokenizer 分词器。jieba.posseg.dt 为默认词性标注分词器。<br>标注句子分词后每个词的词性，采用和 ictclas 兼容的标记法。<br>用法示例</p>
+<h2 id="词性标注"><a href="#词性标注" class="headerlink" title="词性标注"></a>词性标注</h2><p>jieba.posseg.POSTokenizer(tokenizer=None) 新建自定义分词器，tokenizer 参数可指定内部使用的 jieba.Tokenizer 分词器。jieba.posseg.dt 为默认词性标注分词器。<br>标注句子分词后每个词的词性，采用和 ictclas 兼容的标记法。<br>用法示例</p>
 <pre>
 >>> import jieba.posseg as pseg
 >>> words = pseg.cut("我爱北京天安门")
@@ -478,7 +478,7 @@ jieba.analyse.extract_tags(sentence, topK=20, withWeight=False, allowPOS=())</pr
 天安门 ns
 </pre>
 
-<h3 id="并行分词"><a href="#并行分词" class="headerlink" title="并行分词"></a>并行分词</h3><p>原理：将目标文本按行分隔后，把各行文本分配到多个 Python 进程并行分词，然后归并结果，从而获得分词速度的可观提升<br>基于 python 自带的 multiprocessing 模块，目前暂不支持 Windows<br>用法：</p>
+<h2 id="并行分词"><a href="#并行分词" class="headerlink" title="并行分词"></a>并行分词</h2><p>原理：将目标文本按行分隔后，把各行文本分配到多个 Python 进程并行分词，然后归并结果，从而获得分词速度的可观提升<br>基于 python 自带的 multiprocessing 模块，目前暂不支持 Windows<br>用法：</p>
 <pre>
 jieba.enable_parallel(4) # 开启并行分词模式，参数为并行进程数
 jieba.disable_parallel() # 关闭并行分词模式
@@ -487,7 +487,7 @@ jieba.disable_parallel() # 关闭并行分词模式
 <p>例子：<a href="https://github.com/fxsjy/jieba/blob/master/test/parallel/test_file.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/parallel/test_file.py</a></p>
 <p>实验结果：在 4 核 3.4GHz Linux 机器上，对金庸全集进行精确分词，获得了 1MB/s 的速度，是单进程版的 3.3 倍。</p>
 <p>注意：并行分词仅支持默认分词器 jieba.dt 和 jieba.posseg.dt。</p>
-<h3 id="Tokenize：返回词语在原文的起止位置"><a href="#Tokenize：返回词语在原文的起止位置" class="headerlink" title="Tokenize：返回词语在原文的起止位置"></a>Tokenize：返回词语在原文的起止位置</h3><p>注意，输入参数只接受 unicode</p>
+<h2 id="Tokenize：返回词语在原文的起止位置"><a href="#Tokenize：返回词语在原文的起止位置" class="headerlink" title="Tokenize：返回词语在原文的起止位置"></a>Tokenize：返回词语在原文的起止位置</h2><p>注意，输入参数只接受 unicode</p>
 <pre>
 # 默认模式
 result = jieba.tokenize(u'永和服装饰品有限公司')
@@ -511,8 +511,8 @@ word 有限公司            start: 6                end:10
 </pre>
 
 
-<h3 id="ChineseAnalyzer-for-Whoosh-搜索引擎"><a href="#ChineseAnalyzer-for-Whoosh-搜索引擎" class="headerlink" title="ChineseAnalyzer for Whoosh 搜索引擎"></a>ChineseAnalyzer for Whoosh 搜索引擎</h3><p>引用： from jieba.analyse import ChineseAnalyzer<br>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/test_whoosh.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/test_whoosh.py</a></p>
-<h3 id="命令行分词"><a href="#命令行分词" class="headerlink" title="命令行分词"></a>命令行分词</h3><p>使用示例：</p>
+<h2 id="ChineseAnalyzer-for-Whoosh-搜索引擎"><a href="#ChineseAnalyzer-for-Whoosh-搜索引擎" class="headerlink" title="ChineseAnalyzer for Whoosh 搜索引擎"></a>ChineseAnalyzer for Whoosh 搜索引擎</h2><p>引用： from jieba.analyse import ChineseAnalyzer<br>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/test_whoosh.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/test_whoosh.py</a></p>
+<h2 id="命令行分词"><a href="#命令行分词" class="headerlink" title="命令行分词"></a>命令行分词</h2><p>使用示例：</p>
 <pre>python -m jieba news.txt > cut_result.txt</pre>
 
 <p>命令行选项（翻译）：</p>
@@ -546,13 +546,13 @@ optional arguments:
 </pre>
 
 <p>If no filename specified, use STDIN instead.</p>
-<h3 id="延迟加载机制"><a href="#延迟加载机制" class="headerlink" title="延迟加载机制"></a>延迟加载机制</h3><p>jieba 采用延迟加载，import jieba 和 jieba.Tokenizer() 不会立即触发词典的加载，一旦有必要才开始加载词典构建前缀字典。如果你想手工初始 jieba，也可以手动初始化。</p>
+<h2 id="延迟加载机制"><a href="#延迟加载机制" class="headerlink" title="延迟加载机制"></a>延迟加载机制</h2><p>jieba 采用延迟加载，import jieba 和 jieba.Tokenizer() 不会立即触发词典的加载，一旦有必要才开始加载词典构建前缀字典。如果你想手工初始 jieba，也可以手动初始化。</p>
 <p>import jieba<br>jieba.initialize()  # 手动初始化（可选）<br>在 0.28 之前的版本是不能指定主词典的路径的，有了延迟加载机制后，你可以改变主词典的路径:</p>
 <p>jieba.set_dictionary(‘data/dict.txt.big’)<br>例子： <a href="https://github.com/fxsjy/jieba/blob/master/test/test_change_dictpath.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/test_change_dictpath.py</a></p>
-<h3 id="其他词典"><a href="#其他词典" class="headerlink" title="其他词典"></a>其他词典</h3><p>占用内存较小的词典文件 <a href="https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.small" target="_blank" rel="external">https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.small</a></p>
+<h2 id="其他词典"><a href="#其他词典" class="headerlink" title="其他词典"></a>其他词典</h2><p>占用内存较小的词典文件 <a href="https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.small" target="_blank" rel="external">https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.small</a></p>
 <p>支持繁体分词更好的词典文件 <a href="https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.big" target="_blank" rel="external">https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.big</a></p>
 <p>下载你所需要的词典，然后覆盖 jieba/dict.txt 即可；或者用 jieba.set_dictionary(‘data/dict.txt.big’)</p>
-<h3 id="其他语言实现"><a href="#其他语言实现" class="headerlink" title="其他语言实现"></a>其他语言实现</h3><p>结巴分词 Java 版本</p>
+<h2 id="其他语言实现"><a href="#其他语言实现" class="headerlink" title="其他语言实现"></a>其他语言实现</h2><p>结巴分词 Java 版本</p>
 <p>作者：piaolingxue 地址：<a href="https://github.com/huaban/jieba-analysis" target="_blank" rel="external">https://github.com/huaban/jieba-analysis</a></p>
 <p>结巴分词 C++ 版本</p>
 <p>作者：yanyiwu 地址：<a href="https://github.com/yanyiwu/cppjieba" target="_blank" rel="external">https://github.com/yanyiwu/cppjieba</a></p>
