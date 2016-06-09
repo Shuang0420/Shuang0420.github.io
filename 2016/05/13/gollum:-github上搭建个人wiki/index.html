@@ -1,0 +1,1005 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="wiki," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。
+开通Wiki登陆Github，找到你所开通的Github项目的Settings栏目，开通Wikis，如果只希望别人可读不可写，勾选：Restrict edits to Collaborators only。如下图所示：
+
+git cl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gollum/-github上搭建个人wiki">
+<meta property="og:url" content="http://yoursite.com/2016/05/13/gollum:-github上搭建个人wiki/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。
+开通Wiki登陆Github，找到你所开通的Github项目的Settings栏目，开通Wikis，如果只希望别人可读不可写，勾选：Restrict edits to Collaborators only。如下图所示：
+
+git cl">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%884.56.12.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%885.25.54.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-27%20%E4%B8%8A%E5%8D%889.46.38.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%886.26.05.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%889.31.07.png">
+<meta property="og:updated_time" content="2016-06-09T09:12:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gollum/-github上搭建个人wiki">
+<meta name="twitter:description" content="博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。
+开通Wiki登陆Github，找到你所开通的Github项目的Settings栏目，开通Wikis，如果只希望别人可读不可写，勾选：Restrict edits to Collaborators only。如下图所示：
+
+git cl">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%884.56.12.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6294135991397516000,
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/13/gollum:-github上搭建个人wiki/"/>
+
+  <title> gollum/-github上搭建个人wiki | 徐阿衡 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                gollum/-github上搭建个人wiki
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-05-13T16:55:07+08:00" content="2016-05-13">
+              2016-05-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Configuration/" itemprop="url" rel="index">
+                    <span itemprop="name">Configuration</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/13/gollum:-github上搭建个人wiki/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/gollum:-github上搭建个人wiki/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。</p>
+<h3 id="开通Wiki"><a href="#开通Wiki" class="headerlink" title="开通Wiki"></a>开通Wiki</h3><p>登陆Github，找到你所开通的Github项目的Settings栏目，开通Wikis，如果只希望别人可读不可写，勾选：Restrict edits to Collaborators only。如下图所示：</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%884.56.12.png" alt=""></p>
+<h3 id="git-clone下相应维基的git地址"><a href="#git-clone下相应维基的git地址" class="headerlink" title="git clone下相应维基的git地址"></a>git clone下相应维基的git地址</h3><pre> git clone git@github.com:Shuang0420/Shuang0420.github.io.wiki.git wiki</pre>
+
+<p>如果你之前没有设置git密钥，可以参照以下步骤先做配置，如果已经设置，请忽略。</p>
+<ol>
+<li><p>查看是否已经有了ssh密钥：<br><pre>cd ~/.ssh</pre><br>如果没有密钥则不会有此文件夹，有则备份删除</p>
+</li>
+<li><p>生成密钥，得到两个文件：id_rsa 和 id_rsa.pub</p>
+<pre>ssh-keygen -t rsa -C “haiyan.xu.vip@gmail.com”</pre>
+</li>
+<li><p>添加密钥到ssh：ssh-add id_rsa</p>
+</li>
+<li><p>在github上settings中添加ssh密钥，即“id_rsa.pub”里的公钥。</p>
+</li>
+<li><p>测试：ssh git@github.com</p>
+</li>
+</ol>
+<h3 id="配置个人wiki"><a href="#配置个人wiki" class="headerlink" title="配置个人wiki"></a>配置个人wiki</h3><ol>
+<li><p>在wiki目录下，安装bundler</p>
+<pre>gem install bundler</pre>
+
+<p>   如果安装没有问题，可以跳过以下错误解决。</p>
+   <pre>
+   ERROR:  Could not find a valid gem 'bundler' (>= 0), here is why:
+             Unable to download data from https://rubygems.org/ - Errno::EPIPE: Broken pipe - SSL_connect (https://rubygems.org/latest_specs.4.8.gz)</pre>
+
+<p>   解决：</p>
+   <pre>gem source -a http://rubygems.org/
+   gem install bundler</pre>
+
+<p>   然而还是有错误：</p>
+   <pre>Fetching: bundler-1.12.5.gem (100%)^[[A
+   ERROR:  While executing gem ... (Gem::FilePermissionError)
+       You don't have write permissions for the /Library/Ruby/Gems/2.0.0 directory.</pre>
+
+<p>   因为没有sudo：</p>
+   <pre>sudo gem install bundler</pre>
+</li>
+<li><p>新建Gemfile文件，内容如下：</p>
+   <pre>
+   source "http://rubygems.org"
+   gem 'redcarpet'
+   gem "grit", '~> 2.5.0', git: 'https://github.com/gitlabhq/grit.git', ref: '42297cdcee16284d2e4eff23d41377f52fc28b9d'
+   gem 'gollum', git: 'https://github.com/gollum/gollum.git'</pre></li>
+<li><p>运行：</p>
+   <pre>
+   # 安装项目依赖的所有gem包;此命令会尝试更新系统中已存在的gem包
+   bundle install</pre>
+
+<p>   时间有点久，耐心等待。<br>   然而最后出现error,</p>
+   <pre>An error occurred while installing charlock_holmes (0.7.3), and Bundler cannot continue.
+   Make sure that `gem install charlock_holmes -v '0.7.3'` succeeds before bundling.</pre>
+
+<p>   好。那就按要求安装。</p>
+   <pre>sudo gem install charlock_holmes -v '0.7.3'</pre>
+
+<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%885.25.54.png" alt=""></p>
+<p>   好。继续按要求安装。</p>
+   <pre>brew install icu4c</pre>
+
+<p>   再重来</p>
+   <pre>sudo gem install charlock_holmes -v '0.7.3'</pre>
+
+   <pre>bundle install</pre>
+
+<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-27%20%E4%B8%8A%E5%8D%889.46.38.png" alt=""></p>
+<p>   因为没有安装bundle</p>
+   <pre>gem install bundle</pre>
+
+<p>   安装后再次尝试运行</p>
+   <pre>bundle install</pre>
+
+<p>   error</p>
+   <pre>Could not reach host index.rubygems.org. Check your network connection and try again.</pre>
+   出现这种错误可以尝试把Gemfile里的https改成http（互相转化进行尝试）
+
+   <pre>bundle install</pre>
+
+<p>   终于成功！</p>
+</li>
+<li><p>已安装成功gollum等。然后运行：</p>
+   <pre>gollum</pre>
+
+<p>   走到这一步了本人还是遇到了万恶的失败。<br>   看着已经安装好了</p>
+   <pre>
+   Installing nokogiri 1.6.7.2 with native extensions
+   Installing rack-protection 1.5.3
+   Installing gollum-grit_adapter 1.0.1
+   Installing sanitize 2.1.0
+   Installing sinatra 1.4.7
+   Installing gollum-lib 4.2.0
+   Using gollum 4.0.1 from https://github.com/gollum/gollum.git (at master@5a5e56a)
+   Bundle complete! 3 Gemfile dependencies, 24 gems now installed.
+   Use `bundle show [gemname]` to see where a bundled gem is installed.
+   </pre>
+
+<p>   然而实际并没有</p>
+   <pre>
+   $ gollum
+   -bash: gollum: command not found</pre>
+
+<p>   大写的忧伤。最后通过直接安装gollum解决。</p>
+   <pre>sudo gem install gollum</pre>
+
+   <pre>gollum</pre>
+</li>
+<li><p>终于可以在本地启动成功维基。打开网址：<a href="http://0.0.0.0:4567/，可以直接在浏览器中编辑。" target="_blank" rel="external">http://0.0.0.0:4567/，可以直接在浏览器中编辑。</a></p>
+<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%886.26.05.png" alt=""></p>
+<p>   如果发现不能如下错误，请尝试更新ruby。</p>
+<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%889.31.07.png" alt=""></p>
+<p>   更新ruby步骤<br>   安装 RVM<br>   RVM:Ruby Version Manager,Ruby版本管理器，包括Ruby的版本管理和Gem库管理(gemset)</p>
+   <pre>curl -L get.rvm.io | bash -s stable</pre>
+
+   <pre>source ~/.bashrc  
+   source ~/.bash_profile </pre>
+
+<p>   测试是否安装正常</p>
+   <pre>rvm -v  </pre>
+
+<p>   用RVM升级Ruby</p>
+   <pre>
+   #查看当前ruby版本  
+   ruby -v  
+   #列出已知的ruby版本  
+   rvm list known  
+   #安装ruby 2.3.0
+   rvm install 2.3.0 </pre>
+
+<p>   安装完成之后ruby -v查看是否安装成功。</p>
+<p>   重新安装完毕后回到第3步。</p>
+</li>
+</ol>
+<h3 id="github同步"><a href="#github同步" class="headerlink" title="github同步"></a>github同步</h3><p>在wiki目录下面，进行git库操作，提交本地对维基内容的修改。一切将自动保存在你的Github上的个人博客网站的wiki目录下面。</p>
+<pre>
+cd ~/wiki
+git add .
+git commit -am"first commit"
+git push</pre>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/wiki/" rel="tag">#wiki</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/12/Github-Pages-Hexo搭建个人博客/" rel="next" title="Github Pages+Hexo搭建个人博客">
+                <i class="fa fa-chevron-left"></i> Github Pages+Hexo搭建个人博客
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/16/JGibbLDA实战/" rel="prev" title="JGibbLDA实战">
+                JGibbLDA实战 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/13/gollum:-github上搭建个人wiki/"
+           data-title="gollum/-github上搭建个人wiki" data-url="http://yoursite.com/2016/05/13/gollum:-github上搭建个人wiki/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/dog"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">宿命星动</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#开通Wiki"><span class="nav-number">1.</span> <span class="nav-text">开通Wiki</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-clone下相应维基的git地址"><span class="nav-number">2.</span> <span class="nav-text">git clone下相应维基的git地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置个人wiki"><span class="nav-number">3.</span> <span class="nav-text">配置个人wiki</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#github同步"><span class="nav-number">4.</span> <span class="nav-text">github同步</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:""};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

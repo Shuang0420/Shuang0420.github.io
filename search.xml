@@ -1,0 +1,1460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+    
+    <entry>
+      <title><![CDATA[gensim-doc2vec实战]]></title>
+      <url>http://yoursite.com/2016/06/01/gensim-doc2vec%E5%AE%9E%E6%88%98/</url>
+      <content type="html"><![CDATA[<p>gensim的doc2vec找不到多少资料，根据官方api探索性的做了些尝试。本文介绍了利用gensim的doc2vec来训练模型，infer新文档向量，infer相似度等方法，有一些不成熟的地方，后期会继续改进。</p>
+<h3 id="导入模块"><a href="#导入模块" class="headerlink" title="导入模块"></a>导入模块</h3><pre>
+# -*- coding: utf-8 -*-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+import gensim, logging
+import os
+import jieba
+
+# logging information
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+</pre>
+
+<h3 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h3><pre>
+# get input file, text format
+f = open('trainingdata.txt','r')
+input = f.readlines()
+count = len(input)
+print count
+</pre>
+
+<h3 id="文件预处理，分词等"><a href="#文件预处理，分词等" class="headerlink" title="文件预处理，分词等"></a>文件预处理，分词等</h3><pre>
+# read file and separate words
+alldocs=[] # for the sake of check, can be removed
+count=0 # for the sake of check, can be removed
+for line in input:
+    line=line.strip('\n')
+    seg_list = jieba.cut(line)
+    output.write(' '.join(seg_list) + '\n')
+    alldocs.append(gensim.models.doc2vec.TaggedDocument(seg_list,count)) # for the sake of check, can be removed
+    count+=1 # for the sake of check, can be removed
+</pre>
+
+
+<h3 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h3><p>gensim Doc2Vec 提供了 DM 和 DBOW 两个模型。gensim 的说明文档建议多次训练数据集并调整学习速率或在每次训练中打乱输入信息的顺序以求获得最佳效果。</p>
+<pre>
+# PV-DM w/concatenation - window=5 (both sides) approximates paper's 10-word total window size
+Doc2Vec(sentences,dm=1, dm_concat=1, size=100, window=2, hs=0, min_count=2, workers=cores)
+# PV-DBOW  
+Doc2Vec(sentences,dm=0, size=100, hs=0, min_count=2, workers=cores)
+# PV-DM w/average
+Doc2Vec(sentences,dm=1, dm_mean=1, size=100, window=2, hs=0, min_count=2, workers=cores)
+</pre>
+
+
+<h3 id="训练并保存模型"><a href="#训练并保存模型" class="headerlink" title="训练并保存模型"></a>训练并保存模型</h3><pre>
+# train and save the model
+sentences= gensim.models.doc2vec.TaggedLineDocument('output.seq')
+model = gensim.models.Doc2Vec(sentences,size=100, window=3)
+model.train(sentences)
+model.save('all_model.txt')
+</pre>
+
+<h3 id="保存文档向量"><a href="#保存文档向量" class="headerlink" title="保存文档向量"></a>保存文档向量</h3><pre>
+# save vectors
+out=open("all_vector.txt","wb")
+for num in range(0,count):
+    docvec =model.docvecs[num]
+    out.write(docvec)
+    #print num
+    #print docvec
+out.close()
+</pre>
+
+<h3 id="检验-计算训练文档中的文档相似度"><a href="#检验-计算训练文档中的文档相似度" class="headerlink" title="检验 计算训练文档中的文档相似度"></a>检验 计算训练文档中的文档相似度</h3><pre>
+# test, calculate the similarity
+# 注意 docid 是从0开始计数的
+# 计算与训练集中第一篇文档最相似的文档
+sims = model.docvecs.most_similar(0)
+print sims
+# get similarity between doc1 and doc2 in the training data
+sims = model.docvecs.similarity(1,2)
+print sims
+</pre>
+
+<h3 id="infer向量，比较相似度"><a href="#infer向量，比较相似度" class="headerlink" title="infer向量，比较相似度"></a>infer向量，比较相似度</h3><p>下面的代码用于检验模型正确性，随机挑一篇trained dataset中的文档，用模型重新infer，再计算与trained dataset中文档相似度，如果模型良好，相似度第一位应该就是挑出的文档。</p>
+<pre>
+# check
+#############################################################################
+# A good check is to re-infer a vector for a document already in the model. #
+# if the model is well-trained,                                             #
+# the nearest doc should (usually) be the same document.                    #
+#############################################################################
+
+print 'examing'
+doc_id = np.random.randint(model.docvecs.count)  # pick random doc; re-run cell for more examples
+print('for doc %d...' % doc_id)
+inferred_docvec = model.infer_vector(alldocs[doc_id].words)
+print('%s:\n %s' % (model, model.docvecs.most_similar([inferred_docvec], topn=3)))
+</pre>
+
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>👇两个错误还在探索中，根据官方指南是可以运行的，然而我遇到了错误并没能解决。<br>第一段错误代码，关于train the model</p>
+<pre>
+alldocs=[]
+count=0
+for line in input:
+    #print line
+    line=line.strip('\n')
+    seg_list = jieba.cut(line)
+    #output.write(line)
+    output.write(' '.join(seg_list) + '\n')
+    alldocs.append(gensim.models.doc2vec.TaggedDocument(seg_list,count))
+    count+=1
+
+model = Doc2Vec(alldocs,size=100, window=2, min_count=5, workers=4)
+model.train(alldocs)
+</pre>
+
+<p>报错信息</p>
+<pre>
+Traceback (most recent call last):
+  File "d2vTestv5.py", line 59, in <module>
+    model = Doc2Vec(alldocs[0],size=100, window=2, min_count=5, workers=4)
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 596, in __init__
+    self.build_vocab(documents, trim_rule=trim_rule)
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/word2vec.py", line 508, in build_vocab
+    self.scan_vocab(sentences, trim_rule=trim_rule)  # initial survey
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 639, in scan_vocab
+    document_length = len(document.words)
+AttributeError: 'generator' object has no attribute 'words'
+</module></pre>
+
+<p>第二段错误代码，关于infer</p>
+<pre>
+doc_words1=['验证','失败','验证码','未','收到']
+doc_words2=['今天','奖励','有','哪些','呢']
+# get infered vector
+invec1 = model.infer_vector(doc_words1, alpha=0.1, min_alpha=0.0001, steps=5)
+invec2 = model.infer_vector(doc_words2, alpha=0.1, min_alpha=0.0001, steps=5)
+print invec1
+print invec2
+
+# get similarity
+# the output docid is supposed to be 0
+sims = model.docvecs.most_similar([invec1])
+print sims
+
+# according to official guide, the following codes are supposed to be fine, but it fails to run
+sims= model.docvecs.similarity(invec1,invec2)
+print model.similarity(['今天','有','啥','奖励'],['今天','奖励','有','哪些','呢'])
+</pre>
+
+<p>最后两行代码报错，错误信息</p>
+<pre>
+raceback (most recent call last):
+  File "d2vTestv5.py", line 110, in <module>
+    sims= model.docvecs.similarity(invec1,invec2)
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 484, in similarity
+    return dot(matutils.unitvec(self[d1]), matutils.unitvec(self[d2]))
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 341, in __getitem__
+    return vstack([self[i] for i in index])
+  File "/usr/local/lib/python2.7/site-packages/gensim/models/doc2vec.py", line 341, in __getitem__
+    return vstack([self[i] for i in index])
+TypeError: 'numpy.float32' object is not iterable
+</module></pre>
+
+<p><a href="https://github.com/Shuang0420/doc2vec" target="_blank" rel="external">更多代码</a></p>
+<blockquote>
+<p>参考链接<br><a href="https://radimrehurek.com/gensim/models/doc2vec.html" target="_blank" rel="external">https://radimrehurek.com/gensim/models/doc2vec.html</a><br><a href="https://github.com/piskvorky/gensim/blob/develop/docs/notebooks/doc2vec-IMDB.ipynb" target="_blank" rel="external">https://github.com/piskvorky/gensim/blob/develop/docs/notebooks/doc2vec-IMDB.ipynb</a></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gensim: word2vec实战]]></title>
+      <url>http://yoursite.com/2016/05/30/gensim-word2vec%E5%AE%9E%E6%88%98/</url>
+      <content type="html"><![CDATA[<pre>
+
+# -*- coding: utf-8 -*-
+import gensim
+from gensim.corpora import WikiCorpus
+from gensim.models import Word2Vec
+from gensim.models.word2vec import LineSentence
+import os
+import logging
+import jieba
+import re
+import multiprocessing
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+# logging information
+logging.basicConfig(format='%(asctime)s: %(levelname)s: %(message)s')
+logging.root.setLevel(level=logging.INFO)
+
+# get input file, text format
+inp = sys.argv[1]
+input = open(inp, 'r')
+output = open('output.seq', 'w')
+
+if len(sys.argv) < 2:
+    print(globals()['__doc__'] % locals())
+    sys.exit(1)
+
+# read file and separate words
+for line in input.readlines():
+    line=line.strip('\n')
+    seg_list = jieba.cut(line)
+    output.write(' '.join(seg_list) + '\n')
+
+output.close()
+output= open('output.seq', 'r')
+
+# initialize the model
+# size = the dimensionality of the feature vectors
+# window = the maximum distance between the current and predicted word within a sentence
+# min_count = ignore all words with total frequency lower than this.
+model = Word2Vec(LineSentence(output), size=100, window=3, min_count=5,workers=multiprocessing.cpu_count())
+
+# save model
+model.save('output.model')
+model.save_word2vec_format('output.vector', binary=False)
+
+# test
+model=gensim.models.Word2Vec.load('output.model')
+x = model.most_similar([u'奖励'])
+for i in x:
+    print "Word: {}\t Similarity: {}".format(i[0], i[1])
+</pre>
+
+<p><a href="https://github.com/Shuang0420/word2vec_example" target="_blank" rel="external">更多代码</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[word2vec详解之六 -- 若干源码细节]]></title>
+      <url>http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%85%AD-%E8%8B%A5%E5%B9%B2%E6%BA%90%E7%A0%81%E7%BB%86%E8%8A%82/</url>
+      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<hr>
+
+
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/61.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/62.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/63.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/64.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/65.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/66.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/67.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/68.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[word2vec详解之五 -- 基于 Negative Sampling 的模型]]></title>
+      <url>http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%94-%E5%9F%BA%E4%BA%8E-Negative-Sampling-%E7%9A%84%E6%A8%A1%E5%9E%8B/</url>
+      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<p><hr><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/51.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/52.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/53.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/54.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/55.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/56.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/57.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/58.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/59.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/510.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/511.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[word2vec详解之四 -- 基于Hierarchical Softmax 的模型]]></title>
+      <url>http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E5%9B%9B-%E5%9F%BA%E4%BA%8EHierarchical-Softmax-%E7%9A%84%E6%A8%A1%E5%9E%8B/</url>
+      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<hr>
+
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/6.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/7.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/8.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/9.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/10.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/11.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/12.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/1.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/2.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/3.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/4.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/5.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[word2vec详解之三 -- 背景知识]]></title>
+      <url>http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%89-%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86/</url>
+      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<hr>
+
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/32.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/33.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/34.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/35.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/36.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/37.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/38.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/39.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/310.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/311.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[word2vec详解之二 -- 预备知识]]></title>
+      <url>http://yoursite.com/2016/05/29/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/</url>
+      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<hr>
+
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/21.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/22.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/23.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/24.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/25.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/26.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/27.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[word2vec详解之一 -- 目录和前言]]></title>
+      <url>http://yoursite.com/2016/05/28/word2vec%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80-%E7%9B%AE%E5%BD%95%E5%92%8C%E5%89%8D%E8%A8%80/</url>
+      <content type="html"><![CDATA[<p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。</p>
+<p><hr><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/11.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/12.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/13.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/14.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/15.jpg" alt=""></p>
+<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[PHP连接数据库js可视化数据]]></title>
+      <url>http://yoursite.com/2016/05/26/PHP%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93js%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[短句归一化--LSI模型]]></title>
+      <url>http://yoursite.com/2016/05/25/%E7%9F%AD%E9%97%AE%E9%A2%98%E5%BD%92%E4%B8%80%E5%8C%96-LSI%E6%A8%A1%E5%9E%8B/</url>
+      <content type="html"><![CDATA[<h3 id="LSI-理解"><a href="#LSI-理解" class="headerlink" title="LSI 理解"></a>LSI 理解</h3><p>LSI(Latent Semantic Indexing)，中文意译是潜在语义索引，即通过海量文献找出词汇之间的关系。基本理念是当两个词或一组词大量出现在一个文档中时，这些词之间就是语义相关的。</p>
+<blockquote>
+<p>潜在语义索引是一种用奇异值分解方法获得在文本中术语和概念之间关系的索引和获取方法。该方法的主要依据是在相同文章中的词语一般有类似的含义。该方法可以可以从一篇文章中提取术语关系，从而建立起主要概念内容。</p>
+</blockquote>
+<h3 id="降维过程"><a href="#降维过程" class="headerlink" title="降维过程"></a>降维过程</h3><p>将文档库表示成VSM模型的词-文档矩阵Am×n(词-文档矩阵那就是词作为行，文档作为列，这是矩阵先行后列的表示决定的，当然如果表示成文档-词矩阵的话，后面的计算就要用该矩阵的转置了),其中m表示文档库中包含的所有不同的词的个(行数是不同词的个数)，即行向量表示一个词在不同文档出现的次数，n 表示文档库中的文档数(列数是不同文档的个数)，即列向量表示的是不同的文档.A表示为A = [α ij ],在此矩阵中 ,α ij为非负值 , 表示第 i 个词在第j 个文档中出现的频度。显然，A是稀疏矩阵(这是VSM和文档决定的)。</p>
+<p>利用奇异值分解SVD(Singular Value Decomposition)求A的只有K个正交因子的降秩矩阵，该过程就是降维的过程。SVD的重要作用是把词和文档映射到同一个语义空间中，将词和文档表示为K个因子的形式。显然，这会丢失信息，但主要的信息却被保留了。为什么该过程可以降维呢？因为该过程解决了同义和多义现象。可以看出，K的取值对整个分类结果的影响很大。因为，K过小，则丢失信息就越多；K过大，信息虽然多，但可能有冗余且计算消耗大。K的选择也是值得研究的，不过一般取值为100-300，不绝对。</p>
+<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>对于 LSI/PLSI 来说，聚类的意义不在于文档，而在于单词。所以对于聚类的一种变型用法是，当 k 设的足够大时，LSI/PLSI 能够给出落在不同子空间的单词序列，基本上这些单词之间拥有较为紧密的语义联系。其实这种用法本质上还是在利用降维做单词相关度计算。</p>
+<ol>
+<li><p>特征降维<br>LSI 本质上是把每个特征映射到了一个更低维的子空间（sub space)，所以用来做降维可以说是天造地设。TFIDF是另一个通用的降维方法，通过一个简单的公式（两个整数相乘）得到不同单词的重要程度，并取前k个最重要的单词，而丢弃其它单词，只有信息的丢失，并没有信息的改变。从执行效率上 TFIDF 远远高于 LSI，不过从效果上（至少在学术界）LSI 要优于TFIDF。<br>不过必须提醒的是，无论是上述哪一种降维方法，都会造成信息的偏差，进而影响后续分类/聚类的准确率。 降维是希望以可接受的效果损失下，大大提高运行效率和节省内存空间。然而能不降维的时候还是不要降维（比如你只有几千篇文档要处理，那样真的没有必要降维）。</p>
+</li>
+<li><p>单词相关度计算<br>LSI 的结果通过简单变换就能得到不同单词之间的相关度( 0 ~ 1 之间的一个实数），相关度非常高的单词往往拥有相同的含义。不过不要被“潜在语义”的名称所迷惑，所谓的潜在语义只不过是统计意义上的相似，如果想得到同义词还是使用同义词词典靠谱。LSI 得到的近义词的特点是它们不一定是同义词（甚至词性都可能不同），但它们往往出现在同类情景下（比如“魔兽” 和 “dota”)。不过事实上直接使用LSI做单词相关度计算的并不多，一方面在于现在有一些灰常好用的同义词词典，另外相对无监督的学习大家还是更信任有监督的学习（分类）得到的结果。</p>
+</li>
+<li><p>聚类<br>直接用 LSI 聚类的情景还没有见过，但使用该系列算法的后续变种 PLSI, LDA 进行聚类的的确有一些。其中LDA聚类还有些道理（因为它本身就假设了潜在topic的联合概率分布），用 LSI 进行聚类其实并不合适。本质上 LSI 在找特征子空间，而聚类方法要找的是实例分组。 LSI 虽然能得到看起来貌似是聚类的结果，但其意义不见得是聚类所想得到的。一个明显的例子就是，对于分布不平均的样本集（比如新闻类的文章有1000篇，而文学类的文章只有10篇）， LSI/PLSI 得到的往往是相对平均的结果(A类500篇，B类600篇)，这种情况下根本无法得到好的聚类结果。相对传统聚类方法k-means， LSI 系列算法不仅存在信息的偏差（丢失和改变），而且不能处理分布不均的样本集。</p>
+</li>
+</ol>
+<h3 id="实验说明"><a href="#实验说明" class="headerlink" title="实验说明"></a>实验说明</h3><p>用了python的gensim包<br>现有的数据是438条标准问题以及3300条人工问题（可以转化为438条标准问题），现在需要对人工问题做一个归一化。<br>这里采用LSI模型进行建模实验，步骤如下。</p>
+<h3 id="导入包"><a href="#导入包" class="headerlink" title="导入包"></a>导入包</h3><pre>
+# -*- coding: utf-8 -*-
+from gensim import corpora, models, similarities
+import logging
+import jieba
+import jieba.posseg as pseg
+# 防止乱码
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+# 打印log信息
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)</pre>
+
+
+<h3 id="文本预处理"><a href="#文本预处理" class="headerlink" title="文本预处理"></a>文本预处理</h3><pre>
+# 标准FAQ，一行对应一条问句
+f = open('FAQuniq.txt', 'r')
+# 对问句进行分词
+texts = [[word for word in jieba.cut(document, cut_all = False)] for document in f]
+
+# 抽取一个bag-of-words，将文档的token映射为id
+dictionary = corpora.Dictionary(texts)
+# 保存词典
+dictionary.save('LSI.dict')
+
+# 产生文档向量，将用字符串表示的文档转换为用id和词频表示的文档向量
+corpus = [dictionary.doc2bow(text) for text in texts]
+
+# 基于这些“训练文档”计算一个TF-IDF模型
+tfidf = models.TfidfModel(corpus)
+
+# 转化文档向量，将用词频表示的文档向量表示为一个用tf-idf值表示的文档向量
+corpus_tfidf = tfidf[corpus]
+
+# 训练LSI模型 即将训练文档向量组成的矩阵SVD分解，并做一个秩为2的近似SVD分解
+lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=100)
+
+# 保存模型
+lsi.save('LSI.pkl')
+lsi.print_topics(20)</pre>
+
+
+<h3 id="初始化验证performance的文件"><a href="#初始化验证performance的文件" class="headerlink" title="初始化验证performance的文件"></a>初始化验证performance的文件</h3><p>checkFile的每行格式为：</p>
+<pre>原始问题的docid：对应的标准问题的topicid</pre>
+
+<p>把它存到checkDict这个dictionary中，key是docid，value是topicid。</p>
+<pre>
+checkDict=dict()
+def getCheckId():
+    fcheck=open('checkFile.txt')
+    for line in fcheck:
+        line=line.strip('\n')
+        if (len(line)==0):
+            continue
+        docid=line.split(":")[0]
+        topicid=line.split(":")[1]
+        checkDict[int(docid)]=int(topicid)
+getCheckId()</pre>
+
+<h3 id="归一化／计算文档相似度"><a href="#归一化／计算文档相似度" class="headerlink" title="归一化／计算文档相似度"></a>归一化／计算文档相似度</h3><pre>
+# 建索引
+index = similarities.MatrixSimilarity(lsi[corpus])
+
+# 初始化分数
+score1=0
+score2=0
+score3=0
+
+# 读取文件，文件的每行格式为一个原始问句
+f2=open('ORIFAQ3330.txt','r')
+# count的作用是和checkFile的docid，即checkDict的key对应
+count=1
+for query in f2:
+    # 获取该原始问句本应对应的正确标准问句
+    if (not checkDict.has_key(count)):
+        count+=1
+        continue
+    checkId=checkDict[count]
+    # 将问句向量化
+    query_bow = dictionary.doc2bow(jieba.cut(query, cut_all = False))
+    # 再用之前训练好的LSI模型将其映射到二维的topic空间：
+    query_lsi = lsi[query_bow]
+    # 计算其和index中doc的余弦相似度了：
+    sims = index[query_lsi]
+    sort_sims = sorted(enumerate(sims), key=lambda item: -item[1])
+    # 找出最相关的三篇文档，计算这三篇文档是否包括标准问句，如果文档就是标准问句，对应的分数加1
+    if (checkId==sort_sims[0][0]):
+        score1+=1
+    elif (checkId==sort_sims[1][0]):
+        score2+=1
+    elif (checkId==sort_sims[2][0]):
+        score3+=1
+    count+=1</pre>
+
+<h3 id="打印分数"><a href="#打印分数" class="headerlink" title="打印分数"></a>打印分数</h3><pre>
+print "Score1: ".format(score1*1.0/count)
+print "Score2: ".format(score2*1.0/count)
+print "Score3: ".format(score3*1.0/count)</pre>
+
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>其实这里的结果非常差，原因是文档（每一条问句）太短，只有十几个字，另外文档数太少，LSI降维牺牲了准确率，下一个实验LDA的准确率相比会高很多。<br>另外，本次实验所用的样本分布并不均匀，“未收到奖励”类似问题出现的频率比“软件无声音”类似问题出现的频率要高很多。<strong><em>重申：LSI/PLSI 得到的往往是相对平均的结果(A类500篇，B类600篇)，这种情况下根本无法得到好的聚类结果。相对传统聚类方法k-means， LSI 系列算法不仅存在信息的偏差（丢失和改变），而且不能处理分布不均的样本集。</em></strong></p>
+<h3 id="LSI-缺陷"><a href="#LSI-缺陷" class="headerlink" title="LSI 缺陷"></a>LSI 缺陷</h3><p>常用的VSM文本表示模型中有两个主要的缺陷：</p>
+<ol>
+<li><p>该模型假设所有特征词条之间是相互独立、互不影响的（朴素贝叶斯也是这个思想），即该模型还是基于“词袋”模型（应该说所有利用VSM模型没有进行潜在语义分析的算法都是基于“词袋”假设）。</p>
+</li>
+<li><p>没有进行特征降维，特征维数可能会很高，向量空间可能很大，对存储和计算资源要求会比较高。</p>
+</li>
+</ol>
+<p>LSI的基本思想是文本中的词与词之间不是孤立的，存在着某种潜在的语义关系，通过对样本数据的统计分析，让机器自动挖掘出这些潜在的语义关系，并把这些关系表示成计算机可以”理解”的模型。它可以消除词匹配过程中的同义和多义现象。它可以将传统的VSM降秩到一个低维的语义空间中，在该语义空间中计算文档的相似度等。总的说来，LSI就是利用词的语义关系对VSM模型进行降维，并提高分类的效果。</p>
+<blockquote>
+<p>参考链接<br><a href="http://www.zwbk.org/MyLemmaShow.aspx?lid=257113" target="_blank" rel="external">http://www.zwbk.org/MyLemmaShow.aspx?lid=257113</a><br><a href="http://www.52nlp.cn/%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E4%B8%A4%E4%B8%AA%E6%96%87%E6%A1%A3%E7%9A%84%E7%9B%B8%E4%BC%BC%E5%BA%A6%E4%BA%8C" target="_blank" rel="external">http://www.52nlp.cn/%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E4%B8%A4%E4%B8%AA%E6%96%87%E6%A1%A3%E7%9A%84%E7%9B%B8%E4%BC%BC%E5%BA%A6%E4%BA%8C</a></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[GibbsLDA++: A C/C++ 使用心得]]></title>
+      <url>http://yoursite.com/2016/05/25/GibbsLDA-A-C-C-%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[在c里调用python]]></title>
+      <url>http://yoursite.com/2016/05/22/%E5%9C%A8c%E9%87%8C%E8%B0%83%E7%94%A8python/</url>
+      <content type="html"><![CDATA[<p>这一个例子是c调用了python的函数，函数返回值是list，包含了100个float值。</p>
+<pre>
+#include <python2.7 python.h="">
+#include <stdio.h>
+#include <stdlib.h>
+void test1(){
+  Py_Initialize();//初始化python
+  char *test = "奖励";
+  PyObject * pModule = NULL;
+  PyObject * pModule1 = NULL;
+  PyObject * pFunc = NULL;
+  PyObject * pArg    = NULL;
+  PyObject * result;
+  pModule = PyImport_ImportModule("inferSingleDocVec");//引入模块
+  pFunc = PyObject_GetAttrString(pModule, "getDocVec");//直接获取模块中的函数
+  pArg= Py_BuildValue("(s)", test);
+  result = PyEval_CallObject(pFunc, pArg); //调用直接获得的函数，并传递参数；这里得到的是一个list
+  <code>for (int i = 0; i < PyList_Size(result); i++) {</code>
+    printf("%f\t", PyFloat_AsDouble(PyList_GetItem(result, (Py_ssize_t)i)));//打印每一个元素
+  }
+  //下面代码适用于返回值为字符串的情况
+  //char* s=NULL;
+  //PyArg_Parse(result, "s", &s);
+  //for (int i=0;s[i]!='\0';i++){
+   // printf("%c",s[i]);
+ // }
+  Py_Finalize(); //释放python
+//  return;
+}
+int main(int argc, char* argv[])
+{
+    test1();
+    return 0;
+}
+</stdlib.h></stdio.h></python2.7></pre>
+
+<p>编译运行</p>
+<pre>
+$ gcc -I/usr/local/lib/python2.7.11 -o inferDocVec inferDocVec.c -lpython2.7
+$ ./inferDocVec
+</pre>
+
+<p>调用的inferSingleDocVec文件</p>
+<pre>
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+### for infer
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+import gensim, logging
+from gensim.models import Doc2Vec
+import os
+import jieba
+import multiprocessing
+import numpy as np
+import base64
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
+def getDocVec(doc_words):
+    docwords=[word for word in jieba.cut(doc_words, cut_all = False)]
+    model = Doc2Vec.load('all_model_v2.txt')
+    invec = model.infer_vector(docwords, alpha=0.1, min_alpha=0.0001, steps=5)
+    return (list)(invec)
+</pre>
+
+<p>关于如何将python文件转为模块，详见之前的一篇博文<a href="https://github.com/Shuang0420/Shuang0420.github.io/wiki/python----%E5%B0%86%E8%87%AA%E5%B7%B1%E5%86%99%E7%9A%84py%E6%96%87%E4%BB%B6%E4%BD%9C%E4%B8%BA%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%85%A5" target="_blank" rel="external">python 将自己写的py文件作为模块导入</a></p>
+<blockquote>
+<p>参考链接</p>
+<blockquote>
+<p><a href="https://www.daniweb.com/programming/software-development/threads/237529/what-does-pyarg_parse-do-in-detail" target="_blank" rel="external">https://www.daniweb.com/programming/software-development/threads/237529/what-does-pyarg_parse-do-in-detail</a></p>
+<p><a href="http://stackoverflow.com/questions/5079570/writing-a-python-c-extension-how-to-correctly-load-a-pylistobject" target="_blank" rel="external">http://stackoverflow.com/questions/5079570/writing-a-python-c-extension-how-to-correctly-load-a-pylistobject</a></p>
+</blockquote>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[AP聚类]]></title>
+      <url>http://yoursite.com/2016/05/19/AP%E8%81%9A%E7%B1%BB/</url>
+      <content type="html"><![CDATA[<p>AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。</p>
+<p>Affinity Propagation (AP) 聚类是最近在Science杂志上提出的一种新的聚类算法。它根据N个数据点之间的相似度进行聚类,这些相似度可以是对称的,即两个数据点互相之间的相似度一样(如欧氏距离);也可以是不对称的,即两个数据点互相之间的相似度不等。这些相似度组成N×N的相似度矩阵S(其中N为有N个数据点)。AP算法不需要事先指定聚类数目,相反它将所有的数据点都作为潜在的聚类中心,称之为exemplar。以S矩阵的对角线上的数值s(k, k)作为k点能否成为聚类中心的评判标准,这意味着该值越大,这个点成为聚类中心的可能性也就越大,这个值又称作参考度p (preference)。<br>在这里介绍几个文中常出现的名词：<br>exemplar：指的是聚类中心。<br>similarity：数据点i和点j的相似度记为S(i，j)。是指点j作为点i的聚类中心的相似度。一般使用欧氏距离来计算，如－|| ||。文中，所有点与点的相似度值全部取为负值。因为我们可以看到，相似度值越大说明点与点的距离越近，便于后面的比较计算。<br>preference：数据点i的参考度称为P(i)或S(i,i)。是指点i作为聚类中心的参考度。一般取S相似度值的中值。<br>Responsibility:R(i,k)用来描述点k适合作为数据点i的聚类中心的程度。<br>Availability:A(i,k)用来描述点i选择点k作为其聚类中心的适合程度。</p>
+<p>Script output:<br>Estimated number of clusters: 3<br>Homogeneity: 0.872<br>Completeness: 0.872<br>V-measure: 0.872<br>Adjusted Rand Index: 0.912<br>Adjusted Mutual Information: 0.871<br>Silhouette Coefficient: 0.753</p>
+<p>Python source code: plot_affinity_propagation.py<br>print(<strong>doc</strong>)</p>
+<p>from sklearn.cluster import AffinityPropagation<br>from sklearn import metrics<br>from sklearn.datasets.samples_generator import make_blobs</p>
+<p>##############################################################################</p>
+<h1 id="Generate-sample-data"><a href="#Generate-sample-data" class="headerlink" title="Generate sample data"></a>Generate sample data</h1><p>centers = [[1, 1], [-1, -1], [1, -1]]<br>X, labels_true = make_blobs(n_samples=300, centers=centers, cluster_std=0.5,<br>                            random_state=0)</p>
+<p>##############################################################################</p>
+<h1 id="Compute-Affinity-Propagation"><a href="#Compute-Affinity-Propagation" class="headerlink" title="Compute Affinity Propagation"></a>Compute Affinity Propagation</h1><p>af = AffinityPropagation(preference=-50).fit(X)<br>cluster_centers_indices = af.cluster_centers<em>indices</em><br>labels = af.labels_</p>
+<p>n<em>clusters</em> = len(cluster_centers_indices)</p>
+<p>print(‘Estimated number of clusters: %d’ % n<em>clusters</em>)<br>print(“Homogeneity: %0.3f” % metrics.homogeneity_score(labels_true, labels))<br>print(“Completeness: %0.3f” % metrics.completeness_score(labels_true, labels))<br>print(“V-measure: %0.3f” % metrics.v_measure_score(labels_true, labels))<br>print(“Adjusted Rand Index: %0.3f”<br>      % metrics.adjusted_rand_score(labels_true, labels))<br>print(“Adjusted Mutual Information: %0.3f”<br>      % metrics.adjusted_mutual_info_score(labels_true, labels))<br>print(“Silhouette Coefficient: %0.3f”<br>      % metrics.silhouette_score(X, labels, metric=’sqeuclidean’))</p>
+<p>##############################################################################</p>
+<h1 id="Plot-result"><a href="#Plot-result" class="headerlink" title="Plot result"></a>Plot result</h1><p>import matplotlib.pyplot as plt<br>from itertools import cycle</p>
+<p>plt.close(‘all’)<br>plt.figure(1)<br>plt.clf()</p>
+<p>colors = cycle(‘bgrcmykbgrcmykbgrcmykbgrcmyk’)<br>for k, col in zip(range(n<em>clusters</em>), colors):<br>    class_members = labels == k<br>    cluster_center = X[cluster_centers_indices[k]]<br>    plt.plot(X[class_members, 0], X[class_members, 1], col + ‘.’)<br>    plt.plot(cluster_center[0], cluster_center[1], ‘o’, markerfacecolor=col,<br>             markeredgecolor=’k’, markersize=14)<br>    for x in X[class_members]:<br>        plt.plot([cluster_center[0], x[0]], [cluster_center[1], x[1]], col)</p>
+<p>plt.title(‘Estimated number of clusters: %d’ % n<em>clusters</em>)<br>plt.show()</p>
+<blockquote>
+<p>参考链接<br><a href="http://scikit-learn.org/stable/modules/clustering.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/clustering.html</a><br><a href="http://blog.csdn.net/u010695420/article/details/42239465" target="_blank" rel="external">http://blog.csdn.net/u010695420/article/details/42239465</a></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[LDA验证]]></title>
+      <url>http://yoursite.com/2016/05/19/LDA%E9%AA%8C%E8%AF%81/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Gensim and LDA--Training and Prediction]]></title>
+      <url>http://yoursite.com/2016/05/18/Gensim-and-LDA-Training-and-Prediction/</url>
+      <content type="html"><![CDATA[<pre>
+# install the related python packages
+>>> pip install numpy
+>>> pip install scipy
+>>> pip install gensim
+>>> pip install jieba
+
+from gensim import corpora, models, similarities
+import logging
+import jieba
+
+# configuration
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
+# load data from file
+f = open('newfile.txt', 'r')
+documents = f.readlines()
+
+＃ tokenize
+texts = [[word for word in jieba.cut(document, cut_all = False)] for document in documents]
+
+# load id->word mapping (the dictionary)
+dictionary = corpora.Dictionary(texts)
+
+# word must appear >10 times, and no more than 40% documents
+dictionary.filter_extremes(no_below=40, no_above=0.1)
+
+# save dictionary
+dictionary.save('dict_v1.dict')
+
+# load corpus
+corpus = [dictionary.doc2bow(text) for text in texts]
+
+# initialize a model
+tfidf = models.TfidfModel(corpus)
+
+# use the model to transform vectors, apply a transformation to a whole corpus
+corpus_tfidf = tfidf[corpus]
+
+# extract 100 LDA topics, using 1 pass and updating once every 1 chunk (10,000 documents), using 500 iterations
+lda = models.LdaModel(corpus_tfidf, id2word=dictionary, num_topics=100, iterations=500)
+
+# save model to files
+lda.save('mylda_v1.pkl')
+
+# print topics composition, and their scores, for the first document. You will see that only few topics are represented; the others have a nil score.
+for index, score in sorted(lda[corpus_tfidf[0]], key=lambda tup: -1*tup[1]):
+    print "Score: {}\t Topic: {}".format(score, lda.print_topic(index, 10))
+
+# print the most contributing words for 100 randomly selected topics
+lda.print_topics(100)
+
+# load model and dictionary
+model = models.LdaModel.load('mylda_v1.pkl')
+dictionary = corpora.Dictionary.load('dict_v1.dict')
+
+# predict unseen data
+query = "未收到奖励"
+query_bow = dictionary.doc2bow(jieba.cut(query, cut_all = False))
+for index, score in sorted(model[query_bow], key=lambda tup: -1*tup[1]):
+    print "Score: {}\t Topic: {}".format(score, model.print_topic(index, 20))
+
+# if you want to predict many lines of data in a file, do the followings
+f = open('newfile.txt', 'r')
+documents = f.readlines()
+texts = [[word for word in jieba.cut(document, cut_all = False)] for document in documents]
+corpus = [dictionary.doc2bow(text) for text in texts]
+
+# only print the topic with the highest score
+for c in corpus:
+    flag = True
+    for index, score in sorted(model[c], key=lambda tup: -1*tup[1]):
+        if flag:
+            print "Score: {}\t Topic: {}".format(score, model.print_topic(index, 20))</pre>
+
+<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips:"></a>Tips:</h1><p>If you occur encoding problems, you can try the following code</p>
+<pre>
+add it at the beginning of your python file
+# -*- coding: utf-8 -*-
+
+# also, do the followings
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+# the following code may lead to encoding problem when there're Chinese characters
+model.show_topics(-1, 5)
+
+# use this instead
+model.print_topics(-1, 5)</pre>
+
+
+<p>You can see step-by-step output by the following references.</p>
+<blockquote>
+<p>References:</p>
+<blockquote>
+<p><a href="https://radimrehurek.com/gensim/tut2.html" target="_blank" rel="external">https://radimrehurek.com/gensim/tut2.html</a> official guide (en)</p>
+<p><a href="http://blog.csdn.net/questionfish/article/details/46725475" target="_blank" rel="external">http://blog.csdn.net/questionfish/article/details/46725475</a>  official guide (ch)</p>
+<p><a href="https://radimrehurek.com/gensim/wiki.html#latent-dirichlet-allocation" target="_blank" rel="external">https://radimrehurek.com/gensim/wiki.html#latent-dirichlet-allocation</a></p>
+</blockquote>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Gensim-用Python做主题模型]]></title>
+      <url>http://yoursite.com/2016/05/18/Gensim-%E7%94%A8Python%E5%81%9A%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B/</url>
+      <content type="html"><![CDATA[<h3 id="gensim-介绍"><a href="#gensim-介绍" class="headerlink" title="gensim 介绍"></a>gensim 介绍</h3><p>gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensim中的算法包括：LSA(Latent Semantic Analysis), LDA(Latent Dirichlet Allocation), RP (Random Projections), 通过在一个训练文档语料库中，检查词汇统计联合出现模式, 可以用来发掘文档语义结构，这些算法属于非监督学习，可以处理原始的，非结构化的文本（”plain text”）。</p>
+<h3 id="gensim-的特性"><a href="#gensim-的特性" class="headerlink" title="gensim 的特性"></a>gensim 的特性</h3><ul>
+<li>内存独立- 对于训练语料来说，没必要在任何时间将整个语料都驻留在RAM中</li>
+<li>有效实现了许多流行的向量空间算法－包括tf-idf，分布式LSA, 分布式LDA 以及 RP；并且很容易添加新算法</li>
+<li>对流行的数据格式进行了IO封装和转换</li>
+<li>在其语义表达中，可以相似查询</li>
+<li>gensim的创建的目的是，由于缺乏简单的（java很复杂）实现主题建模的可扩展软件框架.</li>
+</ul>
+<h3 id="gensim-的设计原则"><a href="#gensim-的设计原则" class="headerlink" title="gensim 的设计原则"></a>gensim 的设计原则</h3><ul>
+<li>简单的接口，学习曲线低。对于原型实现很方便</li>
+<li>根据输入的语料的size来说，内存各自独立；基于流的算法操作，一次访问一个文档.</li>
+</ul>
+<h3 id="gensim-的核心概念"><a href="#gensim-的核心概念" class="headerlink" title="gensim 的核心概念"></a>gensim 的核心概念</h3><p>gensim的整个package会涉及三个概念：corpus, vector, model.</p>
+<ul>
+<li>语库(corpus)<br>文档集合，用于自动推出文档结构，以及它们的主题等，也可称作训练语料。</li>
+</ul>
+<ul>
+<li><p>向量(vector)</p>
+<p>在向量空间模型(VSM)中，每个文档被表示成一个特征数组。例如，一个单一特征可以被表示成一个问答对(question-answer pair):</p>
+<p>[1].在文档中单词”splonge”出现的次数？ 0个<br>[2].文档中包含了多少句子？ 2个<br>[3].文档中使用了多少字体? 5种<br>这里的问题可以表示成整型id (比如：1,2,3等), 因此，上面的文档可以表示成：(1, 0.0), (2, 2.0), (3, 5.0). 如果我们事先知道所有的问题，我们可以显式地写成这样：(0.0, 2.0, 5.0). 这个answer序列可以认为是一个多维矩阵（3维）. 对于实际目的，只有question对应的answer是一个实数.</p>
+<p>对于每个文档来说，answer是类似的. 因而，对于两个向量来说（分别表示两个文档），我们希望可以下类似的结论：“如果两个向量中的实数是相似的，那么，原始的文档也可以认为是相似的”。当然，这样的结论依赖于我们如何去选取我们的question。</p>
+</li>
+</ul>
+<ul>
+<li><p>稀疏矩阵(Sparse vector)</p>
+<p>通常，大多数answer的值都是0.0. 为了节省空间，我们需要从文档表示中忽略它们，只需要写：(2, 2.0), (3, 5.0) 即可(注意：这里忽略了(1, 0.0)). 由于所有的问题集事先都知道，那么在稀疏矩阵的文档表示中所有缺失的特性可以认为都是0.0.</p>
+<p>gensim的特别之处在于，它没有限定任何特定的语料格式；语料可以是任何格式，当迭代时，通过稀疏矩阵来完成即可。例如，集合 ([(2, 2.0), (3, 5.0)], ([0, -1.0], [3, -1.0])) 是一个包含两个文档的语料，每个都有两个非零的 pair。</p>
+</li>
+</ul>
+<ul>
+<li><p>模型(model)</p>
+<p>对于我们来说，一个模型就是一个变换(transformation)，将一种文档表示转换成另一种。初始和目标表示都是向量－－它们只在question和answer之间有区别。这个变换可以通过训练的语料进行自动学习，无需人工监督，最终的文档表示将更加紧凑和有用；相似的文档具有相似的表示。</p>
+</li>
+</ul>
+<h3 id="演示代码"><a href="#演示代码" class="headerlink" title="演示代码"></a>演示代码</h3><p><a href="http://shuang0420.github.io/2016/05/18/Gensim-and-LDA-Training-and-Prediction/" target="_blank" rel="external">演示代码</a></p>
+<blockquote>
+<p>参考链接</p>
+<blockquote>
+<p><a href="http://d0evi1.github.io/gensim/" target="_blank" rel="external">http://d0evi1.github.io/gensim/</a></p>
+</blockquote>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[JGibbLDA实战]]></title>
+      <url>http://yoursite.com/2016/05/16/JGibbLDA%E5%AE%9E%E6%88%98/</url>
+      <content type="html"><![CDATA[<p>尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。<br>命令：</p>
+<pre>java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/newdocs.dat</pre>
+
+<p>错误信息：</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/err.png" alt=""></p>
+<p>于是尝试导入eclipse运行手动配置，成功，过程如下。</p>
+<ol>
+<li><p>下载JGibbLDA的jar包并解压；<br>网址：<a href="http://jgibblda.sourceforge.net/#Griffiths04" target="_blank" rel="external">http://jgibblda.sourceforge.net/#Griffiths04</a></p>
+</li>
+<li><p>导入eclipse，确保jar包在目录中</p>
+</li>
+<li><p>找到LDACmdOption.java文件， 修改部分代码</p>
+<pre> @Option(name="-dir", usage="Specify directory")
+ public String dir = "models/casestudy-en";
+
+ @Option(name="-dfile", usage="Specify data file")
+ public String dfile = "models/casestudy-en/newdocs.dat";</pre>
+
+<p>值得注意的是，dfile的格式必须是👇这个样子：</p>
+<pre>[M]
+[document1]
+[document2]
+...
+[documentM]</pre>
+
+<p>第一行[M]是documents的总数，之后的每一行是一个document，每个document是一个word list，或者说是bag of words。</p>
+<pre>[document i] = [word i1] [word i2] ... [word iNi]</pre>
+
+<p>各参数含义：<br><strong>-est </strong>从训练语料中评估出LDA模型<br><strong>-alpha</strong> LDA模型中的alpha数值，默认为50/K(K是主题数目)<br><strong>-beta</strong> LDA模型中的beta数值，默认是0.1<br><strong>-ntopics</strong> 主题数目，默认值是100<br><strong>-niters</strong> GIbbs采样的迭代数目，默认值为2000<br><strong>-savestep</strong> 指定开始保存LDA模型的迭代次数<br><strong>-dir</strong> 训练语料目录<br><strong>-dfile</strong> 训练语料文件名称</p>
+</li>
+<li><p>修改项目的Run Configurations，在Java Application中选择LDA，点击(x)=Arguments，输入</p>
+<pre>-est -alpha 0.2 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 100 -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "newdocs.dat"</pre>
+
+<p> 若利用已训练的LDA模型预测，输入以下参数：</p>
+<pre>-inf -dir  Users\x\MyEclipse1\JGibbLDA-v.1.0\models\casestudy-en -dfile "test.txt"</pre>
+
+<p> 注意，进行预测时，当前目录下必须包含已有的LDA训练输出文件，包括model-final.others、model-final.phi、model-final.tassign、model-final.theta、model-final.twords、wordmap.txt文件，如果运行报错，尝试修改LDACmdOption.java的modelName，确保和文件名的modelname部分一致。<br><pre>@Option(name=”-model”, usage=”Specify the model name”)<br> public String modelName = “model-final”;</pre>   </p>
+<p> 如果出现java heap limited的问题，在VM arguments下添加</p>
+<pre>-Xms1g -Xmx1g -Xmn512m</pre>
+</li>
+<li><p>Run<br>输出文件主要有：<br><strong><model_name>.others</model_name></strong>  文件存储LDA模型参数，如alpha、beta等。<br><strong><model_name>.phi </model_name></strong> 每个topic内对doc的分布情况。文件存储词语-主题分布，每一行是一个主题，列内容为词语。<br><strong><model_name>.theta </model_name></strong> 每个doc内对应上面的n个topic的分布情况。文件主题文档分布，每一行是一个文档，列内容是主题概率。<br><strong><model_name>.tassign</model_name></strong>  文件是训练预料中单词的主题指定（归属），每一行是一个语料文档。<br><strong><model_name>.twords</model_name></strong>  n个topic，以及每个topic下面包含的具体的字词<br><strong>wordmap.txt</strong>  词-id映射<br>其中<model_name>根据采样迭代次数来指定，如model-00800，最后一次采样名称命名为model-final。</model_name></p>
+</li>
+</ol>
+<blockquote>
+<p>参考链接：<br><a href="http://www.ithao123.cn/content-4208214.html" target="_blank" rel="external">http://www.ithao123.cn/content-4208214.html</a><br><a href="http://jgibblda.sourceforge.net/" target="_blank" rel="external">http://jgibblda.sourceforge.net/</a></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gollum/-github上搭建个人wiki]]></title>
+      <url>http://yoursite.com/2016/05/13/gollum:-github%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BAwiki/</url>
+      <content type="html"><![CDATA[<p>博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。</p>
+<h3 id="开通Wiki"><a href="#开通Wiki" class="headerlink" title="开通Wiki"></a>开通Wiki</h3><p>登陆Github，找到你所开通的Github项目的Settings栏目，开通Wikis，如果只希望别人可读不可写，勾选：Restrict edits to Collaborators only。如下图所示：</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%884.56.12.png" alt=""></p>
+<h3 id="git-clone下相应维基的git地址"><a href="#git-clone下相应维基的git地址" class="headerlink" title="git clone下相应维基的git地址"></a>git clone下相应维基的git地址</h3><pre> git clone git@github.com:Shuang0420/Shuang0420.github.io.wiki.git wiki</pre>
+
+<p>如果你之前没有设置git密钥，可以参照以下步骤先做配置，如果已经设置，请忽略。</p>
+<ol>
+<li><p>查看是否已经有了ssh密钥：<br><pre>cd ~/.ssh</pre><br>如果没有密钥则不会有此文件夹，有则备份删除</p>
+</li>
+<li><p>生成密钥，得到两个文件：id_rsa 和 id_rsa.pub</p>
+<pre>ssh-keygen -t rsa -C “haiyan.xu.vip@gmail.com”</pre>
+</li>
+<li><p>添加密钥到ssh：ssh-add id_rsa</p>
+</li>
+<li><p>在github上settings中添加ssh密钥，即“id_rsa.pub”里的公钥。</p>
+</li>
+<li><p>测试：ssh git@github.com</p>
+</li>
+</ol>
+<h3 id="配置个人wiki"><a href="#配置个人wiki" class="headerlink" title="配置个人wiki"></a>配置个人wiki</h3><ol>
+<li><p>在wiki目录下，安装bundler</p>
+<pre>gem install bundler</pre>
+
+<p>   如果安装没有问题，可以跳过以下错误解决。</p>
+   <pre>
+   ERROR:  Could not find a valid gem 'bundler' (>= 0), here is why:
+             Unable to download data from https://rubygems.org/ - Errno::EPIPE: Broken pipe - SSL_connect (https://rubygems.org/latest_specs.4.8.gz)</pre>
+
+<p>   解决：</p>
+   <pre>gem source -a http://rubygems.org/
+   gem install bundler</pre>
+
+<p>   然而还是有错误：</p>
+   <pre>Fetching: bundler-1.12.5.gem (100%)^[[A
+   ERROR:  While executing gem ... (Gem::FilePermissionError)
+       You don't have write permissions for the /Library/Ruby/Gems/2.0.0 directory.</pre>
+
+<p>   因为没有sudo：</p>
+   <pre>sudo gem install bundler</pre>
+</li>
+<li><p>新建Gemfile文件，内容如下：</p>
+   <pre>
+   source "http://rubygems.org"
+   gem 'redcarpet'
+   gem "grit", '~> 2.5.0', git: 'https://github.com/gitlabhq/grit.git', ref: '42297cdcee16284d2e4eff23d41377f52fc28b9d'
+   gem 'gollum', git: 'https://github.com/gollum/gollum.git'</pre></li>
+<li><p>运行：</p>
+   <pre>
+   # 安装项目依赖的所有gem包;此命令会尝试更新系统中已存在的gem包
+   bundle install</pre>
+
+<p>   时间有点久，耐心等待。<br>   然而最后出现error,</p>
+   <pre>An error occurred while installing charlock_holmes (0.7.3), and Bundler cannot continue.
+   Make sure that `gem install charlock_holmes -v '0.7.3'` succeeds before bundling.</pre>
+
+<p>   好。那就按要求安装。</p>
+   <pre>sudo gem install charlock_holmes -v '0.7.3'</pre>
+
+<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%885.25.54.png" alt=""></p>
+<p>   好。继续按要求安装。</p>
+   <pre>brew install icu4c</pre>
+
+<p>   再重来</p>
+   <pre>sudo gem install charlock_holmes -v '0.7.3'</pre>
+
+   <pre>bundle install</pre>
+
+<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-27%20%E4%B8%8A%E5%8D%889.46.38.png" alt=""></p>
+<p>   因为没有安装bundle</p>
+   <pre>gem install bundle</pre>
+
+<p>   安装后再次尝试运行</p>
+   <pre>bundle install</pre>
+
+<p>   error</p>
+   <pre>Could not reach host index.rubygems.org. Check your network connection and try again.</pre>
+   出现这种错误可以尝试把Gemfile里的https改成http（互相转化进行尝试）
+
+   <pre>bundle install</pre>
+
+<p>   终于成功！</p>
+</li>
+<li><p>已安装成功gollum等。然后运行：</p>
+   <pre>gollum</pre>
+
+<p>   走到这一步了本人还是遇到了万恶的失败。<br>   看着已经安装好了</p>
+   <pre>
+   Installing nokogiri 1.6.7.2 with native extensions
+   Installing rack-protection 1.5.3
+   Installing gollum-grit_adapter 1.0.1
+   Installing sanitize 2.1.0
+   Installing sinatra 1.4.7
+   Installing gollum-lib 4.2.0
+   Using gollum 4.0.1 from https://github.com/gollum/gollum.git (at master@5a5e56a)
+   Bundle complete! 3 Gemfile dependencies, 24 gems now installed.
+   Use `bundle show [gemname]` to see where a bundled gem is installed.
+   </pre>
+
+<p>   然而实际并没有</p>
+   <pre>
+   $ gollum
+   -bash: gollum: command not found</pre>
+
+<p>   大写的忧伤。最后通过直接安装gollum解决。</p>
+   <pre>sudo gem install gollum</pre>
+
+   <pre>gollum</pre>
+</li>
+<li><p>终于可以在本地启动成功维基。打开网址：<a href="http://0.0.0.0:4567/，可以直接在浏览器中编辑。" target="_blank" rel="external">http://0.0.0.0:4567/，可以直接在浏览器中编辑。</a></p>
+<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%886.26.05.png" alt=""></p>
+<p>   如果发现不能如下错误，请尝试更新ruby。</p>
+<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%889.31.07.png" alt=""></p>
+<p>   更新ruby步骤<br>   安装 RVM<br>   RVM:Ruby Version Manager,Ruby版本管理器，包括Ruby的版本管理和Gem库管理(gemset)</p>
+   <pre>curl -L get.rvm.io | bash -s stable</pre>
+
+   <pre>source ~/.bashrc  
+   source ~/.bash_profile </pre>
+
+<p>   测试是否安装正常</p>
+   <pre>rvm -v  </pre>
+
+<p>   用RVM升级Ruby</p>
+   <pre>
+   #查看当前ruby版本  
+   ruby -v  
+   #列出已知的ruby版本  
+   rvm list known  
+   #安装ruby 2.3.0
+   rvm install 2.3.0 </pre>
+
+<p>   安装完成之后ruby -v查看是否安装成功。</p>
+<p>   重新安装完毕后回到第3步。</p>
+</li>
+</ol>
+<h3 id="github同步"><a href="#github同步" class="headerlink" title="github同步"></a>github同步</h3><p>在wiki目录下面，进行git库操作，提交本地对维基内容的修改。一切将自动保存在你的Github上的个人博客网站的wiki目录下面。</p>
+<pre>
+cd ~/wiki
+git add .
+git commit -am"first commit"
+git push</pre>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Github Pages+Hexo搭建个人博客]]></title>
+      <url>http://yoursite.com/2016/05/12/Github-Pages-Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+      <content type="html"><![CDATA[<h1 id="为什么用Github-Pages-Hexo"><a href="#为什么用Github-Pages-Hexo" class="headerlink" title="为什么用Github Pages + Hexo"></a>为什么用Github Pages + Hexo</h1><h2 id="Github-Page优点"><a href="#Github-Page优点" class="headerlink" title="Github Page优点"></a>Github Page优点</h2><ul>
+<li>轻量级的博客系统，没有麻烦的配置</li>
+<li>使用标记语言，比如<a href="http://markdown.tw/" target="_blank" rel="external">Markdown</a></li>
+<li>无需自己搭建服务器</li>
+<li>根据Github的限制，对应的每个站有300MB空间</li>
+<li>可以绑定自己的域名</li>
+</ul>
+<p>Github Page有两种page模式，User/Organization Pages（个人或公司站点）和Project Pages（项目站点）。这里我们用的是user/Organization Pages，要求使用自己的用户名，每个用户名下面只能建立一个，资源命名必须符合这样的规则username/username.github.com，主干上内容被用来构建和发布页面</p>
+<h2 id="Hexo优点"><a href="#Hexo优点" class="headerlink" title="Hexo优点"></a>Hexo优点</h2><ul>
+<li>用于搭建博客网站框架，可以简单实现优美的博客网站;</li>
+<li>在本地端搭建，就可脱机查阅;</li>
+<li>架构不依托于其他门户网站，不再担心门户网站倒闭，不担心博文丢失或难以导出;</li>
+<li>博文为markdown格式，通用，容易上手，便于快速书写;</li>
+<li>可部署在github上；</li>
+<li>创造者来自中国台湾，所以几乎所有模板都关注到了中文的兼容性，很适合使用汉语的码农。</li>
+</ul>
+<h1 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h1><h2 id="新建github-repository"><a href="#新建github-repository" class="headerlink" title="新建github repository"></a>新建github repository</h2><p>在github上新建repository，name为username.github.io。</p>
+<h2 id="Hexo安装"><a href="#Hexo安装" class="headerlink" title="Hexo安装"></a>Hexo安装</h2><p>先安装git和node.js</p>
+<pre>brew install git
+brew install node</pre>
+验证是否安装成功
+<pre>node -v
+npm -v</pre>
+安装Hexo
+<pre>npm install -g hexo #-g表示全局安装, npm默认为当前项目安装</pre>
+
+<h2 id="Hexo部署"><a href="#Hexo部署" class="headerlink" title="Hexo部署"></a>Hexo部署</h2><p>新建文件夹并打开，在文件夹内操作。</p>
+<pre> hexo init #新建博客目录
+ hexo g #根据当前目录下文件生成静态网页
+ hexo s #启动服务器</pre>
+
+<p>现在就可以到浏览器输入localhost:4000查看啦。</p>
+<p>简单介绍一下文件目录</p>
+<ul>
+<li>public：执行hexo generate命令，输出的静态网页内容目录</li>
+<li>scaffolds：layout模板文件目录，其中的md文件可以添加编辑</li>
+<li>scripts：扩展脚本目录，这里可以自定义一些javascript脚本</li>
+<li>source：文章源码目录，该目录下的markdown和html文件均会被hexo处理。该页面对应repo的根目录，404文件、favicon.ico文件，CNAME文件等都应该放这里，该目录下可新建页面目录。</li>
+<li>drafts：草稿文章</li>
+<li>posts：发布文章themes：主题文件目录</li>
+<li>config.yml：全局配置文件，大多数的设置都在这里</li>
+<li>package.json：应用程序数据，指明hexo的版本等信息，类似于一般软件中的 关于 按钮</li>
+</ul>
+<h2 id="Hexo复制主题"><a href="#Hexo复制主题" class="headerlink" title="Hexo复制主题"></a>Hexo复制主题</h2><pre> hexo clean
+ hexo g
+ hexo s
+ git clone https://github.com/cnfeat/cnfeat.git themes/jacman</pre>
+
+<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><p>修改Hexo目录下的config.yml配置文件中的theme属性，将其设置为jacman。</p>
+<pre>theme: jacman #或你的主题名，注意冒号后有一个空格</pre>
+
+<p>注意：Hexo有两个config.yml文件，一个在根目录，一个在theme下，此时修改的是在根目录下的。</p>
+<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><pre> cd themes/jacman
+ git pull</pre>
+
+<p>注意：为避免出错，请先备份你的_config.yml 文件后再升级</p>
+<h2 id="Hexo本地调试"><a href="#Hexo本地调试" class="headerlink" title="Hexo本地调试"></a>Hexo本地调试</h2><pre> hexo g #生成
+ hexo s #启动本地服务，进行文章预览调试
+ hexo d -g #或者直接作用组合命令</pre>
+
+<p>浏览器输入localhost:4000，即可查看搭建效果。每次变更config.yml 文件或者上传文件都可以先用此命令调试。</p>
+<h2 id="Hexo部署到github"><a href="#Hexo部署到github" class="headerlink" title="Hexo部署到github"></a>Hexo部署到github</h2><pre>npm install hexo-deployer-git --save</pre>
+在 Hexo 文件夹下找到 config.yml 文件, 找到其中的 deploy 标签，改成下图所示形式，并保存。注意：冒号后面要加上一个空格，否则会报错
+<pre>
+deploy:
+  type: git
+  repo: https://github.com/Shuang0420/Shuang0420.github.io.git</pre>
+
+<p>运行如下命令：</p>
+<pre>hexo clean
+hexo generate
+hexo deploy</pre>
+
+
+<h2 id="发博文"><a href="#发博文" class="headerlink" title="发博文"></a>发博文</h2><pre>
+ hexo new "postname" #然后在posts目录下的postname.md文件中编辑博客
+ hexo clean
+ hexo generate
+ # (若要本地预览就先执行 hexo server)
+ hexo deploy</pre>
+
+<h2 id="快捷命令："><a href="#快捷命令：" class="headerlink" title="快捷命令："></a>快捷命令：</h2><pre> hexo g == hexo generate
+ hexo d == hexo deploy
+ hexo s == hexo server
+ hexo n == hexo new
+# 还能组合使用，如：
+hexo d -g</pre>
+
+<blockquote>
+<p>参考链接：</p>
+<blockquote>
+<p><a href="http://mozhenhau.com/2015/03/05/%E5%9C%A8Mac%E9%80%9A%E8%BF%87Hexo%E5%9C%A8github%E4%B8%8A%E5%BB%BA%E7%AB%8B%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/" target="_blank" rel="external">http://mozhenhau.com/2015/03/05/%E5%9C%A8Mac%E9%80%9A%E8%BF%87Hexo%E5%9C%A8github%E4%B8%8A%E5%BB%BA%E7%AB%8B%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</a></p>
+<p><a href="http://evakasch.github.io/2016/05/04/hexo-setup/" target="_blank" rel="external">http://evakasch.github.io/2016/05/04/hexo-setup/</a></p>
+</blockquote>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[让进程在后台可靠运行的几种方法]]></title>
+      <url>http://yoursite.com/2016/04/22/%E8%AE%A9%E8%BF%9B%E7%A8%8B%E5%9C%A8%E5%90%8E%E5%8F%B0%E5%8F%AF%E9%9D%A0%E8%BF%90%E8%A1%8C%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
+      <content type="html"><![CDATA[<p>当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略 HUP 信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。</p>
+<h3 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h3><p>只需在要处理的命令前加上 nohup 即可，标准输出和标准错误缺省会被重定向到 nohup.out 文件中。同时可在结尾加上”&amp;”来将命令同时放入后台运行，也可用”&gt;filename 2&gt;&amp;1”来更改缺省的重定向文件名。</p>
+<pre>
+$ nohup ping www.ibm.com &
+[1] 6982
+$ nohup: appending output to `nohup.out'
+$ ps -ef |grep www.ibm.com
+  501  6982  5823   0  4:23下午 ttys000    0:00.03 ping www.ibm.com
+  501  7120  5823   0  4:26下午 ttys000    0:00.01 grep www.ibm.com
+</pre>
+
+<h3 id="setsid"><a href="#setsid" class="headerlink" title="setsid"></a>setsid</h3><p>nohup 能通过忽略 HUP 信号来使我们的进程避免中途被中断，换个角度思考，如果我们的进程不属于接受 HUP 信号的终端的子进程，那么自然也就不会受到 HUP 信号的影响了。setsid 就能帮助我们做到这一点。</p>
+<pre>
+$ setsid ping www.ibm.com
+$ ps -ef |grep www.ibm.com
+root     31094     1  0 07:28 ?        00:00:00 ping www.ibm.com
+root     31102 29217  0 07:29 pts/4    00:00:00 grep www.ibm.com
+</pre>
+
+<p>  值得注意的是，上例中我们的进程 ID(PID)为31094，而它的父 ID（PPID）为1（即为 init 进程 ID），并不是当前终端的进程 ID。请将此例与nohup 例中的父 ID 做比较。</p>
+<h3 id="disown"><a href="#disown" class="headerlink" title="disown"></a>disown</h3><p>如果未加任何处理就已经提交了命令，该如何补救才能让它避免 HUP 信号的影响呢？</p>
+<ul>
+<li>用disown -h jobspec来使某个作业忽略HUP信号。</li>
+<li>用disown -ah 来使所有的作业都忽略HUP信号。</li>
+<li><p>用disown -rh 来使正在运行的作业忽略HUP信号。</p>
+<p>需要注意的是，当使用过 disown 之后，会将把目标作业从作业列表中移除，我们将不能再使用jobs来查看它，但是依然能够用ps -ef查找到它。<br>但是还有一个问题，这种方法的操作对象是作业，如果我们在运行命令时在结尾加了”&amp;”来使它成为一个作业并在后台运行，那么就万事大吉了，我们可以通过jobs命令来得到所有作业的列表。但是如果并没有把当前命令作为作业来运行，如何才能得到它的作业号呢？答案就是用 CTRL-z（按住Ctrl键的同时按住z键）了！<br>CTRL-z 的用途就是将当前进程挂起（Suspend），然后我们就可以用jobs命令来查询它的作业号，再用bg jobspec来将它放入后台并继续运行。需要注意的是，如果挂起会影响当前进程的运行结果，请慎用此方法。</p>
+<p>disown 示例1（如果提交命令时已经用“&amp;”将命令放入后台运行，则可以直接使用“disown”）</p>
+<pre>$ cp -r testLargeFile largeFile &
+[1] 4825
+$ jobs
+[1]+  Running                 cp -i -r testLargeFile largeFile &
+$ disown -h %1
+$ ps -ef |grep largeFile
+root      4825   968  1 09:46 pts/4    00:00:00 cp -i -r testLargeFile largeFile
+root      4853   968  0 09:46 pts/4    00:00:00 grep largeFile
+$ logout</pre>
+
+<p>disown 示例2（如果提交命令时未使用“&amp;”将命令放入后台运行，可使用 CTRL-z 和“bg”将其放入后台，再使用“disown”）</p>
+<pre>$ cp -r testLargeFile largeFile2
+[1]+  Stopped                 cp -i -r testLargeFile largeFile2
+$ bg %1
+[1]+ cp -i -r testLargeFile largeFile2 &
+$ jobs
+[1]+  Running                 cp -i -r testLargeFile largeFile2 &
+$ disown -h %1
+$ ps -ef |grep largeFile2
+root      5790  5577  1 10:04 pts/3    00:00:00 cp -i -r testLargeFile largeFile2
+root      5824  5577  0 10:05 pts/3    00:00:00 grep largeFile2</pre>
+
+</li>
+</ul>
+<h3 id="screen"><a href="#screen" class="headerlink" title="screen"></a>screen</h3><p>如果有大量这种命令需要在稳定的后台里运行，如何避免对每条命令都做这样的操作呢？<br>此时最方便的方法就是 screen 了。简单的说，screen 提供了 ANSI/VT100 的终端模拟器，使它能够在一个真实终端下运行多个全屏的伪终端。screen 的参数很多，具有很强大的功能，我们在此仅介绍其常用功能以及简要分析一下为什么使用 screen 能够避免 HUP 信号的影响。<br>使用 screen 很方便，有以下几个常用选项：</p>
+<ul>
+<li>用screen -dmS session name来建立一个处于断开模式下的会话（并指定其会话名）。</li>
+<li>用screen -list 来列出所有会话。</li>
+<li>用screen -r session name来重新连接指定会话。</li>
+<li><p>用快捷键CTRL-a d 来暂时断开当前会话。</p>
+<p>screen 示例</p>
+<pre>$ screen -dmS Urumchi
+$ screen -list
+There is a screen on:
+      12842.Urumchi   (Detached)
+1 Socket in /tmp/screens/S-root.
+$ screen -r Urumchi</pre>
+
+<p>当我们用“-r”连接到 screen 会话后，我们就可以在这个伪终端里面为所欲为，再也不用担心 HUP 信号会对我们的进程造成影响，也不用给每个命令前都加上“nohup”或者“setsid”了。</p>
+</li>
+</ul>
+<ol>
+<li><p>未使用 screen 时新进程的进程树</p>
+<pre>$ ping www.google.com &
+[1] 9499
+$ pstree -H 9499
+init─┬─Xvnc
+  ├─acpid
+  ├─atd
+  ├─2*[sendmail]
+  ├─sshd─┬─sshd───bash───pstree
+  │       └─sshd───bash───ping</pre>
+
+<p>我们可以看出，未使用 screen 时我们所处的 bash 是 sshd 的子进程，当 ssh 断开连接时，HUP 信号自然会影响到它下面的所有子进程（包括我们新建立的 ping 进程）。</p>
+</li>
+<li><p>使用了 screen 后新进程的进程树</p>
+<pre>$screen -r Urumchi
+$ ping www.ibm.com &
+[1] 9488
+$ pstree -H 9488
+init─┬─Xvnc
+  ├─acpid
+  ├─atd
+  ├─screen───bash───ping
+  ├─2*[sendmail]</pre>
+
+<p>而使用了 screen 后就不同了，此时 bash 是 screen 的子进程，而 screen 是 init（PID为1）的子进程。那么当 ssh 断开连接时，HUP 信号自然不会影响到 screen 下面的子进程了。</p>
+</li>
+</ol>
+<blockquote>
+<p>参考链接<br><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-nohup/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/linux/l-cn-nohup/</a></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[python-jieba-分词----官方文档截取]]></title>
+      <url>http://yoursite.com/2016/04/01/python-jieba-%E5%88%86%E8%AF%8D----%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E6%88%AA%E5%8F%96/</url>
+      <content type="html"><![CDATA[<h1 id="jieba"><a href="#jieba" class="headerlink" title="jieba"></a>jieba</h1><p>“结巴”中文分词：做最好的 Python 中文分词组件</p>
+<h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h1><ul>
+<li>支持三种分词模式：</li>
+</ul>
+<ol>
+<li>精确模式，试图将句子最精确地切开，适合文本分析；</li>
+<li>全模式，把句子中所有的可以成词的词语都扫描出来, 速度非常快，但是不能解决歧义；</li>
+<li>搜索引擎模式，在精确模式的基础上，对长词再次切分，提高召回率，适合用于搜索引擎分词。</li>
+</ol>
+<ul>
+<li><p>支持繁体分词</p>
+</li>
+<li><p>支持自定义词典</p>
+</li>
+</ul>
+<h1 id="安装说明"><a href="#安装说明" class="headerlink" title="安装说明"></a>安装说明</h1><p>代码对 Python 2/3 均兼容</p>
+<ul>
+<li>全自动安装：easy_install jieba 或者 pip install jieba / pip3 install jieba</li>
+<li>半自动安装：先下载 <a href="http://pypi.python.org/pypi/jieba/" target="_blank" rel="external">http://pypi.python.org/pypi/jieba/</a> ，解压后运行 python setup.py install</li>
+<li>手动安装：将 jieba 目录放置于当前目录或者 site-packages 目录</li>
+</ul>
+<p>通过 import jieba 来引用</p>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><ul>
+<li>基于前缀词典实现高效的词图扫描，生成句子中汉字所有可能成词情况所构成的有向无环图 (DAG)</li>
+<li>采用了动态规划查找最大概率路径, 找出基于词频的最大切分组合</li>
+<li>对于未登录词，采用了基于汉字成词能力的 HMM 模型，使用了 Viterbi 算法</li>
+</ul>
+<h1 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h1><h3 id="分词"><a href="#分词" class="headerlink" title="分词"></a>分词</h3><p>jieba.cut 方法接受三个输入参数: 需要分词的字符串；cut_all 参数用来控制是否采用全模式；HMM 参数用来控制是否使用 HMM 模型<br>jieba.cut_for_search 方法接受两个参数：需要分词的字符串；是否使用 HMM 模型。该方法适合用于搜索引擎构建倒排索引的分词，粒度比较细<br>待分词的字符串可以是 unicode 或 UTF-8 字符串、GBK 字符串。注意：不建议直接输入 GBK 字符串，可能无法预料地错误解码成 UTF-8<br>jieba.cut 以及 jieba.cut_for_search 返回的结构都是一个可迭代的 generator，可以使用 for 循环来获得分词后得到的每一个词语(unicode)，或者用 jieba.lcut 以及 jieba.lcut_for_search 直接返回 list<br>jieba.Tokenizer(dictionary=DEFAULT_DICT) 新建自定义分词器，可用于同时使用不同词典。jieba.dt 为默认分词器，所有全局分词相关函数都是该分词器的映射。</p>
+<p>代码示例</p>
+<pre>
+# encoding=utf-8
+import jieba
+
+seg_list = jieba.cut("我来到北京清华大学", cut_all=True)
+print("Full Mode: " + "/ ".join(seg_list))  # 全模式
+
+seg_list = jieba.cut("我来到北京清华大学", cut_all=False)
+print("Default Mode: " + "/ ".join(seg_list))  # 精确模式
+
+seg_list = jieba.cut("他来到了网易杭研大厦")  # 默认是精确模式
+print(", ".join(seg_list))
+
+seg_list = jieba.cut_for_search("小明硕士毕业于中国科学院计算所，后在日本京都大学深造")  # 搜索引擎模式
+print(", ".join(seg_list))</pre>
+
+<p>输出:</p>
+<p>【全模式】: 我/ 来到/ 北京/ 清华/ 清华大学/ 华大/ 大学</p>
+<p>【精确模式】: 我/ 来到/ 北京/ 清华大学</p>
+<p>【新词识别】：他, 来到, 了, 网易, 杭研, 大厦    (此处，“杭研”并没有在词典中，但是也被Viterbi算法识别出来了)</p>
+<p>【搜索引擎模式】： 小明, 硕士, 毕业, 于, 中国, 科学, 学院, 科学院, 中国科学院, 计算, 计算所, 后, 在, 日本, 京都, 大学, 日本京都大学, 深造</p>
+<h3 id="添加自定义词典"><a href="#添加自定义词典" class="headerlink" title="添加自定义词典"></a>添加自定义词典</h3><p>载入词典</p>
+<p>开发者可以指定自己自定义的词典，以便包含 jieba 词库里没有的词。虽然 jieba 有新词识别能力，但是自行添加新词可以保证更高的正确率<br>用法：</p>
+<pre>jieba.load_userdict(file_name) # file_name 为文件类对象或自定义词典的路径</pre>
+
+<p>词典格式和 dict.txt 一样，一个词占一行；每一行分三部分：词语、词频（可省略）、词性（可省略），用空格隔开，顺序不可颠倒。file_name 若为路径或二进制方式打开的文件，则文件必须为 UTF-8 编码。<br>词频省略时使用自动计算的能保证分出该词的词频。</p>
+<p>例如：</p>
+<p>创新办 3 i<br>云计算 5<br>凱特琳 nz<br>台中<br>更改分词器（默认为 jieba.dt）的 tmp_dir 和 cache_file 属性，可分别指定缓存文件所在的文件夹及其文件名，用于受限的文件系统。</p>
+<p>范例：</p>
+<p>自定义词典：<a href="https://github.com/fxsjy/jieba/blob/master/test/userdict.txt" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/userdict.txt</a></p>
+<p>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/test_userdict.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/test_userdict.py</a></p>
+<p>之前： 李小福 / 是 / 创新 / 办 / 主任 / 也 / 是 / 云 / 计算 / 方面 / 的 / 专家 /</p>
+<p>加载自定义词库后：　李小福 / 是 / 创新办 / 主任 / 也 / 是 / 云计算 / 方面 / 的 / 专家 /</p>
+<p>调整词典</p>
+<p>使用 add_word(word, freq=None, tag=None) 和 del_word(word) 可在程序中动态修改词典。<br>使用 suggest_freq(segment, tune=True) 可调节单个词语的词频，使其能（或不能）被分出来。</p>
+<p>注意：自动计算的词频在使用 HMM 新词发现功能时可能无效。</p>
+<p>代码示例：</p>
+<pre>
+>>> print('/'.join(jieba.cut('如果放到post中将出错。', HMM=False)))
+如果/放到/post/中将/出错/。
+>>> jieba.suggest_freq(('中', '将'), True)
+494
+>>> print('/'.join(jieba.cut('如果放到post中将出错。', HMM=False)))
+如果/放到/post/中/将/出错/。
+>>> print('/'.join(jieba.cut('「台中」正确应该不会被切开', HMM=False)))
+「/台/中/」/正确/应该/不会/被/切开
+>>> jieba.suggest_freq('台中', True)
+69
+>>> print('/'.join(jieba.cut('「台中」正确应该不会被切开', HMM=False)))
+「/台中/」/正确/应该/不会/被/切开
+"通过用户自定义词典来增强歧义纠错能力" --- https://github.com/fxsjy/jieba/issues/14
+</pre>
+
+<h3 id="关键词提取"><a href="#关键词提取" class="headerlink" title="关键词提取"></a>关键词提取</h3><p>基于 TF-IDF 算法的关键词抽取</p>
+<pre>
+import jieba.analyse
+
+jieba.analyse.extract_tags(sentence, topK=20, withWeight=False, allowPOS=())</pre>
+
+<p>sentence 为待提取的文本<br>topK 为返回几个 TF/IDF 权重最大的关键词，默认值为 20<br>withWeight 为是否一并返回关键词权重值，默认值为 False<br>allowPOS 仅包括指定词性的词，默认值为空，即不筛选<br>jieba.analyse.TFIDF(idf_path=None) 新建 TFIDF 实例，idf_path 为 IDF 频率文件</p>
+<p>代码示例 （关键词提取）</p>
+<p><a href="https://github.com/fxsjy/jieba/blob/master/test/extract_tags.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/extract_tags.py</a></p>
+<p>关键词提取所使用逆向文件频率（IDF）文本语料库可以切换成自定义语料库的路径</p>
+<p>用法： <pre>jieba.analyse.set_idf_path(file_name) # file_name为自定义语料库的路径</pre></p>
+<p>自定义语料库示例：<a href="https://github.com/fxsjy/jieba/blob/master/extra_dict/idf.txt.big" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/extra_dict/idf.txt.big</a><br>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/extract_tags_idfpath.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/extract_tags_idfpath.py</a></p>
+<p>关键词提取所使用停止词（Stop Words）文本语料库可以切换成自定义语料库的路径</p>
+<p>用法： <pre>jieba.analyse.set_stop_words(file_name) # file_name为自定义语料库的路径</pre></p>
+<p>自定义语料库示例：<a href="https://github.com/fxsjy/jieba/blob/master/extra_dict/stop_words.txt" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/extra_dict/stop_words.txt</a><br>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/extract_tags_stop_words.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/extract_tags_stop_words.py</a></p>
+<p>关键词一并返回关键词权重值示例</p>
+<p>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/extract_tags_with_weight.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/extract_tags_with_weight.py</a></p>
+<p>基于 TextRank 算法的关键词抽取</p>
+<pre>jieba.analyse.textrank(sentence, topK=20, withWeight=False, allowPOS=('ns', 'n', 'vn', 'v')) #直接使用，接口相同，注意默认过滤词性。</pre>
+<pre>jieba.analyse.TextRank() #新建自定义 TextRank 实例</pre>
+
+<p>算法论文： TextRank: Bringing Order into Texts</p>
+<p><strong>基本思想:</strong></p>
+<ul>
+<li>将待抽取关键词的文本进行分词</li>
+<li>以固定窗口大小(默认为5，通过span属性调整)，词之间的共现关系，构建图</li>
+<li>计算图中节点的PageRank，注意是无向带权图</li>
+</ul>
+<p>使用示例:</p>
+<p>见 test/demo.py</p>
+<h3 id="词性标注"><a href="#词性标注" class="headerlink" title="词性标注"></a>词性标注</h3><p>jieba.posseg.POSTokenizer(tokenizer=None) 新建自定义分词器，tokenizer 参数可指定内部使用的 jieba.Tokenizer 分词器。jieba.posseg.dt 为默认词性标注分词器。<br>标注句子分词后每个词的词性，采用和 ictclas 兼容的标记法。<br>用法示例</p>
+<pre>
+>>> import jieba.posseg as pseg
+>>> words = pseg.cut("我爱北京天安门")
+>>> for word, flag in words:
+...    print('%s %s' % (word, flag))
+...
+我 r
+爱 v
+北京 ns
+天安门 ns
+</pre>
+
+<h3 id="并行分词"><a href="#并行分词" class="headerlink" title="并行分词"></a>并行分词</h3><p>原理：将目标文本按行分隔后，把各行文本分配到多个 Python 进程并行分词，然后归并结果，从而获得分词速度的可观提升<br>基于 python 自带的 multiprocessing 模块，目前暂不支持 Windows<br>用法：</p>
+<pre>
+jieba.enable_parallel(4) # 开启并行分词模式，参数为并行进程数
+jieba.disable_parallel() # 关闭并行分词模式
+</pre>
+
+<p>例子：<a href="https://github.com/fxsjy/jieba/blob/master/test/parallel/test_file.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/parallel/test_file.py</a></p>
+<p>实验结果：在 4 核 3.4GHz Linux 机器上，对金庸全集进行精确分词，获得了 1MB/s 的速度，是单进程版的 3.3 倍。</p>
+<p>注意：并行分词仅支持默认分词器 jieba.dt 和 jieba.posseg.dt。</p>
+<h3 id="Tokenize：返回词语在原文的起止位置"><a href="#Tokenize：返回词语在原文的起止位置" class="headerlink" title="Tokenize：返回词语在原文的起止位置"></a>Tokenize：返回词语在原文的起止位置</h3><p>注意，输入参数只接受 unicode</p>
+<pre>
+# 默认模式
+result = jieba.tokenize(u'永和服装饰品有限公司')
+for tk in result:
+    print("word %s\t\t start: %d \t\t end:%d" % (tk[0],tk[1],tk[2]))
+word 永和                start: 0                end:2
+word 服装                start: 2                end:4
+word 饰品                start: 4                end:6
+word 有限公司            start: 6                end:10
+
+# 搜索模式
+result = jieba.tokenize(u'永和服装饰品有限公司', mode='search')
+for tk in result:
+    print("word %s\t\t start: %d \t\t end:%d" % (tk[0],tk[1],tk[2]))
+word 永和                start: 0                end:2
+word 服装                start: 2                end:4
+word 饰品                start: 4                end:6
+word 有限                start: 6                end:8
+word 公司                start: 8                end:10
+word 有限公司            start: 6                end:10
+</pre>
+
+
+<h3 id="ChineseAnalyzer-for-Whoosh-搜索引擎"><a href="#ChineseAnalyzer-for-Whoosh-搜索引擎" class="headerlink" title="ChineseAnalyzer for Whoosh 搜索引擎"></a>ChineseAnalyzer for Whoosh 搜索引擎</h3><p>引用： from jieba.analyse import ChineseAnalyzer<br>用法示例：<a href="https://github.com/fxsjy/jieba/blob/master/test/test_whoosh.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/test_whoosh.py</a></p>
+<h3 id="命令行分词"><a href="#命令行分词" class="headerlink" title="命令行分词"></a>命令行分词</h3><p>使用示例：</p>
+<pre>python -m jieba news.txt > cut_result.txt</pre>
+
+<p>命令行选项（翻译）：</p>
+<p>使用:</p>
+<pre>python -m jieba [options] filename</pre>
+
+<p>如果没有指定文件名，则使用标准输入。<br>–help 选项输出：</p>
+<pre>
+$> python -m jieba --help
+Jieba command line interface.
+
+positional arguments:
+  filename              input file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d [DELIM], --delimiter [DELIM]
+                        use DELIM instead of ' / ' for word delimiter; or a
+                        space if it is used without DELIM
+  -p [DELIM], --pos [DELIM]
+                        enable POS tagging; if DELIM is specified, use DELIM
+                        instead of '\_' for POS delimiter
+  -D DICT, --dict DICT  use DICT as dictionary
+  -u USER_DICT, --user-dict USER_DICT
+                        use USER_DICT together with the default dictionary or
+                        DICT (if specified)
+  -a, --cut-all         full pattern cutting (ignored with POS tagging)
+  -n, --no-hmm          don't use the Hidden Markov Model
+  -q, --quiet           don't print loading messages to stderr
+  -V, --version         show program's version number and exit
+</pre>
+
+<p>If no filename specified, use STDIN instead.</p>
+<h3 id="延迟加载机制"><a href="#延迟加载机制" class="headerlink" title="延迟加载机制"></a>延迟加载机制</h3><p>jieba 采用延迟加载，import jieba 和 jieba.Tokenizer() 不会立即触发词典的加载，一旦有必要才开始加载词典构建前缀字典。如果你想手工初始 jieba，也可以手动初始化。</p>
+<p>import jieba<br>jieba.initialize()  # 手动初始化（可选）<br>在 0.28 之前的版本是不能指定主词典的路径的，有了延迟加载机制后，你可以改变主词典的路径:</p>
+<p>jieba.set_dictionary(‘data/dict.txt.big’)<br>例子： <a href="https://github.com/fxsjy/jieba/blob/master/test/test_change_dictpath.py" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/test/test_change_dictpath.py</a></p>
+<h3 id="其他词典"><a href="#其他词典" class="headerlink" title="其他词典"></a>其他词典</h3><p>占用内存较小的词典文件 <a href="https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.small" target="_blank" rel="external">https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.small</a></p>
+<p>支持繁体分词更好的词典文件 <a href="https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.big" target="_blank" rel="external">https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.big</a></p>
+<p>下载你所需要的词典，然后覆盖 jieba/dict.txt 即可；或者用 jieba.set_dictionary(‘data/dict.txt.big’)</p>
+<h3 id="其他语言实现"><a href="#其他语言实现" class="headerlink" title="其他语言实现"></a>其他语言实现</h3><p>结巴分词 Java 版本</p>
+<p>作者：piaolingxue 地址：<a href="https://github.com/huaban/jieba-analysis" target="_blank" rel="external">https://github.com/huaban/jieba-analysis</a></p>
+<p>结巴分词 C++ 版本</p>
+<p>作者：yanyiwu 地址：<a href="https://github.com/yanyiwu/cppjieba" target="_blank" rel="external">https://github.com/yanyiwu/cppjieba</a></p>
+<p>结巴分词 Node.js 版本</p>
+<p>作者：yanyiwu 地址：<a href="https://github.com/yanyiwu/nodejieba" target="_blank" rel="external">https://github.com/yanyiwu/nodejieba</a></p>
+<p>结巴分词 Erlang 版本</p>
+<p>作者：falood 地址：<a href="https://github.com/falood/exjieba" target="_blank" rel="external">https://github.com/falood/exjieba</a></p>
+<p>结巴分词 R 版本</p>
+<p>作者：qinwf 地址：<a href="https://github.com/qinwf/jiebaR" target="_blank" rel="external">https://github.com/qinwf/jiebaR</a></p>
+<p>结巴分词 iOS 版本</p>
+<p>作者：yanyiwu 地址：<a href="https://github.com/yanyiwu/iosjieba" target="_blank" rel="external">https://github.com/yanyiwu/iosjieba</a></p>
+<p>结巴分词 PHP 版本</p>
+<p>作者：fukuball 地址：<a href="https://github.com/fukuball/jieba-php" target="_blank" rel="external">https://github.com/fukuball/jieba-php</a></p>
+<p>结巴分词 .NET(C#) 版本</p>
+<p>作者：anderscui 地址：<a href="https://github.com/anderscui/jieba.NET/" target="_blank" rel="external">https://github.com/anderscui/jieba.NET/</a></p>
+<p>系统集成</p>
+<p>Solr: <a href="https://github.com/sing1ee/jieba-solr" target="_blank" rel="external">https://github.com/sing1ee/jieba-solr</a><br>分词速度</p>
+<p>1.5 MB / Second in Full Mode<br>400 KB / Second in Default Mode<br>测试环境: Intel(R) Core(TM) i7-2600 CPU @ 3.4GHz；《围城》.txt</p>
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><ul>
+<li>模型的数据是如何生成的？</li>
+</ul>
+<p>详见： <a href="https://github.com/fxsjy/jieba/issues/7" target="_blank" rel="external">https://github.com/fxsjy/jieba/issues/7</a></p>
+<ul>
+<li>“台中”总是被切成“台 中”？（以及类似情况）</li>
+</ul>
+<p>P(台中) ＜ P(台)×P(中)，“台中”词频不够导致其成词概率较低</p>
+<p>解决方法：强制调高词频</p>
+<p>jieba.add_word(‘台中’) 或者 jieba.suggest_freq(‘台中’, True)</p>
+<ul>
+<li>“今天天气 不错”应该被切成“今天 天气 不错”？（以及类似情况）</li>
+</ul>
+<p>解决方法：强制调低词频</p>
+<p>jieba.suggest_freq((‘今天’, ‘天气’), True)</p>
+<p>或者直接删除该词 jieba.del_word(‘今天天气’)</p>
+<ul>
+<li>切出了词典中没有的词语，效果不理想？</li>
+</ul>
+<p>解决方法：关闭新词发现</p>
+<p>jieba.cut(‘丰田太省了’, HMM=False) jieba.cut(‘我们中出了一个叛徒’, HMM=False)</p>
+<p>更多问题请点击：<a href="https://github.com/fxsjy/jieba/issues?sort=updated&amp;state=closed" target="_blank" rel="external">https://github.com/fxsjy/jieba/issues?sort=updated&amp;state=closed</a></p>
+<p>修订历史</p>
+<p><a href="https://github.com/fxsjy/jieba/blob/master/Changelog" target="_blank" rel="external">https://github.com/fxsjy/jieba/blob/master/Changelog</a></p>
+<blockquote>
+<p>参考链接<br><a href="https://github.com/fxsjy/jieba" target="_blank" rel="external">https://github.com/fxsjy/jieba</a></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[linux-python转码问题]]></title>
+      <url>http://yoursite.com/2016/03/22/linux-python%E8%BD%AC%E7%A0%81%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<p>之前用的一直是utf-8编码，几乎不会出现乱码问题。奈何公司的分词软件支持的输入和输出编码都是gbk，因此必须进行转码，一个非常痛苦的过程，如实记录下遇到的问题，供以后参考</p>
+<h3 id="标准utf8输出"><a href="#标准utf8输出" class="headerlink" title="标准utf8输出"></a>标准utf8输出</h3><pre>
+#!/usr/bin/python
+# -*- coding: utf8 -*-
+#################### deal with base64 file ###################
+import gensim, logging
+from gensim.models import Doc2Vec
+import os
+import multiprocessing
+import numpy as np
+import base64
+import codecs
+import g_url_text_pb2
+import re
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
+def newFile():
+    global count
+    fw = open('baike_url_part_000.chinese','w')
+    with open('baike_url_part_000.result') as f:
+        for line in f:
+            base64Test = base64.b64decode(line)
+            model=g_url_text_pb2.TextInfo()
+            model.ParseFromString(base64Test)
+            doc = model.title.decode('gbk', 'ignore')+' '+(model.content.decode('gbk', 'ignore'))
+            doc = "".join(doc.split())#处理/r/t/n等
+            fw.write("".join(doc)+"\n")
+newFile()
+</pre>
+
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E9%83%A8%E5%88%86%E4%B9%B1%E7%A0%81.png" alt=""></p>
+<h3 id="转gbk输出"><a href="#转gbk输出" class="headerlink" title="转gbk输出"></a>转gbk输出</h3><p>先不管那些奇怪的^@^F等字符，转成gbk编码写入文件，加个encode就行啦</p>
+<pre>doc = doc.encode('gbk','ignore')
+doc = "".join(doc.split())
+fw.write("".join(doc)+"\n")
+</pre>
+
+<p>打开一看，纳尼，怎么变成了这样！这是什么鬼！<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E4%B9%B1%E7%A0%81.png" alt=""></p>
+<p>冷静……查看一下编码格式</p>
+<pre>file baike_url_part_000.chinese</pre>
+
+<p>然而……只显示了data……好忧伤……</p>
+<pre>baike_url_part_000.chinese: data</pre>
+
+<p>再看一下？好吧……binary。。</p>
+<pre>file -i baike_url_part_000.chinese
+baike_url_part_000.chinese: application/octet-stream; charset=binary</pre>
+
+<h3 id="傻瓜命令行工具enca"><a href="#傻瓜命令行工具enca" class="headerlink" title="傻瓜命令行工具enca"></a>傻瓜命令行工具enca</h3><p>好了，这时候就要用神器啦！傻瓜命令行工具enca – 不但能智能识别文件的编码，而且还支持成批转换！心动了吗？心动不如行动！来！安装！so easy~  　　</p>
+<pre>sudo apt-get install enca</pre>
+
+<p>常用的命令格式如下 　　</p>
+<pre>#检查文件的编码　
+#enca -L 当前语言 -x 目标编码 文件名　
+enca -L zh_CN file   　　
+#将文件编码转换为"UTF-8"编码　
+enca -L zh_CN -x UTF-8 file
+#如果不想覆盖原文件
+enca -L zh_CN -x UTF-8 < file1 > file2
+#把当前目录下的所有文件都转成utf-8  　　
+enca -L zh_CN -x utf-8 * </pre>  
+
+<p>这里我们这么用👇</p>
+<pre>$ enca -L zh_CN baike_url_part_000.chinese
+Simplified Chinese National Standard; GB2312
+</pre>
+
+<h3 id="locale"><a href="#locale" class="headerlink" title="locale"></a>locale</h3><p>发现是GB2312,说明不是代码的问题。但是为什么显示出来是乱码呢？那只是因为显示的时候使用的字符编码方式和实际内容的字符编码不一致，所以解决方式当然就是双方都用同一种编码方式喽。简单的命令就可以实现啦</p>
+<pre>
+export LC_ALL=
+</pre>
+
+<p>关于locale，强烈推荐看看<a href="http://www.linuxsky.org/doc/desktop/200704/20.html" target="_blank" rel="external">Locale 详解</a>，然后搞明白以下三个环境变量的优先级：LC<em>ALL&gt;LC</em>*&gt;LANG。locale相关的各个环境变量的作用参见<a href="https://help.ubuntu.com/community/EnvironmentVariables#Locale_setting_variables" target="_blank" rel="external">这里</a>。</p>
+<h3 id="处理-F-A等特殊字符"><a href="#处理-F-A等特殊字符" class="headerlink" title="处理^@^F^A等特殊字符"></a>处理^@^F^A等特殊字符</h3><p>虽然可以显示了，但中间还有许多不能识别的字符<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E9%83%A8%E5%88%86%E4%B9%B1%E7%A0%81.png" alt=""></p>
+<p>看一下这些字符的ascii对照表<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/ascii.jpg" alt=""></p>
+<p>然后一键替换，下面是将^@替换为空格的例子</p>
+<pre>sed -i "s/[\x00]/ /g" baike_url_part_000.chinese </pre>
+
+<p>然而不可见字符这么多，总不能一个个替换吧！在python中直接用正则做替换，在split前加上一行代码</p>
+<pre>doc = re.sub(r'[\x00-\x0F]+',' ', doc)
+doc = "".join(doc.split())
+fw.write("".join(doc)+"\n")</pre>
+
+<p>顺便提一下，在python中，字符串前加r代表此字符串为原样显示，不转义。就像字符串’\n’转义是换行，若其前加上字母r,即r’\n’，则不进行转义，结果将原样显示’\n’。</p>
+<p>这样，才算真正解决了这里的乱码问题。<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E6%AD%A3%E7%A1%AE.png" alt=""></p>
+<p>　</p>
+]]></content>
+    </entry>
+    
+  
+  
+</search>

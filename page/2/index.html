@@ -1,440 +1,633 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
   
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="宿命星动">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="徐阿衡">
 <meta property="og:url" content="http://yoursite.com/page/2/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="宿命星动">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description">
-  
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link rel="stylesheet" href="/css/style.css">
+<meta name="twitter:title" content="徐阿衡">
+<meta name="twitter:description" content="宿命星动">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6294135991397516000,
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/page/2/"/>
+
+  <title> 徐阿衡 </title>
 </head>
 
-<body>
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			
-			<img lazy-src="http://cdn.petpictures.xyz/2016/02/07/so-pretty-dogs-photo-14940252-fanpop.jpg" class="js-avatar">
-			
-		</a>
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
 
-		<hgroup>
-		  <h1 class="header-author"><a href="/">Shuang</a></h1>
-		</hgroup>
+  
 
-		
 
-		
-			<div class="switch-btn">
-				<div class="icon">
-					<div class="icon-ctn">
-						<div class="icon-wrap icon-house" data-idx="0">
-							<div class="birdhouse"></div>
-							<div class="birdhouse_holes"></div>
-						</div>
-						<div class="icon-wrap icon-ribbon hide" data-idx="1">
-							<div class="ribbon"></div>
-						</div>
-						
-						
-						<div class="icon-wrap icon-me hide" data-idx="3">
-							<div class="user"></div>
-							<div class="shoulder"></div>
-						</div>
-						
-					</div>
-					
-				</div>
-				<div class="tips-box hide">
-					<div class="tips-arrow"></div>
-					<ul class="tips-inner">
-						<li>Menu</li>
-						<li>Tags</li>
-						
-						
-						<li>Über</li>
-						
-					</ul>
-				</div>
-			</div>
-		
 
-		<div class="switch-area">
-			<div class="switch-wrap">
-				<section class="switch-part switch-part1">
-					<nav class="header-menu">
-						<ul>
-						
-							<li><a href="/">Homepage</a></li>
-				        
-							<li><a href="/archives">Posts</a></li>
-				        
-							<li><a href="/categories">Categories</a></li>
-				        
-						</ul>
-					</nav>
-					<nav class="header-nav">
-						<div class="social">
-							
-								<a class="github" target="_blank" href="https://github.com/Shuang0420" title="github">github</a>
-					        
-								<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/shuang-xu-7008b894?trk=hp-identity-name" title="linkedin">linkedin</a>
-					        
-						</div>
-					</nav>
-				</section>
-				
-				
-				<section class="switch-part switch-part2">
-					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LDA/" style="font-size: 16.67px;">LDA</a> <a href="/tags/cluster/" style="font-size: 16.67px;">cluster</a> <a href="/tags/doc2vec-gensim/" style="font-size: 10px;">doc2vec gensim</a> <a href="/tags/gensim/" style="font-size: 13.33px;">gensim</a> <a href="/tags/machine-learning/" style="font-size: 16.67px;">machine learning</a> <a href="/tags/topic-modeling/" style="font-size: 16.67px;">topic modeling</a> <a href="/tags/word2vec/" style="font-size: 20px;">word2vec</a> <a href="/tags/word2vec-gensim/" style="font-size: 10px;">word2vec gensim</a>
-					</div>
-				</section>
-				
-				
-				
 
-				
-				
-				<section class="switch-part switch-part3">
-				
-					<div id="js-aboutme">颜色不一样的烟火…</div>
-				</section>
-				
-			</div>
-		</div>
-	</header>				
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
 </div>
 
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
     </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-  	<div class="overlay">
-  		<div class="slider-trigger"></div>
-  		<h1 class="header-author js-mobile-header hide">Shuang</h1>
-  	</div>
-	<div class="intrude-less">
-		<header id="header" class="inner">
-			<div class="profilepic">
-			
-				<img lazy-src="http://cdn.petpictures.xyz/2016/02/07/so-pretty-dogs-photo-14940252-fanpop.jpg" class="js-avatar">
-			
-			</div>
-			<hgroup>
-			  <h1 class="header-author">Shuang</h1>
-			</hgroup>
-			
-			<nav class="header-menu">
-				<ul>
-				
-					<li><a href="/">Homepage</a></li>
-		        
-					<li><a href="/archives">Posts</a></li>
-		        
-					<li><a href="/categories">Categories</a></li>
-		        
-		        <div class="clearfix"></div>
-				</ul>
-			</nav>
-			<nav class="header-nav">
-				<div class="social">
-					
-						<a class="github" target="_blank" href="https://github.com/Shuang0420" title="github">github</a>
-			        
-						<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/shuang-xu-7008b894?trk=hp-identity-name" title="linkedin">linkedin</a>
-			        
-				</div>
-			</nav>
-		</header>				
-	</div>
+  
 </nav>
 
-      <div class="body-wrap">
-  
-    <article id="post-短问题归一化-LSI模型" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/25/短问题归一化-LSI模型/" class="article-date">
-  	<time datetime="2016-05-25T12:59:36.000Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
     
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
+      
+
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/短问题归一化-LSI模型/">短句归一化--LSI模型</a>
-    </h1>
   
 
-      </header>
-      
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
     
-    <div class="article-entry" itemprop="articleBody">
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/25/GibbsLDA-A-C-C-使用心得/" itemprop="url">
+                  GibbsLDA++: A C/C++ 使用心得
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-05-25T12:20:35+08:00" content="2016-05-25">
+              2016-05-25
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/25/GibbsLDA-A-C-C-使用心得/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/25/GibbsLDA-A-C-C-使用心得/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h3 id="LSI-理解"><a href="#LSI-理解" class="headerlink" title="LSI 理解"></a>LSI 理解</h3><p>LSI(Latent Semantic Indexing)，中文意译是潜在语义索引，即通过海量文献找出词汇之间的关系。基本理念是当两个词或一组词大量出现在一个文档中时，这些词之间就是语义相关的。</p>
-<blockquote>
-<p>潜在语义索引是一种用奇异值分解方法获得在文本中术语和概念之间关系的索引和获取方法。该方法的主要依据是在相同文章中的词语一般有类似的含义。该方法可以可以从一篇文章中提取术语关系，从而建立起主要概念内容。</p>
-</blockquote>
-<h3 id="降维过程"><a href="#降维过程" class="headerlink" title="降维过程"></a>降维过程</h3><p>将文档库表示成VSM模型的词-文档矩阵Am×n(词-文档矩阵那就是词作为行，文档作为列，这是矩阵先行后列的表示决定的，当然如果表示成文档-词矩阵的话，后面的计算就要用该矩阵的转置了),其中m表示文档库中包含的所有不同的词的个(行数是不同词的个数)，即行向量表示一个词在不同文档出现的次数，n 表示文档库中的文档数(列数是不同文档的个数)，即列向量表示的是不同的文档.A表示为A = [α ij ],在此矩阵中 ,α ij为非负值 , 表示第 i 个词在第j 个文档中出现的频度。显然，A是稀疏矩阵(这是VSM和文档决定的)。</p>
-<p>利用奇异值分解SVD(Singular Value Decomposition)求A的只有K个正交因子的降秩矩阵，该过程就是降维的过程。SVD的重要作用是把词和文档映射到同一个语义空间中，将词和文档表示为K个因子的形式。显然，这会丢失信息，但主要的信息却被保留了。为什么该过程可以降维呢？因为该过程解决了同义和多义现象。可以看出，K的取值对整个分类结果的影响很大。因为，K过小，则丢失信息就越多；K过大，信息虽然多，但可能有冗余且计算消耗大。K的选择也是值得研究的，不过一般取值为100-300，不绝对。</p>
-<h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>对于 LSI/PLSI 来说，聚类的意义不在于文档，而在于单词。所以对于聚类的一种变型用法是，当 k 设的足够大时，LSI/PLSI 能够给出落在不同子空间的单词序列，基本上这些单词之间拥有较为紧密的语义联系。其实这种用法本质上还是在利用降维做单词相关度计算。</p>
-<ol>
-<li><p>特征降维<br>LSI 本质上是把每个特征映射到了一个更低维的子空间（sub space)，所以用来做降维可以说是天造地设。TFIDF是另一个通用的降维方法，通过一个简单的公式（两个整数相乘）得到不同单词的重要程度，并取前k个最重要的单词，而丢弃其它单词，只有信息的丢失，并没有信息的改变。从执行效率上 TFIDF 远远高于 LSI，不过从效果上（至少在学术界）LSI 要优于TFIDF。<br>不过必须提醒的是，无论是上述哪一种降维方法，都会造成信息的偏差，进而影响后续分类/聚类的准确率。 降维是希望以可接受的效果损失下，大大提高运行效率和节省内存空间。然而能不降维的时候还是不要降维（比如你只有几千篇文档要处理，那样真的没有必要降维）。</p>
-</li>
-<li><p>单词相关度计算<br>LSI 的结果通过简单变换就能得到不同单词之间的相关度( 0 ~ 1 之间的一个实数），相关度非常高的单词往往拥有相同的含义。不过不要被“潜在语义”的名称所迷惑，所谓的潜在语义只不过是统计意义上的相似，如果想得到同义词还是使用同义词词典靠谱。LSI 得到的近义词的特点是它们不一定是同义词（甚至词性都可能不同），但它们往往出现在同类情景下（比如“魔兽” 和 “dota”)。不过事实上直接使用LSI做单词相关度计算的并不多，一方面在于现在有一些灰常好用的同义词词典，另外相对无监督的学习大家还是更信任有监督的学习（分类）得到的结果。</p>
-</li>
-<li><p>聚类<br>直接用 LSI 聚类的情景还没有见过，但使用该系列算法的后续变种 PLSI, LDA 进行聚类的的确有一些。其中LDA聚类还有些道理（因为它本身就假设了潜在topic的联合概率分布），用 LSI 进行聚类其实并不合适。本质上 LSI 在找特征子空间，而聚类方法要找的是实例分组。 LSI 虽然能得到看起来貌似是聚类的结果，但其意义不见得是聚类所想得到的。一个明显的例子就是，对于分布不平均的样本集（比如新闻类的文章有1000篇，而文学类的文章只有10篇）， LSI/PLSI 得到的往往是相对平均的结果(A类500篇，B类600篇)，这种情况下根本无法得到好的聚类结果。相对传统聚类方法k-means， LSI 系列算法不仅存在信息的偏差（丢失和改变），而且不能处理分布不均的样本集。</p>
-</li>
-</ol>
-<h3 id="实验说明"><a href="#实验说明" class="headerlink" title="实验说明"></a>实验说明</h3><p>用了python的gensim包<br>现有的数据是438条标准问题以及3300条人工问题（可以转化为438条标准问题），现在需要对人工问题做一个归一化。<br>这里采用LSI模型进行建模实验，步骤如下。</p>
-<h3 id="导入包"><a href="#导入包" class="headerlink" title="导入包"></a>导入包</h3><pre>
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/22/在c里调用python/" itemprop="url">
+                  在c里调用python
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-05-22T16:55:07+08:00" content="2016-05-22">
+              2016-05-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Programming-language/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming language</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/22/在c里调用python/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/22/在c里调用python/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这一个例子是c调用了python的函数，函数返回值是list，包含了100个float值。</p>
+<pre>
+#include <python2.7 python.h="">
+#include <stdio.h>
+#include <stdlib.h>
+void test1(){
+  Py_Initialize();//初始化python
+  char *test = "奖励";
+  PyObject * pModule = NULL;
+  PyObject * pModule1 = NULL;
+  PyObject * pFunc = NULL;
+  PyObject * pArg    = NULL;
+  PyObject * result;
+  pModule = PyImport_ImportModule("inferSingleDocVec");//引入模块
+  pFunc = PyObject_GetAttrString(pModule, "getDocVec");//直接获取模块中的函数
+  pArg= Py_BuildValue("(s)", test);
+  result = PyEval_CallObject(pFunc, pArg); //调用直接获得的函数，并传递参数；这里得到的是一个list
+  <code>for (int i = 0; i < PyList_Size(result); i++) {</code>
+    printf("%f\t", PyFloat_AsDouble(PyList_GetItem(result, (Py_ssize_t)i)));//打印每一个元素
+  }
+  //下面代码适用于返回值为字符串的情况
+  //char* s=NULL;
+  //PyArg_Parse(result, "s", &s);
+  //for (int i=0;s[i]!='\0';i++){
+   // printf("%c",s[i]);
+ // }
+  Py_Finalize(); //释放python
+//  return;
+}
+int main(int argc, char* argv[])
+{
+    test1();
+    return 0;
+}
+</stdlib.h></stdio.h></python2.7></pre>
+
+<p>编译运行</p>
+<pre>
+$ gcc -I/usr/local/lib/python2.7.11 -o inferDocVec inferDocVec.c -lpython2.7
+$ ./inferDocVec
+</pre>
+
+<p>调用的inferSingleDocVec文件</p>
+<pre>
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
-from gensim import corpora, models, similarities
-import logging
-import jieba
-import jieba.posseg as pseg
-# 防止乱码
+### for infer
 import sys
 reload(sys)
-sys.setdefaultencoding('utf-8')
-# 打印log信息
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)</pre>
+sys.setdefaultencoding('utf8')
+import gensim, logging
+from gensim.models import Doc2Vec
+import os
+import jieba
+import multiprocessing
+import numpy as np
+import base64
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
+def getDocVec(doc_words):
+    docwords=[word for word in jieba.cut(doc_words, cut_all = False)]
+    model = Doc2Vec.load('all_model_v2.txt')
+    invec = model.infer_vector(docwords, alpha=0.1, min_alpha=0.0001, steps=5)
+    return (list)(invec)
+</pre>
 
-<h3 id="文本预处理"><a href="#文本预处理" class="headerlink" title="文本预处理"></a>文本预处理</h3><pre>
-# 标准FAQ，一行对应一条问句
-f = open('FAQuniq.txt', 'r')
-# 对问句进行分词
-texts = [[word for word in jieba.cut(document, cut_all = False)] for document in f]
-
-# 抽取一个bag-of-words，将文档的token映射为id
-dictionary = corpora.Dictionary(texts)
-# 保存词典
-dictionary.save('LSI.dict')
-
-# 产生文档向量，将用字符串表示的文档转换为用id和词频表示的文档向量
-corpus = [dictionary.doc2bow(text) for text in texts]
-
-# 基于这些“训练文档”计算一个TF-IDF模型
-tfidf = models.TfidfModel(corpus)
-
-# 转化文档向量，将用词频表示的文档向量表示为一个用tf-idf值表示的文档向量
-corpus_tfidf = tfidf[corpus]
-
-# 训练LSI模型 即将训练文档向量组成的矩阵SVD分解，并做一个秩为2的近似SVD分解
-lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=100)
-
-# 保存模型
-lsi.save('LSI.pkl')
-lsi.print_topics(20)</pre>
-
-
-<h3 id="初始化验证performance的文件"><a href="#初始化验证performance的文件" class="headerlink" title="初始化验证performance的文件"></a>初始化验证performance的文件</h3><p>checkFile的每行格式为：</p>
-<pre>原始问题的docid：对应的标准问题的topicid</pre>
-
-<p>把它存到checkDict这个dictionary中，key是docid，value是topicid。</p>
-<pre>
-checkDict=dict()
-def getCheckId():
-    fcheck=open('checkFile.txt')
-    for line in fcheck:
-        line=line.strip('\n')
-        if (len(line)==0):
-            continue
-        docid=line.split(":")[0]
-        topicid=line.split(":")[1]
-        checkDict[int(docid)]=int(topicid)
-getCheckId()</pre>
-
-<h3 id="归一化／计算文档相似度"><a href="#归一化／计算文档相似度" class="headerlink" title="归一化／计算文档相似度"></a>归一化／计算文档相似度</h3><pre>
-# 建索引
-index = similarities.MatrixSimilarity(lsi[corpus])
-
-# 初始化分数
-score1=0
-score2=0
-score3=0
-
-# 读取文件，文件的每行格式为一个原始问句
-f2=open('ORIFAQ3330.txt','r')
-# count的作用是和checkFile的docid，即checkDict的key对应
-count=1
-for query in f2:
-    # 获取该原始问句本应对应的正确标准问句
-    if (not checkDict.has_key(count)):
-        count+=1
-        continue
-    checkId=checkDict[count]
-    # 将问句向量化
-    query_bow = dictionary.doc2bow(jieba.cut(query, cut_all = False))
-    # 再用之前训练好的LSI模型将其映射到二维的topic空间：
-    query_lsi = lsi[query_bow]
-    # 计算其和index中doc的余弦相似度了：
-    sims = index[query_lsi]
-    sort_sims = sorted(enumerate(sims), key=lambda item: -item[1])
-    # 找出最相关的三篇文档，计算这三篇文档是否包括标准问句，如果文档就是标准问句，对应的分数加1
-    if (checkId==sort_sims[0][0]):
-        score1+=1
-    elif (checkId==sort_sims[1][0]):
-        score2+=1
-    elif (checkId==sort_sims[2][0]):
-        score3+=1
-    count+=1</pre>
-
-<h3 id="打印分数"><a href="#打印分数" class="headerlink" title="打印分数"></a>打印分数</h3><pre>
-print "Score1: ".format(score1*1.0/count)
-print "Score2: ".format(score2*1.0/count)
-print "Score3: ".format(score3*1.0/count)</pre>
-
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>其实这里的结果非常差，原因是文档（每一条问句）太短，只有十几个字，另外文档数太少，LSI降维牺牲了准确率，下一个实验LDA的准确率相比会高很多。<br>另外，本次实验所用的样本分布并不均匀，“未收到奖励”类似问题出现的频率比“软件无声音”类似问题出现的频率要高很多。<strong><em>重申：LSI/PLSI 得到的往往是相对平均的结果(A类500篇，B类600篇)，这种情况下根本无法得到好的聚类结果。相对传统聚类方法k-means， LSI 系列算法不仅存在信息的偏差（丢失和改变），而且不能处理分布不均的样本集。</em></strong></p>
-<h3 id="LSI-缺陷"><a href="#LSI-缺陷" class="headerlink" title="LSI 缺陷"></a>LSI 缺陷</h3><p>常用的VSM文本表示模型中有两个主要的缺陷：</p>
-<ol>
-<li><p>该模型假设所有特征词条之间是相互独立、互不影响的（朴素贝叶斯也是这个思想），即该模型还是基于“词袋”模型（应该说所有利用VSM模型没有进行潜在语义分析的算法都是基于“词袋”假设）。</p>
-</li>
-<li><p>没有进行特征降维，特征维数可能会很高，向量空间可能很大，对存储和计算资源要求会比较高。</p>
-</li>
-</ol>
-<p>LSI的基本思想是文本中的词与词之间不是孤立的，存在着某种潜在的语义关系，通过对样本数据的统计分析，让机器自动挖掘出这些潜在的语义关系，并把这些关系表示成计算机可以”理解”的模型。它可以消除词匹配过程中的同义和多义现象。它可以将传统的VSM降秩到一个低维的语义空间中，在该语义空间中计算文档的相似度等。总的说来，LSI就是利用词的语义关系对VSM模型进行降维，并提高分类的效果。</p>
+<p>关于如何将python文件转为模块，详见之前的一篇博文<a href="https://github.com/Shuang0420/Shuang0420.github.io/wiki/python----%E5%B0%86%E8%87%AA%E5%B7%B1%E5%86%99%E7%9A%84py%E6%96%87%E4%BB%B6%E4%BD%9C%E4%B8%BA%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%85%A5" target="_blank" rel="external">python 将自己写的py文件作为模块导入</a></p>
 <blockquote>
-<p>参考链接<br><a href="http://www.zwbk.org/MyLemmaShow.aspx?lid=257113" target="_blank" rel="external">http://www.zwbk.org/MyLemmaShow.aspx?lid=257113</a><br><a href="http://www.52nlp.cn/%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E4%B8%A4%E4%B8%AA%E6%96%87%E6%A1%A3%E7%9A%84%E7%9B%B8%E4%BC%BC%E5%BA%A6%E4%BA%8C" target="_blank" rel="external">http://www.52nlp.cn/%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E4%B8%A4%E4%B8%AA%E6%96%87%E6%A1%A3%E7%9A%84%E7%9B%B8%E4%BC%BC%E5%BA%A6%E4%BA%8C</a></p>
+<p>参考链接</p>
+<blockquote>
+<p><a href="https://www.daniweb.com/programming/software-development/threads/237529/what-does-pyarg_parse-do-in-detail" target="_blank" rel="external">https://www.daniweb.com/programming/software-development/threads/237529/what-does-pyarg_parse-do-in-detail</a></p>
+<p><a href="http://stackoverflow.com/questions/5079570/writing-a-python-c-extension-how-to-correctly-load-a-pylistobject" target="_blank" rel="external">http://stackoverflow.com/questions/5079570/writing-a-python-c-extension-how-to-correctly-load-a-pylistobject</a></p>
+</blockquote>
 </blockquote>
 
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cluster/">cluster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/">machine learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/topic-modeling/">topic modeling</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-GibbsLDA-A-C-C-使用心得" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/25/GibbsLDA-A-C-C-使用心得/" class="article-date">
-  	<time datetime="2016-05-25T04:20:35.000Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+          
         
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/GibbsLDA-A-C-C-使用心得/">GibbsLDA++: A C/C++ 使用心得</a>
-    </h1>
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/19/AP聚类/" itemprop="url">
+                  AP聚类
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-05-19T21:42:04+08:00" content="2016-05-19">
+              2016-05-19
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/19/AP聚类/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/19/AP聚类/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
       </header>
-      
     
-    <div class="article-entry" itemprop="articleBody">
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-AP聚类" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/19/AP聚类/" class="article-date">
-  	<time datetime="2016-05-19T13:42:04.000Z" itemprop="datePublished">2016-05-19</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/19/AP聚类/">AP聚类</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。</p>
+          
+            <p>AP算法的具体工作过程如下：先计算N个点之间的相似度值，将值放在S矩阵中，再选取P值(一般取S的中值)。设置一个最大迭代次数(文中设默认值为1000)，迭代过程开始后，计算每一次的R值和A值，根据R(k,k)+A(k,k)值来判断是否为聚类中心(文中指定当(R(k,k)+A(k,k))＞0时认为是一个聚类中心)，当迭代次数超过最大值( 即maxits值)或者当聚类中心连续多少次迭代不发生改变( 即convits值)时终止计算(文中设定连续50次迭代过程不发生改变是终止计算)。</p>
 <p>Affinity Propagation (AP) 聚类是最近在Science杂志上提出的一种新的聚类算法。它根据N个数据点之间的相似度进行聚类,这些相似度可以是对称的,即两个数据点互相之间的相似度一样(如欧氏距离);也可以是不对称的,即两个数据点互相之间的相似度不等。这些相似度组成N×N的相似度矩阵S(其中N为有N个数据点)。AP算法不需要事先指定聚类数目,相反它将所有的数据点都作为潜在的聚类中心,称之为exemplar。以S矩阵的对角线上的数值s(k, k)作为k点能否成为聚类中心的评判标准,这意味着该值越大,这个点成为聚类中心的可能性也就越大,这个值又称作参考度p (preference)。<br>在这里介绍几个文中常出现的名词：<br>exemplar：指的是聚类中心。<br>similarity：数据点i和点j的相似度记为S(i，j)。是指点j作为点i的聚类中心的相似度。一般使用欧氏距离来计算，如－|| ||。文中，所有点与点的相似度值全部取为负值。因为我们可以看到，相似度值越大说明点与点的距离越近，便于后面的比较计算。<br>preference：数据点i的参考度称为P(i)或S(i,i)。是指点i作为聚类中心的参考度。一般取S相似度值的中值。<br>Responsibility:R(i,k)用来描述点k适合作为数据点i的聚类中心的程度。<br>Availability:A(i,k)用来描述点i选择点k作为其聚类中心的适合程度。</p>
 <p>Script output:<br>Estimated number of clusters: 3<br>Homogeneity: 0.872<br>Completeness: 0.872<br>V-measure: 0.872<br>Adjusted Rand Index: 0.912<br>Adjusted Mutual Information: 0.871<br>Silhouette Coefficient: 0.753</p>
 <p>Python source code: plot_affinity_propagation.py<br>print(<strong>doc</strong>)</p>
@@ -454,110 +647,225 @@ print "Score3: ".format(score3*1.0/count)</pre>
 <p>参考链接<br><a href="http://scikit-learn.org/stable/modules/clustering.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/clustering.html</a><br><a href="http://blog.csdn.net/u010695420/article/details/42239465" target="_blank" rel="external">http://blog.csdn.net/u010695420/article/details/42239465</a></p>
 </blockquote>
 
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-LDA验证" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/19/LDA验证/" class="article-date">
-  	<time datetime="2016-05-19T13:14:42.000Z" itemprop="datePublished">2016-05-19</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+          
         
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/19/LDA验证/">LDA验证</a>
-    </h1>
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/19/LDA验证/" itemprop="url">
+                  LDA验证
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-05-19T21:14:42+08:00" content="2016-05-19">
+              2016-05-19
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/19/LDA验证/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/19/LDA验证/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
       </header>
-      
     
-    <div class="article-entry" itemprop="articleBody">
+
+
+    <div class="post-body" itemprop="articleBody">
+
       
+      
+
+      
+        
+          
+            
+          
         
       
     </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
 
+    <div>
       
-      <div class="clearfix"></div>
     </div>
-    
-  </div>
-  
-</article>
 
-
-
-
-
-
-
-
-
-  
-    <article id="post-Gensim-and-LDA-Training-and-Prediction" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/18/Gensim-and-LDA-Training-and-Prediction/" class="article-date">
-  	<time datetime="2016-05-18T12:46:16.000Z" itemprop="datePublished">2016-05-18</time>
-</a>
+    <div>
+      
     </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
   
-  <div class="article-inner">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
     
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/18/Gensim-and-LDA-Training-and-Prediction/">Gensim and LDA--Training and Prediction</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/18/Gensim-and-LDA-Training-and-Prediction/" itemprop="url">
+                  Gensim and LDA--Training and Prediction
+                </a>
+              
+            
+          </h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-05-18T20:46:16+08:00" content="2016-05-18">
+              2016-05-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">machine learning</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/18/Gensim-and-LDA-Training-and-Prediction/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/18/Gensim-and-LDA-Training-and-Prediction/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
       </header>
-      
     
-    <div class="article-entry" itemprop="articleBody">
+
+
+    <div class="post-body" itemprop="articleBody">
+
       
-        <pre>
+      
+
+      
+        
+          
+            <pre>
 # install the related python packages
 >>> pip install numpy
 >>> pip install scipy
@@ -651,81 +959,145 @@ model.print_topics(-1, 5)</pre>
 
 <p>You can see step-by-step output by the following references.</p>
 <blockquote>
-<p>References:<br><a href="https://radimrehurek.com/gensim/tut2.html" target="_blank" rel="external">https://radimrehurek.com/gensim/tut2.html</a> official guide (en)<br><a href="http://blog.csdn.net/questionfish/article/details/46725475" target="_blank" rel="external">http://blog.csdn.net/questionfish/article/details/46725475</a>  official guide (ch)<br><a href="https://radimrehurek.com/gensim/wiki.html#latent-dirichlet-allocation" target="_blank" rel="external">https://radimrehurek.com/gensim/wiki.html#latent-dirichlet-allocation</a></p>
+<p>References:</p>
+<blockquote>
+<p><a href="https://radimrehurek.com/gensim/tut2.html" target="_blank" rel="external">https://radimrehurek.com/gensim/tut2.html</a> official guide (en)</p>
+<p><a href="http://blog.csdn.net/questionfish/article/details/46725475" target="_blank" rel="external">http://blog.csdn.net/questionfish/article/details/46725475</a>  official guide (ch)</p>
+<p><a href="https://radimrehurek.com/gensim/wiki.html#latent-dirichlet-allocation" target="_blank" rel="external">https://radimrehurek.com/gensim/wiki.html#latent-dirichlet-allocation</a></p>
+</blockquote>
 </blockquote>
 
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cluster/">cluster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gensim/">gensim</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/">machine learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/topic-modeling/">topic modeling</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Gensim-用Python做主题模型" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/18/Gensim-用Python做主题模型/" class="article-date">
-  	<time datetime="2016-05-18T02:22:31.000Z" itemprop="datePublished">2016-05-18</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+          
         
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/18/Gensim-用Python做主题模型/">Gensim-用Python做主题模型</a>
-    </h1>
   
 
-      </header>
-      
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
     
-    <div class="article-entry" itemprop="articleBody">
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/18/Gensim-用Python做主题模型/" itemprop="url">
+                  Gensim-用Python做主题模型
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-05-18T10:22:31+08:00" content="2016-05-18">
+              2016-05-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">machine learning</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/18/Gensim-用Python做主题模型/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/18/Gensim-用Python做主题模型/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensim中的算法包括：LSA(Latent Semantic Analysis), LDA(Latent Dirichlet Allocation), RP (Random Projections), 通过在一个训练文档语料库中，检查词汇统计联合出现模式, 可以用来发掘文档语义结构，这些算法属于非监督学习，可以处理原始的，非结构化的文本（”plain text”）。</p>
-<h3 id="gensim有着如下特性"><a href="#gensim有着如下特性" class="headerlink" title="gensim有着如下特性"></a>gensim有着如下特性</h3><ul>
+      
+
+      
+        
+          
+            <h3 id="gensim-介绍"><a href="#gensim-介绍" class="headerlink" title="gensim 介绍"></a>gensim 介绍</h3><p>gemsim是一个免费python库，能够从文档中有效地自动抽取语义主题。gensim中的算法包括：LSA(Latent Semantic Analysis), LDA(Latent Dirichlet Allocation), RP (Random Projections), 通过在一个训练文档语料库中，检查词汇统计联合出现模式, 可以用来发掘文档语义结构，这些算法属于非监督学习，可以处理原始的，非结构化的文本（”plain text”）。</p>
+<h3 id="gensim-的特性"><a href="#gensim-的特性" class="headerlink" title="gensim 的特性"></a>gensim 的特性</h3><ul>
 <li>内存独立- 对于训练语料来说，没必要在任何时间将整个语料都驻留在RAM中</li>
 <li>有效实现了许多流行的向量空间算法－包括tf-idf，分布式LSA, 分布式LDA 以及 RP；并且很容易添加新算法</li>
 <li>对流行的数据格式进行了IO封装和转换</li>
 <li>在其语义表达中，可以相似查询</li>
 <li>gensim的创建的目的是，由于缺乏简单的（java很复杂）实现主题建模的可扩展软件框架.</li>
 </ul>
-<h3 id="gensim的设计原则"><a href="#gensim的设计原则" class="headerlink" title="gensim的设计原则"></a>gensim的设计原则</h3><ul>
+<h3 id="gensim-的设计原则"><a href="#gensim-的设计原则" class="headerlink" title="gensim 的设计原则"></a>gensim 的设计原则</h3><ul>
 <li>简单的接口，学习曲线低。对于原型实现很方便</li>
 <li>根据输入的语料的size来说，内存各自独立；基于流的算法操作，一次访问一个文档.</li>
 </ul>
-<h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><p>gensim的整个package会涉及三个概念：corpus, vector, model.</p>
+<h3 id="gensim-的核心概念"><a href="#gensim-的核心概念" class="headerlink" title="gensim 的核心概念"></a>gensim 的核心概念</h3><p>gensim的整个package会涉及三个概念：corpus, vector, model.</p>
 <ul>
 <li>语库(corpus)<br>文档集合，用于自动推出文档结构，以及它们的主题等，也可称作训练语料。</li>
 </ul>
@@ -747,70 +1119,133 @@ model.print_topics(-1, 5)</pre>
 <p>对于我们来说，一个模型就是一个变换(transformation)，将一种文档表示转换成另一种。初始和目标表示都是向量－－它们只在question和answer之间有区别。这个变换可以通过训练的语料进行自动学习，无需人工监督，最终的文档表示将更加紧凑和有用；相似的文档具有相似的表示。</p>
 </li>
 </ul>
-<h3 id="演示代码见-http-shuang0420-github-io-2016-05-18-Gensim-and-LDA-Training-and-Prediction"><a href="#演示代码见-http-shuang0420-github-io-2016-05-18-Gensim-and-LDA-Training-and-Prediction" class="headerlink" title="演示代码见 http://shuang0420.github.io/2016/05/18/Gensim-and-LDA-Training-and-Prediction/"></a>演示代码见 <a href="http://shuang0420.github.io/2016/05/18/Gensim-and-LDA-Training-and-Prediction/" target="_blank" rel="external">http://shuang0420.github.io/2016/05/18/Gensim-and-LDA-Training-and-Prediction/</a></h3><blockquote>
-<p>参考链接<br><a href="http://d0evi1.github.io/gensim/" target="_blank" rel="external">http://d0evi1.github.io/gensim/</a></p>
+<h3 id="演示代码"><a href="#演示代码" class="headerlink" title="演示代码"></a>演示代码</h3><p><a href="http://shuang0420.github.io/2016/05/18/Gensim-and-LDA-Training-and-Prediction/" target="_blank" rel="external">演示代码</a></p>
+<blockquote>
+<p>参考链接</p>
+<blockquote>
+<p><a href="http://d0evi1.github.io/gensim/" target="_blank" rel="external">http://d0evi1.github.io/gensim/</a></p>
+</blockquote>
 </blockquote>
 
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cluster/">cluster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gensim/">gensim</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/">machine learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/topic-modeling/">topic modeling</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-JGibbLDA实战" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/16/JGibbLDA实战/" class="article-date">
-  	<time datetime="2016-05-16T12:50:23.000Z" itemprop="datePublished">2016-05-16</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+          
         
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/16/JGibbLDA实战/">JGibbLDA实战</a>
-    </h1>
   
 
-      </header>
-      
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
     
-    <div class="article-entry" itemprop="articleBody">
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/16/JGibbLDA实战/" itemprop="url">
+                  JGibbLDA实战
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-05-16T20:50:23+08:00" content="2016-05-16">
+              2016-05-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">machine learning</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/16/JGibbLDA实战/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/16/JGibbLDA实战/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。<br>命令：</p>
+      
+
+      
+        
+          
+            <p>尝试了下JGibbLDA，发现按官方教程用以下命令直接运行jar包会出现错误。<br>命令：</p>
 <pre>java -mx512M -cp bin:lib/args4j-2.0.6.jar jgibblda.LDA -est -alpha 0.5 -beta 0.1 -ntopics 100 -niters 1000 -savestep 100 -twords 20 -dfile models/casestudy/newdocs.dat</pre>
 
 <p>错误信息：</p>
@@ -857,66 +1292,384 @@ model.print_topics(-1, 5)</pre>
 <p>参考链接：<br><a href="http://www.ithao123.cn/content-4208214.html" target="_blank" rel="external">http://www.ithao123.cn/content-4208214.html</a><br><a href="http://jgibblda.sourceforge.net/" target="_blank" rel="external">http://jgibblda.sourceforge.net/</a></p>
 </blockquote>
 
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDA/">LDA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cluster/">cluster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/">machine learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/topic-modeling/">topic modeling</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Github-Pages-Hexo搭建个人博客" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/12/Github-Pages-Hexo搭建个人博客/" class="article-date">
-  	<time datetime="2016-05-12T08:55:07.000Z" itemprop="datePublished">2016-05-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+          
         
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/12/Github-Pages-Hexo搭建个人博客/">Github Pages+Hexo搭建个人博客</a>
-    </h1>
   
 
-      </header>
-      
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
     
-    <div class="article-entry" itemprop="articleBody">
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/13/gollum:-github上搭建个人wiki/" itemprop="url">
+                  gollum/-github上搭建个人wiki
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-05-13T16:55:07+08:00" content="2016-05-13">
+              2016-05-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Configuration/" itemprop="url" rel="index">
+                    <span itemprop="name">Configuration</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/13/gollum:-github上搭建个人wiki/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/gollum:-github上搭建个人wiki/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h1 id="为什么用Github-Pages-Hexo"><a href="#为什么用Github-Pages-Hexo" class="headerlink" title="为什么用Github Pages + Hexo"></a>为什么用Github Pages + Hexo</h1><h2 id="Github-Page优点"><a href="#Github-Page优点" class="headerlink" title="Github Page优点"></a>Github Page优点</h2><ul>
+      
+
+      
+        
+          
+            <p>博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。</p>
+<h3 id="开通Wiki"><a href="#开通Wiki" class="headerlink" title="开通Wiki"></a>开通Wiki</h3><p>登陆Github，找到你所开通的Github项目的Settings栏目，开通Wikis，如果只希望别人可读不可写，勾选：Restrict edits to Collaborators only。如下图所示：</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%884.56.12.png" alt=""></p>
+<h3 id="git-clone下相应维基的git地址"><a href="#git-clone下相应维基的git地址" class="headerlink" title="git clone下相应维基的git地址"></a>git clone下相应维基的git地址</h3><pre> git clone git@github.com:Shuang0420/Shuang0420.github.io.wiki.git wiki</pre>
+
+<p>如果你之前没有设置git密钥，可以参照以下步骤先做配置，如果已经设置，请忽略。</p>
+<ol>
+<li><p>查看是否已经有了ssh密钥：<br><pre>cd ~/.ssh</pre><br>如果没有密钥则不会有此文件夹，有则备份删除</p>
+</li>
+<li><p>生成密钥，得到两个文件：id_rsa 和 id_rsa.pub</p>
+<pre>ssh-keygen -t rsa -C “haiyan.xu.vip@gmail.com”</pre>
+</li>
+<li><p>添加密钥到ssh：ssh-add id_rsa</p>
+</li>
+<li><p>在github上settings中添加ssh密钥，即“id_rsa.pub”里的公钥。</p>
+</li>
+<li><p>测试：ssh git@github.com</p>
+</li>
+</ol>
+<h3 id="配置个人wiki"><a href="#配置个人wiki" class="headerlink" title="配置个人wiki"></a>配置个人wiki</h3><ol>
+<li><p>在wiki目录下，安装bundler</p>
+<pre>gem install bundler</pre>
+
+<p>   如果安装没有问题，可以跳过以下错误解决。</p>
+   <pre>
+   ERROR:  Could not find a valid gem 'bundler' (>= 0), here is why:
+             Unable to download data from https://rubygems.org/ - Errno::EPIPE: Broken pipe - SSL_connect (https://rubygems.org/latest_specs.4.8.gz)</pre>
+
+<p>   解决：</p>
+   <pre>gem source -a http://rubygems.org/
+   gem install bundler</pre>
+
+<p>   然而还是有错误：</p>
+   <pre>Fetching: bundler-1.12.5.gem (100%)^[[A
+   ERROR:  While executing gem ... (Gem::FilePermissionError)
+       You don't have write permissions for the /Library/Ruby/Gems/2.0.0 directory.</pre>
+
+<p>   因为没有sudo：</p>
+   <pre>sudo gem install bundler</pre>
+</li>
+<li><p>新建Gemfile文件，内容如下：</p>
+   <pre>
+   source "http://rubygems.org"
+   gem 'redcarpet'
+   gem "grit", '~> 2.5.0', git: 'https://github.com/gitlabhq/grit.git', ref: '42297cdcee16284d2e4eff23d41377f52fc28b9d'
+   gem 'gollum', git: 'https://github.com/gollum/gollum.git'</pre></li>
+<li><p>运行：</p>
+   <pre>
+   # 安装项目依赖的所有gem包;此命令会尝试更新系统中已存在的gem包
+   bundle install</pre>
+
+<p>   时间有点久，耐心等待。<br>   然而最后出现error,</p>
+   <pre>An error occurred while installing charlock_holmes (0.7.3), and Bundler cannot continue.
+   Make sure that `gem install charlock_holmes -v '0.7.3'` succeeds before bundling.</pre>
+
+<p>   好。那就按要求安装。</p>
+   <pre>sudo gem install charlock_holmes -v '0.7.3'</pre>
+
+<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%885.25.54.png" alt=""></p>
+<p>   好。继续按要求安装。</p>
+   <pre>brew install icu4c</pre>
+
+<p>   再重来</p>
+   <pre>sudo gem install charlock_holmes -v '0.7.3'</pre>
+
+   <pre>bundle install</pre>
+
+<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-27%20%E4%B8%8A%E5%8D%889.46.38.png" alt=""></p>
+<p>   因为没有安装bundle</p>
+   <pre>gem install bundle</pre>
+
+<p>   安装后再次尝试运行</p>
+   <pre>bundle install</pre>
+
+<p>   error</p>
+   <pre>Could not reach host index.rubygems.org. Check your network connection and try again.</pre>
+   出现这种错误可以尝试把Gemfile里的https改成http（互相转化进行尝试）
+
+   <pre>bundle install</pre>
+
+<p>   终于成功！</p>
+</li>
+<li><p>已安装成功gollum等。然后运行：</p>
+   <pre>gollum</pre>
+
+<p>   走到这一步了本人还是遇到了万恶的失败。<br>   看着已经安装好了</p>
+   <pre>
+   Installing nokogiri 1.6.7.2 with native extensions
+   Installing rack-protection 1.5.3
+   Installing gollum-grit_adapter 1.0.1
+   Installing sanitize 2.1.0
+   Installing sinatra 1.4.7
+   Installing gollum-lib 4.2.0
+   Using gollum 4.0.1 from https://github.com/gollum/gollum.git (at master@5a5e56a)
+   Bundle complete! 3 Gemfile dependencies, 24 gems now installed.
+   Use `bundle show [gemname]` to see where a bundled gem is installed.
+   </pre>
+
+<p>   然而实际并没有</p>
+   <pre>
+   $ gollum
+   -bash: gollum: command not found</pre>
+
+<p>   大写的忧伤。最后通过直接安装gollum解决。</p>
+   <pre>sudo gem install gollum</pre>
+
+   <pre>gollum</pre>
+</li>
+<li><p>终于可以在本地启动成功维基。打开网址：<a href="http://0.0.0.0:4567/，可以直接在浏览器中编辑。" target="_blank" rel="external">http://0.0.0.0:4567/，可以直接在浏览器中编辑。</a></p>
+<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%886.26.05.png" alt=""></p>
+<p>   如果发现不能如下错误，请尝试更新ruby。</p>
+<p>   <img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%889.31.07.png" alt=""></p>
+<p>   更新ruby步骤<br>   安装 RVM<br>   RVM:Ruby Version Manager,Ruby版本管理器，包括Ruby的版本管理和Gem库管理(gemset)</p>
+   <pre>curl -L get.rvm.io | bash -s stable</pre>
+
+   <pre>source ~/.bashrc  
+   source ~/.bash_profile </pre>
+
+<p>   测试是否安装正常</p>
+   <pre>rvm -v  </pre>
+
+<p>   用RVM升级Ruby</p>
+   <pre>
+   #查看当前ruby版本  
+   ruby -v  
+   #列出已知的ruby版本  
+   rvm list known  
+   #安装ruby 2.3.0
+   rvm install 2.3.0 </pre>
+
+<p>   安装完成之后ruby -v查看是否安装成功。</p>
+<p>   重新安装完毕后回到第3步。</p>
+</li>
+</ol>
+<h3 id="github同步"><a href="#github同步" class="headerlink" title="github同步"></a>github同步</h3><p>在wiki目录下面，进行git库操作，提交本地对维基内容的修改。一切将自动保存在你的Github上的个人博客网站的wiki目录下面。</p>
+<pre>
+cd ~/wiki
+git add .
+git commit -am"first commit"
+git push</pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/12/Github-Pages-Hexo搭建个人博客/" itemprop="url">
+                  Github Pages+Hexo搭建个人博客
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-05-12T16:55:07+08:00" content="2016-05-12">
+              2016-05-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Configuration/" itemprop="url" rel="index">
+                    <span itemprop="name">Configuration</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/12/Github-Pages-Hexo搭建个人博客/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/12/Github-Pages-Hexo搭建个人博客/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="为什么用Github-Pages-Hexo"><a href="#为什么用Github-Pages-Hexo" class="headerlink" title="为什么用Github Pages + Hexo"></a>为什么用Github Pages + Hexo</h1><h2 id="Github-Page优点"><a href="#Github-Page优点" class="headerlink" title="Github Page优点"></a>Github Page优点</h2><ul>
 <li>轻量级的博客系统，没有麻烦的配置</li>
 <li>使用标记语言，比如<a href="http://markdown.tw/" target="_blank" rel="external">Markdown</a></li>
 <li>无需自己搭建服务器</li>
@@ -932,7 +1685,7 @@ model.print_topics(-1, 5)</pre>
 <li>可部署在github上；</li>
 <li>创造者来自中国台湾，所以几乎所有模板都关注到了中文的兼容性，很适合使用汉语的码农。</li>
 </ul>
-<h1 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h1><h3 id="新建github-repository"><a href="#新建github-repository" class="headerlink" title="新建github repository"></a>新建github repository</h3><p>在github上新建repository，name为username.github.io。</p>
+<h1 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h1><h2 id="新建github-repository"><a href="#新建github-repository" class="headerlink" title="新建github repository"></a>新建github repository</h2><p>在github上新建repository，name为username.github.io。</p>
 <h2 id="Hexo安装"><a href="#Hexo安装" class="headerlink" title="Hexo安装"></a>Hexo安装</h2><p>先安装git和node.js</p>
 <pre>brew install git
 brew install node</pre>
@@ -1005,107 +1758,653 @@ hexo deploy</pre>
 hexo d -g</pre>
 
 <blockquote>
-<p>参考链接：<br><a href="http://mozhenhau.com/2015/03/05/%E5%9C%A8Mac%E9%80%9A%E8%BF%87Hexo%E5%9C%A8github%E4%B8%8A%E5%BB%BA%E7%AB%8B%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/" target="_blank" rel="external">http://mozhenhau.com/2015/03/05/%E5%9C%A8Mac%E9%80%9A%E8%BF%87Hexo%E5%9C%A8github%E4%B8%8A%E5%BB%BA%E7%AB%8B%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</a><br><a href="http://evakasch.github.io/2016/05/04/hexo-setup/" target="_blank" rel="external">http://evakasch.github.io/2016/05/04/hexo-setup/</a></p>
+<p>参考链接：</p>
+<blockquote>
+<p><a href="http://mozhenhau.com/2015/03/05/%E5%9C%A8Mac%E9%80%9A%E8%BF%87Hexo%E5%9C%A8github%E4%B8%8A%E5%BB%BA%E7%AB%8B%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/" target="_blank" rel="external">http://mozhenhau.com/2015/03/05/%E5%9C%A8Mac%E9%80%9A%E8%BF%87Hexo%E5%9C%A8github%E4%B8%8A%E5%BB%BA%E7%AB%8B%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</a></p>
+<p><a href="http://evakasch.github.io/2016/05/04/hexo-setup/" target="_blank" rel="external">http://evakasch.github.io/2016/05/04/hexo-setup/</a></p>
+</blockquote>
 </blockquote>
 
+          
+        
       
     </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
-	</div>
 
+    <div>
       
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Hexo/">Hexo</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
     </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/22/让进程在后台可靠运行的几种方法/" itemprop="url">
+                  让进程在后台可靠运行的几种方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-04-22T16:55:07+08:00" content="2016-04-22">
+              2016-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/22/让进程在后台可靠运行的几种方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/22/让进程在后台可靠运行的几种方法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略 HUP 信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。</p>
+<h3 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h3><p>只需在要处理的命令前加上 nohup 即可，标准输出和标准错误缺省会被重定向到 nohup.out 文件中。同时可在结尾加上”&amp;”来将命令同时放入后台运行，也可用”&gt;filename 2&gt;&amp;1”来更改缺省的重定向文件名。</p>
+<pre>
+$ nohup ping www.ibm.com &
+[1] 6982
+$ nohup: appending output to `nohup.out'
+$ ps -ef |grep www.ibm.com
+  501  6982  5823   0  4:23下午 ttys000    0:00.03 ping www.ibm.com
+  501  7120  5823   0  4:26下午 ttys000    0:00.01 grep www.ibm.com
+</pre>
+
+<h3 id="setsid"><a href="#setsid" class="headerlink" title="setsid"></a>setsid</h3><p>nohup 能通过忽略 HUP 信号来使我们的进程避免中途被中断，换个角度思考，如果我们的进程不属于接受 HUP 信号的终端的子进程，那么自然也就不会受到 HUP 信号的影响了。setsid 就能帮助我们做到这一点。</p>
+<pre>
+$ setsid ping www.ibm.com
+$ ps -ef |grep www.ibm.com
+root     31094     1  0 07:28 ?        00:00:00 ping www.ibm.com
+root     31102 29217  0 07:29 pts/4    00:00:00 grep www.ibm.com
+</pre>
+
+<p>  值得注意的是，上例中我们的进程 ID(PID)为31094，而它的父 ID（PPID）为1（即为 init 进程 ID），并不是当前终端的进程 ID。请将此例与nohup 例中的父 ID 做比较。</p>
+<h3 id="disown"><a href="#disown" class="headerlink" title="disown"></a>disown</h3><p>如果未加任何处理就已经提交了命令，该如何补救才能让它避免 HUP 信号的影响呢？</p>
+<ul>
+<li>用disown -h jobspec来使某个作业忽略HUP信号。</li>
+<li>用disown -ah 来使所有的作业都忽略HUP信号。</li>
+<li><p>用disown -rh 来使正在运行的作业忽略HUP信号。</p>
+<p>需要注意的是，当使用过 disown 之后，会将把目标作业从作业列表中移除，我们将不能再使用jobs来查看它，但是依然能够用ps -ef查找到它。<br>但是还有一个问题，这种方法的操作对象是作业，如果我们在运行命令时在结尾加了”&amp;”来使它成为一个作业并在后台运行，那么就万事大吉了，我们可以通过jobs命令来得到所有作业的列表。但是如果并没有把当前命令作为作业来运行，如何才能得到它的作业号呢？答案就是用 CTRL-z（按住Ctrl键的同时按住z键）了！<br>CTRL-z 的用途就是将当前进程挂起（Suspend），然后我们就可以用jobs命令来查询它的作业号，再用bg jobspec来将它放入后台并继续运行。需要注意的是，如果挂起会影响当前进程的运行结果，请慎用此方法。</p>
+<p>disown 示例1（如果提交命令时已经用“&amp;”将命令放入后台运行，则可以直接使用“disown”）</p>
+<pre>$ cp -r testLargeFile largeFile &
+[1] 4825
+$ jobs
+[1]+  Running                 cp -i -r testLargeFile largeFile &
+$ disown -h %1
+$ ps -ef |grep largeFile
+root      4825   968  1 09:46 pts/4    00:00:00 cp -i -r testLargeFile largeFile
+root      4853   968  0 09:46 pts/4    00:00:00 grep largeFile
+$ logout</pre>
+
+<p>disown 示例2（如果提交命令时未使用“&amp;”将命令放入后台运行，可使用 CTRL-z 和“bg”将其放入后台，再使用“disown”）</p>
+<pre>$ cp -r testLargeFile largeFile2
+[1]+  Stopped                 cp -i -r testLargeFile largeFile2
+$ bg %1
+[1]+ cp -i -r testLargeFile largeFile2 &
+$ jobs
+[1]+  Running                 cp -i -r testLargeFile largeFile2 &
+$ disown -h %1
+$ ps -ef |grep largeFile2
+root      5790  5577  1 10:04 pts/3    00:00:00 cp -i -r testLargeFile largeFile2
+root      5824  5577  0 10:05 pts/3    00:00:00 grep largeFile2</pre>
+
+</li>
+</ul>
+<h3 id="screen"><a href="#screen" class="headerlink" title="screen"></a>screen</h3><p>如果有大量这种命令需要在稳定的后台里运行，如何避免对每条命令都做这样的操作呢？<br>此时最方便的方法就是 screen 了。简单的说，screen 提供了 ANSI/VT100 的终端模拟器，使它能够在一个真实终端下运行多个全屏的伪终端。screen 的参数很多，具有很强大的功能，我们在此仅介绍其常用功能以及简要分析一下为什么使用 screen 能够避免 HUP 信号的影响。<br>使用 screen 很方便，有以下几个常用选项：</p>
+<ul>
+<li>用screen -dmS session name来建立一个处于断开模式下的会话（并指定其会话名）。</li>
+<li>用screen -list 来列出所有会话。</li>
+<li>用screen -r session name来重新连接指定会话。</li>
+<li><p>用快捷键CTRL-a d 来暂时断开当前会话。</p>
+<p>screen 示例</p>
+<pre>$ screen -dmS Urumchi
+$ screen -list
+There is a screen on:
+      12842.Urumchi   (Detached)
+1 Socket in /tmp/screens/S-root.
+$ screen -r Urumchi</pre>
+
+<p>当我们用“-r”连接到 screen 会话后，我们就可以在这个伪终端里面为所欲为，再也不用担心 HUP 信号会对我们的进程造成影响，也不用给每个命令前都加上“nohup”或者“setsid”了。</p>
+</li>
+</ul>
+<ol>
+<li><p>未使用 screen 时新进程的进程树</p>
+<pre>$ ping www.google.com &
+[1] 9499
+$ pstree -H 9499
+init─┬─Xvnc
+  ├─acpid
+  ├─atd
+  ├─2*[sendmail]
+  ├─sshd─┬─sshd───bash───pstree
+  │       └─sshd───bash───ping</pre>
+
+<p>我们可以看出，未使用 screen 时我们所处的 bash 是 sshd 的子进程，当 ssh 断开连接时，HUP 信号自然会影响到它下面的所有子进程（包括我们新建立的 ping 进程）。</p>
+</li>
+<li><p>使用了 screen 后新进程的进程树</p>
+<pre>$screen -r Urumchi
+$ ping www.ibm.com &
+[1] 9488
+$ pstree -H 9488
+init─┬─Xvnc
+  ├─acpid
+  ├─atd
+  ├─screen───bash───ping
+  ├─2*[sendmail]</pre>
+
+<p>而使用了 screen 后就不同了，此时 bash 是 screen 的子进程，而 screen 是 init（PID为1）的子进程。那么当 ssh 断开连接时，HUP 信号自然不会影响到 screen 下面的子进程了。</p>
+</li>
+</ol>
+<blockquote>
+<p>参考链接<br><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-nohup/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/linux/l-cn-nohup/</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
   </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/dog"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">宿命星动</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
   
-</article>
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+</div>
 
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
 
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
 
+        
 
+<div class="busuanzi-count">
 
-
-
-
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
   
 </div>
-      <footer id="footer">
-  <div class="outer">
-    <div id="footer-info">
-    	<div class="footer-left">
-    		&copy; 2016 Shuang
-    	</div>
-      	<div class="footer-right">
-      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
-      	</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
     </div>
   </div>
-</footer>
-    </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:""};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
-<script>
-	var yiliaConfig = {
-		fancybox: true,
-		mathjax: true,
-		animate: true,
-		isHome: true,
-		isPost: false,
-		isArchive: false,
-		isTag: false,
-		isCategory: false,
-		open_in_new: false
-	}
-</script>
-<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-<script src="/js/main.js"></script>
-
-
-
+  
+    
+  
 
 
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
     }
-});
+    var path = "/" + search_path;
+    // monitor main search box;
 
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
-</script>
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
 
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
 
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
 
-  </div>
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
 </body>
 </html>
