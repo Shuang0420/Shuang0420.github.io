@@ -912,7 +912,7 @@ git push</pre>
     </entry>
     
     <entry>
-      <title><![CDATA[Github-Pages-Hexo主题配置]]></title>
+      <title><![CDATA[Hexo 主题配置]]></title>
       <url>http://yoursite.com/2016/05/12/Github-Pages-Hexo%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
       <content type="html"><![CDATA[<p>终于搭建完自己的博客站点啦，好有成就感✌️分享一些本站使用的 NexT 主题配置技巧。<br><a id="more"></a></p>
 <h3 id="添加“标签”页面"><a href="#添加“标签”页面" class="headerlink" title="添加“标签”页面"></a>添加“标签”页面</h3><p>在终端窗口下，定位到 Hexo 站点目录下，新建一个页面，命名为 tags ：</p>
