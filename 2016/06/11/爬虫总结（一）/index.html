@@ -1,0 +1,933 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫总结（一）">
+<meta property="og:url" content="http://yoursite.com/2016/06/11/爬虫总结（一）/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/webserver.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.35.09.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%881.44.20.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.08.54.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.10.28.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.14.06.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.11.23.png">
+<meta property="og:updated_time" content="2016-06-11T14:15:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫总结（一）">
+<meta name="twitter:description" content="爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/webserver.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6294135991397516000,
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/11/爬虫总结（一）/"/>
+
+  <title> 爬虫总结（一） | 徐阿衡 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                爬虫总结（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-06-11T14:35:48+08:00" content="2016-06-11">
+              2016-06-11
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/11/爬虫总结（一）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/06/11/爬虫总结（一）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。<br><a id="more"></a></p>
+<h1 id="爬虫基础"><a href="#爬虫基础" class="headerlink" title="爬虫基础"></a>爬虫基础</h1><h2 id="什么是爬虫"><a href="#什么是爬虫" class="headerlink" title="什么是爬虫"></a>什么是爬虫</h2><p>爬虫说白了其实就是获取资源的程序</p>
+<h2 id="爬虫类型"><a href="#爬虫类型" class="headerlink" title="爬虫类型"></a>爬虫类型</h2><ul>
+<li>网络爬虫<br>网络爬虫，是一种按照一定的规则，<strong>自动的</strong> 抓取万维网信息的程序或者脚本。网络爬虫是搜索引擎系统中十分重要的组成部分，爬取的网页信息用于建立索引从而为搜索引擎提供支持，它决定着整个引擎系统的内容是否丰富，信息是否即时，其性能的优劣直接影响着搜索引擎的效果。</li>
+<li>传统爬虫<br>从一个或若干初始网页的URL开始，获得初始网页的URL，在抓取网页过程中，不断从当前页面上抽取新的URL放入队列，直到满足系统的一定停止条件。</li>
+</ul>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><ul>
+<li>根据一定的网页分析算法过滤与主题无关的链接，保留有用链接并将其放入等待抓取的URL队列</li>
+<li>根据一定的搜索策略从队列中选择下一步要抓取的网页URL，重复上述过程，直到达到指定条件才结束爬取</li>
+<li>对所有抓取的网页进行一定的分析、过滤，并建立索引，以便之后的查询和检索。</li>
+</ul>
+<h2 id="爬取策略"><a href="#爬取策略" class="headerlink" title="爬取策略"></a>爬取策略</h2><h3 id="广度优先"><a href="#广度优先" class="headerlink" title="广度优先"></a>广度优先</h3><p>完成当前层次的搜索后才进行下一层次的搜索。一般的使用策略。</p>
+<h3 id="最佳优先"><a href="#最佳优先" class="headerlink" title="最佳优先"></a>最佳优先</h3><p>会有评估算法，凡是被算法评估为有用的网页，先来爬取。</p>
+<h3 id="深度优先"><a href="#深度优先" class="headerlink" title="深度优先"></a>深度优先</h3><p>实际应用很少。可能会导致trapped问题</p>
+<h2 id="URL（-Uniform-Resource-Locator-统一资源定位符）"><a href="#URL（-Uniform-Resource-Locator-统一资源定位符）" class="headerlink" title="URL（ Uniform Resource Locator: 统一资源定位符）"></a>URL（ Uniform Resource Locator: 统一资源定位符）</h2><p>互联网上资源均有其唯一的地址，由三部分组成。</p>
+<ul>
+<li>模式/协议</li>
+<li>文件所在IP地址及端口号</li>
+<li>主机上的资源位置</li>
+<li>例子：<a href="http://www.example.com/index.html" target="_blank" rel="external">http://www.example.com/index.html</a></li>
+</ul>
+<h2 id="Web-Server／Socket如何建立连接和传输数据的"><a href="#Web-Server／Socket如何建立连接和传输数据的" class="headerlink" title="Web Server／Socket如何建立连接和传输数据的"></a>Web Server／Socket如何建立连接和传输数据的</h2><p>web server 的工作过程其实和打电话的过程差不多（买电话–&gt;注册号码–&gt;监听–&gt;排队接听–&gt;读写–&gt;关闭），经典的三步握手（有人在吗？我在呢，你呢？我也在）在排队接听时进行。下面一张图足以解释一切。<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/webserver.png" alt=""></p>
+<h2 id="HTML-DOM"><a href="#HTML-DOM" class="headerlink" title="HTML DOM"></a>HTML DOM</h2><ul>
+<li>DOM 将 HTML 文档表达为树结构</li>
+<li>定义了访问和操作 HTML 文档的标准</li>
+</ul>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.35.09.png" alt=""></p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><ul>
+<li>由服务器端生成，发送给 User-Agent(一般是浏览器)，浏览器会将 Cookie 的 key/value 保存到某个目录下的文本文件哪，下次访问同一网站时就发送该 Cookie 给服务器。</li>
+</ul>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><ul>
+<li>GET 直接以链接形式访问，链接中包含了所有的参数</li>
+<li>PUT 把提交的数据放到 HTTP 包的包体中<pre>
+eg.
+import urllib
+import urllib2
+url='http://www.zhihu.com/#signin'
+user_agent='MOZILLA/5.0'
+values={'username':'252618408@qq.com','password':'xxx'}
+headers={'User-Agent':user_agent}
+data=urllib.urlencode(values) # urlencode 是 urllib 独有的方法
+request=urllib2.Request(url,data,headers) # write a letter
+response=urllib2.urlopen(request) # send the letter and get the reply
+page=response.read() # read the reply
+</pre>
+
+</li>
+</ul>
+<p>urllib 仅可以接受 URL，这意味着你不可以伪装你的 User Agent 字符串等，但 urllib 提供了 urlencode 方法用来GET查询字符串等产生，而 urllib2 没有。<br>因此 urllib, urllib2经常一起使用。</p>
+<h3 id="Headers-设置"><a href="#Headers-设置" class="headerlink" title="Headers 设置"></a>Headers 设置</h3><ul>
+<li>User-Agent: 部分服务器或 Proxy 会通过该值来判断是否是浏览器发出的请求</li>
+<li>Content-Type: 使用 REST 接口时，服务器会检查该值，用来确定 HTTP Body 中的内容该怎样解析</li>
+<li>application/xml: 在 XMl RPC, 如 RESTful/SOAP 调用时使用</li>
+<li>application/json: 在 JSON RPC 调用时使用</li>
+<li>application/x-www-form-urlencoded: 浏览器提交 Web 表单时使用</li>
+</ul>
+<h1 id="最简单的爬虫"><a href="#最简单的爬虫" class="headerlink" title="最简单的爬虫"></a>最简单的爬虫</h1><h2 id="requests-库"><a href="#requests-库" class="headerlink" title="requests 库"></a>requests 库</h2><pre>
+import requests
+url = "http://shuang0420.github.io/"
+r = requests.get(url)
+</pre>
+
+<h2 id="urllib2-库"><a href="#urllib2-库" class="headerlink" title="urllib2 库"></a>urllib2 库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import urllib2</span><br><span class="line"># request source file</span><br><span class="line">url = &quot;http://shuang0420.github.io/&quot;</span><br><span class="line">request = urllib2.Request(url)  # write a letter</span><br><span class="line">response = urllib2.urlopen(request)  # send the letter and get the reply</span><br><span class="line">page = response.read()  # read the reply</span><br><span class="line"></span><br><span class="line"># save source file</span><br><span class="line">webFile = open(&apos;webPage.html&apos;, &apos;wb&apos;)</span><br><span class="line">webFile.write(page)</span><br><span class="line">webFile.close()</span><br></pre></td></tr></table></figure>
+<p>这是一个简单的爬虫，打开 webPage.html 是这样的显示，没有css.<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%881.44.20.png" alt=""></p>
+<h1 id="实例：爬取网易新闻"><a href="#实例：爬取网易新闻" class="headerlink" title="实例：爬取网易新闻"></a>实例：爬取网易新闻</h1><p>爬取网易新闻 [代码示例]<br>– 使用 urllib2 的 requests包来爬取页面<br>– 使用正则表达式和 bs4 分析一级页面,使用 Xpath 来分析二级页面<br>– 将得到的标题和链接,保存为本地文件</p>
+<h2 id="分析初始页面"><a href="#分析初始页面" class="headerlink" title="分析初始页面"></a>分析初始页面</h2><p>我们的初始页面是 <a href="http://news.163.com/rank" target="_blank" rel="external">http://news.163.com/rank</a><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.08.54.png" alt=""></p>
+<p>查看源代码<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.10.28.png" alt=""></p>
+<p>我们想要的是分类标题和URL，可以通过以下代码实现,这里用了 BeautifulSoup 里的方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def Nav_Info(myPage):</span><br><span class="line">    # 二级导航的标题和页面</span><br><span class="line">    pageInfo = re.findall(r&apos;&lt;div class=&quot;subNav&quot;&gt;.*?&lt;div class=&quot;area areabg1&quot;&gt;&apos;, myPage, re.S)[</span><br><span class="line">        0].replace(&apos;&lt;div class=&quot;subNav&quot;&gt;&apos;, &apos;&apos;).replace(&apos;&lt;div class=&quot;area areabg1&quot;&gt;&apos;, &apos;&apos;)</span><br><span class="line">    soup = BeautifulSoup(pageInfo, &quot;lxml&quot;)</span><br><span class="line">    tags = soup(&apos;a&apos;)</span><br><span class="line">    topics = []</span><br><span class="line">    for tag in tags:</span><br><span class="line">        # 只要 科技、财经、体育 的新闻</span><br><span class="line">        # if (tag.string==&apos;科技&apos; or tag.string==&apos;财经&apos; or tag.string==&apos;体育&apos;):</span><br><span class="line">        topics.append((tag.string, tag.get(&apos;href&apos;, None)))</span><br><span class="line">    return topics</span><br></pre></td></tr></table></figure></p>
+<h2 id="分析二级页面"><a href="#分析二级页面" class="headerlink" title="分析二级页面"></a>分析二级页面</h2><p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.14.06.png" alt=""></p>
+<p>查看源代码<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.11.23.png" alt=""></p>
+<p>我们要爬取的是<td></td>之间的新闻标题和链接，可以通过以下代码实现，这里用了 etree 里的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def News_Info(newPage):</span><br><span class="line">    # xpath 使用路径表达式来选取文档中的节点或节点集</span><br><span class="line">    dom = etree.HTML(newPage)</span><br><span class="line">    news_titles = dom.xpath(&apos;//tr/td/a/text()&apos;)</span><br><span class="line">    news_urls = dom.xpath(&apos;//tr/td/a/@href&apos;)</span><br><span class="line">    return zip(news_titles, news_urls)</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://github.com/Shuang0420/Crawler/blob/master/news.py" target="_blank" rel="external">完整代码</a></p>
+<h2 id="潜在问题"><a href="#潜在问题" class="headerlink" title="潜在问题"></a>潜在问题</h2><ol>
+<li><p>我们的任务是爬取1万个网页，按上面这个程序，耗费时间长，我们可以考虑开启多个线程(池)去一起爬取，或者用分布式架构去并发的爬取网页。</p>
+</li>
+<li><p>种子URL和后续解析到的URL都放在一个列表里，我们应该设计一个更合理的数据结构来存放这些待爬取的URL才是，比如队列或者优先队列。</p>
+</li>
+<li><p>对各个网站的url，我们一视同仁，事实上，我们应当区别对待。大站好站优先原则应当予以考虑。</p>
+</li>
+<li><p>每次发起请求，我们都是根据url发起请求，而这个过程中会牵涉到DNS解析，将url转换成ip地址。一个网站通常由成千上万的URL，因此，我们可以考虑将这些网站域名的IP地址进行缓存，避免每次都发起DNS请求，费时费力。</p>
+</li>
+<li><p>解析到网页中的urls后，我们没有做任何去重处理，全部放入待爬取的列表中。事实上，可能有很多链接是重复的，我们做了很多重复劳动。</p>
+</li>
+<li><p>爬虫被封禁问题</p>
+</li>
+</ol>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><ol>
+<li><p>并行爬取问题</p>
+<p> 关于并行爬取，首先我们想到的是多线程或者线程池方式，一个爬虫程序内部开启多个线程。同一台机器开启多个爬虫程序，这样，我们就有N多爬取线程在同时工作，大大提高了效率。</p>
+<p> 当然，如果我们要爬取的任务特别多，一台机器、一个网点肯定是不够的，我们必须考虑分布式爬虫。分布式架构，考虑的问题有很多，我们需要一个scheduler来分配任务并排序，各个爬虫之间还需要通信合作，共同完成任务，不要重复爬取相同的网页。分配任务时我们还需要考虑负载均衡以做到公平。（可以通过Hash，比如根据网站域名进行hash）</p>
+<p> 负载均衡分派完任务之后，千万不要以为万事大吉了，万一哪台机器挂了呢？原先指派给挂掉的哪台机器的任务指派给谁？又或者哪天要增加几台机器，任务有该如何进行重新分配呢？所以我们还要 task table 来纪录状态。</p>
+</li>
+<li><p>待爬取网页队列<br>如何对待待抓取队列，跟操作系统如何调度进程是类似的场景。<br>不同网站，重要程度不同，因此，可以设计一个优先级队列来存放待爬起的网页链接。如此一来，每次抓取时，我们都优先爬取重要的网页。<br>当然，你也可以效仿操作系统的进程调度策略之多级反馈队列调度算法。</p>
+</li>
+<li><p>DNS缓存<br>为了避免每次都发起DNS查询，我们可以将DNS进行缓存。DNS缓存当然是设计一个hash表来存储已有的域名及其IP。</p>
+</li>
+<li><p>网页去重<br>说到网页去重，第一个想到的是垃圾邮件过滤。垃圾邮件过滤一个经典的解决方案是Bloom Filter（布隆过滤器）。布隆过滤器原理简单来说就是：建立一个大的位数组，然后用多个Hash函数对同一个url进行hash得到多个数字，然后将位数组中这些数字对应的位置为1。下次再来一个url时，同样是用多个Hash函数进行hash，得到多个数字，我们只需要判断位数组中这些数字对应的为是全为1，如果全为1，那么说明这个url已经出现过。如此，便完成了url去重的问题。当然，这种方法会有误差，只要误差在我们的容忍范围之类，比如1万个网页，我只爬取到了9999个，剩下那一个网页，who cares！</p>
+</li>
+<li><p>数据存储的问题<br>数据存储同样是个很有技术含量的问题。用关系数据库存取还是用NoSQL，抑或是自己设计特定的文件格式进行存储，都大有文章可做。</p>
+</li>
+<li><p>进程间通信<br>分布式爬虫，就必然离不开进程间的通信。我们可以以规定的数据格式进行数据交互，完成进程间通信。</p>
+</li>
+<li><p>反爬虫机制问题<br>针对反爬虫机制，我们可以通过轮换IP地址、轮换Cookie、修改用户代理(User Agent)、限制速度、避免重复性爬行模式等方法解决。</p>
+</li>
+</ol>
+<p>参考链接:</p>
+<blockquote>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzA3NDM1NjUwMQ==&amp;mid=2650486783&amp;idx=2&amp;sn=b022421936afb373f4a00f497396220d&amp;scene=0#wechat_redirect" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MzA3NDM1NjUwMQ==&amp;mid=2650486783&amp;idx=2&amp;sn=b022421936afb373f4a00f497396220d&amp;scene=0#wechat_redirect</a><br><a href="http://www.chinahadoop.cn/course/596/learn#lesson/11986" target="_blank" rel="external">http://www.chinahadoop.cn/course/596/learn#lesson/11986</a><br><a href="https://www.bittiger.io/blog/post/5pDTFcDwkmCvvmKys" target="_blank" rel="external">https://www.bittiger.io/blog/post/5pDTFcDwkmCvvmKys</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/01/gensim-doc2vec实战/" rel="next" title="gensim-doc2vec实战">
+                <i class="fa fa-chevron-left"></i> gensim-doc2vec实战
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">宿命星动</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#爬虫基础"><span class="nav-number">1.</span> <span class="nav-text">爬虫基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是爬虫"><span class="nav-number">1.1.</span> <span class="nav-text">什么是爬虫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爬虫类型"><span class="nav-number">1.2.</span> <span class="nav-text">爬虫类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作原理"><span class="nav-number">1.3.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爬取策略"><span class="nav-number">1.4.</span> <span class="nav-text">爬取策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#广度优先"><span class="nav-number">1.4.1.</span> <span class="nav-text">广度优先</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最佳优先"><span class="nav-number">1.4.2.</span> <span class="nav-text">最佳优先</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度优先"><span class="nav-number">1.4.3.</span> <span class="nav-text">深度优先</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URL（-Uniform-Resource-Locator-统一资源定位符）"><span class="nav-number">1.5.</span> <span class="nav-text">URL（ Uniform Resource Locator: 统一资源定位符）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Server／Socket如何建立连接和传输数据的"><span class="nav-number">1.6.</span> <span class="nav-text">Web Server／Socket如何建立连接和传输数据的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML-DOM"><span class="nav-number">1.7.</span> <span class="nav-text">HTML DOM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie"><span class="nav-number">1.8.</span> <span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP"><span class="nav-number">1.9.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Headers-设置"><span class="nav-number">1.9.1.</span> <span class="nav-text">Headers 设置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最简单的爬虫"><span class="nav-number">2.</span> <span class="nav-text">最简单的爬虫</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#requests-库"><span class="nav-number">2.1.</span> <span class="nav-text">requests 库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#urllib2-库"><span class="nav-number">2.2.</span> <span class="nav-text">urllib2 库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例：爬取网易新闻"><span class="nav-number">3.</span> <span class="nav-text">实例：爬取网易新闻</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分析初始页面"><span class="nav-number">3.1.</span> <span class="nav-text">分析初始页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析二级页面"><span class="nav-number">3.2.</span> <span class="nav-text">分析二级页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#潜在问题"><span class="nav-number">3.3.</span> <span class="nav-text">潜在问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">3.4.</span> <span class="nav-text">优化</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/06/11/爬虫总结（一）/';
+      var disqus_title = "爬虫总结（一）";
+      var disqus_url = 'http://yoursite.com/2016/06/11/爬虫总结（一）/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

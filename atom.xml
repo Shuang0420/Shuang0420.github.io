@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-06-09T12:09:08.000Z</updated>
+  <updated>2016-06-11T14:15:20.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,133 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>爬虫总结（一）</title>
+    <link href="http://yoursite.com/2016/06/11/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://yoursite.com/2016/06/11/爬虫总结（一）/</id>
+    <published>2016-06-11T06:35:48.000Z</published>
+    <updated>2016-06-11T14:15:20.000Z</updated>
+    
+    <content type="html">&lt;p&gt;爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;爬虫基础&quot;&gt;&lt;a href=&quot;#爬虫基础&quot; class=&quot;headerlink&quot; title=&quot;爬虫基础&quot;&gt;&lt;/a&gt;爬虫基础&lt;/h1&gt;&lt;h2 id=&quot;什么是爬虫&quot;&gt;&lt;a href=&quot;#什么是爬虫&quot; class=&quot;headerlink&quot; title=&quot;什么是爬虫&quot;&gt;&lt;/a&gt;什么是爬虫&lt;/h2&gt;&lt;p&gt;爬虫说白了其实就是获取资源的程序&lt;/p&gt;
+&lt;h2 id=&quot;爬虫类型&quot;&gt;&lt;a href=&quot;#爬虫类型&quot; class=&quot;headerlink&quot; title=&quot;爬虫类型&quot;&gt;&lt;/a&gt;爬虫类型&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;网络爬虫&lt;br&gt;网络爬虫，是一种按照一定的规则，&lt;strong&gt;自动的&lt;/strong&gt; 抓取万维网信息的程序或者脚本。网络爬虫是搜索引擎系统中十分重要的组成部分，爬取的网页信息用于建立索引从而为搜索引擎提供支持，它决定着整个引擎系统的内容是否丰富，信息是否即时，其性能的优劣直接影响着搜索引擎的效果。&lt;/li&gt;
+&lt;li&gt;传统爬虫&lt;br&gt;从一个或若干初始网页的URL开始，获得初始网页的URL，在抓取网页过程中，不断从当前页面上抽取新的URL放入队列，直到满足系统的一定停止条件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;工作原理&quot;&gt;&lt;a href=&quot;#工作原理&quot; class=&quot;headerlink&quot; title=&quot;工作原理&quot;&gt;&lt;/a&gt;工作原理&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;根据一定的网页分析算法过滤与主题无关的链接，保留有用链接并将其放入等待抓取的URL队列&lt;/li&gt;
+&lt;li&gt;根据一定的搜索策略从队列中选择下一步要抓取的网页URL，重复上述过程，直到达到指定条件才结束爬取&lt;/li&gt;
+&lt;li&gt;对所有抓取的网页进行一定的分析、过滤，并建立索引，以便之后的查询和检索。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;爬取策略&quot;&gt;&lt;a href=&quot;#爬取策略&quot; class=&quot;headerlink&quot; title=&quot;爬取策略&quot;&gt;&lt;/a&gt;爬取策略&lt;/h2&gt;&lt;h3 id=&quot;广度优先&quot;&gt;&lt;a href=&quot;#广度优先&quot; class=&quot;headerlink&quot; title=&quot;广度优先&quot;&gt;&lt;/a&gt;广度优先&lt;/h3&gt;&lt;p&gt;完成当前层次的搜索后才进行下一层次的搜索。一般的使用策略。&lt;/p&gt;
+&lt;h3 id=&quot;最佳优先&quot;&gt;&lt;a href=&quot;#最佳优先&quot; class=&quot;headerlink&quot; title=&quot;最佳优先&quot;&gt;&lt;/a&gt;最佳优先&lt;/h3&gt;&lt;p&gt;会有评估算法，凡是被算法评估为有用的网页，先来爬取。&lt;/p&gt;
+&lt;h3 id=&quot;深度优先&quot;&gt;&lt;a href=&quot;#深度优先&quot; class=&quot;headerlink&quot; title=&quot;深度优先&quot;&gt;&lt;/a&gt;深度优先&lt;/h3&gt;&lt;p&gt;实际应用很少。可能会导致trapped问题&lt;/p&gt;
+&lt;h2 id=&quot;URL（-Uniform-Resource-Locator-统一资源定位符）&quot;&gt;&lt;a href=&quot;#URL（-Uniform-Resource-Locator-统一资源定位符）&quot; class=&quot;headerlink&quot; title=&quot;URL（ Uniform Resource Locator: 统一资源定位符）&quot;&gt;&lt;/a&gt;URL（ Uniform Resource Locator: 统一资源定位符）&lt;/h2&gt;&lt;p&gt;互联网上资源均有其唯一的地址，由三部分组成。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;模式/协议&lt;/li&gt;
+&lt;li&gt;文件所在IP地址及端口号&lt;/li&gt;
+&lt;li&gt;主机上的资源位置&lt;/li&gt;
+&lt;li&gt;例子：&lt;a href=&quot;http://www.example.com/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.example.com/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;Web-Server／Socket如何建立连接和传输数据的&quot;&gt;&lt;a href=&quot;#Web-Server／Socket如何建立连接和传输数据的&quot; class=&quot;headerlink&quot; title=&quot;Web Server／Socket如何建立连接和传输数据的&quot;&gt;&lt;/a&gt;Web Server／Socket如何建立连接和传输数据的&lt;/h2&gt;&lt;p&gt;web server 的工作过程其实和打电话的过程差不多（买电话–&amp;gt;注册号码–&amp;gt;监听–&amp;gt;排队接听–&amp;gt;读写–&amp;gt;关闭），经典的三步握手（有人在吗？我在呢，你呢？我也在）在排队接听时进行。下面一张图足以解释一切。&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/webserver.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;HTML-DOM&quot;&gt;&lt;a href=&quot;#HTML-DOM&quot; class=&quot;headerlink&quot; title=&quot;HTML DOM&quot;&gt;&lt;/a&gt;HTML DOM&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;DOM 将 HTML 文档表达为树结构&lt;/li&gt;
+&lt;li&gt;定义了访问和操作 HTML 文档的标准&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.35.09.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Cookie&quot;&gt;&lt;a href=&quot;#Cookie&quot; class=&quot;headerlink&quot; title=&quot;Cookie&quot;&gt;&lt;/a&gt;Cookie&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;由服务器端生成，发送给 User-Agent(一般是浏览器)，浏览器会将 Cookie 的 key/value 保存到某个目录下的文本文件哪，下次访问同一网站时就发送该 Cookie 给服务器。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;HTTP&quot;&gt;&lt;a href=&quot;#HTTP&quot; class=&quot;headerlink&quot; title=&quot;HTTP&quot;&gt;&lt;/a&gt;HTTP&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;GET 直接以链接形式访问，链接中包含了所有的参数&lt;/li&gt;
+&lt;li&gt;PUT 把提交的数据放到 HTTP 包的包体中&lt;pre&gt;
+eg.
+import urllib
+import urllib2
+url=&#39;http://www.zhihu.com/#signin&#39;
+user_agent=&#39;MOZILLA/5.0&#39;
+values={&#39;username&#39;:&#39;252618408@qq.com&#39;,&#39;password&#39;:&#39;xxx&#39;}
+headers={&#39;User-Agent&#39;:user_agent}
+data=urllib.urlencode(values) # urlencode 是 urllib 独有的方法
+request=urllib2.Request(url,data,headers) # write a letter
+response=urllib2.urlopen(request) # send the letter and get the reply
+page=response.read() # read the reply
+&lt;/pre&gt;
+
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;urllib 仅可以接受 URL，这意味着你不可以伪装你的 User Agent 字符串等，但 urllib 提供了 urlencode 方法用来GET查询字符串等产生，而 urllib2 没有。&lt;br&gt;因此 urllib, urllib2经常一起使用。&lt;/p&gt;
+&lt;h3 id=&quot;Headers-设置&quot;&gt;&lt;a href=&quot;#Headers-设置&quot; class=&quot;headerlink&quot; title=&quot;Headers 设置&quot;&gt;&lt;/a&gt;Headers 设置&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;User-Agent: 部分服务器或 Proxy 会通过该值来判断是否是浏览器发出的请求&lt;/li&gt;
+&lt;li&gt;Content-Type: 使用 REST 接口时，服务器会检查该值，用来确定 HTTP Body 中的内容该怎样解析&lt;/li&gt;
+&lt;li&gt;application/xml: 在 XMl RPC, 如 RESTful/SOAP 调用时使用&lt;/li&gt;
+&lt;li&gt;application/json: 在 JSON RPC 调用时使用&lt;/li&gt;
+&lt;li&gt;application/x-www-form-urlencoded: 浏览器提交 Web 表单时使用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;最简单的爬虫&quot;&gt;&lt;a href=&quot;#最简单的爬虫&quot; class=&quot;headerlink&quot; title=&quot;最简单的爬虫&quot;&gt;&lt;/a&gt;最简单的爬虫&lt;/h1&gt;&lt;h2 id=&quot;requests-库&quot;&gt;&lt;a href=&quot;#requests-库&quot; class=&quot;headerlink&quot; title=&quot;requests 库&quot;&gt;&lt;/a&gt;requests 库&lt;/h2&gt;&lt;pre&gt;
+import requests
+url = &quot;http://shuang0420.github.io/&quot;
+r = requests.get(url)
+&lt;/pre&gt;
+
+&lt;h2 id=&quot;urllib2-库&quot;&gt;&lt;a href=&quot;#urllib2-库&quot; class=&quot;headerlink&quot; title=&quot;urllib2 库&quot;&gt;&lt;/a&gt;urllib2 库&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;import urllib2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# request source file&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;url = &amp;quot;http://shuang0420.github.io/&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;request = urllib2.Request(url)  # write a letter&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;response = urllib2.urlopen(request)  # send the letter and get the reply&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;page = response.read()  # read the reply&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# save source file&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;webFile = open(&amp;apos;webPage.html&amp;apos;, &amp;apos;wb&amp;apos;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;webFile.write(page)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;webFile.close()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这是一个简单的爬虫，打开 webPage.html 是这样的显示，没有css.&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%881.44.20.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;实例：爬取网易新闻&quot;&gt;&lt;a href=&quot;#实例：爬取网易新闻&quot; class=&quot;headerlink&quot; title=&quot;实例：爬取网易新闻&quot;&gt;&lt;/a&gt;实例：爬取网易新闻&lt;/h1&gt;&lt;p&gt;爬取网易新闻 [代码示例]&lt;br&gt;– 使用 urllib2 的 requests包来爬取页面&lt;br&gt;– 使用正则表达式和 bs4 分析一级页面,使用 Xpath 来分析二级页面&lt;br&gt;– 将得到的标题和链接,保存为本地文件&lt;/p&gt;
+&lt;h2 id=&quot;分析初始页面&quot;&gt;&lt;a href=&quot;#分析初始页面&quot; class=&quot;headerlink&quot; title=&quot;分析初始页面&quot;&gt;&lt;/a&gt;分析初始页面&lt;/h2&gt;&lt;p&gt;我们的初始页面是 &lt;a href=&quot;http://news.163.com/rank&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://news.163.com/rank&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.08.54.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;查看源代码&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.10.28.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;我们想要的是分类标题和URL，可以通过以下代码实现,这里用了 BeautifulSoup 里的方法。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;def Nav_Info(myPage):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    # 二级导航的标题和页面&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    pageInfo = re.findall(r&amp;apos;&amp;lt;div class=&amp;quot;subNav&amp;quot;&amp;gt;.*?&amp;lt;div class=&amp;quot;area areabg1&amp;quot;&amp;gt;&amp;apos;, myPage, re.S)[&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        0].replace(&amp;apos;&amp;lt;div class=&amp;quot;subNav&amp;quot;&amp;gt;&amp;apos;, &amp;apos;&amp;apos;).replace(&amp;apos;&amp;lt;div class=&amp;quot;area areabg1&amp;quot;&amp;gt;&amp;apos;, &amp;apos;&amp;apos;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    soup = BeautifulSoup(pageInfo, &amp;quot;lxml&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    tags = soup(&amp;apos;a&amp;apos;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    topics = []&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    for tag in tags:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        # 只要 科技、财经、体育 的新闻&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        # if (tag.string==&amp;apos;科技&amp;apos; or tag.string==&amp;apos;财经&amp;apos; or tag.string==&amp;apos;体育&amp;apos;):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        topics.append((tag.string, tag.get(&amp;apos;href&amp;apos;, None)))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return topics&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&quot;分析二级页面&quot;&gt;&lt;a href=&quot;#分析二级页面&quot; class=&quot;headerlink&quot; title=&quot;分析二级页面&quot;&gt;&lt;/a&gt;分析二级页面&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.14.06.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;查看源代码&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.11.23.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;我们要爬取的是&lt;td&gt;&lt;/td&gt;之间的新闻标题和链接，可以通过以下代码实现，这里用了 etree 里的方法&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;def News_Info(newPage):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    # xpath 使用路径表达式来选取文档中的节点或节点集&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    dom = etree.HTML(newPage)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    news_titles = dom.xpath(&amp;apos;//tr/td/a/text()&amp;apos;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    news_urls = dom.xpath(&amp;apos;//tr/td/a/@href&amp;apos;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return zip(news_titles, news_urls)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/Shuang0420/Crawler/blob/master/news.py&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;完整代码&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;潜在问题&quot;&gt;&lt;a href=&quot;#潜在问题&quot; class=&quot;headerlink&quot; title=&quot;潜在问题&quot;&gt;&lt;/a&gt;潜在问题&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;我们的任务是爬取1万个网页，按上面这个程序，耗费时间长，我们可以考虑开启多个线程(池)去一起爬取，或者用分布式架构去并发的爬取网页。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;种子URL和后续解析到的URL都放在一个列表里，我们应该设计一个更合理的数据结构来存放这些待爬取的URL才是，比如队列或者优先队列。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;对各个网站的url，我们一视同仁，事实上，我们应当区别对待。大站好站优先原则应当予以考虑。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;每次发起请求，我们都是根据url发起请求，而这个过程中会牵涉到DNS解析，将url转换成ip地址。一个网站通常由成千上万的URL，因此，我们可以考虑将这些网站域名的IP地址进行缓存，避免每次都发起DNS请求，费时费力。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;解析到网页中的urls后，我们没有做任何去重处理，全部放入待爬取的列表中。事实上，可能有很多链接是重复的，我们做了很多重复劳动。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;爬虫被封禁问题&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;优化&quot;&gt;&lt;a href=&quot;#优化&quot; class=&quot;headerlink&quot; title=&quot;优化&quot;&gt;&lt;/a&gt;优化&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;并行爬取问题&lt;/p&gt;
+&lt;p&gt; 关于并行爬取，首先我们想到的是多线程或者线程池方式，一个爬虫程序内部开启多个线程。同一台机器开启多个爬虫程序，这样，我们就有N多爬取线程在同时工作，大大提高了效率。&lt;/p&gt;
+&lt;p&gt; 当然，如果我们要爬取的任务特别多，一台机器、一个网点肯定是不够的，我们必须考虑分布式爬虫。分布式架构，考虑的问题有很多，我们需要一个scheduler来分配任务并排序，各个爬虫之间还需要通信合作，共同完成任务，不要重复爬取相同的网页。分配任务时我们还需要考虑负载均衡以做到公平。（可以通过Hash，比如根据网站域名进行hash）&lt;/p&gt;
+&lt;p&gt; 负载均衡分派完任务之后，千万不要以为万事大吉了，万一哪台机器挂了呢？原先指派给挂掉的哪台机器的任务指派给谁？又或者哪天要增加几台机器，任务有该如何进行重新分配呢？所以我们还要 task table 来纪录状态。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;待爬取网页队列&lt;br&gt;如何对待待抓取队列，跟操作系统如何调度进程是类似的场景。&lt;br&gt;不同网站，重要程度不同，因此，可以设计一个优先级队列来存放待爬起的网页链接。如此一来，每次抓取时，我们都优先爬取重要的网页。&lt;br&gt;当然，你也可以效仿操作系统的进程调度策略之多级反馈队列调度算法。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;DNS缓存&lt;br&gt;为了避免每次都发起DNS查询，我们可以将DNS进行缓存。DNS缓存当然是设计一个hash表来存储已有的域名及其IP。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;网页去重&lt;br&gt;说到网页去重，第一个想到的是垃圾邮件过滤。垃圾邮件过滤一个经典的解决方案是Bloom Filter（布隆过滤器）。布隆过滤器原理简单来说就是：建立一个大的位数组，然后用多个Hash函数对同一个url进行hash得到多个数字，然后将位数组中这些数字对应的位置为1。下次再来一个url时，同样是用多个Hash函数进行hash，得到多个数字，我们只需要判断位数组中这些数字对应的为是全为1，如果全为1，那么说明这个url已经出现过。如此，便完成了url去重的问题。当然，这种方法会有误差，只要误差在我们的容忍范围之类，比如1万个网页，我只爬取到了9999个，剩下那一个网页，who cares！&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;数据存储的问题&lt;br&gt;数据存储同样是个很有技术含量的问题。用关系数据库存取还是用NoSQL，抑或是自己设计特定的文件格式进行存储，都大有文章可做。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;进程间通信&lt;br&gt;分布式爬虫，就必然离不开进程间的通信。我们可以以规定的数据格式进行数据交互，完成进程间通信。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;反爬虫机制问题&lt;br&gt;针对反爬虫机制，我们可以通过轮换IP地址、轮换Cookie、修改用户代理(User Agent)、限制速度、避免重复性爬行模式等方法解决。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;参考链接:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;http://mp.weixin.qq.com/s?__biz=MzA3NDM1NjUwMQ==&amp;amp;mid=2650486783&amp;amp;idx=2&amp;amp;sn=b022421936afb373f4a00f497396220d&amp;amp;scene=0#wechat_redirect&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://mp.weixin.qq.com/s?__biz=MzA3NDM1NjUwMQ==&amp;amp;mid=2650486783&amp;amp;idx=2&amp;amp;sn=b022421936afb373f4a00f497396220d&amp;amp;scene=0#wechat_redirect&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.chinahadoop.cn/course/596/learn#lesson/11986&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.chinahadoop.cn/course/596/learn#lesson/11986&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://www.bittiger.io/blog/post/5pDTFcDwkmCvvmKys&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.bittiger.io/blog/post/5pDTFcDwkmCvvmKys&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>gensim-doc2vec实战</title>
@@ -1321,124 +1448,6 @@ auto_excerpt:
     <summary type="html">
     
       &lt;p&gt;终于搭建完自己的博客站点啦，好有成就感✌️分享一些本站使用的 NexT 主题配置技巧。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Configuration" scheme="http://yoursite.com/categories/Configuration/"/>
-    
-    
-      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Github Pages+Hexo搭建个人博客</title>
-    <link href="http://yoursite.com/2016/05/12/Github-Pages-Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://yoursite.com/2016/05/12/Github-Pages-Hexo搭建个人博客/</id>
-    <published>2016-05-12T08:55:07.000Z</published>
-    <updated>2016-06-09T12:15:56.000Z</updated>
-    
-    <content type="html">&lt;p&gt;一直想有个美美的博客，CSDN实在无法满足。看了一些大神的 github 博客，非常艳羡，自己学着搭了个，看在它这么好看的份上，我也会坚持写写写！&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;为什么用Github-Pages-Hexo&quot;&gt;&lt;a href=&quot;#为什么用Github-Pages-Hexo&quot; class=&quot;headerlink&quot; title=&quot;为什么用Github Pages + Hexo&quot;&gt;&lt;/a&gt;为什么用Github Pages + Hexo&lt;/h1&gt;&lt;h2 id=&quot;Github-Page优点&quot;&gt;&lt;a href=&quot;#Github-Page优点&quot; class=&quot;headerlink&quot; title=&quot;Github Page优点&quot;&gt;&lt;/a&gt;Github Page优点&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;轻量级的博客系统，没有麻烦的配置&lt;/li&gt;
-&lt;li&gt;使用标记语言，比如&lt;a href=&quot;http://markdown.tw/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Markdown&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;无需自己搭建服务器&lt;/li&gt;
-&lt;li&gt;根据Github的限制，对应的每个站有300MB空间&lt;/li&gt;
-&lt;li&gt;可以绑定自己的域名&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Github Page有两种page模式，User/Organization Pages（个人或公司站点）和Project Pages（项目站点）。这里我们用的是user/Organization Pages，要求使用自己的用户名，每个用户名下面只能建立一个，资源命名必须符合这样的规则username/username.github.com，主干上内容被用来构建和发布页面&lt;/p&gt;
-&lt;h2 id=&quot;Hexo优点&quot;&gt;&lt;a href=&quot;#Hexo优点&quot; class=&quot;headerlink&quot; title=&quot;Hexo优点&quot;&gt;&lt;/a&gt;Hexo优点&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;用于搭建博客网站框架，可以简单实现优美的博客网站;&lt;/li&gt;
-&lt;li&gt;在本地端搭建，就可脱机查阅;&lt;/li&gt;
-&lt;li&gt;架构不依托于其他门户网站，不再担心门户网站倒闭，不担心博文丢失或难以导出;&lt;/li&gt;
-&lt;li&gt;博文为markdown格式，通用，容易上手，便于快速书写;&lt;/li&gt;
-&lt;li&gt;可部署在github上；&lt;/li&gt;
-&lt;li&gt;创造者来自中国台湾，所以几乎所有模板都关注到了中文的兼容性，很适合使用汉语的码农。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;搭建步骤&quot;&gt;&lt;a href=&quot;#搭建步骤&quot; class=&quot;headerlink&quot; title=&quot;搭建步骤&quot;&gt;&lt;/a&gt;搭建步骤&lt;/h1&gt;&lt;h2 id=&quot;新建github-repository&quot;&gt;&lt;a href=&quot;#新建github-repository&quot; class=&quot;headerlink&quot; title=&quot;新建github repository&quot;&gt;&lt;/a&gt;新建github repository&lt;/h2&gt;&lt;p&gt;在github上新建repository，name为username.github.io。&lt;/p&gt;
-&lt;h2 id=&quot;Hexo安装&quot;&gt;&lt;a href=&quot;#Hexo安装&quot; class=&quot;headerlink&quot; title=&quot;Hexo安装&quot;&gt;&lt;/a&gt;Hexo安装&lt;/h2&gt;&lt;p&gt;先安装git和node.js&lt;/p&gt;
-&lt;pre&gt;brew install git
-brew install node&lt;/pre&gt;
-验证是否安装成功
-&lt;pre&gt;node -v
-npm -v&lt;/pre&gt;
-安装Hexo
-&lt;pre&gt;npm install -g hexo #-g表示全局安装, npm默认为当前项目安装&lt;/pre&gt;
-
-&lt;h2 id=&quot;Hexo部署&quot;&gt;&lt;a href=&quot;#Hexo部署&quot; class=&quot;headerlink&quot; title=&quot;Hexo部署&quot;&gt;&lt;/a&gt;Hexo部署&lt;/h2&gt;&lt;p&gt;新建文件夹并打开，在文件夹内操作。&lt;/p&gt;
-&lt;pre&gt; hexo init #新建博客目录
- hexo g #根据当前目录下文件生成静态网页
- hexo s #启动服务器&lt;/pre&gt;
-
-&lt;p&gt;现在就可以到浏览器输入localhost:4000查看啦。&lt;/p&gt;
-&lt;p&gt;简单介绍一下文件目录&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;public：执行hexo generate命令，输出的静态网页内容目录&lt;/li&gt;
-&lt;li&gt;scaffolds：layout模板文件目录，其中的md文件可以添加编辑&lt;/li&gt;
-&lt;li&gt;scripts：扩展脚本目录，这里可以自定义一些javascript脚本&lt;/li&gt;
-&lt;li&gt;source：文章源码目录，该目录下的markdown和html文件均会被hexo处理。该页面对应repo的根目录，404文件、favicon.ico文件，CNAME文件等都应该放这里，该目录下可新建页面目录。&lt;/li&gt;
-&lt;li&gt;drafts：草稿文章&lt;/li&gt;
-&lt;li&gt;posts：发布文章themes：主题文件目录&lt;/li&gt;
-&lt;li&gt;config.yml：全局配置文件，大多数的设置都在这里&lt;/li&gt;
-&lt;li&gt;package.json：应用程序数据，指明hexo的版本等信息，类似于一般软件中的 关于 按钮&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;Hexo复制主题&quot;&gt;&lt;a href=&quot;#Hexo复制主题&quot; class=&quot;headerlink&quot; title=&quot;Hexo复制主题&quot;&gt;&lt;/a&gt;Hexo复制主题&lt;/h2&gt;&lt;pre&gt; hexo clean
- hexo g
- hexo s
- git clone https://github.com/cnfeat/cnfeat.git themes/jacman&lt;/pre&gt;
-
-&lt;h2 id=&quot;启用主题&quot;&gt;&lt;a href=&quot;#启用主题&quot; class=&quot;headerlink&quot; title=&quot;启用主题&quot;&gt;&lt;/a&gt;启用主题&lt;/h2&gt;&lt;p&gt;修改Hexo目录下的config.yml配置文件中的theme属性，将其设置为jacman。&lt;/p&gt;
-&lt;pre&gt;theme: jacman #或你的主题名，注意冒号后有一个空格&lt;/pre&gt;
-
-&lt;p&gt;注意：Hexo有两个config.yml文件，一个在根目录，一个在theme下，此时修改的是在根目录下的。&lt;/p&gt;
-&lt;h2 id=&quot;更新主题&quot;&gt;&lt;a href=&quot;#更新主题&quot; class=&quot;headerlink&quot; title=&quot;更新主题&quot;&gt;&lt;/a&gt;更新主题&lt;/h2&gt;&lt;pre&gt; cd themes/jacman
- git pull&lt;/pre&gt;
-
-&lt;p&gt;注意：为避免出错，请先备份你的_config.yml 文件后再升级&lt;/p&gt;
-&lt;h2 id=&quot;Hexo本地调试&quot;&gt;&lt;a href=&quot;#Hexo本地调试&quot; class=&quot;headerlink&quot; title=&quot;Hexo本地调试&quot;&gt;&lt;/a&gt;Hexo本地调试&lt;/h2&gt;&lt;pre&gt; hexo g #生成
- hexo s #启动本地服务，进行文章预览调试
- hexo d -g #或者直接作用组合命令&lt;/pre&gt;
-
-&lt;p&gt;浏览器输入localhost:4000，即可查看搭建效果。每次变更config.yml 文件或者上传文件都可以先用此命令调试。&lt;/p&gt;
-&lt;h2 id=&quot;Hexo部署到github&quot;&gt;&lt;a href=&quot;#Hexo部署到github&quot; class=&quot;headerlink&quot; title=&quot;Hexo部署到github&quot;&gt;&lt;/a&gt;Hexo部署到github&lt;/h2&gt;&lt;pre&gt;npm install hexo-deployer-git --save&lt;/pre&gt;
-在 Hexo 文件夹下找到 config.yml 文件, 找到其中的 deploy 标签，改成下图所示形式，并保存。注意：冒号后面要加上一个空格，否则会报错
-&lt;pre&gt;
-deploy:
-  type: git
-  repo: https://github.com/Shuang0420/Shuang0420.github.io.git&lt;/pre&gt;
-
-&lt;p&gt;运行如下命令：&lt;/p&gt;
-&lt;pre&gt;hexo clean
-hexo generate
-hexo deploy&lt;/pre&gt;
-
-
-&lt;h2 id=&quot;发博文&quot;&gt;&lt;a href=&quot;#发博文&quot; class=&quot;headerlink&quot; title=&quot;发博文&quot;&gt;&lt;/a&gt;发博文&lt;/h2&gt;&lt;pre&gt;
- hexo new &quot;postname&quot; #然后在posts目录下的postname.md文件中编辑博客
- hexo clean
- hexo generate
- # (若要本地预览就先执行 hexo server)
- hexo deploy&lt;/pre&gt;
-
-&lt;h2 id=&quot;快捷命令&quot;&gt;&lt;a href=&quot;#快捷命令&quot; class=&quot;headerlink&quot; title=&quot;快捷命令&quot;&gt;&lt;/a&gt;快捷命令&lt;/h2&gt;&lt;pre&gt; hexo g == hexo generate
- hexo d == hexo deploy
- hexo s == hexo server
- hexo n == hexo new
-# 还能组合使用，如：
-hexo d -g&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;参考链接：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;http://mozhenhau.com/2015/03/05/%E5%9C%A8Mac%E9%80%9A%E8%BF%87Hexo%E5%9C%A8github%E4%B8%8A%E5%BB%BA%E7%AB%8B%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://mozhenhau.com/2015/03/05/%E5%9C%A8Mac%E9%80%9A%E8%BF%87Hexo%E5%9C%A8github%E4%B8%8A%E5%BB%BA%E7%AB%8B%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://evakasch.github.io/2016/05/04/hexo-setup/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://evakasch.github.io/2016/05/04/hexo-setup/&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;一直想有个美美的博客，CSDN实在无法满足。看了一些大神的 github 博客，非常艳羡，自己学着搭了个，看在它这么好看的份上，我也会坚持写写写！&lt;br&gt;
     
     </summary>
     
