@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-06-11T14:18:36.000Z</updated>
+  <updated>2016-06-11T14:22:09.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/06/11/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>http://yoursite.com/2016/06/11/爬虫总结（一）/</id>
     <published>2016-06-11T06:35:48.000Z</published>
-    <updated>2016-06-11T14:18:36.000Z</updated>
+    <updated>2016-06-11T14:22:09.000Z</updated>
     
     <content type="html">&lt;p&gt;爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;爬虫基础&quot;&gt;&lt;a href=&quot;#爬虫基础&quot; class=&quot;headerlink&quot; title=&quot;爬虫基础&quot;&gt;&lt;/a&gt;爬虫基础&lt;/h1&gt;&lt;h2 id=&quot;什么是爬虫&quot;&gt;&lt;a href=&quot;#什么是爬虫&quot; class=&quot;headerlink&quot; title=&quot;什么是爬虫&quot;&gt;&lt;/a&gt;什么是爬虫&lt;/h2&gt;&lt;p&gt;爬虫说白了其实就是获取资源的程序&lt;/p&gt;
@@ -108,7 +108,7 @@ r = requests.get(url)
 &lt;li&gt;&lt;p&gt;爬虫被封禁问题&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&quot;优化&quot;&gt;&lt;a href=&quot;#优化&quot; class=&quot;headerlink&quot; title=&quot;优化&quot;&gt;&lt;/a&gt;优化&lt;/h2&gt;&lt;ol&gt;
+&lt;h2 id=&quot;优化方案&quot;&gt;&lt;a href=&quot;#优化方案&quot; class=&quot;headerlink&quot; title=&quot;优化方案&quot;&gt;&lt;/a&gt;优化方案&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;并行爬取问题&lt;/p&gt;
 &lt;p&gt; 关于并行爬取，首先我们想到的是多线程或者线程池方式，一个爬虫程序内部开启多个线程。同一台机器开启多个爬虫程序，这样，我们就有N多爬取线程在同时工作，大大提高了效率。&lt;/p&gt;
 &lt;p&gt; 当然，如果我们要爬取的任务特别多，一台机器、一个网点肯定是不够的，我们必须考虑分布式爬虫。分布式架构，考虑的问题有很多，我们需要一个scheduler来分配任务并排序，各个爬虫之间还需要通信合作，共同完成任务，不要重复爬取相同的网页。分配任务时我们还需要考虑负载均衡以做到公平。（可以通过Hash，比如根据网站域名进行hash）&lt;/p&gt;
