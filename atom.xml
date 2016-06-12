@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-06-12T02:05:48.000Z</updated>
+  <updated>2016-06-12T03:12:54.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/06/11/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>http://yoursite.com/2016/06/11/爬虫总结（一）/</id>
     <published>2016-06-11T06:35:48.000Z</published>
-    <updated>2016-06-12T02:05:48.000Z</updated>
+    <updated>2016-06-12T03:12:54.000Z</updated>
     
     <content type="html">&lt;p&gt;爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;爬虫基础&quot;&gt;&lt;a href=&quot;#爬虫基础&quot; class=&quot;headerlink&quot; title=&quot;爬虫基础&quot;&gt;&lt;/a&gt;爬虫基础&lt;/h1&gt;&lt;h2 id=&quot;什么是爬虫&quot;&gt;&lt;a href=&quot;#什么是爬虫&quot; class=&quot;headerlink&quot; title=&quot;什么是爬虫&quot;&gt;&lt;/a&gt;什么是爬虫&lt;/h2&gt;&lt;p&gt;爬虫说白了其实就是获取资源的程序&lt;/p&gt;
@@ -33,9 +33,9 @@
 &lt;li&gt;根据一定的搜索策略从队列中选择下一步要抓取的网页URL，重复上述过程，直到达到指定条件才结束爬取&lt;/li&gt;
 &lt;li&gt;对所有抓取的网页进行一定的分析、过滤，并建立索引，以便之后的查询和检索。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&quot;爬取策略&quot;&gt;&lt;a href=&quot;#爬取策略&quot; class=&quot;headerlink&quot; title=&quot;爬取策略&quot;&gt;&lt;/a&gt;爬取策略&lt;/h2&gt;&lt;h3 id=&quot;广度优先&quot;&gt;&lt;a href=&quot;#广度优先&quot; class=&quot;headerlink&quot; title=&quot;广度优先&quot;&gt;&lt;/a&gt;广度优先&lt;/h3&gt;&lt;p&gt;完成当前层次的搜索后才进行下一层次的搜索。一般的使用策略。&lt;/p&gt;
+&lt;h2 id=&quot;爬取策略&quot;&gt;&lt;a href=&quot;#爬取策略&quot; class=&quot;headerlink&quot; title=&quot;爬取策略&quot;&gt;&lt;/a&gt;爬取策略&lt;/h2&gt;&lt;h3 id=&quot;广度优先&quot;&gt;&lt;a href=&quot;#广度优先&quot; class=&quot;headerlink&quot; title=&quot;广度优先&quot;&gt;&lt;/a&gt;广度优先&lt;/h3&gt;&lt;p&gt;完成当前层次的搜索后才进行下一层次的搜索。一般的使用策略，一般通过队列来实现。&lt;/p&gt;
 &lt;h3 id=&quot;最佳优先&quot;&gt;&lt;a href=&quot;#最佳优先&quot; class=&quot;headerlink&quot; title=&quot;最佳优先&quot;&gt;&lt;/a&gt;最佳优先&lt;/h3&gt;&lt;p&gt;会有评估算法，凡是被算法评估为有用的网页，先来爬取。&lt;/p&gt;
-&lt;h3 id=&quot;深度优先&quot;&gt;&lt;a href=&quot;#深度优先&quot; class=&quot;headerlink&quot; title=&quot;深度优先&quot;&gt;&lt;/a&gt;深度优先&lt;/h3&gt;&lt;p&gt;实际应用很少。可能会导致trapped问题&lt;/p&gt;
+&lt;h3 id=&quot;深度优先&quot;&gt;&lt;a href=&quot;#深度优先&quot; class=&quot;headerlink&quot; title=&quot;深度优先&quot;&gt;&lt;/a&gt;深度优先&lt;/h3&gt;&lt;p&gt;实际应用很少。可能会导致trapped问题。通过栈来实现。&lt;/p&gt;
 &lt;h2 id=&quot;URL（-Uniform-Resource-Locator-统一资源定位符）&quot;&gt;&lt;a href=&quot;#URL（-Uniform-Resource-Locator-统一资源定位符）&quot; class=&quot;headerlink&quot; title=&quot;URL（ Uniform Resource Locator: 统一资源定位符）&quot;&gt;&lt;/a&gt;URL（ Uniform Resource Locator: 统一资源定位符）&lt;/h2&gt;&lt;p&gt;互联网上资源均有其唯一的地址，由三部分组成。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;模式/协议&lt;/li&gt;
@@ -121,7 +121,7 @@ r = requests.get(url)
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;DNS缓存&lt;br&gt;为了避免每次都发起DNS查询，我们可以将DNS进行缓存。DNS缓存当然是设计一个hash表来存储已有的域名及其IP。&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;网页去重&lt;br&gt;说到网页去重，第一个想到的是垃圾邮件过滤。垃圾邮件过滤一个经典的解决方案是Bloom Filter（布隆过滤器）。布隆过滤器原理简单来说就是：建立一个大的位数组，然后用多个Hash函数对同一个url进行hash得到多个数字，然后将位数组中这些数字对应的位置为1。下次再来一个url时，同样是用多个Hash函数进行hash，得到多个数字，我们只需要判断位数组中这些数字对应的为是全为1，如果全为1，那么说明这个url已经出现过。如此，便完成了url去重的问题。当然，这种方法会有误差，只要误差在我们的容忍范围之类，比如1万个网页，我只爬取到了9999个，剩下那一个网页，who cares！&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;网页去重&lt;br&gt;说到网页去重，第一个想到的是垃圾邮件过滤。垃圾邮件过滤一个经典的解决方案是Bloom Filter（布隆过滤器）。布隆过滤器原理简单来说就是：建立一个大的位数组，然后用多个Hash函数对同一个url进行hash得到多个数字，然后将位数组中这些数字对应的位置为1。下次再来一个url时，同样是用多个Hash函数进行hash，得到多个数字，我们只需要判断位数组中这些数字对应的为是全为1，如果全为1，那么说明这个url已经出现过。如此，便完成了url去重的问题。当然，这种方法会有误差，只要误差在我们的容忍范围之类，比如1万个网页，我只爬取到了9999个，并不会有太大的实际影响。&lt;a href=&quot;http://itindex.net/detail/39767-url-%E7%9B%B8%E4%BC%BC-%E8%AE%A1%E7%AE%97&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;url相似度计算&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;数据存储的问题&lt;br&gt;数据存储同样是个很有技术含量的问题。用关系数据库存取还是用NoSQL，抑或是自己设计特定的文件格式进行存储，都大有文章可做。&lt;/p&gt;
 &lt;/li&gt;

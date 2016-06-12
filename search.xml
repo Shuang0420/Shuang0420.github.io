@@ -17,9 +17,9 @@
 <li>根据一定的搜索策略从队列中选择下一步要抓取的网页URL，重复上述过程，直到达到指定条件才结束爬取</li>
 <li>对所有抓取的网页进行一定的分析、过滤，并建立索引，以便之后的查询和检索。</li>
 </ul>
-<h2 id="爬取策略"><a href="#爬取策略" class="headerlink" title="爬取策略"></a>爬取策略</h2><h3 id="广度优先"><a href="#广度优先" class="headerlink" title="广度优先"></a>广度优先</h3><p>完成当前层次的搜索后才进行下一层次的搜索。一般的使用策略。</p>
+<h2 id="爬取策略"><a href="#爬取策略" class="headerlink" title="爬取策略"></a>爬取策略</h2><h3 id="广度优先"><a href="#广度优先" class="headerlink" title="广度优先"></a>广度优先</h3><p>完成当前层次的搜索后才进行下一层次的搜索。一般的使用策略，一般通过队列来实现。</p>
 <h3 id="最佳优先"><a href="#最佳优先" class="headerlink" title="最佳优先"></a>最佳优先</h3><p>会有评估算法，凡是被算法评估为有用的网页，先来爬取。</p>
-<h3 id="深度优先"><a href="#深度优先" class="headerlink" title="深度优先"></a>深度优先</h3><p>实际应用很少。可能会导致trapped问题</p>
+<h3 id="深度优先"><a href="#深度优先" class="headerlink" title="深度优先"></a>深度优先</h3><p>实际应用很少。可能会导致trapped问题。通过栈来实现。</p>
 <h2 id="URL（-Uniform-Resource-Locator-统一资源定位符）"><a href="#URL（-Uniform-Resource-Locator-统一资源定位符）" class="headerlink" title="URL（ Uniform Resource Locator: 统一资源定位符）"></a>URL（ Uniform Resource Locator: 统一资源定位符）</h2><p>互联网上资源均有其唯一的地址，由三部分组成。</p>
 <ul>
 <li>模式/协议</li>
@@ -105,7 +105,7 @@ r = requests.get(url)
 </li>
 <li><p>DNS缓存<br>为了避免每次都发起DNS查询，我们可以将DNS进行缓存。DNS缓存当然是设计一个hash表来存储已有的域名及其IP。</p>
 </li>
-<li><p>网页去重<br>说到网页去重，第一个想到的是垃圾邮件过滤。垃圾邮件过滤一个经典的解决方案是Bloom Filter（布隆过滤器）。布隆过滤器原理简单来说就是：建立一个大的位数组，然后用多个Hash函数对同一个url进行hash得到多个数字，然后将位数组中这些数字对应的位置为1。下次再来一个url时，同样是用多个Hash函数进行hash，得到多个数字，我们只需要判断位数组中这些数字对应的为是全为1，如果全为1，那么说明这个url已经出现过。如此，便完成了url去重的问题。当然，这种方法会有误差，只要误差在我们的容忍范围之类，比如1万个网页，我只爬取到了9999个，剩下那一个网页，who cares！</p>
+<li><p>网页去重<br>说到网页去重，第一个想到的是垃圾邮件过滤。垃圾邮件过滤一个经典的解决方案是Bloom Filter（布隆过滤器）。布隆过滤器原理简单来说就是：建立一个大的位数组，然后用多个Hash函数对同一个url进行hash得到多个数字，然后将位数组中这些数字对应的位置为1。下次再来一个url时，同样是用多个Hash函数进行hash，得到多个数字，我们只需要判断位数组中这些数字对应的为是全为1，如果全为1，那么说明这个url已经出现过。如此，便完成了url去重的问题。当然，这种方法会有误差，只要误差在我们的容忍范围之类，比如1万个网页，我只爬取到了9999个，并不会有太大的实际影响。<a href="http://itindex.net/detail/39767-url-%E7%9B%B8%E4%BC%BC-%E8%AE%A1%E7%AE%97" target="_blank" rel="external">url相似度计算</a></p>
 </li>
 <li><p>数据存储的问题<br>数据存储同样是个很有技术含量的问题。用关系数据库存取还是用NoSQL，抑或是自己设计特定的文件格式进行存储，都大有文章可做。</p>
 </li>
