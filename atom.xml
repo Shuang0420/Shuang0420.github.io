@@ -106,7 +106,7 @@
     <link href="http://yoursite.com/2016/06/12/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93-%E4%BA%8C-scrapy/"/>
     <id>http://yoursite.com/2016/06/12/爬虫总结-二-scrapy/</id>
     <published>2016-06-12T09:59:51.000Z</published>
-    <updated>2016-06-16T13:39:51.000Z</updated>
+    <updated>2016-06-16T13:48:25.000Z</updated>
     
     <content type="html">&lt;p&gt;把上一篇的实例用 scrapy 框架重新实现一遍。主要步骤就是新建项目 (Project) –&amp;gt; 定义目标（Items）–&amp;gt; 制作爬虫（Spider）–&amp;gt; 存储结果（Pipeline）&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;Scrapy-概述&quot;&gt;&lt;a href=&quot;#Scrapy-概述&quot; class=&quot;headerlink&quot; title=&quot;Scrapy 概述&quot;&gt;&lt;/a&gt;Scrapy 概述&lt;/h1&gt;&lt;blockquote&gt;
@@ -277,7 +277,7 @@ line = json.dumps(dict(item),ensure_ascii=False) + &quot;\n&quot;
     
     </summary>
     
-      <category term="Programming-language" scheme="http://yoursite.com/categories/Programming-language/"/>
+      <category term="Programming language" scheme="http://yoursite.com/categories/Programming-language/"/>
     
     
       <category term="Crawler" scheme="http://yoursite.com/tags/Crawler/"/>
@@ -289,7 +289,7 @@ line = json.dumps(dict(item),ensure_ascii=False) + &quot;\n&quot;
     <link href="http://yoursite.com/2016/06/11/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>http://yoursite.com/2016/06/11/爬虫总结（一）/</id>
     <published>2016-06-11T06:35:48.000Z</published>
-    <updated>2016-06-16T12:02:30.000Z</updated>
+    <updated>2016-06-16T13:47:45.000Z</updated>
     
     <content type="html">&lt;p&gt;爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;爬虫基础&quot;&gt;&lt;a href=&quot;#爬虫基础&quot; class=&quot;headerlink&quot; title=&quot;爬虫基础&quot;&gt;&lt;/a&gt;爬虫基础&lt;/h1&gt;&lt;h2 id=&quot;什么是爬虫&quot;&gt;&lt;a href=&quot;#什么是爬虫&quot; class=&quot;headerlink&quot; title=&quot;什么是爬虫&quot;&gt;&lt;/a&gt;什么是爬虫&lt;/h2&gt;&lt;p&gt;爬虫说白了其实就是获取资源的程序。制作爬虫的总体分三步：爬－取－存。首先要获取整个网页的所有内容，然后再取出其中对你有用的部分，最后再保存🏊的部分。&lt;/p&gt;
@@ -413,7 +413,7 @@ r = requests.get(url)
     
     </summary>
     
-      <category term="Programming-language" scheme="http://yoursite.com/categories/Programming-language/"/>
+      <category term="Programming language" scheme="http://yoursite.com/categories/Programming-language/"/>
     
     
       <category term="Crawler" scheme="http://yoursite.com/tags/Crawler/"/>
