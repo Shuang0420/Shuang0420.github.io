@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.10.28.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.14.06.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-11%20%E4%B8%8B%E5%8D%889.11.23.png">
-<meta property="og:updated_time" content="2016-06-12T03:12:54.000Z">
+<meta property="og:updated_time" content="2016-06-16T12:02:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬虫总结（一）">
 <meta name="twitter:description" content="爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。">
@@ -351,7 +351,7 @@
 
       
         <p>爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。<br><a id="more"></a></p>
-<h1 id="爬虫基础"><a href="#爬虫基础" class="headerlink" title="爬虫基础"></a>爬虫基础</h1><h2 id="什么是爬虫"><a href="#什么是爬虫" class="headerlink" title="什么是爬虫"></a>什么是爬虫</h2><p>爬虫说白了其实就是获取资源的程序</p>
+<h1 id="爬虫基础"><a href="#爬虫基础" class="headerlink" title="爬虫基础"></a>爬虫基础</h1><h2 id="什么是爬虫"><a href="#什么是爬虫" class="headerlink" title="什么是爬虫"></a>什么是爬虫</h2><p>爬虫说白了其实就是获取资源的程序。制作爬虫的总体分三步：爬－取－存。首先要获取整个网页的所有内容，然后再取出其中对你有用的部分，最后再保存🏊的部分。</p>
 <h2 id="爬虫类型"><a href="#爬虫类型" class="headerlink" title="爬虫类型"></a>爬虫类型</h2><ul>
 <li>网络爬虫<br>网络爬虫，是一种按照一定的规则，<strong>自动的</strong> 抓取万维网信息的程序或者脚本。网络爬虫是搜索引擎系统中十分重要的组成部分，爬取的网页信息用于建立索引从而为搜索引擎提供支持，它决定着整个引擎系统的内容是否丰富，信息是否即时，其性能的优劣直接影响着搜索引擎的效果。</li>
 <li>传统爬虫<br>从一个或若干初始网页的URL开始，获得初始网页的URL，在抓取网页过程中，不断从当前页面上抽取新的URL放入队列，直到满足系统的一定停止条件。</li>
@@ -371,7 +371,9 @@
 <li>主机上的资源位置</li>
 <li>例子：<a href="http://www.example.com/index.html" target="_blank" rel="external">http://www.example.com/index.html</a></li>
 </ul>
-<h2 id="Web-Server／Socket如何建立连接和传输数据的"><a href="#Web-Server／Socket如何建立连接和传输数据的" class="headerlink" title="Web Server／Socket如何建立连接和传输数据的"></a>Web Server／Socket如何建立连接和传输数据的</h2><p>web server 的工作过程其实和打电话的过程差不多（买电话–&gt;注册号码–&gt;监听–&gt;排队接听–&gt;读写–&gt;关闭），经典的三步握手（有人在吗？我在呢，你呢？我也在）在排队接听时进行。下面一张图足以解释一切。<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/webserver.png" alt=""></p>
+<h2 id="Web-Server／Socket如何建立连接和传输数据的"><a href="#Web-Server／Socket如何建立连接和传输数据的" class="headerlink" title="Web Server／Socket如何建立连接和传输数据的"></a>Web Server／Socket如何建立连接和传输数据的</h2><p>web server 的工作过程其实和打电话的过程差不多（买电话–&gt;注册号码–&gt;监听–&gt;排队接听–&gt;读写–&gt;关闭），经典的三步握手（有人在吗？我在呢，你呢？我也在）在排队接听时进行。下面一张图足以解释一切。</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/webserver.png" alt=""></p>
+<p>Crawler端需要一个socket接口，向服务器端发起connect请求，完成连接后就可以和服务器交流了，操作完毕会关闭socket接口。服务器端更复杂一点，也需要一个socket接口，并且这个socket接口需要绑定一个地址（bind()），这就相当于有一个固定的电话号码，这样其他人拨打这个号码就可以找到这个服务器。绑定之后服务器的socket就开始监听（listen()）有没有用户请求，如果有，就接收请求（accept()），和用户建立连接，然后就可以交流。</p>
 <h2 id="HTML-DOM"><a href="#HTML-DOM" class="headerlink" title="HTML DOM"></a>HTML DOM</h2><ul>
 <li>DOM 将 HTML 文档表达为树结构</li>
 <li>定义了访问和操作 HTML 文档的标准</li>
@@ -516,6 +518,10 @@ r = requests.get(url)
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2016/06/12/爬虫总结-二-scrapy/" rel="prev" title="爬虫总结(二)-- scrapy">
+                爬虫总结(二)-- scrapy <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -589,7 +595,7 @@ r = requests.get(url)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -597,7 +603,7 @@ r = requests.get(url)
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -606,7 +612,7 @@ r = requests.get(url)
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

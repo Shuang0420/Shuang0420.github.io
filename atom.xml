@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-06-12T03:12:54.000Z</updated>
+  <updated>2016-06-16T13:44:06.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,14 +16,283 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>讲座笔记 -- 腾讯应用宝</title>
+    <link href="http://yoursite.com/2016/06/15/%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0%20--%20%E8%85%BE%E8%AE%AF%E5%BA%94%E7%94%A8%E5%AE%9D/"/>
+    <id>http://yoursite.com/2016/06/15/讲座笔记 -- 腾讯应用宝/</id>
+    <published>2016-06-15T13:35:48.000Z</published>
+    <updated>2016-06-16T13:44:06.000Z</updated>
+    
+    <content type="html">&lt;p&gt;［待整理］&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;应用宝-–-腾讯的安卓应用市场&quot;&gt;&lt;a href=&quot;#应用宝-–-腾讯的安卓应用市场&quot; class=&quot;headerlink&quot; title=&quot;应用宝 – 腾讯的安卓应用市场&quot;&gt;&lt;/a&gt;应用宝 – 腾讯的安卓应用市场&lt;/h1&gt;&lt;p&gt;用户下载转化率 下载/搜索&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;搜索是重要入口（新应用的分发）&lt;/li&gt;
+&lt;li&gt;app 快速的增长 一年增长几百万&lt;/li&gt;
+&lt;li&gt;二八原则 长尾大 0.1%的应用 80%的分发&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;指标&quot;&gt;&lt;a href=&quot;#指标&quot; class=&quot;headerlink&quot; title=&quot;指标&quot;&gt;&lt;/a&gt;指标&lt;/h2&gt;&lt;p&gt;dowloads/QV/UV&lt;br&gt;CTR/ROP&lt;/p&gt;
+&lt;h2 id=&quot;语义计算策略&quot;&gt;&lt;a href=&quot;#语义计算策略&quot; class=&quot;headerlink&quot; title=&quot;语义计算策略&quot;&gt;&lt;/a&gt;语义计算策略&lt;/h2&gt;&lt;h3 id=&quot;数据特征&quot;&gt;&lt;a href=&quot;#数据特征&quot; class=&quot;headerlink&quot; title=&quot;数据特征&quot;&gt;&lt;/a&gt;数据特征&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;数据量少 审核通过应用数量 数十万&lt;/li&gt;
+&lt;li&gt;文本信息少 附带文本信息少（能建索引的量少）–&amp;gt; 泛化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;应对策略 搜索＋推荐&lt;br&gt;描述语义 词、主题、标签&lt;/p&gt;
+&lt;p&gt;query –&amp;gt; term; topic; tag –&amp;gt; app&lt;/p&gt;
+&lt;h3 id=&quot;数据补充&quot;&gt;&lt;a href=&quot;#数据补充&quot; class=&quot;headerlink&quot; title=&quot;数据补充&quot;&gt;&lt;/a&gt;数据补充&lt;/h3&gt;&lt;p&gt;爬取全网资源&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;游戏站点、用户评价&lt;/li&gt;
+&lt;li&gt;知识库：百度百科、百度知道&lt;/li&gt;
+&lt;li&gt;其他应用商店&lt;/li&gt;
+&lt;li&gt;搜索引擎 解析&lt;/li&gt;
+&lt;li&gt;应用宝用户行为&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;噪音大 – 机器学习的方法过滤&lt;br&gt;页面抓取 –&amp;gt; 内容抓取 –&amp;gt; 知识挖掘 –&amp;gt; 标签 句法模板 标签集合 标签关联 –&amp;gt; 标签关联净化 – &amp;gt; 标签索引&lt;/p&gt;
+&lt;h3 id=&quot;数据挖掘&quot;&gt;&lt;a href=&quot;#数据挖掘&quot; class=&quot;headerlink&quot; title=&quot;数据挖掘&quot;&gt;&lt;/a&gt;数据挖掘&lt;/h3&gt;&lt;p&gt;用户行为指导排序&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;点击下载因子（权重大） 增强鲁棒性&lt;/li&gt;
+&lt;li&gt;entropy因子。用户query的集中程度，entropy，点击散，entropy高，区分精准query和模糊query&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;主题模型&quot;&gt;&lt;a href=&quot;#主题模型&quot; class=&quot;headerlink&quot; title=&quot;主题模型&quot;&gt;&lt;/a&gt;主题模型&lt;/h3&gt;&lt;p&gt;LDA 聚类，对 topic 进行人工标注，把 app 映射到 topic&lt;br&gt;（lda 业界用法比较多。最大特点：大量语料。语料少效果不好）补充大量文本数据？？？？？？？？？？？？？？？？？？&lt;/p&gt;
+&lt;h3 id=&quot;标签挖掘&quot;&gt;&lt;a href=&quot;#标签挖掘&quot; class=&quot;headerlink&quot; title=&quot;标签挖掘&quot;&gt;&lt;/a&gt;标签挖掘&lt;/h3&gt;&lt;p&gt;元搜方式挖掘 tag（传统搜索引擎） 搜app&lt;br&gt;根据用户行为、画像挖掘 tag  对用户进行分群 地区／年龄／职业／性别 生成代表用户属性的标签 给app&lt;/p&gt;
+&lt;h3 id=&quot;数据清洗&quot;&gt;&lt;a href=&quot;#数据清洗&quot; class=&quot;headerlink&quot; title=&quot;数据清洗&quot;&gt;&lt;/a&gt;数据清洗&lt;/h3&gt;&lt;p&gt;机器学习模型计算 confidence level&lt;br&gt;human editor ; web data; qa (lda) user group tags&lt;br&gt;–&amp;gt;&lt;br&gt;GBDT model&lt;/p&gt;
+&lt;h3 id=&quot;app-语义画像&quot;&gt;&lt;a href=&quot;#app-语义画像&quot; class=&quot;headerlink&quot; title=&quot;app 语义画像&quot;&gt;&lt;/a&gt;app 语义画像&lt;/h3&gt;&lt;p&gt;语义描述体系&lt;br&gt;分多个维度&lt;/p&gt;
+&lt;h3 id=&quot;机器学习（LTR）&quot;&gt;&lt;a href=&quot;#机器学习（LTR）&quot; class=&quot;headerlink&quot; title=&quot;机器学习（LTR）&quot;&gt;&lt;/a&gt;机器学习（LTR）&lt;/h3&gt;&lt;p&gt;挑战：多来源检索结果不可比（类别／tag）&lt;br&gt;利器：lambdaMART 排序模型（GBRT的变种）&lt;/p&gt;
+&lt;p&gt;–&amp;gt; CTR 提升6%&lt;/p&gt;
+&lt;h2 id=&quot;第三部分-应用宝搜索商业化&quot;&gt;&lt;a href=&quot;#第三部分-应用宝搜索商业化&quot; class=&quot;headerlink&quot; title=&quot;第三部分 应用宝搜索商业化&quot;&gt;&lt;/a&gt;第三部分 应用宝搜索商业化&lt;/h2&gt;&lt;p&gt;推荐相关&lt;/p&gt;
+&lt;h3 id=&quot;分发升级&quot;&gt;&lt;a href=&quot;#分发升级&quot; class=&quot;headerlink&quot; title=&quot;分发升级&quot;&gt;&lt;/a&gt;分发升级&lt;/h3&gt;&lt;p&gt;应用＋&lt;br&gt;应用分发 –&amp;gt; 内容服务分发&lt;/p&gt;
+&lt;p&gt;意图识别优化：什么时候出应用，什么时候出音乐，热度&lt;br&gt;多来源混排：机器学习＋运营系统优化异构排序，促进分发效率（应用、音乐等怎么混排）&lt;br&gt;多场景引导：在热词、直达区（搜索补充呈现）、联想词等场景引导用户，培养内容搜索习惯&lt;/p&gt;
+&lt;h3 id=&quot;应用搜索广告&quot;&gt;&lt;a href=&quot;#应用搜索广告&quot; class=&quot;headerlink&quot; title=&quot;应用搜索广告&quot;&gt;&lt;/a&gt;应用搜索广告&lt;/h3&gt;&lt;p&gt;技术核心&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;app 画像&lt;br&gt;基于标签、主题、类别的 app 细粒度商业词&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;动态混排&lt;br&gt;根据 query 动态选择广告槽位&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;利用相似应用打tag（confidence level –&amp;gt; filter）&lt;/p&gt;
+&lt;h1 id=&quot;机器学习的本质&quot;&gt;&lt;a href=&quot;#机器学习的本质&quot; class=&quot;headerlink&quot; title=&quot;机器学习的本质&quot;&gt;&lt;/a&gt;机器学习的本质&lt;/h1&gt;&lt;p&gt;已知数据 先验知识（专家系统） 未知数据的特征 求未知数据的优化分布&lt;br&gt;通用技术难点：空间搜索 函数泛化&lt;/p&gt;
+&lt;p&gt;实际工作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;模型10% 其他90%&lt;/li&gt;
+&lt;li&gt;数据从哪来&lt;/li&gt;
+&lt;li&gt;特征如何抽取&lt;/li&gt;
+&lt;li&gt;领域先验知识&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;大量噪音？维数灾难？&lt;br&gt;琐碎的工作很重要&lt;/p&gt;
+&lt;p&gt;正则化(L1？ L2？) 剪枝&lt;/p&gt;
+&lt;h1 id=&quot;大公司-vs-小公司&quot;&gt;&lt;a href=&quot;#大公司-vs-小公司&quot; class=&quot;headerlink&quot; title=&quot;大公司 vs 小公司&quot;&gt;&lt;/a&gt;大公司 vs 小公司&lt;/h1&gt;&lt;p&gt;搜索 推荐 广告&lt;br&gt;和牛人接触&lt;br&gt;流程化 冗余 很多团队想做一件事&lt;/p&gt;
+&lt;h3 id=&quot;小公司&quot;&gt;&lt;a href=&quot;#小公司&quot; class=&quot;headerlink&quot; title=&quot;小公司&quot;&gt;&lt;/a&gt;小公司&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;方向更对&lt;br&gt;不被商业价值束缚 不被同伴利益束缚 不被自己经验束缚&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;跑的更快&lt;br&gt;不被用户束缚 不被流程束缚 不被一般道德束缚&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;复利效应&quot;&gt;&lt;a href=&quot;#复利效应&quot; class=&quot;headerlink&quot; title=&quot;复利效应&quot;&gt;&lt;/a&gt;复利效应&lt;/h3&gt;&lt;p&gt;百度 搜索&lt;br&gt;搜搜&lt;br&gt;在一个点上积累积累积累 –&amp;gt; 复利效应 –&amp;gt; 无法超越&lt;br&gt;算法 数学专家 我们做应用方面的复利效应&lt;/p&gt;
+&lt;p&gt;应用宝 去噪 做了一年&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;［待整理］&lt;br&gt;
+    
+    </summary>
+    
+      <category term="他山之石" scheme="http://yoursite.com/categories/%E4%BB%96%E5%B1%B1%E4%B9%8B%E7%9F%B3/"/>
+    
+    
+      <category term="腾讯" scheme="http://yoursite.com/tags/%E8%85%BE%E8%AE%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>爬虫总结(二)-- scrapy</title>
+    <link href="http://yoursite.com/2016/06/12/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93-%E4%BA%8C-scrapy/"/>
+    <id>http://yoursite.com/2016/06/12/爬虫总结-二-scrapy/</id>
+    <published>2016-06-12T09:59:51.000Z</published>
+    <updated>2016-06-16T13:39:51.000Z</updated>
+    
+    <content type="html">&lt;p&gt;把上一篇的实例用 scrapy 框架重新实现一遍。主要步骤就是新建项目 (Project) –&amp;gt; 定义目标（Items）–&amp;gt; 制作爬虫（Spider）–&amp;gt; 存储结果（Pipeline）&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Scrapy-概述&quot;&gt;&lt;a href=&quot;#Scrapy-概述&quot; class=&quot;headerlink&quot; title=&quot;Scrapy 概述&quot;&gt;&lt;/a&gt;Scrapy 概述&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。&lt;br&gt;其最初是为了页面抓取 (更确切来说, 网络抓取 )所设计的， 也可以应用在获取API所返回的数据(例如 Amazon Associates Web Services ) 或者通用的网络爬虫。Scrapy用途广泛，可以用于数据挖掘、监测和自动化测试&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;Scrapy-架构&quot;&gt;&lt;a href=&quot;#Scrapy-架构&quot; class=&quot;headerlink&quot; title=&quot;Scrapy 架构&quot;&gt;&lt;/a&gt;Scrapy 架构&lt;/h2&gt;&lt;p&gt;Scrapy 使用了 Twisted异步网络库来处理网络通讯。整体架构大致如下&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/crawler.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Scrapy-组件&quot;&gt;&lt;a href=&quot;#Scrapy-组件&quot; class=&quot;headerlink&quot; title=&quot;Scrapy 组件&quot;&gt;&lt;/a&gt;Scrapy 组件&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;引擎(Scrapy): 用来处理整个系统的数据流处理, 触发事务(框架核心)&lt;/li&gt;
+&lt;li&gt;调度器(Scheduler): 用来接受引擎发过来的请求, 压入队列中, 并在引擎再次请求的时候返回. 可以想像成一个URL（抓取网页的网址或者说是链接）的优先队列, 由它来决定下一个要抓取的网址是什么, 同时去除重复的网址&lt;/li&gt;
+&lt;li&gt;下载器(Downloader): 用于下载网页内容, 并将网页内容返回给蜘蛛(Scrapy下载器是建立在twisted这个高效的异步模型上的)&lt;/li&gt;
+&lt;li&gt;爬虫(Spiders): 爬虫是主要干活的, 用于从特定的网页中提取自己需要的信息, 即所谓的实体(Item)。用户也可以从中提取出链接,让Scrapy继续抓取下一个页面&lt;/li&gt;
+&lt;li&gt;项目管道(Pipeline): 负责处理爬虫从网页中抽取的实体，主要的功能是持久化实体、验证实体的有效性、清除不需要的信息。当页面被爬虫解析后，将被发送到项目管道，并经过几个特定的次序处理数据。&lt;/li&gt;
+&lt;li&gt;下载器中间件(Downloader Middlewares): 位于Scrapy引擎和下载器之间的框架，主要是处理Scrapy引擎与下载器之间的请求及响应。&lt;/li&gt;
+&lt;li&gt;爬虫中间件(Spider Middlewares): 介于Scrapy引擎和爬虫之间的框架，主要工作是处理蜘蛛的响应输入和请求输出。&lt;/li&gt;
+&lt;li&gt;调度中间件(Scheduler Middewares): 介于Scrapy引擎和调度之间的中间件，从Scrapy引擎发送到调度的请求和响应。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;Scrapy-运行流程&quot;&gt;&lt;a href=&quot;#Scrapy-运行流程&quot; class=&quot;headerlink&quot; title=&quot;Scrapy 运行流程&quot;&gt;&lt;/a&gt;Scrapy 运行流程&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;引擎从调度器中取出一个链接(URL)用于接下来的抓取&lt;/li&gt;
+&lt;li&gt;引擎把URL封装成一个请求(Request)传给下载器，下载器把资源下载下来，并封装成应答包(Response)&lt;/li&gt;
+&lt;li&gt;爬虫解析Response&lt;/li&gt;
+&lt;li&gt;若是解析出实体（Item）,则交给实体管道进行进一步的处理;若是解析出的是链接（URL）,则把URL交给Scheduler等待抓取&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;Scrapy-实例&quot;&gt;&lt;a href=&quot;#Scrapy-实例&quot; class=&quot;headerlink&quot; title=&quot;Scrapy 实例&quot;&gt;&lt;/a&gt;Scrapy 实例&lt;/h1&gt;&lt;h2 id=&quot;新建项目-Project&quot;&gt;&lt;a href=&quot;#新建项目-Project&quot; class=&quot;headerlink&quot; title=&quot;新建项目 (Project)&quot;&gt;&lt;/a&gt;新建项目 (Project)&lt;/h2&gt;&lt;pre&gt;
+scrapy startproject news_scrapy
+&lt;/pre&gt;
+
+&lt;p&gt;输入以上命令之后，就会看见命令行运行的目录下多了一个名为 news_scrapy 的目录，目录的结构如下：&lt;/p&gt;
+&lt;pre&gt;
+|---- news_scrapy
+| |---- news_scrapy
+|   |---- __init__.py
+|   |---- items.py        #用来存储爬下来的数据结构（字典形式）
+|    |---- pipelines.py    #用来对爬出来的item进行后续处理，如存入数据库等
+|    |---- settings.py    #爬虫配置文件
+|    |---- spiders        #此目录用来存放创建的新爬虫文件（爬虫主体）
+|     |---- __init__.py
+| |---- scrapy.cfg        #项目配置文件
+&lt;/pre&gt;
+
+&lt;h2 id=&quot;定义目标（Items）&quot;&gt;&lt;a href=&quot;#定义目标（Items）&quot; class=&quot;headerlink&quot; title=&quot;定义目标（Items）&quot;&gt;&lt;/a&gt;定义目标（Items）&lt;/h2&gt;&lt;p&gt;Items是装载抓取的数据的容器，工作方式像 python 里面的字典，但它提供更多的保护，比如对未定义的字段填充以防止拼写错误&lt;br&gt;通过创建scrapy.Item类, 并且定义类型为 scrapy.Field 的类属性来声明一个Item，通过将需要的item模型化，来控制站点数据。&lt;br&gt;编辑 items.py&lt;/p&gt;
+&lt;pre&gt;
+# -*- coding: utf-8 -*-
+import scrapy
+class NewsScrapyItem(scrapy.Item):
+    # define the fields for your item here like:
+    category = scrapy.Field()
+    url = scrapy.Field()
+    secondary_title = scrapy.Field()
+    secondary_url = scrapy.Field()
+    #text = Field()
+&lt;/pre&gt;
+
+
+&lt;h2 id=&quot;制作爬虫（Spider）&quot;&gt;&lt;a href=&quot;#制作爬虫（Spider）&quot; class=&quot;headerlink&quot; title=&quot;制作爬虫（Spider）&quot;&gt;&lt;/a&gt;制作爬虫（Spider）&lt;/h2&gt;&lt;p&gt;Spider 定义了用于下载的URL列表、跟踪链接的方案、解析网页内容的方式，以此来提取items。&lt;br&gt;要建立一个Spider，你必须用scrapy.spider.BaseSpider创建一个子类，并确定三个强制的属性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;name：爬虫的识别名称，必须是唯一的，在不同的爬虫中你必须定义不同的名字。&lt;/li&gt;
+&lt;li&gt;start_urls：爬取的URL列表。爬虫从这里开始抓取数据，所以，第一次下载的数据将会从这些urls开始。其他子URL将会从这些起始URL中继承性生成。&lt;/li&gt;
+&lt;li&gt;parse()：解析的方法，调用的时候传入从每一个URL传回的Response对象作为唯一参数，负责解析并匹配抓取的数据(解析为item)，跟踪更多的URL。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在 spiders 目录下新建Wynews.py，代码如下。利用 yield Request(url=item[‘url’],meta={‘item_1’: item},callback=self.second_parse) 来进行第二层爬取。&lt;/p&gt;
+&lt;pre&gt;
+class WynewsSpider(BaseSpider):
+    name = &quot;Wynews&quot;
+    start_urls = [&#39;http://news.163.com/rank/&#39;]
+
+    def parse(self,response):
+        html = HtmlXPathSelector(response)
+        page = html.xpath(&#39;//div[@class=&quot;subNav&quot;]/a&#39;)
+        for i in page:
+            item = dict()
+            item[&#39;category&#39;] = i.xpath(&#39;text()&#39;).extract_first()
+            item[&#39;url&#39;] = i.xpath(&#39;@href&#39;).extract_first()
+            print item[&#39;category&#39;],item[&#39;url&#39;]
+            yield Request(url=item[&#39;url&#39;],meta={&#39;item_1&#39;: item},callback=self.second_parse)
+
+    def second_parse(self,response):
+        item_1= response.meta[&#39;item_1&#39;]
+        html = HtmlXPathSelector(response)
+        #print &#39;response &#39;,response
+        page = html.xpath(&#39;//tr/td/a&#39;)
+        #print &#39;page &#39;,page
+        items = []
+        for i in page:
+            item = DidiScrapyItem()
+            item[&#39;category&#39;] = item_1[&#39;category&#39;].encode(&#39;utf8&#39;)
+            item[&#39;url&#39;] = item_1[&#39;url&#39;].encode(&#39;utf8&#39;)
+            item[&#39;secondary_title&#39;] = i.xpath(&#39;text()&#39;).extract_first().encode(&#39;utf8&#39;)
+            item[&#39;secondary_url&#39;] = i.xpath(&#39;@href&#39;).extract_first().encode(&#39;utf8&#39;)
+            #print i.xpath(&#39;text()&#39;).extract(),i.xpath(&#39;@href&#39;).extract()
+            items.append(item)
+        return items
+&lt;/pre&gt;
+
+&lt;h2 id=&quot;存储结果（Pipeline）&quot;&gt;&lt;a href=&quot;#存储结果（Pipeline）&quot; class=&quot;headerlink&quot; title=&quot;存储结果（Pipeline）&quot;&gt;&lt;/a&gt;存储结果（Pipeline）&lt;/h2&gt;&lt;p&gt;Item pipeline 的主要责任是负责处理 spider 抽取的 Item，主要任务是清理、验证和存储数据。当页面被 spider 解析后，将被发送到 pipeline，每个 pipeline 的组件都是由一个简单的方法组成的Python类。pipeline 获取Item，执行相应的方法，并确定是否需要在 pipeline中继续执行下一步或是直接丢弃掉不处理。&lt;/p&gt;
+&lt;h3 id=&quot;执行过程&quot;&gt;&lt;a href=&quot;#执行过程&quot; class=&quot;headerlink&quot; title=&quot;执行过程&quot;&gt;&lt;/a&gt;执行过程&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;清理HTML数据&lt;/li&gt;
+&lt;li&gt;验证解析到的数据（检查Item是否包含必要的字段）&lt;/li&gt;
+&lt;li&gt;检查是否是重复数据（如果重复就删除）&lt;/li&gt;
+&lt;li&gt;将解析到的数据存储到 数据库/文件 中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;主要方法&quot;&gt;&lt;a href=&quot;#主要方法&quot; class=&quot;headerlink&quot; title=&quot;主要方法&quot;&gt;&lt;/a&gt;主要方法&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;process_item(item, spider)&lt;br&gt;每一个item管道组件都会调用该方法，并且必须返回一个item对象实例或raise DropItem异常。&lt;br&gt;被丢掉的item将不会在管道组件进行执行&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;open_spider(spider)&lt;br&gt;当spider执行的时候将调用该方法&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;close_spider(spider)&lt;br&gt;当spider关闭的时候将调用该方法&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;编写自己的-Pipeline&quot;&gt;&lt;a href=&quot;#编写自己的-Pipeline&quot; class=&quot;headerlink&quot; title=&quot;编写自己的 Pipeline&quot;&gt;&lt;/a&gt;编写自己的 Pipeline&lt;/h3&gt;&lt;p&gt;编辑 pipelines.py。把抓取的 items 保存到 json 文件中。&lt;/p&gt;
+&lt;pre&gt;
+import json
+class NewsScrapyPipeline(object):
+    def __init__(self):
+        self.file = open(&#39;items.json&#39;, &#39;w&#39;)
+    def process_item(self, item, spider):
+        line = json.dumps(dict(item),ensure_ascii=False) + &quot;\n&quot;
+        self.file.write(line)
+        return item
+&lt;/pre&gt;
+
+&lt;h3 id=&quot;激活Item-Pipeline组件&quot;&gt;&lt;a href=&quot;#激活Item-Pipeline组件&quot; class=&quot;headerlink&quot; title=&quot;激活Item Pipeline组件&quot;&gt;&lt;/a&gt;激活Item Pipeline组件&lt;/h3&gt;&lt;p&gt;在settings.py文件中，往ITEM_PIPELINES中添加项目管道的类名，激活项目管道组件&lt;/p&gt;
+&lt;pre&gt;
+ITEM_PIPELINES = {
+    &#39;news_scrapy.pipelines.NewsScrapyPipeline&#39;: 300,
+}
+&lt;/pre&gt;
+
+&lt;h2 id=&quot;开启爬虫-Crawl&quot;&gt;&lt;a href=&quot;#开启爬虫-Crawl&quot; class=&quot;headerlink&quot; title=&quot;开启爬虫 (Crawl)&quot;&gt;&lt;/a&gt;开启爬虫 (Crawl)&lt;/h2&gt;&lt;pre&gt;scrapy crawl Wynews&lt;/pre&gt;
+
+&lt;h2 id=&quot;可能出现的问题-Problem&quot;&gt;&lt;a href=&quot;#可能出现的问题-Problem&quot; class=&quot;headerlink&quot; title=&quot;可能出现的问题 (Problem)&quot;&gt;&lt;/a&gt;可能出现的问题 (Problem)&lt;/h2&gt;&lt;p&gt;打开 items.json 文件，中文可能会出现文件乱码问题&lt;/p&gt;
+&lt;pre&gt;
+[{&quot;category&quot;: &quot;\u93c2\u4f34\u6908&quot;, &quot;url&quot;: &quot;http://news.163.com/special/0001386F/rank_news.html&quot;, &quot;secondary_title&quot;: &quot;\u934b\u950b\u9422\u5cf0\u30b3\u95c3\u8e6d\u7b09\u9473\u6ec8\u69fb\u951b\u5c7e\u5d0f\u6fc2\u7a3f\u5dfb\u9359\u53c9\u7c2e\u6769\u6ec4\u7966\u95c0&quot;, &quot;secondary_url&quot;: &quot;http://caozhi.news.163.com/16/0615/09/BPJG6SB60001544E.html&quot;},
+&lt;/pre&gt;
+
+&lt;p&gt;这一行代码就能解决。&lt;/p&gt;
+&lt;pre&gt;
+line = json.dumps(dict(item),ensure_ascii=False) + &quot;\n&quot;
+&lt;/pre&gt;
+
+&lt;p&gt;结果&lt;/p&gt;
+&lt;pre&gt;
+{&quot;category&quot;: &quot;财经&quot;, &quot;url&quot;: &quot;http://money.163.com/special/002526BH/rank.html&quot;, &quot;secondary_title&quot;: &quot;A股闯关MSCI再度失败 索罗斯们押注对冲胜出&quot;, &quot;secondary_url&quot;: &quot;http://money.163.com/16/0615/06/BPJ4T69300253B0H.html&quot;}
+{&quot;category&quot;: &quot;财经&quot;, &quot;url&quot;: &quot;http://money.163.com/special/002526BH/rank.html&quot;, &quot;secondary_title&quot;: &quot;湖北副省长担心房价下跌：泡沫若破裂后果很严重&quot;, &quot;secondary_url&quot;: &quot;http://money.163.com/16/0615/08/BPJBM36U00252G50.html&quot;}
+{&quot;category&quot;: &quot;财经&quot;, &quot;url&quot;: &quot;http://money.163.com/special/002526BH/rank.html&quot;, &quot;secondary_title&quot;: &quot;马云:假货质量超过正品 打假很复杂&quot;, &quot;secondary_url&quot;: &quot;http://money.163.com/16/0615/08/BPJAIOVI00253G87.html&quot;}
+{&quot;category&quot;: &quot;财经&quot;, &quot;url&quot;: &quot;http://money.163.com/special/002526BH/rank.html&quot;, &quot;secondary_title&quot;: &quot;A股闯关未成功 纳入MSCI新兴市场指数被延迟&quot;, &quot;secondary_url&quot;: &quot;http://money.163.com/16/0615/07/BPJ7260D00252G50.html&quot;}
+{&quot;category&quot;: &quot;财经&quot;, &quot;url&quot;: &quot;http://money.163.com/special/002526BH/rank.html&quot;, &quot;secondary_title&quot;: &quot;马云称许多假货比真品好 网友:怪不得淘宝假货多&quot;, &quot;secondary_url&quot;: &quot;http://money.163.com/16/0615/08/BPJC437N002526O3.html&quot;}
+{&quot;category&quot;: &quot;财经&quot;, &quot;url&quot;: &quot;http://money.163.com/special/002526BH/rank.html&quot;, &quot;secondary_title&quot;: &quot;贪官示意家人低价买地 拆迁后获赔近亿元&quot;, &quot;secondary_url&quot;: &quot;http://money.163.com/16/0615/08/BPJAT58400252G50.html&quot;}
+{&quot;category&quot;: &quot;财经&quot;, &quot;url&quot;: &quot;http://money.163.com/special/002526BH/rank.html&quot;, &quot;secondary_title&quot;: &quot;又是毒胶囊:浙江查获1亿多粒毒胶囊 6人被捕&quot;, &quot;secondary_url&quot;: &quot;http://money.163.com/16/0615/07/BPJ8NMRG00253B0H.html&quot;}
+{&quot;category&quot;: &quot;财经&quot;, &quot;url&quot;: &quot;http://money.163.com/special/002526BH/rank.html&quot;, &quot;secondary_title&quot;: &quot;还不起了？委内瑞拉寻求宽限1年偿还中国贷款&quot;, &quot;secondary_url&quot;: &quot;http://money.163.com/16/0615/07/BPJ9IH3400252C1E.html&quot;}
+{&quot;category&quot;: &quot;财经&quot;, &quot;url&quot;: &quot;http://money.163.com/special/002526BH/rank.html&quot;, &quot;secondary_title&quot;: &quot;A股频现清仓式减持 上半年十大减持王曝光&quot;, &quot;secondary_url&quot;: &quot;http://money.163.com/16/0615/07/BPJ7Q9BC00254IU4.html&quot;}
+{&quot;category&quot;: &quot;汽车&quot;, &quot;url&quot;: &quot;http://news.163.com/special/0001386F/rank_auto.html&quot;, &quot;secondary_title&quot;: &quot;《装X购车指南》 30-50万都能买到啥车？&quot;, &quot;secondary_url&quot;: &quot;http://auto.163.com/16/0615/07/BPJ6U1J900084TUP.html&quot;}
+{&quot;category&quot;: &quot;汽车&quot;, &quot;url&quot;: &quot;http://news.163.com/special/0001386F/rank_auto.html&quot;, &quot;secondary_title&quot;: &quot;看挡杆还以为是A8L 新款哈弗H9内饰曝光&quot;, &quot;secondary_url&quot;: &quot;http://auto.163.com/16/0615/00/BPIGTP4B00084TUO.html&quot;}
+{&quot;category&quot;: &quot;汽车&quot;, &quot;url&quot;: &quot;http://news.163.com/special/0001386F/rank_auto.html&quot;, &quot;secondary_title&quot;: &quot;前脸/尾灯有变 新款捷达搭1.5L油耗更低&quot;, &quot;secondary_url&quot;: &quot;http://auto.163.com/16/0615/00/BPIGMEHE00084TUO.html&quot;}
+{&quot;category&quot;: &quot;汽车&quot;, &quot;url&quot;: &quot;http://news.163.com/special/0001386F/rank_auto.html&quot;, &quot;secondary_title&quot;: &quot;主打车型不超10万良心价 远景SUV将8月上市&quot;, &quot;secondary_url&quot;: &quot;http://auto.163.com/16/0615/00/BPIHR2A500084TUO.html&quot;}
+{&quot;category&quot;: &quot;汽车&quot;, &quot;url&quot;: &quot;http://news.163.com/special/0001386F/rank_auto.html&quot;, &quot;secondary_title&quot;: &quot;Macan并不是我真姓 众泰SR8搭2.0T/D&quot;, &quot;secondary_url&quot;: &quot;http://auto.163.com/16/0613/00/BPDBPB0J00084TUO.html&quot;}
+{&quot;category&quot;: &quot;汽车&quot;, &quot;url&quot;: &quot;http://news.163.com/special/0001386F/rank_auto.html&quot;, &quot;secondary_title&quot;: &quot;上海福特翼搏优惠1.5万元&quot;, &quot;secondary_url&quot;: &quot;http://auto.163.com/16/0615/00/BPIHH8FF000857M6.html&quot;}
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Shuang0420/Crawler/tree/master/news_scrapy&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;完整代码&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/php_fly/article/details/19571121&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.csdn.net/php_fly/article/details/19571121&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.jianshu.com/p/078ad2067419&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.jianshu.com/p/078ad2067419&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;把上一篇的实例用 scrapy 框架重新实现一遍。主要步骤就是新建项目 (Project) –&amp;gt; 定义目标（Items）–&amp;gt; 制作爬虫（Spider）–&amp;gt; 存储结果（Pipeline）&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Programming-language" scheme="http://yoursite.com/categories/Programming-language/"/>
+    
+    
+      <category term="Crawler" scheme="http://yoursite.com/tags/Crawler/"/>
+    
+  </entry>
+  
+  <entry>
     <title>爬虫总结（一）</title>
     <link href="http://yoursite.com/2016/06/11/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>http://yoursite.com/2016/06/11/爬虫总结（一）/</id>
     <published>2016-06-11T06:35:48.000Z</published>
-    <updated>2016-06-12T03:12:54.000Z</updated>
+    <updated>2016-06-16T12:02:30.000Z</updated>
     
     <content type="html">&lt;p&gt;爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;爬虫基础&quot;&gt;&lt;a href=&quot;#爬虫基础&quot; class=&quot;headerlink&quot; title=&quot;爬虫基础&quot;&gt;&lt;/a&gt;爬虫基础&lt;/h1&gt;&lt;h2 id=&quot;什么是爬虫&quot;&gt;&lt;a href=&quot;#什么是爬虫&quot; class=&quot;headerlink&quot; title=&quot;什么是爬虫&quot;&gt;&lt;/a&gt;什么是爬虫&lt;/h2&gt;&lt;p&gt;爬虫说白了其实就是获取资源的程序&lt;/p&gt;
+&lt;h1 id=&quot;爬虫基础&quot;&gt;&lt;a href=&quot;#爬虫基础&quot; class=&quot;headerlink&quot; title=&quot;爬虫基础&quot;&gt;&lt;/a&gt;爬虫基础&lt;/h1&gt;&lt;h2 id=&quot;什么是爬虫&quot;&gt;&lt;a href=&quot;#什么是爬虫&quot; class=&quot;headerlink&quot; title=&quot;什么是爬虫&quot;&gt;&lt;/a&gt;什么是爬虫&lt;/h2&gt;&lt;p&gt;爬虫说白了其实就是获取资源的程序。制作爬虫的总体分三步：爬－取－存。首先要获取整个网页的所有内容，然后再取出其中对你有用的部分，最后再保存🏊的部分。&lt;/p&gt;
 &lt;h2 id=&quot;爬虫类型&quot;&gt;&lt;a href=&quot;#爬虫类型&quot; class=&quot;headerlink&quot; title=&quot;爬虫类型&quot;&gt;&lt;/a&gt;爬虫类型&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;网络爬虫&lt;br&gt;网络爬虫，是一种按照一定的规则，&lt;strong&gt;自动的&lt;/strong&gt; 抓取万维网信息的程序或者脚本。网络爬虫是搜索引擎系统中十分重要的组成部分，爬取的网页信息用于建立索引从而为搜索引擎提供支持，它决定着整个引擎系统的内容是否丰富，信息是否即时，其性能的优劣直接影响着搜索引擎的效果。&lt;/li&gt;
 &lt;li&gt;传统爬虫&lt;br&gt;从一个或若干初始网页的URL开始，获得初始网页的URL，在抓取网页过程中，不断从当前页面上抽取新的URL放入队列，直到满足系统的一定停止条件。&lt;/li&gt;
@@ -43,7 +312,9 @@
 &lt;li&gt;主机上的资源位置&lt;/li&gt;
 &lt;li&gt;例子：&lt;a href=&quot;http://www.example.com/index.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.example.com/index.html&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&quot;Web-Server／Socket如何建立连接和传输数据的&quot;&gt;&lt;a href=&quot;#Web-Server／Socket如何建立连接和传输数据的&quot; class=&quot;headerlink&quot; title=&quot;Web Server／Socket如何建立连接和传输数据的&quot;&gt;&lt;/a&gt;Web Server／Socket如何建立连接和传输数据的&lt;/h2&gt;&lt;p&gt;web server 的工作过程其实和打电话的过程差不多（买电话–&amp;gt;注册号码–&amp;gt;监听–&amp;gt;排队接听–&amp;gt;读写–&amp;gt;关闭），经典的三步握手（有人在吗？我在呢，你呢？我也在）在排队接听时进行。下面一张图足以解释一切。&lt;br&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/webserver.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Web-Server／Socket如何建立连接和传输数据的&quot;&gt;&lt;a href=&quot;#Web-Server／Socket如何建立连接和传输数据的&quot; class=&quot;headerlink&quot; title=&quot;Web Server／Socket如何建立连接和传输数据的&quot;&gt;&lt;/a&gt;Web Server／Socket如何建立连接和传输数据的&lt;/h2&gt;&lt;p&gt;web server 的工作过程其实和打电话的过程差不多（买电话–&amp;gt;注册号码–&amp;gt;监听–&amp;gt;排队接听–&amp;gt;读写–&amp;gt;关闭），经典的三步握手（有人在吗？我在呢，你呢？我也在）在排队接听时进行。下面一张图足以解释一切。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/webserver.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Crawler端需要一个socket接口，向服务器端发起connect请求，完成连接后就可以和服务器交流了，操作完毕会关闭socket接口。服务器端更复杂一点，也需要一个socket接口，并且这个socket接口需要绑定一个地址（bind()），这就相当于有一个固定的电话号码，这样其他人拨打这个号码就可以找到这个服务器。绑定之后服务器的socket就开始监听（listen()）有没有用户请求，如果有，就接收请求（accept()），和用户建立连接，然后就可以交流。&lt;/p&gt;
 &lt;h2 id=&quot;HTML-DOM&quot;&gt;&lt;a href=&quot;#HTML-DOM&quot; class=&quot;headerlink&quot; title=&quot;HTML DOM&quot;&gt;&lt;/a&gt;HTML DOM&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;DOM 将 HTML 文档表达为树结构&lt;/li&gt;
 &lt;li&gt;定义了访问和操作 HTML 文档的标准&lt;/li&gt;
@@ -1191,277 +1462,6 @@ model.print_topics(-1, 5)&lt;/pre&gt;
       <category term="topic modeling" scheme="http://yoursite.com/tags/topic-modeling/"/>
     
       <category term="cluster" scheme="http://yoursite.com/tags/cluster/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>gollum/-github上搭建个人wiki</title>
-    <link href="http://yoursite.com/2016/05/13/gollum:-github%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BAwiki/"/>
-    <id>http://yoursite.com/2016/05/13/gollum:-github上搭建个人wiki/</id>
-    <published>2016-05-13T08:55:07.000Z</published>
-    <updated>2016-06-09T12:08:26.000Z</updated>
-    
-    <content type="html">&lt;p&gt;博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h3 id=&quot;开通Wiki&quot;&gt;&lt;a href=&quot;#开通Wiki&quot; class=&quot;headerlink&quot; title=&quot;开通Wiki&quot;&gt;&lt;/a&gt;开通Wiki&lt;/h3&gt;&lt;p&gt;登陆Github，找到你所开通的Github项目的Settings栏目，开通Wikis，如果只希望别人可读不可写，勾选：Restrict edits to Collaborators only。如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%884.56.12.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h3 id=&quot;git-clone-相应维基的git地址&quot;&gt;&lt;a href=&quot;#git-clone-相应维基的git地址&quot; class=&quot;headerlink&quot; title=&quot;git clone 相应维基的git地址&quot;&gt;&lt;/a&gt;git clone 相应维基的git地址&lt;/h3&gt;&lt;pre&gt; git clone git@github.com:Shuang0420/Shuang0420.github.io.wiki.git wiki&lt;/pre&gt;
-
-&lt;p&gt;如果你之前没有设置git密钥，可以参照以下步骤先做配置，如果已经设置，请忽略。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;查看是否已经有了ssh密钥：&lt;br&gt;&lt;pre&gt;cd ~/.ssh&lt;/pre&gt;&lt;br&gt;如果没有密钥则不会有此文件夹，有则备份删除&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;生成密钥，得到两个文件：id_rsa 和 id_rsa.pub&lt;/p&gt;
-&lt;pre&gt;ssh-keygen -t rsa -C “haiyan.xu.vip@gmail.com”&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;添加密钥到ssh：ssh-add id_rsa&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;在github上settings中添加ssh密钥，即“id_rsa.pub”里的公钥。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;测试：ssh git@github.com&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;配置个人wiki&quot;&gt;&lt;a href=&quot;#配置个人wiki&quot; class=&quot;headerlink&quot; title=&quot;配置个人wiki&quot;&gt;&lt;/a&gt;配置个人wiki&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;在wiki目录下，安装bundler&lt;/p&gt;
-&lt;pre&gt;gem install bundler&lt;/pre&gt;
-
-&lt;p&gt;   如果安装没有问题，可以跳过以下错误解决。&lt;/p&gt;
-   &lt;pre&gt;
-   ERROR:  Could not find a valid gem &#39;bundler&#39; (&gt;= 0), here is why:
-             Unable to download data from https://rubygems.org/ - Errno::EPIPE: Broken pipe - SSL_connect (https://rubygems.org/latest_specs.4.8.gz)&lt;/pre&gt;
-
-&lt;p&gt;   解决：&lt;/p&gt;
-   &lt;pre&gt;gem source -a http://rubygems.org/
-   gem install bundler&lt;/pre&gt;
-
-&lt;p&gt;   然而还是有错误：&lt;/p&gt;
-   &lt;pre&gt;Fetching: bundler-1.12.5.gem (100%)^[[A
-   ERROR:  While executing gem ... (Gem::FilePermissionError)
-       You don&#39;t have write permissions for the /Library/Ruby/Gems/2.0.0 directory.&lt;/pre&gt;
-
-&lt;p&gt;   因为没有sudo：&lt;/p&gt;
-   &lt;pre&gt;sudo gem install bundler&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;新建Gemfile文件，内容如下：&lt;/p&gt;
-   &lt;pre&gt;
-   source &quot;http://rubygems.org&quot;
-   gem &#39;redcarpet&#39;
-   gem &quot;grit&quot;, &#39;~&gt; 2.5.0&#39;, git: &#39;https://github.com/gitlabhq/grit.git&#39;, ref: &#39;42297cdcee16284d2e4eff23d41377f52fc28b9d&#39;
-   gem &#39;gollum&#39;, git: &#39;https://github.com/gollum/gollum.git&#39;&lt;/pre&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;运行：&lt;/p&gt;
-   &lt;pre&gt;
-   # 安装项目依赖的所有gem包;此命令会尝试更新系统中已存在的gem包
-   bundle install&lt;/pre&gt;
-
-&lt;p&gt;   时间有点久，耐心等待。&lt;br&gt;   然而最后出现error,&lt;/p&gt;
-   &lt;pre&gt;An error occurred while installing charlock_holmes (0.7.3), and Bundler cannot continue.
-   Make sure that `gem install charlock_holmes -v &#39;0.7.3&#39;` succeeds before bundling.&lt;/pre&gt;
-
-&lt;p&gt;   好。那就按要求安装。&lt;/p&gt;
-   &lt;pre&gt;sudo gem install charlock_holmes -v &#39;0.7.3&#39;&lt;/pre&gt;
-
-&lt;p&gt;   &lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%885.25.54.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;   好。继续按要求安装。&lt;/p&gt;
-   &lt;pre&gt;brew install icu4c&lt;/pre&gt;
-
-&lt;p&gt;   再重来&lt;/p&gt;
-   &lt;pre&gt;sudo gem install charlock_holmes -v &#39;0.7.3&#39;&lt;/pre&gt;
-
-   &lt;pre&gt;bundle install&lt;/pre&gt;
-
-&lt;p&gt;   &lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-27%20%E4%B8%8A%E5%8D%889.46.38.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;   因为没有安装bundle&lt;/p&gt;
-   &lt;pre&gt;gem install bundle&lt;/pre&gt;
-
-&lt;p&gt;   安装后再次尝试运行&lt;/p&gt;
-   &lt;pre&gt;bundle install&lt;/pre&gt;
-
-&lt;p&gt;   error&lt;/p&gt;
-   &lt;pre&gt;Could not reach host index.rubygems.org. Check your network connection and try again.&lt;/pre&gt;
-   出现这种错误可以尝试把Gemfile里的https改成http（互相转化进行尝试）
-
-   &lt;pre&gt;bundle install&lt;/pre&gt;
-
-&lt;p&gt;   终于成功！&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;已安装成功gollum等。然后运行：&lt;/p&gt;
-   &lt;pre&gt;gollum&lt;/pre&gt;
-
-&lt;p&gt;   走到这一步了本人还是遇到了万恶的失败。&lt;br&gt;   看着已经安装好了&lt;/p&gt;
-   &lt;pre&gt;
-   Installing nokogiri 1.6.7.2 with native extensions
-   Installing rack-protection 1.5.3
-   Installing gollum-grit_adapter 1.0.1
-   Installing sanitize 2.1.0
-   Installing sinatra 1.4.7
-   Installing gollum-lib 4.2.0
-   Using gollum 4.0.1 from https://github.com/gollum/gollum.git (at master@5a5e56a)
-   Bundle complete! 3 Gemfile dependencies, 24 gems now installed.
-   Use `bundle show [gemname]` to see where a bundled gem is installed.
-   &lt;/pre&gt;
-
-&lt;p&gt;   然而实际并没有&lt;/p&gt;
-   &lt;pre&gt;
-   $ gollum
-   -bash: gollum: command not found&lt;/pre&gt;
-
-&lt;p&gt;   大写的忧伤。最后通过直接安装gollum解决。&lt;/p&gt;
-   &lt;pre&gt;sudo gem install gollum&lt;/pre&gt;
-
-   &lt;pre&gt;gollum&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;终于可以在本地启动成功维基。打开网址：&lt;a href=&quot;http://0.0.0.0:4567/，可以直接在浏览器中编辑。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://0.0.0.0:4567/，可以直接在浏览器中编辑。&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;   &lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%886.26.05.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;   如果发现不能如下错误，请尝试更新ruby。&lt;/p&gt;
-&lt;p&gt;   &lt;img src=&quot;http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-26%20%E4%B8%8B%E5%8D%889.31.07.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;   更新ruby步骤&lt;br&gt;   安装 RVM&lt;br&gt;   RVM:Ruby Version Manager,Ruby版本管理器，包括Ruby的版本管理和Gem库管理(gemset)&lt;/p&gt;
-   &lt;pre&gt;curl -L get.rvm.io | bash -s stable&lt;/pre&gt;
-
-   &lt;pre&gt;source ~/.bashrc  
-   source ~/.bash_profile &lt;/pre&gt;
-
-&lt;p&gt;   测试是否安装正常&lt;/p&gt;
-   &lt;pre&gt;rvm -v  &lt;/pre&gt;
-
-&lt;p&gt;   用RVM升级Ruby&lt;/p&gt;
-   &lt;pre&gt;
-   #查看当前ruby版本  
-   ruby -v  
-   #列出已知的ruby版本  
-   rvm list known  
-   #安装ruby 2.3.0
-   rvm install 2.3.0 &lt;/pre&gt;
-
-&lt;p&gt;   安装完成之后ruby -v查看是否安装成功。&lt;/p&gt;
-&lt;p&gt;   重新安装完毕后回到第3步。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;github同步&quot;&gt;&lt;a href=&quot;#github同步&quot; class=&quot;headerlink&quot; title=&quot;github同步&quot;&gt;&lt;/a&gt;github同步&lt;/h3&gt;&lt;p&gt;在wiki目录下面，进行git库操作，提交本地对维基内容的修改。一切将自动保存在你的Github上的个人博客网站的wiki目录下面。&lt;/p&gt;
-&lt;pre&gt;
-cd ~/wiki
-git add .
-git commit -am&quot;first commit&quot;
-git push&lt;/pre&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;博客凸显创作，维基则是整理的好工具，很多入门级别、复用别人的操作，如配置环境等，更适合发布在个人维基上，本文就以gollum+github搭建个人wiki做个示范。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Configuration" scheme="http://yoursite.com/categories/Configuration/"/>
-    
-    
-      <category term="wiki" scheme="http://yoursite.com/tags/wiki/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo 主题配置</title>
-    <link href="http://yoursite.com/2016/05/12/Github-Pages-Hexo%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/"/>
-    <id>http://yoursite.com/2016/05/12/Github-Pages-Hexo主题配置/</id>
-    <published>2016-05-12T12:26:12.000Z</published>
-    <updated>2016-06-10T08:14:09.000Z</updated>
-    
-    <content type="html">&lt;p&gt;终于搭建完自己的博客站点啦，好有成就感✌️分享一些本站使用的 NexT 主题配置技巧。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;添加“标签”页面&quot;&gt;&lt;a href=&quot;#添加“标签”页面&quot; class=&quot;headerlink&quot; title=&quot;添加“标签”页面&quot;&gt;&lt;/a&gt;添加“标签”页面&lt;/h3&gt;&lt;p&gt;在终端窗口下，定位到 Hexo 站点目录下，新建一个页面，命名为 tags ：&lt;/p&gt;
-&lt;pre&gt;
-$ cd your-hexo-site
-$ hexo new page tags
-&lt;/pre&gt;
-
-&lt;p&gt;注意：如果有启用 多说 或者 Disqus 评论，页面也会带有评论。 若需要关闭的话，请添加字段 comments 并将值设置为 false，如：&lt;/p&gt;
-&lt;pre&gt;
-title: 标签
-date: 2014-12-22 12:39:04
-type: &quot;tags&quot;
-comments: false
-&lt;/pre&gt;
-
-&lt;p&gt;在菜单中添加链接。编辑 主题配置文件 ， 添加 tags 到 menu 中，如下:&lt;/p&gt;
-&lt;pre&gt;
-menu:
-  home: /
-  archives: /archives
-  tags: /tags
-&lt;/pre&gt;
-
-&lt;h3 id=&quot;添加“分类”页面&quot;&gt;&lt;a href=&quot;#添加“分类”页面&quot; class=&quot;headerlink&quot; title=&quot;添加“分类”页面&quot;&gt;&lt;/a&gt;添加“分类”页面&lt;/h3&gt;&lt;p&gt;在终端窗口下，定位到 Hexo 站点目录下，新建一个页面，命名为 categories ：&lt;/p&gt;
-&lt;pre&gt;
-$ cd your-hexo-site
-$ hexo new page categories
-&lt;/pre&gt;
-
-&lt;p&gt;注意：如果有启用 多说 或者 Disqus 评论，页面也会带有评论。 若需要关闭的话，请添加字段 comments 并将值设置为 false，如：&lt;/p&gt;
-&lt;pre&gt;
-title: 分类
-date: 2014-12-22 12:39:04
-type: &quot;categories&quot;
-comments: false
-&lt;/pre&gt;
-
-&lt;p&gt;在菜单中添加链接。编辑 主题配置文件 ， 添加 categories 到 menu 中，如下:&lt;/p&gt;
-&lt;pre&gt;
-menu:
-  home: /
-  archives: /archives
-  categories : /categories
-&lt;/pre&gt;
-
-
-&lt;h3 id=&quot;评论系统&quot;&gt;&lt;a href=&quot;#评论系统&quot; class=&quot;headerlink&quot; title=&quot;评论系统&quot;&gt;&lt;/a&gt;评论系统&lt;/h3&gt;&lt;p&gt;感觉 DISUQS 比 多说 的设置简单一些。在 &lt;a href=&quot;https://disqus.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://disqus.com/&lt;/a&gt; 按要求注册，完成后在 admin/settings/general/ 下找到 Shortname。&lt;br&gt;编辑 站点配置文件， 添加 disqus_shortname 字段，设置如下：&lt;/p&gt;
-&lt;pre&gt;
-disqus_shortname: your-disqus-shortname
-&lt;/pre&gt;
-
-
-&lt;h3 id=&quot;设置-RSS&quot;&gt;&lt;a href=&quot;#设置-RSS&quot; class=&quot;headerlink&quot; title=&quot;设置 RSS&quot;&gt;&lt;/a&gt;设置 RSS&lt;/h3&gt;&lt;p&gt;安装 hexo-generator-feed，在站点的根目录下执行以下命令：&lt;/p&gt;
-&lt;pre&gt;$ npm install hexo-generator-feed --save&lt;/pre&gt;
-
-&lt;p&gt;更改 主题配置文件，设定 rss 字段的值，留空表示使用 Hexo 生成的 Feed 链接。&lt;/p&gt;
-&lt;h3 id=&quot;访问量统计&quot;&gt;&lt;a href=&quot;#访问量统计&quot; class=&quot;headerlink&quot; title=&quot;访问量统计&quot;&gt;&lt;/a&gt;访问量统计&lt;/h3&gt;&lt;p&gt;编辑 主题配置文件 中的 busuanzi_count 的配置项。&lt;br&gt;当enable: true时，代表开启全局开关。若site_uv、site_pv、page_pv的值均为false时，不蒜子仅作记录而不会在页面上显示。&lt;/p&gt;
-&lt;h3 id=&quot;搜索服务&quot;&gt;&lt;a href=&quot;#搜索服务&quot; class=&quot;headerlink&quot; title=&quot;搜索服务&quot;&gt;&lt;/a&gt;搜索服务&lt;/h3&gt;&lt;p&gt;添加百度/谷歌/本地 自定义站点内容搜索&lt;/p&gt;
-&lt;p&gt;安装 hexo-generator-search，在站点的根目录下执行以下命令：&lt;/p&gt;
-&lt;pre&gt;$ npm install hexo-generator-search --save&lt;/pre&gt;
-
-&lt;p&gt;编辑 站点配置文件，新增以下内容到任意位置：&lt;/p&gt;
-&lt;pre&gt;
-search:
-  path: search.xml
-  field: post&lt;/pre&gt;
-
-
-&lt;h3 id=&quot;开启打赏功能&quot;&gt;&lt;a href=&quot;#开启打赏功能&quot; class=&quot;headerlink&quot; title=&quot;开启打赏功能&quot;&gt;&lt;/a&gt;开启打赏功能&lt;/h3&gt;&lt;p&gt;只需要在 主题配置文件 中填入 微信 和 支付宝 收款二维码图片地址 即可开启该功能。&lt;/p&gt;
-&lt;pre&gt;
-reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
-wechatpay: /path/to/wechat-reward-image
-alipay: /path/to/alipay-reward-image
-&lt;/pre&gt;
-
-&lt;h3 id=&quot;设置阅读全文&quot;&gt;&lt;a href=&quot;#设置阅读全文&quot; class=&quot;headerlink&quot; title=&quot;设置阅读全文&quot;&gt;&lt;/a&gt;设置阅读全文&lt;/h3&gt;&lt;p&gt;在首页显示一篇文章的部分内容，并提供一个链接跳转到全文页面是一个常见的需求。 NexT 提供三种方式来控制文章在首页的显示方式。 也就是说，在首页显示文章的摘录并显示 阅读全文 按钮，可以通过以下方法：&lt;/p&gt;
-&lt;p&gt;在文章中使用 &lt;!-- more --&gt; 手动进行截断，这是 Hexo 提供的方式，推荐使用。&lt;br&gt;在文章的 front-matter 中添加 description，并提供文章摘录&lt;br&gt;自动形成摘要，在 主题配置文件 中添加：&lt;/p&gt;
-&lt;pre&gt;
-auto_excerpt:
-  enable: true
-  length: 150&lt;/pre&gt;
-
-&lt;p&gt;默认截取的长度为 150 字符，可以根据需要自行设定&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;整理自 &lt;a href=&quot;http://theme-next.iissnan.com/getting-started.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;NexT 使用文档&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;终于搭建完自己的博客站点啦，好有成就感✌️分享一些本站使用的 NexT 主题配置技巧。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Configuration" scheme="http://yoursite.com/categories/Configuration/"/>
-    
-    
-      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
     
   </entry>
   

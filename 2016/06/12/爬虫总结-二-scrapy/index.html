@@ -1,0 +1,1008 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Crawler," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="把上一篇的实例用 scrapy 框架重新实现一遍。主要步骤就是新建项目 (Project) –&amp;gt; 定义目标（Items）–&amp;gt; 制作爬虫（Spider）–&amp;gt; 存储结果（Pipeline）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫总结(二)-- scrapy">
+<meta property="og:url" content="http://yoursite.com/2016/06/12/爬虫总结-二-scrapy/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="把上一篇的实例用 scrapy 框架重新实现一遍。主要步骤就是新建项目 (Project) –&amp;gt; 定义目标（Items）–&amp;gt; 制作爬虫（Spider）–&amp;gt; 存储结果（Pipeline）">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/crawler.png">
+<meta property="og:updated_time" content="2016-06-16T13:39:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫总结(二)-- scrapy">
+<meta name="twitter:description" content="把上一篇的实例用 scrapy 框架重新实现一遍。主要步骤就是新建项目 (Project) –&amp;gt; 定义目标（Items）–&amp;gt; 制作爬虫（Spider）–&amp;gt; 存储结果（Pipeline）">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/crawler.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6294135991397516000,
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/12/爬虫总结-二-scrapy/"/>
+
+  <title> 爬虫总结(二)-- scrapy | 徐阿衡 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                爬虫总结(二)-- scrapy
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-06-12T17:59:51+08:00" content="2016-06-12">
+              2016-06-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Programming-language/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming-language</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/12/爬虫总结-二-scrapy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/06/12/爬虫总结-二-scrapy/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>把上一篇的实例用 scrapy 框架重新实现一遍。主要步骤就是新建项目 (Project) –&gt; 定义目标（Items）–&gt; 制作爬虫（Spider）–&gt; 存储结果（Pipeline）<br><a id="more"></a></p>
+<h1 id="Scrapy-概述"><a href="#Scrapy-概述" class="headerlink" title="Scrapy 概述"></a>Scrapy 概述</h1><blockquote>
+<p>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。<br>其最初是为了页面抓取 (更确切来说, 网络抓取 )所设计的， 也可以应用在获取API所返回的数据(例如 Amazon Associates Web Services ) 或者通用的网络爬虫。Scrapy用途广泛，可以用于数据挖掘、监测和自动化测试</p>
+</blockquote>
+<h2 id="Scrapy-架构"><a href="#Scrapy-架构" class="headerlink" title="Scrapy 架构"></a>Scrapy 架构</h2><p>Scrapy 使用了 Twisted异步网络库来处理网络通讯。整体架构大致如下<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/crawler.png" alt=""></p>
+<h2 id="Scrapy-组件"><a href="#Scrapy-组件" class="headerlink" title="Scrapy 组件"></a>Scrapy 组件</h2><ul>
+<li>引擎(Scrapy): 用来处理整个系统的数据流处理, 触发事务(框架核心)</li>
+<li>调度器(Scheduler): 用来接受引擎发过来的请求, 压入队列中, 并在引擎再次请求的时候返回. 可以想像成一个URL（抓取网页的网址或者说是链接）的优先队列, 由它来决定下一个要抓取的网址是什么, 同时去除重复的网址</li>
+<li>下载器(Downloader): 用于下载网页内容, 并将网页内容返回给蜘蛛(Scrapy下载器是建立在twisted这个高效的异步模型上的)</li>
+<li>爬虫(Spiders): 爬虫是主要干活的, 用于从特定的网页中提取自己需要的信息, 即所谓的实体(Item)。用户也可以从中提取出链接,让Scrapy继续抓取下一个页面</li>
+<li>项目管道(Pipeline): 负责处理爬虫从网页中抽取的实体，主要的功能是持久化实体、验证实体的有效性、清除不需要的信息。当页面被爬虫解析后，将被发送到项目管道，并经过几个特定的次序处理数据。</li>
+<li>下载器中间件(Downloader Middlewares): 位于Scrapy引擎和下载器之间的框架，主要是处理Scrapy引擎与下载器之间的请求及响应。</li>
+<li>爬虫中间件(Spider Middlewares): 介于Scrapy引擎和爬虫之间的框架，主要工作是处理蜘蛛的响应输入和请求输出。</li>
+<li>调度中间件(Scheduler Middewares): 介于Scrapy引擎和调度之间的中间件，从Scrapy引擎发送到调度的请求和响应。</li>
+</ul>
+<h2 id="Scrapy-运行流程"><a href="#Scrapy-运行流程" class="headerlink" title="Scrapy 运行流程"></a>Scrapy 运行流程</h2><ol>
+<li>引擎从调度器中取出一个链接(URL)用于接下来的抓取</li>
+<li>引擎把URL封装成一个请求(Request)传给下载器，下载器把资源下载下来，并封装成应答包(Response)</li>
+<li>爬虫解析Response</li>
+<li>若是解析出实体（Item）,则交给实体管道进行进一步的处理;若是解析出的是链接（URL）,则把URL交给Scheduler等待抓取</li>
+</ol>
+<h1 id="Scrapy-实例"><a href="#Scrapy-实例" class="headerlink" title="Scrapy 实例"></a>Scrapy 实例</h1><h2 id="新建项目-Project"><a href="#新建项目-Project" class="headerlink" title="新建项目 (Project)"></a>新建项目 (Project)</h2><pre>
+scrapy startproject news_scrapy
+</pre>
+
+<p>输入以上命令之后，就会看见命令行运行的目录下多了一个名为 news_scrapy 的目录，目录的结构如下：</p>
+<pre>
+|---- news_scrapy
+| |---- news_scrapy
+|   |---- __init__.py
+|   |---- items.py        #用来存储爬下来的数据结构（字典形式）
+|    |---- pipelines.py    #用来对爬出来的item进行后续处理，如存入数据库等
+|    |---- settings.py    #爬虫配置文件
+|    |---- spiders        #此目录用来存放创建的新爬虫文件（爬虫主体）
+|     |---- __init__.py
+| |---- scrapy.cfg        #项目配置文件
+</pre>
+
+<h2 id="定义目标（Items）"><a href="#定义目标（Items）" class="headerlink" title="定义目标（Items）"></a>定义目标（Items）</h2><p>Items是装载抓取的数据的容器，工作方式像 python 里面的字典，但它提供更多的保护，比如对未定义的字段填充以防止拼写错误<br>通过创建scrapy.Item类, 并且定义类型为 scrapy.Field 的类属性来声明一个Item，通过将需要的item模型化，来控制站点数据。<br>编辑 items.py</p>
+<pre>
+# -*- coding: utf-8 -*-
+import scrapy
+class NewsScrapyItem(scrapy.Item):
+    # define the fields for your item here like:
+    category = scrapy.Field()
+    url = scrapy.Field()
+    secondary_title = scrapy.Field()
+    secondary_url = scrapy.Field()
+    #text = Field()
+</pre>
+
+
+<h2 id="制作爬虫（Spider）"><a href="#制作爬虫（Spider）" class="headerlink" title="制作爬虫（Spider）"></a>制作爬虫（Spider）</h2><p>Spider 定义了用于下载的URL列表、跟踪链接的方案、解析网页内容的方式，以此来提取items。<br>要建立一个Spider，你必须用scrapy.spider.BaseSpider创建一个子类，并确定三个强制的属性：</p>
+<ul>
+<li>name：爬虫的识别名称，必须是唯一的，在不同的爬虫中你必须定义不同的名字。</li>
+<li>start_urls：爬取的URL列表。爬虫从这里开始抓取数据，所以，第一次下载的数据将会从这些urls开始。其他子URL将会从这些起始URL中继承性生成。</li>
+<li>parse()：解析的方法，调用的时候传入从每一个URL传回的Response对象作为唯一参数，负责解析并匹配抓取的数据(解析为item)，跟踪更多的URL。</li>
+</ul>
+<p>在 spiders 目录下新建Wynews.py，代码如下。利用 yield Request(url=item[‘url’],meta={‘item_1’: item},callback=self.second_parse) 来进行第二层爬取。</p>
+<pre>
+class WynewsSpider(BaseSpider):
+    name = "Wynews"
+    start_urls = ['http://news.163.com/rank/']
+
+    def parse(self,response):
+        html = HtmlXPathSelector(response)
+        page = html.xpath('//div[@class="subNav"]/a')
+        for i in page:
+            item = dict()
+            item['category'] = i.xpath('text()').extract_first()
+            item['url'] = i.xpath('@href').extract_first()
+            print item['category'],item['url']
+            yield Request(url=item['url'],meta={'item_1': item},callback=self.second_parse)
+
+    def second_parse(self,response):
+        item_1= response.meta['item_1']
+        html = HtmlXPathSelector(response)
+        #print 'response ',response
+        page = html.xpath('//tr/td/a')
+        #print 'page ',page
+        items = []
+        for i in page:
+            item = DidiScrapyItem()
+            item['category'] = item_1['category'].encode('utf8')
+            item['url'] = item_1['url'].encode('utf8')
+            item['secondary_title'] = i.xpath('text()').extract_first().encode('utf8')
+            item['secondary_url'] = i.xpath('@href').extract_first().encode('utf8')
+            #print i.xpath('text()').extract(),i.xpath('@href').extract()
+            items.append(item)
+        return items
+</pre>
+
+<h2 id="存储结果（Pipeline）"><a href="#存储结果（Pipeline）" class="headerlink" title="存储结果（Pipeline）"></a>存储结果（Pipeline）</h2><p>Item pipeline 的主要责任是负责处理 spider 抽取的 Item，主要任务是清理、验证和存储数据。当页面被 spider 解析后，将被发送到 pipeline，每个 pipeline 的组件都是由一个简单的方法组成的Python类。pipeline 获取Item，执行相应的方法，并确定是否需要在 pipeline中继续执行下一步或是直接丢弃掉不处理。</p>
+<h3 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h3><ul>
+<li>清理HTML数据</li>
+<li>验证解析到的数据（检查Item是否包含必要的字段）</li>
+<li>检查是否是重复数据（如果重复就删除）</li>
+<li>将解析到的数据存储到 数据库/文件 中</li>
+</ul>
+<h3 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h3><ul>
+<li><p>process_item(item, spider)<br>每一个item管道组件都会调用该方法，并且必须返回一个item对象实例或raise DropItem异常。<br>被丢掉的item将不会在管道组件进行执行</p>
+</li>
+<li><p>open_spider(spider)<br>当spider执行的时候将调用该方法</p>
+</li>
+<li><p>close_spider(spider)<br>当spider关闭的时候将调用该方法</p>
+</li>
+</ul>
+<h3 id="编写自己的-Pipeline"><a href="#编写自己的-Pipeline" class="headerlink" title="编写自己的 Pipeline"></a>编写自己的 Pipeline</h3><p>编辑 pipelines.py。把抓取的 items 保存到 json 文件中。</p>
+<pre>
+import json
+class NewsScrapyPipeline(object):
+    def __init__(self):
+        self.file = open('items.json', 'w')
+    def process_item(self, item, spider):
+        line = json.dumps(dict(item),ensure_ascii=False) + "\n"
+        self.file.write(line)
+        return item
+</pre>
+
+<h3 id="激活Item-Pipeline组件"><a href="#激活Item-Pipeline组件" class="headerlink" title="激活Item Pipeline组件"></a>激活Item Pipeline组件</h3><p>在settings.py文件中，往ITEM_PIPELINES中添加项目管道的类名，激活项目管道组件</p>
+<pre>
+ITEM_PIPELINES = {
+    'news_scrapy.pipelines.NewsScrapyPipeline': 300,
+}
+</pre>
+
+<h2 id="开启爬虫-Crawl"><a href="#开启爬虫-Crawl" class="headerlink" title="开启爬虫 (Crawl)"></a>开启爬虫 (Crawl)</h2><pre>scrapy crawl Wynews</pre>
+
+<h2 id="可能出现的问题-Problem"><a href="#可能出现的问题-Problem" class="headerlink" title="可能出现的问题 (Problem)"></a>可能出现的问题 (Problem)</h2><p>打开 items.json 文件，中文可能会出现文件乱码问题</p>
+<pre>
+[{"category": "\u93c2\u4f34\u6908", "url": "http://news.163.com/special/0001386F/rank_news.html", "secondary_title": "\u934b\u950b\u9422\u5cf0\u30b3\u95c3\u8e6d\u7b09\u9473\u6ec8\u69fb\u951b\u5c7e\u5d0f\u6fc2\u7a3f\u5dfb\u9359\u53c9\u7c2e\u6769\u6ec4\u7966\u95c0", "secondary_url": "http://caozhi.news.163.com/16/0615/09/BPJG6SB60001544E.html"},
+</pre>
+
+<p>这一行代码就能解决。</p>
+<pre>
+line = json.dumps(dict(item),ensure_ascii=False) + "\n"
+</pre>
+
+<p>结果</p>
+<pre>
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "A股闯关MSCI再度失败 索罗斯们押注对冲胜出", "secondary_url": "http://money.163.com/16/0615/06/BPJ4T69300253B0H.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "湖北副省长担心房价下跌：泡沫若破裂后果很严重", "secondary_url": "http://money.163.com/16/0615/08/BPJBM36U00252G50.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "马云:假货质量超过正品 打假很复杂", "secondary_url": "http://money.163.com/16/0615/08/BPJAIOVI00253G87.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "A股闯关未成功 纳入MSCI新兴市场指数被延迟", "secondary_url": "http://money.163.com/16/0615/07/BPJ7260D00252G50.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "马云称许多假货比真品好 网友:怪不得淘宝假货多", "secondary_url": "http://money.163.com/16/0615/08/BPJC437N002526O3.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "贪官示意家人低价买地 拆迁后获赔近亿元", "secondary_url": "http://money.163.com/16/0615/08/BPJAT58400252G50.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "又是毒胶囊:浙江查获1亿多粒毒胶囊 6人被捕", "secondary_url": "http://money.163.com/16/0615/07/BPJ8NMRG00253B0H.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "还不起了？委内瑞拉寻求宽限1年偿还中国贷款", "secondary_url": "http://money.163.com/16/0615/07/BPJ9IH3400252C1E.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "A股频现清仓式减持 上半年十大减持王曝光", "secondary_url": "http://money.163.com/16/0615/07/BPJ7Q9BC00254IU4.html"}
+{"category": "汽车", "url": "http://news.163.com/special/0001386F/rank_auto.html", "secondary_title": "《装X购车指南》 30-50万都能买到啥车？", "secondary_url": "http://auto.163.com/16/0615/07/BPJ6U1J900084TUP.html"}
+{"category": "汽车", "url": "http://news.163.com/special/0001386F/rank_auto.html", "secondary_title": "看挡杆还以为是A8L 新款哈弗H9内饰曝光", "secondary_url": "http://auto.163.com/16/0615/00/BPIGTP4B00084TUO.html"}
+{"category": "汽车", "url": "http://news.163.com/special/0001386F/rank_auto.html", "secondary_title": "前脸/尾灯有变 新款捷达搭1.5L油耗更低", "secondary_url": "http://auto.163.com/16/0615/00/BPIGMEHE00084TUO.html"}
+{"category": "汽车", "url": "http://news.163.com/special/0001386F/rank_auto.html", "secondary_title": "主打车型不超10万良心价 远景SUV将8月上市", "secondary_url": "http://auto.163.com/16/0615/00/BPIHR2A500084TUO.html"}
+{"category": "汽车", "url": "http://news.163.com/special/0001386F/rank_auto.html", "secondary_title": "Macan并不是我真姓 众泰SR8搭2.0T/D", "secondary_url": "http://auto.163.com/16/0613/00/BPDBPB0J00084TUO.html"}
+{"category": "汽车", "url": "http://news.163.com/special/0001386F/rank_auto.html", "secondary_title": "上海福特翼搏优惠1.5万元", "secondary_url": "http://auto.163.com/16/0615/00/BPIHH8FF000857M6.html"}
+</pre>
+
+<p><a href="https://github.com/Shuang0420/Crawler/tree/master/news_scrapy" target="_blank" rel="external">完整代码</a></p>
+<blockquote>
+<p><a href="http://blog.csdn.net/php_fly/article/details/19571121" target="_blank" rel="external">http://blog.csdn.net/php_fly/article/details/19571121</a><br><a href="http://www.jianshu.com/p/078ad2067419" target="_blank" rel="external">http://www.jianshu.com/p/078ad2067419</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Crawler/" rel="tag">#Crawler</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/11/爬虫总结（一）/" rel="next" title="爬虫总结（一）">
+                <i class="fa fa-chevron-left"></i> 爬虫总结（一）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/15/讲座笔记 -- 腾讯应用宝/" rel="prev" title="讲座笔记 -- 腾讯应用宝">
+                讲座笔记 -- 腾讯应用宝 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">宿命星动</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Scrapy-概述"><span class="nav-number">1.</span> <span class="nav-text">Scrapy 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scrapy-架构"><span class="nav-number">1.1.</span> <span class="nav-text">Scrapy 架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scrapy-组件"><span class="nav-number">1.2.</span> <span class="nav-text">Scrapy 组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scrapy-运行流程"><span class="nav-number">1.3.</span> <span class="nav-text">Scrapy 运行流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Scrapy-实例"><span class="nav-number">2.</span> <span class="nav-text">Scrapy 实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#新建项目-Project"><span class="nav-number">2.1.</span> <span class="nav-text">新建项目 (Project)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义目标（Items）"><span class="nav-number">2.2.</span> <span class="nav-text">定义目标（Items）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制作爬虫（Spider）"><span class="nav-number">2.3.</span> <span class="nav-text">制作爬虫（Spider）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储结果（Pipeline）"><span class="nav-number">2.4.</span> <span class="nav-text">存储结果（Pipeline）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#执行过程"><span class="nav-number">2.4.1.</span> <span class="nav-text">执行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要方法"><span class="nav-number">2.4.2.</span> <span class="nav-text">主要方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写自己的-Pipeline"><span class="nav-number">2.4.3.</span> <span class="nav-text">编写自己的 Pipeline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#激活Item-Pipeline组件"><span class="nav-number">2.4.4.</span> <span class="nav-text">激活Item Pipeline组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启爬虫-Crawl"><span class="nav-number">2.5.</span> <span class="nav-text">开启爬虫 (Crawl)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可能出现的问题-Problem"><span class="nav-number">2.6.</span> <span class="nav-text">可能出现的问题 (Problem)</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/06/12/爬虫总结-二-scrapy/';
+      var disqus_title = "爬虫总结(二)-- scrapy";
+      var disqus_url = 'http://yoursite.com/2016/06/12/爬虫总结-二-scrapy/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

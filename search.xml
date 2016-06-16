@@ -4,10 +4,247 @@
   
     
     <entry>
+      <title><![CDATA[讲座笔记 -- 腾讯应用宝]]></title>
+      <url>http://yoursite.com/2016/06/15/%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0%20--%20%E8%85%BE%E8%AE%AF%E5%BA%94%E7%94%A8%E5%AE%9D/</url>
+      <content type="html"><![CDATA[<p>［待整理］<br><a id="more"></a></p>
+<h1 id="应用宝-–-腾讯的安卓应用市场"><a href="#应用宝-–-腾讯的安卓应用市场" class="headerlink" title="应用宝 – 腾讯的安卓应用市场"></a>应用宝 – 腾讯的安卓应用市场</h1><p>用户下载转化率 下载/搜索</p>
+<ul>
+<li>搜索是重要入口（新应用的分发）</li>
+<li>app 快速的增长 一年增长几百万</li>
+<li>二八原则 长尾大 0.1%的应用 80%的分发</li>
+</ul>
+<h2 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h2><p>dowloads/QV/UV<br>CTR/ROP</p>
+<h2 id="语义计算策略"><a href="#语义计算策略" class="headerlink" title="语义计算策略"></a>语义计算策略</h2><h3 id="数据特征"><a href="#数据特征" class="headerlink" title="数据特征"></a>数据特征</h3><ul>
+<li>数据量少 审核通过应用数量 数十万</li>
+<li>文本信息少 附带文本信息少（能建索引的量少）–&gt; 泛化</li>
+</ul>
+<p>应对策略 搜索＋推荐<br>描述语义 词、主题、标签</p>
+<p>query –&gt; term; topic; tag –&gt; app</p>
+<h3 id="数据补充"><a href="#数据补充" class="headerlink" title="数据补充"></a>数据补充</h3><p>爬取全网资源</p>
+<ul>
+<li>游戏站点、用户评价</li>
+<li>知识库：百度百科、百度知道</li>
+<li>其他应用商店</li>
+<li>搜索引擎 解析</li>
+<li>应用宝用户行为</li>
+</ul>
+<p>噪音大 – 机器学习的方法过滤<br>页面抓取 –&gt; 内容抓取 –&gt; 知识挖掘 –&gt; 标签 句法模板 标签集合 标签关联 –&gt; 标签关联净化 – &gt; 标签索引</p>
+<h3 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h3><p>用户行为指导排序</p>
+<ul>
+<li>点击下载因子（权重大） 增强鲁棒性</li>
+<li>entropy因子。用户query的集中程度，entropy，点击散，entropy高，区分精准query和模糊query</li>
+</ul>
+<h3 id="主题模型"><a href="#主题模型" class="headerlink" title="主题模型"></a>主题模型</h3><p>LDA 聚类，对 topic 进行人工标注，把 app 映射到 topic<br>（lda 业界用法比较多。最大特点：大量语料。语料少效果不好）补充大量文本数据？？？？？？？？？？？？？？？？？？</p>
+<h3 id="标签挖掘"><a href="#标签挖掘" class="headerlink" title="标签挖掘"></a>标签挖掘</h3><p>元搜方式挖掘 tag（传统搜索引擎） 搜app<br>根据用户行为、画像挖掘 tag  对用户进行分群 地区／年龄／职业／性别 生成代表用户属性的标签 给app</p>
+<h3 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h3><p>机器学习模型计算 confidence level<br>human editor ; web data; qa (lda) user group tags<br>–&gt;<br>GBDT model</p>
+<h3 id="app-语义画像"><a href="#app-语义画像" class="headerlink" title="app 语义画像"></a>app 语义画像</h3><p>语义描述体系<br>分多个维度</p>
+<h3 id="机器学习（LTR）"><a href="#机器学习（LTR）" class="headerlink" title="机器学习（LTR）"></a>机器学习（LTR）</h3><p>挑战：多来源检索结果不可比（类别／tag）<br>利器：lambdaMART 排序模型（GBRT的变种）</p>
+<p>–&gt; CTR 提升6%</p>
+<h2 id="第三部分-应用宝搜索商业化"><a href="#第三部分-应用宝搜索商业化" class="headerlink" title="第三部分 应用宝搜索商业化"></a>第三部分 应用宝搜索商业化</h2><p>推荐相关</p>
+<h3 id="分发升级"><a href="#分发升级" class="headerlink" title="分发升级"></a>分发升级</h3><p>应用＋<br>应用分发 –&gt; 内容服务分发</p>
+<p>意图识别优化：什么时候出应用，什么时候出音乐，热度<br>多来源混排：机器学习＋运营系统优化异构排序，促进分发效率（应用、音乐等怎么混排）<br>多场景引导：在热词、直达区（搜索补充呈现）、联想词等场景引导用户，培养内容搜索习惯</p>
+<h3 id="应用搜索广告"><a href="#应用搜索广告" class="headerlink" title="应用搜索广告"></a>应用搜索广告</h3><p>技术核心</p>
+<ul>
+<li><p>app 画像<br>基于标签、主题、类别的 app 细粒度商业词</p>
+</li>
+<li><p>动态混排<br>根据 query 动态选择广告槽位</p>
+</li>
+</ul>
+<p>利用相似应用打tag（confidence level –&gt; filter）</p>
+<h1 id="机器学习的本质"><a href="#机器学习的本质" class="headerlink" title="机器学习的本质"></a>机器学习的本质</h1><p>已知数据 先验知识（专家系统） 未知数据的特征 求未知数据的优化分布<br>通用技术难点：空间搜索 函数泛化</p>
+<p>实际工作：</p>
+<ul>
+<li>模型10% 其他90%</li>
+<li>数据从哪来</li>
+<li>特征如何抽取</li>
+<li>领域先验知识</li>
+</ul>
+<p>大量噪音？维数灾难？<br>琐碎的工作很重要</p>
+<p>正则化(L1？ L2？) 剪枝</p>
+<h1 id="大公司-vs-小公司"><a href="#大公司-vs-小公司" class="headerlink" title="大公司 vs 小公司"></a>大公司 vs 小公司</h1><p>搜索 推荐 广告<br>和牛人接触<br>流程化 冗余 很多团队想做一件事</p>
+<h3 id="小公司"><a href="#小公司" class="headerlink" title="小公司"></a>小公司</h3><ul>
+<li><p>方向更对<br>不被商业价值束缚 不被同伴利益束缚 不被自己经验束缚</p>
+</li>
+<li><p>跑的更快<br>不被用户束缚 不被流程束缚 不被一般道德束缚</p>
+</li>
+</ul>
+<h3 id="复利效应"><a href="#复利效应" class="headerlink" title="复利效应"></a>复利效应</h3><p>百度 搜索<br>搜搜<br>在一个点上积累积累积累 –&gt; 复利效应 –&gt; 无法超越<br>算法 数学专家 我们做应用方面的复利效应</p>
+<p>应用宝 去噪 做了一年</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[爬虫总结(二)-- scrapy]]></title>
+      <url>http://yoursite.com/2016/06/12/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93-%E4%BA%8C-scrapy/</url>
+      <content type="html"><![CDATA[<p>把上一篇的实例用 scrapy 框架重新实现一遍。主要步骤就是新建项目 (Project) –&gt; 定义目标（Items）–&gt; 制作爬虫（Spider）–&gt; 存储结果（Pipeline）<br><a id="more"></a></p>
+<h1 id="Scrapy-概述"><a href="#Scrapy-概述" class="headerlink" title="Scrapy 概述"></a>Scrapy 概述</h1><blockquote>
+<p>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。<br>其最初是为了页面抓取 (更确切来说, 网络抓取 )所设计的， 也可以应用在获取API所返回的数据(例如 Amazon Associates Web Services ) 或者通用的网络爬虫。Scrapy用途广泛，可以用于数据挖掘、监测和自动化测试</p>
+</blockquote>
+<h2 id="Scrapy-架构"><a href="#Scrapy-架构" class="headerlink" title="Scrapy 架构"></a>Scrapy 架构</h2><p>Scrapy 使用了 Twisted异步网络库来处理网络通讯。整体架构大致如下<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/crawler.png" alt=""></p>
+<h2 id="Scrapy-组件"><a href="#Scrapy-组件" class="headerlink" title="Scrapy 组件"></a>Scrapy 组件</h2><ul>
+<li>引擎(Scrapy): 用来处理整个系统的数据流处理, 触发事务(框架核心)</li>
+<li>调度器(Scheduler): 用来接受引擎发过来的请求, 压入队列中, 并在引擎再次请求的时候返回. 可以想像成一个URL（抓取网页的网址或者说是链接）的优先队列, 由它来决定下一个要抓取的网址是什么, 同时去除重复的网址</li>
+<li>下载器(Downloader): 用于下载网页内容, 并将网页内容返回给蜘蛛(Scrapy下载器是建立在twisted这个高效的异步模型上的)</li>
+<li>爬虫(Spiders): 爬虫是主要干活的, 用于从特定的网页中提取自己需要的信息, 即所谓的实体(Item)。用户也可以从中提取出链接,让Scrapy继续抓取下一个页面</li>
+<li>项目管道(Pipeline): 负责处理爬虫从网页中抽取的实体，主要的功能是持久化实体、验证实体的有效性、清除不需要的信息。当页面被爬虫解析后，将被发送到项目管道，并经过几个特定的次序处理数据。</li>
+<li>下载器中间件(Downloader Middlewares): 位于Scrapy引擎和下载器之间的框架，主要是处理Scrapy引擎与下载器之间的请求及响应。</li>
+<li>爬虫中间件(Spider Middlewares): 介于Scrapy引擎和爬虫之间的框架，主要工作是处理蜘蛛的响应输入和请求输出。</li>
+<li>调度中间件(Scheduler Middewares): 介于Scrapy引擎和调度之间的中间件，从Scrapy引擎发送到调度的请求和响应。</li>
+</ul>
+<h2 id="Scrapy-运行流程"><a href="#Scrapy-运行流程" class="headerlink" title="Scrapy 运行流程"></a>Scrapy 运行流程</h2><ol>
+<li>引擎从调度器中取出一个链接(URL)用于接下来的抓取</li>
+<li>引擎把URL封装成一个请求(Request)传给下载器，下载器把资源下载下来，并封装成应答包(Response)</li>
+<li>爬虫解析Response</li>
+<li>若是解析出实体（Item）,则交给实体管道进行进一步的处理;若是解析出的是链接（URL）,则把URL交给Scheduler等待抓取</li>
+</ol>
+<h1 id="Scrapy-实例"><a href="#Scrapy-实例" class="headerlink" title="Scrapy 实例"></a>Scrapy 实例</h1><h2 id="新建项目-Project"><a href="#新建项目-Project" class="headerlink" title="新建项目 (Project)"></a>新建项目 (Project)</h2><pre>
+scrapy startproject news_scrapy
+</pre>
+
+<p>输入以上命令之后，就会看见命令行运行的目录下多了一个名为 news_scrapy 的目录，目录的结构如下：</p>
+<pre>
+|---- news_scrapy
+| |---- news_scrapy
+|   |---- __init__.py
+|   |---- items.py        #用来存储爬下来的数据结构（字典形式）
+|    |---- pipelines.py    #用来对爬出来的item进行后续处理，如存入数据库等
+|    |---- settings.py    #爬虫配置文件
+|    |---- spiders        #此目录用来存放创建的新爬虫文件（爬虫主体）
+|     |---- __init__.py
+| |---- scrapy.cfg        #项目配置文件
+</pre>
+
+<h2 id="定义目标（Items）"><a href="#定义目标（Items）" class="headerlink" title="定义目标（Items）"></a>定义目标（Items）</h2><p>Items是装载抓取的数据的容器，工作方式像 python 里面的字典，但它提供更多的保护，比如对未定义的字段填充以防止拼写错误<br>通过创建scrapy.Item类, 并且定义类型为 scrapy.Field 的类属性来声明一个Item，通过将需要的item模型化，来控制站点数据。<br>编辑 items.py</p>
+<pre>
+# -*- coding: utf-8 -*-
+import scrapy
+class NewsScrapyItem(scrapy.Item):
+    # define the fields for your item here like:
+    category = scrapy.Field()
+    url = scrapy.Field()
+    secondary_title = scrapy.Field()
+    secondary_url = scrapy.Field()
+    #text = Field()
+</pre>
+
+
+<h2 id="制作爬虫（Spider）"><a href="#制作爬虫（Spider）" class="headerlink" title="制作爬虫（Spider）"></a>制作爬虫（Spider）</h2><p>Spider 定义了用于下载的URL列表、跟踪链接的方案、解析网页内容的方式，以此来提取items。<br>要建立一个Spider，你必须用scrapy.spider.BaseSpider创建一个子类，并确定三个强制的属性：</p>
+<ul>
+<li>name：爬虫的识别名称，必须是唯一的，在不同的爬虫中你必须定义不同的名字。</li>
+<li>start_urls：爬取的URL列表。爬虫从这里开始抓取数据，所以，第一次下载的数据将会从这些urls开始。其他子URL将会从这些起始URL中继承性生成。</li>
+<li>parse()：解析的方法，调用的时候传入从每一个URL传回的Response对象作为唯一参数，负责解析并匹配抓取的数据(解析为item)，跟踪更多的URL。</li>
+</ul>
+<p>在 spiders 目录下新建Wynews.py，代码如下。利用 yield Request(url=item[‘url’],meta={‘item_1’: item},callback=self.second_parse) 来进行第二层爬取。</p>
+<pre>
+class WynewsSpider(BaseSpider):
+    name = "Wynews"
+    start_urls = ['http://news.163.com/rank/']
+
+    def parse(self,response):
+        html = HtmlXPathSelector(response)
+        page = html.xpath('//div[@class="subNav"]/a')
+        for i in page:
+            item = dict()
+            item['category'] = i.xpath('text()').extract_first()
+            item['url'] = i.xpath('@href').extract_first()
+            print item['category'],item['url']
+            yield Request(url=item['url'],meta={'item_1': item},callback=self.second_parse)
+
+    def second_parse(self,response):
+        item_1= response.meta['item_1']
+        html = HtmlXPathSelector(response)
+        #print 'response ',response
+        page = html.xpath('//tr/td/a')
+        #print 'page ',page
+        items = []
+        for i in page:
+            item = DidiScrapyItem()
+            item['category'] = item_1['category'].encode('utf8')
+            item['url'] = item_1['url'].encode('utf8')
+            item['secondary_title'] = i.xpath('text()').extract_first().encode('utf8')
+            item['secondary_url'] = i.xpath('@href').extract_first().encode('utf8')
+            #print i.xpath('text()').extract(),i.xpath('@href').extract()
+            items.append(item)
+        return items
+</pre>
+
+<h2 id="存储结果（Pipeline）"><a href="#存储结果（Pipeline）" class="headerlink" title="存储结果（Pipeline）"></a>存储结果（Pipeline）</h2><p>Item pipeline 的主要责任是负责处理 spider 抽取的 Item，主要任务是清理、验证和存储数据。当页面被 spider 解析后，将被发送到 pipeline，每个 pipeline 的组件都是由一个简单的方法组成的Python类。pipeline 获取Item，执行相应的方法，并确定是否需要在 pipeline中继续执行下一步或是直接丢弃掉不处理。</p>
+<h3 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h3><ul>
+<li>清理HTML数据</li>
+<li>验证解析到的数据（检查Item是否包含必要的字段）</li>
+<li>检查是否是重复数据（如果重复就删除）</li>
+<li>将解析到的数据存储到 数据库/文件 中</li>
+</ul>
+<h3 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h3><ul>
+<li><p>process_item(item, spider)<br>每一个item管道组件都会调用该方法，并且必须返回一个item对象实例或raise DropItem异常。<br>被丢掉的item将不会在管道组件进行执行</p>
+</li>
+<li><p>open_spider(spider)<br>当spider执行的时候将调用该方法</p>
+</li>
+<li><p>close_spider(spider)<br>当spider关闭的时候将调用该方法</p>
+</li>
+</ul>
+<h3 id="编写自己的-Pipeline"><a href="#编写自己的-Pipeline" class="headerlink" title="编写自己的 Pipeline"></a>编写自己的 Pipeline</h3><p>编辑 pipelines.py。把抓取的 items 保存到 json 文件中。</p>
+<pre>
+import json
+class NewsScrapyPipeline(object):
+    def __init__(self):
+        self.file = open('items.json', 'w')
+    def process_item(self, item, spider):
+        line = json.dumps(dict(item),ensure_ascii=False) + "\n"
+        self.file.write(line)
+        return item
+</pre>
+
+<h3 id="激活Item-Pipeline组件"><a href="#激活Item-Pipeline组件" class="headerlink" title="激活Item Pipeline组件"></a>激活Item Pipeline组件</h3><p>在settings.py文件中，往ITEM_PIPELINES中添加项目管道的类名，激活项目管道组件</p>
+<pre>
+ITEM_PIPELINES = {
+    'news_scrapy.pipelines.NewsScrapyPipeline': 300,
+}
+</pre>
+
+<h2 id="开启爬虫-Crawl"><a href="#开启爬虫-Crawl" class="headerlink" title="开启爬虫 (Crawl)"></a>开启爬虫 (Crawl)</h2><pre>scrapy crawl Wynews</pre>
+
+<h2 id="可能出现的问题-Problem"><a href="#可能出现的问题-Problem" class="headerlink" title="可能出现的问题 (Problem)"></a>可能出现的问题 (Problem)</h2><p>打开 items.json 文件，中文可能会出现文件乱码问题</p>
+<pre>
+[{"category": "\u93c2\u4f34\u6908", "url": "http://news.163.com/special/0001386F/rank_news.html", "secondary_title": "\u934b\u950b\u9422\u5cf0\u30b3\u95c3\u8e6d\u7b09\u9473\u6ec8\u69fb\u951b\u5c7e\u5d0f\u6fc2\u7a3f\u5dfb\u9359\u53c9\u7c2e\u6769\u6ec4\u7966\u95c0", "secondary_url": "http://caozhi.news.163.com/16/0615/09/BPJG6SB60001544E.html"},
+</pre>
+
+<p>这一行代码就能解决。</p>
+<pre>
+line = json.dumps(dict(item),ensure_ascii=False) + "\n"
+</pre>
+
+<p>结果</p>
+<pre>
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "A股闯关MSCI再度失败 索罗斯们押注对冲胜出", "secondary_url": "http://money.163.com/16/0615/06/BPJ4T69300253B0H.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "湖北副省长担心房价下跌：泡沫若破裂后果很严重", "secondary_url": "http://money.163.com/16/0615/08/BPJBM36U00252G50.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "马云:假货质量超过正品 打假很复杂", "secondary_url": "http://money.163.com/16/0615/08/BPJAIOVI00253G87.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "A股闯关未成功 纳入MSCI新兴市场指数被延迟", "secondary_url": "http://money.163.com/16/0615/07/BPJ7260D00252G50.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "马云称许多假货比真品好 网友:怪不得淘宝假货多", "secondary_url": "http://money.163.com/16/0615/08/BPJC437N002526O3.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "贪官示意家人低价买地 拆迁后获赔近亿元", "secondary_url": "http://money.163.com/16/0615/08/BPJAT58400252G50.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "又是毒胶囊:浙江查获1亿多粒毒胶囊 6人被捕", "secondary_url": "http://money.163.com/16/0615/07/BPJ8NMRG00253B0H.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "还不起了？委内瑞拉寻求宽限1年偿还中国贷款", "secondary_url": "http://money.163.com/16/0615/07/BPJ9IH3400252C1E.html"}
+{"category": "财经", "url": "http://money.163.com/special/002526BH/rank.html", "secondary_title": "A股频现清仓式减持 上半年十大减持王曝光", "secondary_url": "http://money.163.com/16/0615/07/BPJ7Q9BC00254IU4.html"}
+{"category": "汽车", "url": "http://news.163.com/special/0001386F/rank_auto.html", "secondary_title": "《装X购车指南》 30-50万都能买到啥车？", "secondary_url": "http://auto.163.com/16/0615/07/BPJ6U1J900084TUP.html"}
+{"category": "汽车", "url": "http://news.163.com/special/0001386F/rank_auto.html", "secondary_title": "看挡杆还以为是A8L 新款哈弗H9内饰曝光", "secondary_url": "http://auto.163.com/16/0615/00/BPIGTP4B00084TUO.html"}
+{"category": "汽车", "url": "http://news.163.com/special/0001386F/rank_auto.html", "secondary_title": "前脸/尾灯有变 新款捷达搭1.5L油耗更低", "secondary_url": "http://auto.163.com/16/0615/00/BPIGMEHE00084TUO.html"}
+{"category": "汽车", "url": "http://news.163.com/special/0001386F/rank_auto.html", "secondary_title": "主打车型不超10万良心价 远景SUV将8月上市", "secondary_url": "http://auto.163.com/16/0615/00/BPIHR2A500084TUO.html"}
+{"category": "汽车", "url": "http://news.163.com/special/0001386F/rank_auto.html", "secondary_title": "Macan并不是我真姓 众泰SR8搭2.0T/D", "secondary_url": "http://auto.163.com/16/0613/00/BPDBPB0J00084TUO.html"}
+{"category": "汽车", "url": "http://news.163.com/special/0001386F/rank_auto.html", "secondary_title": "上海福特翼搏优惠1.5万元", "secondary_url": "http://auto.163.com/16/0615/00/BPIHH8FF000857M6.html"}
+</pre>
+
+<p><a href="https://github.com/Shuang0420/Crawler/tree/master/news_scrapy" target="_blank" rel="external">完整代码</a></p>
+<blockquote>
+<p><a href="http://blog.csdn.net/php_fly/article/details/19571121" target="_blank" rel="external">http://blog.csdn.net/php_fly/article/details/19571121</a><br><a href="http://www.jianshu.com/p/078ad2067419" target="_blank" rel="external">http://www.jianshu.com/p/078ad2067419</a></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[爬虫总结（一）]]></title>
       <url>http://yoursite.com/2016/06/11/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/</url>
       <content type="html"><![CDATA[<p>爬虫在平时也经常用，但一直没有系统的总结过，其实它涉及了许多的知识点。这一系列会理一遍这些知识点，不求详尽，只希望以点带面构建一个爬虫的知识框架。这一篇是概念性解释以及入门级爬虫介绍（以爬取网易新闻为例）。<br><a id="more"></a></p>
-<h1 id="爬虫基础"><a href="#爬虫基础" class="headerlink" title="爬虫基础"></a>爬虫基础</h1><h2 id="什么是爬虫"><a href="#什么是爬虫" class="headerlink" title="什么是爬虫"></a>什么是爬虫</h2><p>爬虫说白了其实就是获取资源的程序</p>
+<h1 id="爬虫基础"><a href="#爬虫基础" class="headerlink" title="爬虫基础"></a>爬虫基础</h1><h2 id="什么是爬虫"><a href="#什么是爬虫" class="headerlink" title="什么是爬虫"></a>什么是爬虫</h2><p>爬虫说白了其实就是获取资源的程序。制作爬虫的总体分三步：爬－取－存。首先要获取整个网页的所有内容，然后再取出其中对你有用的部分，最后再保存🏊的部分。</p>
 <h2 id="爬虫类型"><a href="#爬虫类型" class="headerlink" title="爬虫类型"></a>爬虫类型</h2><ul>
 <li>网络爬虫<br>网络爬虫，是一种按照一定的规则，<strong>自动的</strong> 抓取万维网信息的程序或者脚本。网络爬虫是搜索引擎系统中十分重要的组成部分，爬取的网页信息用于建立索引从而为搜索引擎提供支持，它决定着整个引擎系统的内容是否丰富，信息是否即时，其性能的优劣直接影响着搜索引擎的效果。</li>
 <li>传统爬虫<br>从一个或若干初始网页的URL开始，获得初始网页的URL，在抓取网页过程中，不断从当前页面上抽取新的URL放入队列，直到满足系统的一定停止条件。</li>
@@ -27,7 +264,9 @@
 <li>主机上的资源位置</li>
 <li>例子：<a href="http://www.example.com/index.html" target="_blank" rel="external">http://www.example.com/index.html</a></li>
 </ul>
-<h2 id="Web-Server／Socket如何建立连接和传输数据的"><a href="#Web-Server／Socket如何建立连接和传输数据的" class="headerlink" title="Web Server／Socket如何建立连接和传输数据的"></a>Web Server／Socket如何建立连接和传输数据的</h2><p>web server 的工作过程其实和打电话的过程差不多（买电话–&gt;注册号码–&gt;监听–&gt;排队接听–&gt;读写–&gt;关闭），经典的三步握手（有人在吗？我在呢，你呢？我也在）在排队接听时进行。下面一张图足以解释一切。<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/webserver.png" alt=""></p>
+<h2 id="Web-Server／Socket如何建立连接和传输数据的"><a href="#Web-Server／Socket如何建立连接和传输数据的" class="headerlink" title="Web Server／Socket如何建立连接和传输数据的"></a>Web Server／Socket如何建立连接和传输数据的</h2><p>web server 的工作过程其实和打电话的过程差不多（买电话–&gt;注册号码–&gt;监听–&gt;排队接听–&gt;读写–&gt;关闭），经典的三步握手（有人在吗？我在呢，你呢？我也在）在排队接听时进行。下面一张图足以解释一切。</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/webserver.png" alt=""></p>
+<p>Crawler端需要一个socket接口，向服务器端发起connect请求，完成连接后就可以和服务器交流了，操作完毕会关闭socket接口。服务器端更复杂一点，也需要一个socket接口，并且这个socket接口需要绑定一个地址（bind()），这就相当于有一个固定的电话号码，这样其他人拨打这个号码就可以找到这个服务器。绑定之后服务器的socket就开始监听（listen()）有没有用户请求，如果有，就接收请求（accept()），和用户建立连接，然后就可以交流。</p>
 <h2 id="HTML-DOM"><a href="#HTML-DOM" class="headerlink" title="HTML DOM"></a>HTML DOM</h2><ul>
 <li>DOM 将 HTML 文档表达为树结构</li>
 <li>定义了访问和操作 HTML 文档的标准</li>

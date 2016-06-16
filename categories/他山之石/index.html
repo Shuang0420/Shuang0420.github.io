@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="word2vec," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -86,28 +86,15 @@
 
 
 
-<meta name="description" content="word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读">
-<meta property="og:type" content="article">
-<meta property="og:title" content="word2vec详解之三 -- 背景知识">
-<meta property="og:url" content="http://yoursite.com/2016/05/29/word2vec详解之三-背景知识/index.html">
+<meta name="description" content="宿命星动">
+<meta property="og:type" content="website">
+<meta property="og:title" content="徐阿衡">
+<meta property="og:url" content="http://yoursite.com/categories/他山之石/index.html">
 <meta property="og:site_name" content="徐阿衡">
-<meta property="og:description" content="word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/32.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/33.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/34.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/35.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/36.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/37.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/38.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/39.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/310.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/311.jpg">
-<meta property="og:updated_time" content="2016-06-09T12:11:51.000Z">
+<meta property="og:description" content="宿命星动">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="word2vec详解之三 -- 背景知识">
-<meta name="twitter:description" content="word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读">
-<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg">
+<meta name="twitter:title" content="徐阿衡">
+<meta name="twitter:description" content="宿命星动">
 
 
 
@@ -128,9 +115,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/05/29/word2vec详解之三-背景知识/"/>
+  <link rel="canonical" href="http://yoursite.com/categories/他山之石/"/>
 
-  <title> word2vec详解之三 -- 背景知识 | 徐阿衡 </title>
+  <title> Category: 他山之石 | 徐阿衡 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -151,7 +138,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -262,176 +249,47 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <section id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        他山之石
+        <small>Category</small>
+      </h2>
+    </div>
 
     
-      <header class="post-header">
+      
 
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
+            <a class="post-title-link" href="/2016/06/15/讲座笔记 -- 腾讯应用宝/" itemprop="url">
               
-                word2vec详解之三 -- 背景知识
+                <span itemprop="name">讲座笔记 -- 腾讯应用宝</span>
               
-            
-          </h1>
+            </a>
         
+      </h1>
 
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-05-29T14:04:41+08:00" content="2016-05-29">
-              2016-05-29
-            </time>
-          </span>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2016-06-15T21:35:48+08:00"
+              content="2016-06-15" >
+          06-15
+        </time>
+      </div>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
-                    <span itemprop="name">machine learning</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/29/word2vec详解之三-背景知识/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/05/29/word2vec详解之三-背景知识/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-              &nbsp; | &nbsp;
-              <span class="page-pv"><i class="fa fa-file-o"></i>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
-              </span>
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。<br><a id="more"></a></p>
-<hr>
-
-<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/32.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/33.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/34.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/35.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/36.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/37.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/38.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/39.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/310.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/311.jpg" alt=""></p>
-<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
-
-      
-    </div>
-
-    <div>
-      
-        
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
-          <p>微信打赏</p>
-        </div>
-      
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/word2vec/" rel="tag">#word2vec</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/05/29/word2vec详解之二-预备知识/" rel="next" title="word2vec详解之二 -- 预备知识">
-                <i class="fa fa-chevron-left"></i> word2vec详解之二 -- 预备知识
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/" rel="prev" title="word2vec详解之四 -- 基于Hierarchical Softmax 的模型">
-                word2vec详解之四 -- 基于Hierarchical Softmax 的模型 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+
 
 
           </div>
@@ -439,17 +297,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -469,17 +316,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
@@ -556,17 +394,6 @@
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <p class="post-toc-empty">This post does not have a Table of Contents</p>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -679,10 +506,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
 
   
 
@@ -699,9 +522,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'httpshuang0420githubio';
-      var disqus_identifier = '2016/05/29/word2vec详解之三-背景知识/';
-      var disqus_title = "word2vec详解之三 -- 背景知识";
-      var disqus_url = 'http://yoursite.com/2016/05/29/word2vec详解之三-背景知识/';
+      var disqus_identifier = 'categories/他山之石/index.html';
+      var disqus_title = "";
+      var disqus_url = '';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
@@ -712,8 +535,6 @@
       }
 
       run_disqus_script('count.js');
-      
-        run_disqus_script('embed.js');
       
     </script>
   

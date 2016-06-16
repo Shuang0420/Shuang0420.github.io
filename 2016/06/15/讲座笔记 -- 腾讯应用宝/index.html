@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="word2vec," />
+  <meta name="keywords" content="腾讯," />
 
 
 
@@ -86,28 +86,16 @@
 
 
 
-<meta name="description" content="word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读">
+<meta name="description" content="［待整理］">
 <meta property="og:type" content="article">
-<meta property="og:title" content="word2vec详解之三 -- 背景知识">
-<meta property="og:url" content="http://yoursite.com/2016/05/29/word2vec详解之三-背景知识/index.html">
+<meta property="og:title" content="讲座笔记 -- 腾讯应用宝">
+<meta property="og:url" content="http://yoursite.com/2016/06/15/讲座笔记 -- 腾讯应用宝/index.html">
 <meta property="og:site_name" content="徐阿衡">
-<meta property="og:description" content="word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/32.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/33.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/34.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/35.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/36.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/37.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/38.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/39.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/310.jpg">
-<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/311.jpg">
-<meta property="og:updated_time" content="2016-06-09T12:11:51.000Z">
+<meta property="og:description" content="［待整理］">
+<meta property="og:updated_time" content="2016-06-16T13:44:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="word2vec详解之三 -- 背景知识">
-<meta name="twitter:description" content="word2vec 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读">
-<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg">
+<meta name="twitter:title" content="讲座笔记 -- 腾讯应用宝">
+<meta name="twitter:description" content="［待整理］">
 
 
 
@@ -128,9 +116,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/05/29/word2vec详解之三-背景知识/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/06/15/讲座笔记 -- 腾讯应用宝/"/>
 
-  <title> word2vec详解之三 -- 背景知识 | 徐阿衡 </title>
+  <title> 讲座笔记 -- 腾讯应用宝 | 徐阿衡 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -283,7 +271,7 @@
             
             
               
-                word2vec详解之三 -- 背景知识
+                讲座笔记 -- 腾讯应用宝
               
             
           </h1>
@@ -295,8 +283,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-05-29T14:04:41+08:00" content="2016-05-29">
-              2016-05-29
+            <time itemprop="dateCreated" datetime="2016-06-15T21:35:48+08:00" content="2016-06-15">
+              2016-06-15
             </time>
           </span>
 
@@ -309,8 +297,8 @@
               <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
-                    <span itemprop="name">machine learning</span>
+                  <a href="/categories/他山之石/" itemprop="url" rel="index">
+                    <span itemprop="name">他山之石</span>
                   </a>
                 </span>
 
@@ -325,8 +313,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/29/word2vec详解之三-背景知识/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/05/29/word2vec详解之三-背景知识/" itemprop="commentsCount"></span>
+                <a href="/2016/06/15/讲座笔记 -- 腾讯应用宝/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/06/15/讲座笔记 -- 腾讯应用宝/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -354,11 +342,70 @@
       
 
       
-        <p><strong>word2vec</strong> 是 Google 于 2013 年开源推出的一个用于获取 word vector 的工具包，它简单、高效，因此引起了很多人的关注。由于 word2vec 的作者 Tomas Mikolov 在两篇相关的论文 [3,4] 中并没有谈及太多算法细节，因而在一定程度上增加了这个工具包的神秘感。一些按捺不住的人于是选择了通过解剖源代码的方式来一窥究竟，出于好奇，我也成为了他们中的一员。读完代码后，觉得收获颇多，整理成文，给有需要的朋友参考。<br><a id="more"></a></p>
-<hr>
-
-<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/31.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/32.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/33.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/34.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/35.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/36.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/37.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/38.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/39.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/310.jpg" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/311.jpg" alt=""></p>
-<p>作者: peghoty<br>出处: <a href="http://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="external">http://blog.csdn.net/itplus/article/details/37969979</a><br>欢迎转载/分享, 但请务必声明文章出处.</p>
+        <p>［待整理］<br><a id="more"></a></p>
+<h1 id="应用宝-–-腾讯的安卓应用市场"><a href="#应用宝-–-腾讯的安卓应用市场" class="headerlink" title="应用宝 – 腾讯的安卓应用市场"></a>应用宝 – 腾讯的安卓应用市场</h1><p>用户下载转化率 下载/搜索</p>
+<ul>
+<li>搜索是重要入口（新应用的分发）</li>
+<li>app 快速的增长 一年增长几百万</li>
+<li>二八原则 长尾大 0.1%的应用 80%的分发</li>
+</ul>
+<h2 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h2><p>dowloads/QV/UV<br>CTR/ROP</p>
+<h2 id="语义计算策略"><a href="#语义计算策略" class="headerlink" title="语义计算策略"></a>语义计算策略</h2><h3 id="数据特征"><a href="#数据特征" class="headerlink" title="数据特征"></a>数据特征</h3><ul>
+<li>数据量少 审核通过应用数量 数十万</li>
+<li>文本信息少 附带文本信息少（能建索引的量少）–&gt; 泛化</li>
+</ul>
+<p>应对策略 搜索＋推荐<br>描述语义 词、主题、标签</p>
+<p>query –&gt; term; topic; tag –&gt; app</p>
+<h3 id="数据补充"><a href="#数据补充" class="headerlink" title="数据补充"></a>数据补充</h3><p>爬取全网资源</p>
+<ul>
+<li>游戏站点、用户评价</li>
+<li>知识库：百度百科、百度知道</li>
+<li>其他应用商店</li>
+<li>搜索引擎 解析</li>
+<li>应用宝用户行为</li>
+</ul>
+<p>噪音大 – 机器学习的方法过滤<br>页面抓取 –&gt; 内容抓取 –&gt; 知识挖掘 –&gt; 标签 句法模板 标签集合 标签关联 –&gt; 标签关联净化 – &gt; 标签索引</p>
+<h3 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h3><p>用户行为指导排序</p>
+<ul>
+<li>点击下载因子（权重大） 增强鲁棒性</li>
+<li>entropy因子。用户query的集中程度，entropy，点击散，entropy高，区分精准query和模糊query</li>
+</ul>
+<h3 id="主题模型"><a href="#主题模型" class="headerlink" title="主题模型"></a>主题模型</h3><p>LDA 聚类，对 topic 进行人工标注，把 app 映射到 topic<br>（lda 业界用法比较多。最大特点：大量语料。语料少效果不好）补充大量文本数据？？？？？？？？？？？？？？？？？？</p>
+<h3 id="标签挖掘"><a href="#标签挖掘" class="headerlink" title="标签挖掘"></a>标签挖掘</h3><p>元搜方式挖掘 tag（传统搜索引擎） 搜app<br>根据用户行为、画像挖掘 tag  对用户进行分群 地区／年龄／职业／性别 生成代表用户属性的标签 给app</p>
+<h3 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h3><p>机器学习模型计算 confidence level<br>human editor ; web data; qa (lda) user group tags<br>–&gt;<br>GBDT model</p>
+<h3 id="app-语义画像"><a href="#app-语义画像" class="headerlink" title="app 语义画像"></a>app 语义画像</h3><p>语义描述体系<br>分多个维度</p>
+<h3 id="机器学习（LTR）"><a href="#机器学习（LTR）" class="headerlink" title="机器学习（LTR）"></a>机器学习（LTR）</h3><p>挑战：多来源检索结果不可比（类别／tag）<br>利器：lambdaMART 排序模型（GBRT的变种）</p>
+<p>–&gt; CTR 提升6%</p>
+<h2 id="第三部分-应用宝搜索商业化"><a href="#第三部分-应用宝搜索商业化" class="headerlink" title="第三部分 应用宝搜索商业化"></a>第三部分 应用宝搜索商业化</h2><p>推荐相关</p>
+<h3 id="分发升级"><a href="#分发升级" class="headerlink" title="分发升级"></a>分发升级</h3><p>应用＋<br>应用分发 –&gt; 内容服务分发</p>
+<p>意图识别优化：什么时候出应用，什么时候出音乐，热度<br>多来源混排：机器学习＋运营系统优化异构排序，促进分发效率（应用、音乐等怎么混排）<br>多场景引导：在热词、直达区（搜索补充呈现）、联想词等场景引导用户，培养内容搜索习惯</p>
+<h3 id="应用搜索广告"><a href="#应用搜索广告" class="headerlink" title="应用搜索广告"></a>应用搜索广告</h3><p>技术核心</p>
+<ul>
+<li><p>app 画像<br>基于标签、主题、类别的 app 细粒度商业词</p>
+</li>
+<li><p>动态混排<br>根据 query 动态选择广告槽位</p>
+</li>
+</ul>
+<p>利用相似应用打tag（confidence level –&gt; filter）</p>
+<h1 id="机器学习的本质"><a href="#机器学习的本质" class="headerlink" title="机器学习的本质"></a>机器学习的本质</h1><p>已知数据 先验知识（专家系统） 未知数据的特征 求未知数据的优化分布<br>通用技术难点：空间搜索 函数泛化</p>
+<p>实际工作：</p>
+<ul>
+<li>模型10% 其他90%</li>
+<li>数据从哪来</li>
+<li>特征如何抽取</li>
+<li>领域先验知识</li>
+</ul>
+<p>大量噪音？维数灾难？<br>琐碎的工作很重要</p>
+<p>正则化(L1？ L2？) 剪枝</p>
+<h1 id="大公司-vs-小公司"><a href="#大公司-vs-小公司" class="headerlink" title="大公司 vs 小公司"></a>大公司 vs 小公司</h1><p>搜索 推荐 广告<br>和牛人接触<br>流程化 冗余 很多团队想做一件事</p>
+<h3 id="小公司"><a href="#小公司" class="headerlink" title="小公司"></a>小公司</h3><ul>
+<li><p>方向更对<br>不被商业价值束缚 不被同伴利益束缚 不被自己经验束缚</p>
+</li>
+<li><p>跑的更快<br>不被用户束缚 不被流程束缚 不被一般道德束缚</p>
+</li>
+</ul>
+<h3 id="复利效应"><a href="#复利效应" class="headerlink" title="复利效应"></a>复利效应</h3><p>百度 搜索<br>搜搜<br>在一个点上积累积累积累 –&gt; 复利效应 –&gt; 无法超越<br>算法 数学专家 我们做应用方面的复利效应</p>
+<p>应用宝 去噪 做了一年</p>
 
       
     </div>
@@ -396,7 +443,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/word2vec/" rel="tag">#word2vec</a>
+            <a href="/tags/腾讯/" rel="tag">#腾讯</a>
           
         </div>
       
@@ -405,17 +452,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/29/word2vec详解之二-预备知识/" rel="next" title="word2vec详解之二 -- 预备知识">
-                <i class="fa fa-chevron-left"></i> word2vec详解之二 -- 预备知识
+              <a href="/2016/06/12/爬虫总结-二-scrapy/" rel="next" title="爬虫总结(二)-- scrapy">
+                <i class="fa fa-chevron-left"></i> 爬虫总结(二)-- scrapy
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/29/word2vec详解之四-基于Hierarchical-Softmax-的模型/" rel="prev" title="word2vec详解之四 -- 基于Hierarchical Softmax 的模型">
-                word2vec详解之四 -- 基于Hierarchical Softmax 的模型 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -563,7 +606,7 @@
               
             
             
-              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#应用宝-–-腾讯的安卓应用市场"><span class="nav-number">1.</span> <span class="nav-text">应用宝 – 腾讯的安卓应用市场</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#指标"><span class="nav-number">1.1.</span> <span class="nav-text">指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语义计算策略"><span class="nav-number">1.2.</span> <span class="nav-text">语义计算策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据特征"><span class="nav-number">1.2.1.</span> <span class="nav-text">数据特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据补充"><span class="nav-number">1.2.2.</span> <span class="nav-text">数据补充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据挖掘"><span class="nav-number">1.2.3.</span> <span class="nav-text">数据挖掘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主题模型"><span class="nav-number">1.2.4.</span> <span class="nav-text">主题模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标签挖掘"><span class="nav-number">1.2.5.</span> <span class="nav-text">标签挖掘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据清洗"><span class="nav-number">1.2.6.</span> <span class="nav-text">数据清洗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#app-语义画像"><span class="nav-number">1.2.7.</span> <span class="nav-text">app 语义画像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#机器学习（LTR）"><span class="nav-number">1.2.8.</span> <span class="nav-text">机器学习（LTR）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三部分-应用宝搜索商业化"><span class="nav-number">1.3.</span> <span class="nav-text">第三部分 应用宝搜索商业化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分发升级"><span class="nav-number">1.3.1.</span> <span class="nav-text">分发升级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用搜索广告"><span class="nav-number">1.3.2.</span> <span class="nav-text">应用搜索广告</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#机器学习的本质"><span class="nav-number">2.</span> <span class="nav-text">机器学习的本质</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#大公司-vs-小公司"><span class="nav-number">3.</span> <span class="nav-text">大公司 vs 小公司</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#小公司"><span class="nav-number">3.0.1.</span> <span class="nav-text">小公司</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复利效应"><span class="nav-number">3.0.2.</span> <span class="nav-text">复利效应</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
@@ -699,9 +742,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'httpshuang0420githubio';
-      var disqus_identifier = '2016/05/29/word2vec详解之三-背景知识/';
-      var disqus_title = "word2vec详解之三 -- 背景知识";
-      var disqus_url = 'http://yoursite.com/2016/05/29/word2vec详解之三-背景知识/';
+      var disqus_identifier = '2016/06/15/讲座笔记 -- 腾讯应用宝/';
+      var disqus_title = "讲座笔记 -- 腾讯应用宝";
+      var disqus_url = 'http://yoursite.com/2016/06/15/讲座笔记 -- 腾讯应用宝/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
