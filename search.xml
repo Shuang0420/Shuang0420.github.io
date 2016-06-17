@@ -1353,17 +1353,30 @@ disqus_shortname: your-disqus-shortname
 
 <p>更改 主题配置文件，设定 rss 字段的值，留空表示使用 Hexo 生成的 Feed 链接。</p>
 <h3 id="访问量统计"><a href="#访问量统计" class="headerlink" title="访问量统计"></a>访问量统计</h3><p>编辑 主题配置文件 中的 busuanzi_count 的配置项。<br>当enable: true时，代表开启全局开关。若site_uv、site_pv、page_pv的值均为false时，不蒜子仅作记录而不会在页面上显示。</p>
-<h3 id="搜索服务"><a href="#搜索服务" class="headerlink" title="搜索服务"></a>搜索服务</h3><p>添加百度/谷歌/本地 自定义站点内容搜索</p>
-<p>安装 hexo-generator-search，在站点的根目录下执行以下命令：</p>
-<pre>$ npm install hexo-generator-search --save</pre>
-
-<p>编辑 站点配置文件，新增以下内容到任意位置：</p>
+<h3 id="搜索服务（Swiftype）"><a href="#搜索服务（Swiftype）" class="headerlink" title="搜索服务（Swiftype）"></a>搜索服务（Swiftype）</h3><ol>
+<li>前往 <a href="https://swiftype.com/users/sign_up" target="_blank" rel="external">Swiftype 注册页面</a>，注册一个新账户。</li>
+<li>注册完成后，创建一个新的搜索引擎(create a search engine)，并按照提示完成创建步骤。</li>
+<li>搜索引擎创建完成后，在菜单中选择 Integrate -&gt; Install Search 开启搜索定制，按照步骤完成定制。最后一步记得点击 Active 按钮。</li>
+<li><p>返回定制引擎的第二个步骤 INSTALL CODE，复制出你的 swiftype_key,也就是下面的”xxxxxxxxx”部分。</p>
 <pre>
-search:
-  path: search.xml
-  field: post</pre>
+<script type="text/javascript">
+(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','\_st');
 
+\_st('install','xxxxxxxxx','2.0.0');
+</script>
+</pre>
+</li>
+<li><p>编辑 站点配置文件， 新增字段 swiftype_key，值设置成第四步中赋值出来的 key</p>
+<pre>
+# Swiftype Search Key
+swiftype_key: xxxxxxxxx
+</pre>
 
+</li>
+</ol>
 <h3 id="开启打赏功能"><a href="#开启打赏功能" class="headerlink" title="开启打赏功能"></a>开启打赏功能</h3><p>只需要在 主题配置文件 中填入 微信 和 支付宝 收款二维码图片地址 即可开启该功能。</p>
 <pre>
 reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
