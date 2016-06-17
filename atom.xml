@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-06-16T13:44:06.000Z</updated>
+  <updated>2016-06-17T03:57:28.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,22 +20,30 @@
     <link href="http://yoursite.com/2016/06/15/%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0%20--%20%E8%85%BE%E8%AE%AF%E5%BA%94%E7%94%A8%E5%AE%9D/"/>
     <id>http://yoursite.com/2016/06/15/讲座笔记 -- 腾讯应用宝/</id>
     <published>2016-06-15T13:35:48.000Z</published>
-    <updated>2016-06-16T13:44:06.000Z</updated>
+    <updated>2016-06-17T03:57:28.000Z</updated>
     
-    <content type="html">&lt;p&gt;［待整理］&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;应用宝-–-腾讯的安卓应用市场&quot;&gt;&lt;a href=&quot;#应用宝-–-腾讯的安卓应用市场&quot; class=&quot;headerlink&quot; title=&quot;应用宝 – 腾讯的安卓应用市场&quot;&gt;&lt;/a&gt;应用宝 – 腾讯的安卓应用市场&lt;/h1&gt;&lt;p&gt;用户下载转化率 下载/搜索&lt;/p&gt;
-&lt;ul&gt;
+    <content type="html">&lt;p&gt;卓居超，2013年加入腾讯内部搜索部门，现负责腾讯应用宝搜索项目。近年来从事的科研工作集中在垂直领域的搜索、推荐技术研究。2015年代表腾讯公司在 WSDM 会议上做题为 “Semantic Matching in APP Search” 的主题报告，介绍腾讯应用宝语义搜索的技术实现。&lt;br&gt;今天他在公司做了一场关于腾讯应用宝的分享，这是一篇讲座笔记。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;应用宝-–-腾讯的安卓应用市场&quot;&gt;&lt;a href=&quot;#应用宝-–-腾讯的安卓应用市场&quot; class=&quot;headerlink&quot; title=&quot;应用宝 – 腾讯的安卓应用市场&quot;&gt;&lt;/a&gt;应用宝 – 腾讯的安卓应用市场&lt;/h1&gt;&lt;ul&gt;
 &lt;li&gt;搜索是重要入口（新应用的分发）&lt;/li&gt;
 &lt;li&gt;app 快速的增长 一年增长几百万&lt;/li&gt;
 &lt;li&gt;二八原则 长尾大 0.1%的应用 80%的分发&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&quot;指标&quot;&gt;&lt;a href=&quot;#指标&quot; class=&quot;headerlink&quot; title=&quot;指标&quot;&gt;&lt;/a&gt;指标&lt;/h2&gt;&lt;p&gt;dowloads/QV/UV&lt;br&gt;CTR/ROP&lt;/p&gt;
-&lt;h2 id=&quot;语义计算策略&quot;&gt;&lt;a href=&quot;#语义计算策略&quot; class=&quot;headerlink&quot; title=&quot;语义计算策略&quot;&gt;&lt;/a&gt;语义计算策略&lt;/h2&gt;&lt;h3 id=&quot;数据特征&quot;&gt;&lt;a href=&quot;#数据特征&quot; class=&quot;headerlink&quot; title=&quot;数据特征&quot;&gt;&lt;/a&gt;数据特征&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;数据量少 审核通过应用数量 数十万&lt;/li&gt;
-&lt;li&gt;文本信息少 附带文本信息少（能建索引的量少）–&amp;gt; 泛化&lt;/li&gt;
+&lt;h2 id=&quot;指标&quot;&gt;&lt;a href=&quot;#指标&quot; class=&quot;headerlink&quot; title=&quot;指标&quot;&gt;&lt;/a&gt;指标&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Downloads&lt;/li&gt;
+&lt;li&gt;QV&lt;/li&gt;
+&lt;li&gt;UV&lt;/li&gt;
+&lt;li&gt;CTR (Click-Through-Rate)&lt;/li&gt;
+&lt;li&gt;ROP (Rate-Of-Penetration)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;应对策略 搜索＋推荐&lt;br&gt;描述语义 词、主题、标签&lt;/p&gt;
-&lt;p&gt;query –&amp;gt; term; topic; tag –&amp;gt; app&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;CTR(Click-Through-Rate): 网络广告（图片广告/文字广告/关键词广告/排名广告/视频广告等）的点击到达率，即该广告的点击量（严格的来说，可以是到达目标页面的数量）除以广告的浏览量（PV- Page View）。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;语义计算策略&quot;&gt;&lt;a href=&quot;#语义计算策略&quot; class=&quot;headerlink&quot; title=&quot;语义计算策略&quot;&gt;&lt;/a&gt;语义计算策略&lt;/h2&gt;&lt;h3 id=&quot;数据特征&quot;&gt;&lt;a href=&quot;#数据特征&quot; class=&quot;headerlink&quot; title=&quot;数据特征&quot;&gt;&lt;/a&gt;数据特征&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;数据量少 审核通过的应用数量只有数十万&lt;/li&gt;
+&lt;li&gt;文本信息少 附带文本信息少&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这就意味着能建索引的量少 –&amp;gt; 所以要将信息泛化&lt;/p&gt;
+&lt;h3 id=&quot;应对策略&quot;&gt;&lt;a href=&quot;#应对策略&quot; class=&quot;headerlink&quot; title=&quot;应对策略&quot;&gt;&lt;/a&gt;应对策略&lt;/h3&gt;&lt;p&gt;搜索＋推荐&lt;br&gt;用 &lt;strong&gt;词、主题、标签&lt;/strong&gt; 来描述语义 (query –&amp;gt; term + topic + tag –&amp;gt; app)&lt;/p&gt;
 &lt;h3 id=&quot;数据补充&quot;&gt;&lt;a href=&quot;#数据补充&quot; class=&quot;headerlink&quot; title=&quot;数据补充&quot;&gt;&lt;/a&gt;数据补充&lt;/h3&gt;&lt;p&gt;爬取全网资源&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;游戏站点、用户评价&lt;/li&gt;
@@ -44,21 +52,37 @@
 &lt;li&gt;搜索引擎 解析&lt;/li&gt;
 &lt;li&gt;应用宝用户行为&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;噪音大 – 机器学习的方法过滤&lt;br&gt;页面抓取 –&amp;gt; 内容抓取 –&amp;gt; 知识挖掘 –&amp;gt; 标签 句法模板 标签集合 标签关联 –&amp;gt; 标签关联净化 – &amp;gt; 标签索引&lt;/p&gt;
-&lt;h3 id=&quot;数据挖掘&quot;&gt;&lt;a href=&quot;#数据挖掘&quot; class=&quot;headerlink&quot; title=&quot;数据挖掘&quot;&gt;&lt;/a&gt;数据挖掘&lt;/h3&gt;&lt;p&gt;用户行为指导排序&lt;/p&gt;
+&lt;p&gt;容易出现的问题是噪音会很大，所以需要机器学习的方法进一步的过滤&lt;/p&gt;
+&lt;p&gt;过程就是 &lt;strong&gt;页面抓取 –&amp;gt; 内容抓取 –&amp;gt; 知识挖掘 –&amp;gt; 标签 + 句法模板 + 标签集合 + 标签关联 –&amp;gt; 标签关联净化 –&amp;gt; 标签索引&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;数据挖掘&quot;&gt;&lt;a href=&quot;#数据挖掘&quot; class=&quot;headerlink&quot; title=&quot;数据挖掘&quot;&gt;&lt;/a&gt;数据挖掘&lt;/h3&gt;&lt;p&gt;利用用户行为来指导排序&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;点击下载因子（权重大） 增强鲁棒性&lt;/li&gt;
-&lt;li&gt;entropy因子。用户query的集中程度，entropy，点击散，entropy高，区分精准query和模糊query&lt;/li&gt;
+&lt;li&gt;点击下载因子。赋予大的权重（增强鲁棒性）&lt;/li&gt;
+&lt;li&gt;entropy因子。entropy可以表示用户query的集中程度，，点击散，entropy高，区分精准query和模糊query&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&quot;主题模型&quot;&gt;&lt;a href=&quot;#主题模型&quot; class=&quot;headerlink&quot; title=&quot;主题模型&quot;&gt;&lt;/a&gt;主题模型&lt;/h3&gt;&lt;p&gt;LDA 聚类，对 topic 进行人工标注，把 app 映射到 topic&lt;br&gt;（lda 业界用法比较多。最大特点：大量语料。语料少效果不好）补充大量文本数据？？？？？？？？？？？？？？？？？？&lt;/p&gt;
-&lt;h3 id=&quot;标签挖掘&quot;&gt;&lt;a href=&quot;#标签挖掘&quot; class=&quot;headerlink&quot; title=&quot;标签挖掘&quot;&gt;&lt;/a&gt;标签挖掘&lt;/h3&gt;&lt;p&gt;元搜方式挖掘 tag（传统搜索引擎） 搜app&lt;br&gt;根据用户行为、画像挖掘 tag  对用户进行分群 地区／年龄／职业／性别 生成代表用户属性的标签 给app&lt;/p&gt;
-&lt;h3 id=&quot;数据清洗&quot;&gt;&lt;a href=&quot;#数据清洗&quot; class=&quot;headerlink&quot; title=&quot;数据清洗&quot;&gt;&lt;/a&gt;数据清洗&lt;/h3&gt;&lt;p&gt;机器学习模型计算 confidence level&lt;br&gt;human editor ; web data; qa (lda) user group tags&lt;br&gt;–&amp;gt;&lt;br&gt;GBDT model&lt;/p&gt;
+&lt;h3 id=&quot;主题模型&quot;&gt;&lt;a href=&quot;#主题模型&quot; class=&quot;headerlink&quot; title=&quot;主题模型&quot;&gt;&lt;/a&gt;主题模型&lt;/h3&gt;&lt;p&gt;LDA 聚类，对 topic 进行人工标注，把 app 映射到 topic&lt;br&gt;LDA 在业界用法比较多。然而它最大的特点是需要大量的语料，语料少效果就不好。所以需要补充大量文本数据。&lt;/p&gt;
+&lt;h3 id=&quot;标签挖掘&quot;&gt;&lt;a href=&quot;#标签挖掘&quot; class=&quot;headerlink&quot; title=&quot;标签挖掘&quot;&gt;&lt;/a&gt;标签挖掘&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;元搜方式挖掘 tag （通过搜app）&lt;/li&gt;
+&lt;li&gt;根据用户行为、画像挖掘 tag&lt;br&gt;对用户进行分群 地区／年龄／职业／性别等 生成代表用户属性的标签给app&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;元搜，上大学的时候还学过来着，居然听讲座的时候没想起来😳&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;元搜索引擎又称多搜索引擎，通过一个统一的用户界面帮助用户在多个搜索引擎中选择和利用合适的（甚至是同时利用若干个）搜索引擎来实现检索操作，是对分布于网络的多种检索工具的全局控制机制。（搜索引擎分类：全文搜索引擎、目录索引、元搜索引擎）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;数据清洗&quot;&gt;&lt;a href=&quot;#数据清洗&quot; class=&quot;headerlink&quot; title=&quot;数据清洗&quot;&gt;&lt;/a&gt;数据清洗&lt;/h3&gt;&lt;p&gt;方法：机器学习模型计算 confidence level&lt;br&gt;human editor + web data + qa (lda) user group tags  –&amp;gt; &lt;a href=&quot;http://blog.csdn.net/w28971023/article/details/8240756&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GBDT mode&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;GBDT(Gradient Boosting Decision Tree) 又叫 MART（Multiple Additive Regression Tree)，是一种迭代的决策树算法，该算法由多棵决策树组成，所有树的结论累加起来做最终答案。它在被提出之初就和SVM一起被认为是泛化能力（generalization)较强的算法。近些年更因为被用于搜索排序的机器学习模型而引起大家关注。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&quot;app-语义画像&quot;&gt;&lt;a href=&quot;#app-语义画像&quot; class=&quot;headerlink&quot; title=&quot;app 语义画像&quot;&gt;&lt;/a&gt;app 语义画像&lt;/h3&gt;&lt;p&gt;语义描述体系&lt;br&gt;分多个维度&lt;/p&gt;
 &lt;h3 id=&quot;机器学习（LTR）&quot;&gt;&lt;a href=&quot;#机器学习（LTR）&quot; class=&quot;headerlink&quot; title=&quot;机器学习（LTR）&quot;&gt;&lt;/a&gt;机器学习（LTR）&lt;/h3&gt;&lt;p&gt;挑战：多来源检索结果不可比（类别／tag）&lt;br&gt;利器：lambdaMART 排序模型（GBRT的变种）&lt;/p&gt;
-&lt;p&gt;–&amp;gt; CTR 提升6%&lt;/p&gt;
-&lt;h2 id=&quot;第三部分-应用宝搜索商业化&quot;&gt;&lt;a href=&quot;#第三部分-应用宝搜索商业化&quot; class=&quot;headerlink&quot; title=&quot;第三部分 应用宝搜索商业化&quot;&gt;&lt;/a&gt;第三部分 应用宝搜索商业化&lt;/h2&gt;&lt;p&gt;推荐相关&lt;/p&gt;
-&lt;h3 id=&quot;分发升级&quot;&gt;&lt;a href=&quot;#分发升级&quot; class=&quot;headerlink&quot; title=&quot;分发升级&quot;&gt;&lt;/a&gt;分发升级&lt;/h3&gt;&lt;p&gt;应用＋&lt;br&gt;应用分发 –&amp;gt; 内容服务分发&lt;/p&gt;
-&lt;p&gt;意图识别优化：什么时候出应用，什么时候出音乐，热度&lt;br&gt;多来源混排：机器学习＋运营系统优化异构排序，促进分发效率（应用、音乐等怎么混排）&lt;br&gt;多场景引导：在热词、直达区（搜索补充呈现）、联想词等场景引导用户，培养内容搜索习惯&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;LTR - Learning to rank：学习排序&lt;br&gt;用机器学习的方法进行排序，可用于相关性排序、推荐引擎等系统中。Learning to rank or machine-learned ranking (MLR) is a type of supervised or semi-supervised machine learning problem in which the goal is to automatically construct a ranking model from training data.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;应用宝搜索商业化&quot;&gt;&lt;a href=&quot;#应用宝搜索商业化&quot; class=&quot;headerlink&quot; title=&quot;应用宝搜索商业化&quot;&gt;&lt;/a&gt;应用宝搜索商业化&lt;/h2&gt;&lt;h3 id=&quot;分发升级&quot;&gt;&lt;a href=&quot;#分发升级&quot; class=&quot;headerlink&quot; title=&quot;分发升级&quot;&gt;&lt;/a&gt;分发升级&lt;/h3&gt;&lt;p&gt;应用+&lt;br&gt;应用分发 –&amp;gt; 内容服务分发&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;意图识别优化：什么时候出应用，什么时候出音乐，热度&lt;/li&gt;
+&lt;li&gt;多来源混排：机器学习＋运营系统优化异构排序，促进分发效率（应用、音乐等怎么混排）&lt;/li&gt;
+&lt;li&gt;多场景引导：在热词、直达区（搜索补充呈现）、联想词等场景引导用户，培养内容搜索习惯&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&quot;应用搜索广告&quot;&gt;&lt;a href=&quot;#应用搜索广告&quot; class=&quot;headerlink&quot; title=&quot;应用搜索广告&quot;&gt;&lt;/a&gt;应用搜索广告&lt;/h3&gt;&lt;p&gt;技术核心&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;app 画像&lt;br&gt;基于标签、主题、类别的 app 细粒度商业词&lt;/p&gt;
@@ -67,7 +91,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;利用相似应用打tag（confidence level –&amp;gt; filter）&lt;/p&gt;
-&lt;h1 id=&quot;机器学习的本质&quot;&gt;&lt;a href=&quot;#机器学习的本质&quot; class=&quot;headerlink&quot; title=&quot;机器学习的本质&quot;&gt;&lt;/a&gt;机器学习的本质&lt;/h1&gt;&lt;p&gt;已知数据 先验知识（专家系统） 未知数据的特征 求未知数据的优化分布&lt;br&gt;通用技术难点：空间搜索 函数泛化&lt;/p&gt;
+&lt;h1 id=&quot;机器学习的本质&quot;&gt;&lt;a href=&quot;#机器学习的本质&quot; class=&quot;headerlink&quot; title=&quot;机器学习的本质&quot;&gt;&lt;/a&gt;机器学习的本质&lt;/h1&gt;&lt;p&gt;已知数据 先验知识（专家系统） 未知数据的特征 –&amp;gt; 求未知数据的优化分布&lt;br&gt;通用技术难点：空间搜索 函数泛化&lt;/p&gt;
 &lt;p&gt;实际工作：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;模型10% 其他90%&lt;/li&gt;
@@ -75,22 +99,23 @@
 &lt;li&gt;特征如何抽取&lt;/li&gt;
 &lt;li&gt;领域先验知识&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;大量噪音？维数灾难？&lt;br&gt;琐碎的工作很重要&lt;/p&gt;
-&lt;p&gt;正则化(L1？ L2？) 剪枝&lt;/p&gt;
-&lt;h1 id=&quot;大公司-vs-小公司&quot;&gt;&lt;a href=&quot;#大公司-vs-小公司&quot; class=&quot;headerlink&quot; title=&quot;大公司 vs 小公司&quot;&gt;&lt;/a&gt;大公司 vs 小公司&lt;/h1&gt;&lt;p&gt;搜索 推荐 广告&lt;br&gt;和牛人接触&lt;br&gt;流程化 冗余 很多团队想做一件事&lt;/p&gt;
-&lt;h3 id=&quot;小公司&quot;&gt;&lt;a href=&quot;#小公司&quot; class=&quot;headerlink&quot; title=&quot;小公司&quot;&gt;&lt;/a&gt;小公司&lt;/h3&gt;&lt;ul&gt;
+&lt;p&gt;大量噪音？维数灾难？&lt;br&gt;&lt;a href=&quot;http://blog.csdn.net/vividonly/article/details/50723852&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;L0,L1,L2正则化&lt;/a&gt; 剪枝&lt;br&gt;琐碎的准备工作很重要&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;L0正则化的值是模型参数中非零参数的个数。&lt;br&gt;L1正则化表示各个参数绝对值之和。&lt;br&gt;L2正则化标识各个参数的平方的和的开方值。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;大公司-vs-小公司&quot;&gt;&lt;a href=&quot;#大公司-vs-小公司&quot; class=&quot;headerlink&quot; title=&quot;大公司 vs 小公司&quot;&gt;&lt;/a&gt;大公司 vs 小公司&lt;/h1&gt;&lt;h2 id=&quot;大公司&quot;&gt;&lt;a href=&quot;#大公司&quot; class=&quot;headerlink&quot; title=&quot;大公司&quot;&gt;&lt;/a&gt;大公司&lt;/h2&gt;&lt;p&gt;搜索 推荐 广告 都能接触到，可以和牛人接触&lt;br&gt;流程化 冗余 很多团队想做一件事&lt;/p&gt;
+&lt;h2 id=&quot;小公司&quot;&gt;&lt;a href=&quot;#小公司&quot; class=&quot;headerlink&quot; title=&quot;小公司&quot;&gt;&lt;/a&gt;小公司&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;方向更对&lt;br&gt;不被商业价值束缚 不被同伴利益束缚 不被自己经验束缚&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;跑的更快&lt;br&gt;不被用户束缚 不被流程束缚 不被一般道德束缚&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&quot;复利效应&quot;&gt;&lt;a href=&quot;#复利效应&quot; class=&quot;headerlink&quot; title=&quot;复利效应&quot;&gt;&lt;/a&gt;复利效应&lt;/h3&gt;&lt;p&gt;百度 搜索&lt;br&gt;搜搜&lt;br&gt;在一个点上积累积累积累 –&amp;gt; 复利效应 –&amp;gt; 无法超越&lt;br&gt;算法 数学专家 我们做应用方面的复利效应&lt;/p&gt;
-&lt;p&gt;应用宝 去噪 做了一年&lt;/p&gt;
+&lt;h1 id=&quot;复利效应&quot;&gt;&lt;a href=&quot;#复利效应&quot; class=&quot;headerlink&quot; title=&quot;复利效应&quot;&gt;&lt;/a&gt;复利效应&lt;/h1&gt;&lt;p&gt;应用宝光是去噪就做了一年。&lt;br&gt;每天积累一点 –&amp;gt; 复利效应 –&amp;gt; 无法超越&lt;br&gt;腾讯去做搜索，做不过百度，为什么？技术团队不强？no！因为百度做了几十年的搜索，每天进步一点，复利效应无法超越。&lt;br&gt;我们要找到可以产生复利效应的点。算法是数学专家的事，我们可以做的是应用方面的复利效应，比如说聊天机器人。&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;p&gt;［待整理］&lt;br&gt;
+      &lt;p&gt;卓居超，2013年加入腾讯内部搜索部门，现负责腾讯应用宝搜索项目。近年来从事的科研工作集中在垂直领域的搜索、推荐技术研究。2015年代表腾讯公司在 WSDM 会议上做题为 “Semantic Matching in APP Search” 的主题报告，介绍腾讯应用宝语义搜索的技术实现。&lt;br&gt;今天他在公司做了一场关于腾讯应用宝的分享，这是一篇讲座笔记。&lt;br&gt;
     
     </summary>
     

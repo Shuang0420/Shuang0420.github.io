@@ -97,7 +97,7 @@
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E9%83%A8%E5%88%86%E4%B9%B1%E7%A0%81.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/ascii.jpg">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E6%AD%A3%E7%A1%AE.png">
-<meta property="og:updated_time" content="2016-06-09T12:08:36.000Z">
+<meta property="og:updated_time" content="2016-06-17T04:00:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux-python转码问题">
 <meta name="twitter:description" content="之前用的一直是utf-8编码，几乎不会出现乱码问题。奈何公司的分词软件支持的输入和输出编码都是gbk，因此必须进行转码，一个非常痛苦的过程，如实记录下遇到的问题，供以后参考">
@@ -400,6 +400,14 @@ fw.write("".join(doc)+"\n")
 <pre>file -i baike_url_part_000.chinese
 baike_url_part_000.chinese: application/octet-stream; charset=binary</pre>
 
+
+<h3 id="iconv-文件编码转换"><a href="#iconv-文件编码转换" class="headerlink" title="iconv 文件编码转换"></a>iconv 文件编码转换</h3><p>iconv [选项…] [文件…]</p>
+<p>输入/输出格式规范：<br>-f, –from-code=名称 原始文本编码<br>-t, –to-code=名称 输出编码</p>
+<p>信息：<br>-l, –list 列举所有已知的字符集</p>
+<p>输出控制：<br>-c 从输出中忽略无效的字符<br>-o, –output=FILE 输出文件<br>-s, –silent 关闭警告<br>–verbose 打印进度信息</p>
+<pre># utf 转 gbk
+iconv -c -f utf-8 -t gb2312 file</pre>
+
 <h3 id="傻瓜命令行工具enca"><a href="#傻瓜命令行工具enca" class="headerlink" title="傻瓜命令行工具enca"></a>傻瓜命令行工具enca</h3><p>好了，这时候就要用神器啦！傻瓜命令行工具enca – 不但能智能识别文件的编码，而且还支持成批转换！心动了吗？心动不如行动！来！安装！so easy~  　　</p>
 <pre>sudo apt-get install enca</pre>
 
@@ -642,7 +650,7 @@ fw.write("".join(doc)+"\n")</pre>
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#标准utf8输出"><span class="nav-number">1.</span> <span class="nav-text">标准utf8输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转gbk输出"><span class="nav-number">2.</span> <span class="nav-text">转gbk输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#傻瓜命令行工具enca"><span class="nav-number">3.</span> <span class="nav-text">傻瓜命令行工具enca</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#locale"><span class="nav-number">4.</span> <span class="nav-text">locale</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理-F-A等特殊字符"><span class="nav-number">5.</span> <span class="nav-text">处理^@^F^A等特殊字符</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#标准utf8输出"><span class="nav-number">1.</span> <span class="nav-text">标准utf8输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转gbk输出"><span class="nav-number">2.</span> <span class="nav-text">转gbk输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iconv-文件编码转换"><span class="nav-number">3.</span> <span class="nav-text">iconv 文件编码转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#傻瓜命令行工具enca"><span class="nav-number">4.</span> <span class="nav-text">傻瓜命令行工具enca</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#locale"><span class="nav-number">5.</span> <span class="nav-text">locale</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理-F-A等特殊字符"><span class="nav-number">6.</span> <span class="nav-text">处理^@^F^A等特殊字符</span></a></li></ol></div>
             
           </div>
         </section>

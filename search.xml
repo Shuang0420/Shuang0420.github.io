@@ -6,20 +6,28 @@
     <entry>
       <title><![CDATA[讲座笔记 -- 腾讯应用宝]]></title>
       <url>http://yoursite.com/2016/06/15/%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0%20--%20%E8%85%BE%E8%AE%AF%E5%BA%94%E7%94%A8%E5%AE%9D/</url>
-      <content type="html"><![CDATA[<p>［待整理］<br><a id="more"></a></p>
-<h1 id="应用宝-–-腾讯的安卓应用市场"><a href="#应用宝-–-腾讯的安卓应用市场" class="headerlink" title="应用宝 – 腾讯的安卓应用市场"></a>应用宝 – 腾讯的安卓应用市场</h1><p>用户下载转化率 下载/搜索</p>
-<ul>
+      <content type="html"><![CDATA[<p>卓居超，2013年加入腾讯内部搜索部门，现负责腾讯应用宝搜索项目。近年来从事的科研工作集中在垂直领域的搜索、推荐技术研究。2015年代表腾讯公司在 WSDM 会议上做题为 “Semantic Matching in APP Search” 的主题报告，介绍腾讯应用宝语义搜索的技术实现。<br>今天他在公司做了一场关于腾讯应用宝的分享，这是一篇讲座笔记。<br><a id="more"></a></p>
+<h1 id="应用宝-–-腾讯的安卓应用市场"><a href="#应用宝-–-腾讯的安卓应用市场" class="headerlink" title="应用宝 – 腾讯的安卓应用市场"></a>应用宝 – 腾讯的安卓应用市场</h1><ul>
 <li>搜索是重要入口（新应用的分发）</li>
 <li>app 快速的增长 一年增长几百万</li>
 <li>二八原则 长尾大 0.1%的应用 80%的分发</li>
 </ul>
-<h2 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h2><p>dowloads/QV/UV<br>CTR/ROP</p>
-<h2 id="语义计算策略"><a href="#语义计算策略" class="headerlink" title="语义计算策略"></a>语义计算策略</h2><h3 id="数据特征"><a href="#数据特征" class="headerlink" title="数据特征"></a>数据特征</h3><ul>
-<li>数据量少 审核通过应用数量 数十万</li>
-<li>文本信息少 附带文本信息少（能建索引的量少）–&gt; 泛化</li>
+<h2 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h2><ul>
+<li>Downloads</li>
+<li>QV</li>
+<li>UV</li>
+<li>CTR (Click-Through-Rate)</li>
+<li>ROP (Rate-Of-Penetration)</li>
 </ul>
-<p>应对策略 搜索＋推荐<br>描述语义 词、主题、标签</p>
-<p>query –&gt; term; topic; tag –&gt; app</p>
+<blockquote>
+<p>CTR(Click-Through-Rate): 网络广告（图片广告/文字广告/关键词广告/排名广告/视频广告等）的点击到达率，即该广告的点击量（严格的来说，可以是到达目标页面的数量）除以广告的浏览量（PV- Page View）。</p>
+</blockquote>
+<h2 id="语义计算策略"><a href="#语义计算策略" class="headerlink" title="语义计算策略"></a>语义计算策略</h2><h3 id="数据特征"><a href="#数据特征" class="headerlink" title="数据特征"></a>数据特征</h3><ul>
+<li>数据量少 审核通过的应用数量只有数十万</li>
+<li>文本信息少 附带文本信息少</li>
+</ul>
+<p>这就意味着能建索引的量少 –&gt; 所以要将信息泛化</p>
+<h3 id="应对策略"><a href="#应对策略" class="headerlink" title="应对策略"></a>应对策略</h3><p>搜索＋推荐<br>用 <strong>词、主题、标签</strong> 来描述语义 (query –&gt; term + topic + tag –&gt; app)</p>
 <h3 id="数据补充"><a href="#数据补充" class="headerlink" title="数据补充"></a>数据补充</h3><p>爬取全网资源</p>
 <ul>
 <li>游戏站点、用户评价</li>
@@ -28,21 +36,37 @@
 <li>搜索引擎 解析</li>
 <li>应用宝用户行为</li>
 </ul>
-<p>噪音大 – 机器学习的方法过滤<br>页面抓取 –&gt; 内容抓取 –&gt; 知识挖掘 –&gt; 标签 句法模板 标签集合 标签关联 –&gt; 标签关联净化 – &gt; 标签索引</p>
-<h3 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h3><p>用户行为指导排序</p>
+<p>容易出现的问题是噪音会很大，所以需要机器学习的方法进一步的过滤</p>
+<p>过程就是 <strong>页面抓取 –&gt; 内容抓取 –&gt; 知识挖掘 –&gt; 标签 + 句法模板 + 标签集合 + 标签关联 –&gt; 标签关联净化 –&gt; 标签索引</strong></p>
+<h3 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h3><p>利用用户行为来指导排序</p>
 <ul>
-<li>点击下载因子（权重大） 增强鲁棒性</li>
-<li>entropy因子。用户query的集中程度，entropy，点击散，entropy高，区分精准query和模糊query</li>
+<li>点击下载因子。赋予大的权重（增强鲁棒性）</li>
+<li>entropy因子。entropy可以表示用户query的集中程度，，点击散，entropy高，区分精准query和模糊query</li>
 </ul>
-<h3 id="主题模型"><a href="#主题模型" class="headerlink" title="主题模型"></a>主题模型</h3><p>LDA 聚类，对 topic 进行人工标注，把 app 映射到 topic<br>（lda 业界用法比较多。最大特点：大量语料。语料少效果不好）补充大量文本数据？？？？？？？？？？？？？？？？？？</p>
-<h3 id="标签挖掘"><a href="#标签挖掘" class="headerlink" title="标签挖掘"></a>标签挖掘</h3><p>元搜方式挖掘 tag（传统搜索引擎） 搜app<br>根据用户行为、画像挖掘 tag  对用户进行分群 地区／年龄／职业／性别 生成代表用户属性的标签 给app</p>
-<h3 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h3><p>机器学习模型计算 confidence level<br>human editor ; web data; qa (lda) user group tags<br>–&gt;<br>GBDT model</p>
+<h3 id="主题模型"><a href="#主题模型" class="headerlink" title="主题模型"></a>主题模型</h3><p>LDA 聚类，对 topic 进行人工标注，把 app 映射到 topic<br>LDA 在业界用法比较多。然而它最大的特点是需要大量的语料，语料少效果就不好。所以需要补充大量文本数据。</p>
+<h3 id="标签挖掘"><a href="#标签挖掘" class="headerlink" title="标签挖掘"></a>标签挖掘</h3><ul>
+<li>元搜方式挖掘 tag （通过搜app）</li>
+<li>根据用户行为、画像挖掘 tag<br>对用户进行分群 地区／年龄／职业／性别等 生成代表用户属性的标签给app</li>
+</ul>
+<p>元搜，上大学的时候还学过来着，居然听讲座的时候没想起来😳</p>
+<blockquote>
+<p>元搜索引擎又称多搜索引擎，通过一个统一的用户界面帮助用户在多个搜索引擎中选择和利用合适的（甚至是同时利用若干个）搜索引擎来实现检索操作，是对分布于网络的多种检索工具的全局控制机制。（搜索引擎分类：全文搜索引擎、目录索引、元搜索引擎）</p>
+</blockquote>
+<h3 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h3><p>方法：机器学习模型计算 confidence level<br>human editor + web data + qa (lda) user group tags  –&gt; <a href="http://blog.csdn.net/w28971023/article/details/8240756" target="_blank" rel="external">GBDT mode</a></p>
+<blockquote>
+<p>GBDT(Gradient Boosting Decision Tree) 又叫 MART（Multiple Additive Regression Tree)，是一种迭代的决策树算法，该算法由多棵决策树组成，所有树的结论累加起来做最终答案。它在被提出之初就和SVM一起被认为是泛化能力（generalization)较强的算法。近些年更因为被用于搜索排序的机器学习模型而引起大家关注。</p>
+</blockquote>
 <h3 id="app-语义画像"><a href="#app-语义画像" class="headerlink" title="app 语义画像"></a>app 语义画像</h3><p>语义描述体系<br>分多个维度</p>
 <h3 id="机器学习（LTR）"><a href="#机器学习（LTR）" class="headerlink" title="机器学习（LTR）"></a>机器学习（LTR）</h3><p>挑战：多来源检索结果不可比（类别／tag）<br>利器：lambdaMART 排序模型（GBRT的变种）</p>
-<p>–&gt; CTR 提升6%</p>
-<h2 id="第三部分-应用宝搜索商业化"><a href="#第三部分-应用宝搜索商业化" class="headerlink" title="第三部分 应用宝搜索商业化"></a>第三部分 应用宝搜索商业化</h2><p>推荐相关</p>
-<h3 id="分发升级"><a href="#分发升级" class="headerlink" title="分发升级"></a>分发升级</h3><p>应用＋<br>应用分发 –&gt; 内容服务分发</p>
-<p>意图识别优化：什么时候出应用，什么时候出音乐，热度<br>多来源混排：机器学习＋运营系统优化异构排序，促进分发效率（应用、音乐等怎么混排）<br>多场景引导：在热词、直达区（搜索补充呈现）、联想词等场景引导用户，培养内容搜索习惯</p>
+<blockquote>
+<p>LTR - Learning to rank：学习排序<br>用机器学习的方法进行排序，可用于相关性排序、推荐引擎等系统中。Learning to rank or machine-learned ranking (MLR) is a type of supervised or semi-supervised machine learning problem in which the goal is to automatically construct a ranking model from training data.</p>
+</blockquote>
+<h2 id="应用宝搜索商业化"><a href="#应用宝搜索商业化" class="headerlink" title="应用宝搜索商业化"></a>应用宝搜索商业化</h2><h3 id="分发升级"><a href="#分发升级" class="headerlink" title="分发升级"></a>分发升级</h3><p>应用+<br>应用分发 –&gt; 内容服务分发</p>
+<ul>
+<li>意图识别优化：什么时候出应用，什么时候出音乐，热度</li>
+<li>多来源混排：机器学习＋运营系统优化异构排序，促进分发效率（应用、音乐等怎么混排）</li>
+<li>多场景引导：在热词、直达区（搜索补充呈现）、联想词等场景引导用户，培养内容搜索习惯</li>
+</ul>
 <h3 id="应用搜索广告"><a href="#应用搜索广告" class="headerlink" title="应用搜索广告"></a>应用搜索广告</h3><p>技术核心</p>
 <ul>
 <li><p>app 画像<br>基于标签、主题、类别的 app 细粒度商业词</p>
@@ -51,7 +75,7 @@
 </li>
 </ul>
 <p>利用相似应用打tag（confidence level –&gt; filter）</p>
-<h1 id="机器学习的本质"><a href="#机器学习的本质" class="headerlink" title="机器学习的本质"></a>机器学习的本质</h1><p>已知数据 先验知识（专家系统） 未知数据的特征 求未知数据的优化分布<br>通用技术难点：空间搜索 函数泛化</p>
+<h1 id="机器学习的本质"><a href="#机器学习的本质" class="headerlink" title="机器学习的本质"></a>机器学习的本质</h1><p>已知数据 先验知识（专家系统） 未知数据的特征 –&gt; 求未知数据的优化分布<br>通用技术难点：空间搜索 函数泛化</p>
 <p>实际工作：</p>
 <ul>
 <li>模型10% 其他90%</li>
@@ -59,17 +83,18 @@
 <li>特征如何抽取</li>
 <li>领域先验知识</li>
 </ul>
-<p>大量噪音？维数灾难？<br>琐碎的工作很重要</p>
-<p>正则化(L1？ L2？) 剪枝</p>
-<h1 id="大公司-vs-小公司"><a href="#大公司-vs-小公司" class="headerlink" title="大公司 vs 小公司"></a>大公司 vs 小公司</h1><p>搜索 推荐 广告<br>和牛人接触<br>流程化 冗余 很多团队想做一件事</p>
-<h3 id="小公司"><a href="#小公司" class="headerlink" title="小公司"></a>小公司</h3><ul>
+<p>大量噪音？维数灾难？<br><a href="http://blog.csdn.net/vividonly/article/details/50723852" target="_blank" rel="external">L0,L1,L2正则化</a> 剪枝<br>琐碎的准备工作很重要</p>
+<blockquote>
+<p>L0正则化的值是模型参数中非零参数的个数。<br>L1正则化表示各个参数绝对值之和。<br>L2正则化标识各个参数的平方的和的开方值。</p>
+</blockquote>
+<h1 id="大公司-vs-小公司"><a href="#大公司-vs-小公司" class="headerlink" title="大公司 vs 小公司"></a>大公司 vs 小公司</h1><h2 id="大公司"><a href="#大公司" class="headerlink" title="大公司"></a>大公司</h2><p>搜索 推荐 广告 都能接触到，可以和牛人接触<br>流程化 冗余 很多团队想做一件事</p>
+<h2 id="小公司"><a href="#小公司" class="headerlink" title="小公司"></a>小公司</h2><ul>
 <li><p>方向更对<br>不被商业价值束缚 不被同伴利益束缚 不被自己经验束缚</p>
 </li>
 <li><p>跑的更快<br>不被用户束缚 不被流程束缚 不被一般道德束缚</p>
 </li>
 </ul>
-<h3 id="复利效应"><a href="#复利效应" class="headerlink" title="复利效应"></a>复利效应</h3><p>百度 搜索<br>搜搜<br>在一个点上积累积累积累 –&gt; 复利效应 –&gt; 无法超越<br>算法 数学专家 我们做应用方面的复利效应</p>
-<p>应用宝 去噪 做了一年</p>
+<h1 id="复利效应"><a href="#复利效应" class="headerlink" title="复利效应"></a>复利效应</h1><p>应用宝光是去噪就做了一年。<br>每天积累一点 –&gt; 复利效应 –&gt; 无法超越<br>腾讯去做搜索，做不过百度，为什么？技术团队不强？no！因为百度做了几十年的搜索，每天进步一点，复利效应无法超越。<br>我们要找到可以产生复利效应的点。算法是数学专家的事，我们可以做的是应用方面的复利效应，比如说聊天机器人。</p>
 ]]></content>
     </entry>
     
@@ -1873,6 +1898,14 @@ fw.write("".join(doc)+"\n")
 <p>再看一下？好吧……binary。。</p>
 <pre>file -i baike_url_part_000.chinese
 baike_url_part_000.chinese: application/octet-stream; charset=binary</pre>
+
+
+<h3 id="iconv-文件编码转换"><a href="#iconv-文件编码转换" class="headerlink" title="iconv 文件编码转换"></a>iconv 文件编码转换</h3><p>iconv [选项…] [文件…]</p>
+<p>输入/输出格式规范：<br>-f, –from-code=名称 原始文本编码<br>-t, –to-code=名称 输出编码</p>
+<p>信息：<br>-l, –list 列举所有已知的字符集</p>
+<p>输出控制：<br>-c 从输出中忽略无效的字符<br>-o, –output=FILE 输出文件<br>-s, –silent 关闭警告<br>–verbose 打印进度信息</p>
+<pre># utf 转 gbk
+iconv -c -f utf-8 -t gb2312 file</pre>
 
 <h3 id="傻瓜命令行工具enca"><a href="#傻瓜命令行工具enca" class="headerlink" title="傻瓜命令行工具enca"></a>傻瓜命令行工具enca</h3><p>好了，这时候就要用神器啦！傻瓜命令行工具enca – 不但能智能识别文件的编码，而且还支持成批转换！心动了吗？心动不如行动！来！安装！so easy~  　　</p>
 <pre>sudo apt-get install enca</pre>
