@@ -1,0 +1,1037 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数组," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="策略 &amp;amp; 注意点array 在内存里是连续存储的，意味着 immutable length 和 no holes allowed。带来的优点是支持随机访问，缺点是当 resize array 的时候需要 copy 原有的所有元素，当删除一个不在末尾的元素时，又要 shift 很多元素。
+数组最需要注意的：
+
+length 问题，最后一个数 array[len(array)-1]
+指针问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构和算法 -- 数组">
+<meta property="og:url" content="http://www.shuang0420.com/2016/09/19/数据结构和算法 -- 数组/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="策略 &amp;amp; 注意点array 在内存里是连续存储的，意味着 immutable length 和 no holes allowed。带来的优点是支持随机访问，缺点是当 resize array 的时候需要 copy 原有的所有元素，当删除一个不在末尾的元素时，又要 shift 很多元素。
+数组最需要注意的：
+
+length 问题，最后一个数 array[len(array)-1]
+指针问题">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95%20--%20%E6%95%B0%E7%BB%84/island.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构和算法 -- 数组">
+<meta name="twitter:description" content="策略 &amp;amp; 注意点array 在内存里是连续存储的，意味着 immutable length 和 no holes allowed。带来的优点是支持随机访问，缺点是当 resize array 的时候需要 copy 原有的所有元素，当删除一个不在末尾的元素时，又要 shift 很多元素。
+数组最需要注意的：
+
+length 问题，最后一个数 array[len(array)-1]
+指针问题">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95%20--%20%E6%95%B0%E7%BB%84/island.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/09/19/数据结构和算法 -- 数组/"/>
+
+
+  <title> 数据结构和算法 -- 数组 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构和算法 -- 数组
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-09-19T09:55:12+08:00" content="2016-09-19">
+              2016-09-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Data-Structure/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Structure</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/19/数据结构和算法 -- 数组/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/09/19/数据结构和算法 -- 数组/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<h1 id="策略-amp-注意点"><a href="#策略-amp-注意点" class="headerlink" title="策略 &amp; 注意点"></a>策略 &amp; 注意点</h1><p>array 在内存里是连续存储的，意味着 immutable length 和 no holes allowed。带来的优点是支持随机访问，缺点是当 resize array 的时候需要 copy 原有的所有元素，当删除一个不在末尾的元素时，又要 shift 很多元素。</p>
+<p>数组最需要注意的：</p>
+<ol>
+<li>length 问题，最后一个数 array[len(array)-1]</li>
+<li>指针问题，deepcopy or shallowcopy，对原数组进行多次变形并需纪录每次结果时，要注意 deepcopy 而不是存指针。res.append(list(nums))，如 permutation 这种题。</li>
+<li>可以用虚拟边界</li>
+<li>利用 array 的 index 可以做很多事情（利用 nums[i] 和 nums[nums[i]]）。如 Find the Duplicate Number，把 array 变成 linkedlist，或者</li>
+</ol>
+<h2 id="Efficiency"><a href="#Efficiency" class="headerlink" title="Efficiency"></a>Efficiency</h2><p>Insertion at back: O(1)<br>Insertion at front: O(n)<br>Insertion in middle: O(n)<br>Searching (using linear search): O(n)<br>Deletion: O(n)<br>Access to an element with its index: O(1)</p>
+<h2 id="python-lists"><a href="#python-lists" class="headerlink" title="python lists"></a>python lists</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">The list data type has some more methods. Here are all of the methods of list objects:</div><div class="line"></div><div class="line">list.append(x)</div><div class="line">Add an item to the end of the list; equivalent to a[len(a):] = [x].</div><div class="line"></div><div class="line">list.extend(L)</div><div class="line">Extend the list by appending all the items in the given list; equivalent to a[len(a):] = L.</div><div class="line"></div><div class="line">list.insert(i, x)</div><div class="line">Insert an item at a given position. The first argument is the index of the element before which to insert, so a.insert(0, x) inserts at the front of the list, and a.insert(len(a), x) is equivalent to a.append(x).</div><div class="line"></div><div class="line">list.remove(x)</div><div class="line">Remove the first item from the list whose value is x. It is an error if there is no such item.</div><div class="line"></div><div class="line">list.pop([i])</div><div class="line">Remove the item at the given position in the list, and return it. If no index is specified, a.pop() removes and returns the last item in the list. (The square brackets around the i in the method signature denote that the parameter is optional, not that you should type square brackets at that position. You will see this notation frequently in the Python Library Reference.)</div><div class="line"></div><div class="line">list.index(x)</div><div class="line">Return the index in the list of the first item whose value is x. It is an error if there is no such item.</div><div class="line"></div><div class="line">list.count(x)</div><div class="line">Return the number of times x appears in the list.</div><div class="line"></div><div class="line">list.sort(cmp=None, key=None, reverse=False)</div><div class="line">Sort the items of the list in place (the arguments can be used for sort customization, see sorted() for their explanation).</div><div class="line"></div><div class="line">list.reverse()</div></pre></td></tr></table></figure>
+<h2 id="Java-Arrays"><a href="#Java-Arrays" class="headerlink" title="Java Arrays"></a>Java Arrays</h2><p>在 java 里，array 有一个方法，clone()，属于 shallow copy。有一个 immutable field，length。<br>Java Arrays 好用的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">int[] a = &#123; 7, 1, 2, 3, 4, 5 &#125;;</div><div class="line">int[] b = &#123; 7, 1, 2, 3, 4, 5 &#125;;</div><div class="line"></div><div class="line">System.out.println(&quot;a equals b: &quot; + Arrays.equals(a, b));</div><div class="line">System.out.println(&quot;a: &quot; + Arrays.toString(a));</div><div class="line"></div><div class="line">Arrays.sort(a);</div><div class="line">int[] c = Arrays.copyOf(b, b.length);</div><div class="line">// public static void arraycopy(Object source, int srcIndex, Object</div><div class="line">// destination, int destIndex, int length)</div><div class="line">int[] d = new int[b.length];</div><div class="line">System.arraycopy(b, 0, d, 0, 3);</div><div class="line">int[] e = b.clone(); // shallow copy, only reference</div><div class="line"></div><div class="line">System.out.println(&quot;Sorted a: &quot; + Arrays.toString(a));</div><div class="line">System.out.println(&quot;c (copied from b): &quot; + Arrays.toString(c));</div><div class="line">System.out.println(&quot;d (copied from b): &quot; + Arrays.toString(d));</div><div class="line">System.out.println(&quot;e (copied from b): &quot; + Arrays.toString(e));</div></pre></td></tr></table></figure></p>
+<p>outputs<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">a equals b: true</div><div class="line">a: [7, 1, 2, 3, 4, 5]</div><div class="line">Sorted a: [1, 2, 3, 4, 5, 7]</div><div class="line">c (copied from b): [7, 1, 2, 3, 4, 5]</div><div class="line">d (copied from b): [7, 1, 2, 0, 0, 0]</div><div class="line">e (copied from b): [7, 1, 2, 3, 4, 5]</div></pre></td></tr></table></figure></p>
+<h2 id="Java-List"><a href="#Java-List" class="headerlink" title="Java List"></a>Java List</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">add(object) : adds a new element to the end</div><div class="line">add(index, object) : inserts a new element at the specified</div><div class="line">index</div><div class="line">set(index, object) : replaces an existing element at the</div><div class="line">specified index with the new element.</div><div class="line">get(index) : returns the element at the specified index.</div><div class="line">remove(index) : deletes the element at the specified index.</div><div class="line">size() : returns the number of elements.</div></pre></td></tr></table></figure>
+<p>Java 7，ArrayList 用的是 doubling-up policy。也就是说，假定 ArrayList 的初始 capacity 为 4，那么加入第 n(n&lt;=4) 个元素的 running time 是 1，而加入第 5 个 item 时，running time 是 5 而不是 1，因为要重新创建一个 double-size list 再把原来的元素 copy 进去。同样的，加入第 9 个元素时的 running time 是 9 而不是 1。用 amortized 的方法可以发现 add(E e) 的操作的 running time 是一个常数，也就是 O(1)。</p>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="66-Plus-One"><a href="#66-Plus-One" class="headerlink" title="66. Plus One"></a>66. Plus One</h2><h3 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h3><p>Given a non-negative integer represented as a non-empty array of digits, plus one to the integer.</p>
+<p>You may assume the integer do not contain any leading zero, except the number 0 itself.</p>
+<p>The digits are stored such that the most significant digit is at the head of the list.</p>
+<p><strong>Similar problems</strong> (M) Multiply Strings (E) Add Binary (M) Add Two Numbers (M) Plus One Linked List<br><a href="http://www.shuang0420.com/2016/09/04/数据结构和算法%20--%20链表/">2.445. Add Two Numbers 369. Plus One Linked List</a><br><a href="http://www.shuang0420.com/2016/10/12/数据结构和算法%20--%20String/">43. Multiply Strings</a></p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line"></div><div class="line">    def plusOne(self, digits):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type digits: List[int]</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if digits[-1] != 9:</div><div class="line">            digits[-1] += 1</div><div class="line">            return digits</div><div class="line">        i = len(digits) - 1</div><div class="line">        while i &gt;= 0 and digits[i] == 9:</div><div class="line">            digits[i] = 0</div><div class="line">            i -= 1</div><div class="line">        if i == -1:</div><div class="line">            cur = [1]</div><div class="line">            cur.extend(digits)</div><div class="line">            return cur</div><div class="line">        digits[i] += 1</div><div class="line">        return digits</div></pre></td></tr></table></figure>
+<h2 id="67-Add-Binary"><a href="#67-Add-Binary" class="headerlink" title="67. Add Binary"></a>67. Add Binary</h2><h3 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem"></a>Problem</h3><p>Given two binary strings, return their sum (also a binary string).</p>
+<p>For example,<br>a = “11”<br>b = “1”<br>Return “100”.</p>
+<h3 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">    1. do it as we do the math</div><div class="line">        make sure a is longer than b</div><div class="line">        while pb&gt;=0, start from right to left, calculate sum value at each digit and update result and carry.</div><div class="line">            cur=int(a[pa])+int(b[pb])+carry</div><div class="line">            res=str(cur%2)+res</div><div class="line">            carry=cur/2</div><div class="line">        while pa&gt;=0, do similar task</div><div class="line">            cur=int(a[pa])+carry</div><div class="line">            res=str(cur%2)+res</div><div class="line">            carry=cur/2</div><div class="line">        deal with carry if carry==1</div><div class="line">            res=&apos;1&apos;+res</div><div class="line">    2. do it recursively</div><div class="line">        when a[-1]==&apos;1&apos; and b[-1]==&apos;1&apos;, recursive case would be</div><div class="line">            addBinary(self.addBinary(a[:-1],b[:-1]),&apos;1&apos;)+&apos;0&apos;</div><div class="line">                current layer: &apos;0&apos;</div><div class="line">                previous digit: a[:-1]+b[:-1]+&apos;1&apos;</div><div class="line">                    add previous digit as usual: addBinary(a[:-1],b[:-1])</div><div class="line">                    add one: addBinary(prev,&apos;1&apos;)</div><div class="line">                =&gt; addBinary(addBinary(a[:-1],b[:-1]),&apos;1&apos;)+&apos;0&apos;</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def addBinary(self, a, b):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type a: str</div><div class="line">        :type b: str</div><div class="line">        :rtype: str</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not a: return b</div><div class="line">        if not b: return a</div><div class="line">        if a[-1]==&apos;0&apos; and b[-1]==&apos;0&apos;:</div><div class="line">            return self.addBinary(a[:-1],b[:-1])+&apos;0&apos;</div><div class="line">        if a[-1]==&apos;1&apos; and b[-1]==&apos;1&apos;:</div><div class="line">            return self.addBinary(self.addBinary(a[:-1],b[:-1]),&apos;1&apos;)+&apos;0&apos;</div><div class="line">        else:</div><div class="line">            return self.addBinary(a[:-1],b[:-1])+&apos;1&apos;</div><div class="line">            &apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line">class Solution(object):</div><div class="line"></div><div class="line">    def addBinary(self, a, b):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type a: str</div><div class="line">        :type b: str</div><div class="line">        :rtype: str</div><div class="line">        &quot;&quot;&quot;</div><div class="line"></div><div class="line">        # make sure a is longer than b</div><div class="line">        if len(a) &lt; len(b):</div><div class="line">            a, b = b, a</div><div class="line"></div><div class="line">        pa = len(a) - 1</div><div class="line">        pb = len(b) - 1</div><div class="line">        res, carry = &apos;&apos;, 0</div><div class="line">        while pb &gt;= 0:</div><div class="line">            cur = int(a[pa]) + int(b[pb]) + carry</div><div class="line">            carry = cur / 2</div><div class="line">            res = str(cur % 2) + res</div><div class="line">            pb -= 1</div><div class="line">            pa -= 1</div><div class="line"></div><div class="line">        while pa &gt;= 0:</div><div class="line">            cur = int(a[pa]) + carry</div><div class="line">            carry = cur / 2</div><div class="line">            res = str(cur % 2) + res</div><div class="line">            pa -= 1</div><div class="line"></div><div class="line">        if carry == 1:</div><div class="line">            res = &apos;1&apos; + res</div><div class="line"></div><div class="line">        return res</div></pre></td></tr></table></figure>
+<h2 id="228-Summary-Ranges"><a href="#228-Summary-Ranges" class="headerlink" title="228. Summary Ranges"></a>228. Summary Ranges</h2><h3 id="Problem-2"><a href="#Problem-2" class="headerlink" title="Problem"></a>Problem</h3><p>Given a sorted integer array without duplicates, return the summary of its ranges.</p>
+<p>For example, given [0,1,2,4,5,7], return [“0-&gt;2”,”4-&gt;5”,”7”].</p>
+<h3 id="Solution-2"><a href="#Solution-2" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line">    def summaryRanges(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[str]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        def joinStr(start,end):</div><div class="line">            if start==end:</div><div class="line">                return str(nums[start])</div><div class="line">            else:</div><div class="line">                return str(nums[start])+&apos;-&gt;&apos;+str(nums[end])</div><div class="line">        if not nums:</div><div class="line">            return []</div><div class="line">        res=[]</div><div class="line">        start,end=0,0</div><div class="line">        while end+1&lt;len(nums):</div><div class="line">            if nums[end]+1==nums[end+1]:</div><div class="line">                end+=1</div><div class="line">            else:</div><div class="line">                res.append(joinStr(start,end))</div><div class="line">                start=end+1</div><div class="line">                end=start</div><div class="line">        res.append(joinStr(start,end))</div><div class="line">        return res</div></pre></td></tr></table></figure>
+<h2 id="360-Sort-Transformed-Array"><a href="#360-Sort-Transformed-Array" class="headerlink" title="360. Sort Transformed Array"></a>360. Sort Transformed Array</h2><h3 id="Problem-3"><a href="#Problem-3" class="headerlink" title="Problem"></a>Problem</h3><p>Given a sorted array of integers nums and integer values a, b and c. Apply a function of the form f(x) = ax2 + bx + c to each element x in the array.</p>
+<p>The returned array must be in sorted order.</p>
+<p>Expected time complexity: O(n)</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">nums = [-4, -2, 2, 4], a = 1, b = 3, c = 5,</div><div class="line"></div><div class="line">Result: [3, 9, 15, 33]</div><div class="line"></div><div class="line">nums = [-4, -2, 2, 4], a = -1, b = 3, c = 5</div><div class="line"></div><div class="line">Result: [-23, -5, 1, 7]</div></pre></td></tr></table></figure></p>
+<p>Credits:<br>Special thanks to @elmirap for adding this problem and creating all test cases.</p>
+<h3 id="Solution-3"><a href="#Solution-3" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Notes:</div><div class="line">    Because the input is sorted and the function is a second degree polynomial, simply applying the function will result in at most two increasing/decreasing runs. Which Python&apos;s sort function will recognize and simply reverse/merge in O(n).</div><div class="line">    Refer links:</div><div class="line">        https://en.wikipedia.org/wiki/Timsort</div><div class="line">        http://blog.csdn.net/yangzhongblog/article/details/8184707</div><div class="line"></div><div class="line">Tips:</div><div class="line">    heapq.merge(*iterables): Merge multiple sorted inputs into a single sorted output (for example, merge timestamped entries from multiple log files). Returns an iterator over the sorted values.</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line"># Method 1</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def sortTransformedArray(self, nums, a, b, c):</div><div class="line">        return sorted(a*x*x + b*x + c for x in nums)</div><div class="line">    &apos;&apos;&apos;   </div><div class="line"></div><div class="line"></div><div class="line"># Method 2: two parts solution</div><div class="line">&apos;&apos;&apos;</div><div class="line">from collections import deque</div><div class="line">import heapq</div><div class="line">class Solution(object):</div><div class="line"></div><div class="line">    def sortTransformedArray(self, nums, a, b, c):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :type a: int</div><div class="line">        :type b: int</div><div class="line">        :type c: int</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line"></div><div class="line">        &quot;&quot;&quot;</div><div class="line">        # can simply use heapq.merge()</div><div class="line">        def mergeLists(left,right):</div><div class="line">            lp,rp=0,0</div><div class="line">            res=[]</div><div class="line">            while lp&lt;len(left) and rp&lt;len(right):</div><div class="line">                if left[lp]&lt;=right[rp]:</div><div class="line">                    res.append(left[lp])</div><div class="line">                    lp+=1</div><div class="line">                else:</div><div class="line">                    res.append(right[rp])</div><div class="line">                    rp+=1</div><div class="line">            while lp&lt;len(left):</div><div class="line">                res.append(left[lp])</div><div class="line">                lp+=1</div><div class="line">            while rp&lt;len(right):</div><div class="line">                res.append(right[rp])</div><div class="line">                rp+=1</div><div class="line">            return res</div><div class="line">            &quot;&quot;&quot;</div><div class="line"></div><div class="line">        if not nums: return None</div><div class="line">        d=deque()</div><div class="line">        if a==0:</div><div class="line">            if b&gt;0:</div><div class="line">                for n in nums:</div><div class="line">                    d.append(n*b+c)</div><div class="line">            else:</div><div class="line">                for n in nums:</div><div class="line">                    d.appendleft(n*b+c)</div><div class="line">        else:</div><div class="line">            left=deque()</div><div class="line">            right=deque()</div><div class="line">            if a&gt;0:</div><div class="line">                line=float(-1*b)/(2*a)</div><div class="line">                for n in nums:</div><div class="line">                    if n&lt;line:</div><div class="line">                        left.appendleft(a*n*n+b*n+c)</div><div class="line">                    else:</div><div class="line">                        right.append(a*n*n+b*n+c)</div><div class="line">            else:</div><div class="line">                line=float(-1*b)/(2*a)</div><div class="line">                for n in nums:</div><div class="line">                    if n&lt;line:</div><div class="line">                        left.append(a*n*n+b*n+c)</div><div class="line">                    else:</div><div class="line">                        right.appendleft(a*n*n+b*n+c)</div><div class="line">            #d=mergeLists(left,right)</div><div class="line">            d=heapq.merge(left,right)</div><div class="line">        return list(d)</div><div class="line">        &apos;&apos;&apos;</div><div class="line"></div><div class="line"># Method 3: two pointers solution</div><div class="line">class Solution(object):</div><div class="line"></div><div class="line">    def sortTransformedArray(self, nums, a, b, c):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :type a: int</div><div class="line">        :type b: int</div><div class="line">        :type c: int</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        def f(x):</div><div class="line">            return a*x*x+b*x+c</div><div class="line"></div><div class="line"></div><div class="line">        start,end=0,len(nums)-1</div><div class="line">        res=[]</div><div class="line">        while start&lt;=end:</div><div class="line">            resS,resE=f(nums[start]),f(nums[end])</div><div class="line">            if a&gt;0:</div><div class="line">                if resS&lt;resE:</div><div class="line">                    res.append(resE)</div><div class="line">                    end-=1</div><div class="line">                else:</div><div class="line">                    res.append(resS)</div><div class="line">                    start+=1</div><div class="line">            else:</div><div class="line">                if resS&gt;resE:</div><div class="line">                    res.append(resE)</div><div class="line">                    end-=1</div><div class="line">                else:</div><div class="line">                    res.append(resS)</div><div class="line">                    start+=1</div><div class="line">        if a&gt;0:</div><div class="line">            return res[::-1]</div><div class="line">        return res</div></pre></td></tr></table></figure>
+<h2 id="346-Moving-Average-from-Data-Stream"><a href="#346-Moving-Average-from-Data-Stream" class="headerlink" title="346. Moving Average from Data Stream"></a>346. Moving Average from Data Stream</h2><h3 id="Problem-4"><a href="#Problem-4" class="headerlink" title="Problem"></a>Problem</h3><p>Given a stream of integers and a window size, calculate the moving average of all integers in the sliding window.<br>For example,<br>MovingAverage m = new MovingAverage(3);<br>m.next(1) = 1<br>m.next(10) = (1 + 10) / 2<br>m.next(3) = (1 + 10 + 3) / 3<br>m.next(5) = (10 + 3 + 5) / 3</p>
+<h3 id="Solution-4"><a href="#Solution-4" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">- maintain a deque of at most &apos;size&apos; length, for each next call, enque the number, calculate average, check if the length of deque is 3, if it is, popleft, and finally return the average. Time complexity O(n); Space complexity O(size)</div><div class="line"></div><div class="line">Follow-up:</div><div class="line">- make it O(1), save the sum each time, that is for each next call, enque the number, add to global sum, calculate average, check if the length of deque is 3, if it is, pop left, minus popped number from sum, and finally return the average.</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">from collections import deque</div><div class="line">class MovingAverage(object):</div><div class="line"></div><div class="line">    def __init__(self, size):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        Initialize your data structure here.</div><div class="line">        :type size: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.q=deque()</div><div class="line">        self.size=size</div><div class="line">        self.sum=0</div><div class="line"></div><div class="line">    def next(self, val):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type val: int</div><div class="line">        :rtype: float</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.q.append(val)</div><div class="line">        self.sum+=val</div><div class="line">        avg=self.sum/float(len(self.q))</div><div class="line">        if len(self.q)==self.size:</div><div class="line">            self.sum-=self.q.popleft()</div><div class="line">        return avg</div><div class="line"></div><div class="line"># Your MovingAverage object will be instantiated and called as such:</div><div class="line"># obj = MovingAverage(size)</div><div class="line"># param_1 = obj.next(val)</div></pre></td></tr></table></figure>
+<h2 id="75-Sort-Colors"><a href="#75-Sort-Colors" class="headerlink" title="75. Sort Colors"></a>75. Sort Colors</h2><p>subarray 问题</p>
+<h3 id="Problem-5"><a href="#Problem-5" class="headerlink" title="Problem"></a>Problem</h3><p>Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.<br>Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.<br>Note:<br>You are not suppose to use the library’s sort function for this problem.</p>
+<h3 id="Solution-5"><a href="#Solution-5" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">- quicksort?  Time complexity: O(nlogn)</div><div class="line">- 3 numbers, so count and reset, Time complexity: O(n), Space complexity: O(3)-&gt;O(1), two-pass</div><div class="line">- subarray with different states, Time complexity: O(n)</div><div class="line"></div><div class="line">Attention:</div><div class="line">- for solution 3, boundary is tricky, remember pointer is not included</div><div class="line"></div><div class="line">Test case:</div><div class="line">- [0]</div><div class="line">- [0,0,0]</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def sortColors(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: void Do not return anything, modify nums in-place instead.</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if len(nums)&lt;=1:</div><div class="line">            return</div><div class="line">        left,right,cur=0,len(nums)-1,0</div><div class="line">        while cur&lt;=right:</div><div class="line">            if nums[cur]==0:</div><div class="line">                nums[cur],nums[left]=nums[left],nums[cur]</div><div class="line">                left+=1</div><div class="line">                cur+=1</div><div class="line">            elif nums[cur]==2:</div><div class="line">                nums[cur],nums[right]=nums[right],nums[cur]</div><div class="line">                right-=1</div><div class="line">            else:</div><div class="line">                cur+=1</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    &apos;&apos;&apos;            </div><div class="line">    # two-pass solution: count and reset            </div><div class="line">    def sortColors(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: void Do not return anything, modify nums in-place instead.</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if len(nums)&lt;1:</div><div class="line">            return</div><div class="line">        a0,a1,a2=0,0,0</div><div class="line">        for n in nums:</div><div class="line">            if n==0: a0+=1</div><div class="line">            elif n==1: a1+=1</div><div class="line">            elif n==2: a2+=1</div><div class="line">        for i in range(len(nums)):</div><div class="line">            if a0&gt;0:</div><div class="line">                nums[i]=0</div><div class="line">                a0-=1</div><div class="line">            elif a1&gt;0:</div><div class="line">                nums[i]=1</div><div class="line">                a1-=1</div><div class="line">            elif a2&gt;0:</div><div class="line">                nums[i]=2</div><div class="line">                a2-=1</div><div class="line">    &apos;&apos;&apos;</div></pre></td></tr></table></figure>
+<h2 id="53-Maximum-Subarray"><a href="#53-Maximum-Subarray" class="headerlink" title="53. Maximum Subarray"></a>53. Maximum Subarray</h2><h3 id="Problem-6"><a href="#Problem-6" class="headerlink" title="Problem"></a>Problem</h3><p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.<br>For example, given the array [-2,1,-3,4,-1,2,1,-5,4],<br>the contiguous subarray [4,-1,2,1] has the largest sum = 6.<br>More practice:<br>If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.</p>
+<h3 id="Solution-6"><a href="#Solution-6" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">- subarray: 2 pointers: head,tail</div><div class="line">- any repeated work? no   any meaningless work? yes    check the sum-array and we can find that the non-max-sum either subtract one more number or miss one more addition --&gt; cur_sum=max(cur_sum,nums[start]+cur_sum)</div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def maxSubArray(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        cur_sum,max_sum=nums[0],nums[0]</div><div class="line">        for start in range(1,len(nums)):</div><div class="line">            cur_sum=max(nums[start],nums[start]+cur_sum)</div><div class="line">            max_sum=max(cur_sum,max_sum)</div><div class="line">        return max_sum</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    # brute-force, time limit exceeded</div><div class="line">    def maxSubArray(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if len(nums)==0:</div><div class="line">            return 0</div><div class="line">        global_sum=nums[0]</div><div class="line">        for i in range(0,len(nums)-1):</div><div class="line">            part_sum=nums[i]</div><div class="line">            if part_sum&gt;global_sum:</div><div class="line">                global_sum=part_sum</div><div class="line">            for j in range(i+1,len(nums)):</div><div class="line">                part_sum+=nums[j]</div><div class="line">                if part_sum&gt;global_sum:</div><div class="line">                    global_sum=part_sum</div><div class="line">        part_sum=nums[-1]</div><div class="line">        if part_sum&gt;global_sum:</div><div class="line">            global_sum=part_sum</div><div class="line">        return global_sum</div><div class="line">    &apos;&apos;&apos;</div></pre></td></tr></table></figure>
+<h2 id="Snapchat-面经"><a href="#Snapchat-面经" class="headerlink" title="Snapchat 面经"></a>Snapchat 面经</h2><h3 id="Problem-7"><a href="#Problem-7" class="headerlink" title="Problem"></a>Problem</h3><p>Returns unsorted part of an array.<br>For example, input -&gt; [1,2,5,7,6,4,9], output -&gt; [5,7,6,4]</p>
+<h3 id="Solution-7"><a href="#Solution-7" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">    Easiest way is to sort the array and compare it with the original array, get the first and last digit of different number, and return the list.</div><div class="line">    It takes O(nlogn) time.</div><div class="line"></div><div class="line">Followup -&gt; O(n) time</div><div class="line">    Use two pointers, lastDigit and firstDigit, and two global variables, curMax and curMin</div><div class="line">    For a sorted array, if we start for left to right curMax should be current number, and if we start from right to left, curMin should be current number.</div><div class="line">    So starts from left to right, keep track of curMax, first update curMax, and then check if current number is current max, if not, update lastDigit, repeat till we finish the loop.</div><div class="line">    Then starts from right to left, keep track of curMin, first update curMin, and then check if current number is current min, if not, update firstDigit, repeat till we finish the loop.</div><div class="line">    Return array[firstDigit,lastDigit+1]</div><div class="line">    Time complexity: O(n)</div><div class="line">&apos;&apos;&apos;</div><div class="line">def solution(array):</div><div class="line">    if not array:</div><div class="line">        return []</div><div class="line">    # keep track of current maximum and minimum</div><div class="line">    lastDigit, firstDigit = 0, len(array) - 1</div><div class="line">    curMax, curMin = array[0], array[len(array) - 1]</div><div class="line">    for i in xrange(len(array)):</div><div class="line">        curMax = max(array[i], curMax)</div><div class="line">        if array[i] &lt; curMax:</div><div class="line">            lastDigit = i</div><div class="line">    for i in xrange(len(array) - 1, -1, -1):</div><div class="line">        curMin = min(array[i], curMin)</div><div class="line">        if array[i] &gt; curMin:</div><div class="line">            firstDigit = i</div><div class="line">    return array[firstDigit:lastDigit + 1]</div><div class="line"></div><div class="line">print solution([])</div><div class="line">print solution([1, 2, 5, 7, 6, 4, 9])</div><div class="line">print solution([1, 2, 5, 5, 1])</div></pre></td></tr></table></figure>
+<h2 id="Finding-sum-of-Absolute-Difference-of-Every-pair-of-integer-from-an-array"><a href="#Finding-sum-of-Absolute-Difference-of-Every-pair-of-integer-from-an-array" class="headerlink" title="Finding sum of Absolute Difference of Every pair of integer from an array"></a>Finding sum of Absolute Difference of Every pair of integer from an array</h2><h3 id="Problem-8"><a href="#Problem-8" class="headerlink" title="Problem"></a>Problem</h3><p>Given an array, find the sum of the absolute difference of every pair of integers.<br>For example: Given a[]= {2, 3, 5, 7 };<br>output would be (3-2) + (5-2) + (7-2) + (5-3) + (7-3) + (7-5) = 17.<br>It must be done better than O(n^2).<br>The original array isn’t necessarily sorted.</p>
+<h3 id="Solution-8"><a href="#Solution-8" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">First, sort the array. Let&apos;s say the sorted array looks like [-5, 2, 3, 5].  To consider only distinct pairs, for each element, pair it with only the elements that came before it. That means that the contribution of 3 to the total result is abs(3 - 2) + abs(3 - (-5)). Because the array is sorted, all the elements that came before are smaller or equal, so this can safely be rewritten as 3 * 2 - (2 + (-5)). In general terms, the contribution of arr[i] to the sum is arr[i] * i - sum (arr[0...i-1]). Fortunately, we can maintain the sum term as we go, avoiding expensive recomputation. We&apos;ll get the answer when we sum the contributions of each arr[i].</div><div class="line"></div><div class="line">This code runs in O(n)O(n) time after sorting, so the overall algorithm is O(nlogn)O(nlog⁡n), unless the data you have makes it easy to sort faster than that.</div><div class="line"></div><div class="line">Depending on the meaning of the term &quot;distinct pairs&quot;, you may need to dedupe the array before running the linear pass over the data. That is, if on an input like [1, 2, 1, 2, 3], you wouldn&apos;t want to count (2, 1) several times (even though there&apos;s several ways the pair can form), then you should just dedupe the input. Convert [1, 2, 1, 2, 3] to [1, 2, 3].</div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line">def solution(arr):</div><div class="line">    if not arr:</div><div class="line">        return 0</div><div class="line">    arr.sort()</div><div class="line">    total = 0</div><div class="line">    arraySum = 0</div><div class="line">    for i in range(0, len(arr)):</div><div class="line">        total += (arr[i] * i - arraySum)</div><div class="line">        arraySum += arr[i]</div><div class="line">    return total</div></pre></td></tr></table></figure>
+<h2 id="11-Container-With-Most-Water"><a href="#11-Container-With-Most-Water" class="headerlink" title="11. Container With Most Water"></a>11. Container With Most Water</h2><h3 id="Problem-9"><a href="#Problem-9" class="headerlink" title="Problem"></a>Problem</h3><p>Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.</p>
+<p>Note: You may not slant the container and n is at least 2.</p>
+<h3 id="Solution-9"><a href="#Solution-9" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">    check every possible container (each combination of (i,j) where i,j &lt; len(height))</div><div class="line">    v=(j-i)*min(height[i],height[j])</div><div class="line">    cur_max=max(v,cur_max)</div><div class="line">    takes O(n^2) time</div><div class="line"></div><div class="line">Followup: make it O(n)</div><div class="line">    if we choose i=0 and an any other number in array, we can ensure v&lt;height[0]*l where l=len(height), same reason, if we choose j=len(height)-1 and an any other number in array, we can ensure v&lt;height[-1]*l</div><div class="line">    thus, we start from i=0 and j=len(height)-1 and get a container with volume v1, then in order to get a larger container, we wanna a heigher boundary(height), so we discard the smaller number between height[i] and height[j], and get a new volume v2, repeat this process till i==j</div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def maxArea(self, height):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type height: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not height or len(height)==1:</div><div class="line">            return 0</div><div class="line">        start,end=0,len(height)-1</div><div class="line">        cur_max=float(&apos;-inf&apos;)</div><div class="line">        while start&lt;end:</div><div class="line">            cur=(end-start)*min(height[start],height[end])</div><div class="line">            cur_max=max(cur,cur_max)</div><div class="line">            if height[start]&gt;height[end]:</div><div class="line">                end-=1</div><div class="line">            else:</div><div class="line">                start+=1</div><div class="line">        return cur_max</div></pre></td></tr></table></figure>
+<h2 id="84-Largest-Rectangle-in-Histogram"><a href="#84-Largest-Rectangle-in-Histogram" class="headerlink" title="84. Largest Rectangle in Histogram"></a>84. Largest Rectangle in Histogram</h2><h3 id="Problem-10"><a href="#Problem-10" class="headerlink" title="Problem"></a>Problem</h3><p>Given n non-negative integers representing the histogram’s bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.</p>
+<p>Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].</p>
+<p>The largest rectangle is shown in the shaded area, which has area = 10 unit.</p>
+<p>For example,<br>Given heights = [2,1,5,6,2,3],<br>return 10.</p>
+<h3 id="Solution-10"><a href="#Solution-10" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">A simple solution is to one by one consider all bars as starting points and calculate area of all rectangles starting with every bar. Finally return maximum of all possible areas. Time complexity of this solution would be O(n^2).</div><div class="line"></div><div class="line">We can use Divide and Conquer to solve this in O(nLogn) time. The idea is to find the minimum value in the given array. Once we have index of the minimum value, the max area is maximum of following three values.</div><div class="line">a) Maximum area in left side of minimum value (Not including the min value)</div><div class="line">b) Maximum area in right side of minimum value (Not including the min value)</div><div class="line">c) Number of bars multiplied by minimum value.</div><div class="line">The areas in left and right of minimum value bar can be calculated recursively. If we use linear search to find the minimum value, then the worst case time complexity of this algorithm becomes O(n^2). In worst case, we always have (n-1) elements in one side and 0 elements in other side and if the finding minimum takes O(n) time, we get the recurrence similar to worst case of Quick Sort.</div><div class="line"></div><div class="line">Followup:</div><div class="line">- O(n)?</div><div class="line">    - avoid repeated work</div><div class="line">    - identify a rectangle: identify 2 boundaries</div><div class="line">    - if cur&gt;stack.peek() --&gt; offer, else --&gt; continously poll</div><div class="line"></div><div class="line"></div><div class="line">    For every bar ‘x’, we calculate the area with ‘x’ as the smallest bar in the rectangle. If we calculate such area for every bar ‘x’ and find the maximum of all areas, our task is done.</div><div class="line">    How to calculate area with ‘x’ as smallest bar? We need to know index of the first smaller (smaller than ‘x’) bar on left of ‘x’ and index of first smaller bar on right of ‘x’. Let us call these indexes as ‘left index’ and ‘right index’ respectively.</div><div class="line">    We traverse all bars from left to right, maintain a stack of bars. Every bar is pushed to stack once. A bar is popped from stack when a bar of smaller height is seen. When a bar is popped, we calculate the area with the popped bar as smallest bar. How do we get left and right indexes of the popped bar – the current index tells us the ‘right index’ and index of previous item in stack is the ‘left index’. Following is the complete algorithm.</div><div class="line"></div><div class="line">    1) Create an empty stack.</div><div class="line">    2) Start from first bar, and do following for every bar ‘hist[i]’ where ‘i’ varies from 0 to n-1.</div><div class="line">    ……a) If stack is empty or hist[i] is higher than the bar at top of stack, then push ‘i’ to stack.</div><div class="line">    ……b) If this bar is smaller than the top of stack, then keep removing the top of stack while top of the stack is greater. Let the removed bar be hist[tp]. Calculate area of rectangle with hist[tp] as smallest bar. For hist[tp], the ‘left index’ is previous (previous to tp) item in stack and ‘right index’ is ‘i’ (current index).</div><div class="line"></div><div class="line">    3) If the stack is not empty, then one by one remove all bars from stack and do step 2.b for every removed bar.</div><div class="line"></div><div class="line">Corner case: [0]</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    def largestRectangleArea(self, heights):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type heights: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not heights: return 0</div><div class="line">        stack=[]</div><div class="line">        max_area=0</div><div class="line">        for i in range(len(heights)+1):</div><div class="line">            while stack and (i==len(heights) or heights[i]&lt;heights[stack[-1]]):</div><div class="line">                height=heights[stack.pop()]</div><div class="line">                leftBound=0 if not stack else stack[-1]+1</div><div class="line">                rightBound=i</div><div class="line">                cur_area=(rightBound-leftBound)*height</div><div class="line">                max_area=max(cur_area,max_area)</div><div class="line">            stack.append(i)</div><div class="line">        return max_area</div><div class="line"></div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    # primitive, 2 loops</div><div class="line">    def largestRectangleArea(self, heights):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type heights: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not heights: return 0</div><div class="line">        max_area=0</div><div class="line">        for i in range(len(heights)):</div><div class="line">            max_area=max(heights[i],max_area)</div><div class="line">            min_height=heights[i]</div><div class="line">            for j in range(i,len(heights)):</div><div class="line">                min_height=min(min_height,heights[j])</div><div class="line">                max_area=max(min_height*(j-i+1),max_area)</div><div class="line">        return max_area</div><div class="line">        &apos;&apos;&apos;</div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    # DP: avg: O(nlogn)   worst: O(n^2)</div><div class="line">    def largestRectangleArea(self, heights):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type heights: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        # DP Solution</div><div class="line">        def maxArea(left,right):</div><div class="line">            if right-left==1:</div><div class="line">                return heights[left]</div><div class="line">            if right==left:</div><div class="line">                return 0</div><div class="line">            minHeight=min(heights[left:right])</div><div class="line">            minHeightIndex=heights[left:right].index(minHeight)+left</div><div class="line">            maxLeft=maxArea(left,minHeightIndex)</div><div class="line">            maxRight=maxArea(minHeightIndex+1,right)</div><div class="line">            cur=minHeight*(right-left)</div><div class="line">            return max(maxLeft,maxRight,cur)</div><div class="line"></div><div class="line">        if not heights: return 0</div><div class="line">        return maxArea(0,len(heights))</div><div class="line">        &apos;&apos;&apos;</div></pre></td></tr></table></figure>
+<h2 id="463-Island-Perimeter"><a href="#463-Island-Perimeter" class="headerlink" title="463. Island Perimeter"></a>463. Island Perimeter</h2><h3 id="Problem-11"><a href="#Problem-11" class="headerlink" title="Problem"></a>Problem</h3><p>You are given a map in form of a two-dimensional integer grid where 1 represents land and 0 represents water. Grid cells are connected horizontally/vertically (not diagonally). The grid is completely surrounded by water, and there is exactly one island (i.e., one or more connected land cells). The island doesn’t have “lakes” (water inside that isn’t connected to the water around the island). One cell is a square with side length 1. The grid is rectangular, width and height don’t exceed 100. Determine the perimeter of the island.</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[[0,1,0,0],</div><div class="line"> [1,1,1,0],</div><div class="line"> [0,1,0,0],</div><div class="line"> [1,1,0,0]]</div><div class="line"></div><div class="line">Answer: 16</div><div class="line">Explanation: The perimeter is the 16 yellow stripes in the image below:</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95%20--%20%E6%95%B0%E7%BB%84/island.jpg" class="ful-image" alt="island.jpg">
+<h3 id="Solution-11"><a href="#Solution-11" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    def islandPerimeter(self, grid):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type grid: List[List[int]]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        newGrid=[[0]*(len(grid[0])+2) for i in range(len(grid)+2)]</div><div class="line">        for i in range(len(grid)):</div><div class="line">            for j in range(len(grid[0])):</div><div class="line">                newGrid[i+1][j+1]=grid[i][j]</div><div class="line">        res=0</div><div class="line">        for i in range(1,len(newGrid)-1):</div><div class="line">            for j in range(1,len(newGrid[0])-1):</div><div class="line">                if newGrid[i][j]==1:</div><div class="line">                    # check around</div><div class="line">                    if newGrid[i][j-1]==0:</div><div class="line">                        res+=1</div><div class="line">                    if newGrid[i][j+1]==0:</div><div class="line">                        res+=1</div><div class="line">                    if newGrid[i-1][j]==0:</div><div class="line">                        res+=1</div><div class="line">                    if newGrid[i+1][j]==0:</div><div class="line">                        res+=1</div><div class="line">        return res</div><div class="line">        &apos;&apos;&apos;</div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    Simplify version</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    def islandPerimeter(self, grid):</div><div class="line">        def water_around(y, x):</div><div class="line">            return ((x == 0              or grid[y][x-1] == 0) +</div><div class="line">                    (x == len(grid[0])-1 or grid[y][x+1] == 0) +</div><div class="line">                    (y == 0              or grid[y-1][x] == 0) +</div><div class="line">                    (y == len(grid)-1    or grid[y+1][x] == 0) )</div><div class="line">        return sum(water_around(y, x) for y in xrange(len(grid)) for x in xrange(len(grid[0])) if grid[y][x])</div></pre></td></tr></table></figure>
+<h2 id="448-Find-All-Numbers-Disappeared-in-an-Array"><a href="#448-Find-All-Numbers-Disappeared-in-an-Array" class="headerlink" title="448. Find All Numbers Disappeared in an Array"></a>448. Find All Numbers Disappeared in an Array</h2><h3 id="Problem-12"><a href="#Problem-12" class="headerlink" title="Problem"></a>Problem</h3><p>Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.</p>
+<p>Find all the elements of [1, n] inclusive that do not appear in this array.</p>
+<p>Could you do it without extra space and in O(n) runtime? You may assume the returned list does not count as extra space.</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">[4,3,2,7,8,2,3,1]</div><div class="line"></div><div class="line">Output:</div><div class="line">[5,6]</div></pre></td></tr></table></figure></p>
+<p><strong>Tags:</strong> Array<br><strong>Similar Problems:</strong> (H) First Missing Positive (M) Find All Duplicates in an Array</p>
+<h3 id="Solution-12"><a href="#Solution-12" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Soltuion:</div><div class="line">    Bucket sort.</div><div class="line">    The idea is simple, we&apos;re gonna make all numbers into the corrent position. Each element w should be put into the w th position of the array.If nums[i] != i + 1 and nums[i] != nums[nums[i] - 1], then we swap nums[i] with nums[nums[i] - 1], for example, nums[0] = 4 and nums[3] = 7, then we swap nums[0] with nums[3]. So In the end the array will be sorted and if nums[i] != i + 1, then i + 1 is missing.</div><div class="line">    The example run as follows</div><div class="line"></div><div class="line">    [4,3,2,7,8,2,3,1]</div><div class="line">    [7,3,2,4,8,2,3,1]</div><div class="line">    [3,3,2,4,8,2,7,1]</div><div class="line">    [2,3,3,4,8,2,7,1]</div><div class="line">    [3,2,3,4,8,2,7,1]</div><div class="line">    [3,2,3,4,1,2,7,8]</div><div class="line">    [1,2,3,4,3,2,7,8]</div><div class="line">    Since every swap we put at least one number to its correct position, the time is O(n)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">Special case: [2,2]</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    brute-force: O(n^2)</div><div class="line">    def findDisappearedNumbers(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not nums: return []</div><div class="line">        res=[]</div><div class="line">        for i in range(1,len(nums)+1):</div><div class="line">            if i not in nums:</div><div class="line">                res.append(i)</div><div class="line">        return res</div><div class="line">        &apos;&apos;&apos;</div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    Sort: O(nlogn)</div><div class="line"></div><div class="line">    def findDisappearedNumbers(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not nums: return []</div><div class="line">        nums.sort()</div><div class="line">        i=0</div><div class="line">        n=len(nums)</div><div class="line">        res=[]</div><div class="line">        for cur in nums:</div><div class="line">            if cur==i:</div><div class="line">                continue</div><div class="line">            if cur==i+1:</div><div class="line">                i+=1</div><div class="line">                continue</div><div class="line">            while i &lt; cur-1:</div><div class="line">                i+=1</div><div class="line">                res.append(i)</div><div class="line">            i=cur</div><div class="line">        while i&lt;n:</div><div class="line">            i+=1</div><div class="line">            res.append(i)</div><div class="line">        return res</div><div class="line">        &apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line">    Sort: O(n)</div><div class="line">    def findDisappearedNumbers(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not nums:</div><div class="line">            return []</div><div class="line">        for i in range(len(nums)):</div><div class="line">            while nums[i] != nums[nums[i] - 1]:</div><div class="line">                nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]</div><div class="line"></div><div class="line">        res = []</div><div class="line">        print nums</div><div class="line">        for i, num in enumerate(nums):</div><div class="line">            if i + 1 != num:</div><div class="line">                res.append(i + 1)</div><div class="line">        return res</div><div class="line"></div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    def findDisappearedNumbers(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        # Use nums as hashmap</div><div class="line">        # For each number i in nums, mark the number that i points as negative.</div><div class="line">        # Then filter the list, get all the indexes that points to a positive number</div><div class="line">        for i in range(len(nums)):</div><div class="line">            index = abs(nums[i]) - 1</div><div class="line">            nums[index] = - abs(nums[index])</div><div class="line"></div><div class="line">        return [i + 1 for i in range(len(nums)) if nums[i] &gt; 0]</div><div class="line">        &apos;&apos;&apos;</div></pre></td></tr></table></figure>
+<h2 id="442-Find-All-Duplicates-in-an-Array"><a href="#442-Find-All-Duplicates-in-an-Array" class="headerlink" title="442. Find All Duplicates in an Array"></a>442. Find All Duplicates in an Array</h2><h3 id="Problem-13"><a href="#Problem-13" class="headerlink" title="Problem"></a>Problem</h3><p>Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.</p>
+<p>Find all the elements that appear twice in this array.</p>
+<p>Could you do it without extra space and in O(n) runtime?</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Input:</div><div class="line">[4,3,2,7,8,2,3,1]</div><div class="line"></div><div class="line">Output:</div><div class="line">[2,3]</div></pre></td></tr></table></figure></p>
+<p><strong>Tags:</strong> Array<br><strong>Similar Problems:</strong> (E) Find All Numbers Disappeared in an Array</p>
+<h3 id="Solution-13"><a href="#Solution-13" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">    Bucket sort. Each element w should be put into the w th position of the array.</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    def findDuplicates(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        hashset=set()</div><div class="line">        res=[]</div><div class="line">        for n in nums:</div><div class="line">            if n in hashset:</div><div class="line">                res.append(n)</div><div class="line">            else:</div><div class="line">                hashset.add(n)</div><div class="line">        return res</div><div class="line">        &apos;&apos;&apos;</div><div class="line"></div><div class="line">    def findDuplicates(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not nums: return []</div><div class="line">        res=[]</div><div class="line">        for i in range(len(nums)):</div><div class="line">            while nums[i] != nums[nums[i]-1]:</div><div class="line">                nums[nums[i]-1],nums[i]=nums[i],nums[nums[i]-1]</div><div class="line">        for i,n in enumerate(nums):</div><div class="line">            if i+1 != n:</div><div class="line">                res.append(n)</div><div class="line">        return res</div></pre></td></tr></table></figure>
+<h2 id="41-First-Missing-Positive"><a href="#41-First-Missing-Positive" class="headerlink" title="41. First Missing Positive"></a>41. First Missing Positive</h2><h3 id="Problem-14"><a href="#Problem-14" class="headerlink" title="Problem"></a>Problem</h3><p>Given an unsorted integer array, find the first missing positive integer.</p>
+<p>For example,<br>Given [1,2,0] return 3,<br>and [3,4,-1,1] return 2.</p>
+<p>Your algorithm should run in O(n) time and uses constant space.</p>
+<p><strong>Tags:</strong> Array<br><strong>Similar Problems:</strong> (M) Missing Number (H) Find the Duplicate Number (E) Find All Numbers Disappeared in an Array</p>
+<h3 id="Solution-14"><a href="#Solution-14" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">    Bucket sort is the only way. As only the elements between 1...n are useful, each element w should be put into the w th position of the array. As it is possible there is some other element v in the w th position, take the v out before overwriting and then iteratively use the same logic on v and go on.</div><div class="line"></div><div class="line">    Time complexity: each element is looped 2 times and swapped 1 time, so the whole time compexity is O(n)</div><div class="line">    Space: O(1) apparently</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line">class Solution(object):</div><div class="line"></div><div class="line">    def firstMissingPositive(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        n = len(nums)</div><div class="line">        for i in xrange(len(nums)):</div><div class="line">            while nums[i] &gt; 0 and nums[i] &lt;= n and nums[i] != nums[nums[i] - 1]:</div><div class="line">                nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]</div><div class="line">        for i, num in enumerate(nums):</div><div class="line">            if i + 1 != num:</div><div class="line">                return i + 1</div><div class="line">        return n + 1</div></pre></td></tr></table></figure>
+<h2 id="287-Find-the-Duplicate-Number"><a href="#287-Find-the-Duplicate-Number" class="headerlink" title="287. Find the Duplicate Number"></a>287. Find the Duplicate Number</h2><h3 id="Problem-15"><a href="#Problem-15" class="headerlink" title="Problem"></a>Problem</h3><p>Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.</p>
+<p>Note:<br>You must not modify the array (assume the array is read only).<br>You must use only constant, O(1) extra space.<br>Your runtime complexity should be less than O(n2).<br>There is only one duplicate number in the array, but it could be repeated more than once.</p>
+<p><strong>Tags:</strong> Binary Search Array Two Pointers<br><strong>Similar Problems:</strong> (H) First Missing Positive (E) Single Number (M) Linked List Cycle II (M) Missing Number</p>
+<h3 id="Solution-15"><a href="#Solution-15" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">    The main idea is the same with problem Linked List Cycle II. Use two pointers the fast and the slow. The fast one goes forward two steps each time, while the slow one goes only step each time. They must meet the same item when slow==fast. In fact, they meet in a circle, the duplicate number must be the entry point of the circle when visiting the array from nums[0]. Next we just need to find the entry point. We use a point(we can use the fast one before) to visit form begining with one step each time, do the same job to slow. When fast==slow, they meet at the entry point of the circle.</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line"></div><div class="line">    def findDuplicate(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not nums:</div><div class="line">            return -1</div><div class="line">        fast = nums[nums[0]]</div><div class="line">        slow = nums[0]</div><div class="line">        while slow != fast:</div><div class="line">            slow = nums[slow]</div><div class="line">            fast = nums[nums[fast]]</div><div class="line"></div><div class="line">        head = 0</div><div class="line">        while head != slow:</div><div class="line">            head = nums[head]</div><div class="line">            slow = nums[slow]</div><div class="line">        return slow</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数组/" rel="tag">#数组</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/18/数据结构和算法 -- TWO-SUM 问题和 python dict/" rel="next" title="数据结构和算法 -- TWO-SUM 问题和python dict">
+                <i class="fa fa-chevron-left"></i> 数据结构和算法 -- TWO-SUM 问题和python dict
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/20/数据结构和算法 -- 搜索/" rel="prev" title="数据结构和算法 -- 搜索">
+                数据结构和算法 -- 搜索 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#策略-amp-注意点"><span class="nav-number">1.</span> <span class="nav-text">策略 & 注意点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Efficiency"><span class="nav-number">1.1.</span> <span class="nav-text">Efficiency</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-lists"><span class="nav-number">1.2.</span> <span class="nav-text">python lists</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-Arrays"><span class="nav-number">1.3.</span> <span class="nav-text">Java Arrays</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-List"><span class="nav-number">1.4.</span> <span class="nav-text">Java List</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题"><span class="nav-number">2.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#66-Plus-One"><span class="nav-number">2.1.</span> <span class="nav-text">66. Plus One</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem"><span class="nav-number">2.1.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">2.1.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#67-Add-Binary"><span class="nav-number">2.2.</span> <span class="nav-text">67. Add Binary</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#228-Summary-Ranges"><span class="nav-number">2.3.</span> <span class="nav-text">228. Summary Ranges</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#360-Sort-Transformed-Array"><span class="nav-number">2.4.</span> <span class="nav-text">360. Sort Transformed Array</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-3"><span class="nav-number">2.4.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-3"><span class="nav-number">2.4.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#346-Moving-Average-from-Data-Stream"><span class="nav-number">2.5.</span> <span class="nav-text">346. Moving Average from Data Stream</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-4"><span class="nav-number">2.5.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-4"><span class="nav-number">2.5.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#75-Sort-Colors"><span class="nav-number">2.6.</span> <span class="nav-text">75. Sort Colors</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-5"><span class="nav-number">2.6.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-5"><span class="nav-number">2.6.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#53-Maximum-Subarray"><span class="nav-number">2.7.</span> <span class="nav-text">53. Maximum Subarray</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-6"><span class="nav-number">2.7.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-6"><span class="nav-number">2.7.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Snapchat-面经"><span class="nav-number">2.8.</span> <span class="nav-text">Snapchat 面经</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-7"><span class="nav-number">2.8.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-7"><span class="nav-number">2.8.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finding-sum-of-Absolute-Difference-of-Every-pair-of-integer-from-an-array"><span class="nav-number">2.9.</span> <span class="nav-text">Finding sum of Absolute Difference of Every pair of integer from an array</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-8"><span class="nav-number">2.9.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-8"><span class="nav-number">2.9.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-Container-With-Most-Water"><span class="nav-number">2.10.</span> <span class="nav-text">11. Container With Most Water</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-9"><span class="nav-number">2.10.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-9"><span class="nav-number">2.10.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#84-Largest-Rectangle-in-Histogram"><span class="nav-number">2.11.</span> <span class="nav-text">84. Largest Rectangle in Histogram</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-10"><span class="nav-number">2.11.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-10"><span class="nav-number">2.11.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#463-Island-Perimeter"><span class="nav-number">2.12.</span> <span class="nav-text">463. Island Perimeter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-11"><span class="nav-number">2.12.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-11"><span class="nav-number">2.12.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#448-Find-All-Numbers-Disappeared-in-an-Array"><span class="nav-number">2.13.</span> <span class="nav-text">448. Find All Numbers Disappeared in an Array</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-12"><span class="nav-number">2.13.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-12"><span class="nav-number">2.13.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#442-Find-All-Duplicates-in-an-Array"><span class="nav-number">2.14.</span> <span class="nav-text">442. Find All Duplicates in an Array</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-13"><span class="nav-number">2.14.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-13"><span class="nav-number">2.14.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#41-First-Missing-Positive"><span class="nav-number">2.15.</span> <span class="nav-text">41. First Missing Positive</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-14"><span class="nav-number">2.15.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-14"><span class="nav-number">2.15.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#287-Find-the-Duplicate-Number"><span class="nav-number">2.16.</span> <span class="nav-text">287. Find the Duplicate Number</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-15"><span class="nav-number">2.16.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-15"><span class="nav-number">2.16.2.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/09/19/数据结构和算法 -- 数组/';
+      var disqus_title = "数据结构和算法 -- 数组";
+      var disqus_url = 'http://www.shuang0420.com/2016/09/19/数据结构和算法 -- 数组/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

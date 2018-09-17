@@ -1,0 +1,1092 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,array,two-sum," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="打尽 two-sum 问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构和算法 -- TWO-SUM 问题和python dict">
+<meta property="og:url" content="http://www.shuang0420.com/2016/09/18/数据结构和算法 -- TWO-SUM 问题和 python dict/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="打尽 two-sum 问题。">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构和算法 -- TWO-SUM 问题和python dict">
+<meta name="twitter:description" content="打尽 two-sum 问题。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/09/18/数据结构和算法 -- TWO-SUM 问题和 python dict/"/>
+
+
+  <title> 数据结构和算法 -- TWO-SUM 问题和python dict | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构和算法 -- TWO-SUM 问题和python dict
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-09-18T09:55:12+08:00" content="2016-09-18">
+              2016-09-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Data-Structure/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Structure</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/18/数据结构和算法 -- TWO-SUM 问题和 python dict/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/09/18/数据结构和算法 -- TWO-SUM 问题和 python dict/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>打尽 two-sum 问题。<br><a id="more"></a></p>
+<h1 id="策略-amp-注意点"><a href="#策略-amp-注意点" class="headerlink" title="策略 &amp; 注意点"></a>策略 &amp; 注意点</h1><h2 id="Assumption"><a href="#Assumption" class="headerlink" title="Assumption"></a>Assumption</h2><ul>
+<li>array is sorted?</li>
+<li>each input would have exactly one solution?</li>
+<li>duplicates in array?</li>
+<li>return index is sorted?</li>
+</ul>
+<h2 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h2><ol>
+<li><p>头尾指针，经典模板</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">while start&lt;end:</div><div class="line">    sum=numbers[start]+numbers[end]</div><div class="line">    if sum==target:</div><div class="line">        return [start,end]</div><div class="line">    if sum&gt;target:</div><div class="line">        end-=1</div><div class="line">    else:</div><div class="line">        start+=1</div></pre></td></tr></table></figure>
+</li>
+<li><p>加上去重的模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">while start&lt;end:</div><div class="line">    cur_sum=nums[start]+nums[end]</div><div class="line">    if cur_sum&lt;target:</div><div class="line">        start+=1</div><div class="line">    elif cur_sum&gt;target:</div><div class="line">        end-=1</div><div class="line">    else:</div><div class="line">        cur_res.append([nums[0],nums[start],nums[end]])</div><div class="line">        start+=1</div><div class="line">        end-=1</div><div class="line">        while start&lt;end and nums[start]==nums[start-1]:</div><div class="line">            start+=1</div><div class="line">        while start&lt;end and nums[end]==nums[end+1]:</div><div class="line">            end-=1</div></pre></td></tr></table></figure>
+</li>
+<li><p>Hashmap 来 search target-nums[i]，1－pass 先 check 在不在 map 中，不在就放进去。</p>
+</li>
+</ol>
+<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><ul>
+<li>涉及 index 一般就不先 sort 了，因为会 disrupt the order</li>
+<li>如果上来就把整个 list 转成 hashmap<val,index>，之后在 search，那么就要注意 val==target-val 的情况了，也要判断 val 出现几次（hashmap 必须考虑 key 是否会重复）</val,index></li>
+<li>要去重的问题用两个 pointer 可以顺便去重，但要注意保证大条件 start&lt;end</li>
+<li>注意数字可能是 negative，初始化变量不要想当然的为0，计算 difference 的时候用 abs(n) 绝对值。</li>
+<li>python dict 的用法，哪些 O(1) 哪些 O(n)</li>
+</ul>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="1-Two-Sum"><a href="#1-Two-Sum" class="headerlink" title="1. Two Sum"></a>1. Two Sum</h2><blockquote>
+<p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.<br>You may assume that each input would have exactly one solution.<br>Example:<br>Given nums = [2, 7, 11, 15], target = 9,<br>Because nums[0] + nums[1] = 2 + 7 = 9,<br>return [0, 1].</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Check assumption:</div><div class="line">- array is not sorted</div><div class="line">- each input would have exactly one solution</div><div class="line">- duplicates in array</div><div class="line">- return index is not sorted</div><div class="line"></div><div class="line">Corner case:</div><div class="line">- len(nums)&lt;2 or nums==None</div><div class="line"></div><div class="line">Solution:</div><div class="line">- Loop array, search target-nums[i] for each nums[j] on the right. Time complexity: O(n^2)</div><div class="line"></div><div class="line">Attention:</div><div class="line">- we cannot sort array, compare target and sum and move pointers to get the answer as it would disrupt the order</div><div class="line">- array.index(value) returns first match, but this may not be what you expect</div><div class="line"></div><div class="line">Optimization:</div><div class="line">- While loop, use hashmap&lt;target-nums[i],i&gt; to store remaining index and value, so that the second loop will have O(1) time complexity, and the total complexity would be O(n). The cost is space complexity. This is two-pass solution.</div><div class="line">- Two-pass --&gt; One pass. While loop, for each i, check if it is in hashmap, if not, add it to the hashmap, if exists, return index.</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line">class Solution(object):</div><div class="line"></div><div class="line">    # with hashmap</div><div class="line">    def twoSum(self, nums, target):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :type target: int</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not nums or len(nums)&lt;2:</div><div class="line">            return None</div><div class="line">        hashmap=dict()</div><div class="line">        for index,value in enumerate(nums):</div><div class="line">            if target-value in hashmap:</div><div class="line">                return[index,hashmap[target-value]]</div><div class="line">            hashmap[value]=index</div><div class="line">        return None</div><div class="line"></div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    # two loops</div><div class="line">    def twoSum(self, nums, target):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :type target: int</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not nums or len(nums)&lt;2:</div><div class="line">            return None</div><div class="line">        for index1,value in enumerate(nums):</div><div class="line">            for index2 in range(index1+1,len(nums)):</div><div class="line">                if nums[index2]==target-value:</div><div class="line">                    return [index1,index2]</div><div class="line">        return None</div><div class="line">    &apos;&apos;&apos;</div></pre></td></tr></table></figure>
+<h2 id="167-Two-Sum-II-Input-array-is-sorted"><a href="#167-Two-Sum-II-Input-array-is-sorted" class="headerlink" title="167. Two Sum II - Input array is sorted"></a>167. Two Sum II - Input array is sorted</h2><blockquote>
+<p>Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.<br>The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.<br>You may assume that each input would have exactly one solution.<br>Input: numbers={2, 7, 11, 15}, target=9<br>Output: index1=1, index2=2</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line">    def twoSum(self, numbers, target):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type numbers: List[int]</div><div class="line">        :type target: int</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not numbers or len(numbers)&lt;2:</div><div class="line">            return None</div><div class="line">        start=0</div><div class="line">        end=len(numbers)-1</div><div class="line">        while start&lt;end:</div><div class="line">            sum=numbers[start]+numbers[end]</div><div class="line">            if sum==target:</div><div class="line">                return [start+1,end+1]</div><div class="line">            if sum&gt;target:</div><div class="line">                end-=1</div><div class="line">            else:</div><div class="line">                start+=1</div><div class="line">        return None</div></pre></td></tr></table></figure>
+<h2 id="170-Two-Sum-III-Data-structure-design"><a href="#170-Two-Sum-III-Data-structure-design" class="headerlink" title="170. Two Sum III - Data structure design"></a>170. Two Sum III - Data structure design</h2><blockquote>
+<p>Design and implement a TwoSum class. It should support the following operations: add and find.<br>add - Add the number to an internal data structure.<br>find - Find if there exists any pair of numbers which sum is equal to the value.<br>For example,<br>add(1); add(3); add(5);<br>find(4) -&gt; true<br>find(7) -&gt; false</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Data structure:</div><div class="line">- hashmap&lt;number,frequency&gt;.   Use hashmap because duplicates matter!</div><div class="line"></div><div class="line">Corner case:</div><div class="line">- hashmap is None</div><div class="line"></div><div class="line">Attention:</div><div class="line">- avoid case val==target-val</div><div class="line"></div><div class="line">Time complexity:</div><div class="line">- add() O(1)</div><div class="line">- find() O(n)</div><div class="line"></div><div class="line">About python dictionary:</div><div class="line">- Do not use dict.keys!</div><div class="line">In Python 2 dict.keys() creates the whole list of keys first that&apos;s why it is an O(N) operation, while key in dict is an O(1) operation.</div><div class="line">&gt;&gt;&gt; dic = dict.fromkeys(range(10**5))</div><div class="line">&gt;&gt;&gt; %timeit 10000 in dic</div><div class="line">1000000 loops, best of 3: 170 ns per loop</div><div class="line">&gt;&gt;&gt; %timeit 10000 in dic.keys()</div><div class="line">100 loops, best of 3: 4.98 ms per loop</div><div class="line">&gt;&gt;&gt; %timeit 10000 in dic.iterkeys()</div><div class="line">1000 loops, best of 3: 402 us per loop</div><div class="line">&gt;&gt;&gt; %timeit 10000 in dic.viewkeys()</div><div class="line">1000000 loops, best of 3: 457 ns per loop</div><div class="line"></div><div class="line">- Use dict.get(key,default=None)!</div><div class="line">self.hashmap[number]=self.hashmap.get(number,0)+1</div><div class="line">&apos;&apos;&apos;</div><div class="line">class TwoSum(object):</div><div class="line"></div><div class="line">    def __init__(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        initialize your data structure here</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.hashmap=dict()</div><div class="line"></div><div class="line">    def add(self, number):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        Add the number to an internal data structure.</div><div class="line">        :rtype: nothing</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        &apos;&apos;&apos;</div><div class="line">        if self.hashmap.has_key(number):</div><div class="line">            self.hashmap[number]+=1</div><div class="line">        else:</div><div class="line">            self.hashmap[number]=1</div><div class="line">        &apos;&apos;&apos;</div><div class="line">        self.hashmap[number]=self.hashmap.get(number,0)+1</div><div class="line"></div><div class="line">    def find(self, value):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        Find if there exists any pair of numbers which sum is equal to the value.</div><div class="line">        :type value: int</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not self.hashmap:</div><div class="line">            return False</div><div class="line">        for v in self.hashmap:</div><div class="line">            if value-v in self.hashmap:</div><div class="line">                if self.hashmap[v]&gt;1 or v!=value-v:</div><div class="line">                    return True</div><div class="line">        return False</div><div class="line"></div><div class="line"></div><div class="line"># Your TwoSum object will be instantiated and called as such:</div><div class="line"># twoSum = TwoSum()</div><div class="line"># twoSum.add(number)</div><div class="line"># twoSum.find(value)</div></pre></td></tr></table></figure>
+<h2 id="15-3Sum"><a href="#15-3Sum" class="headerlink" title="15. 3Sum"></a>15. 3Sum</h2><blockquote>
+<p>Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.<br>Note: The solution set must not contain duplicate triplets.<br>For example, given array S = [-1, 0, 1, 2, -1, -4],<br>A solution set is:<br>[<br>  [-1, 0, 1],<br>  [-1, -1, 2]<br>]</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">- convert to 2-sum problem, avoid duplicate triplets: sort the array, move pointers to skip duplicates</div><div class="line"></div><div class="line">Attention:</div><div class="line">- when avoiding duplicates, keep in mind start&lt;end, consider corner case [0,0,0] with 0</div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def threeSum(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[List[int]]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if len(nums)&lt;3:</div><div class="line">            return []</div><div class="line">        nums=sorted(nums)</div><div class="line">        result=[]</div><div class="line">        for i in range(len(nums)-2):</div><div class="line">            if i&gt;0 and nums[i]==nums[i-1]:</div><div class="line">                continue</div><div class="line">            result+=self.twoSum(nums[i:],0-nums[i])</div><div class="line">        return result</div><div class="line"></div><div class="line"></div><div class="line">    def twoSum(self,nums,target):</div><div class="line">        if len(nums)&lt;3:</div><div class="line">            return []</div><div class="line">        start,end=1,len(nums)-1</div><div class="line">        cur_res=[]</div><div class="line">        while start&lt;end:</div><div class="line">            cur_sum=nums[start]+nums[end]</div><div class="line">            if cur_sum&lt;target:</div><div class="line">                start+=1</div><div class="line">            elif cur_sum&gt;target:</div><div class="line">                end-=1</div><div class="line">            else:</div><div class="line">                cur_res.append([nums[0],nums[start],nums[end]])</div><div class="line">                start+=1</div><div class="line">                end-=1</div><div class="line">                while start&lt;end and nums[start]==nums[start-1]:</div><div class="line">                    start+=1</div><div class="line">                while start&lt;end and nums[end]==nums[end+1]:</div><div class="line">                    end-=1</div><div class="line">        return cur_res</div></pre></td></tr></table></figure>
+<h2 id="259-3Sum-Smaller"><a href="#259-3Sum-Smaller" class="headerlink" title="259. 3Sum Smaller"></a>259. 3Sum Smaller</h2><blockquote>
+<p>Given an array of n integers nums and a target, find the number of index triplets i, j, k with 0 &lt;= i &lt; j &lt; k &lt; n that satisfy the condition nums[i] + nums[j] + nums[k] &lt; target.<br>For example, given nums = [-2, 0, 1, 3], and target = 2.<br>Return 2. Because there are two triplets which sums are less than 2:<br>[-2, 0, 1]<br>[-2, 0, 3]<br>Follow up:<br>Could you solve it in O(n2) runtime?</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Same with normal 3sum problem, just consider all possibilities.</div><div class="line"></div><div class="line">Solution:</div><div class="line">- sort nums, for nums[i] in nums, search if nums[start]+nums[end]&lt;target-nums[i] for nums[i+1:], if it is, count+=end-start and keep going</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def threeSumSmaller(self, nums, target):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :type target: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if len(nums)&lt;3:</div><div class="line">            return 0</div><div class="line">        count=0</div><div class="line">        nums=sorted(nums)</div><div class="line">        for i in range(len(nums)):</div><div class="line">            start=i+1</div><div class="line">            end=len(nums)-1</div><div class="line">            while start&lt;end:</div><div class="line">                cur_sum=nums[start]+nums[end]</div><div class="line">                new_target=target-nums[i]</div><div class="line">                if cur_sum&lt;new_target:</div><div class="line">                    count+=end-start</div><div class="line">                    start+=1</div><div class="line">                else:</div><div class="line">                    end-=1</div><div class="line">        return count</div></pre></td></tr></table></figure>
+<h2 id="16-3Sum-Closest"><a href="#16-3Sum-Closest" class="headerlink" title="16. 3Sum Closest"></a>16. 3Sum Closest</h2><blockquote>
+<p>Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.<br>    For example, given array S = {-1 2 1 -4}, and target = 1.<br>    The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Simliar to 3sum problem, but have a global_diff to record current minimum difference (remember it should be absolute value) and global_sum to record current closet result</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def threeSumClosest(self, nums, target):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :type target: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if len(nums)&lt;3:</div><div class="line">            return None</div><div class="line">        nums=sorted(nums)</div><div class="line">        global_diff=abs(target-nums[0])</div><div class="line">        global_sum=sum(nums[0:3])</div><div class="line">        for i in range(len(nums)-2):</div><div class="line">            start=i+1</div><div class="line">            end=len(nums)-1</div><div class="line">            cur_target=target-nums[i]</div><div class="line">            while start&lt;end:</div><div class="line">                sum2=nums[start]+nums[end]</div><div class="line">                if sum2&lt;cur_target:</div><div class="line">                    if abs(cur_target-sum2)&lt;global_diff:</div><div class="line">                        global_sum=sum2+nums[i]</div><div class="line">                        global_diff=abs(cur_target-sum2)</div><div class="line">                    start+=1</div><div class="line">                elif sum2&gt;cur_target:</div><div class="line">                    if abs(sum2-cur_target)&lt;global_diff:</div><div class="line">                        global_diff=abs(sum2-cur_target)</div><div class="line">                        global_sum=sum2+nums[i]</div><div class="line">                    end-=1</div><div class="line">                else:</div><div class="line">                    return target</div><div class="line">        return global_sum</div></pre></td></tr></table></figure>
+<h2 id="18-4Sum"><a href="#18-4Sum" class="headerlink" title="18. 4Sum"></a>18. 4Sum</h2><blockquote>
+<p>Given an array S of n integers, are there elements a, b, c, and d in S such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.<br>Note: The solution set must not contain duplicate quadruplets.<br>For example, given array S = [1, 0, -1, 0, -2, 2], and target = 0.<br>A solution set is:<br>[<br>  [-1,  0, 0, 1],<br>  [-2, -1, 1, 2],<br>  [-2,  0, 0, 2]<br>]</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line">    def fourSum(self, nums, target):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :type target: int</div><div class="line">        :rtype: List[List[int]]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if len(nums)&lt;4:</div><div class="line">            return []</div><div class="line">        res=[]</div><div class="line">        nums=sorted(nums)</div><div class="line">        for i in range(len(nums)-3):</div><div class="line">            if i&gt;0 and nums[i]==nums[i-1]:</div><div class="line">                continue</div><div class="line">            res+=self.sum_3(nums[i:],target-nums[i])</div><div class="line">        return res</div><div class="line"></div><div class="line">    def sum_3(self,nums,target):</div><div class="line">        if len(nums)&lt;4:</div><div class="line">            return []</div><div class="line">        res=[]</div><div class="line">        cur=nums[0]</div><div class="line">        nums=nums[1:]</div><div class="line">        for i in range(len(nums)-2):</div><div class="line">            if i&gt;0 and nums[i]==nums[i-1]:</div><div class="line">                continue</div><div class="line">            new_target=target-nums[i]</div><div class="line">            start=i+1</div><div class="line">            end=len(nums)-1</div><div class="line">            while start&lt;end:</div><div class="line">                cur_sum=nums[start]+nums[end]</div><div class="line">                if cur_sum&gt;new_target:</div><div class="line">                    end-=1</div><div class="line">                elif cur_sum&lt;new_target:</div><div class="line">                    start+=1</div><div class="line">                else:</div><div class="line">                    res.append([cur,nums[i],nums[start],nums[end]])</div><div class="line">                    start+=1</div><div class="line">                    end-=1</div><div class="line">                    while start&lt;end and nums[start]==nums[start-1]:</div><div class="line">                        start+=1</div><div class="line">                    while start&lt;end and nums[end]==nums[end+1]:</div><div class="line">                        end-=1</div><div class="line">        return res</div></pre></td></tr></table></figure>
+<h1 id="dict-详解"><a href="#dict-详解" class="headerlink" title="dict 详解"></a>dict 详解</h1><h2 id="内置函数和方法"><a href="#内置函数和方法" class="headerlink" title="内置函数和方法"></a>内置函数和方法</h2><table><tr><th style="width:5%">序号</th><th style="width:95%">函数及描述</th></tr><tr><td>1</td><td><a href="att-dictionary-cmp.html">cmp(dict1, dict2)</a><br>比较两个字典元素。</td></tr><tr><td>2</td><td><a href="att-dictionary-len.html">len(dict)</a><br>计算字典元素个数，即键的总数。</td></tr><tr><td>3</td><td><a href="att-dictionary-str.html">str(dict)</a><br>输出字典可打印的字符串表示。</td></tr><tr><td>4</td><td><a href="att-dictionary-type.html">type(variable)</a><br>返回输入的变量类型，如果变量是字典就返回字典类型。</td></tr></table>
+
+<p>Python字典包含了以下内置方法：</p>
+<table><tr><th style="width:5%">序号</th><th style="width:95%">函数及描述</th></tr><tr><td>1</td><td><a href="att-dictionary-clear.html">radiansdict.clear()</a><br>删除字典内所有元素 </td></tr><tr><td>2</td><td><a href="att-dictionary-copy.html">radiansdict.copy()</a><br>返回一个字典的浅复制</td></tr><tr><td>3</td><td><a href="att-dictionary-fromkeys.html">radiansdict.fromkeys()</a><br> 创建一个新字典，以序列seq中元素做字典的键，val为字典所有键对应的初始值</td></tr><tr><td>4</td><td><a href="att-dictionary-get.html">radiansdict.get(key, default=None)</a><br>返回指定键的值，如果值不在字典中返回default值</td></tr><tr><td>5</td><td><a href="att-dictionary-has_key.html">radiansdict.has_key(key)</a><br>如果键在字典dict里返回true，否则返回false</td></tr><tr><td>6</td><td><a href="att-dictionary-items.html">radiansdict.items()</a><br>以列表返回可遍历的(键, 值) 元组数组</td></tr><tr><td>7</td><td><a href="att-dictionary-keys.html">radiansdict.keys()</a><br>以列表返回一个字典所有的键</td></tr><tr><td>8</td><td><a href="att-dictionary-setdefault.html">radiansdict.setdefault(key, default=None)</a><br><br>和get()类似, 但如果键不存在于字典中，将会添加键并将值设为default</td></tr><tr><td>9</td><td><a href="att-dictionary-update.html">radiansdict.update(dict2)</a><br>把字典dict2的键/值对更新到dict里</td></tr><tr><td>10</td><td><a href="att-dictionary-values.html">radiansdict.values()</a><br>以列表返回字典中的所有值</td></tr></table>
+
+<h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>下表 python 3 中 dictinoary (包括 dict 和 defaultdict) 的时间复杂度，要注意的 d.keys() 在 python 2 中的复杂度是 O(n)，因为它返回的是一个 list</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Example</th>
+<th>Class</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Index</td>
+<td>d[k]</td>
+<td>O(1)</td>
+<td>——————————</td>
+</tr>
+<tr>
+<td>Store</td>
+<td>d[k] = v</td>
+<td>O(1)</td>
+<td>——————————</td>
+</tr>
+<tr>
+<td>Length</td>
+<td>len(d)</td>
+<td>O(1)</td>
+<td>——————————</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>del d[k]</td>
+<td>O(1)</td>
+<td>——————————</td>
+</tr>
+<tr>
+<td>get/setdefault</td>
+<td>d.method</td>
+<td>O(1)</td>
+<td>——————————</td>
+</tr>
+<tr>
+<td>Pop</td>
+<td>d.pop(k)</td>
+<td>O(1)</td>
+<td>——————————</td>
+</tr>
+<tr>
+<td>Pop item</td>
+<td>d.popitem()</td>
+<td>O(1)</td>
+<td>——————————</td>
+</tr>
+<tr>
+<td>Clear</td>
+<td>d.clear()</td>
+<td>O(1)</td>
+<td>similar to s = {} or = dict()</td>
+</tr>
+<tr>
+<td>Views</td>
+<td>d.keys()</td>
+<td>O(1)</td>
+<td>——————————</td>
+</tr>
+<tr>
+<td>Construction</td>
+<td>dict(…)</td>
+<td>O(len(…))</td>
+<td>depends # (key,value) 2-tuples</td>
+</tr>
+<tr>
+<td>Iteration</td>
+<td>for k in d:</td>
+<td>O(N)</td>
+<td>all forms: keys, values, items</td>
+</tr>
+</tbody>
+</table>
+<p>So, most dict operations are O(1).</p>
+<p>defaultdicts support all operations that dicts support, with the same complexity classes (because it inherits all the operations); this assumes that calling the constructor when a values isn’t found in the defaultdict is O(1) - which is true for int(), list(), set(), … (the things commonly used)</p>
+<blockquote>
+<p>参考链接<br><a href="https://wiki.python.org/moin/TimeComplexity" target="_blank" rel="external">Python TimeComplexity</a><br><a href="https://www.ics.uci.edu/~pattis/ICS-33/lectures/complexitypython.txt" target="_blank" rel="external">Complexity of Python Operations</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag">#python</a>
+          
+            <a href="/tags/array/" rel="tag">#array</a>
+          
+            <a href="/tags/two-sum/" rel="tag">#two-sum</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/17/数据结构和算法 -- 树/" rel="next" title="数据结构和算法 -- 树">
+                <i class="fa fa-chevron-left"></i> 数据结构和算法 -- 树
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/19/数据结构和算法 -- 数组/" rel="prev" title="数据结构和算法 -- 数组">
+                数据结构和算法 -- 数组 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#策略-amp-注意点"><span class="nav-number">1.</span> <span class="nav-text">策略 & 注意点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Assumption"><span class="nav-number">1.1.</span> <span class="nav-text">Assumption</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#策略"><span class="nav-number">1.2.</span> <span class="nav-text">策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意点"><span class="nav-number">1.3.</span> <span class="nav-text">注意点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题"><span class="nav-number">2.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Two-Sum"><span class="nav-number">2.1.</span> <span class="nav-text">1. Two Sum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#167-Two-Sum-II-Input-array-is-sorted"><span class="nav-number">2.2.</span> <span class="nav-text">167. Two Sum II - Input array is sorted</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#170-Two-Sum-III-Data-structure-design"><span class="nav-number">2.3.</span> <span class="nav-text">170. Two Sum III - Data structure design</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-3Sum"><span class="nav-number">2.4.</span> <span class="nav-text">15. 3Sum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#259-3Sum-Smaller"><span class="nav-number">2.5.</span> <span class="nav-text">259. 3Sum Smaller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-3Sum-Closest"><span class="nav-number">2.6.</span> <span class="nav-text">16. 3Sum Closest</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-4Sum"><span class="nav-number">2.7.</span> <span class="nav-text">18. 4Sum</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dict-详解"><span class="nav-number">3.</span> <span class="nav-text">dict 详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内置函数和方法"><span class="nav-number">3.1.</span> <span class="nav-text">内置函数和方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度"><span class="nav-number">3.2.</span> <span class="nav-text">时间复杂度</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/09/18/数据结构和算法 -- TWO-SUM 问题和 python dict/';
+      var disqus_title = "数据结构和算法 -- TWO-SUM 问题和python dict";
+      var disqus_url = 'http://www.shuang0420.com/2016/09/18/数据结构和算法 -- TWO-SUM 问题和 python dict/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

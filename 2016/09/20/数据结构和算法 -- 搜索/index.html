@@ -1,0 +1,986 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="搜索," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="两种搜索方式，对 unordered array 用 linear search，对 ordered array 用 binary search。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构和算法 -- 搜索">
+<meta property="og:url" content="http://www.shuang0420.com/2016/09/20/数据结构和算法 -- 搜索/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="两种搜索方式，对 unordered array 用 linear search，对 ordered array 用 binary search。">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/2D-matrix.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构和算法 -- 搜索">
+<meta name="twitter:description" content="两种搜索方式，对 unordered array 用 linear search，对 ordered array 用 binary search。">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/2D-matrix.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/09/20/数据结构和算法 -- 搜索/"/>
+
+
+  <title> 数据结构和算法 -- 搜索 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构和算法 -- 搜索
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-09-20T19:55:12+08:00" content="2016-09-20">
+              2016-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Data-Structure/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Structure</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/20/数据结构和算法 -- 搜索/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/09/20/数据结构和算法 -- 搜索/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>两种搜索方式，对 unordered array 用 linear search，对 ordered array 用 binary search。<br><a id="more"></a></p>
+<h1 id="二分查找-Binary-search"><a href="#二分查找-Binary-search" class="headerlink" title="二分查找 (Binary search)"></a>二分查找 (Binary search)</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>对于已排序的有序线性容器而言(比如数组，vector)，二分查找(Binary search)几乎总是最优的搜索方案。二分查找将容器等分为两部分，再根据中间节点与待搜索数据的相对大小关系，进一步搜索其中某一部分。二分查找的算法复杂度为O(logn)。<br>对于局部有序的数据，也可以根据其局部有序的特性，尽可能地利用逼近、剪枝，使用二分查找的变种进行搜索。</p>
+<p>二分寻找要注意的问题是：</p>
+<ul>
+<li>Which way should middle pointer go next</li>
+<li>Avoid infinite loop in the code</li>
+</ul>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><blockquote>
+<p>Compare the number in the middle of the array with x. If it is equal, we are done. If the number is greater, we know to look in the second half of the array. If it is smaller, we know to look in the first half. We can repeat the search on the appropriate half of the array by comparing the middle element of that array with x, once again narrowing our search by a factor of 2. We repeat this process until we find x. This algorithm takes O(log n) time.</p>
+</blockquote>
+<h2 id="Complexity"><a href="#Complexity" class="headerlink" title="Complexity"></a>Complexity</h2><p>Time complexity: O(logN)<br>Worst case: O(logN+1) -&gt; O(logN)</p>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p><strong>Recursive</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">def binarySearch(data, start, end, key):</div><div class="line">    if start &gt; end:</div><div class="line">        return -1</div><div class="line">    mid = start + (end - start) / 2</div><div class="line">    if data[mid] == key:</div><div class="line">        return mid</div><div class="line">    if data[mid] &lt; key:</div><div class="line">        return binarySearch(data, mid + 1, end, key)</div><div class="line">    else:</div><div class="line">        return binarySearch(data, start, mid - 1, key)</div></pre></td></tr></table></figure></p>
+<p><strong>Non-recursive</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">def binarySearch(data, key):</div><div class="line">    start = 0</div><div class="line">    end = len(data) - 1</div><div class="line">    while True:</div><div class="line">        if start &gt; end:</div><div class="line">            return -1</div><div class="line">        mid = start + (end - start) / 2</div><div class="line">        if data[mid] == key:</div><div class="line">            return mid</div><div class="line">        if data[mid] &lt; key:</div><div class="line">            start = mid + 1</div><div class="line">        else:</div><div class="line">            end = mid - 1</div></pre></td></tr></table></figure></p>
+<p><strong>Find closest value</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">def binarySearch(house, heaters):</div><div class="line">    left, right = 0, len(heaters)</div><div class="line">    while left &lt; right:</div><div class="line">        mid = left + (right - left) / 2</div><div class="line">        if heaters[mid] &lt; house:</div><div class="line">            left = mid + 1</div><div class="line">        else:</div><div class="line">            right = mid</div><div class="line">    return left</div></pre></td></tr></table></figure></p>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><h3 id="69-Sqrt-x"><a href="#69-Sqrt-x" class="headerlink" title="69. Sqrt(x)"></a>69. Sqrt(x)</h3><h4 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h4><p>Implement int sqrt(int x).<br>Compute and return the square root of x.</p>
+<h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Search n from 0 to x, every time increment 1, maintain a global varible pre to record the last n whose square is smaller than x, for each n, check if n*n&gt;x, if so, return pre. Takes O(n) time.</div><div class="line"></div><div class="line">Followup:</div><div class="line">    Use binary search to find correct n. Takes O(logn) time.</div><div class="line"></div><div class="line">About overflow:</div><div class="line">    use mid=start+(end-start)/2</div><div class="line">    mid * mid will overflow when mid &gt; sqrt(INT_MAX)</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    O(n)</div><div class="line">    def mySqrt(self, x):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type x: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if x&lt;2: return x</div><div class="line">        pre=0</div><div class="line">        for n in range(2,x):</div><div class="line">            if n*n==x: return n</div><div class="line">            if n*n&lt;x: pre=n</div><div class="line">            else: return pre</div><div class="line">            &apos;&apos;&apos;</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    binary search O(logn)</div><div class="line">    &apos;&apos;&apos;</div><div class="line"></div><div class="line">    def mySqrt(self, x):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type x: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not x or x &lt; 2:</div><div class="line">            return x</div><div class="line">        start = 0</div><div class="line">        end = x</div><div class="line">        while start &lt;= end:</div><div class="line">            mid = start + (end - start) / 2</div><div class="line">            if mid &lt;= x / mid and x / (mid + 1) &lt; mid + 1:</div><div class="line">                return mid</div><div class="line">            elif mid * mid &lt; x:</div><div class="line">                start = mid + 1</div><div class="line">            else:</div><div class="line">                end = mid - 1</div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    Integer Newton</div><div class="line"></div><div class="line">    def mySqrt(self, x):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type x: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if x&lt;2: return x</div><div class="line">        r = x</div><div class="line">        while r &gt; x/r:</div><div class="line">            r = (r + x/r) / 2</div><div class="line">        return r</div><div class="line">        &apos;&apos;&apos;</div></pre></td></tr></table></figure>
+<h3 id="Find-first-bad-version"><a href="#Find-first-bad-version" class="headerlink" title="Find first bad version"></a>Find first bad version</h3><blockquote>
+<p>You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.<br>Suppose you have n versions [1, 2, …, n] and you want to find out the first bad one, which causes all the following ones to be bad.<br>You are given an API bool isBadVersion(version) which will return whether version is bad. Implement a function to find the first bad version. You should minimize the number of calls to the API.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"># The isBadVersion API is already defined for you.</div><div class="line"># @param version, an integer</div><div class="line"># @return a bool</div><div class="line"># def isBadVersion(version):</div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    def firstBadVersion(self, n):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if n==0:</div><div class="line">            return 0</div><div class="line">        start = 0</div><div class="line">        end = n</div><div class="line">        while start &lt; end-1:</div><div class="line">            mid = start + (start - end)/2</div><div class="line">            if isBadVersion(mid):</div><div class="line">                end = mid</div><div class="line">            else:</div><div class="line">                start = mid</div><div class="line">        return start if isBadVersion(start) else end</div></pre></td></tr></table></figure>
+<h3 id="Search-a-2D-Matrix"><a href="#Search-a-2D-Matrix" class="headerlink" title="Search a 2D Matrix"></a>Search a 2D Matrix</h3><blockquote>
+<p>Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:<br>Integers in each row are sorted from left to right.<br>The first integer of each row is greater than the last integer of the previous row.<br>For example,<br>Consider the following matrix:<br>[<br>  [1,   3,  5,  7],<br>  [10, 11, 16, 20],<br>  [23, 30, 34, 50]<br>]<br>Given target = 3, return true.</p>
+</blockquote>
+<p>把这个 2D 数组拉平成 1D 就是一个单调递增的(sorted)的数组，这种情况下找一个数用 binary search 就好，时间复杂度是 O(log(mn))=O(logN)，要注意的就是 index 之间怎么转换，观察发现：<br>2D -&gt; 1D  (i,j) -&gt; i*n+j<br>1D -&gt; 2D  index -&gt; (index/n,index%n)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line">    def searchMatrix(self, matrix, target):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type matrix: List[List[int]]</div><div class="line">        :type target: int</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not matrix:</div><div class="line">            return False</div><div class="line"></div><div class="line">        m = len(matrix) # row</div><div class="line">        n = len(matrix[0]) # column</div><div class="line"></div><div class="line">        start = 0</div><div class="line">        end = m*n-1</div><div class="line">        while start &lt;= end:</div><div class="line">            mid = start + (start - end) / 2</div><div class="line">            if matrix[mid/n][mid%n] == target:</div><div class="line">                return True</div><div class="line">            if matrix[mid/n][mid%n] &gt; target:</div><div class="line">                end = mid-1</div><div class="line">            else:</div><div class="line">                start = mid+1</div><div class="line">        return False</div></pre></td></tr></table></figure></p>
+<h3 id="Search-a-2D-Matrix-II"><a href="#Search-a-2D-Matrix-II" class="headerlink" title="Search a 2D Matrix II"></a>Search a 2D Matrix II</h3><p>问题再变难一点。</p>
+<blockquote>
+<p>Search a 2D Matrix II  QuestionEditorial Solution  My Submissions<br>Total Accepted: 50080<br>Total Submissions: 136871<br>Difficulty: Medium<br>Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:<br>Integers in each row are sorted in ascending from left to right.<br>Integers in each column are sorted in ascending from top to bottom.<br>For example,<br>Consider the following matrix:<br>[<br>  [1,   4,  7, 11, 15],<br>  [2,   5,  8, 12, 19],<br>  [3,   6,  9, 16, 22],<br>  [10, 13, 14, 17, 24],<br>  [18, 21, 23, 26, 30]<br>]<br>Given target = 5, return true.<br>Given target = 20, return false.</p>
+</blockquote>
+<p>当然还是可以用 binary search 做，需要非常仔细。时间复杂度 max(O(mlogn,nlogm)),由 T(n)=2T(n/2)+cn 推导而来<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/2D-matrix.jpg" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line">    def searchMatrix(self, matrix, target):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type matrix: List[List[int]]</div><div class="line">        :type target: int</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not matrix:</div><div class="line">            return False</div><div class="line">        return self.helper(matrix,target,0,0,len(matrix)-1,len(matrix[0])-1)</div><div class="line"></div><div class="line"></div><div class="line">    def helper(self,matrix,target,startX,startY,endX,endY):</div><div class="line">        if startX&gt;endX or startY&gt;endY:</div><div class="line">            return False</div><div class="line">        midX=startX+(startX-endX)/2</div><div class="line">        midY=startY+(startX-endY)/2</div><div class="line">        mid = matrix[midX][midY]</div><div class="line">        if mid == target:</div><div class="line">            return True</div><div class="line">        if mid &gt; target:</div><div class="line">            return self.helper(matrix,target,startX,midY,midX-1,endY) or self.helper(matrix,target,startX,startY,endX,midY-1)</div><div class="line">        else:</div><div class="line">            return self.helper(matrix,target,midX+1,startY,endX,midY) or self.helper(matrix,target,startX,midY+1,endX,endY)</div><div class="line">        return False</div></pre></td></tr></table></figure></p>
+<p>或者，不用 binary search，用比较通用的方法，很好理解，从 top rightmost 开始，比较与 target 的大小，if curr&gt;target，往左，if curr<target，往下。要注意的是确定 ending="" case,="" j<0="" or="" i="">len(matrix)-1。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line">    def searchMatrix(self, matrix, target):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type matrix: List[List[int]]</div><div class="line">        :type target: int</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not matrix:</div><div class="line">            return False</div><div class="line">        i,j = 0,len(matrix[0])-1</div><div class="line">        while True:</div><div class="line">            if j&lt;0 or i&gt;len(matrix)-1:</div><div class="line">                return False</div><div class="line">            curr = matrix[i][j]</div><div class="line">            if curr == target:</div><div class="line">                return True</div><div class="line">            if curr &gt; target:</div><div class="line">                j -= 1</div><div class="line">            else:</div><div class="line">                i += 1</div></pre></td></tr></table></figure></target，往下。要注意的是确定></p>
+<h2 id="475-Heaters"><a href="#475-Heaters" class="headerlink" title="475. Heaters"></a>475. Heaters</h2><h3 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem"></a>Problem</h3><p>Winter is coming! Your first job during the contest is to design a standard heater with fixed warm radius to warm all the houses.</p>
+<p>Now, you are given positions of houses and heaters on a horizontal line, find out minimum radius of heaters so that all houses could be covered by those heaters.</p>
+<p>So, your input will be the positions of houses and heaters seperately, and your expected output will be the minimum radius standard of heaters.</p>
+<p>Note:<br>Numbers of houses and heaters you are given are non-negative and will not exceed 25000.<br>Positions of houses and heaters you are given are non-negative and will not exceed 10^9.<br>As long as a house is in the heaters’ warm radius range, it can be warmed.<br>All the heaters follow your radius standard and the warm radius will the same.</p>
+<p>Example 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Input: [1,2,3],[2]</div><div class="line">Output: 1</div><div class="line">Explanation: The only heater was placed in the position 2, and if we use the radius 1 standard, then all the houses can be warmed.</div></pre></td></tr></table></figure></p>
+<p>Example 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Input: [1,2,3,4],[1,4]</div><div class="line">Output: 1</div><div class="line">Explanation: The two heater was placed in the position 1 and 4. We need to use radius 1 standard, then all the houses can be warmed.</div></pre></td></tr></table></figure></p>
+<h3 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">    Sort the heater</div><div class="line">    For each house, find out the positions of two heaters where the house is between, calculate the minimum value, update global radius</div><div class="line">    Be careful about corner case</div><div class="line"></div><div class="line">Followup:</div><div class="line">    use binary search</div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line">class Solution(object):</div><div class="line"></div><div class="line">    def findRadius(self, houses, heaters):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type houses: List[int]</div><div class="line">        :type heaters: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        houses.sort()</div><div class="line">        heaters.sort()</div><div class="line"></div><div class="line">        def binarySearch(house, heaters):</div><div class="line">            left, right = 0, len(heaters)</div><div class="line">            while left &lt; right:</div><div class="line">                mid = left + (right - left) / 2</div><div class="line">                if heaters[mid] &lt; house:</div><div class="line">                    left = mid + 1</div><div class="line">                else:</div><div class="line">                    right = mid</div><div class="line">            return left</div><div class="line"></div><div class="line">        r = 0</div><div class="line">        for house in houses:</div><div class="line">            i = binarySearch(house, heaters)</div><div class="line">            if i == 0:</div><div class="line">                cur = abs(house - heaters[0])</div><div class="line">            elif i == len(heaters):</div><div class="line">                cur = abs(heaters[-1] - house)</div><div class="line">            else:</div><div class="line">                cur = min(abs(house - heaters[i]), abs(heaters[i - 1] - house))</div><div class="line">            r = max(r, cur)</div><div class="line">        return r</div><div class="line"></div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def findRadius(self, houses, heaters):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type houses: List[int]</div><div class="line">        :type heaters: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        houses.sort()</div><div class="line">        heaters.sort()</div><div class="line">        heaters=[float(&apos;-inf&apos;)]+heaters+[float(&apos;inf&apos;)] # add 2 fake heaters</div><div class="line">        r,i = 0,0</div><div class="line">        for house in houses:</div><div class="line">            while house &gt; heaters[i+1]:  # search to put house between heaters</div><div class="line">                i +=1</div><div class="line">            cur = min (house - heaters[i], heaters[i+1]- house)</div><div class="line">            r = max(r,cur)</div><div class="line">        return r</div><div class="line">&apos;&apos;&apos;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/搜索/" rel="tag">#搜索</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/19/数据结构和算法 -- 数组/" rel="next" title="数据结构和算法 -- 数组">
+                <i class="fa fa-chevron-left"></i> 数据结构和算法 -- 数组
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/20/Search Engines笔记 - Evaluating Search Effectiveness/" rel="prev" title="Search Engines笔记 - Evaluating Search Effectiveness">
+                Search Engines笔记 - Evaluating Search Effectiveness <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#二分查找-Binary-search"><span class="nav-number">1.</span> <span class="nav-text">二分查找 (Binary search)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">1.2.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Complexity"><span class="nav-number">1.3.</span> <span class="nav-text">Complexity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板"><span class="nav-number">1.4.</span> <span class="nav-text">模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例题"><span class="nav-number">1.5.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#69-Sqrt-x"><span class="nav-number">1.5.1.</span> <span class="nav-text">69. Sqrt(x)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solution"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Find-first-bad-version"><span class="nav-number">1.5.2.</span> <span class="nav-text">Find first bad version</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Search-a-2D-Matrix"><span class="nav-number">1.5.3.</span> <span class="nav-text">Search a 2D Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Search-a-2D-Matrix-II"><span class="nav-number">1.5.4.</span> <span class="nav-text">Search a 2D Matrix II</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#475-Heaters"><span class="nav-number">1.6.</span> <span class="nav-text">475. Heaters</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-1"><span class="nav-number">1.6.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">1.6.2.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/09/20/数据结构和算法 -- 搜索/';
+      var disqus_title = "数据结构和算法 -- 搜索";
+      var disqus_url = 'http://www.shuang0420.com/2016/09/20/数据结构和算法 -- 搜索/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

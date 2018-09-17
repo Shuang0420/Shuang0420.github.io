@@ -1,0 +1,1001 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="栈,队列," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="Stack implementation实现一个 stack 可以用两种数据结构，array(dynamic or fixed) 或者是 linked list。
+dynamic array 的优势是支持 random access，因为可以通过 index 获取数据，然而 stack 主要作用是 pop，所以 dynamic array 的这个优势 gains you little。dynami">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构和算法 -- 栈和队列">
+<meta property="og:url" content="http://www.shuang0420.com/2016/09/08/数据结构和算法 -- 栈和队列/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="Stack implementation实现一个 stack 可以用两种数据结构，array(dynamic or fixed) 或者是 linked list。
+dynamic array 的优势是支持 random access，因为可以通过 index 获取数据，然而 stack 主要作用是 pop，所以 dynamic array 的这个优势 gains you little。dynami">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构和算法 -- 栈和队列">
+<meta name="twitter:description" content="Stack implementation实现一个 stack 可以用两种数据结构，array(dynamic or fixed) 或者是 linked list。
+dynamic array 的优势是支持 random access，因为可以通过 index 获取数据，然而 stack 主要作用是 pop，所以 dynamic array 的这个优势 gains you little。dynami">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/09/08/数据结构和算法 -- 栈和队列/"/>
+
+
+  <title> 数据结构和算法 -- 栈和队列 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构和算法 -- 栈和队列
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-09-08T09:55:12+08:00" content="2016-09-08">
+              2016-09-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Data-Structure/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Structure</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/08/数据结构和算法 -- 栈和队列/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/09/08/数据结构和算法 -- 栈和队列/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Stack-implementation"><a href="#Stack-implementation" class="headerlink" title="Stack implementation"></a>Stack implementation</h1><p>实现一个 stack 可以用两种数据结构，array(dynamic or fixed) 或者是 linked list。</p>
+<p><strong>dynamic array</strong> 的优势是支持 random access，因为可以通过 index 获取数据，然而 stack 主要作用是 pop，所以 dynamic array 的这个优势 gains you little。dynamic array 另一个优势是 resize，这个非常的 time-consuming 因为需要 copy array to a new one。</p>
+<p><strong>linked list</strong> 会为每一个元素分配内存，这比 dynamic array 的 resize 更费时，因此基于 dynamic array 的 stack 通常要比基于 linked list 的 stack 快一些。然而，基于 linked list 的 stack 更容易实现。</p>
+<p><strong>Proper functionality</strong><br>基本方法：</p>
+<ul>
+<li>push<br>allocate new element, checks for failure, sets the data of the new element, places it at the top of the stack, adjust the stack pointer</li>
+<li>pop<br>check the stack isn’t empty, fetches data from top element, adjusts the stack pointer, free the element that is no longer on the stack</li>
+</ul>
+<p>完整方法：</p>
+<ul>
+<li>createStack<br>push a null pointer</li>
+<li>deleteStack<br>call pop repeatedly</li>
+</ul>
+<p><strong>Error handling</strong></p>
+<ul>
+<li>pop<br>如果 stack 为空，返回 null? 问题是需要保证 stack 里没有存 null pointer；返回 special value(or negative value)？问题是需要 assume stack 里没有这些元素。感觉 raise error 比较简单。</li>
+<li>push<br>如果传进去的值为 null，raise error</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"># implement a stack using linkedlist</div><div class="line">class Stack(object):</div><div class="line"></div><div class="line">    class Node(object):</div><div class="line"></div><div class="line">        def __init__(self, val=None, next=None):</div><div class="line">            self.val = val</div><div class="line">            self.next = next</div><div class="line"></div><div class="line">    def __init__(self):</div><div class="line">        self.head = None</div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    check the stack isn&apos;t empty, fetches data from top element, adjusts the stack pointer, free the element that is no longer on the stack</div><div class="line">    &apos;&apos;&apos;</div><div class="line"></div><div class="line">    def pop(self):</div><div class="line">        if not self.head: raise ValueError(&quot;Empty stack!&quot;)</div><div class="line">        val = self.head.val</div><div class="line">        self.head = self.head.next</div><div class="line">        return val</div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    allocate new element, checks for failure, sets the data of the new element, places it at the top of the stack, adjust the stack pointer</div><div class="line">    &apos;&apos;&apos;</div><div class="line"></div><div class="line">    def push(self, val):</div><div class="line">        if not val:</div><div class="line">            raise ValueError(&quot;Invalid value!&quot;)</div><div class="line">        node = self.Node(val, self.head)</div><div class="line">        self.head = node</div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line">push a null pointer</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line">def createStack(stack):</div><div class="line">    stack.head = Node()</div><div class="line">    return True</div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line">call pop repeatedly</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line">def deleteStack(stack):</div><div class="line">    while stack.head:</div><div class="line">        stack.pop()</div><div class="line">    return True</div><div class="line"></div><div class="line">stack=Stack()</div><div class="line">stack.push(1)</div><div class="line">stack.push(2)</div><div class="line">stack.push(3)</div><div class="line">print stack.pop()</div><div class="line">print stack.pop()</div><div class="line">print stack.pop()</div><div class="line">print stack.pop()</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"># implement a stack using fixed-size array</div><div class="line">class Stack(object):</div><div class="line"></div><div class="line">    def __init__(self, capacity=None):</div><div class="line">        if capacity:</div><div class="line">            self.elements = [None] * capacity</div><div class="line">        else:</div><div class="line">            self.elements = [None] * 10</div><div class="line">        # set the top to be -1, indicating the stack is empty</div><div class="line">        self.top = -1</div><div class="line"></div><div class="line">    def isEmpty(self):</div><div class="line">        return self.top == -1</div><div class="line"></div><div class="line">    def push(self, item):</div><div class="line">        if self.top == len(self.elements):</div><div class="line">            raise ValueError(&quot;Full stack!&quot;)</div><div class="line">        self.top += 1</div><div class="line">        self.elements[self.top] = item</div><div class="line"></div><div class="line">    def pop(self):</div><div class="line">        if self.isEmpty():</div><div class="line">            raise ValueError(&quot;Empty stack!&quot;)</div><div class="line">        # get the element on the top</div><div class="line">        item = self.elements[self.top]</div><div class="line">        self.elements[self.top] = None</div><div class="line">        # reduce the top variable</div><div class="line">        self.top -= 1</div><div class="line">        return item</div><div class="line"></div><div class="line">    def peek(self):</div><div class="line">        if self.isEmpty():</div><div class="line">            raise ValueError(&quot;Empty stack!&quot;)</div><div class="line">        return self.elements[self.top]</div></pre></td></tr></table></figure>
+<h1 id="Queue-implementation"><a href="#Queue-implementation" class="headerlink" title="Queue implementation"></a>Queue implementation</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"># implement a queue using fixed-size array</div><div class="line">class Queue(object):</div><div class="line"></div><div class="line">    def __init__(self, capacity=None):</div><div class="line">        if capacity:</div><div class="line">            self.elements = [None] * capacity</div><div class="line">        else:</div><div class="line">            self.elements = [None] * 5</div><div class="line">        self.front = 0</div><div class="line">        self.back = -1</div><div class="line">        self.nItems = 0</div><div class="line"></div><div class="line">    def enqueue(self, item):</div><div class="line">        if self.isFull():</div><div class="line">            raise ValueError(&quot;Queue is full&quot;)</div><div class="line">        self.back += 1</div><div class="line">        index = self.back % len(self.elements)</div><div class="line">        self.elements[index] = item</div><div class="line">        self.nItems += 1</div><div class="line"></div><div class="line">    def dequeue(self):</div><div class="line">        if self.isEmpty():</div><div class="line">            raise ValueError(&quot;Queue is empty&quot;)</div><div class="line">        index = self.front % len(self.elements)</div><div class="line">        result = self.elements[index]</div><div class="line">        self.elements[index] = None</div><div class="line">        self.front = index + 1</div><div class="line">        self.nItems -= 1</div><div class="line">        return result</div><div class="line"></div><div class="line">    def peekFront(self):</div><div class="line">        if self.isEmpty():</div><div class="line">            raise ValueError(&quot;Queue is empty&quot;)</div><div class="line">        return self.elements[self.front % len(self.elements)]</div><div class="line"></div><div class="line">    def isEmpty(self):</div><div class="line">        return self.nItems == 0</div><div class="line"></div><div class="line">    def isFull(self):</div><div class="line">        return self.nItems == len(self.elements)</div><div class="line"></div><div class="line"></div><div class="line">q=Queue()</div><div class="line">q.enqueue(4)</div><div class="line">q.enqueue(5)</div><div class="line">q.enqueue(6)</div><div class="line">print q.elements</div><div class="line">q.dequeue()</div><div class="line">print q.elements</div><div class="line">q.dequeue()</div><div class="line">print q.elements</div><div class="line">q.enqueue(10)</div><div class="line">q.enqueue(11)</div><div class="line">q.enqueue(12)</div><div class="line">print q.elements</div></pre></td></tr></table></figure>
+<h1 id="Leetcode-实例"><a href="#Leetcode-实例" class="headerlink" title="Leetcode 实例"></a>Leetcode 实例</h1><h2 id="232-Implement-Queue-using-Stacks"><a href="#232-Implement-Queue-using-Stacks" class="headerlink" title="232.Implement Queue using Stacks"></a>232.Implement Queue using Stacks</h2><h3 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h3><p>Implement the following operations of a queue using stacks.<br>push(x) – Push element x to the back of queue.<br>pop() – Removes the element from in front of queue.<br>peek() – Get the front element.<br>empty() – Return whether the queue is empty.<br>Notes:<br>You must use only standard operations of a stack – which means only push to top, peek/pop from top, size, and is empty operations are valid.<br>Depending on your language, stack may not be supported natively. You may simulate a stack by using a list or deque (double-ended queue), as long as you use only standard operations of a stack.<br>You may assume that all operations are valid (for example, no pop or peek operations will be called on an empty queue).</p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">class Queue(object):</div><div class="line">    def __init__(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        initialize your data structure here.</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.stack1=list()</div><div class="line">        self.stack2=list()</div><div class="line"></div><div class="line">    def push(self, x):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type x: int</div><div class="line">        :rtype: nothing</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.stack1.append(x)</div><div class="line"></div><div class="line">    def pop(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :rtype: nothing</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.helper()</div><div class="line">        return self.stack2.pop()</div><div class="line"></div><div class="line">    def peek(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.helper()</div><div class="line">        &apos;&apos;&apos;</div><div class="line">        element=self.stack2.pop()</div><div class="line">        self.stack2.append(element)</div><div class="line">        return element</div><div class="line">        &apos;&apos;&apos;</div><div class="line">        return self.stack2[-1]</div><div class="line"></div><div class="line">    def empty(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if self.stack1 or self.stack2:</div><div class="line">            return False</div><div class="line">        return True</div><div class="line"></div><div class="line">    def helper(self):</div><div class="line">        if not self.stack2:</div><div class="line">            while self.stack1:</div><div class="line">                self.stack2.append(self.stack1.pop())</div></pre></td></tr></table></figure>
+<h2 id="225-Implement-Stack-using-Queues"><a href="#225-Implement-Stack-using-Queues" class="headerlink" title="225.Implement Stack using Queues"></a>225.Implement Stack using Queues</h2><h3 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem"></a>Problem</h3><p>Implement the following operations of a stack using queues.<br>push(x) – Push element x onto stack.<br>pop() – Removes the element on top of the stack.<br>top() – Get the top element.<br>empty() – Return whether the stack is empty.<br>Notes:<br>You must use only standard operations of a queue – which means only push to back, peek/pop from front, size, and is empty operations are valid.<br>Depending on your language, queue may not be supported natively. You may simulate a queue by using a list or deque (double-ended queue), as long as you use only standard operations of a queue.<br>You may assume that all operations are valid (for example, no pop or top operations will be called on an empty stack).<br>Update (2015-06-11):<br>The class name of the Java function had been updated to MyStack instead of Stack.</p>
+<p>用两个队列，push: O(n)，pop: O(1)，top: O(1)</p>
+<h3 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">from collections import deque</div><div class="line">class Stack(object):</div><div class="line">    def __init__(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        initialize your data structure here.</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.queue1=deque()</div><div class="line">        self.queue2=deque()</div><div class="line"></div><div class="line">    def push(self, x):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type x: int</div><div class="line">        :rtype: nothing</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not self.queue2:</div><div class="line">            self.queue2.append(x)</div><div class="line">            while self.queue1:</div><div class="line">                self.queue2.append(self.queue1.popleft())</div><div class="line">            self.queue1,self.queue2=self.queue2,self.queue1</div><div class="line"></div><div class="line"></div><div class="line">    def pop(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :rtype: nothing</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.queue1.popleft()</div><div class="line"></div><div class="line">    def top(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        return self.queue1[0]</div><div class="line"></div><div class="line"></div><div class="line">    def empty(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not self.queue1:</div><div class="line">            return True</div><div class="line">        return False</div></pre></td></tr></table></figure>
+<h2 id="155-Min-Stack"><a href="#155-Min-Stack" class="headerlink" title="155. Min Stack"></a>155. Min Stack</h2><h3 id="Problem-2"><a href="#Problem-2" class="headerlink" title="Problem"></a>Problem</h3><p>Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.</p>
+<p>push(x) – Push element x onto stack.<br>pop() – Removes the element on top of the stack.<br>top() – Get the top element.<br>getMin() – Retrieve the minimum element in the stack.<br>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">MinStack minStack = new MinStack();</div><div class="line">minStack.push(-2);</div><div class="line">minStack.push(0);</div><div class="line">minStack.push(-3);</div><div class="line">minStack.getMin();   --&gt; Returns -3.</div><div class="line">minStack.pop();</div><div class="line">minStack.top();      --&gt; Returns 0.</div><div class="line">minStack.getMin();   --&gt; Returns -2.</div></pre></td></tr></table></figure></p>
+<h3 id="Solution-2"><a href="#Solution-2" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">    Primitive idea would be to use a global varible to record current minimum value when push, but when pop value, the minimum value may change. One solution is when pop we empty the list and redo the push action for n-1 values but thus it takes O(n) time.</div><div class="line"></div><div class="line">Followup:</div><div class="line">    It would be perfect if we can keep track of the minmum value at each &apos;timestamp&apos;. We can use tuple to record current minimum value for each value when push a new element.</div><div class="line">&apos;&apos;&apos;</div><div class="line">&apos;&apos;&apos;</div><div class="line">class MinStack(object):</div><div class="line"></div><div class="line">    def __init__(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        initialize your data structure here.</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.stack=list()</div><div class="line">        self.min=float(&apos;inf&apos;)</div><div class="line"></div><div class="line">    def push(self, x):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type x: int</div><div class="line">        :rtype: void</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.stack.append(x)</div><div class="line">        self.min=min(self.min,x)</div><div class="line"></div><div class="line"></div><div class="line">    def pop(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :rtype: void</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not self.stack:</div><div class="line">            return None</div><div class="line">        if self.top()==self.min:</div><div class="line">            cur=self.stack[::]</div><div class="line">            self.stack=[]</div><div class="line">            self.min=float(&apos;inf&apos;)</div><div class="line">            for i in range(len(cur)-1):</div><div class="line">                self.push(cur[i])</div><div class="line">        else:</div><div class="line">            del self.stack[-1]</div><div class="line"></div><div class="line">    def top(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not self.stack: return None</div><div class="line">        return self.stack[-1]</div><div class="line"></div><div class="line"></div><div class="line">    def getMin(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        return self.min</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">class MinStack(object):</div><div class="line"></div><div class="line">    def __init__(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        initialize your data structure here.</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.stack=list()</div><div class="line"></div><div class="line">    def push(self, x):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type x: int</div><div class="line">        :rtype: void</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not self.stack:</div><div class="line">            self.stack.append((x,x))</div><div class="line">            return</div><div class="line">        self.stack.append((x,min(x,self.getMin())))</div><div class="line"></div><div class="line">    def pop(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :rtype: void</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not self.stack:</div><div class="line">            return None</div><div class="line">        return self.stack.pop()[0]</div><div class="line"></div><div class="line">    def top(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not self.stack: return None</div><div class="line">        return self.stack[-1][0]</div><div class="line"></div><div class="line"></div><div class="line">    def getMin(self):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        return self.stack[-1][-1]</div><div class="line"></div><div class="line"># Your MinStack object will be instantiated and called as such:</div><div class="line"># obj = MinStack()</div><div class="line"># obj.push(x)</div><div class="line"># obj.pop()</div><div class="line"># param_3 = obj.top()</div><div class="line"># param_4 = obj.getMin()</div></pre></td></tr></table></figure>
+<h2 id="20-Valid-Parentheses"><a href="#20-Valid-Parentheses" class="headerlink" title="20.Valid Parentheses"></a>20.Valid Parentheses</h2><h3 id="Problem-3"><a href="#Problem-3" class="headerlink" title="Problem"></a>Problem</h3><p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.</p>
+<p>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
+<h3 id="Solution-3"><a href="#Solution-3" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">- check when right meet; just need the last unpaired left =&gt; first in,last out =&gt; stack</div><div class="line">- create a dictionary for parenthese pairs, for each element in s, if it exists in dictionary.keys(), then append it into the stack, else, pop from the stack and check if the popped value and current element is a pair. Time complexity: O(n)</div><div class="line">- remember to check if stack is empty in every check and also in final check (look back for previous left parentheses)</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def isValid(self, s):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type s: str</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not s:</div><div class="line">            return None</div><div class="line">        dictionary=&#123;&apos;(&apos;:&apos;)&apos;,&apos;[&apos;:&apos;]&apos;,&apos;&#123;&apos;:&apos;&#125;&apos;&#125;</div><div class="line">        s=list(s)</div><div class="line">        stack=[]</div><div class="line">        for i in s:</div><div class="line">            if i in dictionary:</div><div class="line">                stack.append(i)</div><div class="line">            else:</div><div class="line">                if not stack or dictionary[stack.pop()]!=i:</div><div class="line">                    return False</div><div class="line">        return not stack</div></pre></td></tr></table></figure>
+<h2 id="150-Evaluate-Reverse-Polish-Notation"><a href="#150-Evaluate-Reverse-Polish-Notation" class="headerlink" title="150. Evaluate Reverse Polish Notation"></a>150. Evaluate Reverse Polish Notation</h2><h3 id="Problem-4"><a href="#Problem-4" class="headerlink" title="Problem"></a>Problem</h3><p>Evaluate the value of an arithmetic expression in Reverse Polish Notation.</p>
+<p>Valid operators are +, -, *, /. Each operand may be an integer or another expression.</p>
+<p>Some examples:<br>  [“2”, “1”, “+”, “3”, “*“] -&gt; ((2 + 1) * 3) -&gt; 9<br>  [“4”, “13”, “5”, “/“, “+”] -&gt; (4 + (13 / 5)) -&gt; 6</p>
+<h3 id="Solution-4"><a href="#Solution-4" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">- each operation requires two operands and one operator, operator always appear after operands, so we search element from left to right, store numbers in the stack till we meet up with an operator, and with the operator, we pop two elements from the stack and caculate the results and push it back to stack, and continue, till the end of tokens, finally return the final value of the stack.</div><div class="line"></div><div class="line">Attention(negative integer division):</div><div class="line">- division in python, pls consider when one of the operand is negative, you would get surprising result. eg. -7/2=-4.</div><div class="line">    in order to avoid that, use int(float(a)/b) whenever there&apos;s a division operation</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def evalRPN(self, tokens):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type tokens: List[str]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        stack=[]</div><div class="line">        for t in tokens:</div><div class="line">            if t==&apos;+&apos;:</div><div class="line">                stack.append(stack.pop()+stack.pop())</div><div class="line">            elif t==&apos;-&apos;:</div><div class="line">                a=stack.pop()</div><div class="line">                b=stack.pop()</div><div class="line">                stack.append(b-a)</div><div class="line">            elif t==&apos;*&apos;:</div><div class="line">                stack.append(stack.pop()*stack.pop())</div><div class="line">            elif t==&apos;/&apos;:</div><div class="line">                a=stack.pop()</div><div class="line">                b=stack.pop()</div><div class="line">                stack.append(int(float(b)/a))</div><div class="line">            else:</div><div class="line">                stack.append(int(t))</div><div class="line">        return stack.pop()</div></pre></td></tr></table></figure>
+<p>Followup<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Followup:</div><div class="line">- infix notation</div><div class="line">    ( =&gt; operator stack</div><div class="line">    number =&gt; number stack</div><div class="line">    ) =&gt; pop and calculate till a &apos;(&apos; is met</div><div class="line">    +,- =&gt; higher precedence met-&gt; push into the operator stack, lower precedence met-&gt; calculate higher operator in stack first and then push</div><div class="line">- test case:</div><div class="line">  input: [&quot;(&quot;,&quot;(&quot;,&quot;3&quot;,&quot;+&quot;,&quot;4&quot;,&quot;)&quot;,&quot;*&quot;,&quot;(&quot;,&quot;4&quot;,&quot;+&quot;,&quot;1&quot;,&quot;)&quot;,&quot;-&quot;,&quot;4&quot;,&quot;*&quot;,&quot;2&quot;,&quot;)&quot;,&quot;+&quot;,&quot;1&quot;]</div><div class="line">  output: 28</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def evalRPN(self,tokens):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type tokens: List[str]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        op_stack=[]</div><div class="line">        num_stack=[]</div><div class="line">        for i in tokens:</div><div class="line">            # case &apos;(&apos;</div><div class="line">            if i==&apos;(&apos;:</div><div class="line">                op_stack.append(i)</div><div class="line">            # case &apos;)&apos;</div><div class="line">            elif i==&apos;)&apos;:</div><div class="line">                while op_stack[-1]!=&apos;(&apos;:</div><div class="line">                    num_stack.append(self.cal(op_stack.pop(),num_stack.pop(),num_stack.pop()))</div><div class="line">                op_stack.pop()</div><div class="line">            # case &apos;+&apos;,&apos;-&apos;,&apos;*&apos;,&apos;/&apos;</div><div class="line">            elif i==&apos;+&apos; or i==&apos;-&apos; or i==&apos;*&apos; or i==&apos;/&apos;:</div><div class="line">                while op_stack and self.isLowerThan(i,op_stack[-1]):</div><div class="line">                    num_stack.append(self.cal(op_stack.pop(),num_stack.pop(),num_stack.pop()))</div><div class="line">                op_stack.append(i)</div><div class="line">            # case number</div><div class="line">            else:</div><div class="line">                num_stack.append(int(i))</div><div class="line">        while op_stack:</div><div class="line">            num_stack.append(self.cal(op_stack.pop(),num_stack.pop(),num_stack.pop()))</div><div class="line">        return num_stack.pop()</div><div class="line"></div><div class="line"></div><div class="line">    def cal(self,op,num1,num2):</div><div class="line">        if op==&apos;+&apos;:</div><div class="line">            return num1+num2</div><div class="line">        if op==&apos;-&apos;:</div><div class="line">            return num2-num1</div><div class="line">        if op==&apos;*&apos;:</div><div class="line">            return num1*num2</div><div class="line">        if op==&apos;/&apos;:</div><div class="line">            return int(float(num2)/num1)</div><div class="line">        raise ValueError(&quot;Not valid operator&quot;)</div><div class="line"></div><div class="line">    def isLowerThan(self,op1,op2):</div><div class="line">        if (op1==&apos;+&apos; or op1==&apos;-&apos;) and (op2==&apos;*&apos; or op2==&apos;/&apos;):</div><div class="line">            return True</div><div class="line">        return False</div></pre></td></tr></table></figure></p>
+<h2 id="71-Simplify-Path"><a href="#71-Simplify-Path" class="headerlink" title="71. Simplify Path"></a>71. Simplify Path</h2><h3 id="Problem-5"><a href="#Problem-5" class="headerlink" title="Problem"></a>Problem</h3><p>Given an absolute path for a file (Unix-style), simplify it.</p>
+<p>For example,<br>path = “/home/“, =&gt; “/home”<br>path = “/a/./b/../../c/“, =&gt; “/c”<br>click to show corner cases.</p>
+<p>Corner Cases:<br>Did you consider the case where path = “/../“?<br>In this case, you should return “/“.<br>Another corner case is the path might contain multiple slashes ‘/‘ together, such as “/home//foo/“.<br>In this case, you should ignore redundant slashes and return “/home/foo”.</p>
+<h3 id="Solution-5"><a href="#Solution-5" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">- ignore &apos;.&apos;, when met &apos;..&apos;, pop from stack if stack is not empty, and finally join the stack</div><div class="line"></div><div class="line">Attention:</div><div class="line">- corner case: /../a =&gt; /a</div><div class="line">- always remember if you wanna pop from a stack check if it is empty first</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def simplifyPath(self, path):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type path: str</div><div class="line">        :rtype: str</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        vals=path.split(&apos;/&apos;)</div><div class="line">        stack=[]</div><div class="line">        for v in vals:</div><div class="line">            if v==&apos;&apos; or v==&apos;.&apos;: continue</div><div class="line">            if v==&apos;..&apos;:</div><div class="line">                if stack: stack.pop()</div><div class="line">            else: stack.append(v)</div><div class="line">        return &apos;/&apos;+&apos;/&apos;.join(stack)</div></pre></td></tr></table></figure>
+<h2 id="84-Largest-Rectangle-in-Histogram"><a href="#84-Largest-Rectangle-in-Histogram" class="headerlink" title="84. Largest Rectangle in Histogram"></a>84. Largest Rectangle in Histogram</h2><h3 id="Problem-6"><a href="#Problem-6" class="headerlink" title="Problem"></a>Problem</h3><p>Given n non-negative integers representing the histogram’s bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.</p>
+<p>Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].</p>
+<p>The largest rectangle is shown in the shaded area, which has area = 10 unit.</p>
+<p>For example,<br>Given heights = [2,1,5,6,2,3],<br>return 10.</p>
+<h3 id="Solution-6"><a href="#Solution-6" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">- primitive idea: find all rectangles and get max one, time complexity O(n^2)</div><div class="line"></div><div class="line">Followup:</div><div class="line">- O(n)?</div><div class="line">    - avoid repeated work</div><div class="line">    - identify a rectangle: identify 2 boundaries</div><div class="line">    - if cur&gt;stack.peek() --&gt; offer, else --&gt; continously poll</div><div class="line"></div><div class="line">Corner case: [0]</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def largestRectangleArea(self, heights):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type heights: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not heights: return 0</div><div class="line">        stack=[]</div><div class="line">        max_area=0</div><div class="line">        for i in range(len(heights)+1):</div><div class="line">            cur=0 if i==len(heights) else heights[i]</div><div class="line">            while stack and cur&lt;=heights[stack[-1]]:</div><div class="line">                height=heights[stack.pop()]</div><div class="line">                leftBound=0 if not stack else stack[-1]+1</div><div class="line">                rightBound=i</div><div class="line">                cur_area=(rightBound-leftBound)*height</div><div class="line">                max_area=max(cur_area,max_area)</div><div class="line">            stack.append(i)</div><div class="line">        return max_area</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    # primitive, 2 loops</div><div class="line">    def largestRectangleArea(self, heights):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type heights: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not heights: return 0</div><div class="line">        max_area=0</div><div class="line">        for i in range(len(heights)):</div><div class="line">            max_area=max(heights[i],max_area)</div><div class="line">            min_height=heights[i]</div><div class="line">            for j in range(i,len(heights)):</div><div class="line">                min_height=min(min_height,heights[j])</div><div class="line">                max_area=max(min_height*(j-i+1),max_area)</div><div class="line">        return max_area</div><div class="line">        &apos;&apos;&apos;</div></pre></td></tr></table></figure>
+<h1 id="Python-stack-amp-deque"><a href="#Python-stack-amp-deque" class="headerlink" title="Python stack &amp; deque"></a>Python stack &amp; deque</h1><p>这篇用到的 python 的知识点/需要注意的地方。</p>
+<h2 id="use-lists-as-stacks"><a href="#use-lists-as-stacks" class="headerlink" title="use lists as stacks"></a>use lists as stacks</h2><p>LIFO<br>add, use append()<br>retrieve, use pop()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; stack = [3, 4, 5]</div><div class="line">&gt;&gt;&gt; stack.append(6)</div><div class="line">&gt;&gt;&gt; stack.append(7)</div><div class="line">&gt;&gt;&gt; stack</div><div class="line">[3, 4, 5, 6, 7]</div><div class="line">&gt;&gt;&gt; stack.pop()</div><div class="line">7</div><div class="line">&gt;&gt;&gt; stack</div><div class="line">[3, 4, 5, 6]</div><div class="line">&gt;&gt;&gt; stack.pop()</div><div class="line">6</div><div class="line">&gt;&gt;&gt; stack.pop()</div><div class="line">5</div><div class="line">&gt;&gt;&gt; stack</div><div class="line">[3, 4]</div></pre></td></tr></table></figure></p>
+<h2 id="use-lists-as-queues"><a href="#use-lists-as-queues" class="headerlink" title="use lists as queues"></a>use lists as queues</h2><p>FIFO，python list 作 queue 并不 efficent，用 collections.deque<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; from collections import deque</div><div class="line">&gt;&gt;&gt; queue = deque([&quot;Eric&quot;, &quot;John&quot;, &quot;Michael&quot;])</div><div class="line">&gt;&gt;&gt; queue.append(&quot;Terry&quot;)           # Terry arrives</div><div class="line">&gt;&gt;&gt; queue.append(&quot;Graham&quot;)          # Graham arrives</div><div class="line">&gt;&gt;&gt; queue.popleft()                 # The first to arrive now leaves</div><div class="line">&apos;Eric&apos;</div><div class="line">&gt;&gt;&gt; queue.pop()                 # The second to arrive now leaves</div><div class="line">&apos;Graham&apos;</div><div class="line">&gt;&gt;&gt; queue                           # Remaining queue in order of arrival</div><div class="line">deque([&apos;John&apos;, &apos;Michael&apos;, &apos;Terry&apos;])</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/栈/" rel="tag">#栈</a>
+          
+            <a href="/tags/队列/" rel="tag">#队列</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/07/数据结构和算法 -- 排序算法/" rel="next" title="数据结构和算法 -- 排序算法">
+                <i class="fa fa-chevron-left"></i> 数据结构和算法 -- 排序算法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/11/Search Engines笔记 - Query Processing/" rel="prev" title="Search Engines笔记 - Query Processing">
+                Search Engines笔记 - Query Processing <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Stack-implementation"><span class="nav-number">1.</span> <span class="nav-text">Stack implementation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Queue-implementation"><span class="nav-number">2.</span> <span class="nav-text">Queue implementation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Leetcode-实例"><span class="nav-number">3.</span> <span class="nav-text">Leetcode 实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#232-Implement-Queue-using-Stacks"><span class="nav-number">3.1.</span> <span class="nav-text">232.Implement Queue using Stacks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem"><span class="nav-number">3.1.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">3.1.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#225-Implement-Stack-using-Queues"><span class="nav-number">3.2.</span> <span class="nav-text">225.Implement Stack using Queues</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#155-Min-Stack"><span class="nav-number">3.3.</span> <span class="nav-text">155. Min Stack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-2"><span class="nav-number">3.3.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">3.3.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-Valid-Parentheses"><span class="nav-number">3.4.</span> <span class="nav-text">20.Valid Parentheses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-3"><span class="nav-number">3.4.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-3"><span class="nav-number">3.4.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#150-Evaluate-Reverse-Polish-Notation"><span class="nav-number">3.5.</span> <span class="nav-text">150. Evaluate Reverse Polish Notation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-4"><span class="nav-number">3.5.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-4"><span class="nav-number">3.5.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#71-Simplify-Path"><span class="nav-number">3.6.</span> <span class="nav-text">71. Simplify Path</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-5"><span class="nav-number">3.6.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-5"><span class="nav-number">3.6.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#84-Largest-Rectangle-in-Histogram"><span class="nav-number">3.7.</span> <span class="nav-text">84. Largest Rectangle in Histogram</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-6"><span class="nav-number">3.7.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-6"><span class="nav-number">3.7.2.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-stack-amp-deque"><span class="nav-number">4.</span> <span class="nav-text">Python stack & deque</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#use-lists-as-stacks"><span class="nav-number">4.1.</span> <span class="nav-text">use lists as stacks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#use-lists-as-queues"><span class="nav-number">4.2.</span> <span class="nav-text">use lists as queues</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/09/08/数据结构和算法 -- 栈和队列/';
+      var disqus_title = "数据结构和算法 -- 栈和队列";
+      var disqus_url = 'http://www.shuang0420.com/2016/09/08/数据结构和算法 -- 栈和队列/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

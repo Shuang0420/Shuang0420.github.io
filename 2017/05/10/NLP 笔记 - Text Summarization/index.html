@@ -1,0 +1,1081 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,text summarization,文本摘要," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="Stanford Dan Jurafsky &amp;amp; Chris Manning: Natural Language Processing 课程笔记。文档/会议/邮件摘要，QA 系统回答 what/how 等复杂问题，都需要自动摘要技术。本篇主要讲基于查询的摘要。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 笔记 - Text Summarization">
+<meta property="og:url" content="http://www.shuang0420.com/2017/05/10/NLP 笔记 - Text Summarization/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="Stanford Dan Jurafsky &amp;amp; Chris Manning: Natural Language Processing 课程笔记。文档/会议/邮件摘要，QA 系统回答 what/how 等复杂问题，都需要自动摘要技术。本篇主要讲基于查询的摘要。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/google%20snippets.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/summarization%20stages.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/topic%20signature.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/supervised%20content%20selection.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/query-focused%20multi-document%20summarization.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/Simplifying%20sentences.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/de%EF%AC%81nition%20questions.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/dIE%20METHOD.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE-2.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE%20EXAMPLE.png">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 笔记 - Text Summarization">
+<meta name="twitter:description" content="Stanford Dan Jurafsky &amp;amp; Chris Manning: Natural Language Processing 课程笔记。文档/会议/邮件摘要，QA 系统回答 what/how 等复杂问题，都需要自动摘要技术。本篇主要讲基于查询的摘要。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/google%20snippets.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/05/10/NLP 笔记 - Text Summarization/"/>
+
+
+  <title> NLP 笔记 - Text Summarization | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                NLP 笔记 - Text Summarization
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-05-10T09:02:27+08:00" content="2017-05-10">
+              2017-05-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/CMU-11611/" itemprop="url" rel="index">
+                    <span itemprop="name">CMU 11611</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/10/NLP 笔记 - Text Summarization/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/10/NLP 笔记 - Text Summarization/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Stanford Dan Jurafsky &amp; Chris Manning: Natural Language Processing 课程笔记。文档/会议/邮件摘要，QA 系统回答 what/how 等复杂问题，都需要自动摘要技术。本篇主要讲基于查询的摘要。<br><a id="more"></a></p>
+<h1 id="Types-of-Summarization-Task"><a href="#Types-of-Summarization-Task" class="headerlink" title="Types of Summarization Task"></a>Types of Summarization Task</h1><p><strong>单文档 vs 多文档</strong></p>
+<ul>
+<li>Single-­‐document summarization<br>给定一个文档，产生 abstract/outline/headline</li>
+<li>Multiple-­‐document summarization<br>给定主题相关的一组文档，通过摘要来概况同一事件/主题的信息</li>
+</ul>
+<p>与单文档相比，多文档任务面临的<strong>减小句子冗余度/确定句子顺序/确定压缩比率(从每个文档中抽取句子的比例)/指代消解问题</strong>都更加的突出</p>
+<p><strong>查询无关 vs 查询相关</strong></p>
+<ul>
+<li>Generic summarization<br>对一个文档的内容做整体性的摘要</li>
+<li>Query-­‐focused summarization<br>根据用户查询语句表达的信息需求(information need)来对一篇文档做出摘要总结，如 Google snippets<br>用于 QA 系统，根据提问产生文档摘要来回答一个复杂的问题</li>
+</ul>
+<p>查询相关的文本摘要对句子重要性的衡量需要同时考虑主题性以及查询相关性</p>
+<p><strong>抽取式 vs 合成式</strong></p>
+<ul>
+<li>Extractive summarization<br>摘要句子完全从源文档中抽取形成</li>
+<li>Abstractive summarization: our own words<br>从源文档中抽取句子并进行改写形成摘要</li>
+</ul>
+<p>目前来看，大多数的系统是抽取式，合成式的技术还不够成熟。</p>
+<p>本章主要讨论 <strong>Extractive summarization</strong></p>
+<h1 id="Baseline-Model"><a href="#Baseline-Model" class="headerlink" title="Baseline Model"></a>Baseline Model</h1><p>好的作者常常会在标题和第一句话就表达主题，因此最简单的 baseline 就是抽取文档中的首句作为摘要。</p>
+<h1 id="Generating-snippets-query-focused-summaries"><a href="#Generating-snippets-query-focused-summaries" class="headerlink" title="Generating snippets: query-focused summaries"></a>Generating snippets: query-focused summaries</h1><p>看一下 Google snippets</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/google%20snippets.png" class="ful-image" alt="google%20snippets.png">
+<ul>
+<li>Single-­‐document summarization</li>
+<li>Query-­‐focused summarization</li>
+<li>Extractive summarization</li>
+</ul>
+<h2 id="Main-Stages"><a href="#Main-Stages" class="headerlink" title="Main Stages"></a>Main Stages</h2><p>产生 snippets 的<strong>主要步骤(Stages):</strong></p>
+<ul>
+<li><strong>content selection</strong><br>选择需要抽取的句子(segment/moving window)</li>
+<li><strong>information ordering</strong><br>对抽取的句子进行排序</li>
+<li><strong>sentence realization</strong><br>形成摘要</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/summarization%20stages.png" class="ful-image" alt="summarization%20stages.png">
+<h2 id="Base-Summarization-Algorithm"><a href="#Base-Summarization-Algorithm" class="headerlink" title="Base Summarization Algorithm"></a>Base Summarization Algorithm</h2><p>对一个 base summarization algorithm 而言，其实只需要做第一步 conent selection，之后的 information ordering 即保留句子在源文档的位置，sentence realization 即保留原句。</p>
+<h3 id="Unsupervised-content-selection"><a href="#Unsupervised-content-selection" class="headerlink" title="Unsupervised content selection"></a>Unsupervised content selection</h3><p>我们需要选择的是<strong>salient or informative</strong>的句子，一般来说，salient words 有两种选择方法</p>
+<ul>
+<li>tf-idf<br>也就是找在该文档中经常出现，并且在其他文章中很少出现的单词</li>
+<li>topic signature<br>通过计算 log-likelihood ratio(LLR) 并设置 threhold 来过滤并选择重要的单词<br>$weight(w_i)=1 \ if -2log \lambda(w_i)&gt;10 \ else \ 0$</li>
+</ul>
+<p>这里主要介绍下<strong>Topic signature-based content selection with queries</strong></p>
+<p><strong>Step1: choose words</strong><br>salient words 有下面两个来源:</p>
+<ul>
+<li>计算每个单词的 log-likelihood ratio(LLR) ，根据 threshold 进行选择</li>
+<li>选择所有出现在 query 里的单词</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/topic%20signature.png" class="ful-image" alt="topic%20signature.png">
+<p><strong>Step2: weigh a sentence(or window)</strong><br>在上一步计算的单词分数基础上，计算每个句子/短语窗口的分数<br>$$weight(s)={1 \over |S|} \sum_{w \in S} weight(w)$$<br>选择 top k 个句子。</p>
+<h3 id="Supervised-content-selection"><a href="#Supervised-content-selection" class="headerlink" title="Supervised content selection"></a>Supervised content selection</h3><p>其实是一个二分类问题，对文档中的每一个句子，用分类器进行二值分类，1 代表这个句子可以作为摘要输出句子，0 代表不能。</p>
+<p>监督学习方法难点是获得训练集，很有可能摘要句子并不是文档中的完整句子，所以需要事先把文档句子和摘要句子对齐，才能得到分类标签。然后对文档句子抽取特征将句子映射为特征向量，再训练分类器，可以用的算法如 <strong>Naive Bayes/Decision Tree/HMM/CRF/LR/SVM/SVM-HMM等</strong></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/supervised%20content%20selection.png" class="ful-image" alt="supervised%20content%20selection.png">
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>上面提到的只是最基础的方法，对非监督方法而言，还有下面的方法</p>
+<ul>
+<li>线性组合方法：利用手工构建的评分函数，采取若干重要特征并手工设定特征权重，以此来对句子重要性进行得分计算。</li>
+<li>词汇链方法：通过文章中相邻句子的语义相似性来判断文章主题，引入Wordnet等语言资源中的同义词和近义词信息，分析文章中相邻句子的语义相似性。寻找若干最长的词汇链来确定文章包含主题，并依此来构建文摘句子集合；[6,7]  </li>
+<li>图模型方法：将文章中每个句子作为图中的节点，利用句子之间内容相似性构建图中节点之间的边。构建好文章图后，利用PageRank或者HITS<a href="http://lib.csdn.net/base/datastructure" target="_blank" rel="external">算法</a>来迭代计算图中节点的权值，按照权值大小作为句子重要性的评分依据来对文摘句子进行抽取。[3,4]</li>
+<li>子主题分析方法：通过聚类或者语义块分析等手段，发现文章包含的子主题，并从不同的子主题中抽取句子来构造摘要句子集合。LSA，PLSA等方法属于这一类[8,10,12]。</li>
+</ul>
+<p>一些研究工作 <a href="https://pdfs.semanticscholar.org/8ddf/5baeeab2e2fd401c0959a2d70e4c2ba68a33.pdf" target="_blank" rel="external">Document Summarization using Conditional Random Fields</a> 和 <a href="https://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0ahUKEwjC5bWohpzUAhWBsY8KHUnHDlQQFggkMAA&amp;url=http%3a%2f%2fwww2009%2eorg%2fproceedings%2fpdf%2fp71%2epdf&amp;usg=AFQjCNHZgHD2NVdqCJ9xONGboyNI0oyNog" target="_blank" rel="external">Enhancing Diversity, Coverage and Balance for  Summarization through Structure Learning</a>对主流的一些自动文摘方法做了对比，对于非监督方法来说，基于 HITS 的图模型方法明显优于其他方法，对于监督方法来说，SVM-HMM 和 CRF 方法效果最好，其中 SVM-HMM 方法在一般<a href="http://lib.csdn.net/base/softwaretest" target="_blank" rel="external">测试</a>集合上稍微优于CRF，在难度高的测试集合上效果明显好于CRF方法。这两个方法优于HITS图模型方法，不过优势并非特别明显；从测试结果来看，方法效果排序如下 SVM-HMM&gt;CRF&gt;HITS&gt;HMM&gt;SVM&gt;LR&gt;NB&gt;LSA</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">1. 简单特征线性组合方法(非监督方法)</div><div class="line">	即确定一些主要特征，然后设定特征权重后根据线性组合方式来进行句子打分和排序输出；</div><div class="line">	优点：</div><div class="line">		方法简单；</div><div class="line">		无需训练数据；</div><div class="line">		执行速度快；</div><div class="line">	缺点：</div><div class="line">		由于手工拟合评分函数，只能采取部分主要特征；</div><div class="line">		权重设定需要手工设置并不断调试；</div><div class="line">		效果一般；</div><div class="line">2. 基于HITS的图模型方法(非监督方法)</div><div class="line">	考虑到目前的研究表明，基于 HITS 的图模型方法是非监督方法中效果最好的，如果采取非监督方法，则优先考虑 HITS 的图模型方法；</div><div class="line">	优点:</div><div class="line">		无需训练集合；</div><div class="line">		基本与语言和领域无关；</div><div class="line">		效果好；</div><div class="line">	缺点：</div><div class="line">		由于存在任意句子相似性计算和迭代计算，所以运行速度相对比较慢；需要改进速度提出改进方法；</div><div class="line">		该方法没有考虑信息冗余的问题，可能需要有针对性的改进；</div><div class="line">3. 基于 CRF 或者 SVM-HMM 的监督学习方法</div><div class="line">	目前研究表明，CRF 和 SVM-HMM 在所有监督和非监督方法中是效果最好的，其中 SVM-HMM 效果略好于 CRF，CRF 略好于 HITS 图模型方法；所以如果采取监督学习思路，可以考虑CRF或者SVM-HMM的方法；</div><div class="line">	优点：</div><div class="line">		效果好；</div><div class="line">	缺点：</div><div class="line">		需要训练数据；</div><div class="line">		效果依赖于训练数据质量和领域等方面的情况；</div><div class="line">		执行速度慢；尤其是融合HITS模型等复杂特征，需要首先计算复杂特征，所以速度应该是最慢的；</div></pre></td></tr></table></figure>
+<p>这部分的总结来自<a href="http://blog.csdn.net/malefactor/article/details/8312838" target="_blank" rel="external">文本摘要技术调研</a></p>
+<p>[1] .Jie Tang, Limin Yao, and Dewei Chen . Multi-topic based Query-oriented Summarization.<br>W.-T.Yih, J. Goodman, L. Vanderwende, and H. Suzuki. Multi-document summarization by maximizing informative content-words.In Proceedingsof IJCAI’07, 2007.<br>[2]  Dou Shen1,Jian-Tao Sun.etc    DocumentSummarization using Conditional Random Fields.  In<em>Proceedingsof IJCAI’07</em>, 2007.<br>[3] GunesErkan.  Dragomir R. Radev.  LexRank: Graph-based LexicalCentrality as Salience in   Text Summarization.  Journal of ArtificialIntelligence Research 22 (2004) 457-479<br>[4] Rada Mihalcea.  Language Independent Extractive Summarization.<br>[5] Liangda Li, Ke Zhou†,Gui-Rong Xue etc  Enhancing Diversity, Coverage and Balance for  Summarization through Structure Learning.  WWW 2009.<br>[6] Gregory Silber and Kathleen F. McCoy  Efficient Text Summarization Using Lexical Chains.<br>[7] Barzilay,Regina and Michael Elhadad. Using Lexical Chainsfor Text Summarization. in Proceedings of the IntelligentScalable Text Summarization Workshop(ISTS’97), 1997.<br>[8] Shanmugasundaram Hariharan   Extraction Based Multi Document Summarization using Single Document  Summary Cluster   <em>Int. J.Advance. Soft Comput. Appl., Vol. 2, No. 1, March 2010</em><br>[9] ShanmugasundaramHariharan, “Merging Multi-Document Text Summaries-A Case Study”, <em>Journal of Scienceand Technology</em>, Vol.5, No.4,pp.63-74, December 2009.<br>[10] JinZhang etc  AdaSum: An Adaptive Model for Summarization.  CIKM 2008.<br>[11] Varadarajan and Hristidis. A System forQuery-Specific Document Summarization CIKM2006.<br>[12] LeonhardHennig  Topic-based Multi-Document Summarization with Probabilistic Latent Semantic Analysis</p>
+<h1 id="Complex-Questions-Summarizing-Multiple-Documents"><a href="#Complex-Questions-Summarizing-Multiple-Documents" class="headerlink" title="Complex Questions: Summarizing Multiple Documents"></a>Complex Questions: Summarizing Multiple Documents</h1><p>自动摘要还可以用于回答复杂的问句(如 how/what)，有两大类方法，自底向上的 snippet 方法，以及自上而下的信息抽取方法。</p>
+<p><strong>Bottom-up snippet method:</strong></p>
+<ol>
+<li>找到相关文档集合</li>
+<li>从文档集合中抽取 informative sentences</li>
+<li>对句子进行排序并形成回答</li>
+</ol>
+<p><strong>Top-down information extraction method:</strong></p>
+<ol>
+<li>根据不同的问题类型建立特定的信息抽取框架</li>
+<li>抽取信息</li>
+<li>形成回答</li>
+</ol>
+<p>属于研究热点，有很大提升空间。</p>
+<h2 id="Bottom-up-snippet-method"><a href="#Bottom-up-snippet-method" class="headerlink" title="Bottom-up snippet method"></a>Bottom-up snippet method</h2><p>处理框架：</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/query-focused%20multi-document%20summarization.png" class="ful-image" alt="query-focused%20multi-document%20summarization.png">
+<h3 id="Sentence-Simplification"><a href="#Sentence-Simplification" class="headerlink" title="Sentence Simplification"></a>Sentence Simplification</h3><p>首先简化句子，可以删除 <strong>同位语/定语从句/没有命名实体的介词短语/句子开头的状语</strong> 等</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/Simplifying%20sentences.png" class="ful-image" alt="Simplifying%20sentences.png">
+<h3 id="Sentence-Extraction"><a href="#Sentence-Extraction" class="headerlink" title="Sentence Extraction"></a>Sentence Extraction</h3><h4 id="Maximal-Marginal-Relevance-MMR"><a href="#Maximal-Marginal-Relevance-MMR" class="headerlink" title="Maximal Marginal Relevance(MMR)"></a>Maximal Marginal Relevance(MMR)</h4><p>MMR 是一种从多个文档中进行选择的递归(iterative)方法，递归的从文档中选取最合适的句子插入到 summary/answer 中，两个指标是<strong>相关性(relevant)</strong>，以及 <strong>新颖度(novel)</strong>。这在<a href="http://www.shuang0420.com/2016/12/07/Search%20Engines笔记%20-%20Diversity/">Search Engines笔记 - Diversity</a>也提到过。</p>
+<ul>
+<li><strong>Relevant</strong><br>与 query 最相关的句子，high cosine similarity to the query</li>
+<li><strong>Novel</strong><br>减少 summary/answer 的冗余程度，low cosine similariy to the summary<br>$\hat S_{MMR}=max s \in D \lambda sim(s,Q) - (1-\lambda)max s \in S sim(s,S)$</li>
+<li>不断添加句子到 summary 中，直到 summary length 到达预期要求</li>
+</ul>
+<h4 id="LLR-MMR-choosing-informative-yet-non-redundant-sentences"><a href="#LLR-MMR-choosing-informative-yet-non-redundant-sentences" class="headerlink" title="LLR + MMR: choosing informative yet non-redundant sentences"></a>LLR + MMR: choosing informative yet non-redundant sentences</h4><p>1.  根据 LLR 对每个句子进行打分<br>2.  选择 top k 个句子作为候选的摘要句<br>3.  迭代的从候选集里选取高分并且还不在当前摘要里的句子，添加进摘要</p>
+<h3 id="Information-Ordering"><a href="#Information-Ordering" class="headerlink" title="Information Ordering"></a>Information Ordering</h3><ul>
+<li>时间顺序(Chronological ordering)<br>根据时间对句子进行排序，主要用于新闻类的摘要(Barzilay, Elhadad, and McKeown 2002)</li>
+<li>一致性(Coherence)<br>根据 cosine similarity 对句子排序，使得摘要中相邻的句子更相似，或者相邻句子讨论同一个实体(Barzilay and Lapata 2007)</li>
+<li>专题排序(Topical ordering)<br>从源文档中学习主题排序</li>
+</ul>
+<h2 id="Information-Extraction-Method"><a href="#Information-Extraction-Method" class="headerlink" title="Information Extraction Method"></a>Information Extraction Method</h2><p>用信息抽取(IE)的方法来回答，比如说一个人物传记类的问题答案通常包含人物的 <strong>生卒年月，国籍，教育程度，名望/荣誉等</strong>，一个定义类问题(definition)通常包括 <strong>属(genus)或者上位词(hypernym)</strong>，如 The Hajj is a type of ritual，一个关于用药的医学类问题通常包括 <strong>问题(medical condition)、治疗(intervention, the drug or procedure)和结果(outcome)</strong></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/de%EF%AC%81nition%20questions.png" class="ful-image" alt="de%EF%AC%81nition%20questions.png">
+<p>上图是课程提到的 IE 方法框架，暂时不是很理解 predicate identification 这一步，感觉 <a href="http://acl-arc.comp.nus.edu.sg/archives/acl-arc-090501d3/data/pdf/anthology-PDF/H/H01/H01-1054.pdf" target="_blank" rel="external">Multidocument Summarization via Information Extraction</a>这篇文档的框架更加 straight-forward 一些。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/dIE%20METHOD.png" class="ful-image" alt="IE%20METHOD.png">
+<h1 id="Evaluating-summaries-ROUGE"><a href="#Evaluating-summaries-ROUGE" class="headerlink" title="Evaluating summaries: ROUGE"></a>Evaluating summaries: ROUGE</h1><p>ROUGE 是内部评价指标，以 BLEU 为基础，虽然比不上人工评价，但是用起来很方便</p>
+<p>给定一个文档 D，以及一个自动生成的文本摘要 X：</p>
+<ol>
+<li>由 N 个人产生 D 的 reference summaries</li>
+<li>运行系统，产生自动文本摘要 X</li>
+<li>计算 reference summaries 中的 bigram 在 X 里出现的比例</li>
+</ol>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE-2.png" class="ful-image" alt="ROUGE-2.png">
+<p>举个例子，问句是 “What is water spinach?”，Human 1, Human 2, Human 3 是人工产生的 reference summaries，System answer 是自动摘要，计算如下</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE%20EXAMPLE.png" class="ful-image" alt="ROUGE%20EXAMPLE.png">
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/text-summarization/" rel="tag">#text summarization</a>
+          
+            <a href="/tags/文本摘要/" rel="tag">#文本摘要</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/02/Alexa 开发新技能/" rel="next" title="Alexa 开发新技能 - python flask">
+                <i class="fa fa-chevron-left"></i> Alexa 开发新技能 - python flask
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/24/论文笔记 - Learning to Extract Conditional Knowledge for Question Answering using Dialogue/" rel="prev" title="论文笔记 - Learning to Extract Conditional Knowledge for Question Answering using Dialogue">
+                论文笔记 - Learning to Extract Conditional Knowledge for Question Answering using Dialogue <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Types-of-Summarization-Task"><span class="nav-number">1.</span> <span class="nav-text">Types of Summarization Task</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Baseline-Model"><span class="nav-number">2.</span> <span class="nav-text">Baseline Model</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Generating-snippets-query-focused-summaries"><span class="nav-number">3.</span> <span class="nav-text">Generating snippets: query-focused summaries</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Main-Stages"><span class="nav-number">3.1.</span> <span class="nav-text">Main Stages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Base-Summarization-Algorithm"><span class="nav-number">3.2.</span> <span class="nav-text">Base Summarization Algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Unsupervised-content-selection"><span class="nav-number">3.2.1.</span> <span class="nav-text">Unsupervised content selection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Supervised-content-selection"><span class="nav-number">3.2.2.</span> <span class="nav-text">Supervised content selection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">3.2.3.</span> <span class="nav-text">Summary</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Complex-Questions-Summarizing-Multiple-Documents"><span class="nav-number">4.</span> <span class="nav-text">Complex Questions: Summarizing Multiple Documents</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bottom-up-snippet-method"><span class="nav-number">4.1.</span> <span class="nav-text">Bottom-up snippet method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sentence-Simplification"><span class="nav-number">4.1.1.</span> <span class="nav-text">Sentence Simplification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sentence-Extraction"><span class="nav-number">4.1.2.</span> <span class="nav-text">Sentence Extraction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Maximal-Marginal-Relevance-MMR"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">Maximal Marginal Relevance(MMR)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LLR-MMR-choosing-informative-yet-non-redundant-sentences"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">LLR + MMR: choosing informative yet non-redundant sentences</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Information-Ordering"><span class="nav-number">4.1.3.</span> <span class="nav-text">Information Ordering</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Information-Extraction-Method"><span class="nav-number">4.2.</span> <span class="nav-text">Information Extraction Method</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Evaluating-summaries-ROUGE"><span class="nav-number">5.</span> <span class="nav-text">Evaluating summaries: ROUGE</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/05/10/NLP 笔记 - Text Summarization/';
+      var disqus_title = "NLP 笔记 - Text Summarization";
+      var disqus_url = 'http://www.shuang0420.com/2017/05/10/NLP 笔记 - Text Summarization/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

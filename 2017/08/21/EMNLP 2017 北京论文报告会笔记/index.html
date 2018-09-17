@@ -1,0 +1,1126 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="AI,NLP,Machine Translation,Relation Extraction," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="16 号在北京举办的，邀请了国内部分被录用论文的作者来报告研究成果，整场报告会分为文本摘要及情感分析、机器翻译、信息抽取及自动问答、文本分析及表示学习四个部分。感觉上次的 CCF-GAIR 参会笔记 写的像流水账，这次换一种方式做笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EMNLP 2017 北京论文报告会笔记">
+<meta property="og:url" content="http://www.shuang0420.com/2017/08/21/EMNLP 2017 北京论文报告会笔记/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="16 号在北京举办的，邀请了国内部分被录用论文的作者来报告研究成果，整场报告会分为文本摘要及情感分析、机器翻译、信息抽取及自动问答、文本分析及表示学习四个部分。感觉上次的 CCF-GAIR 参会笔记 写的像流水账，这次换一种方式做笔记。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/multimodal_salient.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/multimodal_guidance.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/visual_match.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/multimodal_loss_f.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_story.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_rule.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_negation.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_valid.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_invalid.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_form.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_form2.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_form3.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_res_overall.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_res_k.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_res_att.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/NRG1.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/nrg_res.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/SMT_NMT.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/SMT_NMT_balancer.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/re_cnn.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/re_model.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/re_res.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/biskip1.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/biskip2.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/biskip3.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/nmt_word_pred.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/nmt_word_pred_frame.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/nmt_word_pred_res.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/tree_base_encoder.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/tree_base_encoder_goal.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/tree_encoder.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/tree_decoder_attention.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/tree_encoder_ress.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/conv_memory_network.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/conv_memory_results.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/EMD1.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/ZP1.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/ZP_memory.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/ZP_score.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/hello1.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/hello2.png">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="EMNLP 2017 北京论文报告会笔记">
+<meta name="twitter:description" content="16 号在北京举办的，邀请了国内部分被录用论文的作者来报告研究成果，整场报告会分为文本摘要及情感分析、机器翻译、信息抽取及自动问答、文本分析及表示学习四个部分。感觉上次的 CCF-GAIR 参会笔记 写的像流水账，这次换一种方式做笔记。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/multimodal_salient.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/08/21/EMNLP 2017 北京论文报告会笔记/"/>
+
+
+  <title> EMNLP 2017 北京论文报告会笔记 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                EMNLP 2017 北京论文报告会笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-08-21T21:02:27+08:00" content="2017-08-21">
+              2017-08-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Others/" itemprop="url" rel="index">
+                    <span itemprop="name">Others</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/08/21/EMNLP 2017 北京论文报告会笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/21/EMNLP 2017 北京论文报告会笔记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>16 号在北京举办的，邀请了国内部分被录用论文的作者来报告研究成果，整场报告会分为<strong>文本摘要及情感分析、机器翻译、信息抽取及自动问答、文本分析及表示学习</strong>四个部分。感觉上次的 <a href="http://www.shuang0420.com/2017/07/15/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/">CCF-GAIR 参会笔记</a> 写的像流水账，这次换一种方式做笔记。<br><a id="more"></a></p>
+<p>分为四个部分，并没有包含分享的所有论文。第一部分写我最喜欢的论文，第二部分总结一些以模型融合为主要方法的论文，第三部分总结一些对模型组件进行微调的论文，第四部分是类似旧瓶装新酒的 idea。</p>
+<h1 id="I-like"><a href="#I-like" class="headerlink" title="I like"></a>I like</h1><h2 id="Multimodal-Summarization-for-Asynchronous-Collection-of-Text-Image-Audio-and-Video"><a href="#Multimodal-Summarization-for-Asynchronous-Collection-of-Text-Image-Audio-and-Video" class="headerlink" title="Multimodal Summarization for Asynchronous Collection of Text, Image, Audio and Video"></a>Multimodal Summarization for Asynchronous Collection of Text, Image, Audio and Video</h2><p>异步的文本、图像、音视频多模态摘要，一般的文本摘要关注的是 <strong>salience, non-redundancy</strong>，这里关注的是 <strong>readability, visual information</strong>，visual information 这里说的就是图片信息，暗示事件的 highlights。考虑一个视频新闻，本身有视觉模态和音频模态，通过 ASR，还可以产生文本模态，问题是<strong>如何将这些模态连接起来，产生一个附带精彩图片的文本摘要呢？</strong> 这篇论文就在讨论这个问题，整个模型<strong>输入</strong>是一个主题的文本以及视频，<strong>输出</strong>是一段附图片的文本摘要。</p>
+<p><strong>1. 预处理：</strong><br><strong>视频产生图片：</strong>CV 基本思路，把 Video 切成一个个的 shots(镜头/段落)，每个镜头可以 group(组合) 成一个 story(scene)，每一个镜头还可以细分成 sub-shots，每个 sub-shot 可以用 key-frame 来表示，<strong>选择关键帧作为视觉信息</strong>，同时认为<strong>长镜头的图片相对于短镜头更重要</strong>，基于此对图片重要性进行打分。<br><strong>音频产生文字</strong>：ASR。一方面语音识别结果并不十分准确，另一方面音频模态会有一些音频信号可以暗示我们哪些内容是重要的，基于这两点会产生两个指导策略，稍后提到。</p>
+<p><strong>2. 文本重要性打分：</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/multimodal_salient.png" class="ful-image" alt="multimodal_salient.png"><br>用 <strong>LexRank</strong>，句子是点，连线是重要性，进行随机游走，针对音频产生文字的两个特性使用两个<strong>指导策略:</strong></p>
+<ul>
+<li>如果语音识别结果和文本句子语义相同，那么让语音识别结果来推荐文本，反之不然；</li>
+<li>如果语音信号比较明显，语音推荐文本，反之不然；</li>
+</ul>
+<p>这两条指导策略会提升<strong>文本可读性</strong>。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/multimodal_guidance.png" class="ful-image" alt="multimodal_guidance.png"></p>
+<p><strong>3. 图文匹配问题：</strong><br>希望摘要能覆盖视觉信息，能解释图片，所以需要做一个文本图片分类器。图像 vcr 解码接两层前向网络，文本做一个高斯分布再求 fisher rank，也是接两层前向网络，最终将两个文本映射到同一个语义空间，计算匹配度。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/visual_match.png" class="ful-image" alt="visual_match.png"></p>
+<p>一个问题是<strong>如何在复杂的句子里提出子句</strong>，作者提出了基于传统<strong>语义角色标注</strong>的方法，利用中心谓词提取匹配的 frame 信息(predicate, argument1, argument2)，好处是可以抽取语义相对独立的部分，还可以通过 frame 的设定(只取施、受、谓词)过滤如时间等图片很难反映的信息。</p>
+<p><strong>4. 目标函数：</strong><br>提到了三个目标函数：</p>
+<ol>
+<li><strong>针对文本：</strong>对文本重要性奖励、冗余性惩罚</li>
+<li><strong>针对视觉：</strong>图片重要性(镜头时长)，是否被文本摘要覆盖(是否有匹配)</li>
+<li><strong>平衡</strong>视觉信息和文本信息</li>
+</ol>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/multimodal_loss_f.png" class="ful-image" alt="multimodal_loss_f.png">
+<p>下面一篇 <strong>Affinity-Preserving Random Walk for Multi-Document Summarization</strong> 多文档摘要也用到了图排序模型，这里略过。</p>
+<h2 id="Reasoning-with-Heterogeneous-Knowledge-for-Commonsense-Machine-Comprehension"><a href="#Reasoning-with-Heterogeneous-Knowledge-for-Commonsense-Machine-Comprehension" class="headerlink" title="Reasoning with Heterogeneous Knowledge for Commonsense Machine Comprehension"></a>Reasoning with Heterogeneous Knowledge for Commonsense Machine Comprehension</h2><p>聚焦两个问题：<strong>如何去获取并且表示常识知识？并且如何应用获取到的常识知识进行推理？</strong> 论文尝试从多个不同来源的异构知识库当中获取了相关的信息，并将这些知识统一表示成了带有推理代价的推理规则的形式，采用一个基于注意力机制的多知识推理模型，综合考虑上述所有的知识完成推理任务。</p>
+<p><strong>任务类型：</strong> 在 RocStories 数据集上，在给定一个故事的前 4 句话的情况下，要求系统从两个候选句子当中选出一个作为故事的结尾。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_story.png" class="ful-image" alt="kb_story.png"></p>
+<p><strong>推理规则：</strong>统一将知识表示成如下的推理规则的形式，在<strong>关系 f</strong> 下，<strong>元素 Y</strong> 可以由<strong>元素 X</strong> 推出，其<strong>推理代价</strong>是 <strong>s</strong>。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_rule.png" class="ful-image" alt="kb_rule.png"></p>
+<h3 id="知识获取"><a href="#知识获取" class="headerlink" title="知识获取"></a>知识获取</h3><p>主要从不同来源获取三类知识，包括：</p>
+<ul>
+<li><strong>事件序列知识(Event Narrative Knowledge)</strong><br>捕捉事件之间的时间、因果关系(去了餐馆 -&gt; 要点餐)<br>采用两个模型来捕捉这个信息，一种是<strong>基于有序的 PMI 模型</strong>，另外一个<strong>基于Skip-Gram的向量化表示模型</strong>，本质都是基于事件对在文本当中的<strong>有序共现的频繁程度</strong>来计算推理规则的代价的。</li>
+<li><strong>实体的语义知识(Entity semantic knowledge)</strong><br>捕捉实体之间的语义关系<br>以星巴克为例，捕捉的第一种关系是<strong>实体间的共指关系(coreference)</strong>，比如说用“咖啡屋”来指代星巴克。从 <u>Wordnet</u> 来获取实体间上下位关系的知识。cost 是 1 当且仅当 X 和 Y 是同义词或者有上下位关系<br>​ 第二种关系是<strong>相关关系(associative)</strong>，比如说出现星巴克时可能会出现“拿铁咖啡”这一类与之相关的实体。通过 <u>Wikipedia</u> 中实体页面的链接关系来得到实体间的相关关系知识，Cost 是<strong>两个实体间的距离</strong>(Milne and Witten(2008).)</li>
+<li><strong>情感的一致性知识(Sentiment coherent knowledge)</strong><br>捕捉元素间的情感关系<br>故事的结尾和故事的整体的情感应该基本上保持一致，否则结尾就会显得太突兀，那么这样的结尾就不是一个好的结尾。从 <u>SentiWordnet</u> 上来获得这种不同元素之间的情感一致性的知识。cost 为 1 if both subjective and have opposite sentimental polarity; 为 -1 if both subjective and have same sentimental polarity; 否则为 0</li>
+</ul>
+<p>上述推理规则代价的计算方式不同，论文使用了一种类似于 Metric Learning的方式，通过在每个类别的推理规则上增加了一个<strong>非线性层</strong>来自动学习对不同类别的推理规则代价的校准。</p>
+<p>另外，由于否定的存在会反转事件关系以及情感关系的推理结果，论文对否定进行了特殊处理。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_negation.png" class="ful-image" alt="kb_negation.png"></p>
+<h3 id="知识推理"><a href="#知识推理" class="headerlink" title="知识推理"></a>知识推理</h3><p><strong>如何将规则用到阅读理解之中？</strong>换句话说，就是在给定一个文档和候选答案的基础上，如何衡量候选答案是否正确？首先将文档以及候选答案都划分为<strong>元素</strong>，整个推理的过程就被转化成了一个推理规则选择以及对这个推理的合理性进行评估的过程。</p>
+<p><strong>重要假设：</strong>一组有效的推理应当要能够覆盖住结尾当中的所有元素。换言之，结尾当中出现的每一个元素，都应当能够在原文当中找到它出现的依据。</p>
+<p>对于同样的一个文档和候选答案，我们可以有多种多样不同的推理。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_valid.png" class="ful-image" alt="kb_valid.png"><br>上面一个推理就是一组有效的推理，这组推理是很符合人的认知的。因为我们通常会通过 Mary 和 She 之间的实体共指关系、Restaurant 和 order 之间的序列关系以及 restaurant 和 food 之间的相关关系来判断这个结果是不是成立的。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_invalid.png" class="ful-image" alt="kb_invalid.png">
+<p>这个就不怎么合理，因为我们不太会去考虑一个人和一个事件之间是不是有时序关系，以及考虑 walk to 这样一个动作和 food 之间的联系。</p>
+<p>采用每一种推理的可能性是不同的，用 $P(R|D, H)$ 来对这种推理的选择建模，基于<strong>元素独立性假设</strong>，得到下面的式子</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_form.png" class="ful-image" alt="kb_form.png">
+<p>是否选择一条推理规则参与推理一个假设元素 $h_i$，取决于对于原文当中推理得到 $h_i$ 的元素 $d_j$ 的选择，以及对于 $d_j$ 到 $h_i$ 之间推理关系的选择。然后将这个概率分布重新定义了一个重要性函数，与三个因子相关:</p>
+<ul>
+<li>s(h,d)<br>文档中的元素与候选答案中元素的语义匹配程度</li>
+<li>a(h,f) 以及 a(d,f)<br>一个元素与这条推理规则的关系的一个关联程度，使用一个注意力函数来建模这种关联程度</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_form2.png" class="ful-image" alt="kb_form2.png">
+<p>将原文到候选的推理代价定义成其所有有效的推理的期望代价<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_form3.png" class="ful-image" alt="kb_form3.png"></p>
+<p>使用一个 softmax 函数来归一化所有候选的代价值，并且使用最大后验概率估计来估计模型当中的参数。</p>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><p>三个 Baseline 进行了比较：</p>
+<ul>
+<li>Narrative Event Chain (Chambers and Jurafsky, 2008)<br>仅仅考虑是事件与事件之间的关联信息</li>
+<li>DSSM (Huang et al., 2013)<br>将文档和候选答案各自表示成了一个语义向量，并且计算它们之间的语义距离</li>
+<li>LSTM 模型 (Pichotta and Mooney, 2015)<br>通过对先前的事件进行序列建模来预测后面发生事件的概率。</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_res_overall.png" class="ful-image" alt="kb_res_overall.png">
+<p><strong>不同知识的影响</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_res_k.png" class="ful-image" alt="kb_res_k.png"><br>每一种知识都能够起到作用，移除任何一种知识都会导致系统的performance显著地降低。</p>
+<p><strong>推理规则选择方式加入 attention 机制的影响</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/kb_res_att.png" class="ful-image" alt="kb_res_att.png"></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>一是推理规则怎样产生更多更复杂的推理？二是训练数据，一方面，常识阅读理解数据还是很缺乏，可能需要半监督或远程监督的方法来拓展训练数据；另一方面，可能需要扩展更多的数据源。</p>
+<h2 id="Neural-Response-Generation-via-GAN-with-an-Approximate-Embedding-Layer"><a href="#Neural-Response-Generation-via-GAN-with-an-Approximate-Embedding-Layer" class="headerlink" title="Neural Response Generation via GAN with an Approximate Embedding Layer"></a>Neural Response Generation via GAN with an Approximate Embedding Layer</h2><p>生成式聊天系统可以看作是一个特殊的翻译过程，一个 question-answer pair 等价于 SMT 需要处理的一条平行语料，而 SMT 的训练过程实际上也就等价于构建问题和答案当中词语的语义关联过程。NMT 作为 SMT 高级版可以用来实现聊天回复的自动生成。这种新的自动聊天模型架构命名为 <strong>Neural Response Generation(NRG)</strong>。</p>
+<p>而现在 NRG 存在问题是生成的答案严重趋同，不具有实际价值，如对于任何的用户 query，生成的结果都有可能是“我也觉得”或“我也是这么认为的”，这种生成结果被称为 <strong>safe response</strong>。safe response 产生原因如下：</p>
+<ul>
+<li><strong>The data distribution of chat corpus</strong></li>
+<li><strong>The fundamental nature of statistical models</strong></li>
+</ul>
+<p>聊天数据中词语在句子不同位置的概率分布具有非常明显的长尾特性，尤其在句子开头，相当大比例的聊天回复是以“我”“也”作为开头的句子，词语概率分布上的模式会优先被 decoder 的语言模型学到，并在生成过程中严重抑制 query 与 response 之间词语关联模式的作用，也就是说，即便有了 query 的语义向量作为条件，decoder 仍然会挑选概率最大的“我”作为 response 的第一个词语，又由于语言模型的特性，接下来的词语将极有可能是“也”……以此类推，一个 safe response 由此产生。</p>
+<p>常见的解决方案包括：<strong>通过引入 attention mechanism 强化 query 中重点的语义信息；削弱 decoder 中语言模型的影响；引入 user modeling 或者外部知识等信息也能够增强生成回复的多样性</strong>。这些其实是对于模型或者数据的局部感知，如果从更加全局的角度考虑 safe response 的问题，就会发现产生 safe response 的 S2S 模型实际上是陷入了一个<strong>局部的最优解</strong>，而我们需要的是给模型<strong>施加一个干扰</strong>，使其跳出局部解，进入更加优化的状态，那么最简单的正向干扰是，告知模型它生成的 safe response 是很差的结果，尽管生成这样的结果的 loss 是较小的。这样就开启了<strong>生成式对抗网络（Generative Adversarial Networks, GAN）</strong>在生成式聊天问题中的曲折探索。</p>
+<p>将 GAN 引入聊天回复生成的思路：使用 encoder-decoder 架构搭建一个回复生成器G，负责生成指定 query 的一个 response，同时搭建一个判别器 D 负责判断生成的结果与真正的 response 尚存多大的差距，并根据判别器的输出调整生成器 G，使其跳出产生 safe response 的局部最优局面。</p>
+<p>一个重要的问题是<strong>如何实现判别器 D 训练误差向生成器 G 的反向传播(Backpropagation)</strong>。对于文本的生成来说，一个文本样本的生成必然伴随 G 在输出层对词语的采样过程，无论这种采样所遵循的原则是选取最大概率的 greedy思想还是 beam searching，它实际上都引入了离散的操作，这种不可导的过程就像道路上突然出现的断崖，阻挡了反向传播的脚步，使对于 G 的对抗训练无法进行下去。这篇论文就针对<strong>文本生成过程中的采样操作带来的误差无法传导的实际问题</strong>提出了解决方案。</p>
+<p>论文为生成器 G 构建了一个 <strong>Approximate Embedding Layer(AEL 如图中红色矩形框中所示，其细节在图右侧部分给出)</strong>，这一层的作用是近似的表达每次采样过程，在每一个 generation step 中不再试图得到具体的词，而是基于词语的概率分布算出一个采样向量。这个操作的具体过程是，在每一个 generation step 里，GRU 输出的隐状态 $h_i$ 在加入一个随机扰动 $z_i$ 之后，经过全连接层和 softmax 之后得到整个词表中每个词语的概率分布，我们将这个概率分布作为权重对词表中所有词语的 embedding 进行加权求和，从而得到一个当前采样的词语的近似向量表示（如图中右侧绿框所示），并令其作为下一个 generation step 的输入。同时，此近似向量同样可以用来拼接组成 fake response 的表示用于 D 的训练。不难看出，这种对于采样结果的近似表示操作是连续可导的，并且引入这种近似表示并不改变模型 G 的训练目标。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/NRG1.png" class="ful-image" alt="NRG1.png">
+<p>取得了不错的效果。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/nrg_res.png" class="ful-image" alt="nrg_res.png"></p>
+<p>详细戳<a href="https://www.leiphone.com/news/201707/uv3wNCq0MB1HSR56.html" target="_blank" rel="external">首发！三角兽被 EMNLP 录取论文精华导读：基于对抗学习的生成式对话模型浅说</a></p>
+<h1 id="模型融合"><a href="#模型融合" class="headerlink" title="模型融合"></a>模型融合</h1><p>把传统模型和神经网络相结合。</p>
+<h2 id="Translating-Phrases-in-Neural-Machine-Translation"><a href="#Translating-Phrases-in-Neural-Machine-Translation" class="headerlink" title="Translating Phrases in Neural Machine Translation"></a>Translating Phrases in Neural Machine Translation</h2><p>目前的 NMT 里 decoder 一次生成一个单词，不能进行 one-many 以及 many-many 的翻译，也就是没法做目标语言 phrase 的翻译，而 SMT 能做，所以想法是把两者结合。结合方法一般来说有两种，一是 shallow，NMT 作为 feature 放到传统框架进行预调；二是 deep，SMT 给 NMT 做推荐，NMT 用神经网络的方式接收 SMT 的东西。这篇论文用的是第二种方式。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/SMT_NMT.png" class="ful-image" alt="SMT_NMT.png"></p>
+<p>SMT 先翻译一遍，把 relevant target phrases 扔到 NMT 的 Phrase Memory 里，NMT 从 Phrase Memory 里读取 target phrases 并进行打分，然后系统同时看 target phrase 和 word predictor 的结果，用一个 <strong>balancer</strong> 将 SMT 和 NMT 的优势结合起来，来判断下一个是单词还是短语的概率，来决定选哪个。所以其实产生的翻译 $y={y_1, y_2, …, y_{T_u}}$其实有两个碎片(fragments)组成，NMT 的 word predictor $w={w_1, w_2,…,w_K}$ 以及 phrase memory 里存的相关短语 $p={p_1,p_2,…p_L}$ (这里的<strong>relevant target phrases</strong> 要满足两个条件：<strong>与原文相关(adequacy)；不重复翻译(coverage)</strong>)</p>
+<p>另外一点是作者还提出了基于 <strong>chunk</strong> 的翻译，SMT 对 source 提取 Chunk 信息，把布什总统、美国政府这些作为 chunk 让 SMT 预翻，然后把它们写到 phrase memory 里，后续步骤不变。chunk 的实现主要是由 sequence tagging 完成，相同 tag 表示同一个 chunk，开始符号另外标记，比如 “information security” 被标注成 “NP _B NP”，然后新的输入就变成原来的 word embedding 以及 chunking tag embedding。chunk 的好处在于限定了 source-side phrase 的信息，一方面减少了短语间的 overlap，另一方面提高了 decoding 的准确性。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/SMT_NMT_balancer.png" class="ful-image" alt="SMT_NMT_balancer.png">
+<p>机器翻译相关戳<br><a href="http://www.shuang0420.com/2017/05/01/NLP 笔记 - Machine Translation/">NLP 笔记 - Machine Translation</a><br><a href="http://www.shuang0420.com/2017/07/10/NLP 笔记 - Machine Translation-Neuron models/">NLP 笔记 - Neural Machine Translation</a></p>
+<p>问题是 SMT 没那么强(很难保证准确率)，NMT 也没那么弱(一个单词一个单词的翻译也能把正确的短语翻译出来)</p>
+<h2 id="Incorporating-Relation-Paths-in-Neural-Relation-Extraction"><a href="#Incorporating-Relation-Paths-in-Neural-Relation-Extraction" class="headerlink" title="Incorporating Relation Paths in Neural Relation Extraction"></a>Incorporating Relation Paths in Neural Relation Extraction</h2><p>提出了对文本中的<strong>关系路径</strong>进行建模，结合 CNN 模型 (Zeng, et al. (2014). Relation classification via convolutional deep neural network. CGLING) 完成关系抽取任务。<br>传统基于 CNN 的方法，通过 CNN 自动将原始文本映射到特征空间中，以此为依据判断句子所表达的关系<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/re_cnn.png" class="ful-image" alt="re_cnn.png"></p>
+<p>这种 CNN 模型存在的问题是难以理解多句话文本上的语义信息。比如说 A is the father of B. B is the father of C. 就没法得出 A 和 C 的关系，基于此，论文提出了在<strong>多样例学习机制</strong>的基础上<strong>引入关系路径编码器</strong>的方法，其实就是原来的 word embedding 输入加上一层 position embedding，position embedding 将当前词与 head entity/tail entity 的相对路径分别用两个 vector 表示。然后用 $\alpha$ 来平衡 text encoder(E) 和 path encoder(G)。<br>$$L(h,r,t)=E(h,r,t|S)+\alpha G(h,r,t|P)$$</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/re_model.png" class="ful-image" alt="re_model.png">
+<p>Encoder 用的是<strong>多样例学习机制(Multi-instances Learning)</strong>，也就是用一个句子集合联合预测关系，这样可以捕获更广泛的上下文。句子集合的选择方法有<strong>随机方法(rand)，最大化方法(max, 选最具代表性的)，选择-注意力机制(att)</strong>，注意力机制的效果最好。</p>
+<p>实验结果：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/re_res.png" class="ful-image" alt="re_res.png"></p>
+<p>之后可以继续的两个改进方向，一是对<strong>多步关系路径</strong>进行建模，使得模型可以处理更复杂的语义情况，而是<strong>将文本中的关系路径和知识图谱中的关系路径有机地结合</strong>，更好地完成关系抽取和知识图谱补全的任务。</p>
+<h1 id="零件调整"><a href="#零件调整" class="headerlink" title="零件调整"></a>零件调整</h1><p>对已有模型零部件的一些调整改造。</p>
+<h2 id="Towards-a-Universal-Sentiment-Classifier-in-Multiple-languages"><a href="#Towards-a-Universal-Sentiment-Classifier-in-Multiple-languages" class="headerlink" title="Towards a Universal Sentiment Classifier in Multiple languages"></a>Towards a Universal Sentiment Classifier in Multiple languages</h2><p>这里我觉得有意思的一点是作者模仿了 skip-gram 模型提出了一种同时训练多语言的 embedding 的方法。一句话解释就是通过中心词来预测自身/其他语言周围的前后词。比如说双语预料中，需要使中文能预测中文自身的周围词，英文能学习英文自身的周围词，还要通过对齐来学习中文来预测英文、英文来预测中文。skip-gram 相关戳 <a href="http://www.shuang0420.com/2016/06/21/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/">词向量总结笔记（简洁版）</a>。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/biskip1.png" class="ful-image" alt="biskip1.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/biskip2.png" class="ful-image" alt="biskip2.png">
+<p>C 作为 source language S 和 target language T 之间的平行语料，语料库可以分为 $C_S$ 和 $C_T$ 两部分，目标函数如下<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/biskip3.png" class="ful-image" alt="biskip3.png"></p>
+<p>然后就用一个 LR 模型进行情感分类。</p>
+<h2 id="Neural-Machine-Translation-with-Word-Predictions"><a href="#Neural-Machine-Translation-with-Word-Predictions" class="headerlink" title="Neural Machine Translation with Word Predictions"></a>Neural Machine Translation with Word Predictions</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/nmt_word_pred.png" class="ful-image" alt="nmt_word_pred.png">
+<p>我们知道在 NMT 中，训练成本主要来自于输出层在整个 target vocabulary 上的 softmax 计算，为了减小这种 cost，各位学者做出了各种努力，比如说 Devlin et al. (2014) 从计算角度提出了 <strong>self-normalization</strong> 技术，通过改造目标函数把计算整个 matrix 的步骤优化为只计算输出层每一行的值(<a href="http://www.shuang0420.com/2017/07/10/NLP%20%E7%AC%94%E8%AE%B0%20-%20Machine%20Translation-Neuron%20models/">NLP 笔记 - Neural Machine Translation</a>)，而在 <strong>Neural Machine Translation with Word Predictions</strong> 这篇论文中，作者提出了一种减小 target vocabulary 的方法，主要用到了<strong>词预测机制(word predictor)</strong>。</p>
+<p>之前 MT 的目标是生成一个<strong>词序列(ordered sequence)</strong>，而现在 word predictor 的目标是生成 y1..yn 的词，但是不考虑词序<strong>(no order)</strong>。</p>
+<p>和上图一样的 idea，word prediction 中，initial state($WP_E$)要包含 target sentence 里的所有信息，hidden state(WP_D)要包含没有被翻译的词的所有信息。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/nmt_word_pred_frame.png" class="ful-image" alt="nmt_word_pred_frame.png"></p>
+<p>$$P_{WP_E}(y|x)=\prod^{|y|}_{j=1}P_{WP_E}(y_j|x)$$<br>$$P_{WP_D}(y_j,y_{j+1},…,y_{|y|}|y_{&lt;j},x)=\prod^{|y|}_{k=j}P_{WP_D}(y_k|y_{&lt;j},x)$$</p>
+<p>这样无论是效果和效率上都有了显著提升<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/nmt_word_pred_res.png" class="ful-image" alt="nmt_word_pred_res.png"></p>
+<p>这个方法很好的一点是目标中的词对词预测来说是天然的标注，构造简单。然而要注意的两个点是 <strong>预测要准&amp;预测要快</strong>，否则就失去了意义。还有个问题是，按理来说较大词表质量更好然而翻译效率低，较小的词表，像这篇论文提出的，翻译某句话提前先预测生成一个新的小的词表交给 decoder，效率毫无疑问会提升，但是质量，为啥会更好？不是很理解，坐等论文。</p>
+<h2 id="Towards-Bidirectional-Hierarchical-Representations-for-Attention-based-Neural-Machine-Translation"><a href="#Towards-Bidirectional-Hierarchical-Representations-for-Attention-based-Neural-Machine-Translation" class="headerlink" title="Towards Bidirectional Hierarchical Representations for Attention-based Neural Machine Translation"></a>Towards Bidirectional Hierarchical Representations for Attention-based Neural Machine Translation</h2><p>对传统 tree-based encoder 的一个改进。传统的 tree-based encoder 是 bottom-up 的结构，能抓局部信息却捕捉不了全局信息<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/tree_base_encoder.png" class="ful-image" alt="tree_base_encoder.png"></p>
+<p>这篇论文对 tree-based encoder 做了改造，让它既能捕捉局部的语义信息，又能捕捉全局的语义信息。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/tree_base_encoder_goal.png" class="ful-image" alt="tree_base_encoder_goal.png"></p>
+<p>bottom-up encoding 取得局部信息，top-down encoding 取得全局信息。对于 OOV(out-of-vocabulary) 问题，基于 sub-word 思想，这里单独建立一个二叉词法树并将其融入原来的句法树里。这样如下图所示，模型囊括了句子、短语、词、sub-word 各种全局/局部信息，表达力 max。然而同样带来的问题是会产生重复信息，进而可能会造成重复翻译。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/tree_encoder.png" class="ful-image" alt="tree_encoder.png"></p>
+<p>为解决重复翻译的问题，或者说词/短语向量的 balance，这里还引入了 attention 机制<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/tree_decoder_attention.png" class="ful-image" alt="tree_decoder_attention.png"></p>
+<p>效果有了一定提升。举个例子说明 tree-based encoder 的优势。用普通的 sequence encoder 翻译 PP 时会产生错误，普通的 tree-based 能翻译好 PP，不过 <em>境外</em> 和 <em>以外的地区</em> 还是有一点差距的，新版 tree-decoder 翻译就无压力。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/tree_encoder_ress.png" class="ful-image" alt="tree_encoder_ress.png"></p>
+<h1 id="迁移-idea"><a href="#迁移-idea" class="headerlink" title="迁移 idea"></a>迁移 idea</h1><p>其实就是用已有的但可能用在别的方面的模型/思路解决现在的问题。</p>
+<h2 id="A-Question-Answering-Approach-for-Emotion-Cause-Extraction"><a href="#A-Question-Answering-Approach-for-Emotion-Cause-Extraction" class="headerlink" title="A Question Answering Approach for Emotion Cause Extraction"></a>A Question Answering Approach for Emotion Cause Extraction</h2><p>这一部分之前木有研究过，先来看一下什么是 <strong>emotion cause extraction</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Document: 我的手机昨天丢了，我现在很难过。 (I lost my phone yesterday, and  I feel sad now. )</div><div class="line">Emotion：Sad  </div><div class="line">Emotional Expression: 很难过</div><div class="line">Emotion Cause: 我的手机昨天丢了</div></pre></td></tr></table></figure>
+<p>任务目标是根据文本信息及其中包含的情感表达抽取出<strong>情感原因</strong>。论文作者之前发过论文，用的是基于 dependency parsing 的方法，把情感原因转化为树的分类任务，但结果依赖 dependency parsing 的准确性，而且只能处理对子句／句子级别的原因，不能处理细粒度的短语级别的原因。所以这一篇转换了思路，把 <strong>emotion cause extraction</strong> 问题转化为 <strong>question-answering</strong> 问题，提出了一种<strong>基于卷积的多层 memory network 方法</strong>，结果比之前基于树的方法提升了 2 个点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Emotional Text =&gt; Reading Text</div><div class="line">Emotional Words =&gt; Question/Query</div><div class="line">Emotion Cause Binary Classification Results =&gt; Answer</div></pre></td></tr></table></figure>
+<p>用传统的 memory network 作为基础模型，reading text 用词向量 embedding 表达，存到记忆单元，待判断的情感词的词向量作为注意力单元，将 query 和 text 每个词进行内积操作，softmax 归一化作为词权重，用注意力的加权和作为整个句子的表达。为了引入词语的上下文，用了<strong>类似卷积的注意力加权方法</strong>，每个词的注意力由当前词、前文词、后文词共同决定，加权过程中根据上下文注意力对不同位置的词语进行加权，获得以短语窗口为单位的加权结果，然后进行输出。同时对记忆网络做了多层的堆叠，以学习更深的特征。最后效果得到了提升，并且在短语级别的情感原因抽取上也取得了不错的效果。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/conv_memory_network.png" class="ful-image" alt="conv_memory_network.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/conv_memory_results.png" class="ful-image" alt="conv_memory_results.png">
+<p>问题来了，query 是怎么产生的呢？=&gt; <strong>数据集标注好了情感表达词！</strong></p>
+<h2 id="Earth-Mover’s-Distance-Minimization-for-Unsupervised-Bilingual-Lexicon-Induction"><a href="#Earth-Mover’s-Distance-Minimization-for-Unsupervised-Bilingual-Lexicon-Induction" class="headerlink" title="Earth Mover’s Distance Minimization for Unsupervised Bilingual Lexicon Induction"></a>Earth Mover’s Distance Minimization for Unsupervised Bilingual Lexicon Induction</h2><p>主要研究无监督的双语对齐方法，也就是能无监督地联系两个词向量空间，本质上是需要词向量空间之间，或者说词向量分布之间距离的度量。用的 <strong>EMD 思想</strong>，目标就是寻找一个映射G，使得映射后的源语言词向量分布和目标语言词向量分布的 EMD 或者说 Wasserstein 距离最小化。具体等论文发表再研究了。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/EMD1.png" class="ful-image" alt="EMD1.png"></p>
+<h2 id="Chinese-Zero-Pronoun-Resolution-with-Deep-Memory-Network"><a href="#Chinese-Zero-Pronoun-Resolution-with-Deep-Memory-Network" class="headerlink" title="Chinese Zero Pronoun Resolution with Deep Memory Network"></a>Chinese Zero Pronoun Resolution with Deep Memory Network</h2><p>解决中文的零指代消解问题。主要思路，用上下文来表示 ZP，使用两个 LSTM，一个对前文建模(left-to-right)，一个对后文建模(right-to-left)，然后连接两边最后一个隐层的向量作为 AZP 的表达(也可以尝试平均／求和)<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/ZP1.png" class="ful-image" alt="ZP1.png"></p>
+<p>接着，给定一个 AZP，会有一个 NP 集合被抽出来作为 candidate antecedents，根据每个 candidate antecedent 的重要性产生一个额外的 memory，通过对两个 LSTM(一个前向一个反向) 产生的 hidden vectors 各自进行减法操作然后连接产生最后的 vector 作为最终 candidate antecedents 的表达，并存入外部的 memory 中。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/ZP_memory.png" class="ful-image" alt="ZP_memory.png"></p>
+<p>这样我们的 memory 里就有了一堆的候选 candidate antecedents，接着要对 candidate antecedents 的重要性做一个排序，选择合适的 NP 来 fill in the gap (ZP)。这里用了 attention 机制，并加入了一些人工特征(Chen and Ng (2016))，表示为 $v_t^{(feature)}$<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/ZP_score.png" class="ful-image" alt="ZP_score.png"></p>
+<p>模型用到了人工特征，能不能改进？ZP 位置必须事先指定，能不能自动检测？还有是对 OOV 怎么处理。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>整场报告会听下来，收获还是有很多的，只是不如想象中那么惊艳，替换零部件，加个 attention，融入传统特征，有很多的套路，最大一个收获可能是再次意识到了 <strong>attention</strong> 机制的强大，大部分论文用了 attention 结果都有大幅的改善。anyway，能提高准确率/训练效率的模型就是好模型！大家都是棒棒哒！学习！</p>
+<p>周三开完会，周四飞深圳，周五上班，周六日去了澳门浪，好不容易开始笔记，发现好多内容都快忘了，有点难过 TAT，虽然我也有长短期记忆，也禁不起这么折腾…</p>
+<p>最后叨叨一句，大部分论文都没发表出来，如果有错误，各位多包容，也热切欢迎大家批评指正～</p>
+<p>文末彩蛋(其实还有张 Wu &amp; Tang 喝着喜茶打农药的高清大图，我先犹豫下要不要发～)<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/hello1.png" class="ful-image" alt="hello1.png"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EMNLP%202017%20%E5%8C%97%E4%BA%AC%E8%AE%BA%E6%96%87%E6%8A%A5%E5%91%8A%E4%BC%9A%E7%AC%94%E8%AE%B0/hello2.png" class="ful-image" alt="hello2.png"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" rel="tag">#AI</a>
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/Machine-Translation/" rel="tag">#Machine Translation</a>
+          
+            <a href="/tags/Relation-Extraction/" rel="tag">#Relation Extraction</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/15/深度学习-加快学习速度/" rel="next" title="深度学习-学习优化(Andrew Ng. DL 笔记)">
+                <i class="fa fa-chevron-left"></i> 深度学习-学习优化(Andrew Ng. DL 笔记)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/29/神经网络-过拟合(Andrew Ng. DL 笔记)/" rel="prev" title="深度学习-过拟合(Andrew Ng. DL 笔记)">
+                深度学习-过拟合(Andrew Ng. DL 笔记) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#I-like"><span class="nav-number">1.</span> <span class="nav-text">I like</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Multimodal-Summarization-for-Asynchronous-Collection-of-Text-Image-Audio-and-Video"><span class="nav-number">1.1.</span> <span class="nav-text">Multimodal Summarization for Asynchronous Collection of Text, Image, Audio and Video</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reasoning-with-Heterogeneous-Knowledge-for-Commonsense-Machine-Comprehension"><span class="nav-number">1.2.</span> <span class="nav-text">Reasoning with Heterogeneous Knowledge for Commonsense Machine Comprehension</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#知识获取"><span class="nav-number">1.2.1.</span> <span class="nav-text">知识获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#知识推理"><span class="nav-number">1.2.2.</span> <span class="nav-text">知识推理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验"><span class="nav-number">1.2.3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">1.2.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Neural-Response-Generation-via-GAN-with-an-Approximate-Embedding-Layer"><span class="nav-number">1.3.</span> <span class="nav-text">Neural Response Generation via GAN with an Approximate Embedding Layer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模型融合"><span class="nav-number">2.</span> <span class="nav-text">模型融合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Translating-Phrases-in-Neural-Machine-Translation"><span class="nav-number">2.1.</span> <span class="nav-text">Translating Phrases in Neural Machine Translation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Incorporating-Relation-Paths-in-Neural-Relation-Extraction"><span class="nav-number">2.2.</span> <span class="nav-text">Incorporating Relation Paths in Neural Relation Extraction</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#零件调整"><span class="nav-number">3.</span> <span class="nav-text">零件调整</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Towards-a-Universal-Sentiment-Classifier-in-Multiple-languages"><span class="nav-number">3.1.</span> <span class="nav-text">Towards a Universal Sentiment Classifier in Multiple languages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Neural-Machine-Translation-with-Word-Predictions"><span class="nav-number">3.2.</span> <span class="nav-text">Neural Machine Translation with Word Predictions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Towards-Bidirectional-Hierarchical-Representations-for-Attention-based-Neural-Machine-Translation"><span class="nav-number">3.3.</span> <span class="nav-text">Towards Bidirectional Hierarchical Representations for Attention-based Neural Machine Translation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迁移-idea"><span class="nav-number">4.</span> <span class="nav-text">迁移 idea</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Question-Answering-Approach-for-Emotion-Cause-Extraction"><span class="nav-number">4.1.</span> <span class="nav-text">A Question Answering Approach for Emotion Cause Extraction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Earth-Mover’s-Distance-Minimization-for-Unsupervised-Bilingual-Lexicon-Induction"><span class="nav-number">4.2.</span> <span class="nav-text">Earth Mover’s Distance Minimization for Unsupervised Bilingual Lexicon Induction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chinese-Zero-Pronoun-Resolution-with-Deep-Memory-Network"><span class="nav-number">4.3.</span> <span class="nav-text">Chinese Zero Pronoun Resolution with Deep Memory Network</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/08/21/EMNLP 2017 北京论文报告会笔记/';
+      var disqus_title = "EMNLP 2017 北京论文报告会笔记";
+      var disqus_url = 'http://www.shuang0420.com/2017/08/21/EMNLP 2017 北京论文报告会笔记/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

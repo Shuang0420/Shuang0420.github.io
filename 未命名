@@ -1,0 +1,62 @@
+
+import urllib2
+# get lineups, given token
+request = urllib2.Request("https://json.schedulesdirect.org/20141201/status", headers={"token" : "ae581f6f2ca408cb2373ca6f0b0de364"})
+lineups = urllib2.urlopen(request).read()
+
+# get countries, postalcode example
+request = urllib2.Request("https://json.schedulesdirect.org/20141201/available/countries")
+countries = urllib2.urlopen(request).read()
+
+
+# get transmitter
+request = urllib2.Request("https://json.schedulesdirect.org/20141201/transmitters/GBR")
+transmitter = urllib2.urlopen(request).read()
+
+
+# get headends, given token, country, postalcode
+request = urllib2.Request("https://json.schedulesdirect.org/20141201/headends?country=USA&postalcode=60030", headers={"token" : "ae581f6f2ca408cb2373ca6f0b0de364"})
+headends = urllib2.urlopen(request).read()
+
+
+# add lineup, given lineup
+'''
+Use the lineup field obtained from the GET /headends to add the lineup.
+Token: Required
+The command follows this format:
+PUT /lineups/{COUNTRY}-{LINEUP}-{DEVICE}
+So, to add IL57303:X in the United States:
+PUT https://json.schedulesdirect.org/20141201/lineups/USA-IL57303-X
+'''
+DATA = b'lineups/USA-IL57303-X'
+request = urllib2.Request(url='https://json.schedulesdirect.org/20141201/lineups/USA-IL57303-X', method='PUT', headers={"token" : "ae581f6f2ca408cb2373ca6f0b0de364"})
+add = urllib2.urlopen(request).read()
+
+
+
+
+
+import hashlib
+
+
+hash_object = hashlib.sha1(b'GodzillaROARS')
+hex_dig = hash_object.hexdigest()
+print(hex_dig)
+
+url = 'https://json.schedulesdirect.org/20141201/token'
+data = urllib.urlencode({"username" : "legendev","password":hex_dig})
+req = urllib2.Request(url, data)
+response = urllib2.urlopen(req)
+print response.read()
+
+```
+JSON API Documentation – https://github.com/SchedulesDirect/JSON-Service/wiki/API-20141201
+login: legendev
+pass: GodzillaROARS
+```
+
+https://json.schedulesdirect.org/20141201/token?username=legendev?password=5bb6325f149c4a5dbd25e3ac1071e72ac68bdbe7
+
+
+
+def I

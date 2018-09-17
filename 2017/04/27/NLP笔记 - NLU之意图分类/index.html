@@ -1,0 +1,1064 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,Information Extraction,Intent Classification,NLU," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="阿里巴巴水德的关于意图分类的讲座笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP笔记 - NLU之意图分类">
+<meta property="og:url" content="http://www.shuang0420.com/2017/04/27/NLP笔记 - NLU之意图分类/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="阿里巴巴水德的关于意图分类的讲座笔记。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/3.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/4.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/5.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/6.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/7.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/8.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/9.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/10.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/11.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP笔记 - NLU之意图分类">
+<meta name="twitter:description" content="阿里巴巴水德的关于意图分类的讲座笔记。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/04/27/NLP笔记 - NLU之意图分类/"/>
+
+
+  <title> NLP笔记 - NLU之意图分类 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                NLP笔记 - NLU之意图分类
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-04-27T10:02:27+08:00" content="2017-04-27">
+              2017-04-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/CMU-11611/" itemprop="url" rel="index">
+                    <span itemprop="name">CMU 11611</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/27/NLP笔记 - NLU之意图分类/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/27/NLP笔记 - NLU之意图分类/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>阿里巴巴水德的关于意图分类的讲座笔记。<br><a id="more"></a></p>
+<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><h2 id="自然语言理解-NLU"><a href="#自然语言理解-NLU" class="headerlink" title="自然语言理解(NLU)"></a>自然语言理解(NLU)</h2><blockquote>
+<p><strong>Natural language understanding (NLU)</strong> is a subtopic of natural language processing in artificial intelligence that deals with machine reading comprehension. NLU is considered an AI-hard problem. [1]</p>
+</blockquote>
+<p>从概念定义可以得出的信息</p>
+<ul>
+<li>属于 NLP 的一个分支</li>
+<li>属于人工智能的一个部分</li>
+<li>用来解决机器理解人类语言的问题</li>
+<li>属于人工智能的核心难题</li>
+</ul>
+<p>补充一句，什么是 AI-complete 或 AI-hard 问题？其实就是说解决这个问题的难度等同于让计算机和人类一样智能，或者说实现它就相当于实现了 strong AI，基本标志 AI 革命的完美结束。</p>
+<h2 id="语义表示-Semantic-representation"><a href="#语义表示-Semantic-representation" class="headerlink" title="语义表示(Semantic representation)"></a>语义表示(Semantic representation)</h2><p><strong>语义表示(Semantic representation)</strong> 有三种典型形式:</p>
+<ul>
+<li><strong>分布语义表示（distributional semantics representation)</strong><br>​    把语义表示成一个向量，如 word2vec、LSA、LDA 及各种神经网络模型(如 LSTM)<br>​    基于Harris的分布假设：semantically similar words occur in similar contexts<br>​    对人机交互而言，这种表示方法缺少一个细节性/可解释的表示，不能说出第 n 维表示什么<br>​    <a href="http://www.shuang0420.com/2017/03/21/NLP%20笔记%20-%20再谈词向量/">NLP 笔记 - 再谈词向量</a></li>
+<li><strong>模型论语义表示（model-theoretic semantics representation）</strong><br>​    把自然语言映射成逻辑表达式(logic form)<br>​    在计算方法上，典型的就是构建一个semantic parser<br>​    难度比较大，见<a href="http://www.shuang0420.com/2017/04/07/NLP%20笔记%20-%20Meaning%20Representation%20Languages/">NLP 笔记 - Meaning Representation Languages</a>的一阶谓词演算和 lambda reduction。<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/1.jpg" class="ful-image" alt="1.jpg"></li>
+<li><strong>框架语义表示（frame semantics representation）</strong><br>​    这种表示方法对人机交互非常有帮助<br>​    比如说 “订一张上海飞北京的头等舱，下午5点出发，国航的”，把语义用一个frame表示出来，如图所示：<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/2.jpg" class="ful-image" alt="2.jpg">
+</li>
+</ul>
+<p>在智能语音交互中，普遍采用<strong>frame</strong>语义表示，比如飞机票，第一层是 domain，确定是 flight_ticket 这一领域，下一层是这一领域下的 intent，比如说 search_flight_ticket，最下面一层是 intent 下的 slots。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/3.jpg" class="ful-image" alt="3.jpg"><br>自然语言理解的核心过程，第一步就是对 domain/intent 分类，然后接着对 slot 进行填充。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/4.jpg" class="ful-image" alt="4.jpg"></p>
+<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>来理解一下上面所说到的 domain 和 intent 的概念。</p>
+<ul>
+<li>domain<br>领域，同一类型的数据或者资源，以及围绕这些数据或资源提供的服务；<br>比如“地图”，“酒店”，“飞机票”、“火车票”等；<br>领域的目的其实是为了界定要解的 intent 范围，因为泛领域的 NLU 目前还做不到</li>
+<li>intent<br>意图，对于领域数据的操作，表示用户想要完成的任务，一般以动宾短语来命名；<br>比如飞机票领域中，有“查询机票”、“退机票”等意图；</li>
+</ul>
+<p>然后就到了本篇重点，<strong>意图分类(intent classification)</strong>，意图分类是一个典型的文本分类问题，所有传统的分类方法都可以使用，比如SVM/Decision Tree/Maximum Entropy 等等，数学形式来表示就是给定一个标注数据集合，$U={(u_1,c_1),…,(u_n,c_n)}$，其中，$c_i \in C$ 是具体的 intent，$u_i$ 是输入的 utterance，求解目标是<br>$$c_k = argmax_{c \in C}p(c|u_k)$$</p>
+<h1 id="主要难点"><a href="#主要难点" class="headerlink" title="主要难点"></a>主要难点</h1><h2 id="语言多样性"><a href="#语言多样性" class="headerlink" title="语言多样性"></a>语言多样性</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">• 我要听大王叫我来巡山</div><div class="line">• 给我播大王叫我来巡山</div><div class="line">• 我想听歌大王叫我来巡山</div><div class="line">• 放首大王叫我来巡山</div><div class="line">• 给唱一首大王叫我来巡山</div><div class="line">• 放音乐大王叫我来巡山</div><div class="line">• 放首歌大王叫我来巡山</div><div class="line">• 给大爷来首大王叫我来巡山</div></pre></td></tr></table></figure>
+<h2 id="语言歧义性"><a href="#语言歧义性" class="headerlink" title="语言歧义性"></a>语言歧义性</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">• 我要去拉萨</div><div class="line">  – 火车票？</div><div class="line">  – 飞机票？</div><div class="line">  – 音乐？</div><div class="line">  – 还是查找景点？</div></pre></td></tr></table></figure>
+<p>解决语言歧义性的方法一般有下面 3 种</p>
+<ol>
+<li>选一个 top intent，通常可能就选最常见的 intent</li>
+<li>给一个 intent list 让用户来选</li>
+<li>综合上下文信息来确定一个最优的 intent，这是最好的方法</li>
+</ol>
+<h2 id="语言鲁棒性"><a href="#语言鲁棒性" class="headerlink" title="语言鲁棒性"></a>语言鲁棒性</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">• 错字</div><div class="line">  – 大王叫我来新山</div><div class="line">• 多字</div><div class="line">  – 大王叫让我来巡山</div><div class="line">• 少字</div><div class="line">  – 大王叫我巡山</div><div class="line">• 别称</div><div class="line">  – 熊大熊二（指熊出没）</div><div class="line">• 不连贯</div><div class="line">  – 我要看那个恩花千骨</div><div class="line">• 噪音</div><div class="line">  – 全家只有大王叫我去巡山咯</div><div class="line">• …</div></pre></td></tr></table></figure>
+<h2 id="知识依赖"><a href="#知识依赖" class="headerlink" title="知识依赖"></a>知识依赖</h2><p>要知道语言是对现实世界的描述，很多词是有多种含义的，如果没有对现实世界的知识会难以分类。看下面的例子，大鸭梨可以是水果也可以是餐厅，七天可以是天数也可以是酒店。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">– 大鸭梨</div><div class="line">– 七天</div><div class="line">– 总参</div><div class="line">– 天气预报</div><div class="line">– 晚安</div></pre></td></tr></table></figure></p>
+<h2 id="上下文依赖-context"><a href="#上下文依赖-context" class="headerlink" title="上下文依赖(context)"></a>上下文依赖(context)</h2><p>上下文的概念包含了很多内容，比如说</p>
+<ul>
+<li>对话上下文<br>​    多轮对话</li>
+<li>设备上下文<br>​    指硬件设备，如手机/电视/汽车/…</li>
+<li>应用上下文<br>​    用户在哪个 app 里进行对话</li>
+<li>用户画像<br>​    用户的个性化信息，尤其是地理位置等</li>
+<li>……</li>
+</ul>
+<p>如下面两段对话，上下文不同，宁夏的含义也就不同。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">U：买张火车票</div><div class="line">A：请问你要去哪里？</div><div class="line">U：宁夏</div><div class="line">U：来首歌听</div><div class="line">A：请问你想听什么歌？</div><div class="line">U：宁夏</div></pre></td></tr></table></figure></p>
+<h1 id="基本方法"><a href="#基本方法" class="headerlink" title="基本方法"></a>基本方法</h1><ul>
+<li>基于规则（rule-based）<br>CFG<br>JSGF<br>……</li>
+<li>传统机器学习方法<br>SVM<br>ME<br>……</li>
+<li>深度学习方法<br>CNN<br>RNN/LSTM<br>……</li>
+<li>融合规则和深度学习的方法</li>
+</ul>
+<h2 id="基于规则的意图分类"><a href="#基于规则的意图分类" class="headerlink" title="基于规则的意图分类"></a>基于规则的意图分类</h2><p>实际上是<a href="http://www.shuang0420.com/2017/02/28/NLP%20笔记%20-%20Syntax%20and%20Parsing/">基于上下文无关语法(CFG)</a>，以上面提到的飞机票领域为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">FRAME: flight_ticket</div><div class="line">NETS:</div><div class="line">[search_flight_ticket]</div><div class="line">[refund_flight)ticket]</div><div class="line"></div><div class="line">[search_flight_ticket]</div><div class="line">	[flight_range]						[flight_ticket]</div><div class="line">	[from]			[to]				  (的 (飞机票))</div><div class="line">		(从 [city]) (去 [city])</div><div class="line"></div><div class="line"></div><div class="line">[city]</div><div class="line">(北京)</div><div class="line">(上海)</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>从北京到上海的飞机票<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/5.jpg" class="ful-image" alt="5.jpg"></p>
+<h2 id="基于统计模型的意图分类"><a href="#基于统计模型的意图分类" class="headerlink" title="基于统计模型的意图分类"></a>基于统计模型的意图分类</h2><p>给定输入 utterance u 和类别 c，我们要求的是 P(c|u)，核心问题就是:</p>
+<ul>
+<li>如何表示 u，也就是 text representation</li>
+<li>如何学习 P(c|u)，也就是 classifer</li>
+</ul>
+<h3 id="Text-Representation"><a href="#Text-Representation" class="headerlink" title="Text Representation"></a>Text Representation</h3><ul>
+<li>Bag of Words (BOW)<br>– 优点：简单<br>– 缺点：没有考虑语言结构，相似关系等</li>
+<li>Hand-crafted features<br>– 优点：精准<br>– 缺点：领域依赖，扩展性差</li>
+<li>Learned feature representation<br>– 优点：能够学到所有相关的信息<br>– 缺点：需要学习</li>
+</ul>
+<h3 id="Classifier"><a href="#Classifier" class="headerlink" title="Classifier"></a>Classifier</h3><p>两类模型任君选择</p>
+<ul>
+<li>生成式模型Generative (joint) models，计算 P(c,u)<br>– Naive Bayes<br>– HMM<br>– …</li>
+<li>判别式模型Discriminative (conditional) models, 计算 P(c|u)<br>– logistic regression<br>– maximum entropy<br>– conditional random fields<br>– support vector machines<br>– …</li>
+</ul>
+<h3 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h3><p>一种简单的实现方案，首先用 bag of words 提取基本特征，接着人工定义规则来提取一些高质量的特征(提取意图词，过滤 stopwords 等)，然后将这些特征用 one-hot 或者 tf-idf 方式表示为向量，再将特征向量喂给 svm 分类器。如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">1. Text Representation</div><div class="line">	– Bag of Words (BOW)</div><div class="line">	 	&gt;&gt; unigram</div><div class="line">		&gt;&gt; bigram</div><div class="line">		&gt;&gt; pos</div><div class="line">	– Hand-crafted features</div><div class="line">		&gt;&gt; 意图词，用来表达意图的有限词集合，比如“飞机票/机票/餐厅/美食/火车…”</div><div class="line">		&gt;&gt; 无效词比例，定义一个有效词的集合，然后计算 utterance 中无效词的比例</div><div class="line">		&gt;&gt; pattern特征，比如“从[city]”，“去[city]”，…</div><div class="line">		&gt;&gt; …</div><div class="line">	– feature vector</div><div class="line">		&gt;&gt; One-hot</div><div class="line">		&gt;&gt; TF-IDF</div><div class="line"></div><div class="line">2. Classifier</div><div class="line">	– svm, 比如可以采用开源的libsvm/liblinear实现</div></pre></td></tr></table></figure></p>
+<h2 id="基于深度学习的意图分类"><a href="#基于深度学习的意图分类" class="headerlink" title="基于深度学习的意图分类"></a>基于深度学习的意图分类</h2><p>两种典型策略</p>
+<ul>
+<li>RNN（recurrent neutral network）<br>序列化、有记忆模型</li>
+<li>CNN（convolutional neutral network）<br>非序列化、无记忆模型</li>
+</ul>
+<p>一般我们把 RNN/CNN 是特征学习方法，分类器可以有多种选择。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/6.jpg" class="ful-image" alt="6.jpg"></p>
+<h3 id="RNN-Recurrent-Neutral-Network"><a href="#RNN-Recurrent-Neutral-Network" class="headerlink" title="RNN(Recurrent Neutral Network)"></a>RNN(Recurrent Neutral Network)</h3><p>从 language model 理解，<br>$$<br>\begin{aligned}<br>p(W_1=w_1, W_2=w_2,…,W_{L+1}=stop)  &amp; = p(w_1)p(w_2|w_1)p(w_3|w_1,w_2)…p(w_n|w_1,w_2,…w_{n-1}) \\<br>   &amp; = (\prod^L_{l=1}p(W_l=w_l|W_{1:l-1}=w_{1:l-1}))p(W_{L+1}=stop|W_{1:L}=w_{1:L}) \\<br>   &amp; = (\prod^L_{l=1}p(w_l|history_l))p(stop|history_L)<br>  \end{aligned}<br>  $$</p>
+<p>其实也就是下图的<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/7.jpg" class="ful-image" alt="7.jpg"></p>
+<p>RNN 最后要加一层，一般是 softmax 分类。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/8.jpg" class="ful-image" alt="8.jpg"></p>
+<p>由于 RNN 的训练存在梯度消失/梯度爆炸问题，实际中往往采用 LSTM/GRU 等结构，Classifier 采用 softmax 函数，和网络一起训练</p>
+<h3 id="CNN-Convolutional-neutral-network"><a href="#CNN-Convolutional-neutral-network" class="headerlink" title="CNN(Convolutional neutral network)"></a>CNN(Convolutional neutral network)</h3><p>之前讲过啦，见<a href="http://www.shuang0420.com/2016/08/05/实习总结之%20sentence%20embedding/">实习总结之 sentence embedding</a>，一张图简单回顾。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/9.jpg" class="ful-image" alt="9.jpg"><br>这里要说的是怎么将其用于意图分类。如果能够融入知识(如下图的语义标签)，将 word vector 和 knowledge vector 结合起来，效果可能会有所提升。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/10.jpg" class="ful-image" alt="10.jpg"></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20NLU%E4%B9%8B%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB/11.jpg" class="ful-image" alt="11.jpg">
+<p>阿里巴巴做了实验，发现在他们自己 4k+ 的测试集上能带来 3% 的效果提升，并且，越是知识依赖严重的领域，效果越是明显，比如说在音乐、地图领域的提升比天气领域的提升明显很多。</p>
+<h2 id="融合规则和深度学习的系统"><a href="#融合规则和深度学习的系统" class="headerlink" title="融合规则和深度学习的系统"></a>融合规则和深度学习的系统</h2><ul>
+<li>规则解决哪些问题？<br>冷启动<br>解bug<br>解业务特有意图</li>
+<li>模型解决哪些问题？<br>海量数据下把问题解决的更加深入和彻底<br>解通用的意图</li>
+</ul>
+<h1 id="产品"><a href="#产品" class="headerlink" title="产品"></a>产品</h1><p>意图分类在阿里产品中的使用，如汽车/阿里云/YunOS手机助理/支付宝/天猫魔盒/机器人等等。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/Information-Extraction/" rel="tag">#Information Extraction</a>
+          
+            <a href="/tags/Intent-Classification/" rel="tag">#Intent Classification</a>
+          
+            <a href="/tags/NLU/" rel="tag">#NLU</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/25/卷积神经网络 CNN 笔记(高级篇)/" rel="next" title="卷积神经网络 CNN 笔记(高级篇)">
+                <i class="fa fa-chevron-left"></i> 卷积神经网络 CNN 笔记(高级篇)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/01/NLP 笔记 - Machine Translation/" rel="prev" title="NLP 笔记 - Machine Translation">
+                NLP 笔记 - Machine Translation <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自然语言理解-NLU"><span class="nav-number">1.1.</span> <span class="nav-text">自然语言理解(NLU)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语义表示-Semantic-representation"><span class="nav-number">1.2.</span> <span class="nav-text">语义表示(Semantic representation)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本概念"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主要难点"><span class="nav-number">3.</span> <span class="nav-text">主要难点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#语言多样性"><span class="nav-number">3.1.</span> <span class="nav-text">语言多样性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语言歧义性"><span class="nav-number">3.2.</span> <span class="nav-text">语言歧义性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语言鲁棒性"><span class="nav-number">3.3.</span> <span class="nav-text">语言鲁棒性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#知识依赖"><span class="nav-number">3.4.</span> <span class="nav-text">知识依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文依赖-context"><span class="nav-number">3.5.</span> <span class="nav-text">上下文依赖(context)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本方法"><span class="nav-number">4.</span> <span class="nav-text">基本方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于规则的意图分类"><span class="nav-number">4.1.</span> <span class="nav-text">基于规则的意图分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于统计模型的意图分类"><span class="nav-number">4.2.</span> <span class="nav-text">基于统计模型的意图分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Text-Representation"><span class="nav-number">4.2.1.</span> <span class="nav-text">Text Representation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Classifier"><span class="nav-number">4.2.2.</span> <span class="nav-text">Classifier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方案"><span class="nav-number">4.2.3.</span> <span class="nav-text">实现方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于深度学习的意图分类"><span class="nav-number">4.3.</span> <span class="nav-text">基于深度学习的意图分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RNN-Recurrent-Neutral-Network"><span class="nav-number">4.3.1.</span> <span class="nav-text">RNN(Recurrent Neutral Network)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CNN-Convolutional-neutral-network"><span class="nav-number">4.3.2.</span> <span class="nav-text">CNN(Convolutional neutral network)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#融合规则和深度学习的系统"><span class="nav-number">4.4.</span> <span class="nav-text">融合规则和深度学习的系统</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#产品"><span class="nav-number">5.</span> <span class="nav-text">产品</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/04/27/NLP笔记 - NLU之意图分类/';
+      var disqus_title = "NLP笔记 - NLU之意图分类";
+      var disqus_url = 'http://www.shuang0420.com/2017/04/27/NLP笔记 - NLU之意图分类/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

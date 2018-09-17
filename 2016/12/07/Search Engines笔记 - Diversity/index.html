@@ -1,0 +1,1258 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,Search Engines,信息检索,多样化," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 11642 的课程笔记。一个 query 可能表现了不同的信息需求，之前的相关性模型可能带来的结果是大多文档只能满足同一个信息需求，所以有些用户满意了，有些 user 抓狂了。我们希望检索到的 document 是能够 diverse 的，这样的话可以尽可能的满足不同用户的需求。这一章就讲了怎么实现 diversity。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Search Engines笔记 - Diversity">
+<meta property="og:url" content="http://www.shuang0420.com/2016/12/07/Search Engines笔记 - Diversity/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 11642 的课程笔记。一个 query 可能表现了不同的信息需求，之前的相关性模型可能带来的结果是大多文档只能满足同一个信息需求，所以有些用户满意了，有些 user 抓狂了。我们希望检索到的 document 是能够 diverse 的，这样的话可以尽可能的满足不同用户的需求。这一章就讲了怎么实现 diversity。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/MMR.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step3.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step4.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/JS.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/R_LTR.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/l2r.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquad.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquadd.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s3.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s4.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s5.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquadb.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.0.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.d.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.3.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.4.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/vs.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/%CE%B1-NDCG.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Search Engines笔记 - Diversity">
+<meta name="twitter:description" content="CMU 11642 的课程笔记。一个 query 可能表现了不同的信息需求，之前的相关性模型可能带来的结果是大多文档只能满足同一个信息需求，所以有些用户满意了，有些 user 抓狂了。我们希望检索到的 document 是能够 diverse 的，这样的话可以尽可能的满足不同用户的需求。这一章就讲了怎么实现 diversity。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/MMR.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/12/07/Search Engines笔记 - Diversity/"/>
+
+
+  <title> Search Engines笔记 - Diversity | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Search Engines笔记 - Diversity
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-12-07T19:02:27+08:00" content="2016-12-07">
+              2016-12-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Search-Engines/" itemprop="url" rel="index">
+                    <span itemprop="name">Search Engines</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/07/Search Engines笔记 - Diversity/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/12/07/Search Engines笔记 - Diversity/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 11642 的课程笔记。一个 query 可能表现了不同的信息需求，之前的相关性模型可能带来的结果是大多文档只能满足同一个信息需求，所以有些用户满意了，有些 user 抓狂了。我们希望检索到的 document 是能够 diverse 的，这样的话可以尽可能的满足不同用户的需求。这一章就讲了怎么实现 diversity。<br><a id="more"></a></p>
+<h1 id="Relevance-based-ranking-model"><a href="#Relevance-based-ranking-model" class="headerlink" title="Relevance based ranking model"></a>Relevance based ranking model</h1><p>之前的 <strong>相关性模型(Relevance based ranking model)</strong> 的目的是：</p>
+<ul>
+<li>在每个 ranking 位置上最大化预期用户满意度</li>
+<li>主要基于与原始查询的文本相似性</li>
+</ul>
+<p>我们基于了这样一个假设：</p>
+<blockquote>
+<p>each document is independent of other documents in the ranking</p>
+</blockquote>
+<p>它带来的检索结果是：</p>
+<ul>
+<li>主要关注最可能出现的 intent</li>
+<li>适用于一些用户，但另一些用户可能不满意</li>
+</ul>
+<p>如果这条 query 清楚的表达了 user intent，那么这种方法能得到最佳的结果。然而事实往往是，一条 query 可能会有多种解释或者多种 user intents，如果我们返回的 documents 表达的都是错误的 intent 怎么办？用户得不到任何相关文档！这是相当糟糕的体验。</p>
+<p>E.g.,<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">multiple interpretations</div><div class="line">Query: discovery channel store</div><div class="line">– The Discovery Channel store homepage?</div><div class="line">– Discovery Channel store locations?</div><div class="line">– Toys and products sold by Discovery Channel stores?</div><div class="line">– Products based on the Animal Planet program?</div><div class="line"></div><div class="line">multiple tasks for the same interpretation</div><div class="line">Query: Carnegie Mellon University</div><div class="line">– Find the home page of CMU (Navigational)</div><div class="line">– Find the location of CMU  (Location)</div><div class="line">– Check recent news about CMU  (News)</div><div class="line">– Find pictures of CMU (Pictures)</div></pre></td></tr></table></figure></p>
+<p>所以我们引入了 <strong>多样性</strong> 的概念。多样性是 <strong>健壮性(robustness)</strong> 和 <strong>相关性(relevance)</strong> 之间的权衡，它会</p>
+<ul>
+<li>减少最有可能的 intent 的相关性</li>
+<li>覆盖多个 intent 增加鲁棒性</li>
+</ul>
+<p>下面描述了两个层次的多样性。</p>
+<ol>
+<li>原始查询的解释(Interpretation of the original query)<ul>
+<li>这个查询是指什么？</li>
+<li>用户想知道这个 query 的哪一个方面的信息？</li>
+</ul>
+</li>
+<li>每个解释的不同任务(Different tasks for each interpretation)<ul>
+<li>用户想要完成什么任务？图片？地图？视频？导航？</li>
+</ul>
+</li>
+</ol>
+<p>这一章我们集中讲 diversification of interpretations。</p>
+<h1 id="Diversification-Algorithms"><a href="#Diversification-Algorithms" class="headerlink" title="Diversification Algorithms"></a>Diversification Algorithms</h1><p>主要有两类算法。<br><strong>Implicit</strong></p>
+<ul>
+<li>query intent 隐含在文档排名中</li>
+<li>假设相似的文档涵盖了相似的 intent</li>
+</ul>
+<p><strong>Explicit</strong></p>
+<ul>
+<li>显性定义了 query intent</li>
+<li>对文档重新排序，以便覆盖所有的 query intent</li>
+</ul>
+<h2 id="Implicit-Methods"><a href="#Implicit-Methods" class="headerlink" title="Implicit Methods"></a>Implicit Methods</h2><p><strong>一些特征：</strong></p>
+<ul>
+<li>不需要关于可能存在的 query intent 的先验知识 - 因此称为“隐式”</li>
+<li>选择与查询匹配的文档然后重新排序，产生多样性排名</li>
+<li>不偏好任何 query intent<ul>
+<li>受欢迎的 intent 没有得到比 rare intent 更重要</li>
+</ul>
+</li>
+</ul>
+<h3 id="Maximum-Marginal-Relevance-MMR"><a href="#Maximum-Marginal-Relevance-MMR" class="headerlink" title="Maximum Marginal Relevance (MMR)"></a>Maximum Marginal Relevance (MMR)</h3><p><strong>主要思路：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">• Use the query to retrieve a ranking R of documents</div><div class="line">• Use MMR to rerank the top N documents (build a new ranking S)</div><div class="line">  – Select the 1st document based on how well it satisfies the query</div><div class="line">  – Select subsequent documents based on two criteria</div><div class="line">    » How well it satisfies the query</div><div class="line">    » How different it is from documents ranked above it</div></pre></td></tr></table></figure></p>
+<p>MMR 是贪心算法(greedy algorithm)。在每一个 step，都选择一个文档插入最后的 ranking list。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/MMR.png" class="ful-image" alt="MMR.png"></p>
+<p>R: The initial ranking<br>S: Documents already selected for the diverse ranking<br>  – Documents ranked above this position<br>Sim(di, dj): Similarity metric<br>  – E.g., vector space model or Jensen-Shannon Divergence</p>
+<p>举个例子，假设$\lambda = 0.6$，初始排名及其相关性分数如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Initial Ranking</div><div class="line">d1, 0.80</div><div class="line">d2, 0.78</div><div class="line">d3, 0.76</div><div class="line">d4, 0.74</div><div class="line">d5, 0.72</div><div class="line">d6, 0.70</div></pre></td></tr></table></figure></p>
+<p>第一步，选择与 query 最相关的文档 d1，并从 R 中移除 d1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Diversified Ranking</div><div class="line">d1</div></pre></td></tr></table></figure></p>
+<p>计算剩余文档与 {d1} 的相似度和对应的多样性分数<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step1.jpg" class="ful-image" alt="step1.jpg"></p>
+<p>选择分数最高的文档作为多样性排名的第 2 篇文档，并从 R 中移除该文档<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Diversified Ranking</div><div class="line">d1</div><div class="line">d5</div></pre></td></tr></table></figure></p>
+<p>分别计算剩余文档与已排序文档 {d1, d5} 的相似度，选相似度最大的值，计算 MMR 分数<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step2.jpg" class="ful-image" alt="step2.jpg"></p>
+<p>选择分数最高的文档作为多样性排名的第 3 篇文档，并从 R 中移除该文档<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Diversified Ranking</div><div class="line">d1</div><div class="line">d5</div><div class="line">d3</div></pre></td></tr></table></figure></p>
+<p>分别计算剩余文档与已排序文档 {d1, d5, d3} 的相似度，选相似度最大的值，计算 MMR 分数<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step3.jpg" class="ful-image" alt="step3.jpg"></p>
+<p>选择分数最高的文档作为多样性排名的第 4 篇文档，并从 R 中移除该文档<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Diversified Ranking</div><div class="line">d1</div><div class="line">d5</div><div class="line">d3</div><div class="line">d6</div></pre></td></tr></table></figure></p>
+<p>分别计算剩余文档与已排序文档 d1, d5, d3, d6 的相似度，选相似度最大的值，计算 MMR 分数<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step4.jpg" class="ful-image" alt="step4.jpg"></p>
+<p>选择分数最高的文档作为多样性排名的第 5 篇文档，并从 R 中移除该文档<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Diversified Ranking</div><div class="line">d1</div><div class="line">d5</div><div class="line">d3</div><div class="line">d6</div><div class="line">d2</div></pre></td></tr></table></figure></p>
+<p><strong>Repeat until all documents in the initial ranking are added to the diversified ranking</strong></p>
+<p>所以就有了最后的排名 {d1, d5, d3, d6, d2}</p>
+<p>MMR 也会用于其它的任务如文本摘要，因为它是符合摘要的基本要求的，即相关性和多样性的权衡。摘要结果与原文的相关性越高，摘要就接近全文中心意思，而多样性则使摘要内容更加的全面。直观和简单是这种方法最大的优点。</p>
+<h4 id="Similarity"><a href="#Similarity" class="headerlink" title="Similarity"></a>Similarity</h4><p>关于相似度的衡量。<br><strong>Anything-to-Anything Similarity</strong><br>Vector space 可以比较任意两个向量的相似度，应用广泛，如聚类。<br>BM25 不能用 anything-to-anything similarity，但可以用 language modeling framework</p>
+<p><strong>Probabilistic Similarity</strong><br>也有很多专门来计算 probability distribution similarity 的方法。KL divergence 就是其中很受欢迎的一种，然而它是不对称的，Jensen-Shannon Divergence 则是 KL divergence 的一个 symmetric and smoothed 的版本。</p>
+<p>$$JS(x||y)={1 \over 2} KL(x||M) + {1 \over 2}KL(y|M)$$<br>$$M={x+y \over 2}$$</p>
+<p>放到两个 document 的比较里<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/JS.jpg" class="ful-image" alt="JS.jpg"></p>
+<p>它也经常会用在 anything-to-anything similarity tasks 中。</p>
+<h3 id="Learning-to-Rank-for-diversification"><a href="#Learning-to-Rank-for-diversification" class="headerlink" title="Learning to Rank for diversification"></a>Learning to Rank for diversification</h3><p>MMR 是无监督的，而 Learning-to-Rank 就是 MMR 的 supervised 版本。</p>
+<p>如果直接用传统的 learning-to-rank 模型来优化一个多样性指标 (e.g., α-NDCG)，也就是用和相同模型、相同特征，但是用基于多样性的训练数据（e.g., pointwise, pairwise, or listwise training data），来学习怎样产生 diversity ranking，会发生什么？</p>
+<ul>
+<li>各种指标会得到不一致的结果</li>
+<li>训练数据和测试数据会有不一样的 performance</li>
+</ul>
+<p><strong>Why?</strong><br>因为传统 Le2R 忽略了文档之间的相关性，它只考虑 document-query 的相关性特征及 query independent 特征（e.g., pagerank），而缺少多样性特征如：</p>
+<ul>
+<li>文档-文档的相似性特征</li>
+<li>关于 sub-intents 的特征</li>
+</ul>
+<p>因此，机器学习算法难以找到适用于多样性模型的合适的权重，相反，多样性的训练数据还会让学习模型感到困惑。所以有了一个解决方案： <strong>Relational-LeToR（R-LeToR）</strong>，既考虑单个文档，又考虑文档与文档之间的关系，也就是说除传统 LeToR 需要的 <strong>relevance feature</strong> 之外，R-LeToR 还考虑了 <strong>relationship features</strong>，relationship 也就是相似度，计算的是候选文档与 higher-ranked documents 的相似度(和 MMR 的计算过程相似)</p>
+<p>与传统 listwise Le2R 的区别是 ranking function 中多了 relational feature R：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/R_LTR.png" class="ful-image" alt="R_LTR.png"></p>
+<h4 id="Relational-features"><a href="#Relational-features" class="headerlink" title="Relational features"></a>Relational features</h4><p>Relational features 由相关性函数得到，其输入是文档相似度。</p>
+<p>文档间的相似度可以通过下面的方法计算：<br><strong> 文本相似度（Text similarity）:</strong><br>– E.g. KL-Divergence of document language models<br><strong> 主题相似度（Topic similarity）:</strong><br>– E.g. Cosine between docs’ topic distributions in topic models<br><strong> 类别相似度（Category similarity）:</strong><br>– E.g. Overlap of docs’ categories in a predefined ontology<br><strong> 链接相似度（Link similarity）:</strong><br>– E.g. whether docs have hyperlinks to each other<br><strong> URL similarity:</strong><br>– E.g. whether docs are from same website or not.</p>
+<p>相关性函数可以是当前文档与 all higher-ranked doc 的：</p>
+<ul>
+<li>最小相似度</li>
+<li>平均相似度</li>
+<li>最大相似度</li>
+</ul>
+<h4 id="Relational-ListMLE"><a href="#Relational-ListMLE" class="headerlink" title="Relational-ListMLE"></a>Relational-ListMLE</h4><p>ListMLE 是一种 ListWise LeToR，将一个 query 返回的整个文档排序列表作为输入，直接对排序结果列表进行优化，训练得到一个最优的评分函数，损失函数是 likelihood loss。关于 LeToR 的更多类型，这一篇不多做介绍。</p>
+<p>ListMLE 可以轻松地处理各种 relational features。回忆下 ListMLE 的 sequential assumption</p>
+<ul>
+<li>自上而下逐个挑选文档，这与 MMR 的 sequential assumption 相同</li>
+<li>每个位置独立于先前的位置<br>与 ListMLE 不同的是，Relational-ListMLE 通过 relational features 打破了这种独立性假设</li>
+</ul>
+<p>Relational-ListMLE 的生成过程是：</p>
+<ul>
+<li>从候选文档中迭代产生新的排序</li>
+<li>给定候选文档集合 Si = {d1, …, dn}<br>– 从 Si 中选择最适合出现在位置 i 上的文档 di<br>多提一句，p-ListMLE 也打破了这个假设</li>
+</ul>
+<p>Relational-ListMLE 的生成过程是：</p>
+<ul>
+<li>从候选文档中迭代产生新的 ranking</li>
+<li>给定候选文档集合 Si = {d1, …, dn}<br>– 从 Si 中选择最适合出现在位置 i 上的文档 di</li>
+</ul>
+<h4 id="Learning-and-Ranking"><a href="#Learning-and-Ranking" class="headerlink" title="Learning and Ranking"></a>Learning and Ranking</h4><p>学习的过程和 ListMLE 完全相同，损失函数仍然是 likelihood loss，用 SGD 优化。</p>
+<p>排序时，因为文档依赖于之前的位置，无法像 ListMLE 一样直接计算 ranking score，所以</p>
+<ul>
+<li>在 n 个位置的每一个位置上<br>» 从剩余的文档中选择 P(di|Si,w) 最高的文档<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/l2r.jpg" class="ful-image" alt="l2r.jpg">
+» 更新与其他文档的相似性特征 (O(n))</li>
+</ul>
+<p>整个复杂度是 $O(n^2)$，而由于多样性算法是一种重排序方法，所以 n 不是很大，大多数情况下 n &lt;1000</p>
+<h4 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h4><p>R-LeToR 是在 LeToR 基础上的一种最先进的技术，Relational-ListMLE 是唯一的一种监督的学习算法，因此可能比所有隐式和显式方法更好。然而正因为它是最近发表的，没有大量的证据，因此要小心使用。</p>
+<h2 id="Explicit-Methods"><a href="#Explicit-Methods" class="headerlink" title="Explicit Methods"></a>Explicit Methods</h2><h3 id="Query-intents-subtopics-discovery"><a href="#Query-intents-subtopics-discovery" class="headerlink" title="Query intents (subtopics) discovery"></a>Query intents (subtopics) discovery</h3><p>怎么发现 query intents?</p>
+<ul>
+<li>通过分析搜索日志。下一章会展开。<br>非常挑战，因为 query intent 都很 personal，不同的人有不同的解释，也有很多种 possible subtopics。<br>通常用对 top retrieved documents 进行聚类或 topic modeling 等方法来进行，但是效果并不好。</li>
+<li>用已有的经验<br>– 由 TREC 提供的 query intents<br>– 由商业搜索引擎的 query suggestions／related queries 推断出的 query intents</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Topic 1, type=faceted</div><div class="line">• Query: obama family tree</div><div class="line">• Description: Find information on President Barack Obama&apos;s family history, including genealogy, national origins, places and dates of birth, etc.</div><div class="line">• Subtopic, type=nav: Find the TIME magazine photo essay &quot;Barack Obama&apos;s Family Tree&quot;.</div><div class="line">• Subtopic, type=inf: Where did Barack Obama&apos;s parents and grandparents come from?</div><div class="line">• Subtopic, type=inf: Find biographical information on Barack Obama&apos;s mother.</div></pre></td></tr></table></figure>
+<p>注意两种类型的主题<br><strong>Ambiguous:</strong> query 的不相关解释<br>– E.g., “michael jordan”, “avp”, “espn sports”</p>
+<p><strong>Faceted:</strong> query 的相关解释<br>– E.g., “arizona game and fish”, “obama family tree”</p>
+<h3 id="xQuAD"><a href="#xQuAD" class="headerlink" title="xQuAD"></a>xQuAD</h3><p>xQuAD(eXplicit Query Aspect Diversification (xQuAD))<br><strong>Inputs</strong><br>– An initial ranking<br>– 一组 query intents (e.g., from search engine suggestions)</p>
+<p><strong>Observation:</strong> 单个文档可能覆盖多个 intents，尤其是对 faceted queries 而言。</p>
+<p><strong>Key idea:</strong> 选择能够满足尽可能多的 uncovered intents 的文档<br>– Provide maximum coverage and minimum redundancy<br>– MMR did this implicitly<br>– xQuAD does it explicitly</p>
+<p><strong>xQuAD characteristics</strong></p>
+<ul>
+<li>需要一组显性的 query intents</li>
+<li>允许单个文档满足多个 query intents<br>– 这些文档更有可能有高排名</li>
+<li>多样性排名 equally 覆盖了每一个 intent<br>– 也可以对 intent 加权，但实验表明 uniform weights 是最好的</li>
+<li>每个 query q 都需要运行 q + {q1, …, qk} 这么多查询语句<br>– 计算量略大</li>
+<li>目前可用的最有效的方法之一</li>
+</ul>
+<h4 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h4><p><strong>Assumptions:</strong><br>• 每个查询 q 都有 {q1, …, qk} 这么多 query intents<br>• 这些 query intents 都是相互独立的</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquad.jpg" class="ful-image" alt="xquad.jpg">
+<p>R: Initial ranking (produced by some other method)<br>S: Diversified ranking (initially empty)<br>τ: Desired length of diversified ranking<br>$\lambda$: Balance between relevance and diversity</p>
+<ol>
+<li>用相关性模型得到文档集合 R</li>
+<li>计算文档分数，得到分数最高的文档 d*</li>
+<li>从 R 中移除 d*</li>
+<li>把 d* 加入 S</li>
+</ol>
+<p><strong>Selection criteria:</strong><br>relevance 和 diversity 的平衡<br>$$(1-\lambda)P(d|q) + \lambda P(d,\overline S|q)$$</p>
+<p><strong>Diversity component:</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquadd.jpg" class="ful-image" alt="xquadd.jpg"></p>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p>E.g.,<br>Step 1:<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s1.jpg" class="ful-image" alt="s1.jpg"></p>
+<p>Step 2:<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s2.jpg" class="ful-image" alt="s2.jpg"></p>
+<p>Step 3:<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s3.jpg" class="ful-image" alt="s3.jpg"></p>
+<p>Step 4:<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s4.jpg" class="ful-image" alt="s4.jpg"></p>
+<p>Step 5:<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s5.jpg" class="ful-image" alt="s5.jpg"></p>
+<p>rank<br>xQuAD 偏好能够满足多个 intents 的文档<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquadb.jpg" class="ful-image" alt="xquadb.jpg"></p>
+<h4 id="Weighting-queries"><a href="#Weighting-queries" class="headerlink" title="Weighting queries"></a>Weighting queries</h4><p>Santos, et al 研究了 weighting queries 的三种方法</p>
+<ul>
+<li>Uniform weights: 1 / |Q|</li>
+<li>类似于 CRCS 资源排序算法的方法<br>– 与 ReDDE 相似<br>– 与 qi 匹配的 top-ranked documents 的数量相关</li>
+<li>基于在商业搜索引擎中匹配的文档的相对数量</li>
+</ul>
+<p>在 TREC 2009 的数据中，Uniform 被认为是最有效的。</p>
+<h4 id="Some-research-results"><a href="#Some-research-results" class="headerlink" title="Some research results"></a>Some research results</h4><p>Related queries 并没有什么用<br>Suggested queries 更加有效</p>
+<h3 id="PM-2"><a href="#PM-2" class="headerlink" title="PM-2"></a>PM-2</h3><p>Proportionality Model 2 (PM-2)<br><strong>Inputs</strong><br>– An initial ranking<br>– 一组 query intents (e.g., from search engine suggestions)</p>
+<p><strong>Observation:</strong> 用于发现 query intents 的算法，将发现许多稀少或不流行的 intents，高召回率。<br>– They shouldn’t get equal coverage in a diversified ranking</p>
+<p><strong>Key idea:</strong> 每个 subtopic 的文档数量应与每个 subtopic 的 popularity 成正比</p>
+<ul>
+<li>最小化冗余</li>
+<li>subtopic 的 coverage 可以更好地匹配用户需求</li>
+</ul>
+<p><strong>PM-2 characteristics</strong></p>
+<ul>
+<li>需要一组显性的 query intents</li>
+<li>允许单个文档满足多个 query intents<br>– 这些文档更有可能有高排名</li>
+<li>多样性排名按比例的覆盖每一个 intent<br>– 加权是可能的，但均匀的权重是最好的</li>
+<li>每个 query q 都需要运行 q + {q1, …, qk} 这么多查询语句<br>可能计算量有点大</li>
+<li>与 xQuAD 的相对性能取决于 datasets and explicit topics.</li>
+</ul>
+<h4 id="算法-1"><a href="#算法-1" class="headerlink" title="算法"></a>算法</h4><p>PM-2 的思想其实来源自选举制的比例代表制的一种方法：Sainte-Laguë method</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.jpg" class="ful-image" alt="pm2.jpg">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">• At each rank r</div><div class="line">  – 选择下一个必须覆盖的查询意图 qi，来保持排名中的意图比例覆盖率</div><div class="line">  – 选择一个覆盖了意图 qi 的文档 d </div><div class="line">  » 同时，文档 d 也可能涵盖其他查询意图</div><div class="line">  – 从原始排名 R 中删除文档 d</div><div class="line">  – 把 d 加入多样化排名S</div></pre></td></tr></table></figure>
+<p><strong>怎么计算下一个必须覆盖的查询意图 qi？</strong><br>$$qt[i]={v_i\over 2s_i+1}$$</p>
+<p>vi 是分配给这个意图的总文档数，实际等于 p(qi|q) x len(S)<br>si 代表已经分配给这个意图的文档，初始值为 0<br>最高的 quotient score 就对应下一个必须覆盖的意图</p>
+<h4 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h4><p>E.g., 原始的相关性排名<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.0.jpg" class="ful-image" alt="pm2.0.jpg"></p>
+<p><strong>假设：</strong><br>λ=0.6<br>p(qi|q)=0.5<br>Ranking depth=8</p>
+<p>Step 0: 初始化变量<br>计算分配给各个意图的文档数 <strong>votes v[i]</strong><br>v[1] = 0.5×8 = 4<br>v[2] = 0.5×8 = 4</p>
+<p>初始化 <strong>slots assigned s[i]</strong><br>s[1] = 0<br>s[2]=0</p>
+<p>Step 1，计算 quotient score<br>qt[1] = 4 / (2×0+1) = 4<br>qt[2] = 4 / (2×0+1) = 4</p>
+<p>选择分数高的意图作为下一个必须覆盖的意图<br>$i^* = 1$</p>
+<p>计算 PM2 分数<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.d.jpg" class="ful-image" alt="pm2.d.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.1.jpg" class="ful-image" alt="pm2.1.jpg"></p>
+<p>d2 wins!</p>
+<p>Step 2<br><strong>slots assigned s[i]</strong><br>$$s[i]=s[i]+{P(d^*|q_i) \over \sum_qP(d^* |q_j)}$$<br>s[1] = 0+0.8/(0.8+0.1) = 0.89<br>s[2] = 0+0.1/(0.8+0.1) = 0.11</p>
+<p><strong>Quotient scores qt[i]</strong><br>$$qt[i]={v_i\over 2s_i+1}$$<br>qt[1] = 4 / (2×0.89+1) = 1.44<br>qt[2] = 4 / (2×0.11+1) = 3.27</p>
+<p><strong>selected intent</strong><br>$$argmax_i qt[i]$$<br>$i^* = 2$</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.2.jpg" class="ful-image" alt="pm2.2.jpg">
+<p>d5 wins!</p>
+<p>Step 3<br>s[1] = 0.89+0.3/(0.3+0.8) = 1.16<br>s[2] = 0.11+0.8/(0.3+0.8) = 0.84</p>
+<p>qt[1] = 4 / (2×1.16+1) = 1.20<br>qt[2] = 4 / (2×0.84+1) = 1.49</p>
+<p>$i^*=2$</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.3.jpg" class="ful-image" alt="pm2.3.jpg">
+<p>d4 wins!</p>
+<p>Step 4<br>s[1] = 1.16+0.2/(0.2+0.7) = 1.38<br>s[2] = 0.84+0.7/(0.2+0.7) = 1.62</p>
+<p>qt[1] = 4 / (2×1.38+1) = 1.06<br>qt[2] = 4 / (2×1.62+1) = 0.95</p>
+<p>$i^* = 1$</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.4.jpg" class="ful-image" alt="pm2.4.jpg">
+<p>d1 wins!</p>
+<p>Repeat until all documents in the initial ranking are added to the diversified ranking</p>
+<h3 id="xQuAD-vs-pm2"><a href="#xQuAD-vs-pm2" class="headerlink" title="xQuAD vs pm2"></a>xQuAD vs pm2</h3><p>xQuAD 选择涵盖多个 intents 的文档</p>
+<ul>
+<li>给需要覆盖的 intents 赋予较高的权重</li>
+</ul>
+<p>PM2 首先选择最需要覆盖的 intent</p>
+<ul>
+<li>然后选择一个覆盖这个 intent 的文档</li>
+<li>如果这个文档能覆盖其它 intents，那么给它加分</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/vs.jpg" class="ful-image" alt="vs.jpg">
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>显式方法比 MMR 更有效。但需要一个 query intents 的外部来源，从网络搜索引擎获取的 intents 往往不能令人满意，因为它总是依赖于某一个组织。<br>xQuAD 和 PM-2 都是无监督的，效果不如有监督的模型 R-LeToR。</p>
+<p>理想情况下，我们希望能结合这些方法的优点</p>
+<ul>
+<li>无需使用外部资源</li>
+<li>充分利用 subtopics</li>
+<li>充分利用监督学习</li>
+</ul>
+<p><strong>Methods of identifying query intents</strong></p>
+<ul>
+<li>Commercial search engine suggestions<br>– Query suggestions &gt; related queries</li>
+<li>Still an open problem<br>– Very hard without search log</li>
+</ul>
+<p><strong>Characteristics</strong></p>
+<ul>
+<li>MMR: Implicit, unsupervised, penalizes redundancy</li>
+<li>R-LeToR: Implicit, supervised, features to model redundancy</li>
+<li>xQuAD: Explicit, unsupervised, penalizes redundancy</li>
+<li>PM-2: Explicit, unsupervised, enforces proportionality</li>
+</ul>
+<p><strong>Performance:</strong><br>R-LeToR &gt; PM-2 ≈ xQuAD &gt; MMR</p>
+<h1 id="Diversity-Evaluation-Metrics"><a href="#Diversity-Evaluation-Metrics" class="headerlink" title="Diversity Evaluation Metrics"></a>Diversity Evaluation Metrics</h1><h2 id="Precision-IA-k"><a href="#Precision-IA-k" class="headerlink" title="Precision-IA@k"></a>Precision-IA@k</h2><p>实际是 P@k 的变种。易于计算，易于理解。之前的模型里我们把 $q_i$ 当作 query 的第 i 个 term，而这里，$q_i$ 指代的是 query 的第 i 个 query intent。<br>假设 query q 有 n 个 query intents {q1, …, qn}，每个 intent 出现的概率是 p(qi | q)，一般来说，p(qi | q) 是均匀分布的，也就是 1/n 的概率，不需要 uniform。<br><strong>计算步骤：</strong></p>
+<ol>
+<li>采用某种方法对 query q 检索到的文档进行排序</li>
+<li>对每个 intent qi 计算 $P@k_{qi}$</li>
+<li>对 P@kqi 求平均得到 Precision-IA@k<br>$Precision-IA@k=\sum_{qi}P(qi|q)P@k_{qi}$</li>
+</ol>
+<p><strong>评价：</strong><br>通常一个好的策略是给满足了多个 intetns 的文档更高的优先级</p>
+<ul>
+<li>能提高 Precision-IA @ k</li>
+<li>用一个文档满足多个 intent 是降低风险的有效方法</li>
+</ul>
+<h2 id="α-NDCG"><a href="#α-NDCG" class="headerlink" title="α-NDCG"></a>α-NDCG</h2><p>先来回顾下 NDCG 公式<br>$$NDCG@k = Z_k \sum_{i=1}^k{2^{R_i}-1 \over log(1+i)}$$</p>
+<p>考虑了两点：</p>
+<ul>
+<li>Gain from a document worth R(k) at rank k(based on relevance): $G@k=2^{R(k)}$</li>
+<li>Discount for selecting a document at rank k(based on rank): $D@G={1 \over log_2(1+k)}$</li>
+</ul>
+<p><strong>特点：</strong></p>
+<ul>
+<li>考虑了每个文档的位置</li>
+<li>允许了多值(multi-valued)的相关性评估</li>
+<li>忽略了排名的多样性</li>
+</ul>
+<p>它的变种 α-NDCG<br>Uses an intent-aware gain calculation<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/%CE%B1-NDCG.jpg" class="ful-image" alt="%CE%B1-NDCG.jpg"></p>
+<p>The gain vector for α-NDCG discounts intent redundancy</p>
+<ul>
+<li>1-α controls the discount</li>
+<li>If α=0.5<br>Value (j+1th reldoc, qi) = 0.5 ×Value (jth reldoc, qi)<br>(each document is worth 1⁄2 the previous document)</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/Search-Engines/" rel="tag">#Search Engines</a>
+          
+            <a href="/tags/信息检索/" rel="tag">#信息检索</a>
+          
+            <a href="/tags/多样化/" rel="tag">#多样化</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/07/Search Engines笔记 - Federated Search/" rel="next" title="Search Engines笔记 - Federated Search">
+                <i class="fa fa-chevron-left"></i> Search Engines笔记 - Federated Search
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/10/Distributed Systems笔记－NFS、AFS、GFS/" rel="prev" title="Distributed Systems笔记－NFS、AFS、GFS">
+                Distributed Systems笔记－NFS、AFS、GFS <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Relevance-based-ranking-model"><span class="nav-number">1.</span> <span class="nav-text">Relevance based ranking model</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Diversification-Algorithms"><span class="nav-number">2.</span> <span class="nav-text">Diversification Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Implicit-Methods"><span class="nav-number">2.1.</span> <span class="nav-text">Implicit Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maximum-Marginal-Relevance-MMR"><span class="nav-number">2.1.1.</span> <span class="nav-text">Maximum Marginal Relevance (MMR)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Similarity"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">Similarity</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Learning-to-Rank-for-diversification"><span class="nav-number">2.1.2.</span> <span class="nav-text">Learning to Rank for diversification</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Relational-features"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">Relational features</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Relational-ListMLE"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">Relational-ListMLE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Learning-and-Ranking"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">Learning and Ranking</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Performance"><span class="nav-number">2.1.2.4.</span> <span class="nav-text">Performance</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explicit-Methods"><span class="nav-number">2.2.</span> <span class="nav-text">Explicit Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Query-intents-subtopics-discovery"><span class="nav-number">2.2.1.</span> <span class="nav-text">Query intents (subtopics) discovery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xQuAD"><span class="nav-number">2.2.2.</span> <span class="nav-text">xQuAD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Weighting-queries"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">Weighting queries</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Some-research-results"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">Some research results</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PM-2"><span class="nav-number">2.2.3.</span> <span class="nav-text">PM-2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法-1"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-1"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xQuAD-vs-pm2"><span class="nav-number">2.2.4.</span> <span class="nav-text">xQuAD vs pm2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">2.2.5.</span> <span class="nav-text">Summary</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Diversity-Evaluation-Metrics"><span class="nav-number">3.</span> <span class="nav-text">Diversity Evaluation Metrics</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Precision-IA-k"><span class="nav-number">3.1.</span> <span class="nav-text">Precision-IA@k</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#α-NDCG"><span class="nav-number">3.2.</span> <span class="nav-text">α-NDCG</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/12/07/Search Engines笔记 - Diversity/';
+      var disqus_title = "Search Engines笔记 - Diversity";
+      var disqus_url = 'http://www.shuang0420.com/2016/12/07/Search Engines笔记 - Diversity/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

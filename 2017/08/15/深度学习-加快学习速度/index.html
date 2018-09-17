@@ -1,0 +1,998 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep learning," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="Andrew Ng. Deep Learning Course 2 Improving Deep Neural Networks 笔记，讲加快学习速度的几种方法，包括 input normalization，batch normalization，mini-batch，Momentum，RMSprop，Adam，learning rate decay 等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习-学习优化(Andrew Ng. DL 笔记)">
+<meta property="og:url" content="http://www.shuang0420.com/2017/08/15/深度学习-加快学习速度/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="Andrew Ng. Deep Learning Course 2 Improving Deep Neural Networks 笔记，讲加快学习速度的几种方法，包括 input normalization，batch normalization，mini-batch，Momentum，RMSprop，Adam，learning rate decay 等。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_0.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_1.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch2.png">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习-学习优化(Andrew Ng. DL 笔记)">
+<meta name="twitter:description" content="Andrew Ng. Deep Learning Course 2 Improving Deep Neural Networks 笔记，讲加快学习速度的几种方法，包括 input normalization，batch normalization，mini-batch，Momentum，RMSprop，Adam，learning rate decay 等。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/08/15/深度学习-加快学习速度/"/>
+
+
+  <title> 深度学习-学习优化(Andrew Ng. DL 笔记) | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                深度学习-学习优化(Andrew Ng. DL 笔记)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-08-15T12:20:02+08:00" content="2017-08-15">
+              2017-08-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Deep-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep learning</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/08/15/深度学习-加快学习速度/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/15/深度学习-加快学习速度/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Andrew Ng. Deep Learning Course 2 Improving Deep Neural Networks 笔记，讲加快学习速度的几种方法，包括 input normalization，batch normalization，mini-batch，Momentum，RMSprop，Adam，learning rate decay 等。<br><a id="more"></a></p>
+<h1 id="归一化输入"><a href="#归一化输入" class="headerlink" title="归一化输入"></a>归一化输入</h1><p>神经网络训练开始前，一般需要对输入数据做归一化处理，把数据归一化为 0 均值、方差为 1 的数据，步骤如下：</p>
+<ol>
+<li>零均值化<br>$u={1\over m} \sum^m_{i=1}x^{(i)}$<br>$x=x-u$</li>
+<li>方差归一化<br>$\sigma^2={1\over m}\sum^m_{i=1}x^{(i)}**2$<br>$x/=\sigma^2$</li>
+</ol>
+<p><strong>归一化后的数据分布：</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_0.png" class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_0.png"></p>
+<p><strong>问题是为什么要归一化？或者说什么时候需要归一化？</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_1.png" class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_1.png"></p>
+<p>一方面是可以提高学习速率，主要考虑 <strong>代价函数</strong>，左图代表未归一化的代价函数，右图代表归一化的代价函数，未归一化的代价函数是狭长的，需要更小的学习率，更多的迭代才能到最小值，而归一化后的函数是偏球形的，无论从哪个位置开始，梯度下降法都能够更直接的找到最小值，这样就可以在梯度下降中使用较大步长，优化代价函数 J 更简单快速。</p>
+<p>另一个角度是从数据分布角度来看，如果训练数据和测试数据的分布不同，网络的泛化能力会大大降低，另一方面，如果每个 mini-batch 的数据分布不同，网络就需要去学习适应不同的分布，这也会影响学习速度。</p>
+<p>当然有些时候并不需要归一化，比如说如果数据本身特征值就在相似范围内，那么归一化就不是很重要，相反，如果特征值的取值范围差别很大，有些特征值从 0 到 1，有些从 1 到 1000，归一化特征就很重要了。</p>
+<p>只有输入特征归一化很多时候是不够的，因为除了输入层，后面隐藏层每一层的输入数据分布是一直在发生变化的，比如第二层输入就是由第一层的参数和原始输入计算得到的(z=wx+t, a=g(z))，而第一层的参数在整个训练过程中一直在变化，这必然会引起后面每一层输入数据分布的改变，这种现象(中间层在训练过程中数据分布的改变)又叫做 <strong>“Internal  Covariate Shift”</strong>。</p>
+<p>一个直觉就是把归一化不只应用到输入层，也应用到深度隐藏层，这就有了 batch normalization。不过一个区别是，我们不希望 hidden unit value 必须是均值 0 方差 1 的分布(以 sigmoid 为例，如果 z 的均值为 0 方差为 1，就永远处于 sigmoid 线性部分，相当于把这一层网络学到的特征分布给搞坏了，我们不希望这样)，所以对每个 mini-batch 求均值、方差、归一化、并学习缩放参数：</p>
+<p>$$<br>\begin{aligned}<br>u &amp;= {1\over m} \sum^m_{i=1}z^{(i)} \\<br>\sigma^2 &amp;= {1\over m}\sum^m_{i=1}z^{(i)}**2 \\<br>z^{(i)}_{norm} &amp;= z^{(i)}-{\mu \over \sqrt{\sigma^2 + \epsilon} } \\<br>z^{N(i)} &amp;= \gamma z^{(i)}_{norm} + \beta \\<br>  \end{aligned}<br>$$</p>
+<p>$\gamma, \ \beta$ 都是需要学习的参数，每一层都不同，可以用 gradient descent 来学习，$\beta^{[i]}=\beta^{[i]}-\alpha d\beta^{[i]}$。在深度学习框架，一般是把 batch norm 应用于 batch norm layer，直接一行代码就搞定啦。</p>
+<p>在测试阶段，每次只有一个样本，$\mu, \sigma$ 哪里来？这需要我们进行估算，可以在网络训练完后运行整个训练集得到 $\mu, \sigma$，也可以在训练时做指数加权平均，来粗略估算 $\mu, \sigma$，然后在测试中使用。</p>
+<p>最后提一点，由于 Norm 对 z 加了噪音，所以有轻微的 regularization effect 的效果，迫使后面的单元不会过分依赖前面任何一个单元， 当然越大的 mini-batch size 会减小这种效果。</p>
+<h1 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a>优化算法</h1><h2 id="Mini-batch"><a href="#Mini-batch" class="headerlink" title="Mini-batch"></a>Mini-batch</h2><p>对整个训练集进行梯度下降时，必须处理完整个训练集后，才能将进行一步梯度下降法，如果把训练集分割为小一点的子训练集(mini-batch)，每次同时处理单个 mini-batch，那么 1个 epoch 虽然只遍历了一次训练集，却能够做 5000 个(如下图)梯度下降</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch.png" class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch2.png" class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch2.png">
+<p>Mini-batch 梯度下降法比 batch 梯度下降运行更快，那么一个问题是 <strong>怎么选择 mini-batch size?</strong></p>
+<ul>
+<li>size=m<br>Batch gradient descent(BGD)<br>每一次迭代都对 m 个样本进行计算，计算量大，耗时长</li>
+<li>size=1<br>如果 minibatch 的 size 为 1，就称为 <strong>随机梯度下降(stochastic gradient descent, SGD)</strong>，每次迭代仅对一个样本计算梯度，随机梯度下降永远不会收敛，只会在最小值附近波动，但并不会达到并在最小值处停下，也就很容易陷入局部最优解<br>另外，每次处理一个样本，SGD 并没有利用 vectorization 的优势</li>
+<li>1 &lt; size &lt; m<br>介于 BSD 和 SGD 之间，每次选取一定量的训练样本将进行迭代，速度比 BGD 快，比 SGD 慢，精度比 BGD 低，比 SGD 高</li>
+</ul>
+<p>另外还有一种方法是 <strong>带 mini-batch 的 SGD</strong>，用来缓解 SGD  每次用一个样本容易陷入局部最优解的问题，过程是样本分为 mini-batch，然后在对每个 mini-batch 里计算单个样本的梯度然后求和取平均作为该 mini-batch 的梯度来更新参数。</p>
+<p>最后还有一种 <strong>Online GD</strong>，应对线上实时的、有不间断的训练数据产生的应用。<strong>在线学习(Online Learning)</strong> 算法就是充分利用实时数据的一个训练算法。与 mini-batch GD/SGD的区别在于，所有训练数据只用一次，然后丢弃。这样做的好处是可以追踪模型的变化趋势。比如搜索广告的点击率(CTR)预估模型，网民的点击行为会随着时间改变。用batch算法(每天对所有历史数据重新训练更新模型)，耗时长，也无法及时反馈用户的点击行为迁移。</p>
+<h2 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h2><p>比标准的 gradient descent 要快，基本想法是，计算梯度的 <strong>指数加权平均数(exponentially weighted average of gradients)</strong>，并利用该梯度更新权重。</p>
+<img class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/momentum1.jpeg">
+<p>直观上讲，希望横轴学习更快，纵轴学习更慢(不希望有那么剧烈的波动)，Momentum 的过程如下：</p>
+<p><strong>On iteration t:</strong><br>  Compute dw, db on current mini-batch<br>$$<br>\begin{aligned}<br>​    v_{dw} &amp;= \beta v_{dw}+(1-\beta)dw \\<br>​    v_{db} &amp;= \beta v_{db}+(1-\beta)db \\<br>​    w &amp;= w-\alpha v_{dw} \\<br>​    b &amp;= b-\alpha v_{db}  \\<br>  \end{aligned}<br>$$<br>​<br>平均这些梯度，纵轴上的波动平均值接近于 0，平均过程中，正负抵消，纵轴方向摆动变小，而所有的的微分都指向横轴，横轴的平均值仍然很大，横轴方向运动更快，相当于走了更直接的路径。把代价函数想象成碗状函数，那么微分项提供了加速度，momentum v 像速度，$\beta$ 表现出摩擦性，所以球不会无限加速下去，原来的 gradient descent 每一步独立于上一步，而现在球可以从向下滚获得动量。</p>
+<p>初始化的 $V_{dw}=0，V_{db}=0$，两个矩阵分别和 dw、db 有相同维数。也有做法会把 $1-\beta$ 去掉，这样的话其实 $\alpha$ 就需要根据 $1 \over 1-\beta$ 做相应变化，会影响到学习率 $\alpha$ 的最佳值。</p>
+<p>最常见的 $\beta$ 是0.9，平均了前10次迭代的梯度，效果不错。</p>
+<p>另外关于指数加权平均，各数值的加权而随时间而指数式递减，越近期的数据加权越重，这个过程实际上是一个递推的过程，不像普通求解平均值需要保留所有的数值然后求和除以n，这种方法只需要保留 n-1 时刻的平均值和 n 时刻的数值就好，这样可以减少内存和空间的做法。</p>
+<p>优点是积累的速度v可以让我们越过局部最小点，但也可能造成在全局最优点来回震荡。</p>
+<h2 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h2><p>RMSprop 用的是 moving average of squared gradients，它会联系之前的每一次梯度变化情况来更新学习步长。如果当前得到的梯度为负，那学习步长就会减小一点点；如果当前得到的梯度为正，那学习步长就会增大一点点。</p>
+<p><strong>On iteration t:</strong><br>​    Compute dw, db on current mini-batch<br>$$<br>\begin{aligned}<br>​    s_dw &amp;= \beta s_dw + (1-\beta)s_dw^2 \ square, elementwise \\<br>​    s_db &amp;= \beta s_db + (1-\beta)s_db^2 \\<br>​    w &amp;= w-\alpha {dw \over \sqrt{s_{dw}+\epsilon}} \\<br>​    b &amp;= b-\alpha {db \over \sqrt{s_{db}+\epsilon}} \\<br>  \end{aligned}<br>$$</p>
+<p>我们希望 $s_dw$ 相对很小，$s_db$ 相对很大，这样就可以减缓纵轴上的变化，就可以用更大的学习率。在实践过程中，分母不能为 0，所以要加上个很小的 $\epsilon$</p>
+<h2 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h2><p><strong>Adam(Adaptive Moment Estimation)，</strong>将 Momentum 和 RMSprop 结合到一起，并加入了 bias correction(指数加权平均刚开始计算时, $v_t$ 与 $\theta_t$ 偏差很大, bias correction 用于解决该问题)，优点是在经过偏置校正后，每一次迭代学习率都有个确定范围，使得参数比较平稳。</p>
+<p>$v_dw=0, s_db=0, v_db=0, s_db=0$</p>
+<p>On iteration t:<br>​    Compute dw, db on current mini-batch<br>$$<br>\begin{aligned}<br>​    v_dw &amp;= \beta_1 v_{dw} + (1-\beta_1)dw, \ \ v_db = \beta_1 v_{db} + (1-\beta_1)db \\<br>​    s_dw &amp;= \beta s_{dw}+(1-\beta_2)dw^2, s_db = \beta s_{db}+(1-\beta_2)db^2 \\<br>​    v^{corrected}_{dw} &amp;= {v_{dw} \over (1-\beta^t_1)}, \ \ v^{corrected}_{db}={v_{db} \over (1-\beta^t_1)} \\<br>​    s^{corrected}_{dw} &amp;= {s_{dw} \over (1-\beta_2^t)}, \ \ s^{corrected}_{db}={s_{db} \over (1-\beta_2^t)} \\<br>​    w &amp;= w - \alpha {v^{corrected}_{dw} \over \sqrt{s_{dw}+\epsilon}}, \ \ b = b - \alpha {v^{corrected}_{dw} \over \sqrt{s_{dw}+\epsilon}} \\<br>  \end{aligned}<br>$$</p>
+<p>$\beta_1: 0.9 $ -&gt; dw<br>$\beta_2: 0.999$ -&gt; $dw^2$<br>$\epsilon: 10^{-8}$</p>
+<h1 id="Learning-rate-decay"><a href="#Learning-rate-decay" class="headerlink" title="Learning rate decay"></a>Learning rate decay</h1><p>在学习初期，你能承受较大的步伐，但当开始收敛的时候，小的学习率能让你步伐小一点，下面列举了几种 decay 的方法，$\alpha$ 是初始学习率。<br>$$<br>\begin{aligned}<br>\alpha &amp;= {1 \over 1 + decay-rate * epoch-num}\alpha_0 \\<br>\alpha &amp;= 0.95^{epoch-num}\alpha_0 \\<br>\alpha &amp;= {k \over \sqrt{epoch-num}}\alpha_0 \\<br>\alpha &amp;= {k \over \sqrt t}\alpha_0 \\<br>\end{aligned}<br>$$</p>
+<p>或者也可以使用离散下降的学习率，开始的 5000 step 用这个学习率，之后的 5000 step 把原来的学习率降低一半……</p>
+<p>还有一种更朴实的，人工来控制学习率，像 babysitting 一样，不断观察着训练效果，人工来调整。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-learning/" rel="tag">#Deep learning</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/08/论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization/" rel="next" title="论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization">
+                <i class="fa fa-chevron-left"></i> 论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/21/EMNLP 2017 北京论文报告会笔记/" rel="prev" title="EMNLP 2017 北京论文报告会笔记">
+                EMNLP 2017 北京论文报告会笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#归一化输入"><span class="nav-number">1.</span> <span class="nav-text">归一化输入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优化算法"><span class="nav-number">2.</span> <span class="nav-text">优化算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mini-batch"><span class="nav-number">2.1.</span> <span class="nav-text">Mini-batch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Momentum"><span class="nav-number">2.2.</span> <span class="nav-text">Momentum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RMSprop"><span class="nav-number">2.3.</span> <span class="nav-text">RMSprop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adam"><span class="nav-number">2.4.</span> <span class="nav-text">Adam</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Learning-rate-decay"><span class="nav-number">3.</span> <span class="nav-text">Learning rate decay</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/08/15/深度学习-加快学习速度/';
+      var disqus_title = "深度学习-学习优化(Andrew Ng. DL 笔记)";
+      var disqus_url = 'http://www.shuang0420.com/2017/08/15/深度学习-加快学习速度/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

@@ -1,0 +1,1013 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mysql,hbase,webserver," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 11642 的 project。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目实战--搜索引擎">
+<meta property="og:url" content="http://www.shuang0420.com/2016/10/22/项目实战-搜索引擎/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 11642 的 project。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/indri_operator.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="项目实战--搜索引擎">
+<meta name="twitter:description" content="CMU 11642 的 project。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/10/22/项目实战-搜索引擎/"/>
+
+
+  <title> 项目实战--搜索引擎 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                项目实战--搜索引擎
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-10-22T19:15:12+08:00" content="2016-10-22">
+              2016-10-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Projects/" itemprop="url" rel="index">
+                    <span itemprop="name">Projects</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/22/项目实战-搜索引擎/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/22/项目实战-搜索引擎/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 11642 的 project。<br><a id="more"></a></p>
+<h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>数据：ClueWeb09 dataset，共 553,202 篇文档，用 Lucene 建立的索引。<br>部分框架是现成的，有 <a href="http://boston.lti.cs.cmu.edu/classes/11-642/HW/doc/" target="_blank" rel="external">api 文档</a><br>我们要做的是实现部分 operator 以及 ranking algorithm。</p>
+<p>实现一个个性化的搜索引擎，具有以下能力：</p>
+<ul>
+<li>diversification</li>
+<li>query expansion</li>
+<li>learning to rank</li>
+</ul>
+<p><strong>支持的 operator:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#OR, #AND, #SYN, #NEAR/n, #WINDOW/n, #SUM #AND, #WAND, #WSUM, #WINDOW</div></pre></td></tr></table></figure></p>
+<p><strong>支持的 fields:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&apos;url&apos;, &apos;keywords&apos; , &apos;title&apos;, &apos;body&apos;, &apos;inlink&apos;</div></pre></td></tr></table></figure></p>
+<p><strong>支持的 ranking algorithm</strong><br>Unranked/Ranked boolean, Okapi BM25, Indri, Le2R(use SVM), diversification algorithm(xQuAD &amp; PM25), and etc.</p>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>程序输入: one parameter (name of parameter file)</p>
+<p>parameter file 必须包括以下参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- queryFilePath= The path to the query file.</div><div class="line">- indexPath= The path to the Lucene index directory. Typically this will be something like &quot;indexPath=index&quot;.</div><div class="line">- trecEvalOutputPath= The path to the file where your software will write its output for trec_eval.</div><div class="line">- retrievalAlgorithm= &quot;UnrankedBoolean&quot; ／ &quot;RankedBoolean&quot; ／ &quot;BM25&quot; / &quot;Indri&quot;</div></pre></td></tr></table></figure></p>
+<p><strong>可选参数</strong><br>用于 “BM25” / “Indri” 模型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- BM25:k_1= Values are real numbers &gt;= 0.0.</div><div class="line">- BM25:b= Values are real numbers between 0.0 and 1.0.</div><div class="line">- BM25:k_3= Values are real numbers &gt;= 0.0.</div><div class="line">- Indri:mu= Values are integers &gt;= 0.</div><div class="line">- Indri:lambda= Values are real numbers between 0.0 and 1.0</div></pre></td></tr></table></figure></p>
+<p>用于 query expansion。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- fb= Acceptable values are &quot;true&quot; and &quot;false&quot;. This value controls whether query expansion is performed (fb=true).</div><div class="line">- fbDocs= Acceptable values are integers &gt; 0. This value determines the number of documents to use for query expansion.</div><div class="line">- fbTerms= Acceptable values are integers &gt; 0. This value determines the number of terms that are added to the query.</div><div class="line">- fbMu= Acceptable values are integers &gt;= 0. This value determines the amount of smoothing used to calculate p(r|d).</div><div class="line">- fbOrigWeight= Acceptable values are between 0.0 and 1.0. This value determines the weight on the original query. The weight on the expanded query is (1-fbOrigWeight).</div><div class="line">- fbInitialRankingFile= The value is a string that contains the name of a file (in trec_eval input format) that contains an initial document ranking for the query.</div><div class="line">- fbExpansionQueryFile= The value is a string that contains the name of a file where your software must write its expansion query. The file format is described below.</div></pre></td></tr></table></figure></p>
+<p>用于 Le2R:（解释待修正）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">letor:trainingQueryFile= HW4-train.qry.txt</div><div class="line">letor:trainingQrelsFile= HW4-train.qrel.txt</div><div class="line">letor:trainingFeatureVectorsFile= HW4-train.vec.txt</div><div class="line">letor:pageRankFile= HW4.pk.txt</div><div class="line">letor:svmRankLearnPath= svm_rank/svm_rank_learn</div><div class="line">letor:svmRankClassifyPath= svm_rank/svm_rank_classify</div><div class="line">letor:svmRankParamC= 0.001</div><div class="line">letor:svmRankModelFile= HW4-svm.model.txt</div><div class="line">letor:testingFeatureVectorsFile= HW4-test.vec.txt</div><div class="line">letor:testingDocumentScores= HW4-test.rank.txt</div></pre></td></tr></table></figure></p>
+<p>用于 diversification:（解释待修正）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">diversity=true</div><div class="line">diversity:maxInputRankingsLength=100</div><div class="line">diversity:maxResultRankingLength=50</div><div class="line">diversity:algorithm=xquad</div><div class="line">diversity:intentsFile=q.intents.txt</div><div class="line">diversity:lambda=1</div></pre></td></tr></table></figure></p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>程序输出：<br>在 trecEvalOutputPath 指定的文件中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">QueryID	Q0	DocID	                    Rank	Score	RunID</div><div class="line">10	    Q0	clueweb09-enwp03-35-1378	1	    16	  run-1</div><div class="line">10	    Q0	clueweb09-enwp00-78-1360	2	    11	  run-1</div><div class="line">10	    Q0	clueweb09-enwp00-67-0958	3	    9	    run-1</div><div class="line">:	      :	  :	                        :	    :	    :</div><div class="line">11	    Q0	clueweb09-enwp00-63-1141	1	    18	  run-1</div></pre></td></tr></table></figure></p>
+<p>如果有 query expansion，在 fbExpansionQueryFile 指定的文件中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">qid1: query1</div><div class="line">qid2: query2</div><div class="line"> :      :</div><div class="line"></div><div class="line">eg.</div><div class="line">1: #wand (0.73 obama 0.43 family 0.40 white 0.65 tree 0.33 politics ...)</div><div class="line">2: #wand (0.69 french 0.83 lick 0.76 indiana ...)</div></pre></td></tr></table></figure></p>
+<h1 id="基本策略"><a href="#基本策略" class="headerlink" title="基本策略"></a>基本策略</h1><p><strong>要求</strong></p>
+<ul>
+<li>从 query file 中逐条读取 query</li>
+<li>将 query parse 为 query tree，internal nodes 是 operators，leaves 是 index terms<ul>
+<li>如果一个 query 没有 explicit operator，默认为 #OR</li>
+<li>如果一个 query 没有 explicit field，默认为 body</li>
+<li>对 query term 进行 stemming 和 stopwords 处理</li>
+</ul>
+</li>
+<li>评估 query，用 <a href="http://www.shuang0420.com/2016/09/11/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Query%20Processing/">DAAT 策略</a>，对 leaf node 的 evaluation 就是如果这个 term 的 inverted list 存在，就获取它，注意有些 query term 是没有 inverted list 的。</li>
+<li>对所有文档按文档分数降序排序，如果分数相同，按 external document id 升序排序。</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg" class="ful-image" alt="%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg">
+<h1 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h1><p>不同模型支持的 operator 各有不同<br>系统需要支持的 Operator 有 #OR, #AND, #SYN, #NEAR/n, #WINDOW/n, 对 BM25 模型来说，还需要支持 #SUM，对 Indri 模型来说，还需要支持 #AND, #WAND, #WSUM, #WINDOW</p>
+<h1 id="Fields"><a href="#Fields" class="headerlink" title="Fields"></a>Fields</h1><p>系统支持的 fields 有 ‘url’, ‘keywords’ (from the html ‘meta’ tag), ‘title’, ‘body’, 和 ‘inlink’ 5 种，query 形式为 apple.title。</p>
+<h1 id="Query"><a href="#Query" class="headerlink" title="Query"></a>Query</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#Operator( term_1.field term_2.field ... term_n.field )</div><div class="line">apples</div><div class="line">#AND (apple bananas)</div><div class="line">#OR (apple bananas)</div><div class="line">#NEAR/3 (apple pie)</div><div class="line">#NEAR/5 (pie apple)</div></pre></td></tr></table></figure>
+<h1 id="排序模型"><a href="#排序模型" class="headerlink" title="排序模型"></a>排序模型</h1><h2 id="Exact-match"><a href="#Exact-match" class="headerlink" title="Exact-match"></a>Exact-match</h2><p>Boolean retrieval 需要支持的 Operator 有 #OR, #AND, #SYN, #NEAR/n, #WINDOW/n</p>
+<ul>
+<li>#OR 只要有一个 query term 在文档中出现，就算 match，在 ranked boolean retrieval 中分数为所有匹配的 query term 的 tf 的最大值。</li>
+<li>#AND 只有在所有 query term 都在文档中出现时，才算 match，在 ranked boolean retrieval 中分数为所有 query term 的 tf 的最小值。</li>
+<li>#NEAR/n 如果每对相邻两个 query term 之间的距离小于 n，才算 match，在 ranked boolean retrieval 中分数为 match 的次数。（For example, #NEAR/2(a b c) matches “a b c”, “a x b c”, “a b x c”, and “a x b x c”, but not “a x x b c”）。</li>
+<li>#WINDOW/n 和 #NEAR/n 类似，但是不要求顺序。</li>
+</ul>
+<p><a href="http://www.shuang0420.com/2016/09/06/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Exact-match%20retrieval/">Search Engines笔记 - Exact-match retrieval</a></p>
+<h3 id="Unranked-boolean-retrieval"><a href="#Unranked-boolean-retrieval" class="headerlink" title="Unranked boolean retrieval"></a>Unranked boolean retrieval</h3><p>对每个文档来说，如果 match，分数为 1，不 match 就为 0。</p>
+<h3 id="Ranked-boolean-retrieval"><a href="#Ranked-boolean-retrieval" class="headerlink" title="Ranked boolean retrieval"></a>Ranked boolean retrieval</h3><p>每个文档的分数是 query term 在该文档中的 term frequency。</p>
+<h2 id="Best-match"><a href="#Best-match" class="headerlink" title="Best-match"></a>Best-match</h2><p><a href="http://www.shuang0420.com/2016/09/30/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Best-Match/">Search Engines笔记 - Best-Match</a></p>
+<h3 id="BM25"><a href="#BM25" class="headerlink" title="BM25"></a>BM25</h3><p>需要支持的 Operator 有 #SYN, #NEAR/n, #SUM</p>
+<h3 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h3><p>需要支持的 Operator 有 #AND(Indri #and), #WAND, #WSUM, #WINDOW。默认的 operator 是 #AND，注意这里的 #AND 和 boolean retrieval 中的算法不一样。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/indri_operator.jpg" class="ful-image" alt="%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/indri_operator.jpg"></p>
+<h1 id="Query-expansion"><a href="#Query-expansion" class="headerlink" title="Query expansion"></a>Query expansion</h1><p>基本逻辑是把 initial query 当做 classifier，用它来 label 部分 data，得到 top-ranked documents，然后用 labeled data 来产生更优的 classifier。基本过程：</p>
+<ul>
+<li>用原始 query 检索文档</li>
+<li>取结果的前 N 篇文档作为训练集，这些文档相关度可能不高，然而我们的目的是学习 vocabulary pattern。</li>
+<li>应用 relevance feedback algorithm 选取 term 和 term weight</li>
+<li>组成新的 query 来检索文档</li>
+</ul>
+<p>见 <a href="http://www.shuang0420.com/2016/10/10/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Pseudo%20Relevance%20Feedback/">Search Engines笔记 - Pseudo Relevance Feedback</a></p>
+<h1 id="Diversification"><a href="#Diversification" class="headerlink" title="Diversification"></a>Diversification</h1><p>具体见 <a href="http://www.shuang0420.com/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/">Search Engines笔记 - Diversity
+</a></p>
+<p><a href="http://www.shuang0420.com/2016/10/10/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Pseudo%20Relevance%20Feedback/">Search Engines笔记 - Pseudo Relevance Feedback</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag">#mysql</a>
+          
+            <a href="/tags/hbase/" rel="tag">#hbase</a>
+          
+            <a href="/tags/webserver/" rel="tag">#webserver</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/15/Search Engines笔记 - Cache/" rel="next" title="Search Engines笔记 - Cache">
+                <i class="fa fa-chevron-left"></i> Search Engines笔记 - Cache
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/25/Search Engines笔记 - Learning to Rank/" rel="prev" title="Search Engines笔记 - Learning to Rank">
+                Search Engines笔记 - Learning to Rank <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目介绍"><span class="nav-number">1.</span> <span class="nav-text">项目介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入"><span class="nav-number">1.2.</span> <span class="nav-text">输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出"><span class="nav-number">1.3.</span> <span class="nav-text">输出</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本策略"><span class="nav-number">2.</span> <span class="nav-text">基本策略</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Operator"><span class="nav-number">3.</span> <span class="nav-text">Operator</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fields"><span class="nav-number">4.</span> <span class="nav-text">Fields</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Query"><span class="nav-number">5.</span> <span class="nav-text">Query</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排序模型"><span class="nav-number">6.</span> <span class="nav-text">排序模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Exact-match"><span class="nav-number">6.1.</span> <span class="nav-text">Exact-match</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Unranked-boolean-retrieval"><span class="nav-number">6.1.1.</span> <span class="nav-text">Unranked boolean retrieval</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ranked-boolean-retrieval"><span class="nav-number">6.1.2.</span> <span class="nav-text">Ranked boolean retrieval</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Best-match"><span class="nav-number">6.2.</span> <span class="nav-text">Best-match</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BM25"><span class="nav-number">6.2.1.</span> <span class="nav-text">BM25</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Indri"><span class="nav-number">6.2.2.</span> <span class="nav-text">Indri</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Query-expansion"><span class="nav-number">7.</span> <span class="nav-text">Query expansion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Diversification"><span class="nav-number">8.</span> <span class="nav-text">Diversification</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/10/22/项目实战-搜索引擎/';
+      var disqus_title = "项目实战--搜索引擎";
+      var disqus_url = 'http://www.shuang0420.com/2016/10/22/项目实战-搜索引擎/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

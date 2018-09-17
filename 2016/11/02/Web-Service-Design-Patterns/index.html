@@ -1,0 +1,1078 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Web Service," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 95702 Distributed Systems 笔记。简单介绍 XML-RPC、SOAP、REST 三种 web 服务实现方案以及 RPC、Message、Resource 三种 patterns。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Distributed Systems笔记－Web Service Design Patterns">
+<meta property="og:url" content="http://www.shuang0420.com/2016/11/02/Web-Service-Design-Patterns/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 95702 Distributed Systems 笔记。简单介绍 XML-RPC、SOAP、REST 三种 web 服务实现方案以及 RPC、Message、Resource 三种 patterns。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/RPC.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/message.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/resource.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/conclusion.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Distributed Systems笔记－Web Service Design Patterns">
+<meta name="twitter:description" content="CMU 95702 Distributed Systems 笔记。简单介绍 XML-RPC、SOAP、REST 三种 web 服务实现方案以及 RPC、Message、Resource 三种 patterns。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/RPC.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/11/02/Web-Service-Design-Patterns/"/>
+
+
+  <title> Distributed Systems笔记－Web Service Design Patterns | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Distributed Systems笔记－Web Service Design Patterns
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-11-02T15:22:43+08:00" content="2016-11-02">
+              2016-11-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Distributed-Systems/" itemprop="url" rel="index">
+                    <span itemprop="name">Distributed Systems</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/02/Web-Service-Design-Patterns/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/02/Web-Service-Design-Patterns/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 95702 Distributed Systems 笔记。简单介绍 XML-RPC、SOAP、REST 三种 web 服务实现方案以及 RPC、Message、Resource 三种 patterns。<br><a id="more"></a></p>
+<h1 id="Web-服务实现方案"><a href="#Web-服务实现方案" class="headerlink" title="Web 服务实现方案"></a>Web 服务实现方案</h1><p>主流的 Web 服务实现方案有以下三种，因为 XML-RPC 逐渐被 SOAP 取代，所以也可以说，主流的 Web 服务实现方案只有 REST 和 SOAP 两种。</p>
+<ul>
+<li>REST：表征状态转移（Representational State Transfer</li>
+<li>SOAP：简单对象访问协议（Simple Object Access Protocol）</li>
+<li>XML-RPC：远程过程调用（Remote procedure call，RPC)</li>
+</ul>
+<h2 id="XML-RPC"><a href="#XML-RPC" class="headerlink" title="XML-RPC"></a>XML-RPC</h2><p>XML-RPC 是一个远程过程调用（remote procedure call，RPC)的分布式计算协议，通过XML将调用函数封装，并使用 HTTP 协议作为传送机制。后来在新的功能不断被引入下，这个标准慢慢演变成为今日的 SOAP 协定。XML-RPC 协定是已登记的专利项目。XML-RPC 透过向装置了这个协定的服务器发出HTTP请求。发出请求的用户端一般都是需要向远端系统要求呼叫的软件。</p>
+<p>eg. Long-lived image<br>如果需要经常把大的图片传到前端，那么可以把图片的 cache-control 设置的大一些，如 30 天，如果需要更新图片，那么上传一张新的图片到新的 URI，然后再改变 HTML，指向新的 URI。</p>
+<p>HTML<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;img src=&apos;/image/big-image.jpg&apos;\&gt;</div></pre></td></tr></table></figure></p>
+<p>Server<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 Ok</div><div class="line">Date: Thu, 15 Aug 2008 23:26:31 GMT</div><div class="line">Server: Apache</div><div class="line">Content-Length: 50753</div><div class="line">Cache-Control: max-age=259200</div></pre></td></tr></table></figure></p>
+<p>HTML<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;img src=&apos;/image/big-image2.jpg&apos;&gt;&lt;/pre&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="SOAP"><a href="#SOAP" class="headerlink" title="SOAP"></a>SOAP</h2><p>SOAP(Simple Object Access Protocol) 是一套完整的实现 Web 服务的解决方案。</p>
+<p>SOAP 方式的 Web 服务中的 Web 服务描述语言（WSDL）和简单对象访问协议（SOAP）一起构成了 SOAP 方式下的 Web 服务的结构单元。客户端通过 WSDL 可以了解 Web 服务公开了那些可以被执行的方法以及 Web 服务可以发送或接收的消息格式（解决了公布访问资源方法的问题）。客户端按照 SOAP 将调用位于远程系统上的服务所需信息序列化为消息（解决了如何调用远程方法的问题）。注意 WSDL 描述的服务以及SOAP消息都是符合统一标准的，都是机器可读的.</p>
+<p>WSDL 基于 XML 格式，用来描述 Web 服务。WSDL 文档可以看成是客户端和服务器之间的一个协约。使用 WSDL 工具，你可以自动处理这个过程，几乎不用手工编写代码就能够让应用程序整合新的服务。因此 WSDL 是 Web 服务体系结构的基础，因为它提供了一个通用语言，用来描述服务和整合这些服务的平台。</p>
+<p>SOAP 本身提供了与 Web 服务交换信息的方法。SOAP 是序列化调用位于远程系统上的服务所需信息的标准方法，这些信息可以使用一种远程系统能够读懂的格式通过网络发送到远程系统，而不必关心远程系统运行于何种平台或者使用何种语言编写。SOAP 以 XML 格式提供了一个简单、轻量的用于在分散或分布环境中交换结构化和类型信息的机制。实际上它通过提供一个有标准组件的包模型和在模块中编码数据的机制，定义了一个简单的表示应用程序语义的机制。</p>
+<p>用一个简单的例子来说明 SOAP 使用过程，一个 SOAP 消息可以发送到一个具有 Web Service 功能的 Web 站点，例如，一个含有房价信息的数据库，消息的参数中标明这是一个查询消息，此站点将返回一个 XML 格式的信息，其中包含了查询结果（价格，位置，特点，或者其他信息）。由于数据是用一种标准化的可分析的结构来传递的，所以可以直接被第三方站点所利用。</p>
+<h2 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h2><p>表征状态转移（Representional State Transfer），是 Roy Fielding（ HTTP规范的主要编写者之一）博士在2000年他的博士论文中提出来的一种软件架构风格。它并不是一个标准，而是通过表征（Representional）来描述传输状态的一种原则。其宗旨是从资源的角度来观察整个网络，分布在各处的资源由URI确定，而客户端的应用通过 URI 来获取资源的表征。获得这些表征致使这些应用程序转变了其状态。随着不断获取资源的表征，客户端应用不断地在转变着其状态。</p>
+<p>REST 中没有用于描述资源（服务）列表，资源元数据的类似于WSDL的东西。所以我们需要其他策略去代替 WSDL 实现“公布访问资源方法的问题”。</p>
+<p>由于没有类似于 SOAP 的权威性协议作为规范，因此各个网站的REST实现都自有一套，也正是因为这种各自实现的情况，在性能和可用性上会大大高于 SOAP 发布的 web service，但细节方面有太多没有约束的地方，其统一通用方面远远不及 SOAP。</p>
+<p>举个例子：假设A组织，B组织都实现了Restful API来通过工号查询人员信息，因为没有统一的规范。</p>
+<p>A的API 可能是这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://A/api/person/001</div></pre></td></tr></table></figure></p>
+<p>B的API 可能是这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://A/api/person/id=001</div></pre></td></tr></table></figure></p>
+<p>第三方客户端在实现远程调用的时候就必须考虑这些API的差异，分别查看A，B的API文档。</p>
+<p>如果有个权威性协议作为规范做指导，规定这个API应该实现成下面这样，那么第三方客户端也只需按照这个标准去调用远程API，而不用查看A，B的API文档：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://A/api/person/&#123;001&#125;</div></pre></td></tr></table></figure></p>
+<p>而 OData 就是这样的一个设计和使用 Restful API 的权威性协议. OData 定义了一些标准规则（像一个接口定义一堆方法一样），实现 Restful API 时候，必须实现这些标准规则（就像实现一个接口必须实现其所有方法一样）。第三方就可以根据 Odata 协议定义的规则去访问 Restful API。</p>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>Resources</p>
+<ul>
+<li>URI<br>REST 的一个重要原则是  Addressability，每一个资源都有一个 URI。格式为 scheme://host:port/path?queryString#fragment。scheme 可以是 http、ftp、https 等。</li>
+<li>Uniform Interface<br>methods，用 http 的若干方法来操作资源。<br>representation，提供了多种 formats 来表述网页，如 xml, json 等。http 用 content-type header 来定义格式。</li>
+</ul>
+<p>Protocol</p>
+<ul>
+<li>client-server<br>客户和服务器之间通过一个统一的接口来互相通讯。</li>
+<li>stateless<br>每一个 request 都是独立的，每次发送请求时客户端都需要提供足够的信息，服务端并不会保存有关客户的任何状态。</li>
+<li>cacheable<br>REST 的系统能恰当对请求进行缓存，尽量减少服务器和客户端之间的信息传输来提高性能</li>
+<li>layered(intermediaries)<br>客户端并不会固定和一个服务器打交道</li>
+</ul>
+<p><strong>HTTP method 的补充：</strong></p>
+<ul>
+<li>GET - safe, idempotent, cacheable</li>
+<li>PUT - idempotent</li>
+<li>DELETE - idempotent</li>
+<li>HEAD - safe, idempotent</li>
+<li>POST</li>
+</ul>
+<p>cacheable：response 可以被缓存<br>idempotent：该操作可以被执行多次<br>safe：该操作并没有副作用（不会影响别的操作）</p>
+<h3 id="HATEOAS"><a href="#HATEOAS" class="headerlink" title="HATEOAS"></a>HATEOAS</h3><p>REST 另一个主要内容是 HATEOAS。HATEOS 用中文解释就是 <strong>超文本作为状态转移的引擎</strong>，这是一个 late binding 的例子。用户在浏览器输入 URL 向该资源发起一个 HTTP GET 请求，服务器会返回 response，在这个 response 中包含了下一步你该去哪里的信息，你可以在这个 response 中找到对其它资源的引用：链接、图片、脚本等。也就是说，一个典型的REST服务不需要额外的文档标示通过哪些URL访问特定类型的资源，而是通过服务端返回的响应来标示到底能在该资源上执行什么样的操作。一个REST服务的客户端也不需要知道任何有关哪里有什么样的资源这种信息。</p>
+<p>举例来说，一个客户端可能会接收一个我们上面所描述的用于报表服务的主RESTful服务的引用：</p>
+<pre>http://company1.com/report/</pre>
+
+<p>如果是通过浏览器发出的请求，可能会返回一个包含如下引用的HTML文档：</p>
+<pre>http://company1.com/report/sales</pre>
+
+<p>用户可以点击进入并找到可浏览的年份列表。要说明的是浏览器对于URL的结构并没有特别的认知，但它知道如何分析结果并以用户可以浏览的结果返回内容。</p>
+<p>对于其它的MIME类型道理也是一样，比如以XML的格式请求2009年的季度报表：</p>
+<pre>http://company1.com/reports/sales/2009/qtr</pre>
+
+<p>可能得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;reports&gt;</div><div class="line">    &lt;description&gt;2009 Quarterly Reports&lt;/description&gt;</div><div class="line">    &lt;report name=&quot;First Quarter&quot; src=&quot;http://company1.com/reports/sales/2009/qtr/1&quot;/&gt;</div><div class="line">    &lt;report name=&quot;Second Quarter&quot; src=&quot;http://company1.com/reports/sales/2009/qtr/2&quot;/&gt;</div><div class="line">    &lt;report name=&quot;Third Quarter&quot; src=&quot;http://company1.com/reports/sales/2009/qtr/3&quot;/&gt;    </div><div class="line">&lt;/reports&gt;</div></pre></td></tr></table></figure></p>
+<p>可以将 URL 想成是贯穿信息空间的向量。每一个层次都进一步的将你指向最终的资源。不同的路径可能产生同样的结果。客户端需要知道如何分析这些结果，但通过对响应给出可识别的类型，我们可以触发合适的分析器。这一结构可通过爬虫降序的从引用来抓取，或者以某种接口展现给用户浏览。一个 RESTful 接口成为了客户端通过基于已知来请求信息的方式。它们以一个已知或者已发现的点作为开始，就像你浏览web一样来浏览信息。</p>
+<p>这就是 HATEOS 所指代的。应用的状态在超文本响应中被转移和发现。就像浏览器需要知道HTML、图片、声音文件等等一样，一个RESTful客户端也需要知道如何分析解析资源引用的结果。然而，整个过程是简单、受约束、可伸缩并且灵活的——这正是我们所期望的网络软件系统的属性。</p>
+<p>许多人搭建的”RESTful”系统都要求客户端事先知道URL的每一层次的意义。如果服务端将信息重组了，这些系统的客户端就会崩溃。真正体现了HATEOS的客户端与它们所通讯的服务器之间才更加能做到松耦合。</p>
+<p>更多见<a href="http://www.infoq.com/cn/articles/roa-rest-of-rest/" target="_blank" rel="external">面向资源的架构：REST的另一面</a></p>
+<h3 id="Linked-Services-Pattern"><a href="#Linked-Services-Pattern" class="headerlink" title="Linked Services Pattern"></a>Linked Services Pattern</h3><p>是 HATEOAS 的核心。只发布一部分 root web services 的地址，在每个 response 中返回相关服务的地址，让客户端通过这种 response 来发现之后的 URI。</p>
+<blockquote>
+<p>Only publish the addresses of a few root web services. Include the addresses of related services in each response. Let clients parse responses to discover subsequent service URIs.</p>
+</blockquote>
+<h3 id="Network-performance"><a href="#Network-performance" class="headerlink" title="Network performance"></a>Network performance</h3><p>客户端 -&gt; 服务端。</p>
+<pre>client - proxy - gateways - origin server</pre>
+
+<p>REST 的优势。</p>
+<ul>
+<li>Efficiency<br>缓存可以提高效率，并不需要到达 gateways 和 origin server；data control 意味着我们可以压缩数据来提高效率。</li>
+<li>Scalability<br>缓存：理由同上。<br>无状态：如果服务器记录用户相关的状态，那么集群扩展时用户相关的状态就要及时地在集群中的各个服务器之间同步，对用户状态的同步将会是一个非常棘手的问题，当一个用户的相关状态在一个服务器上发生了更改，那么在什么时候，什么情况下对这些状态进行同步？如果该状态同步是同步进行的，那么同时刷新多个服务器上的用户状态将导致对用户请求的处理变得异常缓慢。如果该同步是异步的，那么用户在发送下一个请求时，其它服务器将可能由于用户状态不同步的原因无法正确地处理用户的请求。除此之外，如果集群进行了不停机的横向扩展，那么用户状态的同步需要如何完成？<br>不同的 gateways，增加 intermediaries 非常方便。</li>
+<li>User Perceived Performance<br>通过 reduce media types，缓存等方式实现。</li>
+<li>simplicity/evolvability/extensibility/customizability/configuration/reusability/visibility/portability/reliability</li>
+</ul>
+<h3 id="三种方案简单比较"><a href="#三种方案简单比较" class="headerlink" title="三种方案简单比较"></a>三种方案简单比较</h3><p>XML-RPC已慢慢的被SOAP所取代，现在很少采用了，但它还是有版权的。</p>
+<ul>
+<li>成熟度上：SOAP在成熟度上优于REST</li>
+<li>效率和易用性上：REST更胜一筹</li>
+<li>安全性上：SOAP安全性高于REST，因为 REST 更关注的是效率和性能问题</li>
+</ul>
+<p>总体上，因为 REST 模式的 Web 服务与复杂的 SOAP 和 XML-RPC 对比来讲明显的更加简洁，越来越多的 web 服务开始采用 REST 风格设计和实现。例如，Amazon.com 提供接近 REST 风格的 Web 服务进行图书查找；雅虎提供的 Web 服务也是REST风格的。REST 对于资源型服务接口来说很合适，同时特别适合对于效率要求很高，但是对于安全要求不高的场景。而 SOAP 的成熟性可以给需要提供给多开发语言的，对于安全性要求较高的接口设计带来便利。所以我觉得纯粹说什么设计模式将会占据主导地位没有什么意义，关键还是看应用场景，正是那句老话：适合的才是最好的</p>
+<p>同时很重要一点就是不要扭曲了REST现在很多网站都跟风去开发 REST 风格的接口，其实都是在学其形，不知其心，最后弄得不伦不类，性能上不去，安全又保证不了，徒有一个看似象摸象样的皮囊。</p>
+<p><a href="http://www.cnblogs.com/lanxuezaipiao/archive/2013/05/11/3072436.html" target="_blank" rel="external">三种主流的Web服务实现方案（REST+SOAP+XML-RPC）简述及比较</a></p>
+<h1 id="API-styles"><a href="#API-styles" class="headerlink" title="API styles"></a>API styles</h1><h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><p>RPC 是指远程过程调用，也就是说两台服务器A、B，一个应用部署在A服务器上，想要调用 B 服务器上应用提供的函数/方法，需要通过网络来表达调用的语义和传达调用的数据。</p>
+<p>这时候的 message 包括 procedure name 和 parameter list，service descriptor 通常是 WSDL 和 XSDL 或者 non-XML approach(JSON-RPC)，作用是生成一个在 client 上的 service connector(proxy)。</p>
+<p>Framework: SOAP, JAX-WS(java), WCF(Microsoft)</p>
+<p>RPC 模型是 tightly copuled system，如果 parameter list 改变了，那么 client 将会 break。如果 descriptor 改变了，那么必须重新生成 connector 来连接 client。</p>
+<p>request/response 是 RPC 的默认模式，request/acknowlege 会 less coupled(seperation of concerns)，request 可以在队列中等待，之后再进行处理，这样可以提高 scalability。如果 client 不想再等待的时候 block，那么可以用 asynchronous response handler。</p>
+<h3 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h3><p>通过 http 调用别的机器上的进程／方法<br>为什么 RPC 呢？就是无法在一个进程内，甚至一个计算机内通过本地调用的方式完成的需求，比如不同的系统间的通讯，甚至不同的组织间的通讯。由于计算能力需要横向扩展，需要在多台机器组成的集群上部署应用.</p>
+<p>RPC 的协议有很多，比如最早的 CORBA，Java RMI，Web Service的 RPC 风格，Hessian，Thrift，甚至 Rest API。</p>
+<p>通信细节<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/RPC.jpg" class="ful-image" alt="Web-Service-Design-Patterns/RPC.jpg"></p>
+<ol>
+<li>服务消费方（client）调用以本地调用方式调用服务；</li>
+<li>client stub 接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体；</li>
+<li>server stub 收到消息后进行解码；</li>
+<li>server stub 根据解码结果调用本地的服务；</li>
+<li>本地服务执行并将结果返回给 server stub；</li>
+<li>server stub 将返回结果打包成消息并发送至消费方；</li>
+<li>client stub 接收到消息，并进行解码；</li>
+<li>服务消费方得到最终结果。</li>
+</ol>
+<p>RPC的目标就是要2~8这些步骤都封装起来，让用户对这些细节透明。</p>
+<h2 id="Message"><a href="#Message" class="headerlink" title="Message"></a>Message</h2><p>通过 http 给别的机器发送 command 命令、通知、其它信息，不用和别的进程 direct coupling，也不用知道别的机器的方法的签名。message 只包含一个参数。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/message.jpg" class="ful-image" alt="Web-Service-Design-Patterns/message.jpg">
+<p>这时候的 message 不包括 procedure name 和 parameter list，service descriptor 通常是 WSDL 和 XSDL，作用是生成一个 service connector(proxy)，service 的主要任务是分发，要求 service 更加的聪明，能够评估消息内容并决定去执行哪个进程调用哪个方法。</p>
+<p>response 包括了相关 service 的地址（url）。<br>Framework: SOAP, WS-Policy, WS-Security</p>
+<p>默认是 request/acknowledge 模式而不是 request/response。<br>追加一条新的 message type 很简单。</p>
+<h2 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h2><p>操作另一台机器上的数据，不用和别的进程 direct coupling，最小化 the need for domain specific api’s。<br>消息内容是一个 http 方法，一个 uri，一个 media type。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/resource.jpg" class="ful-image" alt="Web-Service-Design-Patterns/resource.jpg"></p>
+<p>Resource API 可能是 Restful 的。<br>request/acknowledge 或者 request/response。<br>会产生 Security risk 因为 uri is hackable</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/conclusion.jpg" class="ful-image" alt="Web-Service-Design-Patterns/conclusion.jpg">
+<p>如果要建一个分布式系统，high performance(speed) 是最主要的要求，那么以下选项选哪个？</p>
+<ul>
+<li>REST sytle web service</li>
+<li>JAVA RMI</li>
+<li>SOAP based web service</li>
+<li>Javascript using JSON</li>
+<li>Plain old XML(POX) over HTTP</li>
+</ul>
+<p>选 JAVA RMI，因为 java RMI 把 message 都编码成 binary 的形式，减少了在各终端的 conversion time。</p>
+<h1 id="Postel’s-Law"><a href="#Postel’s-Law" class="headerlink" title="Postel’s Law"></a>Postel’s Law</h1><p>最后加一条 Postel’s Law。简单来说就是 <strong>对自己严格，对他人宽容</strong>。“发送时保守”是告诫 web 开发人员的，HTML代码应该写的尽可能符合标准，能够方便别人（浏览器）去解析。“接收时开放”主要是说对一个不遵循固定标准（如不遵循HTML标准）的网页，或者说网站中出现的一个或多个错误，浏览器仍能够尽可能的解析并呈现。另外，浏览器必须向后兼容也是“接收时开放”的一个典型例子，不能因为大家都用 HTML5 编写网站浏览器就不再支持之前的 HTML 版本。</p>
+<blockquote>
+<p>参考链接：<br><a href="http://www.cnblogs.com/LBSer/p/4853234.html" target="_blank" rel="external">你应该知道的RPC原理</a><br><a href="http://www.cnblogs.com/loveis715/p/4669091.html" target="_blank" rel="external">REST简介</a><br><a href="http://stevenjohn.iteye.com/blog/1442776" target="_blank" rel="external">WebService的两种方式SOAP和REST比较 (转)</a><br><a href="http://www.cnblogs.com/lanxuezaipiao/archive/2013/05/11/3072436.html" target="_blank" rel="external">三种主流的Web服务实现方案（REST+SOAP+XML-RPC）简述及比较</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web-Service/" rel="tag">#Web Service</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/25/Search Engines笔记 - Learning to Rank/" rel="next" title="Search Engines笔记 - Learning to Rank">
+                <i class="fa fa-chevron-left"></i> Search Engines笔记 - Learning to Rank
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/02/Cryptographic-Protocols/" rel="prev" title="Distributed Systems笔记－Cryptographic Protocols">
+                Distributed Systems笔记－Cryptographic Protocols <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Web-服务实现方案"><span class="nav-number">1.</span> <span class="nav-text">Web 服务实现方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#XML-RPC"><span class="nav-number">1.1.</span> <span class="nav-text">XML-RPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOAP"><span class="nav-number">1.2.</span> <span class="nav-text">SOAP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REST"><span class="nav-number">1.3.</span> <span class="nav-text">REST</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特性"><span class="nav-number">1.3.1.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HATEOAS"><span class="nav-number">1.3.2.</span> <span class="nav-text">HATEOAS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linked-Services-Pattern"><span class="nav-number">1.3.3.</span> <span class="nav-text">Linked Services Pattern</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Network-performance"><span class="nav-number">1.3.4.</span> <span class="nav-text">Network performance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三种方案简单比较"><span class="nav-number">1.3.5.</span> <span class="nav-text">三种方案简单比较</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API-styles"><span class="nav-number">2.</span> <span class="nav-text">API styles</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RPC"><span class="nav-number">2.1.</span> <span class="nav-text">RPC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Why"><span class="nav-number">2.1.1.</span> <span class="nav-text">Why</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Message"><span class="nav-number">2.2.</span> <span class="nav-text">Message</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Resource"><span class="nav-number">2.3.</span> <span class="nav-text">Resource</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Postel’s-Law"><span class="nav-number">3.</span> <span class="nav-text">Postel’s Law</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/11/02/Web-Service-Design-Patterns/';
+      var disqus_title = "Distributed Systems笔记－Web Service Design Patterns";
+      var disqus_url = 'http://www.shuang0420.com/2016/11/02/Web-Service-Design-Patterns/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

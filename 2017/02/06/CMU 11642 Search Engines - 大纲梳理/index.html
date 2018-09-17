@@ -1,0 +1,1414 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,Search Engines," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 11642 的课程笔记大纲。涉及了很多算法，详细见具体的链接，代码就不贴了。欢迎讨论，欢迎指正～">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU 11642 Search Engines - 大纲梳理">
+<meta property="og:url" content="http://www.shuang0420.com/2017/02/06/CMU 11642 Search Engines - 大纲梳理/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 11642 的课程笔记大纲。涉及了很多算法，详细见具体的链接，代码就不贴了。欢迎讨论，欢迎指正～">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CMU 11642 Search Engines - 大纲梳理">
+<meta name="twitter:description" content="CMU 11642 的课程笔记大纲。涉及了很多算法，详细见具体的链接，代码就不贴了。欢迎讨论，欢迎指正～">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/02/06/CMU 11642 Search Engines - 大纲梳理/"/>
+
+
+  <title> CMU 11642 Search Engines - 大纲梳理 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CMU 11642 Search Engines - 大纲梳理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-02-06T14:29:18+08:00" content="2017-02-06">
+              2017-02-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Search-Engines/" itemprop="url" rel="index">
+                    <span itemprop="name">Search Engines</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/06/CMU 11642 Search Engines - 大纲梳理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/06/CMU 11642 Search Engines - 大纲梳理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 11642 的课程笔记大纲。涉及了很多算法，详细见具体的链接，代码就不贴了。欢迎讨论，欢迎指正～<br><a id="more"></a></p>
+<p>Jamie 搜索引擎这门课，还是很有收获的，课上除了一些基本概念和算法外还有很多最新研究，涵盖内容非常广，绝对不止一本书。据 Jamie 讲，在 yahoo 等公司搜索部门的学生回来说现在做的工作感觉就是当年做的作业，是否有夸张不知道，然而大家可以感受下。已经过了选课阶段，就当给下一届想选的小盆友一点 workload 信息吧：</p>
+<ol>
+<li>reading notes。每周有大量的 reading，可能是教材也可能是论文。注意 reading notes 的成绩是 binary 的，1 or 0，不要以为在 blackboard 上看到自己是 80 分就以为有了0.8，80分＝0分！</li>
+<li>homework。五次作业完成一个完善的 search engine，语言是 java，大概三四十个类，每次都是在上一次的基础上进一步改进，所以除了最后一次作业外，你做的每一次作业的 performance 都将深深的影响下一次。如果你发现你的运行时间比 Callen 给的时间要长很多，请务必进行优化。作业不难，通常是让你实现各种算法，常用的以及某些论文中的，然而评分很严，很多 corner case 要注意。<br>每次作业完成都有一篇 report，需要做很多实验(四五十个至少吧，不写脚本的话感觉可以从天黑做到天亮)，并做“深刻”总结，之所以说“深刻”是因为有时候我绞尽脑汁写的东西得到的评语是 shallow。一把心酸泪。一般来说一天写算法再一天过全部的 test case，最后做实验写 report。</li>
+<li>exam。期中期末两次考试，上过 text analytics 的人都知道，Callen 的一贯风格，考试广度优先，题量大，靠本能，你腾出时间来思考你就输了，给分低。</li>
+</ol>
+<p>但是说了这么多不要怕！！就算考试成绩再低你的最后分数也会很好看！！</p>
+<p>关于能不能 hold 住，这么说吧我上学期还选了 Machine learning(11601A)，Distributed Systems(95702)，以及 Data Structures for Application Programmers(08722)，感觉 4 门课老实说大课只能 focus 一到两门，如果各位还要刷题找工作，还是建议 P/F 或者是 audit 一门。</p>
+<p>然后回到正题，高度总结下，这门课就讲了两个问题，一个是如何准确匹配查询与文档，一个是如何快速返回检索结果，就是 <strong>效果 vs 效率</strong> 的一个权衡。下面的总结梳理了这门课的重点，其中会涉及很多具体算法，然而这只是简单的提纲，不能把公式/算法都列出来，具体的可以看下面的链接或者看书/讲义。透露一点：多数的算法项目里你都需要去实现，而不需要实现的算法，Jamie 也不会轻易放过你，所以你们觉得会在哪里出现呢？😁</p>
+<h1 id="文档表示"><a href="#文档表示" class="headerlink" title="文档表示"></a>文档表示</h1><p><strong>源文档到索引的过程：</strong><br><strong>Raw data</strong> –(Format Parser)–&gt; <strong>Canonical format</strong> –(Lexical Analyzer)–&gt; <strong>Index terms</strong> –(Index data structures)–&gt; <strong>Indexer</strong></p>
+<ul>
+<li>元描述(Meta-descriptions)<pre><code>- Fields (author, title, inlink, url)
+</code></pre></li>
+<li>关键词、受控词汇(controlled vocabulary)<pre><code>scheme 由识别文档主题的规则、指定词库、索引术语、分配索引的规则四部分组成
+- 优点
+    § 召回率高
+    § 支持浏览和搜索
+    § 在医学、法律、专利方面比较流行
+- 不足
+    § 人工标注创建和维护的成本很高
+    § 人工标注可能不一致
+    § 检索受限制
+</code></pre></li>
+<li><p>自动文档表示(Free-text or full-text index terms)</p>
+<pre><code>一般用词袋(Bag of Words)，文档由该文档中出现的词的集合所表示
+○ 优点
+    § 简单、有效
+○ 缺点
+    § 无法从词袋表示恢复原文档
+    § 忽略了词之间和句法关系以及篇章结构的信息
+
+过程：
+    1. 符号化(Tokenization):识别词的边界
+    2. 停用词(Stop Words)
+        过滤不具有内容信息的词，停用词表依赖于具体文档集及具体应用
+        ○ 优点
+            §  停用词并不能提高检索效果
+            §  大幅减少索引大小
+            §  缩短检索时间
+        ○ 不足
+            § 难以满足某些特殊的 query(to be or not to be)
+    3. 词语形态规范化(Normalization)
+        规范化词语的形态信息: 时态，数量，如 company &amp; companies, sell &amp; sold
+    4. 词根(Stemming)
+        处理词缀信息
+        ○ 优点
+            § 更准确地表示文档
+            § 匹配更广泛的查询
+        ○ 不足
+            § Stemming 的结果可能不是词语
+             § 不相关的词可能具有相同的 stem
+    5. 词形还原(Lemmatization)
+        将词语变为其语法原型(syntactic stem)，使用一般规则与例外处理，处理过程要考虑词性的不同
+        ○ 优点
+            § 更准确地表示文档
+            § 匹配更广泛的查询
+
+    大部分互联网搜索引擎并不使用 stemming/lemmatization
+        § 文档集很大
+        § 不太考虑召回率
+        § Stemming 结果并不完美
+    大部分互联网搜索引擎使用停用词表，Jammie Callen 课上好像说现在不怎么用？
+</code></pre></li>
+</ul>
+<p><a href="http://www.shuang0420.com/2016/09/25/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Representation/">Search Engines笔记 - Document Representations</a><br><a href="http://www.shuang0420.com/2017/02/01/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words,%20morphology,%20and%20lexicons/">NLP 笔记 - Words, morphology, and lexicons</a></p>
+<h1 id="文档索引"><a href="#文档索引" class="headerlink" title="文档索引"></a>文档索引</h1><ul>
+<li>目的在于提高检索效率</li>
+<li>索引词项的统计特性<pre><code>- Heaps定律：对词项数目的估计
+- Zipf定律：对词项的分布建模
+</code></pre></li>
+<li>索引分类<pre><code>- Term dictionary
+- Inverted lists
+    § 重点。常用的有 frequency inverted lists 和 positional inverted lists。
+    § 可看做连标数组，每个链表的表头包含关键词，其后序单元则包括所有包括这个关键词的文档标号，以及一些其他信息，如该词的频率和位置等
+- Attributes
+- Fields masks
+- Forward Index
+- ...
+</code></pre></li>
+<li>索引对象<pre><code>通常采用 word 构建索引
+词组怎么办？
+    - 事前处理 precoordinate(只有一个 inverted list)，合并可能的词组，interest rate -&gt; interest_rate
+    - 事后处理 postcoordinate(有多个 inverted lists)，查询的时候加上 #NEAR/1。interest rate -&gt; #NEAR/1(interest rate)
+</code></pre></li>
+<li>索引算法<pre><code>- 单机版
+    - BSBI(Block sort-based indexing)
+    - SPIMI(Single-pass in-memory indexing)
+- 分布式索引
+    - 技术：sharding, replication, MapReduce
+    - 优化：分层索引
+- 索引压缩
+    - Delta Gap
+    - Variable Byte Encoding
+- 索引优化
+    - Skip lists，考虑 operators(如 #NEAR,#WINDOW,#SYN,Boolean AND，调整指针) 以及 Top-Docs(截取部分 top docs)
+    - 一个 term 多个 inverted list，比如一份不存位置信息，一份存，对于不需要位置信息的 operator，就用前一个索引
+- 动态索引
+    - 周期性索引重构
+    - 辅助索引
+</code></pre></li>
+<li>数据结构<pre><code>- 一般采用 B-Tree(B+ tree, B* tree)，易于扩展，用于完全匹配(exact-match lookup)，范围寻找(range lookup)，前缀寻找（prefix lookup）
+- 哈希表，不易于扩展，用于完全匹配(exact-match lookup)
+</code></pre></li>
+</ul>
+<p><a href="http://www.shuang0420.com/2016/10/14/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Index/">Search Engines笔记 - Index Construction</a></p>
+<h1 id="查询处理"><a href="#查询处理" class="headerlink" title="查询处理"></a>查询处理</h1><ul>
+<li>TAAT(Term-at-a-time)<pre><code>每处理完一个 inverted list，部分更新文档分数，再处理下一个。
+- 优点：高效，易于理解
+- 缺点：可能爆内存，因此很少用在 large-scale systems
+</code></pre></li>
+<li>DAAT(Document-at-a-time)<pre><code>每处理一篇文档，就算出 complete score，再处理下一篇文档。
+- 优点：易于进行内存管理，可以进行 query evaluation 的优化，常用在大规模的系统
+- 缺点：效率没有 TAAT 高
+</code></pre></li>
+<li>TAAT/DAAT hybrids<pre><code>平衡 Efficiency 和 memory control
+Eg. block-based TAAT(compute TAAT over blocks of document ids)
+</code></pre></li>
+</ul>
+<p><a href="http://www.shuang0420.com/2016/09/11/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Query%20Processing/">Search Engines笔记 - Query Processing</a></p>
+<h1 id="信息检索模型"><a href="#信息检索模型" class="headerlink" title="信息检索模型"></a>信息检索模型</h1><ul>
+<li>基本思想<pre><code>如果一篇文档与一个查询相似，那么该文档与查询相关
+</code></pre></li>
+<li>相似性<pre><code>- 字符串匹配
+- 相似的词汇
+- 相同的语义
+</code></pre></li>
+<li><p>检索模型</p>
+<pre><code>- 完全匹配模型／布尔模型(Boolean Model)
+    - Unranked boolean model，只有匹配不匹配，没有分数。
+    - Ranked boolean model，为文档计算特定分数。
+    ○ 优点
+        § 简单，效率高
+        § 可预测，可解释，对查询严格掌控
+    ○ 缺点
+        § 一般用户难以构造布尔查询
+        § 严格匹配，导致过少或过多的检索结果
+        § 很难在 Precision 和 Recall 间得到平衡
+    尽管布尔模型不再用作主流文档检索模型，但其思想常用于实现高级(综合)检索功能
+
+- 最佳匹配模型(Best-Match Model)
+    衡量一篇文档与 information need 的匹配程度，与完全匹配模型（匹配／不匹配）相比更注重用户体验，不管有没有匹配都会返回文档结果。有很多种方法，但说到底公式其实都和 tf-idf 的公式相似。
+    1. 向量空间 Vector space retrieval model(VSM)
+        - 思想: 文档与查询都是高维空间中的一个向量
+        - 向量空间表示
+            - 文档是词语组成的向量
+            - 词语是文档组成的向量
+            - 查询是词语组成的向量
+        - 相似性
+            - 用内积衡量
+                ○ 缺点
+                    § 长文档由于更可能包含匹配词语，因而更可能相关
+                    § 然而，如果两篇文档具有同样的相似值，用户更倾向于短文档，短文档更聚焦在用户信息需求上
+                    § 相似性计算中应该考虑文档长度(进行规范化)
+            - 用夹角来衡量
+                - 考虑 tf, idf, doclen
+                - tf: 词语出现的频率
+                - idf: 区别不同词语的重要性
+                - doclen: 对文档长度进行补偿
+            - 其他相似性度量
+                - Minkowski metric(dissimilarity)
+                - Euclidian distance(dissimilarity)
+                - Jacquard measure
+                - Dice&apos;s coefficient
+        ○ 优点
+            § 简单有效
+        ○ 缺点
+            § 过于灵活，自己设置 term weight，确定相似度度量方法，自己设置怎么支持 query-independent weights
+    2. 概率理论 Probabilistic retrieval model(BM25)
+        - RSJ weight * tf weight * user weight
+        ○ 优点
+            § 有很强的概率理论支持
+            § 在新的环境中参数可以被调整
+            § 在大量的 evaluation 中都非常有效
+        ○ 缺点
+            § 经验调整参数
+    3. 统计语言模型 Statistical language model(query likelihood)
+        生成两个模型，一个文档的语言模型，一个查询的语言模型，有两种方案来对文档进行排序，
+        - query likelihood
+            加上 Jelinek-Mercer Smoothing 和 Bayesian Smoothing With Dirichlet Priors
+        - KL divergence
+    4. 推理网络 Inference networks(Indri)
+        - document + smoothing parameter(α,β) -&gt; language model(θ) -&gt; language model vocabulary(r)
+</code></pre></li>
+<li>Document Priors<pre><code>与 query 无关的用来评估文档价值的 estimates(query independent)，主要有 spam score, PageRank, length of url 等，与上面的算法结合可以综合评估网页的分数。
+</code></pre></li>
+</ul>
+<p><a href="http://www.shuang0420.com/2016/09/06/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Exact-match%20retrieval/">Search Engines笔记 - Exact-match retrieval</a><br><a href="http://www.shuang0420.com/2016/09/30/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Best-Match/">Search Engines笔记 - Best-Match</a></p>
+<h1 id="个性化"><a href="#个性化" class="headerlink" title="个性化"></a>个性化</h1><ul>
+<li>基本逻辑：<pre><code>- Representation: 描述用户的兴趣/偏好
+- Learning: 从数据中学习兴趣/偏好
+- Ranking: 在检索算法中使用兴趣/偏好
+</code></pre></li>
+<li>主要方法：<pre><code>- 基于话题
+    - 根据用户的长期检索历史对用户建模，得到的用户模型是在类别标签上的一个概率分布
+    - 对排序列表进行 rerank，top n 的文档是两个分数的组合:
+        - 原始文档分数
+        - 文档类别和用户兴趣类别的匹配分数
+- 长期 vs 短期
+    将用户信息分为长期信息、短期信息、长期＋短期信息三组信息，每个特征都分别从这三组信息中分别提取出来，然后训练分类器
+- 典型 vs 非典型信息需求
+    - 根据用户长期检索历史创建 user profile
+    - 判断非典型信息需求
+        - 衡量 profile 和 session 的 divergence
+          - 从用户历史记录里得到的每个 session feature 的 divergence
+          - session 和 historical vocabularies 的 cosine 距离
+          - session 和 historical topic categories 的 cosine 距离
+    - 提取特征，训练分类器
+</code></pre></li>
+</ul>
+<p><a href="http://www.shuang0420.com/2016/11/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Personalization/">Search Engines笔记 - Personalization</a></p>
+<h1 id="多样性"><a href="#多样性" class="headerlink" title="多样性"></a>多样性</h1><p>一个 query 可能表达了不同的信息需求，相关性模型可能带来的结果是大多文档只能满足同一个信息需求，我们希望检索到的文档是多样性的，能够覆盖到大多数的需求，满足更多用户。</p>
+<ul>
+<li>算法<pre><code>- Implicit Methods
+    query intent 隐含在文档排名中，假设相似的文档涵盖了相似的 intent
+    - Maximum Marginal Relevance (MMR)
+        - 基于相似度，对文档重排序。
+        - 重排序的标准是选择与 query 相似度高的，但和之前已经选出来的文档的相似度低的文档
+    - Learning to Rank
+        - 相当于 MMR 的有监督版本
+        - 和 ListMLE 相同，写下 likelihood function，计算 MLE..
+- Explicit Methods
+    明确定义了 query intent，对文档重新排序，以便覆盖所有的 query intent
+    - xQuAD
+        选择涵盖多个 intents 的文档，给需要覆盖的 intents 赋予较高的权重
+    - PM-2
+        然后选择一个覆盖这个 intent 的文档，如果这个文档能覆盖其它 intents，那么给它加分
+</code></pre></li>
+<li>评价指标<pre><code>- Precision-IA@k
+- α-NDCG
+</code></pre></li>
+</ul>
+<p><a href="http://www.shuang0420.com/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/">Search Engines笔记 - Diversity</a></p>
+<h1 id="联合搜索"><a href="#联合搜索" class="headerlink" title="联合搜索"></a>联合搜索</h1><p>对一个 query，我们可以放到合适的多个垂直数据库里检索，然后合并结果呈现给用户。</p>
+<ul>
+<li>Resource representation(资源表达)<pre><code>- 获取每个数据库的信息
+- 通常用 query-based sampling 方法
+</code></pre></li>
+<li>Resource selection(资源选择)<pre><code>对资源进行排序，对每个查询选择少量资源进行检索
+- 无监督算法
+    看作资源排序的问题，估计 P(ri|q)
+    - content-based methods
+        - Bag-of-words method
+            - 对各个资源下 query 和 resource 的相似度 S(q,c) 来对资源进行排序
+            - 将一个资源看作一个大的词袋
+            - E.g. CORI
+            - query 和 resource 的相似度，这并不是我们的初衷
+        - Sample documents method
+            - 对每个资源采样然后合并得到一个 centralized index，记录每个文档来自哪个 resource
+            - E.g. ReDDE
+            - 高的召回率和准确率，通常来说效果都大于等于 CORI，尤其是数据库大小分布是 skewed 时
+    - query-based methods
+        对 query，搜索各个资源下的 query log，找出 match 的 query，然后求当前 query 和历史 query 的相似度 S(q,qpast)，对资源进行排序
+- 监督算法
+    给定一个查询，选择一个或更多的 verticals
+    将问题定义为一个 “one-vs-all” 的分类任务
+        - 对每个 vertical 都训练一个分类器
+        - 对 “no vertical” (web only) 也训练一个分类器
+        - 选择一个/多个具有最高置信度(confidence score)的分类器
+</code></pre></li>
+<li>Result-merging(结果合并)<pre><code>即对来自不同搜索引擎／数据库对结果进行 merge，产生最终展现给用户的 ranking list。
+用所有的 sampled documents 创建一个 index，从选定的资源里检索文档，对每个文档计算 sim (q, d)，同时根据数据库情况计算每个文档的 authority score，最后分数就是 score(d) = f ( sim (q, d), authority (d) )
+- Semi-Supervised method
+    - 对每个文档我们有两个分数，Sample index (resource neutral) score，Resource i (resource-specific) score
+    - 学习 f (resource-specific) = resource-neutral
+</code></pre>思路可以用于大规模分布式搜索引擎</li>
+</ul>
+<p><a href="http://www.shuang0420.com/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/">Search Engines笔记 - Federated Search</a><br><a href="http://www.shuang0420.com/2016/11/29/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20ReDDE%20Algorithm%20for%20Resource%20Selection%20/">Search Engines笔记 - ReDDE Algorithm for Resource Selection</a></p>
+<h1 id="Web-检索"><a href="#Web-检索" class="headerlink" title="Web 检索"></a>Web 检索</h1><ul>
+<li>Web 检索 = 文档检索 + 针对 Web 检索的新技术</li>
+<li>Web 页面采集<br>  爬虫：快速有效地收集尽可能多的有用 Web 页面，包括页面之间的链接结构<pre><code>- Web 爬虫需要具备的特性
+    - 健壮 robustness, 避免 spider traps
+    - 友好 politeness, 遵守 web server 的采集协议
+    - 分布式 distributed, 多台机器分布式采集
+    - 可扩展 scalable, 爬虫架构方便扩展
+    - 性能与效率，有效利用系统资源
+    - 质量 quality, 倾向于采集有用的页面
+    - 新颖 freshness, 获取网页的最新版本
+    - 可扩充 Extensible, 能够处理新数据类型、新的采集协议等
+- Web 页面爬取策略
+    - 深度优先
+    - 广度优先
+    - 实际应用中以广度优先为主，深度优先为辅
+- 难点
+    - 暗网的采集，只有向数据库提交查询才形成的 Web 页面
+    - Web 2.0 内容，脚本语言等生成的动态内容
+    - 多媒体内容
+</code></pre></li>
+<li>Web 页面排序<br>  页面排序值 = 页面内容相关度 +/* 页面重要性</li>
+<li>Web 链接分析<pre><code>- 理论基础：Web 页面之间的超链关系非常重要，一条从页面 A 指向页面 B 的链接表明
+       - A 与 B 相关
+       - A 推荐/引用/投票/赞成 B
+- 经典算法
+    - PageRank
+   - Topic-Sensitive PageRank(TSPR)
+   - T-Fresh
+   - HITS - Hypertext Induced Topic Selection
+</code></pre></li>
+<li>基于学习的网页排序<pre><code>Learning to Rank 主要包括三个类别
+- Pointwise
+    - 训练数据是一个文档类别或分数
+    - Accurate score ≠ accurate ranking
+    - 忽略文档的位置信息
+- Pairwise
+    - 训练数据是文档对的一个偏好(一对文档选哪个)
+    - Accurate preference ≠ accurate ranking
+     - 忽略文档的位置信息
+- Listwise
+    - 训练数据是文档的排名
+    - 难以直接优化 ranking metrics
+主流算法有
+    - RankSVM
+    - RankNet
+    - ListNet
+Learning to Rank 工具包
+    - RankLib
+    - people.cs.umass.edu/~vdang/ranklib.html
+评价指标
+    - WTA(Winners take all)
+    - MRR(Mean Reciprocal Rank)
+    - MAP(Mean Average Precision)
+    - NDCG(Normalized Discounted Cumulative Gain)
+    - RC(Rank Correlation)
+</code></pre></li>
+</ul>
+<p><a href="http://www.shuang0420.com/2016/11/04/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/">Search Engines笔记 - Authority Metrics</a><br><a href="http://wdxtub.com/vault/data-analysis-guide.html" target="_blank" rel="external">聚类-小土刀</a><br><a href="http://www.shuang0420.com/2016/06/11/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/">爬虫总结(一)– 爬虫基础 &amp; python实现</a><br><a href="http://www.shuang0420.com/2016/06/12/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93-%E4%BA%8C-scrapy/">爬虫总结(二)– scrapy</a><br><a href="http://www.shuang0420.com/2016/06/15/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93-%E4%B8%89-scrapinghub/">爬虫总结(三)– cloud scrapy</a><br><a href="http://www.shuang0420.com/2016/06/17/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93-%E5%9B%9B-%E5%88%86%E5%B8%83%E5%BC%8F%E7%88%AC%E8%99%AB/">爬虫总结(四)– 分布式爬虫</a><br><a href="http://www.shuang0420.com/2016/06/20/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93-%E4%BA%94-%E5%85%B6%E4%BB%96%E6%8A%80%E5%B7%A7/">爬虫总结(五)– 其他技巧</a><br><a href="http://www.shuang0420.com/2016/06/27/%E7%88%AC%E8%99%AB%E6%80%BB%E7%BB%93--%E6%B1%87%E6%80%BB%E8%B4%B4/">爬虫总结–汇总贴</a></p>
+<h1 id="伪相关反馈"><a href="#伪相关反馈" class="headerlink" title="伪相关反馈"></a>伪相关反馈</h1><p>Pseudo Relevance Feedback 自动产生更好的 query。<strong>基本逻辑</strong> 是把原始查询当做分类器，用它来给部分数据打标签，得到 top-ranked documents，然后用 labeled data 来产生更优的 classifier。基本过程：</p>
+<ol>
+<li>用原始 query 检索文档</li>
+<li>取结果的前 N 篇文档作为训练集，这些文档相关度可能不高，然而我们的目的是学习 vocabulary pattern。</li>
+<li>应用 relevance feedback algorithm 选取 term 和 term weight</li>
+<li>组成新的 query 来检索文档<ul>
+<li>Query expansion 平均能使 MAP 提高 20%</li>
+<li>但同时也有可能让 1/3 的用户感到 annoy</li>
+</ul>
+</li>
+</ol>
+<p>所以通常来说，query expansion 会用在召回率很重要的场景，或者 average performance 很重要的场景，比如 legal retrieval, TREC, research paper 等。</p>
+<p><a href="http://www.shuang0420.com/2016/10/10/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Pseudo%20Relevance%20Feedback/">Search Engines笔记 - Pseudo Relevance Feedback</a></p>
+<h1 id="信息检索评价"><a href="#信息检索评价" class="headerlink" title="信息检索评价"></a>信息检索评价</h1><ul>
+<li>评价检索模型或搜索引擎的性能<br>  主要考虑搜索质量 vs 搜索效率，这里主要谈搜索质量</li>
+<li>评测数据集<pre><code>一般人工构建
+构成
+    - 文档集合(documents)
+    - 信息需求(information needs)及查询集(queries)
+    - 相关性判断(relevance judgements)
+已有评测集
+    - TREC
+        § trec.nist.gov
+        § 最具影响力
+        § 多种信息检索任务，侧重于英文
+    - NTCIR
+        § research.nii.ac.jp/ntcir/
+    - CLEF
+        § www.clef-campaign.org
+</code></pre></li>
+<li>评价指标<pre><code>衡量检索结果与标准答案的一致性
+- 对 Unranked Retrieval(非排序检索)的评价
+    - Precision and Recall
+    - P@n
+    - F-Measure
+    - Average Results(Micro, Macro)
+- 对 Ranked Retrieval(排序结果)的评价
+    考虑相关文档在检索结果中的排序位置，考虑在不同 recall levels 的 precision 值
+    - AP and MAP
+    - MRR (Mean Reciprocal Rank)
+    - NDCG (Normalized Discounted Cumulative Gain)
+    - RBP (Rank-Biased Precision)
+</code></pre></li>
+<li><p>评价方法</p>
+<pre><code>- Cranfield Methodology
+    1. 获得文档(documents)集合
+    2. 获得信息需求(information needs)集合
+    3. 获得相关性判断(relevance judgments)
+    4. 计算(Measure)各种方法找到相关文档的效果
+    5. 比较(Compare)各个方法的有效性
+
+- 动态环境下的评价(Interleaved)
+ 主要用 Interleaved testing 方法。通常输入是两个排序列表，分别由不同方法产生，输出是一个排序列表，由输入的所有文档重新排序产生。
+    - Balanced interleaving
+        第一次决定从哪个方法开始，然后交替把文档加入 interleaved ranking，如果遇到了已经评估过的文档，就直接 counter++，但是不把文档加进 interleaved ranking 里。
+    - Team-draft interleaving
+        每一轮都随机产生先取哪种方法，如果有重复，跳过，取下一个。
+
+一般来说，我们更多的会使用 Cranfield，因为
+    § Cranfield 更成熟，已经使用了很多年而且易于理解
+    § Cranfield 支持大量的 metrics，能提供更多关于 ranking behavior 的信息
+    § Cranfield 几乎在所有场景下都使用，而 Interleaving 需要有 query traffic
+    § 尽管如此，interleaving 仍然是一个很有用的工具，在 Inexpensive, adaptive, sensitive to small differences 的情景下效果较好
+</code></pre></li>
+</ul>
+<p><a href="http://www.shuang0420.com/2016/09/20/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/">Search Engines笔记 - Evaluating Search Effectiveness</a></p>
+<h1 id="搜索日志"><a href="#搜索日志" class="headerlink" title="搜索日志"></a>搜索日志</h1><p>最重要的是两个问题</p>
+<ul>
+<li>How to represent users<pre><code>1. 从日志中得到 (user,query) pairs
+2. 为用户创建 pseudo documents
+        - 标题: user id
+        - 内容: 每条 query 的前 10 篇文档对应的 Yahoo! 分类目录
+3. 计算相似度
+        e.g. JS divergence, cosine
+</code></pre></li>
+<li>Segmenting search logs into sessions<pre><code>- 把 search log 划分为一个个基于信息需求的 dialogue，实际就是用户发出初始查询，搜索引擎给出结果，用户不满意，重新修改查询语句再次搜索，然后得到新的结果，不断循环知道解决问题/放弃检索，这期间的行为就构成了 dialogue
+- 划分可以考虑的因素：时间、相同的 term、编辑距离、相同点击、文档类别、分类器等等
+</code></pre></li>
+</ul>
+<p><a href="http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/">Search Engines笔记 - Search logs</a>        </p>
+<h1 id="搜索引擎优化-SEO"><a href="#搜索引擎优化-SEO" class="headerlink" title="搜索引擎优化(SEO)"></a>搜索引擎优化(SEO)</h1><p>提高网站或网页在搜索引擎中可见度(排名)的过程</p>
+<ul>
+<li>基本思想<pre><code>- 基于各类搜索引擎的工作原理(采集、索引、排序等)，对网站进行相关的优化的调整，提高网站在搜索引擎中的排名
+- 白帽：合理优化，不牺牲用户体验
+- 黑帽：不正当优化，牺牲用户体验
+    § 重复、隐藏文字、链接工厂、桥页、跳页
+</code></pre></li>
+<li>影响排名的因素<pre><code>- 内部因素
+    § URL 中出现关键词
+    § 网页 Title 中出现关键词
+    § 常规内容中出现关键词
+    § 在页面的最后一段中出现关键词
+    § &lt;Head&gt; 标签 比如 h1, h2 中出现关键词
+    § 站内的链接中出现关键词
+    § 导向相关内容的导出链接
+    § 导出链接中出现关键词
+    § 图片文件名中出现关键词
+    § Alt 标签中出现关键词
+    § comment 中出现关键词
+    § 合理的频率更新内容
+    § 内容对搜索引擎的展示位置
+    § 网站结构循环 PR, 而非散发 PR
+    § 关键词进行适当的修饰(加粗、斜体等)
+- 外部因素
+    § 大量的导入链接
+    § 从高 PR 值的网页获得导入链接
+    § 从相关内容网站获得导入链接
+    § 导入链接指向的网页有具体内容
+    § 锚文字中有关键词
+    § 锚文字周围有相关词
+    § 锚文字存在于文章或句子中
+    § 导入链接的时间长度，一般导入链接的存在时间有3-6个月
+    § 单向链接的价值高于交换链接
+    § 导入链接的页面的导出链接小于 100 个，流出链接越少越好
+    § 链接来自不同 IP
+    § 合理的导入链接增长频率
+</code></pre></li>
+<li>SEO 操作<pre><code>- 站外 SEO
+    § 网站外部链接优化、网站的链接见识、网站的外部数据分析等
+    § 交换、购买链接，提交网址到分类目录等
+- 站内 SEO
+    § 网站结构的设计、网站代码优化和内部链接优化、网站内容的优化、网站用户体验优化等
+</code></pre></li>
+<li>建议：丰富网站关键词、主题集中、友好的网页结构、避免重复、有规律的更新等</li>
+</ul>
+<p><a href="http://wdxtub.com/vault/data-analysis-guide.html" target="_blank" rel="external">聚类-小土刀</a></p>
+<p><strong>所有课程笔记:</strong><br><a href="http://www.shuang0420.com/2016/09/06/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Exact-match%20retrieval/">Search Engines笔记 - Exact-match retrieval</a><br><a href="http://www.shuang0420.com/2016/09/11/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Query%20Processing/">Search Engines笔记 - Query Processing</a><br><a href="http://www.shuang0420.com/2016/09/20/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/">Search Engines笔记 - Evaluating Search Effectiveness</a><br><a href="http://www.shuang0420.com/2016/09/25/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Representation/">Search Engines笔记 - Document Representations</a><br><a href="http://www.shuang0420.com/2016/09/30/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Best-Match/">Search Engines笔记 - Best-Match</a><br><a href="http://www.shuang0420.com/2016/10/02/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Information%20Needs/">Search Engines笔记 - Information Needs</a><br><a href="http://www.shuang0420.com/2016/10/10/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Pseudo%20Relevance%20Feedback/">Search Engines笔记 - Pseudo Relevance Feedback</a><br><a href="http://www.shuang0420.com/2016/10/14/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Index/">Search Engines笔记 - Index Construction</a><br><a href="http://www.shuang0420.com/2016/10/15/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Cache/">Search Engines笔记 - Cache</a><br><a href="http://www.shuang0420.com/2016/10/25/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Rank/">Search Engines笔记 - Learning to Rank</a><br><a href="http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/">Search Engines笔记 - Search logs</a><br><a href="http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/">Search Engines笔记 - Document Structure</a><br><a href="http://www.shuang0420.com/2016/11/04/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/">Search Engines笔记 - Authority Metrics</a><br><a href="http://www.shuang0420.com/2016/11/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Personalization/">Search Engines笔记 - Personalization</a><br><a href="http://www.shuang0420.com/2016/11/29/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20ReDDE%20Algorithm%20for%20Resource%20Selection%20/">Search Engines笔记 - ReDDE Algorithm for Resource Selection</a><br><a href="http://www.shuang0420.com/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/">Search Engines笔记 - Federated Search</a><br><a href="http://www.shuang0420.com/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/">Search Engines笔记 - Diversity</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/Search-Engines/" rel="tag">#Search Engines</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/03/OSX OpenCV for Python2.7:Python3.5 环境配置/" rel="next" title="OSX OpenCV for Python2.7/Python3.5 环境配置">
+                <i class="fa fa-chevron-left"></i> OSX OpenCV for Python2.7/Python3.5 环境配置
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/08/推荐系统--用户行为和实验设计/" rel="prev" title="推荐系统--用户行为和实验设计">
+                推荐系统--用户行为和实验设计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文档表示"><span class="nav-number">1.</span> <span class="nav-text">文档表示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文档索引"><span class="nav-number">2.</span> <span class="nav-text">文档索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查询处理"><span class="nav-number">3.</span> <span class="nav-text">查询处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#信息检索模型"><span class="nav-number">4.</span> <span class="nav-text">信息检索模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#个性化"><span class="nav-number">5.</span> <span class="nav-text">个性化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多样性"><span class="nav-number">6.</span> <span class="nav-text">多样性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联合搜索"><span class="nav-number">7.</span> <span class="nav-text">联合搜索</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web-检索"><span class="nav-number">8.</span> <span class="nav-text">Web 检索</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#伪相关反馈"><span class="nav-number">9.</span> <span class="nav-text">伪相关反馈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#信息检索评价"><span class="nav-number">10.</span> <span class="nav-text">信息检索评价</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搜索日志"><span class="nav-number">11.</span> <span class="nav-text">搜索日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搜索引擎优化-SEO"><span class="nav-number">12.</span> <span class="nav-text">搜索引擎优化(SEO)</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/02/06/CMU 11642 Search Engines - 大纲梳理/';
+      var disqus_title = "CMU 11642 Search Engines - 大纲梳理";
+      var disqus_url = 'http://www.shuang0420.com/2017/02/06/CMU 11642 Search Engines - 大纲梳理/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

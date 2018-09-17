@@ -1,0 +1,1054 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 11611 的课程笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 笔记 - Words, morphology, and lexicons">
+<meta property="og:url" content="http://www.shuang0420.com/2017/02/01/NLP 笔记 - Words, morphology, and lexicons/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 11611 的课程笔记。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSAmodel.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSAeg.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSAalg.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/noun.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/adj.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/der.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSTmodel.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSTeg.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSTeg2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSTcom.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 笔记 - Words, morphology, and lexicons">
+<meta name="twitter:description" content="CMU 11611 的课程笔记。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSAmodel.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/02/01/NLP 笔记 - Words, morphology, and lexicons/"/>
+
+
+  <title> NLP 笔记 - Words, morphology, and lexicons | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                NLP 笔记 - Words, morphology, and lexicons
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-02-01T19:02:27+08:00" content="2017-02-01">
+              2017-02-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/CMU-11611/" itemprop="url" rel="index">
+                    <span itemprop="name">CMU 11611</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/01/NLP 笔记 - Words, morphology, and lexicons/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/01/NLP 笔记 - Words, morphology, and lexicons/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 11611 的课程笔记。<br><a id="more"></a></p>
+<h1 id="Morphology-形态学"><a href="#Morphology-形态学" class="headerlink" title="Morphology(形态学)"></a>Morphology(形态学)</h1><p><strong>关键概念：</strong> words are not atoms<br>单词不是原子，它是由 morphemes(语素) 构成的。如 misunderstandings，我们可以将其分解为 mis-understand-ing-s。</p>
+<h2 id="morphemes-语素"><a href="#morphemes-语素" class="headerlink" title="morphemes(语素)"></a>morphemes(语素)</h2><p><strong>语素的种类:</strong></p>
+<ul>
+<li>Roots(词根)<br>一个单词最核心的语素，代表着这个单词最主要的含义。或者把它称为 stem(词干)？</li>
+<li>Affixes(词缀)<ul>
+<li>Prefixes(前缀)<br>•  pre-nuptual, ir-regular</li>
+<li>Suffixes(后缀)<br>•  determin-ize, iterat-or</li>
+<li>Infixes(中缀)<br>•  Pennsyl-f**kin-vanian</li>
+<li>Circumfixes(位缀)<br>•  ge-sammel-t</li>
+</ul>
+</li>
+</ul>
+<p><strong>concatenative morphology(毗邻性语素)</strong> 主要指前缀和后缀这一类语素，词是由一定数目的语素毗邻在一起而组成的。<br><strong>nonconcatenative morphology(非毗邻性语素)</strong></p>
+<ul>
+<li>Umlaut<br>  foot : feet :: tooth : teeth</li>
+<li>Ablaut<br>  sing, sang, sung</li>
+<li>Root-and-pattern(词根与模式语素) or templatic morphology(模板语素)<br>通常在阿拉伯语和其它闪美特语系中(Eg. Arabic, Hebrew, Afroasiatic languages)。如在希伯来语中，动词通常由词根和模板组成，词根又通常由3个辅音组成。</li>
+<li>Infixation</li>
+</ul>
+<h2 id="words-词"><a href="#words-词" class="headerlink" title="words(词)"></a>words(词)</h2><p>从语素构成单词的方法主要有两大类(可能部分交叉)：inflection(屈折)和 derivation(派生)。</p>
+<p><strong>Inflectional morphology(屈折形态学)</strong></p>
+<ul>
+<li>屈折把词干(stem)和一个语法语素(grammatical morpheme)结合起来，形成的单词一般和原来的词干术语同一个词类(word class)，还会产生诸如“一致关系”之类的句法功能。</li>
+<li>Examples<br>•  Number (singular versus plural) automaton → automata<br>•  Case (nomina:ve versus accusa:ve versus…) he, him, his, …</li>
+</ul>
+<p><strong>Derivational morphology(派生形态学)</strong></p>
+<ul>
+<li>派生把词干(stem)和一个词缀(suffixes/affixes/infixes)结合起来，但是形成的单词一般属于不同的词类(word class)，具有不同的含义(meaning)。</li>
+<li>Examples<br>•  parse → parser<br>•  repulse → repulsive</li>
+</ul>
+<p><strong>补充：</strong><br>英语的名词通常只有两种屈折变化：一个词缀表示复数(plural)，一个词缀表示领属(possessive)。动词的屈折变化稍为复杂。英文动词有三种：主要动词(如 eat, sleep)，情态动词(如 can, will, should) 和基础动词(如 be, have, do)。主要动词还分规则动词和不规则动词，不同种类的变换各有不同。详见《自然语言处理综论》by Daniel, James P39。<br>英语的屈折比其它语言相对简单，但英语的派生却相当复杂。名词可以由动词或形容词变换得到，形容词也可以从名词和动词派生。</p>
+<h2 id="Final-State-Automaton-有限状态自动机"><a href="#Final-State-Automaton-有限状态自动机" class="headerlink" title="Final-State Automaton(有限状态自动机)"></a>Final-State Automaton(有限状态自动机)</h2><p><strong>关键概念: 形式语言(formal language)</strong> 是一个模型，这个模型能够而且只能够生成或识别满足形式语言定义所要求的某一形式语言的符号串。而 <strong>自然语言(Natural language)</strong> 是现实中人们所说的语言，两者可能完全不同，然而我们通常使用形式语言来模拟自然语言的某些部分。</p>
+<p><strong>有限状态自动机(FSA)</strong> 是解决形态学(Morphology)问题的主要方法。可以用 FSA 识别的语言我们称为 regular language。</p>
+<p><strong>正则表达式 vs 有限状态自动机:</strong></p>
+<ul>
+<li>正则表达式是描述有限状态自动机的一种方法</li>
+<li>任何正则表达式都可以用有限状态自动机来实现</li>
+<li>任何有限状态自动机都可以用正则表达式来描述</li>
+<li>两者彼此对称</li>
+</ul>
+<p><strong>FSA 模型：</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSAmodel.jpg" class="ful-image" alt="FSAmodel.jpg"></p>
+<p>一个经典例子是用 FSA 来识别羊的语言。我们把羊的语言定义为由下面的(无限)集合构成的任何字符串:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">baa!</div><div class="line">baaa!</div><div class="line">baaaa!</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>描述这种羊的语言的正则表达式是/baa+!/，下图就是模拟这种正则表达式的一个自动机(automaton)。这是一个有向图，包括点(或结点)的有限集合和两个点之间的有向连接的弧的集合。圆圈表示点，箭头表示弧，这样一个自动机有 5 个状态，状态 0 是初始状态(start state)，用进入的箭头表示；状态 4 是最后状态(final state) 或接收状态(accepting state)，用双圈来表示，另外还有 4 个转移(transition)，用弧来表示。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSAeg.jpg" class="ful-image" alt="FSAeg.jpg"></p>
+<p>自动机从 q0 开始，反复进行如下过程：</p>
+<ul>
+<li>寻找输入的下一个字母，如果与自动机中离开当前状态的弧相匹配，那么就穿过这个弧，移动到下一个状态</li>
+<li>如果输入的字母已经读完，那么进入接收状态(q4)，自动机就成功识别了输入。如果自动机总不能进入最后状态，或者输入已经读完，又或者某些输入与自动机的弧不匹配，或是自动机在某个非最后状态停住了，我们就说，自动机拒绝(reject)输入。</li>
+</ul>
+<p><strong>算法：</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSAalg.jpg" class="ful-image" alt="FSAalg.jpg"></p>
+<p><strong>其它例子：</strong><br><strong>FSA for English Nouns:</strong></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/noun.jpg" class="ful-image" alt="noun.jpg">
+<p><strong>FSA for English Adjective:</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/adj.jpg" class="ful-image" alt="adj.jpg"></p>
+<p><strong>FSA for English Deriva:onal Morphology:</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/der.jpg" class="ful-image" alt="der.jpg"></p>
+<h2 id="Morphological-Parsing-形态剖析"><a href="#Morphological-Parsing-形态剖析" class="headerlink" title="Morphological Parsing(形态剖析)"></a>Morphological Parsing(形态剖析)</h2><p>主要有三种方法</p>
+<ul>
+<li>Table</li>
+<li>Trie</li>
+<li>Final-state transducer</li>
+</ul>
+<p>这里主要介绍第三种:有限状态转录机</p>
+<h3 id="Final-State-Transducers-FST"><a href="#Final-State-Transducers-FST" class="headerlink" title="Final State Transducers(FST)"></a>Final State Transducers(FST)</h3><p><strong>FST 模型:</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSTmodel.jpg" class="ful-image" alt="FSTmodel.jpg"></p>
+<p><strong>FSA vs FST:</strong><br><strong>FSA</strong> 主要是来表达正则语言，主要作用是 <strong>识别(recognize)</strong> 语言；而 <strong>FST</strong> 既能够 <strong>识别(recognize)</strong> 语言，也能够 <strong>产生(generates)</strong> 语言，它可以剖析(parse)输入，或者把输入转化(transform)成另一种表达方式。</p>
+<p>举个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Input: a word</div><div class="line">Output: the word’s stem(s) and features expressed by other morphemes.</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSTeg.jpg" class="ful-image" alt="FSTeg.jpg">
+<p>第二列输出包含了词干和有关的形态特征(feature)，这些特征说明了附加在词干上的有关信息。如 +N 这个特征表示这个词是名词，+SG 表示单数，+PL 表示复数。</p>
+<p>输入 cats，经过形态剖析后可以得到输出 cat+N+PL，这样我们就知道 cat 是一个复数名词。我们使用的是 <strong>双层形态学(two-level morphology)</strong> 的方法来进行的形态剖析。把一个词表示为 <strong>词汇层(lexical level)</strong> 和 <strong>表层(surface level)</strong> 之间的对应，<strong>词汇层</strong> 表示组成该词的语素之间的简单毗邻关系，<strong>表层</strong> 表示该层实际拼写的最终情况。形态剖析要建立 <strong>映射规则</strong>，把在表层上的字幕序列(如 cats) 映射为词汇层上的语素和特征的序列(cat+N+PL)，两个层之间的映射的自动机就是 <strong>有限状态转录机(Final State Transducers)</strong>。有限状态转录机通过有限自动机来实现这种转录，因此我们通常把 FST 看成具有两层的 FSA，FST 具有比 FSA 更多的功能；FSA 通过确定符号集合来定义/识别形式语言，而 FST 则定义符号串之间的关系，这样就可以从另一个角度把 FST 看成是读一个符号串并生成另一个符号串的机器。</p>
+<p>可以通过 4 个角度来看 FST:</p>
+<ul>
+<li>作为识别器(recognizer)<br>符号串的偶对作为输入和输出，如果该符号串偶对也在语言的符号串偶对(pair)中就接收，否则拒绝</li>
+<li>作为生成器(generator)<br>输出 yes 或 no 以及输出符号串的偶对</li>
+<li>作为翻译器(translator)<br>读一个符号串，输出另一个符号串</li>
+<li>作为关联器(relater)<br>计算两个集合之间的关系</li>
+</ul>
+<p><strong>其它例子：</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSTeg2.jpg" class="ful-image" alt="FSTeg2.jpg"></p>
+<p><strong>补充:</strong><br>为了建立一个形态剖析器，至少需要：</p>
+<ul>
+<li>词表(lexicon)：词干和词缀表及其基本信息(如一个词干是名词词干还是动词词干等)</li>
+<li>形态顺序规则(morphotactics)：关于形态顺序的模型，解释在一个词内什么样的语素跟在什么样的语素后面。如英语表示复数的语素要跟在名词后面而不是前面</li>
+<li>正词法规则(orthographic rule)：当两个语素结合时在拼写上发生什么变换。如 y-&gt;ie。</li>
+</ul>
+<p>有很多 FST 的工具包，可以 compile &amp; rewrite FST 的规则，也可以将不同规则进行合并。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Words%2C%20morphology%2C%20and%20lexicons/FSTcom.jpg" class="ful-image" alt="FSTcom.jpg"></p>
+<h2 id="Stemming"><a href="#Stemming" class="headerlink" title="Stemming"></a>Stemming</h2><p>讲了无数遍的概念，就不展开了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Input: a word</div><div class="line">Output: the word’s stem (approximately)</div></pre></td></tr></table></figure></p>
+<h2 id="Tokenization"><a href="#Tokenization" class="headerlink" title="Tokenization"></a>Tokenization</h2><p>讲了无数遍的概念，就不展开了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Input: raw text</div><div class="line">Output: sequence of tokens normalized for easier processing.</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/23/推荐系统--开坑/" rel="next" title="推荐系统--开坑">
+                <i class="fa fa-chevron-left"></i> 推荐系统--开坑
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/02/NLP 笔记 - Spelling, Edit Distance, and Noisy Channels/" rel="prev" title="NLP 笔记 - Spelling, Edit Distance, and Noisy Channels">
+                NLP 笔记 - Spelling, Edit Distance, and Noisy Channels <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Morphology-形态学"><span class="nav-number">1.</span> <span class="nav-text">Morphology(形态学)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#morphemes-语素"><span class="nav-number">1.1.</span> <span class="nav-text">morphemes(语素)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#words-词"><span class="nav-number">1.2.</span> <span class="nav-text">words(词)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Final-State-Automaton-有限状态自动机"><span class="nav-number">1.3.</span> <span class="nav-text">Final-State Automaton(有限状态自动机)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Morphological-Parsing-形态剖析"><span class="nav-number">1.4.</span> <span class="nav-text">Morphological Parsing(形态剖析)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Final-State-Transducers-FST"><span class="nav-number">1.4.1.</span> <span class="nav-text">Final State Transducers(FST)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stemming"><span class="nav-number">1.5.</span> <span class="nav-text">Stemming</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tokenization"><span class="nav-number">1.6.</span> <span class="nav-text">Tokenization</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/02/01/NLP 笔记 - Words, morphology, and lexicons/';
+      var disqus_title = "NLP 笔记 - Words, morphology, and lexicons";
+      var disqus_url = 'http://www.shuang0420.com/2017/02/01/NLP 笔记 - Words, morphology, and lexicons/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

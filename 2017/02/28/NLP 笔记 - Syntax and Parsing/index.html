@@ -1,0 +1,1174 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 11611 的课程笔记。讲句法的相关概念及各种 parsing 算法包括 CFG / PCFG / CKY / Earley 等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 笔记 - Constituency Parsing">
+<meta property="og:url" content="http://www.shuang0420.com/2017/02/28/NLP 笔记 - Syntax and Parsing/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 11611 的课程笔记。讲句法的相关概念及各种 parsing 算法包括 CFG / PCFG / CKY / Earley 等。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/eg1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ccnf1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ccnf2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ccnf3.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ccnf4.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/pt1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ps.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/top-down.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/pt3.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/bottom-up.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/10.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/pcfg1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/pcfg2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/da.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/refine.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckyeg1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckyeg2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckyeg3.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/cky.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/cky2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckya1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckya2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckyworkedeg1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckyworkedeg2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/earley1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/earley2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/earley3.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/earley4.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/eva1.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 笔记 - Constituency Parsing">
+<meta name="twitter:description" content="CMU 11611 的课程笔记。讲句法的相关概念及各种 parsing 算法包括 CFG / PCFG / CKY / Earley 等。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/eg1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/02/28/NLP 笔记 - Syntax and Parsing/"/>
+
+
+  <title> NLP 笔记 - Constituency Parsing | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                NLP 笔记 - Constituency Parsing
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-02-28T19:02:27+08:00" content="2017-02-28">
+              2017-02-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/CMU-11611/" itemprop="url" rel="index">
+                    <span itemprop="name">CMU 11611</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/28/NLP 笔记 - Syntax and Parsing/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/28/NLP 笔记 - Syntax and Parsing/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 11611 的课程笔记。讲句法的相关概念及各种 parsing 算法包括 CFG / PCFG / CKY / Earley 等。<br><a id="more"></a></p>
+<h1 id="Context-Free-Grammars"><a href="#Context-Free-Grammars" class="headerlink" title="Context-Free Grammars"></a>Context-Free Grammars</h1><p>我们怎么知道哪些单词可以组合在一起(形成一个成分)呢？一个明显的依据是它们都可以出现在相同的句法环境中。Context-Free Grammar，简称 CFG，又称<strong>短语结构语法(Phrase-Structure Grammar)</strong>，形式化方法等价于<strong>Backus-Naur范式(Backus-Naur Form，简称BNF)</strong>。</p>
+<p>CFG 对形式语言(formal language)进行了限制，production rule 箭头(→)左边只能是一个 non-terminal symbol，表示某种聚类或概括性，右边的项是一个或多个 terminal 和 non-terminal 符号构成的有序表，可以把 CFGs 想象成句子的 generator，那么可以把“→”读为“用右边的符号串来重写左边的符号”。定义如下：</p>
+<ul>
+<li><strong>N:</strong> a set of non-terminal symbols</li>
+<li><strong>$\Sigma$:</strong> a set of terminal symbols</li>
+<li><strong>R:</strong> a set of production rules of the form $X \ → \ Y_1Y_2Y_n$ for n&gt;=0, $X \in N$, $Y_i \in (N \cup \Sigma)$</li>
+<li><strong>$S \in N$:</strong> a distinguished/special start symbol</li>
+</ul>
+<p>来个例子<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/eg1.jpg" class="ful-image" alt="eg1.jpg"></p>
+<p>我们可以把 CFGs 想象成 declarative programs，像是 Prolog, SQL, XQuery，Re，只声明最后想要做什么(ultimate goal)，而不是怎么做(intermediary steps)，也就是说相同程序可以被用在各种不同的 context 下面，而命令式编程(imperative programs)则是基于上下文的。</p>
+<blockquote>
+<p>CFGs specify what is to be computed in terms of rules and let generalized computation mechanisms solve for the particular cases</p>
+</blockquote>
+<p>判断一些语言是不是 Context-Free Grammar<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Example 1: L1 = &#123; anbn | n is a positive integer &#125; is a context-free language. For the following context-free grammar G1 = &lt; V1 , , S , P1 &gt; generates L1 :</div><div class="line">V1 = &#123; S &#125; ,  = &#123; a , b &#125; and P1 = &#123; S -&gt; aSb , S -&gt; ab &#125;.</div><div class="line"></div><div class="line">Example 2: L2 = &#123; wwr| w  &#123;a, b &#125;+ &#125; is a context-free language , where w is a non-empty string and wr denotes the reversal of string w, that is, w is spelled backward to obtain wr . For the following context-free grammar G2 = &lt; V2 , , S , P2 &gt; generates L2 :</div><div class="line">V2 = &#123; S &#125; ,  = &#123; a , b &#125; and P2 = &#123; S -&gt; aSa , S -&gt; bSb , S -&gt; aa , S -&gt; bb &#125;.</div><div class="line"></div><div class="line">Example 3: Let L3 be the set of algebraic expressions involving identifiers x and y, operations + and * and left and right parentheses. Then L3 is a context-free language. For the following context-free grammar G3 = &lt; V3 , 3, S , P3 &gt; generates L3 :</div><div class="line">V3 = &#123; S &#125; , 3 = &#123; x , y , ( , ) , + , * &#125; and P3 = &#123; S -&gt; ( S + S ) , S -&gt; S*S , S -&gt; x , S -&gt; y &#125;.</div><div class="line"></div><div class="line">Example 4: Portions of the syntaxes of programming languages can be described by context-free grammars. For example</div><div class="line">&#123; &lt; statement &gt; -&gt; &lt; if-statement &gt; , &lt; statement &gt; -&gt; &lt; for-statement &gt; , &lt; statement &gt; -&gt; &lt; assignment &gt; , . . . , &lt; if-statement &gt; -&gt; if ( &lt; expression &gt; ) &lt; statement &gt; , &lt; for-statement &gt; -&gt; for ( &lt; expression &gt; ; &lt; expression &gt; ; &lt; expression &gt; ) &lt; statement &gt; , . . . , &lt; expression &gt; -&gt; &lt; algebraic-expression &gt; , &lt; expression &gt; -&gt; &lt; logical-expression &gt; , . . . &#125; .</div></pre></td></tr></table></figure></p>
+<p>CFG 有两个相关任务，一个是 Recognition(识别)，一个是 Parsing(剖析)，输入与输出如下：</p>
+<ul>
+<li><strong>Input:</strong>  sentence w=(w1,…,wn) and CFG G</li>
+<li><strong>Output(recognition):</strong>  true iff $w \in Language(G)$</li>
+<li><strong>Output(parsing):</strong>  one or more derivations for w, under G</li>
+</ul>
+<p>可以用 Earley 算法在 O(n^3) 的时间复杂度内识别 CFG，下面会具体介绍。</p>
+<p><a href="http://www.cs.odu.edu/~toida/nerzic/390teched/cfl/cfg.html" target="_blank" rel="external">Context-Free Grammar</a></p>
+<h2 id="Chomsky-Normal-Form-CNF"><a href="#Chomsky-Normal-Form-CNF" class="headerlink" title="Chomsky Normal Form(CNF)"></a>Chomsky Normal Form(CNF)</h2><h3 id="FSA-and-CFG"><a href="#FSA-and-CFG" class="headerlink" title="FSA and CFG"></a>FSA and CFG</h3><p>当一个 non-terminal 符号的展开式中也包含了这个 non-terminal 符号时，就会产生语法的递归(recursion)问题，如 Norminal → Norminal PP中，就有递归问题。</p>
+<p>Chomsky(1959)证明了一个上下文无关语言(L)能够被有限自动机(FSA)生成，当且仅当存在一个生成语言 L 的、没有任何中心-自嵌入(center-embedded)递归的上下文语法($A→\alpha A \beta$)</p>
+<p>之后会讨论 FSA 的一个扩充版本，递归转移网络(recursive transition network，简称 RTN)，它给 FSA 增加了很强的地柜能力。由 RTN 形成的自动机恰好与上下文无关语法同构(isomorphic)，在一定场合下，可以作为研究 CFG 的一个有用的比喻。</p>
+<p>L(G) 是一种 push-down automata，可以被 normalized(Chomsky normal form)</p>
+<ul>
+<li>Chomsky normal form</li>
+<li>Only one or two symbols on RHS</li>
+</ul>
+<h3 id="CNF"><a href="#CNF" class="headerlink" title="CNF"></a>CNF</h3><p>让各个语法都拥有一个标准的形式非常有用(语法的规则部分都采用一种特殊的形式)。CNF 就是这样一种标准形式。如果一个 CFG 是 ε-free （ ε 表示空串），而且它的 rules 只有如下两种形式之一，且 $X, Y, Z \in N, \ w \in T$，那个这个 CFG 就是采用 CNF 形式的。CNF 语法都是二分叉的。</p>
+<ul>
+<li>X → Y Z</li>
+<li>X → w</li>
+</ul>
+<h4 id="Transformation"><a href="#Transformation" class="headerlink" title="Transformation"></a>Transformation</h4><p>任何语法都可以转化成一个弱等价的 CNF 形式，只改变树的结构，且能识别相同的语言。基本思路如下：</p>
+<ul>
+<li>Empties and unaries are removed recursively</li>
+<li>n-ary rules are divided by introducing new nonterminals(n&gt;2)</li>
+</ul>
+<p>CFGs 到 CNF 的转化过程：</p>
+<ul>
+<li><strong>For each rule</strong><br>  X → A B C</li>
+<li><strong>Rewrite as</strong><br>  X → A X2<br>  X2 → B C<br>相当于引入了一个新的 non-terminal</li>
+</ul>
+<p>一个上下文无关语法 $G=(N, \Sigma, R, S)$ 在 Chomsky Normal Form 下的表达如下：</p>
+<ul>
+<li><strong>N:</strong>  a set of non-terminal symbols</li>
+<li><strong>$\Sigma $:</strong>  a set of terminal symbols</li>
+<li><strong>R:</strong>  a set of rules which take one of two forms:<br>  X → $Y_1Y_2$ for X $\in$ N, and $Y_1Y_2 \in N$<br>  X → Y for X $\in$ N, and Y $\in \Sigma$</li>
+<li><strong>$S \in N$:</strong>  distinguished start symbol</li>
+</ul>
+<p>E.g.<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ccnf1.jpg" class="ful-image" alt="ccnf1.jpg"></p>
+<h4 id="Binarization"><a href="#Binarization" class="headerlink" title="Binarization"></a>Binarization</h4><blockquote>
+<p>Binarization is crucial for cubic time CFG parsing.</p>
+</blockquote>
+<p>这是我们必须知道的一条法则，在高效的 CFG parsing 中，Binarization 几乎总是必不可少的，可能是在 parsing 算法之前(如 CKY)，也可能是隐藏在了 parsing 算法中，但它总会被用到。</p>
+<p>看一下 binarization 之前的 parse tree，VP → V NP PP 这一条是不符合 CNF 规则的<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ccnf2.jpg" class="ful-image" alt="ccnf2.jpg"></p>
+<p>添加新的 non-terminal @VP_V，进行 binarization 之后的 parse tree<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ccnf3.jpg" class="ful-image" alt="ccnf3.jpg"></p>
+<h4 id="Unaries-Empties"><a href="#Unaries-Empties" class="headerlink" title="Unaries/Empties"></a>Unaries/Empties</h4><p>进一步讨论下 unaries/empties，处理过程如下：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ccnf4.jpg" class="ful-image" alt="ccnf4.jpg"></p>
+<p>对 CNF 来说，重建 n-aries 是非常容易的，然而重建 unaries/empties 就非常的 tricky 了，一个 neat and clean 的 CNF 往往需要删除 empties and unaries，但另一方面，我们也可以简单的保留它们(通常只删除 emptie，保留 unaries，如上图的 non-empties 的树)，以便能够重建原来的 tree。</p>
+<h2 id="Recognition"><a href="#Recognition" class="headerlink" title="Recognition"></a>Recognition</h2><p>把识别当作一个搜索来做，算法如下非常简单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Agenda = &#123; state0 &#125;</div><div class="line">while(Agenda not empty)</div><div class="line">    s = pop a state from Agenda</div><div class="line">    if s is a success-state return s // valid parse tree</div><div class="line">    else if s is not a failure-state:</div><div class="line">        generate new states from s</div><div class="line">        push new states onto Agenda</div><div class="line">return nil // no parse!</div></pre></td></tr></table></figure></p>
+<h2 id="Parsing"><a href="#Parsing" class="headerlink" title="Parsing"></a>Parsing</h2><p>上下文无关语法最后能产生剖析树(parse tree)，这里看一下输入输出以及产生的信息，下面具体介绍 parse 过程。<br><strong>INPUT: </strong> The burglar robbed the apartment.<br><strong>OUTPUT: </strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/pt1.jpg" class="ful-image" alt="pt1.jpg"></p>
+<p>Parse Trees 可以传达的信息</p>
+<ol>
+<li><strong>Part of speech for each word</strong><br> N = noun, V = verb, DT = determiner</li>
+<li><strong>Phrases</strong><br> Noun Phrases (NP): “the burglar”, “the apartment” VerbPhrases(VP): “robbedtheapartment”<br> Sentences (S): “the burglar robbed the apartment”</li>
+<li><strong>Useful Relationships</strong><br> “the burglar” is the subject of “robbed”, see picture below<br> Application: Machine Translation<br> E.g. English word order: subject-verb-object, Japanese word order: subject-object-verb</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">      S</div><div class="line">  /       \</div><div class="line"> NP       VP</div><div class="line"> |         |</div><div class="line">Subject   Verb</div></pre></td></tr></table></figure>
+<p>Parsing 的算法有两类，一个是 top-down，一个是 bottom-up。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ps.jpg" class="ful-image" alt="ps.jpg"></p>
+<h3 id="Top-down-Parser"><a href="#Top-down-Parser" class="headerlink" title="Top-down Parser"></a>Top-down Parser</h3><ul>
+<li><strong>Start state:</strong>  (S, 0)</li>
+<li><strong>Scan:</strong>  From (wj+1 β, j), you can get to (β, j + 1).</li>
+<li><strong>Predict:</strong>  If Z → γ, then from (Z β, j), you can get to (γβ, j).</li>
+<li><strong>Final state:</strong>  (ε, n)</li>
+</ul>
+<p>假定剖析要并行地构造出所有可能的树。算法开始时假定，给初始符号指派 S，输入就可以从 S 开始被推导出来。下一步搜索所有能够以 S 为顶点的树，寻找在语法的所有规则中左手边为 S 的规则。如下图，原始句子为 Book that flight，有三条规则可以展开 S，所以在图中的搜索空间第二层中，创造了三个局部树。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/top-down.jpg" class="ful-image" alt="top-down.jpg">
+<p>在第三层中，只有第五个 parse tree(由规则 VP → Verb NP 展开的树)最后与输入句子 Book that flight 相匹配。这里用的是 Left-Most Derivations 方法，每次都从最左边的 non-terminal X 开始，把 X 替换成 $\beta$($X→\beta$ 是 R 里的一条规则)，再举一个例子：<br>E.g.<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/pt3.jpg" class="ful-image" alt="pt3.jpg"><br>[S], [NP VP], [D N VP], [the N VP], [the man VP], [the man Vi], [the man sleeps]</p>
+<h3 id="Bottom-up-Parser"><a href="#Bottom-up-Parser" class="headerlink" title="Bottom-up Parser"></a>Bottom-up Parser</h3><ul>
+<li><strong>Start state:</strong>  (ε, 0)</li>
+<li><strong>Shift:</strong>  From (α, j), you can get to (α wj+1, j + 1).</li>
+<li><strong>Reduce:</strong>  If Z → γ, then from (αγ, j) you can get to (α Z, j).</li>
+<li><strong>Final state:</strong>  (S, n)</li>
+</ul>
+<p>从输入的单词开始，每次都是用语法中的规则，试图从底部的单词向上构造剖析树。如果剖析器成功地构造了以初始符号 S 为根的树，而且这个树覆盖了整个输入，那么剖析就获得了成功。同样，以 Book that flight 为例，book 有歧义，可能是动词也可能是名词，所以就有了刚开始的分叉。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/bottom-up.jpg" class="ful-image" alt="bottom-up.jpg"></p>
+<p>对于 bottom-up 的剖析，从一层到下一层时，要寻找被剖析的成分是否与某个规则的右手边相匹配，这与 top-down 的剖析正好相反。最后第二层，把 book 解释为名词的树枝在搜索空间中被剪除，因为语法中没有以 Nominal NP 为右边的规则，因而无法继续剖析。</p>
+<h3 id="Top-down-vs-Bottom-up"><a href="#Top-down-vs-Bottom-up" class="headerlink" title="Top-down vs Bottom-up"></a>Top-down vs Bottom-up</h3><p>两种方法各有优缺点。Top-down 策略绝不会浪费时间搜索一个不可能以 S 为根的树，或者说，它不可能去搜索那些在以 S 为根的树中找不到位置的子树；与此相反，bottom-up 策略中，那些不可能导致 S 的树大量存在着，如上面的例子，刚开始就把 book 错误的解释为名词，而在给定语法中，这样的树根本不可能推导出 S。<br>另一方面，top-down 会花费大量努力去产生与输入不一致的根为 S 的树，在 top-down 的图中，第三层六个树里，前四个树的左分支都不能与 book 匹配，因而这些树都不能形成最后的 parse tree。top-down 的这个弱点是由于这种方法在没有检查输入符号之前就开始生成树了，反之，bottom-up 绝不会去搜索那些不是以实际的输入为基础的树。</p>
+<p>由此可见，这两种方法都不能有效利用语法和输入单词中的约束条件。</p>
+<p>总而言之，Parsing 要解决的两个问题，一个是怎么 avoid repeated work，另一个是怎么解决 ambiguity。</p>
+<h2 id="Ambiguity"><a href="#Ambiguity" class="headerlink" title="Ambiguity"></a>Ambiguity</h2><p>由 CFG 产生的字符串可能有多个 derivation，这就会产生 ambiguity。<br>E.g.<br>VP → Verb NP prefer a morning flight<br>VP → Verb NP PP leave Boston in the morning<br>VP → Verb PP leaving on Tuesday<br>如上，一个 VP 可能有多个规则，因此一个句子也可能有多个 parse tree。</p>
+<p>Ambiguity 的来源：</p>
+<ul>
+<li><strong>Part-of-Speech ambiguity</strong><br>  NNS → walks<br>  Vi → walks</li>
+<li><strong>Prepositional Phrase Attachment</strong><br>  the fast car mechanic under the pigeon in the box</li>
+</ul>
+<p>关于 attachment 带来的 ambiguity，再多讲几句，放在不同的地方修饰不同的词差别是很大的，一个 Prepositional Phrase(PP) 可以跟在前面的名词/动词前面，这就会产生各种歧义。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/10.jpg" class="ful-image" alt="10.jpg">
+<p>怎么选择正确的 parse 呢？有一种方法是基于统计数据，在语料库中，看某个 PP 跟在特定名词/动词后面的概率，取概率大的那种 parse。</p>
+<h2 id="Grammaticality"><a href="#Grammaticality" class="headerlink" title="Grammaticality"></a>Grammaticality</h2><p>从语法而言，也有很多种表达，虽然下面的句子有些在我们看来语法上是错误的，然而表达上却是没有问题的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">• I&apos;ll write the company</div><div class="line">• I&apos;ll write to the company</div><div class="line">• It needs to be washed</div><div class="line">• It needs washed</div><div class="line">• They met Friday to discuss it</div><div class="line">• They met on Friday to discuss it</div></pre></td></tr></table></figure></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><ul>
+<li>CFG 提供了一个用于创建语法的工具集<br>  Grammars that work well (for a given application)<br>  Grammars that work poorly (for a given application)</li>
+<li>关于CFG理论，没有一个先验 prior 来告诉你给定应用的“正确”语法看起来应该是怎样的</li>
+<li>一个好的语法通常是：<br>  Doesn’t over-generate very much (high precision)<br>  Doesn’t under-generate very much (high recall)</li>
+<li>在实践中具体情况具体分析</li>
+<li>CFG可能不足以完全捕获自然语言的语法<br>  but almost adequate<br>  computationally well-behaved<br>  not very convenient as a means for hand- crafting a grammar<br>  not probabalistic</li>
+<li>有些信息抽取问题可以不使用完全剖析，而使用层叠式 FSA(cascade)来解决</li>
+</ul>
+<h1 id="Improved-Algorithms"><a href="#Improved-Algorithms" class="headerlink" title="Improved Algorithms"></a>Improved Algorithms</h1><h2 id="Probabilistic-Context-Free-Grammar-PCFGs"><a href="#Probabilistic-Context-Free-Grammar-PCFGs" class="headerlink" title="Probabilistic Context-Free Grammar(PCFGs)"></a>Probabilistic Context-Free Grammar(PCFGs)</h2><p>对 CFG 的最简单的提升就是概率上下文无关语法(PCFG)，又称随机上下文无关语法(Stochastic Context-Free Grammar，简称 SCFG)，其最大贡献是它进行了歧义消解(disambiguation)，来自 Stanford 讲义</p>
+<p>上下文无关语法 G 是由四个参数 (N,$\Sigma$, R, S)来定义的</p>
+<ul>
+<li><strong>N:</strong> a set of non-terminal symbols</li>
+<li><strong>$\Sigma$:</strong> a set of terminal symbols</li>
+<li><strong>R:</strong> a set of production rules of the form $A \ → \ \beta$, $A \in N$, $\beta \in (N \cup \Sigma)$</li>
+<li><strong>$S \in N$:</strong> a distinguished/special start symbol</li>
+</ul>
+<p>PCFG 的产生式 R 中的每个规则都加上来一个条件概率，从而增强了这些规则：<br>$$A → \beta [p]$$</p>
+<p>所以 PCFG 是一个五元组 (N,$\Sigma$, P, S, D)，D 的功能是给 R 中的每个规则指派一个概率，或者说是把给定的 non-terminal 符号 p 展开为符号序列 $\beta$ 时的概率，这个概率通常表示为 $P(A → \beta)$，或者 $P(A → \beta|A)$，一个 non-terminal 符号的所有展开，概率之和为1.<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/pcfg1.jpg" class="ful-image" alt="pcfg1.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/pcfg2.jpg" class="ful-image" alt="pcfg2.jpg"></p>
+<p>PCFG 可以用来估计关于一个句子及其 parse tree 的有用概率的数量。PCFG 可以对于一个句子 S 的每个 parse tree T(也就是每个推导结果)都指派一个概率，这在<strong>歧义消解(disambiguation)</strong> 中是非常有用的。<br>一个特定 parse tree T 的概率定义为在该 parse tree 中用来展开每个节点 n 的所有规则 r 的概率的乘积：<br>$$P(T,S)=\prod_{n \in T} p(r(n))$$<br>所以作为结果的概率 P(T,S)既是剖析和句子的联合概率，又是剖析 P(T)的概率。这是 make sense 的，因为剖析包含了句子中的所有单词，所以 P(S|T)=1,所以有<br>$$P(T,S)=P(T)*P(S|T)=P(T)$$</p>
+<p>歧义消解(disambiguation)例子：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/da.jpg" class="ful-image" alt="da.jpg"></p>
+<p>算出 $P(T_l)=1.5*10^{-6}$，$P(T_r)=1.7*10^{-6}$，右侧的 parse tree 具有比较高的概率，所以如果歧义消解算法选择具有最大 PCFG 概率的剖析，那么这个剖析便可以通过这样的歧义消解算法选择正确的结果。</p>
+<p>形式化一下，得到给定句子 S 的最佳 parse tree T<br>$$<br>  \begin{aligned}<br>  \hat T(S) &amp;= argmax_{T \in \tau(S)} P(T|S) \\<br>   &amp; = argmax_{T \in \tau(S)} {P(T|S) \over P(S)} \\<br>   &amp; = argmax_{T \in \tau(S)} P(T, S) \\<br>   &amp; = argmax_{T \in \tau(S)} P(T) \\<br>  \end{aligned}<br>$$</p>
+<p>$$P(S) = \sum_{T \in \tau(S)} P(T,S) = \sum_{T \in \tau(S)} P(T)$$</p>
+<p>在 PCFG 中，如果一种语言的所有句子的概率之和为 1，就可以说这个 PCFG 是坚固的(consistent)，有些递归规则会使语法变得不坚固，如概率为 1 的规则 S→S 就会导致概率量的丧失，因为推导永远不会终止。</p>
+<p>PCFG 是 robust 的，它考虑了所有的可能，虽然通常带来了很低的概率；它部分解决了 grammar ambiguity 的问题，但并没有那么完美，因为它的独立性假设太强了；同时，PCFG 给出了一个基于概率的语言模型(probabilistic language model)，然而它往往比 trigram model 的表现差的多，因为它缺少 lexicalization</p>
+<p>另外，PCFG 假设任何一个 non-terminal 符号的展开与任何其他 non-terminal 符号的展开是独立的，然而这个假设太强了，可以通过 state-splitting 的方式来放宽假设，如下面的 Parent Annotation Tree 和 Marking possessive NPs Tree。同时要注意的是，如果分割太多了，可能会导致稀疏性问题。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/refine.jpg" class="ful-image" alt="refine.jpg"></p>
+<h2 id="Cocke-Kasami-Younger"><a href="#Cocke-Kasami-Younger" class="headerlink" title="Cocke-Kasami-Younger"></a>Cocke-Kasami-Younger</h2><p>主要是一种 bottom-up 的剖析算法，使用动态规划表来存储结果。输入必须是具有 Chomsky 范式(CNF)的。以 People fish tanks 这个句子，形象化的理解 PCFG 下的 CKY 算法。首先为一个句子建立一个三角形的表格，然后 bottom-up 一层一层向上填充 chart<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckyeg1.jpg" class="ful-image" alt="ckyeg1.jpg"></p>
+<p>以前两个单词为例，假定单词的 PoS 已经填充完毕，现在我们要填充最上面的 cell。根据右边的规则找出所有可能的组合，计算概率。注意，如果规则的等式左边是 S，我们只保留最大概率的那个组合。在这个例子里，我们看到有两个可能性能够组成 sentence，S → NP VP 和 S → VP，这种情况下，我们只S → NP VP。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckyeg2.jpg" class="ful-image" alt="ckyeg2.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckyeg3.jpg" class="ful-image" alt="ckyeg3.jpg"></p>
+<p>核心算法<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/cky.jpg" class="ful-image" alt="cky.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/cky2.jpg" class="ful-image" alt="cky2.jpg"></p>
+<p>完整算法(stanford slides)<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckya1.jpg" class="ful-image" alt="ckya1.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckya2.jpg" class="ful-image" alt="ckya2.jpg"></p>
+<p>score, back 两个数组的作用是用空间换时间</p>
+<p>worked example<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckyworkedeg1.jpg" class="ful-image" alt="ckyworkedeg1.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/ckyworkedeg2.jpg" class="ful-image" alt="ckyworkedeg2.jpg"></p>
+<p>时间复杂度：</p>
+<ul>
+<li>Worst case: O(n^3*g)</li>
+<li>Best in worst case</li>
+<li>Others better in average case</li>
+</ul>
+<p><strong>Summary:</strong></p>
+<ul>
+<li>Fills in table bottom-up, using dynamic programming<br>  • Only builds constituents that have evidence in the input<br>  • Never builds a constituent instance more than once<br>  • But it builds things that cannot be used</li>
+<li>Chomsky Normal Form is annoying</li>
+</ul>
+<p><a href="https://www.youtube.com/watch?v=hq80J8kBg-Y" target="_blank" rel="external">15 - 3 - CKY Parsing -Stanford NLP-Professor Dan Jurafsky &amp; Chris Manning</a><br><a href="https://www.youtube.com/watch?v=MiEKnFyErbQ" target="_blank" rel="external">15 - 4 - CKY Example-Stanford NLP-Professor Dan Jurafsky &amp; Chris Manning</a></p>
+<h2 id="Earley"><a href="#Earley" class="headerlink" title="Earley"></a>Earley</h2><p>主要是一种 top-down 的剖析算法，使用动态规划表来有效存储中间结果。与 CKY 算法相比，Earley 的优势在于：</p>
+<ul>
+<li>Never build things that are useless (goes top-down)，大多数情况下时间复杂度小于 $O(n^3)$</li>
+<li>不用把 grammar 转化成 CNF 范式</li>
+</ul>
+<p>如果输入有 N 个单词，Earley 算法会创建一个 N+1 大小的 chart，对于句子中每一个单词的位置，chart 包含一个状态表来表示已经生成的部分剖析树，在句子结尾，chart 把对于给定输入的所有可能的剖析结果进行编码，每个可能的子树只表示一次，并且这个子树表示可以被需要它的所有的剖析共享。</p>
+<p>我们用点规则(dotted rules)来表示状态，来分隔走过的进程以及未完成的进程，每个 chart entry 可能含有三种信息：</p>
+<ul>
+<li><strong>Completed constituents and their locations: </strong><br>  S → · VP [0,0]<br>  点在成分左侧，表示这个特定的开始节点 S，第一个 0 表示预测的成分开始于 input string 的开头，第二个 0 表示点也在开头的位置</li>
+<li><strong>In-progress constituents: </strong><br>  NP → Det · Nominal [1,2]<br>  NP 开始于位置 1，Det 已经被成功剖析，期待下一步处理 Nominal</li>
+<li><strong>Predicted constituents: </strong><br>  VP → V NP · [0,3]<br>  点处于两个成分右侧，表示已经成功找到了与 VP 相对应的树，而且这个 VP 横跨在整个 input string 上</li>
+</ul>
+<p>从左到右走过 chart 的由 N+1 个状态组成的集合，按顺序处理每个集合中的各个状态，每一步根据具体情况将下面描述的三个操作中的一个应用于每个状态，向前移动后，不会再回溯，直到最后一个状态 S → $\alpha$ · [0,N]，表示剖析成功。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/earley1.jpg" class="ful-image" alt="earley1.jpg"></p>
+<p>简单版的步骤</p>
+<ol>
+<li>Predict all the states you can upfront</li>
+<li>Read a word<br> Extend states based on matches<br> Generate new predictions<br> Go to step 2</li>
+<li>When you’re out of words, look at the chart to see if you have a winner</li>
+</ol>
+<p>假设设有CFG如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">S → NP VP</div><div class="line">NP → DT NN</div><div class="line">VP → VBD NP</div><div class="line">DT → the</div><div class="line">NN → rat</div><div class="line">NN → cheese</div><div class="line">VBD → ate</div></pre></td></tr></table></figure></p>
+<p>下面以 the rat ate the cheese 为输入来演示一下 Earley 算法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">S → ● NP VP [0,0]         （Predictor）:初始状态                      -(0)</div><div class="line">NP → ● DT NN [0,0]        （Predictor）:由初始状态 (0) 得到            -(1)</div><div class="line"></div><div class="line">DT → the ● [0,1]           (Scanner)   :由 (1) 得到                  -(2)</div><div class="line">NP → DT ● NN [0,1]         (Completer):由 (1) 和 (2) 归并得到         -(3)</div><div class="line"></div><div class="line">NN → rat ● [1,2]           (Scanner)   :由 (3) 得到                  -(4)</div><div class="line">NP → DT NN ● [0,2]         (Completer):由 (3) 和 (4) 归并得到         -(5)</div><div class="line">S → NP ● VP [0,2]          (Completer):由 (0) 和 (5) 归并得到         -(6)</div><div class="line">VP → ● VBD NP [2,2]        (Predictor）:由 (6) 得到                  -(7)</div><div class="line"></div><div class="line">VBD → ate ● [2,3]          (Scanner)   :由 (7) 得到                  -(8)</div><div class="line">VP → VBD ● NP [2,3]        (Completer):由 (7) 和 (8) 归并得到         -(9)</div><div class="line">NP → ● DT NN [3,3]        （Predictor）:由 (9) 得到                   -(10)</div><div class="line"></div><div class="line">DT → the ● [3,4]           (Scanner)   :由 (10) 得到                 -(11)</div><div class="line">NP → DT ● NN [3,4]         (Completer):由 (10) 和 (1) 归并得到        -(12)</div><div class="line"></div><div class="line">NN → cheese ● [4,5]        (Scanner)   :由 (12) 得到                 -(13)</div><div class="line">NP → DT NN ● [3,5]         (Completer):由 (12) 和 (13) 归并得到       -(14)</div><div class="line">VP → VBD NP ● [2,5]        (Completer):由 (9) 和 (14) 归并得到        -(15)    </div><div class="line">S → NP VP ● [0,5]          (Completer):由 (6) 和 (15) 归并得到        -(16)</div></pre></td></tr></table></figure></p>
+<p>具体算法<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/earley2.jpg" class="ful-image" alt="earley2.jpg"></p>
+<p>E.g.<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/earley3.jpg" class="ful-image" alt="earley3.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/earley4.jpg" class="ful-image" alt="earley4.jpg"></p>
+<p>具体来看三个操作<strong>预测(Predictor)、完成(Completer)、扫描(Scanner)</strong>。</p>
+<ul>
+<li><strong>Predictor: </strong> for non-terminals<br>  用于 dotted-rule 中 dot 右侧为 non-terminal 符号但又不是词类范畴(part-of-speech category)的任何状态<br>  对语法提供的 non-terminal 符号的不同展开，都创造一个新的状态，放到同样一个 chart 中，开始和结束位置与之前相同<br>  S → · VP [0,0]，用 Predictor，就是在第一个 chart entry 中增加状态 VP → · Verb, [0,0] 和 VP → · Verb NP, [0,0]</li>
+<li><strong>Scanner: </strong> for words<br>  用于 dotted-rule 中 dot 右侧为词类范畴(part-of-speech category)的状态<br>  检查 input string，把对应于所预测的词类范畴(part-of-speech category)的状态加入到 chart 中，scanner 操作后，从输入状态中造出一个新的状态<br>  VP → · Verb NP [0,0]，dot 后面是词类，所以 scanner 要在输入中寻找当前的单词，而 book 是一个 verb，与当前状态中的预测匹配，所以创造出一个新的状态 VP → Verb · NP [0,1]，然后把这个新的状态加到 chart 中，跟随在当前处理过的状态之后</li>
+<li><strong>Completer: </strong> otherwise<br>  状态中的 dot 到达规则右端时，剖析算法成功找到了在输入的某个跨度上的一个特定的语法范畴，completer 的目标就是寻找输入中在这个位置的语法范畴，发现并且推进前面造出的所有状态<br>  NP → Det Nominal · [1,3]，completer 要寻找以 1 为结尾并预测 NP 的状态，找到由 Scanner 造出的状态 VP → Verb · NP [0,1]，结果是加入一个新的完成状态 VP → Verb NP · [0,3]</li>
+</ul>
+<h2 id="CKY-and-Earley"><a href="#CKY-and-Earley" class="headerlink" title="CKY and Earley"></a>CKY and Earley</h2><p>CKY 和 Earley 都是 chart parsing 的方法，Earley 是 top-down 的，CKY 是 bottom-up 的。也有两个算法都不能解决的问题，如一致性(agreement)问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">• Number</div><div class="line">    Chen is/people are</div><div class="line">• Person</div><div class="line">    I am/Chen is</div><div class="line">• Tense</div><div class="line">    Chen was reading/Chen is reading/Chen will be reading</div><div class="line">• Case</div><div class="line">    not in English but in many other languages such as German, Russian, Greek</div><div class="line">• Gender</div><div class="line">    not in English but in many other languages such as German, French, Spanish</div></pre></td></tr></table></figure></p>
+<p>可以用 Combinatorial Explosion 方法来解决，如下，分开表示第一人称NP、第二人称NP、第三人称NP的规则，然而这样的组合太多了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">– S → NP VP</div><div class="line">– S → 1sgNP 1sgVP</div><div class="line">– S → 2sgNP 2sgVP</div><div class="line">– S → 3sgNP 3sgVP</div><div class="line">...</div><div class="line">– 1sgNP → 1sgN</div></pre></td></tr></table></figure></p>
+<p>另外一个问题是次范畴化的问题(Subcategorization Frames)，这需要依存算法来解决。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">• Direct object</div><div class="line">    The dog ate a sausage</div><div class="line">• Prepositional phrase</div><div class="line">    Mary left the car in the garage</div><div class="line">• Predicative adjective</div><div class="line">    The receptionist looked worried</div><div class="line">• Bare infinitive</div><div class="line">    She helped me buy this place</div><div class="line">• To-infinitive</div><div class="line">    The girl wanted to be alone</div><div class="line">• Participial phrase</div><div class="line">    He stayed crying after the movie ended</div><div class="line">• That-clause</div><div class="line">    Ravi doesn’t believe that it will rain tomorrow</div><div class="line">• Question-form clauses</div><div class="line">    She wondered where to go</div></pre></td></tr></table></figure></p>
+<p>最后，来回顾一下 CFG 的假设，CFG 假设任何一个 non-terminal 符号的展开与任何其他 non-terminal 符号的展开是独立的，然而这个假设是不成立的，可以看一下下面的例子，这个问题的解决需要引入 Lexicalized grammars。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Non-independence</div><div class="line">– All NPs</div><div class="line">    11% NP PP, 9% DT NN, 6% PRP</div><div class="line">– NPs under S</div><div class="line">    9% NP PP, 9% DT NN, 21% PRP</div><div class="line">– NPs under VP</div><div class="line">    23% NP PP, 7% DT NN, 4% PRP</div><div class="line">– (example from Dan Klein)</div></pre></td></tr></table></figure></p>
+<h1 id="Constituency-Parser-Evaluation"><a href="#Constituency-Parser-Evaluation" class="headerlink" title="Constituency Parser Evaluation"></a>Constituency Parser Evaluation</h1><p>需要有 label 数据，评价方法如下，上面的 parse tree 是标准的，下面的 parse tree 是算法产生的，我们标注每一个成分的起始和终止位置，然后比较两个 tree，看两个 tree 对应成分的起始和终止位置是否相同，计算 precision，recall，F1，和 tagging accuracy。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/eva1.jpg" class="ful-image" alt="eva1.jpg"></p>
+<p><strong>Labeled-Precision:</strong> 3/7=42.9%<br><strong>Labeled-Recall:</strong> 3/8=37.5%<br><strong>LP/LR-F1:</strong> 40.0%<br><strong>Tagging-Accuracy:</strong> 11/11=100.0%</p>
+<p>这种评估方式有其弱点，上层的错误会被下层持续继承，如上面的例子，只有最后一个单词 yesterday 的识别出现了错误，然而一层层传承下来，准确率就变得很低。</p>
+<blockquote>
+<p>参考链接：<br><a href="http://blog.csdn.net/baimafujinji/article/details/6495823" target="_blank" rel="external">自然语言处理中的Earley算法</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/27/NLP 笔记 - Syntax Introduction/" rel="next" title="NLP 笔记 - Syntax Introduction">
+                <i class="fa fa-chevron-left"></i> NLP 笔记 - Syntax Introduction
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/02/NLP 笔记 - Question Answering System/" rel="prev" title="NLP 笔记 - Question Answering System">
+                NLP 笔记 - Question Answering System <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Context-Free-Grammars"><span class="nav-number">1.</span> <span class="nav-text">Context-Free Grammars</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Chomsky-Normal-Form-CNF"><span class="nav-number">1.1.</span> <span class="nav-text">Chomsky Normal Form(CNF)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FSA-and-CFG"><span class="nav-number">1.1.1.</span> <span class="nav-text">FSA and CFG</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CNF"><span class="nav-number">1.1.2.</span> <span class="nav-text">CNF</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Transformation"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Transformation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Binarization"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">Binarization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unaries-Empties"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">Unaries/Empties</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Recognition"><span class="nav-number">1.2.</span> <span class="nav-text">Recognition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parsing"><span class="nav-number">1.3.</span> <span class="nav-text">Parsing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Top-down-Parser"><span class="nav-number">1.3.1.</span> <span class="nav-text">Top-down Parser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bottom-up-Parser"><span class="nav-number">1.3.2.</span> <span class="nav-text">Bottom-up Parser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Top-down-vs-Bottom-up"><span class="nav-number">1.3.3.</span> <span class="nav-text">Top-down vs Bottom-up</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ambiguity"><span class="nav-number">1.4.</span> <span class="nav-text">Ambiguity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grammaticality"><span class="nav-number">1.5.</span> <span class="nav-text">Grammaticality</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">1.6.</span> <span class="nav-text">Summary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Improved-Algorithms"><span class="nav-number">2.</span> <span class="nav-text">Improved Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Probabilistic-Context-Free-Grammar-PCFGs"><span class="nav-number">2.1.</span> <span class="nav-text">Probabilistic Context-Free Grammar(PCFGs)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cocke-Kasami-Younger"><span class="nav-number">2.2.</span> <span class="nav-text">Cocke-Kasami-Younger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Earley"><span class="nav-number">2.3.</span> <span class="nav-text">Earley</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CKY-and-Earley"><span class="nav-number">2.4.</span> <span class="nav-text">CKY and Earley</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Constituency-Parser-Evaluation"><span class="nav-number">3.</span> <span class="nav-text">Constituency Parser Evaluation</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/02/28/NLP 笔记 - Syntax and Parsing/';
+      var disqus_title = "NLP 笔记 - Constituency Parsing";
+      var disqus_url = 'http://www.shuang0420.com/2017/02/28/NLP 笔记 - Syntax and Parsing/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

@@ -1,0 +1,1089 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Knowledge Graph,知识库,Neo4j," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="内容主要来自 Coursera 课程 Big Data Graph Analytics，在这对 Cypher 语句做个整理，方便查阅。包括基本语句、以及路径分析、链接分析样例。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neo4j Cypher Cheetsheet">
+<meta property="og:url" content="http://www.shuang0420.com/2017/09/11/Neo4j Cypher Cheetsheet/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="内容主要来自 Coursera 课程 Big Data Graph Analytics，在这对 Cypher 语句做个整理，方便查阅。包括基本语句、以及路径分析、链接分析样例。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/create_1.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/triangle.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/2nd_nei.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/loops.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/multi_graph.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/induced.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/HP.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/shortest.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/shortest_all.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/shortest_cond.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/diameter.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/extract.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/Dijkstra.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/error.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/no_immediate%20neighborhood.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/no_contain.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/matrix.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/scale0.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/scale1.png">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Neo4j Cypher Cheetsheet">
+<meta name="twitter:description" content="内容主要来自 Coursera 课程 Big Data Graph Analytics，在这对 Cypher 语句做个整理，方便查阅。包括基本语句、以及路径分析、链接分析样例。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/create_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/09/11/Neo4j Cypher Cheetsheet/"/>
+
+
+  <title> Neo4j Cypher Cheetsheet | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Neo4j Cypher Cheetsheet
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-09-11T20:40:10+08:00" content="2017-09-11">
+              2017-09-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Knowledge-Graph/" itemprop="url" rel="index">
+                    <span itemprop="name">Knowledge Graph</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/09/11/Neo4j Cypher Cheetsheet/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/11/Neo4j Cypher Cheetsheet/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>内容主要来自 Coursera 课程 <strong>Big Data Graph Analytics</strong>，在这对 Cypher 语句做个整理，方便查阅。包括基本语句、以及路径分析、链接分析样例。<br><a id="more"></a></p>
+<p>Neo4j 使用 Cypher 查询图形数据，Cypher 是描述性的图形查询语言，语法简单功能强大，由于 Neo4j 在图形数据库家族中处于绝对领先的地位，拥有众多的用户基数，Cypher 成为图形查询语言的事实上的标准。<br>和 SQL 很相似，Cypher 语言的关键字不区分大小写，但是属性值，标签，关系类型和变量是区分大小写的。</p>
+<p>看一下基本的概念</p>
+<ul>
+<li><p><strong>变量(Variable)</strong><br>变量用于对搜索模式的部分进行命名，并在同一个查询中引用，在小括号()中命名变量，<strong>变量名是区分大小写的</strong>，示例代码创建了两个变量：n 和 b，通过 return 子句返回变量 b；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">MATCH (n)--&gt;(b)</div><div class="line">RETURN b</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>访问属性(Property)</strong><br>在 Cypher 查询中，通过点来访问属性，格式是：Variable.PropertyKey，通过 id 函数来访问实体的 ID，格式是 id(Variable)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match (n)--&gt;(b)</div><div class="line">where id(n)=5 and b.age=18</div><div class="line">return b;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>节点(Node)</strong><br>节点模式的构成：<code>(Variable:Lable1 {Key1:Value1,Key2,Value2})</code><br>每个节点都有一个整数 ID，在创建新的节点时，Neo4j 自动为节点设置 ID 值，在整个数据库中，节点的 ID 值是递增和唯一的。<br>下面的 Cypher 查询创建一个节点，标签是 Person，具有两个属性 name 和 born，通过 RETURN 子句，返回新建的节点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">create (n:Person &#123; name: &apos;Tom Hanks&apos;, born: 1956 &#125;) return n;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>匹配(Match)</strong><br>通过match子句查询数据库，match子句用于指定搜索的模式（Pattern），where子句为match模式增加谓词（Predicate），用于对Pattern进行约束；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">match(n) return n;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>关系(Relation)</strong><br>关系的构成：<code>StartNode - [Variable:RelationshipType {Key1:Value1, Key2:Value2}] -&gt; EndNode</code><br>创建关系时，必须指定关系类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MATCH (a:Person),(b:Movie)</div><div class="line">WHERE a.name = &apos;Robert Zemeckis&apos; AND b.title = &apos;Forrest Gump&apos;</div><div class="line">CREATE (a)-[r:DIRECTED]-&gt;(b)</div><div class="line">RETURN r;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>本篇数据集：<br><strong>链接:</strong> <a href="http://pan.baidu.com/s/1dEHWQch" target="_blank" rel="external">http://pan.baidu.com/s/1dEHWQch</a><br><strong>密码:</strong> 00v4</p>
+<h1 id="Create-and-Delete"><a href="#Create-and-Delete" class="headerlink" title="Create and Delete"></a>Create and Delete</h1><p>建图要求<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">==============</div><div class="line">Five Nodes</div><div class="line">N1 = Tom</div><div class="line">N2 = Harry</div><div class="line">N3 = Julian</div><div class="line">N4 = Michele</div><div class="line">N5 = Josephine</div><div class="line"></div><div class="line">Five Edges</div><div class="line">e1 = Harry ‘is known by’ Tom</div><div class="line">e2 = Julian ‘is co-worker of’ Harry</div><div class="line">e3 = Michele ‘is wife of’ Harry</div><div class="line">e4 = Josephine ‘is wife of’ Tom</div><div class="line">e5 = Josephine ‘is friend of’ Michele</div><div class="line"></div><div class="line">==============</div><div class="line">A simple text description of a graph</div><div class="line">N1 - e1 -&gt; N2</div><div class="line">N2 - e2 -&gt; N3</div><div class="line">N2 - e3 -&gt; N4</div><div class="line">N1 - e4 -&gt; N5</div><div class="line">N4 - e5 -&gt; N5</div><div class="line">==============</div></pre></td></tr></table></figure></p>
+<p>创建完整的 graph<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">create (N1:ToyNode &#123;name: &apos;Tom&apos;&#125;) - [:ToyRelation &#123;relationship: &apos;knows&apos;&#125;] -&gt; (N2:ToyNode &#123;name: &apos;Harry&apos;&#125;),</div><div class="line">(N2) - [:ToyRelation &#123;relationship: &apos;co-worker&apos;&#125;] -&gt; (N3:ToyNode &#123;name: &apos;Julian&apos;, job: &apos;plumber&apos;&#125;),</div><div class="line">(N2) - [:ToyRelation &#123;relationship: &apos;wife&apos;&#125;] -&gt; (N4:ToyNode &#123;name: &apos;Michele&apos;, job: &apos;accountant&apos;&#125;),</div><div class="line">(N1) - [:ToyRelation &#123;relationship: &apos;wife&apos;&#125;] -&gt; (N5:ToyNode &#123;name: &apos;Josephine&apos;, job: &apos;manager&apos;&#125;),</div><div class="line">(N4) - [:ToyRelation &#123;relationship: &apos;friend&apos;&#125;] -&gt; (N5)</div><div class="line">;</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/create_1.png" class="ful-image" alt="create_1.png">
+<p>ToyNode is a node type and ToyRelation is an edge type. ToyNode can have properties, so can ToyRelation.</p>
+<p><strong>//View the resulting graph</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">match (n:ToyNode)-[r]-(m) return n, r, m</div></pre></td></tr></table></figure></p>
+<p><strong>//Delete all nodes and edges</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">match (n)-[r]-() delete n, r</div></pre></td></tr></table></figure></p>
+<p><strong>//Delete all nodes which have no edges</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">match (n) delete n</div></pre></td></tr></table></figure></p>
+<p><strong>//Delete only ToyNode nodes which have no edges</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">match (n:ToyNode) delete n</div></pre></td></tr></table></figure></p>
+<p><strong>//Delete all edges</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">match (n)-[r]-() delete r</div></pre></td></tr></table></figure></p>
+<p><strong>//Delete only ToyRelation edges</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">match (n)-[r:ToyRelation]-() delete r</div></pre></td></tr></table></figure></p>
+<p><strong>//Selecting an existing single ToyNode node</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">match (n:ToyNode &#123;name:&apos;Julian&apos;&#125;) return n</div></pre></td></tr></table></figure></p>
+<h1 id="Adding-or-Modify"><a href="#Adding-or-Modify" class="headerlink" title="Adding or Modify"></a>Adding or Modify</h1><p>Merge 子句的作用：当模式（Pattern）存在时，匹配该模式；当模式不存在时，创建新的模式，功能是 match 子句和 create 的组合。在 merge 子句之后，可以显式指定 on create 和 on match 子句，用于修改绑定的节点或关系的属性。</p>
+<p>通过 merge 子句，可以指定图形中必须存在一个节点，该节点必须具有特定的标签，属性等，如果不存在，那么 merge 子句将创建相应的节点。</p>
+<p><strong>//Adding a Node Correctly</strong><br>First find a node you wanna add to, then add the node.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">match (n:ToyNode &#123;name:&apos;Julian&apos;&#125;)</div><div class="line">merge (n)-[:ToyRelation &#123;relationship: &apos;fiancee&apos;&#125;]-&gt;(m:ToyNode &#123;name:&apos;Joyce&apos;, job:&apos;store clerk&apos;&#125;)</div></pre></td></tr></table></figure></p>
+<p><strong>//Adding a Node Incorrectly</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">create (n:ToyNode &#123;name:&apos;Julian&apos;&#125;)-[:ToyRelation &#123;relationship: &apos;fiancee&apos;&#125;]-&gt;(m:ToyNode &#123;name:&apos;Joyce&apos;, job:&apos;store clerk&apos;&#125;)</div></pre></td></tr></table></figure></p>
+<p><strong>//Correct your mistake by deleting the bad nodes and edge</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">match (n:ToyNode &#123;name:&apos;Joyce&apos;&#125;)-[r]-(m) delete n, r, m</div></pre></td></tr></table></figure></p>
+<p><strong>//Modify a Node’s Information</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">match (n:ToyNode) where n.name = &apos;Harry&apos; set n.job = &apos;drummer&apos;</div><div class="line">match (n:ToyNode) where n.name = &apos;Harry&apos; set n.job = n.job + [&apos;lead guitarist&apos;]</div></pre></td></tr></table></figure></p>
+<h1 id="Import"><a href="#Import" class="headerlink" title="Import"></a>Import</h1><p><strong>//One way to “clean the slate” in Neo4j before importing (run both lines):</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">match (a)-[r]-&gt;() delete a,r</div><div class="line">match (a) delete a</div></pre></td></tr></table></figure></p>
+<p><strong>//Script to Import Data Set: test.csv (simple road network)</strong><br><strong>//[NOTE: replace any spaces in your path with %20, “percent twenty” ]</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">LOAD CSV WITH HEADERS FROM &quot;file:///test.csv&quot; AS line</div><div class="line">MERGE (n:MyNode &#123;Name:line.Source&#125;)</div><div class="line">MERGE (m:MyNode &#123;Name:line.Target&#125;)</div><div class="line">MERGE (n) -[:TO &#123;dist:line.distance&#125;]-&gt; (m)</div></pre></td></tr></table></figure></p>
+<p><strong>//Script to import global terrorist data</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">LOAD CSV WITH HEADERS FROM &quot;file:///terrorist_data_subset.csv&quot; AS row</div><div class="line">MERGE (c:Country &#123;Name:row.Country&#125;)</div><div class="line">MERGE (a:Actor &#123;Name: row.ActorName, Aliases: row.Aliases, Type: row.ActorType&#125;)</div><div class="line">MERGE (o:Organization &#123;Name: row.AffiliationTo&#125;)</div><div class="line">MERGE (a)-[:AFFILIATED_TO &#123;Start: row.AffiliationStartDate, End: row.AffiliationEndDate&#125;]-&gt;(o)</div><div class="line">MERGE(c)&lt;-[:IS_FROM]-(a);</div></pre></td></tr></table></figure></p>
+<p>When you are loading CSVs you get an error like “Couldn’t load the external resource at: file: […]”, put your csv file in the right path like <code>/Users/shuang/Documents/Neo4j/default.graphdb/import/</code>, the problem will be solved.</p>
+<h1 id="Basic-Graph-Operations"><a href="#Basic-Graph-Operations" class="headerlink" title="Basic Graph Operations"></a>Basic Graph Operations</h1><p><strong>//Counting the number of nodes</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode)</div><div class="line">return count(n)</div></pre></td></tr></table></figure></p>
+<p><strong>//Counting the number of edges</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode)-[r]-&gt;()</div><div class="line">return count(r)</div></pre></td></tr></table></figure></p>
+<p><strong>//Finding leaf nodes:</strong><br><strong>Leaf node: </strong> the node which have no outgoing edges<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode)-[r:TO]-&gt;(m)</div><div class="line">where not ((m)--&gt;())</div><div class="line">return m</div></pre></td></tr></table></figure></p>
+<p><strong>//Finding root nodes:</strong><br><strong>Root node: </strong> the node which have no incoming edges<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match (m)-[r:TO]-&gt;(n:MyNode)</div><div class="line">where not (()--&gt;(m))</div><div class="line">return m</div></pre></td></tr></table></figure></p>
+<p><strong>//Finding triangles:</strong><br><strong>Triangle: </strong> a three cycle, consisting of three nodes and three edges where the beginning and end node are the same<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">match (a)-[:TO]-&gt;(b)-[:TO]-&gt;(c)-[:TO]-&gt;(a)</div><div class="line">return distinct a, b, c</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/triangle.png" class="ful-image" alt="triangle.png">
+<p><strong>//Finding 2nd neighbors of D:</strong><br><strong>2nd neighbor: </strong> two nodes away from D<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match (a)-[:TO*..2]-(b)</div><div class="line">where a.Name=&apos;D&apos;</div><div class="line">return distinct a, b</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/2nd_nei.png" class="ful-image" alt="2nd_nei.png">
+<p>Some nodes appear to be only one node away from the node D but we can get to those nodes indirectly through another node, which means that they’re not only a first neighbor but they’re also a second neighbor.</p>
+<p><strong>//Finding the types of a node:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match (n)</div><div class="line">where n.Name = &apos;Afghanistan&apos;</div><div class="line">return labels(n)</div></pre></td></tr></table></figure></p>
+<p><strong>//Finding the label of an edge:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">match (n &#123;Name: &apos;Afghanistan&apos;&#125;)&lt;-[r]-()</div><div class="line">return distinct type(r)</div></pre></td></tr></table></figure></p>
+<p><strong>//Finding all properties of a node:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">match (n:Actor)</div><div class="line">return * limit 20</div></pre></td></tr></table></figure></p>
+<p><strong>//Finding loops:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">match (n)-[r]-&gt;(n)</div><div class="line">return n, r limit 10</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/loops.png" class="ful-image" alt="loops.png">
+<p><strong>//Finding multigraphs:</strong><br><strong>Multigraph: </strong> any two nodes which have two or more edges between them<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match (n)-[r1]-&gt;(m), (n)-[r2]-(m)</div><div class="line">where r1 &lt;&gt; r2</div><div class="line">return n, r1, r2, m limit 10</div></pre></td></tr></table></figure></p>
+<p>remember to apply a constraint in which the edges must be different for the same pairs of nodes<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/multi_graph.png" class="ful-image" alt="multi_graph.png"></p>
+<p><strong>//Finding the induced subgraph given a set of nodes:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match (n)-[r:TO]-(m)</div><div class="line">where n.Name in [&apos;A&apos;, &apos;B&apos;, &apos;C&apos;, &apos;D&apos;, &apos;E&apos;] and m.Name in [&apos;A&apos;, &apos;B&apos;, &apos;C&apos;, &apos;D&apos;, &apos;E&apos;]</div><div class="line">return n, r, m</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/induced.png" class="ful-image" alt="induced.png">
+<h1 id="Path-Analytics"><a href="#Path-Analytics" class="headerlink" title="Path Analytics"></a>Path Analytics</h1><p><strong>//Viewing the graph</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode)-[r]-&gt;(m)</div><div class="line">return n, r, m</div></pre></td></tr></table></figure></p>
+<p><strong>//Finding paths between specific nodes:</strong><br>Use the match command to match p which is a variable we’re using to represent our path, = node a, going through an edge to node c. There’s something slightly different about this edge, and that is that we’re using a star to represent an arbitrary number of edges in sequence between a and c, and we’ll be returning all of those edges that are necessary to complete the path. And in this case we only want to return a single path.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match p=(a)-[:TO*]-(c)</div><div class="line">where a.Name=&apos;H&apos; and c.Name=&apos;P&apos;</div><div class="line">return p limit 1</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/HP.png" class="ful-image" alt="HP.png">
+<p>*Your results might not be the same as the video hands-on demo. If not, try the following query and it should return the shortest path between nodes H and P:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">match p=(a)-[:TO*]-(c) where a.Name=&apos;H&apos; and c.Name=&apos;P&apos; return p order by length(p) asc limit 1</div></pre></td></tr></table></figure></p>
+<p><strong>//Finding the length between specific nodes:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match p=(a)-[:TO*]-(c)</div><div class="line">where a.Name=&apos;H&apos; and c.Name=&apos;P&apos;</div><div class="line">return length(p) limit 1</div></pre></td></tr></table></figure></p>
+<p><strong>//Finding a shortest path between specific nodes:</strong><br>Use a built-in command shortestPath<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match p=shortestPath((a)-[:TO*]-(c))</div><div class="line">where a.Name=&apos;A&apos; and c.Name=&apos;P&apos;</div><div class="line">return p, length(p) limit 1</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/shortest.png" class="ful-image" alt="shortest.png">
+<p><strong>//All Shortest Paths:</strong><br>Use a built-in command allShortestPaths<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">MATCH p = allShortestPaths((source)-[r:TO*]-(destination))</div><div class="line">WHERE source.Name=&apos;A&apos; AND destination.Name = &apos;P&apos;</div><div class="line">RETURN EXTRACT(n IN NODES(p)| n.Name) AS Paths</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/shortest_all.png" class="ful-image" alt="shortest_all.png">
+<p><strong>//All Shortest Paths with Path Conditions:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">MATCH p = allShortestPaths((source)-[r:TO*]-&gt;(destination))</div><div class="line">WHERE source.Name=&apos;A&apos; AND destination.Name = &apos;P&apos; AND LENGTH(NODES(p)) &gt; 5</div><div class="line">RETURN EXTRACT(n IN NODES(p)| n.Name) AS Paths,length(p)</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/shortest_cond.png" class="ful-image" alt="shortest_cond.png">
+<p><strong>//Diameter of the graph:</strong><br><strong>Diameter: </strong> the longest shortest path between two nodes in the graph<br>Returned in the form of an array. We’re using a new term, extract, which is based on the following. Assuming we have matched our path p, we want to identify all of the nodes in p and extract their names. And we’ll return these names as a listing, which we’ll call the variable paths. If there’s more than one shortest path, we’ll get multiple listings of node names.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode), (m:MyNode)</div><div class="line">where n &lt;&gt; m</div><div class="line">with n, m</div><div class="line">match p=shortestPath((n)-[*]-&gt;(m))</div><div class="line">return n.Name, m.Name, length(p)</div><div class="line">order by length(p) desc limit 1</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/diameter.png" class="ful-image" alt="diameter.png">
+<p><strong>//Extracting and computing with node and properties:</strong><br>Returned as the variable pathLength.<br><strong>Reduce line</strong> begins by setting a variable s equal to 0. And then define a variable e, which represents the set of relationships in a path that’s returned,<br>or in other words, the edges. And we pass that into this variable s, and add to it, the value of the distance that we’ve assigned to that edge.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">match p=(a)-[:TO*]-(c)</div><div class="line">where a.Name=&apos;H&apos; and c.Name=&apos;P&apos;</div><div class="line">return extract(n in nodes(p)|n.Name) as Nodes, length(p) as pathLength,</div><div class="line">reduce(s=0, e in relationships(p)| s + toInt(e.dist)) as pathDist limit 1</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/extract.png" class="ful-image" alt="extract.png">
+<p>The path itself, as we know, begins in H and ends in P. And it has a pathLength of 8, but it has a pathDist of 40.<br>So we could interpret this to mean that even though there are 7 towns between the source town and the destination town, or a pathLength of 8,<br>the actual distance in miles would be a value of 40.</p>
+<p><strong>//Dijkstra’s algorithm for a specific target node:</strong><br>This is not the path in our network with the least weights. It is the weight of the shortest path based on numbers of hops.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MATCH (from: MyNode &#123;Name:&apos;A&apos;&#125;), (to: MyNode &#123;Name:&apos;P&apos;&#125;),</div><div class="line">path = shortestPath((from)-[:TO*]-&gt;(to))</div><div class="line">WITH REDUCE(dist = 0, rel in rels(path) | dist + toInt(rel.dist)) AS distance, path</div><div class="line">RETURN path, distance</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/Dijkstra.png" class="ful-image" alt="Dijkstra.png">
+<p><strong>//Dijkstra’s algorithm SSSP:</strong><br>What we’ve calculated is the shortest hop path with the weights added, the sum of the weights of the edges in that path. This is not the least weight path of the entire network.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MATCH (from: MyNode &#123;Name:&apos;A&apos;&#125;), (to: MyNode),</div><div class="line">path = shortestPath((from)-[:TO*]-&gt;(to))</div><div class="line">WITH REDUCE(dist = 0, rel in rels(path) | dist + toInt(rel.dist)) AS distance, path, from, to</div><div class="line">RETURN from, to, path, distance order by distance desc</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/error.png" class="ful-image" alt="error.png">
+<p>Problem not solved. Refer to <a href="https://github.com/neo4j/neo4j/issues/9992" target="_blank" rel="external">allshortestPaths error start/end nodes the same with cypher.forbid_shortestpath_common_node=false</a></p>
+<p><strong>//Graph not containing a selected node:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match (n)-[r:TO]-&gt;(m)</div><div class="line">where n.Name &lt;&gt; &apos;D&apos; and m.Name &lt;&gt; &apos;D&apos;</div><div class="line">return n, r, m</div></pre></td></tr></table></figure></p>
+<p><strong>//Shortest path over a Graph not containing a selected node:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match p=shortestPath((a &#123;Name: &apos;A&apos;&#125;)-[:TO*]-(b &#123;Name: &apos;P&apos;&#125;))</div><div class="line">where not(&apos;D&apos; in (extract(n in nodes(p)|n.Name)))</div><div class="line">return p, length(p)</div></pre></td></tr></table></figure></p>
+<p><strong>//Graph not containing the immediate neighborhood of a specified node:</strong><br>Remember to take leaf and root node into account.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">match (d &#123;Name:&apos;D&apos;&#125;)-[:TO]-(b)</div><div class="line">with collect(distinct b.Name) as neighbors</div><div class="line">match (n)-[r:TO]-&gt;(m)</div><div class="line">where</div><div class="line">not (n.Name in (neighbors+&apos;D&apos;))</div><div class="line">and</div><div class="line">not (m.Name in (neighbors+&apos;D&apos;))</div><div class="line">return n, r, m</div><div class="line">;</div><div class="line">match (d &#123;Name:&apos;D&apos;&#125;)-[:TO]-(b)-[:TO]-&gt;(leaf)</div><div class="line">where not((leaf)--&gt;())</div><div class="line">return (leaf)</div><div class="line">;</div><div class="line">match (d &#123;Name:&apos;D&apos;&#125;)-[:TO]-(b)&lt;-[:TO]-(root)</div><div class="line">where not((root)&lt;--())</div><div class="line">return (root)</div></pre></td></tr></table></figure></p>
+<p>The result for first statement.<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/no_immediate%20neighborhood.png" class="ful-image" alt="no_immediate%20neighborhood.png"></p>
+<p><strong>//Graph not containing a selected neighborhood:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">match (a &#123;Name: &apos;F&apos;&#125;)-[:TO*..2]-(b)</div><div class="line">with collect(distinct b.Name) as MyList</div><div class="line">match (n)-[r:TO]-&gt;(m)</div><div class="line">where not(n.Name in MyList) and not (m.Name in MyList)</div><div class="line">return distinct n, r, m</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/no_contain.png" class="ful-image" alt="no_contain.png">
+<h1 id="Connectivity-Analytics"><a href="#Connectivity-Analytics" class="headerlink" title="Connectivity Analytics"></a>Connectivity Analytics</h1><blockquote>
+<p><strong>Connectivity analytics</strong> in terms of network robustness. In other words, a measure of how resistant a graph network is to being disconnected<br>Two ways of connectivity analytics: One computed the eigenvalues, and the second computed the degree distribution. For these examples, we’re going to use the second one, degree distributions.</p>
+</blockquote>
+<p><strong>//Viewing the graph</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode)-[r]-&gt;(m)</div><div class="line">return n, r, m</div></pre></td></tr></table></figure></p>
+<p><strong>// Find the outdegree of all nodes</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode)-[r]-&gt;()</div><div class="line">return n.Name as Node, count(r) as Outdegree</div><div class="line">order by Outdegree</div><div class="line">union</div><div class="line">match (a:MyNode)-[r]-&gt;(leaf)</div><div class="line">where not((leaf)--&gt;())</div><div class="line">return leaf.Name as Node, 0 as Outdegree</div></pre></td></tr></table></figure></p>
+<p><strong>// Find the indegree of all nodes</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode)&lt;-[r]-()</div><div class="line">return n.Name as Node, count(r) as Indegree</div><div class="line">order by Indegree</div><div class="line">union</div><div class="line">match (a:MyNode)&lt;-[r]-(root)</div><div class="line">where not((root)&lt;--())</div><div class="line">return root.Name as Node, 0 as Indegree</div></pre></td></tr></table></figure></p>
+<p><strong>// Find the degree of all nodes</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode)-[r]-()</div><div class="line">return n.Name, count(distinct r) as degree</div><div class="line">order by degree</div></pre></td></tr></table></figure></p>
+<p><strong>// Find degree histogram of the graph</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode)-[r]-()</div><div class="line">with n as nodes, count(distinct r) as degree</div><div class="line">return degree, count(nodes) order by degree asc</div></pre></td></tr></table></figure></p>
+<p><strong>//Save the degree of the node as a new node property</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode)-[r]-()</div><div class="line">with n, count(distinct r) as degree</div><div class="line">set n.deg = degree</div><div class="line">return n.Name, n.deg</div></pre></td></tr></table></figure></p>
+<p><strong>// Construct the Adjacency Matrix of the graph</strong><br><strong>Philosophical issue：</strong><br>Every database will allow you some analytical computation and the remainder of the analytical computations must be done outside of the database. However, it is always a judicious idea to get the database to achieve an intermediate result formatted in a way that you would need for the next computation. And then, you use that intermediate result as the input to the next computation. We’ve seen that a number of computations in graph analytics start with the adjacency matrix. So we should be able to force Cypher to produce an adjacency matrix<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode), (m:MyNode)</div><div class="line">return n.Name, m.Name,</div><div class="line">case</div><div class="line">when (n)--&gt;(m) then 1</div><div class="line">else 0</div><div class="line">end as value</div></pre></td></tr></table></figure></p>
+<p><strong>// Construct the Normalized Laplacian Matrix of the graph</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">match (n:MyNode), (m:MyNode)</div><div class="line">return n.Name, m.Name,</div><div class="line">case</div><div class="line">when n.Name = m.Name then 1</div><div class="line">when (n)--&gt;(m) then -1/(sqrt(toInt(n.deg))*sqrt(toInt(m.deg)))</div><div class="line">else 0</div><div class="line">end as value</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/matrix.png" class="ful-image" alt="matrix.png">
+<h1 id="Scale-View"><a href="#Scale-View" class="headerlink" title="Scale View"></a>Scale View</h1><p>可以调整显示区的大小，浏览器调到 inspect 模式，在 d3 代码区域添加 scale 函数，如下。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/scale0.png" class="ful-image" alt="scale0.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Neo4j%20Cypher%20Cheetsheet/scale1.png" class="ful-image" alt="scale1.png">
+<p><strong>References:</strong></p>
+<blockquote>
+<p><a href="https://neo4j.com/docs/cypher-refcard/current/" target="_blank" rel="external">Neo3j Cypher Refcard 3.2</a><br><a href="http://www.ttlsa.com/nosql/how-to-neo4j-cypher-query-language/" target="_blank" rel="external">Neo4j Cypher查询语言详解</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Knowledge-Graph/" rel="tag">#Knowledge Graph</a>
+          
+            <a href="/tags/知识库/" rel="tag">#知识库</a>
+          
+            <a href="/tags/Neo4j/" rel="tag">#Neo4j</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/05/项目实战-知识图谱初探/" rel="next" title="项目实战--知识图谱初探">
+                <i class="fa fa-chevron-left"></i> 项目实战--知识图谱初探
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/20/NLP 笔记 - Discourse Analysis/" rel="prev" title="NLP 笔记 - Discourse Analysis">
+                NLP 笔记 - Discourse Analysis <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Create-and-Delete"><span class="nav-number">1.</span> <span class="nav-text">Create and Delete</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Adding-or-Modify"><span class="nav-number">2.</span> <span class="nav-text">Adding or Modify</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Import"><span class="nav-number">3.</span> <span class="nav-text">Import</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Graph-Operations"><span class="nav-number">4.</span> <span class="nav-text">Basic Graph Operations</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Path-Analytics"><span class="nav-number">5.</span> <span class="nav-text">Path Analytics</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Connectivity-Analytics"><span class="nav-number">6.</span> <span class="nav-text">Connectivity Analytics</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Scale-View"><span class="nav-number">7.</span> <span class="nav-text">Scale View</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/09/11/Neo4j Cypher Cheetsheet/';
+      var disqus_title = "Neo4j Cypher Cheetsheet";
+      var disqus_url = 'http://www.shuang0420.com/2017/09/11/Neo4j Cypher Cheetsheet/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

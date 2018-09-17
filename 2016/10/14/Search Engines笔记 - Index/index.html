@@ -1,0 +1,1146 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,Search Engines,信息检索," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 11642 的课程笔记。这篇讲了搜索引擎中创建索引的主要原则、方法以及优化方案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Search Engines笔记 - Index Construction">
+<meta property="og:url" content="http://www.shuang0420.com/2016/10/14/Search Engines笔记 - Index/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 11642 的课程笔记。这篇讲了搜索引擎中创建索引的主要原则、方法以及优化方案。">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/index_cons.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/SPIMI.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/tree.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/inverted_list.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/Indri_static_file.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/Indri_term_diction.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/Indri_inverted.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/indri_compress.png">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Search Engines笔记 - Index Construction">
+<meta name="twitter:description" content="CMU 11642 的课程笔记。这篇讲了搜索引擎中创建索引的主要原则、方法以及优化方案。">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/index_cons.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/10/14/Search Engines笔记 - Index/"/>
+
+
+  <title> Search Engines笔记 - Index Construction | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Search Engines笔记 - Index Construction
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-10-14T12:21:21+08:00" content="2016-10-14">
+              2016-10-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Search-Engines/" itemprop="url" rel="index">
+                    <span itemprop="name">Search Engines</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/14/Search Engines笔记 - Index/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/14/Search Engines笔记 - Index/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 11642 的课程笔记。这篇讲了搜索引擎中创建索引的主要原则、方法以及优化方案。 <a id="more"></a></p>
+<h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p><img src="http://7xu83c.com1.z0.glb.clouddn.com/index_cons.png" alt=""></p>
+<p><strong>Inverted list:</strong><br>索引包含了各种数据结构，如 term dictionary，inverted list 等。inverted list 是一个重点。搜索引擎所拥有的文档中出现的每一个单词都拥有一个 inverted list，记录这个单词在多少文档中出现，分别是哪些文档，每个文档分部出现多少次，分别出现在什么位置等信息。比如 Apple 这个词出现在文档 1，7，19，34，102。其中文档 1 中出现了3次，分别在位置 20，105，700。这样当搜索 Apple 时，搜索引擎就不用遍历所有的文档，只需要查找每个单词对应的 inverted list 就可以知道这个词在哪里出现了。</p>
+<p><strong>文档预处理:</strong><br>创建索引是个巨大工程。首先是对文档进行解析和处理。互联网上的文档格式各种各样，对每一种格式的文档都要有一个对应的解析器程序，这样才能忽略各种奇怪符号，提取出有用内容。每一个解析器的实现都是一个繁琐且困难的任务。对于解析后的干净文档，许多重要的自然语言处理算法就要派上用场。以英语为例，需要进行分词（tokenization，将一句话分割成一个个单词），词干提取（stemming， 将文本中出现的单词还原成它的原型），part-of-speech tagging（识别单词在一句话中的词性），创建 n-gram 模型等操作。此外还需要识别文档中的命名实体(named entity)，比如将“iphone 6”作为一个词，而不是 “iphone” 一个， “6” 一个。上述操作生成的信息都要存储下来。这样构造 inverted list 时就可以知道每个单词出现的位置，出现个数等信息。</p>
+<p><strong>生成索引:</strong><br>索引生成程序的一个设计目标就是高效。它要求被尽可能地运行在多个机器上。对于每个机器来说，索引程序一边扫描输入文档，一边在内存中更新索引的数据结构。当内存中得数据大小超过一定阀值时，这些内容被作为一个块(block)一次性写入硬盘文件中。当所有文档扫描结束后这些块会再被合并成一个大的 inverted file。因为每一个块都是排好序的，合并操作是线性的复杂度。因为数据量太大，可以用 MapReduce 把一个大的任务分割成许多小任务，并下发给多个 Mapper 程序，Mapper计算好的中间结果会发给多个 Reducer 程序继续处理，得到最终结果。这个计算模型允许成千上万台机器同时运算，从而极大提高了运算效率。</p>
+<p>inverted list 要和访问机制(access mechanism)一起可以工作。访问机制定义了如何通过一个单词找到它所对应的 inverted list。大概可以使用两种数据结构：b-tree 或 Hash table。</p>
+<p><strong>Big facts:</strong></p>
+<ul>
+<li>索引中的单词和文档都用 integer 的 ID 表示而不是字符串，省空间省时间。</li>
+<li>一般来说 corpus 比 RAM 要大，不能在内存中完成整个任务，所以一定会有部分写到磁盘中，访问磁盘数据比访问内存数据慢得多，所以可以做的是<ul>
+<li>只在必要的时候写入磁盘</li>
+<li>压缩数据减少 I/O。数据从磁盘传输到内存是由系统总线而不是处理器来实现的，所以磁盘 I/O 时处理器仍然可以处理数据。</li>
+<li>顺序读取（比 random access 快）。因为磁盘读写时，磁头移到数据所在的磁道有一段时间，大概 5ms，称为寻道时间，这段时间并不进行数据的传输，所以连续读取的数据应该连续存放来节省时间。</li>
+</ul>
+</li>
+</ul>
+<p><strong>索引更新:</strong><br>互联网内容是不停变化的，这必然导致索引不停被更新。然而建立好的索引中，各个单词的反转列表是紧密的拼接在一起的，这使得更新变得非常困难。通常搜索引擎会积攒一批文件后才进行索引的更改，并且把索引分成静态和动态两个部分。程序把所有更改都写入动态部分，并且周期性地将动态部分合并进静态部分中。搜索时，动态和静态部分都会被访问。当从索引中删除一个文档时，这个文档中出现的词对应的反转列表都会被修改，开销极大。于是程序加入了“删除列表（delete lists）”来记录所有被删除的文档。搜索时会查询删除列表来把已经被删除的文档从搜索结果中移除。当删除列表足够大，垃圾回收机制会被触发，重新生成索引。</p>
+<h1 id="Single-Processor-单机版"><a href="#Single-Processor-单机版" class="headerlink" title="Single Processor(单机版)"></a>Single Processor(单机版)</h1><h2 id="Block-sort-based-indexing-BSBI"><a href="#Block-sort-based-indexing-BSBI" class="headerlink" title="Block sort-based indexing(BSBI)"></a>Block sort-based indexing(BSBI)</h2><p>基于块的排序索引方法(Block sort-based indexing algorithm) 过程如下:</p>
+<ol>
+<li>将 corpus 分割成几个大小相等的部分</li>
+<li>对每个部分的 (termId,docId)排序</li>
+<li>一旦 in-memory buffer 满了，就把临时排序结果 flush 到磁盘中，然后重新初始化，重复2、3过程</li>
+<li>将所有的中间文件合并成最终索引。(merge index blocks on disk)</li>
+</ol>
+<img class="ful-image" alt="block%20merge%20step">
+<p>BSBI 的时间复杂度是 O(TlogT)</p>
+<h2 id="Single-pass-in-memory-indexing-SPIMI"><a href="#Single-pass-in-memory-indexing-SPIMI" class="headerlink" title="Single-pass in-memory indexing(SPIMI)"></a>Single-pass in-memory indexing(SPIMI)</h2><p>BSBI 需要将 term 映射成 id，对大规模的 corpus 来说，这种数据结构会很大以致在内存中难以存放，SPIMI 使用 term 本身，将每个块的词典写入磁盘，对于下一个块则重新采用新的词典，这样带来的好处是，只要硬盘空间足够大，SPIMI 就能索引任何大小的 corpus。 算法如下，反复调用 SPIMI-INVERT 函数直到将全部 corpus 处理完。token_stream 就是 term-docid stream。 <img src="http://7xu83c.com1.z0.glb.clouddn.com/SPIMI.png" alt=""></p>
+<p>BSBI 和 SPIMI 的一个区别是， SPIMI 直接在 inverted list 中增加一项，这个 inverted list 是动态增长对，大小会不断调整，而 BSBI 一开始就整理出所有的 termID-docID 并对它们进行排序。这样做的好处是：</p>
+<ul>
+<li>不需要进行排序，处理速度更快</li>
+<li>保留 inverted list 对 term 的归属关系，能节省内存，也不用保存 term id，所以每次单独的 SPIMI-INVERT 调用能够处理的块可以非常大，整个的索引构建过程也会因此非常高效。</li>
+</ul>
+<p>SPIMI 的空间复杂度是 O(T)。</p>
+<h1 id="Distributed-indexes"><a href="#Distributed-indexes" class="headerlink" title="Distributed indexes"></a>Distributed indexes</h1><h2 id="Size-of-web-search-engine-index"><a href="#Size-of-web-search-engine-index" class="headerlink" title="Size of web search engine index"></a>Size of web search engine index</h2><p>一些假设：</p>
+<ul>
+<li>网页数：500亿（2013年），假设 50％ 是 text 文本</li>
+<li>平均网页大小：37K（2013年）</li>
+<li>假设 non-text 网页的平均入链数：1K</li>
+<li>索引大小约为原始文本大小的 20％</li>
+</ul>
+<p>Text: 25billion <em> 37K + 25billion </em> 1K = 925TB<br>Index: 20% * 950TB = 185TB (call it 200TB for convenience)</p>
+<p>–&gt; 索引分布在 50 个 4TB 的磁盘驱动器上比较合理</p>
+<h2 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware"></a>Hardware</h2><p>一个 computer cluster，又叫做 rack，有 40-80 台机器，每个 rack 有自己内部的网络，对大公司像 google 而言，机器的选择遵循的原则是：</p>
+<ul>
+<li>越便宜越好</li>
+<li>每台计算机使用少量的普通磁盘</li>
+<li>每台计算机使用比较大(not huge)的 RAM</li>
+</ul>
+<p>因为一台机子坏了得立刻换一台机子上去，自动部署，随时投入使用。而对于小的组织像 cmu，机子就会买好一点的，一台坏了会去修，而不是直接换一台。</p>
+<h2 id="Partitioned-indexes"><a href="#Partitioned-indexes" class="headerlink" title="Partitioned indexes"></a>Partitioned indexes</h2><p>分布式索引用到了 sharding 和 replication 的原理。</p>
+<h3 id="Sharding"><a href="#Sharding" class="headerlink" title="Sharding"></a>Sharding</h3><p>index 通常是被切片(sharding)的，每个分区包含了一堆不重复的文档集合，每个分区都被分到了一台机器，根据之前对索引大小的估计，就有 25 个分区(2 disks/node, 4TB/disk =&gt; 200TB) 。 那么 <strong>corpus 会怎样被分区呢？</strong> 可以随机分配(random assignment)，也可以按来源（source-based assignment），总的来说，随机分配用的比较多，因为随机可以平衡不同分区的 query traffic，让每台机得到充分使用。</p>
+<h3 id="Replication"><a href="#Replication" class="headerlink" title="Replication"></a>Replication</h3><p>索引通常被存了好几份 copy(replication)，为了提高并行能力和容错能力。 所以一个 index server 标准的配置：</p>
+<ul>
+<li>40 machines in a rack</li>
+<li>2*4TB disks/machine</li>
+<li>320 TB of index/rack</li>
+</ul>
+<h3 id="Query-evalution"><a href="#Query-evalution" class="headerlink" title="Query evalution"></a>Query evalution</h3><p>分布式系统的 query 评估过程为</p>
+<ul>
+<li>从每个分区中找出一台机器。 (select a machine for each index partition)</li>
+<li>把 query 分配到选出的机器中，然后每台机器返回一个 ranked list of matches。 (broadcast the query to each selected machine)</li>
+<li>一个 aggregator 将这些 ranked list 合并(merge-sort)成最终的有序文档集合。(an aggregator assembles them into a final ranked list of doc ids)</li>
+<li>其它机器对每个结果来寻找 title, urls, etc.。（other machines looks up titles, URLs, etc., for each result, a similar partitioning/pooling strategy is used for documents）</li>
+</ul>
+<h2 id="Tiered-indexes"><a href="#Tiered-indexes" class="headerlink" title="Tiered indexes"></a>Tiered indexes</h2><p>另一种分布式的 index 是将 web page 进行分层，10% 为 tier 1，是高价值的网页，其余 90% 是 tier 2，是低价值的网页。query 过来我们先从 tier 1 找，如果 good results 不够，再往 tier 2 找。 所以问题来了，<strong>怎么找 top tier(s)？</strong></p>
+<ul>
+<li>page rank 较高的网页，或来自 page rank 较高的网站的网页</li>
+<li>对之前的一些常见 query 非常重要的网页（排名高，点击率高，停留时间长）</li>
+<li>网址较短的网页（更可能是主页）</li>
+<li>spam 分数较低的网页</li>
+</ul>
+<p>Tiered index 的优势如下：</p>
+<ul>
+<li>降低了大多数 query 的搜索成本，一个完整的搜索过程比 tier 1 的搜索要找 10x 的机器。</li>
+<li>提高了大多数 query 的搜索质量，因为它更关注 “good” pages.</li>
+</ul>
+<p><strong>什么情况下会去找 tier 2?</strong></p>
+<ul>
+<li>匹配 query 的 Tier 1 的网页太少</li>
+<li>query 非常少见</li>
+</ul>
+<h2 id="Index-Construction"><a href="#Index-Construction" class="headerlink" title="Index Construction"></a>Index Construction</h2><p>建立分布式索引用的框架是 MapReduce，基本过程是 Input reader –&gt; Map –&gt; Combine –&gt; Shuffle –&gt; Reduce。<br>从最基本的 binary inverted list 进行示范，format 是 (term,[docids]) 或者 (term,[docid,docid,…])，注意这里的 docid 是 internal document id（转化成了 integer） 而不是原来的 id。</p>
+<h3 id="Mapper"><a href="#Mapper" class="headerlink" title="Mapper"></a>Mapper</h3><p>每个 Map task 相当于一个 document parser</p>
+<ul>
+<li>input: a stream of documents</li>
+<li>output: a stream of (term,docid) tuples<br>eg. (men,1)(and,1)(women,1)…(once,2)(upon,2)</li>
+</ul>
+<h3 id="Shuffle／Sort"><a href="#Shuffle／Sort" class="headerlink" title="Shuffle／Sort"></a>Shuffle／Sort</h3><p>Shuffle 的过程相当于 route tuples 到 Reducers 里。在 Shuffle/Sort 中，都是 shuffle/sort by key，而不是 by value。</p>
+<ul>
+<li>input: (t5,docid1)(t1,docid3)(t1,docid1)…</li>
+<li>output: (t1,docid3)(t1,docid1)(t5,docid1)…</li>
+</ul>
+<h3 id="Redcuer"><a href="#Redcuer" class="headerlink" title="Redcuer"></a>Redcuer</h3><p>Reducer 的作用就是将 stream of keys 转化成 streams of inverted lists。Reducer 会 sort values 也就是 docids，然后建立 inverted list，这里要保证的是最长的 inverted list 必须能够 fit in memory。</p>
+<ul>
+<li>input: (men,1)(men,127)(men,49)(men,23)…</li>
+<li>ouput: (men,[df:492,docids:1,23,49,127,…])</li>
+</ul>
+<h3 id="Improvement"><a href="#Improvement" class="headerlink" title="Improvement"></a>Improvement</h3><p>这个流程下来的效率并不高，因为文档里所有 unique term 都会产生一个 tuple，像 WSJ’87-92 (533 MB of text) 就会产生 20 million 的 tuple，每个 tuple 都会 shuffle 到 reducers 里，进 reducer 前还要先 sort，这个过程特别耗时。所以我们会用 Combiner 来提高效率。Combiner 的作用和 reducer 差不多，不过它是在每个 mapper 里进行的，它把每个 mapper 里的 docid 先进行了合并。(t1,docid1)(t2,docid1)(t4,docid2)…-&gt;(t1,[docid1,docid18,…])。这样的好处是需要 shuffle 的 tuple 更少，需要 hash 的 key 更少，需要进行 movement operation 的数据也更少，另外，需要 reduce 的 tuple 更少，需要 sort 的 tuple 也更少。<br>改进后的框架如下：</p>
+<ol>
+<li><strong>Map:</strong><br>$(docid_1,content_1)$ -&gt; $(t_1,ilist_{1,1})(t_2,ilist_{2,1})(t_3,ilist_{3,1})$</li>
+<li><strong>Combine:</strong><br>Sort by t &amp; combine $(t_1 [ilist_{1,2} ilist_{1,3} ilist_{1,1},…])$-&gt;$(t_1,ilist_{1,27})$<br>每个 output inverted list 包含了一系列文档</li>
+<li><strong>Shuffle by t</strong></li>
+<li><strong>Sort by t</strong><br>$(t_4 ilist_{4,1}) (t_1 ilist_{1,3})$-&gt;$(t_1,ilist_{1,2})(t_1,ilist_{1,4})(t_4,ilist_{4,1})$</li>
+<li><strong>Reduce</strong><br>$(t_1 [ilist_{1,2} ilist_{1,1} ilist_{1,4},…])$-&gt;$(t_1,ilist_final)$</li>
+</ol>
+<p>$ilist_{i,j}$: the j’th inverted list fragment for term i</p>
+<p>注意每个 reducer 里的 inverted list 都是完整的，每个 reducer 相当于存了个 result block，每个 block 包括不同的 term，每个 term 只在一个 block 里出现。</p>
+<p>如果要创建 partitioned inverted list，只用在 key 里加上一个 partition id 即可。</p>
+<ol>
+<li><strong>Map:</strong><br>$(docid_1,content_1)$ -&gt; $([p,t_1],ilist_{1,1})([p,t_2],ilist_{2,1})([p,t_3],ilist_{3,1})$</li>
+<li><strong>Combine:</strong><br>Sort by t &amp; combine $([p,t_1] [ilist_{1,2} ilist_{1,3} ilist_{1,1},…])$-&gt;$([p,t_1],ilist_{1,27})$<br>每个 output inverted list 包含了一系列文档</li>
+<li><strong>Shuffle by p</strong></li>
+<li><strong>Sort by [p,t]</strong><br>$([p,t_4] ilist_{4,1}) ([p,t_1] ilist_{1,3})$-&gt;$([p,t_1],ilist_{1,2})([p,t_1],ilist_{1,4})([p,t_4],ilist_{4,1})$</li>
+<li><strong>Reduce</strong><br>$([p,t_1] [ilist_{1,2} ilist_{1,1} ilist_{1,4},…])$-&gt;$([p,t_1],ilist_final)$</li>
+</ol>
+<h1 id="Inverted-list-compression"><a href="#Inverted-list-compression" class="headerlink" title="Inverted list compression"></a>Inverted list compression</h1><p>概念上来讲 inverted list 看起来像一个 object</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># apple</div><div class="line">df: 4356</div><div class="line">docid: 42</div><div class="line">tf: 3</div><div class="line">locs: 14</div><div class="line">      83</div><div class="line">      157</div><div class="line">      94</div><div class="line">docid: 94</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>而实际上它在磁盘中只是一串数字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">4356</div><div class="line">42</div><div class="line">3</div><div class="line">14</div><div class="line">83</div><div class="line">157</div><div class="line">94</div></pre></td></tr></table></figure>
+<p>通常 intered list 会被压缩，目的不同，选择的压缩方法也就不同。要节省空间我们就用 aggressive compression algorithms，要节省时间我们就用 simple compression algorithms。现在我们最主要的目的是节省 query 时间，用的压缩算法主要有</p>
+<ul>
+<li>Gap encoding</li>
+<li>Restricted variable-length(RVL) encoding</li>
+</ul>
+<h2 id="Delta-Gap"><a href="#Delta-Gap" class="headerlink" title="Delta Gap"></a>Delta Gap</h2><p>Delta Gap 的基本思想是保存数字的差值而不是数字本身，意义在于</p>
+<ul>
+<li>增加较小的数字的概率</li>
+<li>更 skewed 的分布</li>
+<li>降低信息熵</li>
+</ul>
+<h2 id="Variable-Byte-Encoding"><a href="#Variable-Byte-Encoding" class="headerlink" title="Variable Byte Encoding"></a>Variable Byte Encoding</h2><p>Variable Byte Encoding 存了一串 bytes，每个 byte 由开头 1 位 flag 和 7 位的 payload（the number）组成。flag 为 0，表示不是最后一个 byte，flag 为 1 表示这是最后一个 byte。通过连接 payload 来重建 number。</p>
+<p>好处是编码和解码的效率都很高，可以找到第 n 位数字而不用 decode 之前的数字。</p>
+<p>Example</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">[0..2^7-1]:      1 byte : 1xxxxxxx</div><div class="line">[2^7...2^14-1]:  2 bytes: 0xxxxxxx1xxxxxxx</div><div class="line">[2^14...2^21-1]: 3 bytes: 0xxxxxxx0xxxxxxx1xxxxxxx</div><div class="line">...</div><div class="line"></div><div class="line">Decimal: 5</div><div class="line">Binary: 00000000 00000000 00000000 00000101</div><div class="line"># 照抄最后7位，第一位补上1</div><div class="line">Compressed: 10000101</div><div class="line"></div><div class="line">Decimal: 127</div><div class="line">Binary: 00000000 00000000 00000000 01111111</div><div class="line"># 照抄最后7位，第一位补上1</div><div class="line">Compressed: 11111111</div><div class="line"></div><div class="line">Decimal: 128</div><div class="line">Binary: 00000000 00000000 00000000 10000000</div><div class="line"># 照抄最后7位，第一位补上0，再往前找7位，照抄，第一位补上1</div><div class="line">Compressed: 00000000 10000001</div><div class="line"></div><div class="line">Decimal: 131</div><div class="line">Binary: 00000000 00000000 00000000 10000011</div><div class="line"># 照抄最后7位，第一位补上0，再往前找7位，照抄，第一位补上1</div><div class="line">Compressed: 00000011 10000001</div></pre></td></tr></table></figure>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>最高效的压缩算法比 variable byte encoding 节省 15%－20% 的空间，但是比 restricted variable length encoding 要慢。注意我们这里要把握的原则是 <strong>“Disks are cheap, and speed is important”</strong>，所以 Restricted variable length compression 还是非常通用的。</p>
+<p>压缩不包含地址信息的 inverted file，所用空间是 original text 的 10%，压缩包含地址信息的 inverted file，所用空间是 original text 的 15%-20%。</p>
+<h1 id="Inverted-list-Optimization"><a href="#Inverted-list-Optimization" class="headerlink" title="Inverted list Optimization"></a>Inverted list Optimization</h1><h2 id="Skip-lists"><a href="#Skip-lists" class="headerlink" title="Skip lists"></a>Skip lists</h2><p>我们可以跳过一些文档来减少 I/O，减少计算。</p>
+<h3 id="Operators"><a href="#Operators" class="headerlink" title="Operators"></a>Operators</h3><p>#NEAR,#WINDOW,#SYN,Boolean AND，skip lists 在这些 operator 中会非常有效。回顾 #NEAR 的算法，假设 query 是 #NEAR/3(a b)，包含 a 的第一个 docid 是 59356，包含 b 的第一个 docid 是 43，之前的做法是让 b 的 doc pointer 不断指向 next，直到 a,b 的pointer 指向同一篇文档，如果考虑 skip lists，就可以直接指向 a 的 docid，（调用 docIteratorAdvanceTo(doc_id_a)方法）。</p>
+<h3 id="Score-calculation-Top-Docs"><a href="#Score-calculation-Top-Docs" class="headerlink" title="Score calculation (Top-Docs)"></a>Score calculation (Top-Docs)</h3><p>有些 inverted list 太长了，而大多 query 只需要返回 &lt;100 的文档，所以我们可以截取 inverted list 里 top docs 的部分，这样就能提高效率，代价是 更低的召回率。</p>
+<p><strong>怎么找到 Top-Docs</strong></p>
+<ul>
+<li>tf</li>
+<li>PageRank</li>
+</ul>
+<p><strong>怎么对 Top-Docs 排序</strong></p>
+<ul>
+<li>Order by doc id</li>
+<li>Order by tf</li>
+</ul>
+<p><strong>How many terms are frequent enough to have a top-docs list?</strong><br>根据 <a href="http://www.shuang0420.com/2016/07/10/Tfidf总结笔记/">Zipf’s Law</a><br>$$Rank * Frequency = A * N$$</p>
+<p>所以 ctf&gt;=800 的 term 大概占比 ${A*N/800 \over A * N}=1/800=0.125%$</p>
+<p><strong>why 800?</strong><br>假设一个 inverted list 有5个 integer，没压缩就有 16 bytes，30%压缩比，压缩了有 5 bytes，linux filesystem page size是 4096 bytes, 所以有4096/5=819条 inverted list 能 fit in one page</p>
+<p>假设 vocabulary 有 1,000,000 个 term，那么大概只有 1,250 个 top-docs lists，每个 list 大概 4-8KB，一共占 5-10 MB。</p>
+<h2 id="Multiple-inverted-lists-per-term"><a href="#Multiple-inverted-lists-per-term" class="headerlink" title="Multiple inverted lists per term"></a>Multiple inverted lists per term</h2><p>有些 operator 并不需要 tf，像 unranked boolean operators， 有些 operator 并不需要 locations，像 #SUM,#WEIGHT,#AND,#OR,#ANDNOT,…，而 inverted lists with locations 会产生 I/O 浪费，对没有 location 的 inverted list，我们只用存 docid, tf 两个 integer，而对存了 location 的 inverted list,假定我们对每篇文档多用了 1.5 个 integer，那么我们其实浪费了 42% 的 I/O。 所以对于每个 term，我们可以存两份 inverted list，一份有 location，一份没有，对不需要 location 的 operator，我们就直接访问没有location 的 inverted list，这样就能避免不必要的 I/O，当然代价是额外的磁盘空间。</p>
+<p><strong>我们要对每个 term 都存两个 inverted list 吗？</strong> 其实并不需要。因为大概只有 0.125% 对 term 有 topdocs/champion list，其它 term 对 inverted list 都很短。所以我们只用对 frequent terms 建两个 inverted list 就可以啦。</p>
+<h1 id="Index-updates"><a href="#Index-updates" class="headerlink" title="Index updates"></a>Index updates</h1><p>corpus 并不是静态的，随着文档的增加，我们需要将新的 term 加入词典，对已有的 inverted list 进行更新，然而这个代价非常的大。最简单的索引更新方法是 <strong>周期性地对 corpus 进行索引重构</strong>，如果 corpus 更新次数不多，而且能接受新文档检索的一定延迟，也有足够资源支持建立新索引时让旧索引继续工作，那么周期性索引重构不失为一种好选择。 另外一种解决方法是保持两个索引：一个主索引，一个辅助索引，辅助索引用于存储新文档信息，保存在内存中，检索时可以同时遍历两个索引并将结果合并。如果有文档删除，可以把删除的 docid 记录在一个 delete list 里，在返回结果之前利用它过滤掉已经删除的文档。文档的更新通过先删除后重新插入实现。当辅助索引变得很大时，就将它合并到主索引中。</p>
+<h1 id="Storing-document-structure"><a href="#Storing-document-structure" class="headerlink" title="Storing document structure"></a>Storing document structure</h1><h2 id="Treat-each-element-as-independent-of-other-elements"><a href="#Treat-each-element-as-independent-of-other-elements" class="headerlink" title="Treat each element as independent of other elements"></a>Treat each element as independent of other elements</h2><p>简单明了的结构，简单、高效，对 shallow structure 的 document 非常有效。 在这种结构下，我们分别保存每个 field 下的词汇，可以有一下两种形式</p>
+<ul>
+<li>FIELD::TERM</li>
+<li>(FIELD,TERM)</li>
+</ul>
+<h2 id="Treat-elements-as-part-of-an-element-hierarchy"><a href="#Treat-elements-as-part-of-an-element-hierarchy" class="headerlink" title="Treat elements as part of an element hierarchy"></a>Treat elements as part of an element hierarchy</h2><p>$Document \supset Section \supset Subsection$ 非常灵活的结构，更好的符合用户需求，基本思想是 <strong>“Terms in “Subsection” should also appear in “Section””</strong> 对 complex structure 非常有效。</p>
+<h3 id="Storing-fields-as-trees"><a href="#Storing-fields-as-trees" class="headerlink" title="Storing fields as trees"></a>Storing fields as trees</h3><p><img src="http://7xu83c.com1.z0.glb.clouddn.com/tree.png" alt=""></p>
+<p>这种方式代价太高，I/O 和内存代价都很高。做个简单计算</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">20 bytes/node * 100 nodes/doc * 1,000,000 docs=2GB</div></pre></td></tr></table></figure>
+<h3 id="Storing-fields-as-inverted-lists"><a href="#Storing-fields-as-inverted-lists" class="headerlink" title="Storing fields as inverted lists"></a>Storing fields as inverted lists</h3><p>多存一份 field 的 inverted list，包含 field 起始和终止位置。然后通过这个位置区间找到 term inverted list 中符合条件的 location。 <img src="http://7xu83c.com1.z0.glb.clouddn.com/inverted_list.png" alt=""></p>
+<h2 id="Indri-Index-Components"><a href="#Indri-Index-Components" class="headerlink" title="Indri Index Components"></a>Indri Index Components</h2><h3 id="Statistic-files"><a href="#Statistic-files" class="headerlink" title="Statistic files"></a>Statistic files</h3><p><img src="http://7xu83c.com1.z0.glb.clouddn.com/Indri_static_file.png" alt=""></p>
+<h3 id="Term-dictionaries"><a href="#Term-dictionaries" class="headerlink" title="Term dictionaries"></a>Term dictionaries</h3><p><img src="http://7xu83c.com1.z0.glb.clouddn.com/Indri_term_diction.png" alt=""></p>
+<h3 id="Inverted-files"><a href="#Inverted-files" class="headerlink" title="Inverted files"></a>Inverted files</h3><p><img src="http://7xu83c.com1.z0.glb.clouddn.com/Indri_inverted.png" alt=""></p>
+<h3 id="Compressed-collection"><a href="#Compressed-collection" class="headerlink" title="Compressed collection"></a>Compressed collection</h3><p><img src="http://7xu83c.com1.z0.glb.clouddn.com/indri_compress.png" alt=""></p>
+<h2 id="Lucene-Index"><a href="#Lucene-Index" class="headerlink" title="Lucene Index"></a>Lucene Index</h2><p>略</p>
+<blockquote>
+<p>参考链接:<br><a href="http://boston.lti.cs.cmu.edu/classes/11-642/" target="_blank" rel="external">Search Engines: 11-442 / 11-642</a><br>本文图片来自书本 Introduction to Information Retrieval 和 Jamie Callen 的 slides。<br><a href="http://mp.weixin.qq.com/s?__biz=MzA5NTcyMjg1Nw==&amp;mid=401947034&amp;idx=1&amp;sn=572787750d0083b995c1e5dda00d0d70&amp;scene=1&amp;srcid=12312wNHo2HWD6o6Gs2czbPB&amp;from=groupmessage&amp;isappinstalled=0#wechat_redirect" target="_blank" rel="external">搜索引擎原理扫盲</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/Search-Engines/" rel="tag">#Search Engines</a>
+          
+            <a href="/tags/信息检索/" rel="tag">#信息检索</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/10/Search Engines笔记 - Pseudo Relevance Feedback/" rel="next" title="Search Engines笔记 - Pseudo Relevance Feedback">
+                <i class="fa fa-chevron-left"></i> Search Engines笔记 - Pseudo Relevance Feedback
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/15/Search Engines笔记 - Cache/" rel="prev" title="Search Engines笔记 - Cache">
+                Search Engines笔记 - Cache <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Single-Processor-单机版"><span class="nav-number">2.</span> <span class="nav-text">Single Processor(单机版)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Block-sort-based-indexing-BSBI"><span class="nav-number">2.1.</span> <span class="nav-text">Block sort-based indexing(BSBI)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Single-pass-in-memory-indexing-SPIMI"><span class="nav-number">2.2.</span> <span class="nav-text">Single-pass in-memory indexing(SPIMI)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Distributed-indexes"><span class="nav-number">3.</span> <span class="nav-text">Distributed indexes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Size-of-web-search-engine-index"><span class="nav-number">3.1.</span> <span class="nav-text">Size of web search engine index</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hardware"><span class="nav-number">3.2.</span> <span class="nav-text">Hardware</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Partitioned-indexes"><span class="nav-number">3.3.</span> <span class="nav-text">Partitioned indexes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sharding"><span class="nav-number">3.3.1.</span> <span class="nav-text">Sharding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Replication"><span class="nav-number">3.3.2.</span> <span class="nav-text">Replication</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Query-evalution"><span class="nav-number">3.3.3.</span> <span class="nav-text">Query evalution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tiered-indexes"><span class="nav-number">3.4.</span> <span class="nav-text">Tiered indexes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Index-Construction"><span class="nav-number">3.5.</span> <span class="nav-text">Index Construction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mapper"><span class="nav-number">3.5.1.</span> <span class="nav-text">Mapper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shuffle／Sort"><span class="nav-number">3.5.2.</span> <span class="nav-text">Shuffle／Sort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redcuer"><span class="nav-number">3.5.3.</span> <span class="nav-text">Redcuer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Improvement"><span class="nav-number">3.5.4.</span> <span class="nav-text">Improvement</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inverted-list-compression"><span class="nav-number">4.</span> <span class="nav-text">Inverted list compression</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Delta-Gap"><span class="nav-number">4.1.</span> <span class="nav-text">Delta Gap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Variable-Byte-Encoding"><span class="nav-number">4.2.</span> <span class="nav-text">Variable Byte Encoding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">4.3.</span> <span class="nav-text">Summary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inverted-list-Optimization"><span class="nav-number">5.</span> <span class="nav-text">Inverted list Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Skip-lists"><span class="nav-number">5.1.</span> <span class="nav-text">Skip lists</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Operators"><span class="nav-number">5.1.1.</span> <span class="nav-text">Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Score-calculation-Top-Docs"><span class="nav-number">5.1.2.</span> <span class="nav-text">Score calculation (Top-Docs)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiple-inverted-lists-per-term"><span class="nav-number">5.2.</span> <span class="nav-text">Multiple inverted lists per term</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Index-updates"><span class="nav-number">6.</span> <span class="nav-text">Index updates</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Storing-document-structure"><span class="nav-number">7.</span> <span class="nav-text">Storing document structure</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Treat-each-element-as-independent-of-other-elements"><span class="nav-number">7.1.</span> <span class="nav-text">Treat each element as independent of other elements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Treat-elements-as-part-of-an-element-hierarchy"><span class="nav-number">7.2.</span> <span class="nav-text">Treat elements as part of an element hierarchy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Storing-fields-as-trees"><span class="nav-number">7.2.1.</span> <span class="nav-text">Storing fields as trees</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Storing-fields-as-inverted-lists"><span class="nav-number">7.2.2.</span> <span class="nav-text">Storing fields as inverted lists</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Indri-Index-Components"><span class="nav-number">7.3.</span> <span class="nav-text">Indri Index Components</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Statistic-files"><span class="nav-number">7.3.1.</span> <span class="nav-text">Statistic files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Term-dictionaries"><span class="nav-number">7.3.2.</span> <span class="nav-text">Term dictionaries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inverted-files"><span class="nav-number">7.3.3.</span> <span class="nav-text">Inverted files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compressed-collection"><span class="nav-number">7.3.4.</span> <span class="nav-text">Compressed collection</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lucene-Index"><span class="nav-number">7.4.</span> <span class="nav-text">Lucene Index</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/10/14/Search Engines笔记 - Index/';
+      var disqus_title = "Search Engines笔记 - Index Construction";
+      var disqus_url = 'http://www.shuang0420.com/2016/10/14/Search Engines笔记 - Index/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

@@ -1,0 +1,988 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,Search Engines,信息检索," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 11642 的课程笔记。这一篇概括了用户信息需求的分类、查询语句的结构以及查询的前期处理过程(非结构化的查询语句-&amp;gt;结构化的查询语句)。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Search Engines笔记 - Information Needs">
+<meta property="og:url" content="http://www.shuang0420.com/2016/10/02/Search Engines笔记 - Information Needs/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 11642 的课程笔记。这一篇概括了用户信息需求的分类、查询语句的结构以及查询的前期处理过程(非结构化的查询语句-&amp;gt;结构化的查询语句)。">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Search Engines笔记 - Information Needs">
+<meta name="twitter:description" content="CMU 11642 的课程笔记。这一篇概括了用户信息需求的分类、查询语句的结构以及查询的前期处理过程(非结构化的查询语句-&amp;gt;结构化的查询语句)。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/10/02/Search Engines笔记 - Information Needs/"/>
+
+
+  <title> Search Engines笔记 - Information Needs | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Search Engines笔记 - Information Needs
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-10-02T21:59:21+08:00" content="2016-10-02">
+              2016-10-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Search-Engines/" itemprop="url" rel="index">
+                    <span itemprop="name">Search Engines</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/02/Search Engines笔记 - Information Needs/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/02/Search Engines笔记 - Information Needs/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 11642 的课程笔记。这一篇概括了用户信息需求的分类、查询语句的结构以及查询的前期处理过程(非结构化的查询语句-&gt;结构化的查询语句)。 <a id="more"></a></p>
+<h1 id="Query-type"><a href="#Query-type" class="headerlink" title="Query type"></a>Query type</h1><ul>
+<li>Informational(39%)<br>像 iphones 之类，用户想了解一个 topic。</li>
+<li>Transactional(36%)<br>像购物、买机票之类，用户想找个网站进行交易，但是并没有特定的 destination.</li>
+<li>Navigational(25%)<br>像 CMU 网站之类的，用户有一个特定的想要浏览的 location/destination</li>
+</ul>
+<h1 id="Query-language"><a href="#Query-language" class="headerlink" title="Query language"></a>Query language</h1><p>一条标准的 query 分为 3 部分。</p>
+<ul>
+<li>Source of information: fields, XML elements, metadata</li>
+<li>Query operators: AND, OR, NEAR/n, …</li>
+<li>Rules: 怎样使用这些 operators (顺序、权重等)</li>
+</ul>
+<p>每一条 query 都会被转化成一个结构化的查询语句。</p>
+<h2 id="Query-operators"><a href="#Query-operators" class="headerlink" title="Query operators"></a>Query operators</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Boolean operators: AND, OR, AND-NOT</div><div class="line">Distance operators: NEAR/n, WINDOW/n, SENTENCE/n, PARAGRAPH/n</div><div class="line">Extent(field) restrictions: BODY, TITLE, INLINK, ABSTRACT, AUTHOR,...</div><div class="line">Comparison operators: &lt;, &gt;, BEFORE, AFTER, ...</div><div class="line">Score operators: WEIGHT, AVERAGE, MAX, MIN, ...</div><div class="line">Synonym</div><div class="line">Filter-And-Rank(q1,q2): q1 forms a set, use q2 ranks it</div></pre></td></tr></table></figure>
+<h2 id="Query-Processing"><a href="#Query-Processing" class="headerlink" title="Query Processing"></a>Query Processing</h2><p>查询处理，这里最常用的是 #NEAR 和 #SYNONYM，对于一些词组(phrases)，搜索引擎会用 #NEAR 进行规范化，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">die-cast -&gt; #NEAR/1 (die cast)</div><div class="line">virginia beach -&gt; #NEAR/1 (virginia beach)</div><div class="line">barack obama -&gt; #NEAR/3 (barack obama)</div></pre></td></tr></table></figure></p>
+<p>对于一些缩写，或者拼写错误，一般会用 #SYNONYM 进行调整，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Abbreviations</div><div class="line">virginia -&gt; (virginia,va)</div><div class="line"></div><div class="line"># Spelliing correction:</div><div class="line">brittany -&gt; britney</div><div class="line">brittany -&gt; #SYNONYM (brittany,britney)</div></pre></td></tr></table></figure></p>
+<h2 id="Query-Reformulation"><a href="#Query-Reformulation" class="headerlink" title="Query Reformulation"></a>Query Reformulation</h2><p>Sequential-Dependency Models(SDM) 会将非结构化的查询转化成结构化的查询语句，一个 SDM query 分为三部分:</p>
+<ul>
+<li>Bag of words matches<br>作用是保证能找到东西。eg. #AND(q1,q2…qn)</li>
+<li>N-gram matches (ordered,phrase-like)<br>给匹配的 n-gram 提供了额外的权重。eg. #NEAR/1(q1,q2) #NEAR/1(q2,q3)…#NEAR/1(qn-1,qn)</li>
+<li>Short window matches (unordered, sentence-like)<br>给匹配的窗口提供了额外的权重。eg. #WINDOW/8(q1,q2)…#WINDOW/8(qn-1,qn)</li>
+</ul>
+<p>Eg.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">User Query:</div><div class="line">	sherwood regional library</div><div class="line"></div><div class="line">A sequential dependency model query:</div><div class="line">	#wand(</div><div class="line">		0.5 #and( sherwood regional library )</div><div class="line">		0.25 #and( #near/1( regional library )  #near/1( sherwood regional ) )</div><div class="line">		0.25 #and( #window/8( regional library )  #window/8( sherwood regional ) ) )</div></pre></td></tr></table></figure></p>
+<p>Perl 代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/perl</div><div class="line"></div><div class="line">#</div><div class="line"># Perl subroutine that generates Indri dependence model queries.</div><div class="line">#</div><div class="line"># Written by: Don Metzler (metzler@cs.umass.edu)</div><div class="line"># Last update: 06/27/2005</div><div class="line">#</div><div class="line"># Feel free to distribute, edit, modify, or mangle this code as you see fit. If you make any interesting</div><div class="line"># changes please email me a copy.</div><div class="line">#</div><div class="line"># For more technical details, see:</div><div class="line">#</div><div class="line">#    * Metzler, D. and Croft, W.B., &quot;A Markov Random Field Model for Term Dependencies,&quot; ACM SIGIR 2005.</div><div class="line">#</div><div class="line">#    * Metzler, D., Strohman T., Turtle H., and Croft, W.B., &quot;Indri at TREC 2004: Terabyte Track&quot;, TREC 2004.</div><div class="line">#</div><div class="line">#    * http://ciir.cs.umass.edu/~metzler/</div><div class="line">#</div><div class="line"># MODIFICATIONS</div><div class="line">#  - Updated by Jamie Callan:  02/11/2015</div><div class="line">#    Modified to support a less cryptic Indri-like query language.</div><div class="line">#    #combine --&gt; #and, #1 --&gt; #near/1, #weight --&gt; #wand, and #uw --&gt; #window/</div><div class="line">#</div><div class="line"># NOTES</div><div class="line">#</div><div class="line">#    * this script assumes that the query string has already been parsed and that all characters</div><div class="line">#      that are not compatible with Indri&apos;s query language have been removed.</div><div class="line">#</div><div class="line">#    * it is not advisable to do a &apos;full dependence&apos; variant on long strings because of the exponential</div><div class="line">#      number of terms that will result. it is suggested that the &apos;sequential dependence&apos; variant be</div><div class="line">#      used for long strings. either that, or split up long strings into smaller cohesive chunks and</div><div class="line">#      apply the &apos;full dependence&apos; variant to each of the chunks.</div><div class="line">#</div><div class="line">#    * the unordered features use a window size of 4 * number of terms within the phrase. this has been</div><div class="line">#      found to work well across a wide range of collections and topics. however, this may need to be</div><div class="line">#      modified on an individual basis.</div><div class="line">#</div><div class="line"></div><div class="line"># example usage</div><div class="line">print formulate_query( &quot;sherwood regional library&quot;, &quot;sd&quot;, 0.02, 0.49, 0.49 ) . &quot;\n\n&quot;;</div><div class="line">#print formulate_query( &quot;sherwood regional library&quot;, &quot;fd&quot;, 0.8, 0.1, 0.1 ) . &quot;\n\n&quot;;</div><div class="line"></div><div class="line">#</div><div class="line"># formulates a query based on query text and feature weights</div><div class="line">#</div><div class="line"># arguments:</div><div class="line">#    * query - string containing original query terms separated by spaces</div><div class="line">#    * type  - string. &quot;sd&quot; for sequential dependence or &quot;fd&quot; for full dependence variant. defaults to &quot;fd&quot;.</div><div class="line">#    * wt[0] - weight assigned to term features</div><div class="line">#    * wt[1] - weight assigned to ordered (#near) features</div><div class="line">#    * wt[2] - weight assigned to unordered (#window) features</div><div class="line">#</div><div class="line">sub formulate_query &#123;</div><div class="line">    my ( $q, $type, @wt ) = @_;</div><div class="line"></div><div class="line">    # trim whitespace from beginning and end of query string</div><div class="line">    $q =~ s/^\s+|\s+$//g;</div><div class="line"></div><div class="line">    my $queryT = &quot;#and( &quot;;</div><div class="line">    my $queryO = &quot;#and(&quot;;</div><div class="line">    my $queryU = &quot;#and(&quot;;</div><div class="line"></div><div class="line">    # generate term features (f_T)</div><div class="line">    my @terms = split(/\s+/ , $q);</div><div class="line">    my $term;</div><div class="line">    foreach $term ( @terms ) &#123;</div><div class="line">	$queryT .= &quot;$term &quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    my $num_terms = @terms;</div><div class="line"></div><div class="line">    # skip the rest of the processing if we&apos;re just</div><div class="line">    # interested in term features or if we only have 1 term</div><div class="line">    if( ( $wt[1] == 0.0 &amp;&amp; $wt[2] == 0.0 ) || $num_terms == 1 ) &#123;</div><div class="line">	return $queryT . &quot;)&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    # generate the rest of the features</div><div class="line">    my $start = 1;</div><div class="line">    if( $type eq &quot;sd&quot; ) &#123; $start = 3; &#125;</div><div class="line">    for( my $i = $start ; $i &lt; 2 ** $num_terms ; $i++ ) &#123;</div><div class="line">	my $bin = unpack(&quot;B*&quot;, pack(&quot;N&quot;, $i)); # create binary representation of i</div><div class="line">	my $num_extracted = 0;</div><div class="line">	my $extracted_terms = &quot;&quot;;</div><div class="line"></div><div class="line">	# get query terms corresponding to &apos;on&apos; bits</div><div class="line">	for( my $j = 0 ; $j &lt; $num_terms ; $j++ ) &#123;</div><div class="line">	    my $bit = substr($bin, $j - $num_terms, 1);</div><div class="line">	    if( $bit eq &quot;1&quot; ) &#123;</div><div class="line">		$extracted_terms .= &quot;$terms[$j] &quot;;</div><div class="line">		$num_extracted++;</div><div class="line">	    &#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	if( $num_extracted == 1 ) &#123; next; &#125; # skip these, since we already took care of the term features...</div><div class="line">	if( $bin =~ /^0+11+[^1]*$/ ) &#123; # words in contiguous phrase, ordered features (f_O)</div><div class="line">	    $queryO .= &quot; #near/1( $extracted_terms) &quot;;</div><div class="line">	&#125;</div><div class="line">	$queryU .= &quot; #window/&quot; . 4*$num_extracted . &quot;( $extracted_terms) &quot;; # every subset of terms, unordered features (f_U)</div><div class="line">	if( $type eq &quot;sd&quot; ) &#123; $i *= 2; $i--; &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    my $query = &quot;#wand(&quot;;</div><div class="line">    if( $wt[0] != 0.0 &amp;&amp; $queryT ne &quot;#and( &quot; ) &#123; $query .= &quot; $wt[0] $queryT)&quot;; &#125;</div><div class="line">    if( $wt[1] != 0.0 &amp;&amp; $queryO ne &quot;#and(&quot; ) &#123; $query .= &quot; $wt[1] $queryO)&quot;; &#125;</div><div class="line">    if( $wt[2] != 0.0 &amp;&amp; $queryU ne &quot;#and(&quot; ) &#123; $query .= &quot; $wt[2] $queryU)&quot;; &#125;</div><div class="line"></div><div class="line">    if( $query eq &quot;#wand(&quot; ) &#123; return &quot;&quot;; &#125; # return &quot;&quot; if we couldn&apos;t formulate anything</div><div class="line"></div><div class="line">    return $query . &quot; )&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>另外常用的模型还有 <a href="http://www.shuang0420.com/2016/10/10/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Pseudo%20Relevance%20Feedback/">query expansion</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/Search-Engines/" rel="tag">#Search Engines</a>
+          
+            <a href="/tags/信息检索/" rel="tag">#信息检索</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/02/AES 和 RSA笔记/" rel="next" title="AES 和 RSA 笔记">
+                <i class="fa fa-chevron-left"></i> AES 和 RSA 笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/07/Hexo local search错误解决/" rel="prev" title="Hexo local search 错误解决">
+                Hexo local search 错误解决 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Query-type"><span class="nav-number">1.</span> <span class="nav-text">Query type</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Query-language"><span class="nav-number">2.</span> <span class="nav-text">Query language</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Query-operators"><span class="nav-number">2.1.</span> <span class="nav-text">Query operators</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Query-Processing"><span class="nav-number">2.2.</span> <span class="nav-text">Query Processing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Query-Reformulation"><span class="nav-number">2.3.</span> <span class="nav-text">Query Reformulation</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/10/02/Search Engines笔记 - Information Needs/';
+      var disqus_title = "Search Engines笔记 - Information Needs";
+      var disqus_url = 'http://www.shuang0420.com/2016/10/02/Search Engines笔记 - Information Needs/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

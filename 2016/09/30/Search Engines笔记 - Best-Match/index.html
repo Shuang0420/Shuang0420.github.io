@@ -1,0 +1,1113 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,Search Engines,信息检索," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 11642 的课程笔记。Best match模型衡量的是一篇文档与 information need 的匹配程度，与 Exact match模型（匹配／不匹配）相比更注重用户体验，不管有没有匹配 Best match 都会返回文档结果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Search Engines笔记 - Best-Match">
+<meta property="og:url" content="http://www.shuang0420.com/2016/09/30/Search Engines笔记 - Best-Match/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 11642 的课程笔记。Best match模型衡量的是一篇文档与 information need 的匹配程度，与 Exact match模型（匹配／不匹配）相比更注重用户体验，不管有没有匹配 Best match 都会返回文档结果。">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/cos.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/inc_ltc_sim.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/length_bias_sim.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/lnu.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/lucene-tfidf.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/bm25.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/lucene_bm25.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/JM_smo.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/query_likeli.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/KL_sim.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/Indri_framework.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/Indri_operator.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/Indri_default.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/Indri_default2.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/priors.png">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Search Engines笔记 - Best-Match">
+<meta name="twitter:description" content="CMU 11642 的课程笔记。Best match模型衡量的是一篇文档与 information need 的匹配程度，与 Exact match模型（匹配／不匹配）相比更注重用户体验，不管有没有匹配 Best match 都会返回文档结果。">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/cos.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/09/30/Search Engines笔记 - Best-Match/"/>
+
+
+  <title> Search Engines笔记 - Best-Match | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Search Engines笔记 - Best-Match
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-09-30T12:21:21+08:00" content="2016-09-30">
+              2016-09-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Search-Engines/" itemprop="url" rel="index">
+                    <span itemprop="name">Search Engines</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/30/Search Engines笔记 - Best-Match/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/09/30/Search Engines笔记 - Best-Match/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 11642 的课程笔记。Best match模型衡量的是一篇文档与 information need 的匹配程度，与 Exact match模型（匹配／不匹配）相比更注重用户体验，不管有没有匹配 Best match 都会返回文档结果。<br><a id="more"></a></p>
+<p>这一篇考虑的是 query dependent 的分数，网页打分的依据是文档和查询的相关性分数，也就是信息检索得分(IR score)。有很多理论来计算 IR score，这里主要介绍以下 4 种理论：</p>
+<ul>
+<li>向量空间 Vector space retrieval model(VSM)</li>
+<li>概率理论 Probabilistic retrieval model(BM25)</li>
+<li>统计语言模型 Statistical language model(query likelihood)</li>
+<li>推理网络 Inference networks(Indri)</li>
+</ul>
+<p>它们的公式其实都和 <a href="http://www.shuang0420.com/2016/07/10/Tfidf%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0/">tf-idf</a> 的公式相似。每个单词－文档组合都有一个tf-idf值。tf 表示此文档中这个单词出现的次数；df 表示含有这个单词的文档的数量。通常如果一个单词在文档中出现次数越多说明这个文档与这个单词相关性越大。但是有的单词太常用了，比如英文里“the”，“a” 在任何一个文档中都会大量出现。idf 就表示一个文档含有此单词的概率的倒数，用来消除常用词干扰。如果某个词或短语在一篇文章中出现的频率 TF 高，并且在其他文章中很少出现，则认为此词或者短语具有很好的类别区分能力，适合用来分类。</p>
+<p>Document Priors 指与 query 无关的用来评估文档价值的 estimates(query independent)，主要的 document priors 有 spam score, PageRank, length of url 等，与上面的算法结合可以综合评估网页的分数。</p>
+<h1 id="VSM"><a href="#VSM" class="headerlink" title="VSM"></a>VSM</h1><p>假设文档 d 对应的向量用 $\overrightarrow {V}(d)$ 表示，每个维度对应一个 term，向量分量一般可以采用 tf-idf 权重计算方式。一组文档的集合看作向量空间的多个向量，每个 term 对应一个坐标轴，然后在向量空间下进行相似度计算。</p>
+<h2 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h2><p>文档与查询都是高维空间中的一个向量</p>
+<ul>
+<li>文档是词语组成的向量</li>
+<li>词语是文档组成的向量</li>
+<li>查询是词语组成的向量</li>
+</ul>
+<h2 id="相似度计算"><a href="#相似度计算" class="headerlink" title="相似度计算"></a>相似度计算</h2><p>相似度的计算方法。</p>
+<ul>
+<li>Inner product</li>
+<li>Dice coefficient</li>
+<li>Jackard coefficient</li>
+<li>Cosine correlation</li>
+</ul>
+<h3 id="余弦相似度-cosine-similarity"><a href="#余弦相似度-cosine-similarity" class="headerlink" title="余弦相似度 (cosine similarity)"></a>余弦相似度 (cosine similarity)</h3><p>直接向量差(overlap measures)衡量相似度会产生下面的问题，</p>
+<ul>
+<li>并没有对向量长度进行归一化</li>
+<li>所有的 term 都被看作是同等重要的</li>
+</ul>
+<p>可能导致的结果是，两篇内容相似的文档向量的差向量可能很大，因为一篇文档可能比另一篇文档长很多。</p>
+<p>最常用的 similarity metric 还是 cosine similarity.<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/cos.png" alt=""></p>
+<p>关于 Vector Coefficient 我们需要考虑以下三点：</p>
+<ul>
+<li>Document term weight: 文档中每个 term 的重要性 ==&gt; tf -&gt; log(tf+1)</li>
+<li>Collection term weight: 文档集合中每个 term 的重要性  ==&gt; idf -&gt; $log{N \over df}+1$ (avoid idf=0)</li>
+<li>Length normalization: 对文档长度进行的补偿</li>
+</ul>
+<p><strong>关于文档长度：</strong></p>
+<ul>
+<li>长文档由于更可能包含匹配词语，因而更可能相关</li>
+<li>然而，如果两篇文档具有同样的相似值，用户更倾向于短文档，短文档更聚焦在用户信息需求上</li>
+<li>因此相似性计算中应该考虑文档长度(进行规范化)</li>
+</ul>
+<p>更进一步的 cosine-similarity，Inc.ltc<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/inc_ltc_sim.png" alt=""></p>
+<p>这个公式可以用作 #SUM 的计算，仅计算包含了查询词的文档的分数。</p>
+<h3 id="Length-Bias"><a href="#Length-Bias" class="headerlink" title="Length Bias"></a>Length Bias</h3><p>大多数的 similarity metrics 都会有一个 length bias，就是说短文档的分数被高估了，长文档的分数被低估了，<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/length_bias_sim.png" alt=""></p>
+<p>所以我们需要 pivote document length normalization，可以采用 Lnu.Ltu metric.<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/lnu.png" alt=""></p>
+<h2 id="Lucene-应用"><a href="#Lucene-应用" class="headerlink" title="Lucene 应用"></a>Lucene 应用</h2><p>Lucene 的检索过程：</p>
+<ol>
+<li>使用布尔查询检索到一个文档集合</li>
+<li>用 VSM 算法来对这个集合对文档进行排序</li>
+</ol>
+<p>Simplified Lucene’s tf.idf Ranker<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/lucene-tfidf.png" alt=""></p>
+<p>与 Inc.ltc 的不同</p>
+<ul>
+<li>tf weight 用了 sqrt(tf) 而不是 log(tf)+1，stronger reward for frequent terms in document</li>
+<li>idf weight 用了 square 而不是 idf，stronger penalty for frequent terms across corpus</li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><blockquote>
+<p>Key idea: Measure similarity among weighted term vectors</p>
+</blockquote>
+<p>Vector Space Retrieval Model 没有告诉我们怎么 set term weights，没有告诉我们怎么确定 similarity，也没有告诉我们怎么支持 query-independent weights，它的优点是灵活，缺点也是灵活，所有的东西都要我们自己设置。</p>
+<h1 id="Okapi-BM25"><a href="#Okapi-BM25" class="headerlink" title="Okapi BM25"></a>Okapi BM25</h1><p>BM25 十分重视 term frequency 和 document length，这里省略了公式推导过程，直接分析参数。<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/bm25.png" alt=""></p>
+<h2 id="k1"><a href="#k1" class="headerlink" title="k1"></a>k1</h2><p>如果 k1 取 0，则对应 BIM 模型，document term frequency 完全没有影响，rare word (idf)和 repeated query terms(query tf) dominate；如果 k1 取较大值，对应使用原始的 term frequency。</p>
+<h2 id="b"><a href="#b" class="headerlink" title="b"></a>b</h2><p>b (0&lt;=b&lt;1) 决定文档的缩放长度：b=1 表示基于文档长度对 term frequency 进行完全的缩放，b=0 表示归一化时不考虑文档长度因素，长文档更有可能排在前面。</p>
+<h2 id="k3"><a href="#k3" class="headerlink" title="k3"></a>k3</h2><p>如果查询很长，对于 query term 也可以采用类似的权重计算方法。对查询长度没有进行归一化（相当于b=0）。k3=0 表示 term frequency in query 并没有影响，(apple apple pie) 和 (apple pie) 完全一样。<br>这一项通常是由用户确定的，对应的 operator 是 $WSUM</p>
+<h2 id="参数优化"><a href="#参数优化" class="headerlink" title="参数优化"></a>参数优化</h2><p>整个公式的参数可以通过在单独的开发测试集上搜索最优参数来最大化检索性能，如网格搜索方法（grid search）。现有的试验中，参数的合理取值范围是 k1,k3 取 1.2~2，b 取 0.75。</p>
+<p>除了对用户查询提供 term frequency 计算方法外，在相关反馈中还可以考虑查询扩展，在已知的相关文档利用公式对 term 进行排序，并选取最靠前的多个 term 构成新的查询，再进行计算。</p>
+<h2 id="RSJ-weight"><a href="#RSJ-weight" class="headerlink" title="RSJ weight"></a>RSJ weight</h2><p>RSJ weight 和 idf 相似，都 favor rare words in corpus，因为 rare words 能更好的区分相关文档与不相关文档。RSJ 也有不足的地方。<br>如果 df=N/2，那么 RSJ weight 就会变成 log(1)=0，匹配一个 term 对文档分数没有任何影响。<br>如果 df&gt;N/2，RSJ weight=log(fraction)&lt;0，匹配一个经常出现的 term 会降低文档分数。</p>
+<p>通常的解决方案是，把 RSJ weight 设置成 $Max(0，log{N-df+0.5 \over df+0.5})$。如果我们用 idf 公式代替 RSJ weight，那么对 frequent words 的惩罚就会减小，尤其是对那些出现了 N/2 的词。</p>
+<p>最近，Lucene 转变了 ranking 算法，变成了 BM25 Ranker<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/lucene_bm25.png" alt=""></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p><strong>优点：</strong></p>
+<ul>
+<li>有很强的概率理论支持</li>
+<li>在新的环境中参数可以被调整</li>
+<li>在大量的 evalution 中都非常有效</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>经验调整参数</li>
+</ul>
+<h1 id="Query-Likelihood"><a href="#Query-Likelihood" class="headerlink" title="Query Likelihood"></a>Query Likelihood</h1><p>假定四个变量</p>
+<ul>
+<li>d: document</li>
+<li>$\theta_d$: language model for document d</li>
+<li>q: query</li>
+<li>$\theta_q$: language model for query q</li>
+</ul>
+<p>q 和 $\theta_q$，d 和 $\theta_d$ 不是同一个东西，然而为了方便表示，我们就用 q 直接表示，p(d|q) 代替 p(d|$\theta_q$)</p>
+<p>我们生成两个模型，一个是 document 的语言模型，一个是 query 的语言模型，有两种方案来对文档进行排序</p>
+<ul>
+<li>Rank d by $p(d|\theta_q)$     (query likelihood)</li>
+<li>Rank d by similarity of $\theta_d$ and $\theta_q$  (KL divergence)</li>
+</ul>
+<h2 id="Rank-by-P-d-q"><a href="#Rank-by-P-d-q" class="headerlink" title="Rank by P(d|q)"></a>Rank by P(d|q)</h2><p>给定一个 query，出现文档 d 的概率，query 一般很短，$\theta_q$ 非常的稀疏，它包含了很少的 term frequency 信息，所以我们用 Bayes rule 来转换它。</p>
+<p>$p(d|q)={p(q|d)p(d) \over p(q)}$<br>–&gt; 丢掉 document-independent term<br>$p(q|d)p(d)$<br>–&gt; 丢掉 constant term<br>$p(q|d)$<br>–&gt;<br>$\prod p(q_i|d)$</p>
+<p>于是问题就变成了怎么估计 $p(q_i|d)$</p>
+<h3 id="p-q-i-d"><a href="#p-q-i-d" class="headerlink" title="$p(q_i|d)$"></a>$p(q_i|d)$</h3><p>我们用最大似然 (Maximum likelihood estimation MLE)。<br>$$P_{MLE}(q_i|d)={tf_{q_i,d} \over length(d)}$$</p>
+<p><strong>是一个好的估计吗？</strong><br>首先它基于一篇文档，所以结果可能没那么准确，如果 document 里没有出现 $q_i$，那么结果就是 0，这相当于一个 boolean AND，所以 $q_i$ 是对 document 的一个不错的描述，即使它不在 document 中。</p>
+<p>所以我们要用 smoothing，来提高 MLE 的准确性，同时来预测没有出现过的词。</p>
+<h3 id="Smoothing"><a href="#Smoothing" class="headerlink" title="Smoothing"></a>Smoothing</h3><h4 id="Jelinek-Mercer-“Mixture-Model”-Smoothing"><a href="#Jelinek-Mercer-“Mixture-Model”-Smoothing" class="headerlink" title="Jelinek-Mercer(“Mixture Model”) Smoothing"></a>Jelinek-Mercer(“Mixture Model”) Smoothing</h4><p>$$p(q_i|d)=(1-\lambda)p_{MLE}(q_i|d)+ \lambda p_{MLE}(q_i|C)$$</p>
+<p>C 代表整个 collection，$\lambda$ 越小，smoothing 的作用越小，越适合短 query，$\lambda$ 越大，smoothing 的作用越大，越适合长 query。为什么？对短文档而言，通常每一个 query term 都要匹配，所以 idf weighting 并没有那么重要，越小的 smoothing 越好，而对于长 query 而言，大部分 query term 必须匹配，而另一部分可以不 match，所以 idf weighting 会更重要，就可以多 smoothing 一点。</p>
+<p>Jelinek-Mercer smoothing 的作用与 idf 类似，它能够区分文档集合里常见的和不常见的 term 。</p>
+<p>看一个具体例子，有两个 query term，一个 frequent 一个 rare。</p>
+<pre>p(apple|C)=0.01, p(ipod|C)=0.001</pre>
+
+<p>两篇文档</p>
+<pre>doc1: doclen=50,$tf\_{apple}=2$,$tf\_{ipod}=3$
+doc2: doclen=50,$tf\_{apple}=3$,$tf\_{ipod}=2$</pre>
+
+<p>没有 smoothing 前，两篇文档的 p(q|d)都是 0.0024</p>
+<pre>2/50 ＊ 3/50=0.0024
+3/50 ＊ 2/50=0.0024</pre>
+
+<p>JM Smooth 后，假设 $\lambda=0.4$</p>
+<pre>doc1: p(q|d)=(0.6* 2/50 + 0.4*0.01) * (0.6 * 3/50 + 0.4*0.001)=0.001019
+doc2: p(q|d)=(0.6* 3/50 + 0.4*0.01) * (0.6 * 2/50 + 0.4*0.001)=0.000976</pre>
+
+<p>这就发现，smooth 能够区分文档集合里常见的和不常见的 term。<br>我们也可以计算 doclen=50,$tf_{apple}=2$,$tf_{ipod}=2$ 的情况，看多加入一个 apple 或 ipod 后 p(q|d) 发生了什么，同样的，unsmoothed effect 对常见的和不常见的 term 并没有差别，但是 smooth 带来了显著差异。</p>
+<p>最后上张推导图<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/JM_smo.png" alt=""></p>
+<h4 id="Bayesian-Smoothing-With-Dirichlet-Priors"><a href="#Bayesian-Smoothing-With-Dirichlet-Priors" class="headerlink" title="Bayesian Smoothing With Dirichlet Priors"></a>Bayesian Smoothing With Dirichlet Priors</h4><p>$$p(q_i|d)={tf_{q_i,d}+ \mu p_{MLE}(q_i|C) \over length(d)+ \mu }$$</p>
+<p>$\mu$ 在 [1000-10000] 区间内比较好<br>Bayesian smoothing 是对文档长度的平滑，对短文档而言，$p(q_i|d)$ 的概率分布更不平滑，需要更大的 $\mu $，对长文档而言，概率分布更平滑，需要更小的 $\mu$.</p>
+<h3 id="Two-Stage-Smoothing"><a href="#Two-Stage-Smoothing" class="headerlink" title="Two-Stage Smoothing"></a>Two-Stage Smoothing</h3><p>可以结合以上两种平滑方式，得到<br>$$p(q_i|d)=(1- \lambda ){tf_{q_i,d}+ \mu p_{MLE}(q_i|C) \over length(d)+ \mu }+ \lambda p_{MLE}(q_i|C)$$</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/query_likeli.png" alt=""></p>
+<h2 id="Rank-by-similarity"><a href="#Rank-by-similarity" class="headerlink" title="Rank by similarity"></a>Rank by similarity</h2><p>KL Divergence<br>Kullback-Leibler 距离，也叫相对熵（Relative Entropy）。计算公式如下：<br>$$KL(p||q)=\sum p(x)log{p(x) \over q(x)}$$</p>
+<p>KL 距离不是对称的, KL(p||q)!=KL(q||p)，我们要计算的是 KL(q||d)，query 和 document 的相对熵，推导公式如下。<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/KL_sim.png" alt=""></p>
+<h2 id="Comparsion"><a href="#Comparsion" class="headerlink" title="Comparsion"></a>Comparsion</h2><p>两种方式其实是一样的，仔细看公式！<br>Query likelihood ranks by<br>$$p(q|d)=\prod p(q_i|d)$$</p>
+<p>KL diverge ranks by<br>$$\sum p(x)log{p(x) \over q(x)}$$</p>
+<h1 id="Inference-networks-Indri"><a href="#Inference-networks-Indri" class="headerlink" title="Inference networks(Indri)"></a>Inference networks(Indri)</h1><p><img src="http://7xu83c.com1.z0.glb.clouddn.com/Indri_framework.png" alt=""></p>
+<p>document + smoothing parameter($\alpha$ $\beta$) -&gt; language model($\theta$) -&gt; language model vocabulary(r)</p>
+<p>information needs(I)由 query(q) 表示，query 由 operator(c) 组成.</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/Indri_operator.png" alt=""></p>
+<p>在 Indri 中，#AND 认为所有的 argument 都是独立概率， #WSUM 认为所有的 argument 都用来估计同一个概率。<br>在实现 Indri 的 ranking algorithm 时，要注意的是我们必须实现一个 getDefaultScore，来处理 tf=0 的情况，以保证用户总能得到搜索结果。<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/Indri_default.png" alt=""><br><img src="http://7xu83c.com1.z0.glb.clouddn.com/Indri_default2.png" alt=""></p>
+<h1 id="Document-Priors"><a href="#Document-Priors" class="headerlink" title="Document Priors"></a>Document Priors</h1><p>Document Priors 指与 query 无关的用来评估文档价值的 estimates (query-independent estimates of the value of each document)，一般是根据文档本身的性质来决定的，主要的 document priors 有 spam score, PageRank, length of url 等。<br>在 BM25，query likelihood 和 KL divergence 中的使用。<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/priors.png" alt=""><br>Indri 中，prior 在 Query likelihood 中的表示为 #and(#prior(url) a b c)，在 KL divergence 中的表示为 #and(#prior(url) #and(a b c))</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/Search-Engines/" rel="tag">#Search Engines</a>
+          
+            <a href="/tags/信息检索/" rel="tag">#信息检索</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/25/Search Engines笔记 - Document Representation/" rel="next" title="Search Engines笔记 - Document Representations">
+                <i class="fa fa-chevron-left"></i> Search Engines笔记 - Document Representations
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/01/SHA-1和MD5笔记/" rel="prev" title="SHA-1和MD5 笔记">
+                SHA-1和MD5 笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#VSM"><span class="nav-number">1.</span> <span class="nav-text">VSM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思想"><span class="nav-number">1.1.</span> <span class="nav-text">思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相似度计算"><span class="nav-number">1.2.</span> <span class="nav-text">相似度计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#余弦相似度-cosine-similarity"><span class="nav-number">1.2.1.</span> <span class="nav-text">余弦相似度 (cosine similarity)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Length-Bias"><span class="nav-number">1.2.2.</span> <span class="nav-text">Length Bias</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lucene-应用"><span class="nav-number">1.3.</span> <span class="nav-text">Lucene 应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">1.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Okapi-BM25"><span class="nav-number">2.</span> <span class="nav-text">Okapi BM25</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#k1"><span class="nav-number">2.1.</span> <span class="nav-text">k1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#b"><span class="nav-number">2.2.</span> <span class="nav-text">b</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k3"><span class="nav-number">2.3.</span> <span class="nav-text">k3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数优化"><span class="nav-number">2.4.</span> <span class="nav-text">参数优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RSJ-weight"><span class="nav-number">2.5.</span> <span class="nav-text">RSJ weight</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">2.6.</span> <span class="nav-text">Summary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Query-Likelihood"><span class="nav-number">3.</span> <span class="nav-text">Query Likelihood</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rank-by-P-d-q"><span class="nav-number">3.1.</span> <span class="nav-text">Rank by P(d|q)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#p-q-i-d"><span class="nav-number">3.1.1.</span> <span class="nav-text">$p(q_i|d)$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Smoothing"><span class="nav-number">3.1.2.</span> <span class="nav-text">Smoothing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Jelinek-Mercer-“Mixture-Model”-Smoothing"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">Jelinek-Mercer(“Mixture Model”) Smoothing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bayesian-Smoothing-With-Dirichlet-Priors"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">Bayesian Smoothing With Dirichlet Priors</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Two-Stage-Smoothing"><span class="nav-number">3.1.3.</span> <span class="nav-text">Two-Stage Smoothing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rank-by-similarity"><span class="nav-number">3.2.</span> <span class="nav-text">Rank by similarity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Comparsion"><span class="nav-number">3.3.</span> <span class="nav-text">Comparsion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inference-networks-Indri"><span class="nav-number">4.</span> <span class="nav-text">Inference networks(Indri)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Document-Priors"><span class="nav-number">5.</span> <span class="nav-text">Document Priors</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/09/30/Search Engines笔记 - Best-Match/';
+      var disqus_title = "Search Engines笔记 - Best-Match";
+      var disqus_url = 'http://www.shuang0420.com/2016/09/30/Search Engines笔记 - Best-Match/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

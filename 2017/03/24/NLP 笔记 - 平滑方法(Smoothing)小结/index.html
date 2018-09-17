@@ -1,0 +1,1055 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,平滑,smoothing," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="系统总结下之前零零散散提到过的 smoothing 方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 笔记 - 平滑方法(Smoothing)小结">
+<meta property="og:url" content="http://www.shuang0420.com/2017/03/24/NLP 笔记 - 平滑方法(Smoothing)小结/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="系统总结下之前零零散散提到过的 smoothing 方法。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/3.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/4.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/5.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/9.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/8.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/6.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/7.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/8.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 笔记 - 平滑方法(Smoothing)小结">
+<meta name="twitter:description" content="系统总结下之前零零散散提到过的 smoothing 方法。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/03/24/NLP 笔记 - 平滑方法(Smoothing)小结/"/>
+
+
+  <title> NLP 笔记 - 平滑方法(Smoothing)小结 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                NLP 笔记 - 平滑方法(Smoothing)小结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-03-24T09:02:27+08:00" content="2017-03-24">
+              2017-03-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/CMU-11611/" itemprop="url" rel="index">
+                    <span itemprop="name">CMU 11611</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/24/NLP 笔记 - 平滑方法(Smoothing)小结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/24/NLP 笔记 - 平滑方法(Smoothing)小结/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>系统总结下之前零零散散提到过的 smoothing 方法。<br><a id="more"></a></p>
+<h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><p>我们来看一个概率模型，也就是 p(e)在 event space E 下的概率分布，模型很可能会用最大似然估计(MLE)，如下<br>$$P_{MLE}={c(x) \over \sum_ec(e)}$$</p>
+<p>然而，由于并没有足够的数据，很多事件 x 并没有在训练数据中出现，也就是 c(x)=0，$P_{MLE}=0$，这是有问题的，没有在训练数据中出现的数据，并不代表不会在测试数据中出现，如果没有考虑到数据稀疏性，你的模型就太简单了！</p>
+<p>Data sparsity 是 smoothing 的最大原因。Chen &amp; Goodman 在1998 年提到过，几乎所有数据稀疏的场景下，smoothing 都可以帮助提高 performance，而数据稀疏性几乎是所有统计模型(statistical modeling)都会遇到的问题。而如果你有足够多的训练数据，所有的 parameters 都可以在没有 smoothing 的情况下被准确的估计，那么你总是可以扩展模型，如原来是 bigram，没有数据稀疏，完全可以扩展到 trigram 来提高 performance，如果还没有出现稀疏，就再往高层推，当 parameters 越来越多的时候，数据稀疏再次成为了问题，这时候，用合适的平滑方法可以得到更准确的模型。实际上，无论有多少的数据，平滑几乎总是可以以很小的代价来提高 performance。</p>
+<h1 id="平滑方法"><a href="#平滑方法" class="headerlink" title="平滑方法"></a>平滑方法</h1><ul>
+<li>Additive smoothing</li>
+<li>Good-Turing estimate</li>
+<li>Jelinek-Mercer smoothing (interpolation)</li>
+<li>Katz smoothing (backoff)</li>
+<li>Witten-Bell smoothing</li>
+<li>Absolute discounting</li>
+<li>Kneser-Ney smoothing</li>
+</ul>
+<h2 id="差值-Interpolation-vs-回退-backoff"><a href="#差值-Interpolation-vs-回退-backoff" class="headerlink" title="差值(Interpolation) vs. 回退(backoff)"></a>差值(Interpolation) vs. 回退(backoff)</h2><p>先来理解下平滑方法的两种思想，一个是差值，简单来讲，就是把不同阶的模型结合起来，另一种是回退，直观的理解，就是说如果没有 3gram，就用 bigram，如果没有 bigram，就用 unigram，两者的区别：</p>
+<ul>
+<li>插值（Jelinek-Mercer）和回退（Katz）都涉及到来自较高和较低阶模型的信息</li>
+<li>主要区别：在决定非零计数的 n-gram 的概率时，差值模型使用低阶模型的信息，而回退模型则不使用</li>
+<li>相同点：在决定没有出现过的(零计数) n-gram 时，两者都用了低阶模型的信息</li>
+<li>事实证明，做差值模型的回退版本和做回退模型的差值版本都不难~(Kneser-Ney最开始是回退模型，而 Chen&amp;Goodman 也做了差值版本)</li>
+</ul>
+<p>另外还有一点，与差值平滑算法相比，回退算法所需参数较少，而且可以直接确定，无需通过某种迭代重估算法反复训练，因此实现更加方便。</p>
+<h2 id="Additive-smoothing"><a href="#Additive-smoothing" class="headerlink" title="Additive smoothing"></a>Additive smoothing</h2><h3 id="Add-one-smoothing"><a href="#Add-one-smoothing" class="headerlink" title="Add-one smoothing"></a>Add-one smoothing</h3><p>也叫 Laplace smoothing，假设 we saw each word one more time than we did，下面以 bigram model 为例给出加 1 平滑的模型<br>MLE estimate:<br>$$P_{MLE}(w_i|w_{i-1})={c(w_{i-1}w_i) \over c(w_{i-1})}$$<br>Add-1 estimate:<br>$$P_{Add-1}(w_i|w_{i-1})={c(w_{i-1}w_i)+1 \over c(w_{i-1})+V}$$</p>
+<p>通常情况下，V={w:c(w)$\gt$0}$\cup${UNK}</p>
+<p>举个例子，假设语料库为下面三个句子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">JOHN READ MOBY DICK</div><div class="line">MARY READ A DIFFERENT BOOK</div><div class="line">SHE READ A BOOK BY CHER</div></pre></td></tr></table></figure></p>
+<p>那么 JOHN READ A BOOK 这个句子的概率是：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/1.jpg" class="ful-image" alt="1.jpg"></p>
+<p>而 CHEN READ A BOOK 这个句子出现的概率是：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/2.jpg" class="ful-image" alt="2.jpg"></p>
+<p>如果使用加1平滑，那么概率就变成了：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/3.jpg" class="ful-image" alt="3.jpg"></p>
+<p>加 1 平滑通常情况下是一种很糟糕的算法，与其他平滑方法相比显得非常差，然而我们可以把加 1 平滑用在其他任务中，如文本分类，或者非零计数没那么多的情况下。</p>
+<h3 id="Additive-smoothing-1"><a href="#Additive-smoothing-1" class="headerlink" title="Additive smoothing"></a>Additive smoothing</h3><p>对加 1 平滑的改进就是把 1 改成 $\delta$，且 $0 \lt \delta \le 1$，也就是 pretend we’ve seen each n-gram $\delta$ times more than we have，当然，Gale &amp; Church(1994) 吐槽了这种方法，说表现很差。</p>
+<p>$$P_{Add-1}(w_i|w_{i-1})={c(w_{i-1}w_i)+\delta \over c(w_{i-1})+\delta V}$$</p>
+<h2 id="Good-Turing-smoothing"><a href="#Good-Turing-smoothing" class="headerlink" title="Good-Turing smoothing"></a>Good-Turing smoothing</h2><p><strong>基本思想:</strong> 用观察计数较高的 N-gram 数量来重新估计概率量大小，并把它指派给那些具有零计数或较低计数的 N-gram</p>
+<blockquote>
+<p>Idea: reallocate the probability mass of n-grams that occur r+1 times in the training data to the n-grams that occur r times.</p>
+</blockquote>
+<p>一般情况下，我们选出现过一次的概率，也就是 Things seen once 这一概念：<br><strong>Things seen once</strong>: 使用刚才已经看过一次的事物的数量来帮助估计从来没有见过的事物的数量。举个例子，假设你在钓鱼，然后抓到了 18 条鱼，种类如下：10 carp, 3 perch, 2 whitefish, 1 trout, 1 salmon, 1 eel，那么<br><strong>下一条鱼是 trout 的概率是多少？</strong><br>很简单，我们认为是 1/18</p>
+<p><strong>那么，下一条鱼是新品种的概率是多少？</strong><br>不考虑其他，那么概率是 0，然而根据 Things seen once 来估计新事物，概率是 3/18</p>
+<p><strong>在此基础上，下一条鱼是 trout 的概率是多少？</strong><br>肯定就小于 1/18，那么怎么估计呢？<br>在 Good Turing 下，对每一个计数 r，我们做一个调整，变为 r*，公式如下，其中 $n_r$ 表示出现过 r 次的 n-gram。<br>$$r^* = (r+1){n_{r+1} \over n_r}$$</p>
+<p>然后，我们就有<br>$$P_{GT}(x:c(x)=r) = {r^* \over N}$$</p>
+<p>所以，c=1时，<br>$C^* (trout)= 2*1/3 = 2/3$<br>$P^* (trout)={2/3 \over 18}={1 \over 27}$</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>然后，问题来了，如果 $n_{r+1}=0$ 怎么办？这在  r 很高的情况下很常见，因为在对计数进行计数时(counts of counts)，会出现 “holes”。即使没有这个 hole，对很高的 r 来说，$n^r$ 也是有噪音的(noisy)。</p>
+<p>所以，我们应该这样来看 $r^*$:<br>$$r^* = (r+1){E(n_{r+1}) \over E(n_r)}$$</p>
+<p>但是，问题是怎么估计这种期望呢？这需要更多的解释。</p>
+<h2 id="Jelinek-Mercer-smoothing-Interpolation-差值"><a href="#Jelinek-Mercer-smoothing-Interpolation-差值" class="headerlink" title="Jelinek-Mercer smoothing(Interpolation, 差值)"></a>Jelinek-Mercer smoothing(Interpolation, 差值)</h2><p>同样，以语言模型为例，我们看这样一种情况，如果 c(BURNISH THE) 和 c(BURNISH THOU) 都是 0，那么在前面的平滑方法 additive smoothing 和 Good-Turing 里，p(THE|BURNISH)=p(THOU|BURNISH)，而这个概率我们直观上来看是错误的，因为 THE 要比 THOU 常见的多，$p(THE|BURNISH)\gt p(THOU|BURNISH)$ 应该是大概率事件。要实现这个，我们就希望把 bigram 和 unigram 结合起来，interpolate 就是这样一种方法。</p>
+<p>用线性差值把不同阶的 N-gram 结合起来，这里结合了 trigram，bigram 和 unigram。用 lambda 进行加权<br>$$<br>  \begin{aligned}<br>  p(w_n|w_{n-1}w_{n-2}) &amp; = \lambda_1 p(w_n|w_{n-1}w_{n-2}) \\<br>   &amp; + \lambda_2 p(w_n|w_{n-1})  \\<br>   &amp; + \lambda_3 p(w_n)<br>  \end{aligned}<br>$$</p>
+<p>$$\sum_i \lambda_i=1$$</p>
+<p><strong>怎样设置 lambdas?</strong><br>把语料库分为 training data, held-out data, test data 三部分，然后</p>
+<ul>
+<li>Fix the N-gram probabilities(on the training data)</li>
+<li>Search for lambdas that give the largest probabilities to held-out set:<br>$logP(w_1…w_n|M(\lambda_1…\lambda_k))=\sum_ilogP_M(\lambda_1…\lambda_k)(w_i|w_{i-1})$</li>
+</ul>
+<p>这种差值其实是一个递归的形式，我们可以把每个 lambda 看成上下文的函数，如果对于一个特定的 bigram 有特定的计数，假定 trigram 的计数是基于 bigram 的，那么这样的办法将更可靠，因此，可以使 trigram 的 lambda 值更高，给 trigram 更高权重。</p>
+<p>$$<br>  \begin{aligned}<br>  p(w_n|w_{n-1}w_{n-2}) &amp; = \lambda_1 (w^{n-1}_{n-2})p(w_n|w_{n-1}w_{n-2}) \\<br>   &amp; + \lambda_2 (w^{n-1}_{n-2})p(w_n|w_{n-1})  \\<br>   &amp; + \lambda_3 (w^{n-1}_{n-2})p(w_n)<br>  \end{aligned}<br>$$</p>
+<p>通常 $\lambda w^{n-1}_{n-2}$ 是用 EM 算法，在 held-out data 上训练得到(held-out interpolation) 或者在 cross-validation 下训练得到(deleted interpolation)。$\lambda w^{n-1}_{n-2}$ 的值依赖于上下文，高频的上下文通常会有高的 lambdas。</p>
+<h2 id="Katz-smoothing"><a href="#Katz-smoothing" class="headerlink" title="Katz smoothing"></a>Katz smoothing</h2><p>回退式算法。和 Good-Turing 一样，对计数进行调整，以 bigram 为例，非 0 计数的 bigram 都根据打折比率 $d_r$ 进行打折，比率约为 ${r^* \over r}$，这个比率是由 Good-Turing 计算得到的，然后根据下一个低阶分布(如 unigram)，对没有出现过的 bigram 重新分配从非零计数中减去的值。</p>
+<p>以 bigram 为例看看它是怎么做的：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/4.jpg" class="ful-image" alt="4.jpg"></p>
+<p>对于 $d_r$ 的一些探讨，当一个 n-gram 出现次数足够大时，MLE 其实是一个可靠的概率估计，而当计数不是足够大时，就可以采用 Good-Turing 对其进行平滑，让计数为 0 时，退回低阶模型。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/5.jpg" class="ful-image" alt="5.jpg"></p>
+<h2 id="Witten-Bell-smoothing"><a href="#Witten-Bell-smoothing" class="headerlink" title="Witten-Bell smoothing"></a>Witten-Bell smoothing</h2><p>一个 JM smoothing 的实例，当 n-gram $w^i_{i-n+1}$ 在训练数据中出现的时候，我们应该用高阶模型，否则，用低阶模型。所以 $1-w^i_{i-n+1}$ 应该是一个单词在训练数据中没有出现在 $w^i_{i-n+1}$ 后面的概率，可以用跟在 $w^i_{i-n+1}$ 后的 unique words 的数量来估计，公式为：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/9.jpg" class="ful-image" alt="9.jpg"></p>
+<p>举个例子来理解一下，考虑 spite 和 constant 的 bigram，在 Europarl corpus 中，两个 bigram 都出现了 993 次，以 spite 开始的 bigram 只有 9 种，大多数情况下 spite 后面跟着 of(979次)，因为 in spite of 是常见的表达，而跟在 constant 后的单词有 415 种，所以，我们更有可能见到一个跟在 constant 后面的 bigram，Witten-Bell 平滑就考虑了这种单词预测的多样性，所以：</p>
+<p>$1-\lambda_{spite}={9 \over 9+993}=0.00898$<br>$1-\lambda_{constant}={415 \over 415+993}=0.29474$</p>
+<h2 id="Absolute-discounting"><a href="#Absolute-discounting" class="headerlink" title="Absolute discounting"></a>Absolute discounting</h2><p>和 Jelinek-Mercer 相似，Absolute discounting 包括了对高阶和低阶模型的差值，然而它并不是用高阶模型的 $P_{ML}$ 乘以一个 lambda，而是从每个非零计数里减掉一个固定的 discount $\delta \in [0,1]$</p>
+<p>先简单的来看下 bigram model，加上 Absolute discounting 就是：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/8.jpg" class="ful-image" alt="8.jpg"></p>
+<p>完整的公式<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/6.jpg" class="ful-image" alt="6.jpg"></p>
+<p>一般来说，$\delta$ 就直接取 0.75 好啦~</p>
+<h2 id="Kneser-Ney-smoothing"><a href="#Kneser-Ney-smoothing" class="headerlink" title="Kneser-Ney smoothing"></a>Kneser-Ney smoothing</h2><p>是 Absolute discounting 的一个扩展，对回退部分做了一个修正。</p>
+<p><strong>Idea: </strong> 只有在高阶模型的计数很小或者为 0 时，低阶模型才显得重要，(换种说法，只有在 bigram 没有出现过时，unigram 才有用)，因此应针对该目的进行优化</p>
+<p>举个例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Shannon game: I can&apos;t see without my reading (Francisco/glasses)?</div></pre></td></tr></table></figure></p>
+<p>reading 后面跟 Francisco 还是 glasses 呢？因为 “San Francisco” 是个很常见的地名，所以 Francisco 有一个很高的 unigram 概率，比 glasses 高，而 Francisco 偏偏只在 San 后面出现，这就非常不合理。而更合理的方式是，给 Francisco 一个较低的 unigram 概率，这样，bigram 模型表现会更好。</p>
+<p>改进的方案是，我们不看 how likely is w，而去看 how likely is w to appear as a novel continuation，也就是，对每个单词，我们看它对应的 bigram type 的数量，然后，每个 bigram type 在第一次出现的时候都是 novel continuation</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/7.jpg" class="ful-image" alt="7.jpg">
+<p>所以最后的公式为:<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/8.jpg" class="ful-image" alt="8.jpg"></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><ul>
+<li>影响最大的因素是使用 modified backoff distribution，如 Kneser-Ney smoothing</li>
+<li>Jelinek-Mercer 平滑在小型训练数据集上表现更好，而 Katz 在大型训练集上表现更好</li>
+<li>Katz 在计数大的 n-grams 上效果很好，而 Kneser-Ney 适合小的计数</li>
+<li>Absolute discounting 要优于 linear discounting</li>
+<li>在非零计数较低的情况下，Interpolated models 优于 backoff</li>
+<li>添加 free parameters 到算法中，通过 held-out data 上优化这些参数可以提高性能</li>
+</ul>
+<blockquote>
+<p>参考链接<br><a href="https://web.stanford.edu/class/cs124/lec/languagemodeling.pdf" target="_blank" rel="external">Stanford Language Modeling</a><br><a href="https://nlp.stanford.edu/~wcmac/papers/20050421-smoothing-tutorial.pdf" target="_blank" rel="external">NLP Lunch Tutorial: Smoothing</a><br><a href="http://www.statmt.org/book/slides/07-language-models.pdf" target="_blank" rel="external">Language models</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/平滑/" rel="tag">#平滑</a>
+          
+            <a href="/tags/smoothing/" rel="tag">#smoothing</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/21/NLP 笔记 - 再谈词向量/" rel="next" title="NLP 笔记 - 再谈词向量">
+                <i class="fa fa-chevron-left"></i> NLP 笔记 - 再谈词向量
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/24/ParseTree操作若干-Tregex and Stanford CoreNLP/" rel="prev" title="ParseTree操作若干-Tregex and Stanford CoreNLP">
+                ParseTree操作若干-Tregex and Stanford CoreNLP <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引入"><span class="nav-number">1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#平滑方法"><span class="nav-number">2.</span> <span class="nav-text">平滑方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#差值-Interpolation-vs-回退-backoff"><span class="nav-number">2.1.</span> <span class="nav-text">差值(Interpolation) vs. 回退(backoff)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Additive-smoothing"><span class="nav-number">2.2.</span> <span class="nav-text">Additive smoothing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-one-smoothing"><span class="nav-number">2.2.1.</span> <span class="nav-text">Add-one smoothing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Additive-smoothing-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">Additive smoothing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Good-Turing-smoothing"><span class="nav-number">2.3.</span> <span class="nav-text">Good-Turing smoothing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">2.3.1.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jelinek-Mercer-smoothing-Interpolation-差值"><span class="nav-number">2.4.</span> <span class="nav-text">Jelinek-Mercer smoothing(Interpolation, 差值)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Katz-smoothing"><span class="nav-number">2.5.</span> <span class="nav-text">Katz smoothing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Witten-Bell-smoothing"><span class="nav-number">2.6.</span> <span class="nav-text">Witten-Bell smoothing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Absolute-discounting"><span class="nav-number">2.7.</span> <span class="nav-text">Absolute discounting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kneser-Ney-smoothing"><span class="nav-number">2.8.</span> <span class="nav-text">Kneser-Ney smoothing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/03/24/NLP 笔记 - 平滑方法(Smoothing)小结/';
+      var disqus_title = "NLP 笔记 - 平滑方法(Smoothing)小结";
+      var disqus_url = 'http://www.shuang0420.com/2017/03/24/NLP 笔记 - 平滑方法(Smoothing)小结/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

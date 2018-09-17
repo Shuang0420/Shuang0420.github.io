@@ -1,0 +1,1008 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Tensorflow,docker," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="用 docker 配置 tensorflow 环境(Tensorflow + Python3 + Jupyter Notebook + tflearn)，在 dash00/tensorflow-python3-jupyter 基础上，添加 tflearn package，创建新的 docker image shuang0420/tensorflow-tflearn-python3-jupyter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Docker 快速配置深度学习(Tensorflow)环境">
+<meta property="og:url" content="http://www.shuang0420.com/2017/06/15/使用 Docker 快速配置深度学习Tensorflow环境/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="用 docker 配置 tensorflow 环境(Tensorflow + Python3 + Jupyter Notebook + tflearn)，在 dash00/tensorflow-python3-jupyter 基础上，添加 tflearn package，创建新的 docker image shuang0420/tensorflow-tflearn-python3-jupyter">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BD%BF%E7%94%A8%20Docker%20%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0Tensorflow%E7%8E%AF%E5%A2%83/tflearn.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BD%BF%E7%94%A8%20Docker%20%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0Tensorflow%E7%8E%AF%E5%A2%83/tensorboard.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BD%BF%E7%94%A8%20Docker%20%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0Tensorflow%E7%8E%AF%E5%A2%83/kitematic.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BD%BF%E7%94%A8%20Docker%20%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0Tensorflow%E7%8E%AF%E5%A2%83/docker%20preference.png">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Docker 快速配置深度学习(Tensorflow)环境">
+<meta name="twitter:description" content="用 docker 配置 tensorflow 环境(Tensorflow + Python3 + Jupyter Notebook + tflearn)，在 dash00/tensorflow-python3-jupyter 基础上，添加 tflearn package，创建新的 docker image shuang0420/tensorflow-tflearn-python3-jupyter">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BD%BF%E7%94%A8%20Docker%20%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0Tensorflow%E7%8E%AF%E5%A2%83/tflearn.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/06/15/使用 Docker 快速配置深度学习Tensorflow环境/"/>
+
+
+  <title> 使用 Docker 快速配置深度学习(Tensorflow)环境 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用 Docker 快速配置深度学习(Tensorflow)环境
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-06-15T09:02:27+08:00" content="2017-06-15">
+              2017-06-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Others/" itemprop="url" rel="index">
+                    <span itemprop="name">Others</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/15/使用 Docker 快速配置深度学习Tensorflow环境/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/06/15/使用 Docker 快速配置深度学习Tensorflow环境/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>用 docker 配置 tensorflow 环境(Tensorflow + Python3 + Jupyter Notebook + tflearn)，在 <a href="https://hub.docker.com/r/dash00/tensorflow-python3-jupyter/" target="_blank" rel="external">dash00/tensorflow-python3-jupyter</a> 基础上，添加 tflearn package，创建新的 docker image <a href="https://hub.docker.com/r/shuang0420/tensorflow-tflearn-python3-jupyter/" target="_blank" rel="external">shuang0420/tensorflow-tflearn-python3-jupyter</a></p>
+<a id="more"></a>
+<h1 id="Use-Other’s-Image"><a href="#Use-Other’s-Image" class="headerlink" title="Use Other’s Image"></a>Use Other’s Image</h1><p>我们在 <a href="https://hub.docker.com/r/dash00/tensorflow-python3-jupyter/" target="_blank" rel="external">dash00/tensorflow-python3-jupyter</a> 基础上创建自己的新镜像。</p>
+<h2 id="Download-Image"><a href="#Download-Image" class="headerlink" title="Download Image"></a>Download Image</h2><p>首先获取镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker pull dash00/tensorflow-python3-jupyter</div></pre></td></tr></table></figure>
+<p>原镜像 <code>dash00/tensorflow-python3-jupyter</code> 包含了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- Jupyter Notebook</div><div class="line">- TensorFlow</div><div class="line">- scikit-learn</div><div class="line">- pandas</div><div class="line">- matplotlib</div><div class="line">- numpy</div><div class="line">- scipy</div><div class="line">- Pillow</div><div class="line">- Python 2 and 3</div></pre></td></tr></table></figure>
+<h2 id="Start-Container"><a href="#Start-Container" class="headerlink" title="Start Container"></a>Start Container</h2><h3 id="Use-basic-container"><a href="#Use-basic-container" class="headerlink" title="Use basic container"></a>Use basic container</h3><p>如果用下面的启动方式，当结束 container 的时候，jupyter notebook 里的内容也会随之消失。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run -it -p 8888:8888 dash00/tensorflow-python3-jupyter</div></pre></td></tr></table></figure>
+<h3 id="Use-persistent-folder"><a href="#Use-persistent-folder" class="headerlink" title="Use persistent folder"></a>Use persistent folder</h3><p>这种启动方式将 notebook 内容存到了本地，本质上是一个 mapping。<code>/$(pwd)/notebooks</code> 就是本机 notebook 目录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run -it -p 8888:8888 -v /$(pwd)/notebooks:/notebooks dash00/tensorflow-python3-jupyter</div></pre></td></tr></table></figure>
+<h3 id="Use-Jupyter-Notebook-and-Tensorboard-in-the-same-time"><a href="#Use-Jupyter-Notebook-and-Tensorboard-in-the-same-time" class="headerlink" title="Use Jupyter Notebook and Tensorboard in the same time"></a>Use Jupyter Notebook and Tensorboard in the same time</h3><p>同时运行 jupyter notebook 和 tensorboard</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ docker run  --name notebooks -d -v /$(pwd)/notebooks:/notebooks -v /$(pwd)/logs:/logs -p 8888:8888 dash00/tensorflow-python3-jupyter /run_jupyter.sh --allow-root --NotebookApp.token=&apos;&apos;</div><div class="line">$</div><div class="line">$ docker run  --name board -d -v /$(pwd)/logs:/logs -p 6006:6006 dash00/tensorflow-python3-jupyter tensorboard --logdir /logs</div></pre></td></tr></table></figure>
+<p>打开浏览器输入 <code>http://&lt;CONTAINER_IP&gt;:8888/</code> 打开 jupyter notebook，输入 <code>http://&lt;CONTAINER_IP&gt;:6006/</code> 打开 tensorboard</p>
+<h1 id="Modify-and-Create-New-Image"><a href="#Modify-and-Create-New-Image" class="headerlink" title="Modify and Create New Image"></a>Modify and Create New Image</h1><h2 id="Modify-Old-Image"><a href="#Modify-Old-Image" class="headerlink" title="Modify Old Image"></a>Modify Old Image</h2><p>进入 docker image，注意跟在 root@ 后面的 <code>97748739b45d</code> 就是新的 docker image id。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ docker run -it dash00/tensorflow-python3-jupyter /bin/bash</div><div class="line">root@97748739b45d:/notebooks#</div></pre></td></tr></table></figure>
+<p>先看一下是什么系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">root@97748739b45d:/notebooks# lsb_release -a</div><div class="line">No LSB modules are available.</div><div class="line">Distributor ID:	Ubuntu</div><div class="line">Description:	Ubuntu 16.04.2 LTS</div><div class="line">Release:	16.04</div><div class="line">Codename:	xenial</div></pre></td></tr></table></figure></p>
+<p><a href="https://hub.docker.com/r/dash00/tensorflow-python3-jupyter/" target="_blank" rel="external">dash00/tensorflow-python3-jupyter</a> 提到装了 python2 和 python3，tf 是装在 python3 下，所以 tflearn 也要装在 python3 下。发现默认 python 进入的是 python2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># python</div><div class="line">Python 2.7.12 (default, Nov 19 2016, 06:48:10)</div><div class="line">[GCC 5.4.0 20160609] on linux2</div><div class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</div><div class="line">&gt;&gt;&gt; exit()</div><div class="line"># python3</div><div class="line">Python 3.5.2 (default, Nov 17 2016, 17:05:23)</div><div class="line">[GCC 5.4.0 20160609] on linux</div><div class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</div><div class="line">&gt;&gt;&gt; exit()</div></pre></td></tr></table></figure></p>
+<p>pip install 要在 python3 下，为了使用稳定版本的 tflearn，需要用到 git，尝试下以下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># python3 -m pip install git+https://github.com/tflearn/tflearn.git</div><div class="line">Collecting git+https://github.com/tflearn/tflearn.git</div><div class="line">  Cloning https://github.com/tflearn/tflearn.git to /tmp/pip-u0c73_t1-build</div><div class="line">  Error [Errno 2] No such file or directory: &apos;git&apos; while executing command git clone -q https://github.com/tflearn/tflearn.git /tmp/pip-u0c73_t1-build</div><div class="line">Cannot find command &apos;git&apos;</div><div class="line">You are using pip version 8.1.1, however version 9.0.1 is available.</div><div class="line">You should consider upgrading via the &apos;pip install --upgrade pip&apos; command.</div></pre></td></tr></table></figure></p>
+<p>发现没有装 git，就先装一下喽<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># apt-get update</div><div class="line"># apt-get install git</div></pre></td></tr></table></figure></p>
+<p>再次 pip 下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># python3 -m pip install git+https://github.com/tflearn/tflearn.git</div><div class="line"># python3</div><div class="line">Python 3.5.2 (default, Nov 17 2016, 17:05:23)</div><div class="line">[GCC 5.4.0 20160609] on linux</div><div class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</div><div class="line">&gt;&gt;&gt; import tflearn</div><div class="line">hdf5 is not supported on this machine (please install/reinstall h5py for optimal experience)</div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># python3 -m pip install --upgrade pip</div><div class="line"># python3 -m pip install h5py</div></pre></td></tr></table></figure>
+<p>成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># python3</div><div class="line">Python 3.5.2 (default, Nov 17 2016, 17:05:23)</div><div class="line">[GCC 5.4.0 20160609] on linux</div><div class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</div><div class="line">&gt;&gt;&gt; import tflearn</div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="Commit-test-and-upload"><a href="#Commit-test-and-upload" class="headerlink" title="Commit, test, and upload"></a>Commit, test, and upload</h2><p>然后退出当前容器，通过命令 <code>docker commit</code> 来提交容器副本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># exit</div><div class="line">$ docker commit -m=&quot;install git and tflearn&quot; -a=&quot;shuang0420&quot; 97748739b45d shuang0420/tensorflow-tflearn-python3-jupyter:latest</div><div class="line">sha256:97748739b45dc8ce994521fa11d7ad6349bc83762e76139086789e0416560710</div></pre></td></tr></table></figure>
+<p>各个参数说明：</p>
+<ul>
+<li><strong>-m:</strong>提交的描述信息</li>
+<li><strong>-a:</strong>指定镜像作者</li>
+<li><strong>e218edb10161：</strong>容器ID</li>
+<li><strong>runoob/ubuntu:v2:</strong>指定要创建的目标镜像名</li>
+</ul>
+<p>使用 <code>docker images</code> 命令来查看我们的新镜像 <code>shuang0420/tensorflow-tflearn-python3-jupyter</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ docker images</div><div class="line">REPOSITORY                                  TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">shuang0420/tensorflow-tflearn-python3-jupyter   latest              97748739b45d        20 hours ago        1.28 GB</div><div class="line">dash00/tensorflow-python3-jupyter           latest              34eeac184315        4 weeks ago         1.17 GB</div><div class="line">hello-world                                 latest              48b5124b2768        5 months ago        1.84 kB</div></pre></td></tr></table></figure>
+<p>现在的镜像包含了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- git</div><div class="line">- Jupyter Notebook</div><div class="line">- TensorFlow</div><div class="line">- tflearn</div><div class="line">- scikit-learn</div><div class="line">- pandas</div><div class="line">- matplotlib</div><div class="line">- numpy</div><div class="line">- scipy</div><div class="line">- Pillow</div><div class="line">- Python 2 and 3</div></pre></td></tr></table></figure>
+<p>然后使用新镜像 <code>shuang0420/tensorflow-tflearn-python3-jupyter</code> 来启动一个容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run  --name notebooks -d -v /$(pwd)/notebooks:/notebooks -v /$(pwd)/logs:/logs -p 8888:8888 shuang0420/tensorflow-tflearn-python3-jupyter /run_jupyter.sh --allow-root --NotebookApp.token=&apos;&apos;</div></pre></td></tr></table></figure>
+<p>如果出现下面的错误，说明之前已经启动了一个名为 notebooks 的 container，我们可以直接启动该容器，或者退出并删除原容器，新建一个。通过 <code>docker ps -a</code> 命令查看 container id 并删除该 container，再重新运行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">docker: Error response from daemon: Conflict. The container name &quot;/notebooks&quot; is already in use by container 4602dc6d7f0b8b7756fa31d63a0ecb19bd37147c2af80710294a480587f9eb08. You have to remove (or rename) that container to be able to reuse that name..</div><div class="line">See &apos;docker run --help&apos;.</div><div class="line"></div><div class="line">$ docker ps -a</div><div class="line">CONTAINER ID        IMAGE                                              COMMAND                  CREATED             STATUS                           PORTS               NAMES</div><div class="line">&#123;% imgurl %E4%BD%BF%E7%94%A8%20Docker%20%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0Tensorflow%E7%8E%AF%E5%A2%83/kitematic.png ful-image alt:kitematic.png %&#125;</div><div class="line">$</div><div class="line">$ docker rm 4602dc6d7f0b</div><div class="line">4602dc6d7f0b</div><div class="line">$ docker run  --name notebooks -d -v /$(pwd)/notebooks:/notebooks -v /$(pwd)/logs:/logs -p 8888:8888 shuang0420/tensorflow-tflearn-python3-jupyter /run_jupyter.sh --allow-root --NotebookApp.token=&apos;&apos;</div><div class="line">$ docker run  --name board -d -v /$(pwd)/logs:/logs -p 6006:6006 shuang0420/tensorflow-tflearn-python3-jupyter tensorboard --logdir /logs</div><div class="line">$</div></pre></td></tr></table></figure>
+<p><strong>浏览器输入 <code>localhost:8888</code> 打开 jupyter notebook</strong></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BD%BF%E7%94%A8%20Docker%20%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0Tensorflow%E7%8E%AF%E5%A2%83/tflearn.png" class="ful-image" alt="tflearn.png">
+<p><strong>浏览器输入 <code>localhost:6006</code> 打开 jupyter notebook</strong></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BD%BF%E7%94%A8%20Docker%20%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0Tensorflow%E7%8E%AF%E5%A2%83/tensorboard.png" class="ful-image" alt="tensorboard.png">
+<p>当然也可以通过 <code>kitematic</code> 来直接控制 container 啦～～</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BD%BF%E7%94%A8%20Docker%20%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0Tensorflow%E7%8E%AF%E5%A2%83/kitematic.png" class="ful-image" alt="kitematic.png">
+<p>用 <code>push</code> 命令将 image 上传到 docker hub<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker push shuang0420/tensorflow-tflearn-python3-jupyter:latest</div></pre></td></tr></table></figure></p>
+<p>已上传至 docker hub，见 <a href="https://hub.docker.com/r/shuang0420/tensorflow-tflearn-python3-jupyter/" target="_blank" rel="external">shuang0420/tensorflow-tflearn-python3-jupyter</a></p>
+<h1 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h1><h2 id="Run-jupyter-and-tensorboard"><a href="#Run-jupyter-and-tensorboard" class="headerlink" title="Run jupyter and tensorboard"></a>Run jupyter and tensorboard</h2><p><a href="https://hub.docker.com/r/shuang0420/tensorflow-tflearn-python3-jupyter/" target="_blank" rel="external">shuang0420/tensorflow-tflearn-python3-jupyter</a> 的使用方法，基本用法和 <a href="https://hub.docker.com/r/dash00/tensorflow-python3-jupyter/" target="_blank" rel="external">dash00/tensorflow-python3-jupyter</a> 相同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ docker run  --name notebooks -d -v /$(pwd):/notebooks -v /$(pwd)/tensorflow/logs:/logs -p 8888:8888 shuang0420/tensorflow-tflearn-python3-jupyter /run_jupyter.sh --allow-root --NotebookApp.token=&apos;&apos;</div><div class="line">$</div><div class="line">$ docker run  --name board -d -v /$(pwd)/tensorflow/logs:/logs -p 6006:6006 shuang0420/tensorflow-tflearn-python3-jupyter tensorboard --logdir /logs</div></pre></td></tr></table></figure>
+<p><code>/$(pwd):</code> 和 <code>/$(pwd)/tensorflow/logs</code> 是本机目录，它把 container 中的 Jupyter notebooks 以及 logs 匹配到了本机目录，使得 container 和本机可以共享资源。当然首先要保证你的 docker 和 local host 有共享这些目录的权限，在 Docker Preferences 里可以设置。</p>
+<h2 id="Monitor"><a href="#Monitor" class="headerlink" title="Monitor"></a>Monitor</h2><p>用 <code>docker stats</code> 来查看 container 的资源使用状况。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">CONTAINER           CPU %               MEM USAGE / LIMIT       MEM %               NET I/O             BLOCK I/O           PIDS</div><div class="line">cb7ef0a4afc2        0.02%               8.438 MiB / 1.952 GiB   0.42%               219 kB / 1.2 MB     207 MB / 38.3 MB    2</div><div class="line">0e6a9a715cbd        0.00%               19.51 MiB / 1.952 GiB   0.98%               189 kB / 285 kB     1.24 GB / 2.23 GB   16</div></pre></td></tr></table></figure></p>
+<p>或者进入 docker 用 <code>top</code> 查看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">Last login: Mon Jun 19 16:11:32 on ttys000</div><div class="line">top - 13:38:02 up 1 day, 19:58,  0 users,  load average: 0.09, 0.17, 0.11</div><div class="line">Tasks:   6 total,   1 running,   5 sleeping,   0 stopped,   0 zombie</div><div class="line">%Cpu(s):  0.1 us,  0.1 sy,  0.0 ni, 99.8 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</div><div class="line">KiB Mem :  2046768 total,  1923504 free,    66636 used,    56628 buff/cache</div><div class="line">KiB Swap:  1048572 total,   683580 free,   364992 used.  1861204 avail Mem</div><div class="line"></div><div class="line">  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND</div><div class="line">    1 root      20   0   18036      0      0 S   0.0  0.0   0:00.04 bash</div><div class="line">    7 root      20   0  300448  12820   5268 S   0.0  0.6   0:02.41 jupyter-noteboo</div><div class="line">   31 root      20   0   18248   1828   1648 S   0.0  0.1   0:00.07 bash</div><div class="line">  130 root      20   0  591052    688    688 S   0.0  0.0   0:00.78 python3</div><div class="line">  148 root      20   0   18244     12     12 S   0.0  0.0   0:00.02 bash</div><div class="line">  170 root      20   0   36644   1252   1032 R   0.0  0.1   0:00.46 top</div></pre></td></tr></table></figure></p>
+<h2 id="Memory-and-CPU"><a href="#Memory-and-CPU" class="headerlink" title="Memory and CPU"></a>Memory and CPU</h2><p>Mac OS 默认给 docker 分配 4 个 CPU 和 2 GB 的内存，因此不管怎么用 <code>docker update</code> 和 <code>docker run</code> 命令来调整 container 的 CPU 和 memory，始终不能超过 docker 的限制，想要用更多的 cpu 和 memory 资源，只用在 Docker Preferences -&gt; Advanced 中调整即可。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BD%BF%E7%94%A8%20Docker%20%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0Tensorflow%E7%8E%AF%E5%A2%83/docker%20preference.png" class="ful-image" alt="docker%20preference.png"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tensorflow/" rel="tag">#Tensorflow</a>
+          
+            <a href="/tags/docker/" rel="tag">#docker</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/09/AWS Lex 创建 Slack Bot - Integrating Lex Bot with Slack/" rel="next" title="AWS Lex 创建 Slack Bot - Integrating Lex Bot with Slack">
+                <i class="fa fa-chevron-left"></i> AWS Lex 创建 Slack Bot - Integrating Lex Bot with Slack
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/16/卷积神经网络 CNN - 目标分类/" rel="prev" title="卷积神经网络 CNN 笔记- 目标分类">
+                卷积神经网络 CNN 笔记- 目标分类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Use-Other’s-Image"><span class="nav-number">1.</span> <span class="nav-text">Use Other’s Image</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Download-Image"><span class="nav-number">1.1.</span> <span class="nav-text">Download Image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Start-Container"><span class="nav-number">1.2.</span> <span class="nav-text">Start Container</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-basic-container"><span class="nav-number">1.2.1.</span> <span class="nav-text">Use basic container</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-persistent-folder"><span class="nav-number">1.2.2.</span> <span class="nav-text">Use persistent folder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-Jupyter-Notebook-and-Tensorboard-in-the-same-time"><span class="nav-number">1.2.3.</span> <span class="nav-text">Use Jupyter Notebook and Tensorboard in the same time</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Modify-and-Create-New-Image"><span class="nav-number">2.</span> <span class="nav-text">Modify and Create New Image</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Modify-Old-Image"><span class="nav-number">2.1.</span> <span class="nav-text">Modify Old Image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Commit-test-and-upload"><span class="nav-number">2.2.</span> <span class="nav-text">Commit, test, and upload</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Usage"><span class="nav-number">3.</span> <span class="nav-text">Usage</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Run-jupyter-and-tensorboard"><span class="nav-number">3.1.</span> <span class="nav-text">Run jupyter and tensorboard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Monitor"><span class="nav-number">3.2.</span> <span class="nav-text">Monitor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-and-CPU"><span class="nav-number">3.3.</span> <span class="nav-text">Memory and CPU</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/06/15/使用 Docker 快速配置深度学习Tensorflow环境/';
+      var disqus_title = "使用 Docker 快速配置深度学习(Tensorflow)环境";
+      var disqus_url = 'http://www.shuang0420.com/2017/06/15/使用 Docker 快速配置深度学习Tensorflow环境/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

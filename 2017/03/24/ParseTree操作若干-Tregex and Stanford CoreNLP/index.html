@@ -1,0 +1,983 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,ParseTree," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="网上教程太少，只能自己摸索了。关于怎么用 python 来调用 Stanford Parser。–持续更新中–">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ParseTree操作若干-Tregex and Stanford CoreNLP">
+<meta property="og:url" content="http://www.shuang0420.com/2017/03/24/ParseTree操作若干-Tregex and Stanford CoreNLP/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="网上教程太少，只能自己摸索了。关于怎么用 python 来调用 Stanford Parser。–持续更新中–">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/ParseTree%E6%93%8D%E4%BD%9C%E8%8B%A5%E5%B9%B2-Tregex%20and%20Stanford%20CoreNLP/1.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ParseTree操作若干-Tregex and Stanford CoreNLP">
+<meta name="twitter:description" content="网上教程太少，只能自己摸索了。关于怎么用 python 来调用 Stanford Parser。–持续更新中–">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/ParseTree%E6%93%8D%E4%BD%9C%E8%8B%A5%E5%B9%B2-Tregex%20and%20Stanford%20CoreNLP/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/03/24/ParseTree操作若干-Tregex and Stanford CoreNLP/"/>
+
+
+  <title> ParseTree操作若干-Tregex and Stanford CoreNLP | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ParseTree操作若干-Tregex and Stanford CoreNLP
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-03-24T13:02:27+08:00" content="2017-03-24">
+              2017-03-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/CMU-11611/" itemprop="url" rel="index">
+                    <span itemprop="name">CMU 11611</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/24/ParseTree操作若干-Tregex and Stanford CoreNLP/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/24/ParseTree操作若干-Tregex and Stanford CoreNLP/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>网上教程太少，只能自己摸索了。关于怎么用 python 来调用 Stanford Parser。–持续更新中–<br><a id="more"></a></p>
+<p>Tregex 用来做句子层面的识别及操作，简单理解就是关于 tree 的 regex。一些语法知识见<a href="https://nlp.stanford.edu/software/tregex/The_Wonderful_World_of_Tregex.ppt/" target="_blank" rel="external">The Wonderful World of Tregex</a>。用 java 来调用 API 更简单一点，然而项目需要，所以这一篇讲怎么用 python 来调用。</p>
+<h1 id="Stanford-CoreNLP"><a href="#Stanford-CoreNLP" class="headerlink" title="Stanford CoreNLP"></a>Stanford CoreNLP</h1><p>Stanford NLP 的工具还可以有 Server 端！简直是 python 使用者一大福利。<br>下载安装<a href="http://stanfordnlp.github.io/CoreNLP/corenlp-server.html" target="_blank" rel="external">CoreNLP Server</a></p>
+<p>先测试一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -cp &quot;*&quot; -Xmx2g edu.stanford.nlp.pipeline.StanfordCoreNLP -annotators tokenize,ssplit,pos,lemma,ner,parse,dcoref -file input.txt</div></pre></td></tr></table></figure></p>
+<p>ok，可以运行，然后开启 server</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># Run the server using all jars in the current directory (e.g., the CoreNLP home directory)</div><div class="line">java -mx4g -cp &quot;*&quot; edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 15000</div></pre></td></tr></table></figure>
+<p>之后就可以通过 python 发送 http 请求来调用接口啦~ Python 代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">url = &quot;http://localhost:9000/tregex&quot;</div><div class="line">request_params = &#123;&quot;pattern&quot;: &quot;(NP[$VP]&gt;S)|(NP[$VP]&gt;S\\n)|(NP\\n[$VP]&gt;S)|(NP\\n[$VP]&gt;S\\n)&quot;&#125;</div><div class="line">text = &quot;Pusheen and Smitha walked along the beach.&quot;</div><div class="line">r = requests.post(url, data=text, params=request_params)</div><div class="line">print r.json()</div></pre></td></tr></table></figure></p>
+<p>结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;u&apos;sentences&apos;: [&#123;u&apos;0&apos;: &#123;u&apos;namedNodes&apos;: [], u&apos;match&apos;: u&apos;(NP (NNP Pusheen)\n  (CC and)\n  (NNP Smitha))\n&apos;&#125;&#125;]&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="Tregex-的基本语法"><a href="#Tregex-的基本语法" class="headerlink" title="Tregex 的基本语法"></a>Tregex 的基本语法</h1><p>之后再慢慢补充吧。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/ParseTree%E6%93%8D%E4%BD%9C%E8%8B%A5%E5%B9%B2-Tregex%20and%20Stanford%20CoreNLP/1.jpg" class="ful-image" alt="1.jpg"></p>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><p>假定已经安装好了 nltk, stanford nlp 各类包，并设置好了路径。</p>
+<h2 id="Parse-Tree-from-NLTK"><a href="#Parse-Tree-from-NLTK" class="headerlink" title="Parse Tree from NLTK"></a>Parse Tree from NLTK</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">from __future__ import division, unicode_literals</div><div class="line">import nltk</div><div class="line">from nltk.parse.stanford import StanfordParser</div><div class="line"></div><div class="line">parser = StanfordParser(model_path=&quot;edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz&quot;)</div><div class="line"></div><div class="line">def getParserTree(line):</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    return parse tree of the string</div><div class="line">    :param line: string</div><div class="line">    :return: list of tree nodes</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    return list(parser.raw_parse(line))</div><div class="line"></div><div class="line"></div><div class="line"># get parse tree</div><div class="line">text = &apos;Harry Potter, a young boy, is very famous in US&apos;</div><div class="line">testTree = getParserTree(text)</div><div class="line"></div><div class="line">print testTree</div></pre></td></tr></table></figure>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[Tree(&apos;ROOT&apos;, [Tree(&apos;S&apos;, [Tree(&apos;NP&apos;, [Tree(&apos;NP&apos;, [Tree(&apos;NNP&apos;, [&apos;Harry&apos;]), Tree(&apos;NNP&apos;, [&apos;Potter&apos;])]), Tree(&apos;,&apos;, [&apos;,&apos;]), Tree(&apos;NP&apos;, [Tree(&apos;DT&apos;, [&apos;a&apos;]), Tree(&apos;JJ&apos;, [&apos;young&apos;]), Tree(&apos;NN&apos;, [&apos;boy&apos;])]), Tree(&apos;,&apos;, [&apos;,&apos;])]), Tree(&apos;VP&apos;, [Tree(&apos;VBZ&apos;, [&apos;is&apos;]), Tree(&apos;ADJP&apos;, [Tree(&apos;RB&apos;, [&apos;very&apos;]), Tree(&apos;JJ&apos;, [&apos;famous&apos;]), Tree(&apos;PP&apos;, [Tree(&apos;IN&apos;, [&apos;in&apos;]), Tree(&apos;NP&apos;, [Tree(&apos;NNP&apos;, [&apos;US&apos;])])])])])])])]</div></pre></td></tr></table></figure></p>
+<h2 id="Parse-Tree-from-CoreNLP-Server"><a href="#Parse-Tree-from-CoreNLP-Server" class="headerlink" title="Parse Tree from CoreNLP Server"></a>Parse Tree from CoreNLP Server</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"></div><div class="line">#&quot;annotators&quot;, &quot;tokenize, ssplit, pos, lemma, ner, parse, dcoref&quot;</div><div class="line">url = &apos;http://localhost:9000/?properties=&#123;&quot;annotators&quot;: &quot;parse&quot;, &quot;outputFormat&quot;: &quot;text&quot;&#125;&apos;</div><div class="line">text=&apos;Harry Potter, a young boy, is very famous in US&apos;</div><div class="line">r = requests.post(url, data=text)</div><div class="line">print r.content</div></pre></td></tr></table></figure>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">Sentence #1 (12 tokens):</div><div class="line">Harry Potter, a young boy, is very famous in US</div><div class="line">[Text=Harry CharacterOffsetBegin=0 CharacterOffsetEnd=5 PartOfSpeech=NNP]</div><div class="line">[Text=Potter CharacterOffsetBegin=6 CharacterOffsetEnd=12 PartOfSpeech=NNP]</div><div class="line">[Text=, CharacterOffsetBegin=12 CharacterOffsetEnd=13 PartOfSpeech=,]</div><div class="line">[Text=a CharacterOffsetBegin=14 CharacterOffsetEnd=15 PartOfSpeech=DT]</div><div class="line">[Text=young CharacterOffsetBegin=16 CharacterOffsetEnd=21 PartOfSpeech=JJ]</div><div class="line">[Text=boy CharacterOffsetBegin=22 CharacterOffsetEnd=25 PartOfSpeech=NN]</div><div class="line">[Text=, CharacterOffsetBegin=25 CharacterOffsetEnd=26 PartOfSpeech=,]</div><div class="line">[Text=is CharacterOffsetBegin=27 CharacterOffsetEnd=29 PartOfSpeech=VBZ]</div><div class="line">[Text=very CharacterOffsetBegin=30 CharacterOffsetEnd=34 PartOfSpeech=RB]</div><div class="line">[Text=famous CharacterOffsetBegin=35 CharacterOffsetEnd=41 PartOfSpeech=JJ]</div><div class="line">[Text=in CharacterOffsetBegin=42 CharacterOffsetEnd=44 PartOfSpeech=IN]</div><div class="line">[Text=US CharacterOffsetBegin=45 CharacterOffsetEnd=47 PartOfSpeech=NNP]</div><div class="line">(ROOT</div><div class="line">  (S</div><div class="line">    (NP</div><div class="line">      (NP (NNP Harry) (NNP Potter))</div><div class="line">      (, ,)</div><div class="line">      (NP (DT a) (JJ young) (NN boy))</div><div class="line">      (, ,))</div><div class="line">    (VP (VBZ is)</div><div class="line">      (ADJP (RB very) (JJ famous)</div><div class="line">        (PP (IN in)</div><div class="line">          (NP (NNP US)))))))</div><div class="line"></div><div class="line">root(ROOT-0, famous-10)</div><div class="line">compound(Potter-2, Harry-1)</div><div class="line">nsubj(famous-10, Potter-2)</div><div class="line">punct(Potter-2, ,-3)</div><div class="line">det(boy-6, a-4)</div><div class="line">amod(boy-6, young-5)</div><div class="line">appos(Potter-2, boy-6)</div><div class="line">punct(Potter-2, ,-7)</div><div class="line">cop(famous-10, is-8)</div><div class="line">advmod(famous-10, very-9)</div><div class="line">case(US-12, in-11)</div><div class="line">nmod:in(famous-10, US-12)</div></pre></td></tr></table></figure></p>
+<p>annotators 可以加其他 parameter，得到更多的 ner, lemma 等信息，输出也可以设定为 json 或 html 等格式。</p>
+<h2 id="同位语"><a href="#同位语" class="headerlink" title="同位语"></a>同位语</h2><p>得到 parse tree 的同位语部分，规则如下，第一个 NP 是 parent，后面两个 NP 是 sisters，中间由逗号隔开，这是同位语的基本形式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NP=n1 &lt; (NP=n2 $.. (/,/ $.. NP=n3))</div></pre></td></tr></table></figure></p>
+<p>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">from __future__ import division, unicode_literals</div><div class="line">import nltk</div><div class="line">from nltk.parse.stanford import StanfordParser</div><div class="line">import requests</div><div class="line"></div><div class="line">APPOSITION = &quot;NP=n1 &lt; (NP=n2 $.. (/,/ $.. NP=n3))&quot;</div><div class="line"></div><div class="line">def getAppositions(tree):</div><div class="line">    url = &quot;http://localhost:9000/tregex&quot;</div><div class="line">    request_params = &#123;&quot;pattern&quot;: APPOSITION&#125;</div><div class="line">    r = requests.post(url, data=text, params=request_params)</div><div class="line">    return r.json()</div><div class="line"></div><div class="line"></div><div class="line">text = &apos;Harry Potter, a young boy, is very famous in US&apos;</div><div class="line">print getAppositions(text)</div></pre></td></tr></table></figure></p>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;u&apos;sentences&apos;: [&#123;u&apos;0&apos;: &#123;u&apos;namedNodes&apos;: [&#123;u&apos;n1&apos;: u&apos;(NP\n  (NP (NNP Harry) (NNP Potter))\n  (, ,)\n  (NP (DT a) (JJ young) (NN boy))\n  (, ,))\n&apos;&#125;, &#123;u&apos;n2&apos;: u&apos;(NP (NNP Harry) (NNP Potter))\n&apos;&#125;, &#123;u&apos;n3&apos;: u&apos;(NP (DT a) (JJ young) (NN boy))\n&apos;&#125;], u&apos;match&apos;: u&apos;(NP\n  (NP (NNP Harry) (NNP Potter))\n  (, ,)\n  (NP (DT a) (JJ young) (NN boy))\n  (, ,))\n&apos;&#125;&#125;]&#125;</div></pre></td></tr></table></figure></p>
+<p>再进一步处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">def getAppositions(tree):</div><div class="line">    url = &quot;http://localhost:9000/tregex&quot;</div><div class="line">    request_params = &#123;&quot;pattern&quot;: APPOSITION&#125;</div><div class="line">    r = requests.post(url, data=text, params=request_params)</div><div class="line">    js = r.json()</div><div class="line">    if js[&apos;sentences&apos;][0] and &apos;0&apos; in js[&apos;sentences&apos;][0] and &apos;namedNodes&apos; in js[&apos;sentences&apos;][0][&apos;0&apos;]:</div><div class="line">        return js[&apos;sentences&apos;][0][&apos;0&apos;][&apos;namedNodes&apos;]</div><div class="line">    return None</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">text = &apos;Harry Potter, a young boy, is very famous in US&apos;</div><div class="line">testTree = getParserTree(text)</div><div class="line">res = getAppositions(testTree)</div><div class="line">if res:</div><div class="line">    for c in res:</div><div class="line">        print c</div></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;u&apos;n1&apos;: u&apos;(NP\n  (NP (NNP Harry) (NNP Potter))\n  (, ,)\n  (NP (DT a) (JJ young) (NN boy))\n  (, ,))\n&apos;&#125;</div><div class="line">&#123;u&apos;n2&apos;: u&apos;(NP (NNP Harry) (NNP Potter))\n&apos;&#125;</div><div class="line">&#123;u&apos;n3&apos;: u&apos;(NP (DT a) (JJ young) (NN boy))\n&apos;&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/ParseTree/" rel="tag">#ParseTree</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/24/NLP 笔记 - 平滑方法(Smoothing)小结/" rel="next" title="NLP 笔记 - 平滑方法(Smoothing)小结">
+                <i class="fa fa-chevron-left"></i> NLP 笔记 - 平滑方法(Smoothing)小结
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/30/AWS EC2 部署 django 项目/" rel="prev" title="AWS EC2 部署 django 项目">
+                AWS EC2 部署 django 项目 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Stanford-CoreNLP"><span class="nav-number">1.</span> <span class="nav-text">Stanford CoreNLP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tregex-的基本语法"><span class="nav-number">2.</span> <span class="nav-text">Tregex 的基本语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#示例"><span class="nav-number">3.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Parse-Tree-from-NLTK"><span class="nav-number">3.1.</span> <span class="nav-text">Parse Tree from NLTK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parse-Tree-from-CoreNLP-Server"><span class="nav-number">3.2.</span> <span class="nav-text">Parse Tree from CoreNLP Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同位语"><span class="nav-number">3.3.</span> <span class="nav-text">同位语</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/03/24/ParseTree操作若干-Tregex and Stanford CoreNLP/';
+      var disqus_title = "ParseTree操作若干-Tregex and Stanford CoreNLP";
+      var disqus_url = 'http://www.shuang0420.com/2017/03/24/ParseTree操作若干-Tregex and Stanford CoreNLP/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

@@ -1,0 +1,1065 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="树," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="最大最小值python 里找 float 的最小值，float(‘-inf’)，最大值，float(‘inf’)找 int 的最大最小值123import sysmax = sys.maxintmin = -sys.maxint-1
+其它class 里创建 helper 方法第一个参数传 self, 调用 self.helper()python 的三元运算符，python 的 max 方法。
+基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构和算法 -- 树">
+<meta property="og:url" content="http://www.shuang0420.com/2016/09/17/数据结构和算法 -- 树/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="最大最小值python 里找 float 的最小值，float(‘-inf’)，最大值，float(‘inf’)找 int 的最大最小值123import sysmax = sys.maxintmin = -sys.maxint-1
+其它class 里创建 helper 方法第一个参数传 self, 调用 self.helper()python 的三元运算符，python 的 max 方法。
+基础">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/binary_tree_upside_down.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构和算法 -- 树">
+<meta name="twitter:description" content="最大最小值python 里找 float 的最小值，float(‘-inf’)，最大值，float(‘inf’)找 int 的最大最小值123import sysmax = sys.maxintmin = -sys.maxint-1
+其它class 里创建 helper 方法第一个参数传 self, 调用 self.helper()python 的三元运算符，python 的 max 方法。
+基础">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/binary_tree_upside_down.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/09/17/数据结构和算法 -- 树/"/>
+
+
+  <title> 数据结构和算法 -- 树 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构和算法 -- 树
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-09-17T09:55:12+08:00" content="2016-09-17">
+              2016-09-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Data-Structure/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Structure</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/17/数据结构和算法 -- 树/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/09/17/数据结构和算法 -- 树/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="最大最小值"><a href="#最大最小值" class="headerlink" title="最大最小值"></a>最大最小值</h2><p>python 里找 float 的最小值，float(‘-inf’)，最大值，float(‘inf’)<br>找 int 的最大最小值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">max = sys.maxint</div><div class="line">min = -sys.maxint-1</div></pre></td></tr></table></figure></p>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>class 里创建 helper 方法第一个参数传 self, 调用 self.helper()<br>python 的三元运算符，python 的 max 方法。</p>
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
+<li>Root: The node at the top of the tree</li>
+<li>Parent: When any node (except the root) has exactly one edge running upward to another node. The node above is called parent of the node.</li>
+<li>Child: Any node may have one or more lines running downward to other nodes. These nodes below the given node called its children.</li>
+<li>Edge: connection between one node to another.</li>
+<li>Leaf: A node that has no children is called a leaf. There can be only one root in a tree but there can be many leaves.</li>
+<li>Level: The level of a node is defined by 1 + the number of connections between the node and the root.</li>
+<li>Path: – a sequence of nodes and edges connecting a node with a descendant.</li>
+<li>Height of node – The height of a node is the number of edges on the longest downward path between that node and a leaf.</li>
+<li>Height of tree –The height of a tree is the number of edges on the longest downward path between the root and a leaf.</li>
+<li>Depth –The depth of a node is the number of edges from the node to the tree’s root node.</li>
+</ul>
+<h2 id="complexity"><a href="#complexity" class="headerlink" title="complexity"></a>complexity</h2><p>insertion, 平均 O(logN)，左树找到 SPOT,右树找到 SPOT,一次砍一半，就是 O(logN)<br>deletion,平均情况 O(logN)多一些，先搜索到元素，O(logN)，没找到就 end，找到，分 4 种，记录元素是 left 还是 right</p>
+<ul>
+<li>leaf parent 对应指针指到 null</li>
+<li>仅有左边 child，parent 对应指针指到左 child,元素指针全部删除</li>
+<li>仅有右边 child，parent 对应指针指到右 child,元素指针全部删除</li>
+<li>有左右两个 child，先找 successor，就是右子树的最小严肃，从要删除的元素往下一路向左，找到最左元素，定为 successor，然后如果 successor 有右树，将其连到 parent 的左树上，successor 新的右树，连到被删除元素的右树上。</li>
+</ul>
+<h2 id="Binary-search-tree-二叉搜索树"><a href="#Binary-search-tree-二叉搜索树" class="headerlink" title="Binary search tree 二叉搜索树"></a>Binary search tree 二叉搜索树</h2><p>二叉搜索树每个节点比其左子树元素大，比其右子树元素小。</p>
+<blockquote>
+<p>The left subtree of a node contains only nodes with keys less than node’s key.<br>The right subtree of a node contains only nodes with keys greater than node’s key.</p>
+</blockquote>
+<p>二叉搜索树的作用：保持元素顺序，相当于是一个排序好的 list，插入删除操作，比排序的 list 快，维护元素顺序或对元素排序时，非常适用。</p>
+<h2 id="Balanced-binary-tree-平衡树"><a href="#Balanced-binary-tree-平衡树" class="headerlink" title="Balanced binary tree 平衡树"></a>Balanced binary tree 平衡树</h2><p>树结构越接近一个链条，各操作就越像线性结构，就越失去了树结构独特的优势，所以引入了平衡树</p>
+<h2 id="遍历方法"><a href="#遍历方法" class="headerlink" title="遍历方法"></a>遍历方法</h2><ul>
+<li>深度优先（DFS）<br>先根(preorder)，中根(inorder)，后根(postorder)</li>
+<li>广度优先（BFS）<br>优先遍历完同层，是一个 queue 结构，先 dequeue 根节点 q，按照层序 enqueue 其 children，visit(q)然后 dequeue 根部新根节点。继续 enqueue，重复刀 dequeue 空为止。所有 node 都被 enqueue 和 dequeue 一遍，复杂度是 O(2n)，即 O(n)</li>
+</ul>
+<h3 id="stack-amp-DFS"><a href="#stack-amp-DFS" class="headerlink" title="stack &amp; DFS"></a>stack &amp; DFS</h3><h4 id="先根-144-Binary-Tree-Preorder-Traversal"><a href="#先根-144-Binary-Tree-Preorder-Traversal" class="headerlink" title="先根(144.Binary Tree Preorder Traversal)"></a>先根(144.Binary Tree Preorder Traversal)</h4><p>注意 conner case root==None 的时候返回的是[],不是 root(None)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># Definition for a binary tree node.</div><div class="line"># class TreeNode(object):</div><div class="line">#     def __init__(self, x):</div><div class="line">#         self.val = x</div><div class="line">#         self.left = None</div><div class="line">#         self.right = None</div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    def preorderTraversal(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if root is None:</div><div class="line">            return []</div><div class="line">        else:</div><div class="line">            return [root.val]+self.preorderTraversal(root.left)+self.preorderTraversal(root.right)</div></pre></td></tr></table></figure></p>
+<h4 id="中根-94-Binary-Tree-Inorder-Traversal"><a href="#中根-94-Binary-Tree-Inorder-Traversal" class="headerlink" title="中根(94.Binary Tree Inorder Traversal)"></a>中根(94.Binary Tree Inorder Traversal)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line">    def inorderTraversal(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if root is None:</div><div class="line">            return []</div><div class="line">        return self.inorderTraversal(root.left)+[root.val]+self.inorderTraversal(root.right)</div></pre></td></tr></table></figure>
+<h4 id="后根-145-Binary-Tree-Postorder-Traversal"><a href="#后根-145-Binary-Tree-Postorder-Traversal" class="headerlink" title="后根(145.Binary Tree Postorder Traversal)"></a>后根(145.Binary Tree Postorder Traversal)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line">    def postorderTraversal(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if root is None:</div><div class="line">            return []</div><div class="line">        return self.postorderTraversal(root.left)+self.postorderTraversal(root.right)+[root.val]</div></pre></td></tr></table></figure>
+<h3 id="queue-amp-BFS-102-Binary-Tree-Level-Order-Traversal"><a href="#queue-amp-BFS-102-Binary-Tree-Level-Order-Traversal" class="headerlink" title="queue &amp; BFS(102. Binary Tree Level Order Traversal)"></a>queue &amp; BFS(102. Binary Tree Level Order Traversal)</h3><h4 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h4><p>Given a binary tree, return the level order traversal of its nodes’ values. (ie, from left to right, level by level).<br>For example:<br>Given binary tree [3,9,20,null,null,15,7],<br>   3<br>  / \<br> 9   20<br>/  \<br>15 7<br>return its level order traversal as:<br>[<br>[3],<br>[9,20],<br>[15,7]<br>]</p>
+<p>遍历当前的 queue, 把每个 node value 存到 list，将每个 node 的 left 和 right node 存到 queue，遍历完后将当前 list 加进 result 里。<br>问题是怎么遍历当前 queue，通过纪录每个 layer（也就是 queue）的长度来实现。<br>corner case: root == None, return []</p>
+<p>Time complexity: O(n)，每个 node enqueue 一次，dequeue 一次<br>Space complexity: O(n)，worst space,最后一次，满树，大概 O(n/2)</p>
+<h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">def levelOrder(self, root):</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    :type root: TreeNode</div><div class="line">    :rtype: List[List[int]]</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    if not root:</div><div class="line">        return []</div><div class="line">    q = deque([root])</div><div class="line">    result = []</div><div class="line">    while q:</div><div class="line">        layer = []</div><div class="line">        size = len(q)</div><div class="line">        for i in range(size):</div><div class="line">            node = q.popleft()</div><div class="line">            layer.append(node.val)</div><div class="line">            if node.left:</div><div class="line">                q.append(node.left)</div><div class="line">            if node.right:</div><div class="line">                q.append(node.right)</div><div class="line">        result.append(layer)</div><div class="line">    return result</div></pre></td></tr></table></figure>
+<h1 id="解题策略"><a href="#解题策略" class="headerlink" title="解题策略"></a>解题策略</h1><h2 id="Divide-and-conquer"><a href="#Divide-and-conquer" class="headerlink" title="Divide and conquer"></a>Divide and conquer</h2><p>树和图的很多问题，可以分解成子问题递归求解（divide and conquer），一般思路是综合节点本身，左子树，右子树三方的局部解得到全局解。</p>
+<p>要注意的是，传节点的时候</p>
+<ul>
+<li>设置出口，ending case，一般是 node==None；</li>
+<li>Recursive down</li>
+<li>Return up</li>
+<li>Current layer</li>
+</ul>
+<p>构造递归的时候，可以 suppose all subtrees are handled.</p>
+<h2 id="特定路径的问题"><a href="#特定路径的问题" class="headerlink" title="特定路径的问题"></a>特定路径的问题</h2><p>关于寻找特定路径的问题，通常需要回溯思想，我们往往需要设计一个 helper function，传入当前节点和其它需要记录的参数。</p>
+<h2 id="树和其他数据结构的相互转换"><a href="#树和其他数据结构的相互转换" class="headerlink" title="树和其他数据结构的相互转换"></a>树和其他数据结构的相互转换</h2><p>树 –&gt; 其它数据结构：树的遍历，合并局部解来得到全局解<br>其它数据结构 –&gt; 树：递归将数据结构的两部分分别转换成子树，再合并。</p>
+<h2 id="寻找特定节点"><a href="#寻找特定节点" class="headerlink" title="寻找特定节点"></a>寻找特定节点</h2><p>此类题目通常会传入一个当前节点，要求找到与此节点具有一定关系的特定节点：例如前驱、后继、左／右兄弟等。</p>
+<p>对于这类题目，首先可以了解一下常见特定节点的定义及性质。在存在指向父节点指针的情况下，通常可以由当前节点出发，向上倒推解决。如果节点没有父节点指针，一般需要从根节点出发向下搜索，搜索的过程就是DFS。</p>
+<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><p>Error control:</p>
+<ul>
+<li>确定 node.left, node.right 是否为 None，尤其是 leverl order traversal 中。</li>
+<li>connection between nodes 在原来的 tree 上更改箭头，这样更清楚要不要抛弃某些箭头。</li>
+</ul>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="101-Symmetric-Tree"><a href="#101-Symmetric-Tree" class="headerlink" title="101. Symmetric Tree"></a>101. Symmetric Tree</h2><h3 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem"></a>Problem</h3><p>Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).</p>
+<p>For example, this binary tree [1,2,2,3,4,4,3] is symmetric:</p>
+<pre><code>1
+</code></pre><p>   / \<br>  2   2<br> / \ / \<br>3  4 4  3<br>But the following [1,2,2,null,3,null,3] is not:<br>    1<br>   / \<br>  2   2<br>   \   \<br>   3    3<br>Note:<br>Bonus points if you could solve it both recursively and iteratively.</p>
+<h3 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">- primitive idea: level order traversal, use deque, check popleft()==pop(), but should consider how to handle [1,2,2,null,3,null,3], the easiest way is to treat it as a complete tree, keep None there</div><div class="line">    this is two-pass solution, with O(n) space complexity and O(n) time complexity</div><div class="line">- make it one-pass</div><div class="line"></div><div class="line">Followup:</div><div class="line">- without stack: use recursive</div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"># Definition for a binary tree node.</div><div class="line"># class TreeNode(object):</div><div class="line">#     def __init__(self, x):</div><div class="line">#         self.val = x</div><div class="line">#         self.left = None</div><div class="line">#         self.right = None</div><div class="line"></div><div class="line">from collections import deque</div><div class="line">class Solution(object):</div><div class="line">    def isSymmetric(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not root:</div><div class="line">            return True</div><div class="line">        return self.helper(root.left, root.right)</div><div class="line"></div><div class="line">    def helper(self, left, right):</div><div class="line">        if not left or not right:</div><div class="line">            if left == right:</div><div class="line">                return True</div><div class="line">            else:</div><div class="line">                return False</div><div class="line">        if left.val == right.val:</div><div class="line">            return self.helper(left.left, right.right) and self.helper(left.right, right.left)</div><div class="line">        return False</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    # two-pass solution with deque</div><div class="line">    def isSymmetric(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not root:</div><div class="line">            return True</div><div class="line">        # level order traversal</div><div class="line">        result=deque()</div><div class="line">        queue=deque([root])</div><div class="line">        while queue:</div><div class="line">            size=len(queue)</div><div class="line">            layer=deque()</div><div class="line">            for i in range(size):</div><div class="line">                node=queue.popleft()</div><div class="line">                if not node:</div><div class="line">                    layer.append(None)</div><div class="line">                    continue</div><div class="line">                layer.append(node.val)</div><div class="line">                queue.append(node.left)</div><div class="line">                queue.append(node.right)</div><div class="line">            result.append(layer)</div><div class="line">        # pop root and last level(all None)</div><div class="line">        result.popleft()</div><div class="line">        result.pop()</div><div class="line">        while result:</div><div class="line">            layer=result.pop()</div><div class="line">            while layer:</div><div class="line">                if layer.pop()!=layer.popleft():</div><div class="line">                    return False</div><div class="line">        return True</div><div class="line">        &apos;&apos;&apos;     </div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    # one-pass solution with deque</div><div class="line">    def isSymmetric(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not root:</div><div class="line">            return True  </div><div class="line">        queue=deque([root.left,root.right])</div><div class="line">        while queue:</div><div class="line">            left=queue.popleft()</div><div class="line">            right=queue.pop()</div><div class="line">            if not left and not right: continue</div><div class="line">            if not left or not right or left.val!=right.val: return False</div><div class="line">            queue.appendleft(left.left)</div><div class="line">            queue.appendleft(left.right)</div><div class="line">            queue.append(right.right)</div><div class="line">            queue.append(right.left)</div><div class="line">        return True</div><div class="line">    &apos;&apos;&apos;</div></pre></td></tr></table></figure>
+<h2 id="156-Binary-tree-upside-down"><a href="#156-Binary-tree-upside-down" class="headerlink" title="156. Binary tree upside down"></a>156. Binary tree upside down</h2><h3 id="Problem-2"><a href="#Problem-2" class="headerlink" title="Problem"></a>Problem</h3><p>Given a binary tree where all the right nodes are either leaf nodes with a sibling (a left node that shares the same parent node) or empty, flip it upside down and turn it into a tree where the original right nodes turned into left leaf nodes. Return the new root.<br>For example:<br>Given a binary tree {1,2,3,4,5},<br>    1<br>  /   \<br> 2    3<br>/ \<br>4  5<br>return the root of the binary tree [4,5,2,#,#,3,1].<br>     4<br>    / \<br>   5   2<br>      / \<br>      3  1</p>
+<p>Assumption: input tree is valid<br>Conner Case: Null root –&gt; Null new root</p>
+<h3 id="Solution-2"><a href="#Solution-2" class="headerlink" title="Solution"></a>Solution</h3><h4 id="Stack-解法"><a href="#Stack-解法" class="headerlink" title="Stack 解法"></a>Stack 解法</h4><p>Time compexity: O(n)<br>Space complexity: O(n/2)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">- with stack: store all nodes along the left path in a stack, and flit it.</div><div class="line">    root=&gt;root.left,</div><div class="line">    root.left=&gt;root.right,</div><div class="line">    root.right=&gt;root</div><div class="line"></div><div class="line">- recursive: assume lower layers are handled (we can pass root.left as parameter and call the function till leftmost node), handle current layer only</div><div class="line"></div><div class="line">Attention:</div><div class="line">- draw connection between nodes at original tree, so that you won&apos;t forget to clear pointers after each flip, and transfer root control.</div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line"># Definition for a binary tree node.</div><div class="line"># class TreeNode(object):</div><div class="line">#     def __init__(self, x):</div><div class="line">#         self.val = x</div><div class="line">#         self.left = None</div><div class="line">#         self.right = None</div><div class="line"></div><div class="line">def upsideDownBinaryTree(self, root):</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    :type root: TreeNode</div><div class="line">    :rtype: TreeNode</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    if not root:</div><div class="line">        return root</div><div class="line"></div><div class="line">    stack = []</div><div class="line">    # store all nodes along the path in stack</div><div class="line">    while root:</div><div class="line">        stack.append(root)</div><div class="line">        root = root.left</div><div class="line"></div><div class="line">    # start from leftmost leaf</div><div class="line">    newRoot = stack.pop()</div><div class="line">    head = newRoot</div><div class="line">    while stack:</div><div class="line">        parent = stack.pop()</div><div class="line">        head.left = parent.right # parent</div><div class="line">        head.right = parent</div><div class="line"></div><div class="line">        head = parent</div><div class="line">        parent.left = None</div><div class="line">        parent.right = None</div><div class="line"></div><div class="line">    return newRoot</div></pre></td></tr></table></figure></p>
+<h4 id="Recursive-解法"><a href="#Recursive-解法" class="headerlink" title="Recursive 解法"></a>Recursive 解法</h4><p>Identical subproblem, lower level first<br>通过 root.left 过渡到下一个子问题，从下往上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">def upsideDownBinaryTree(self, root):</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    :type root: TreeNode</div><div class="line">    :rtype: TreeNode</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    # stop case</div><div class="line">    if not root or not root.left:</div><div class="line">        return root</div><div class="line">    # assume all lower levels are handled</div><div class="line">    newRoot = self.upsideDownBinaryTree(root.left)</div><div class="line"></div><div class="line">    # handle current level</div><div class="line">    root.left.left = root.right</div><div class="line">    root.left.right = root</div><div class="line"></div><div class="line">    root.left = None</div><div class="line">    root.right = None</div><div class="line"></div><div class="line">    return newRoot</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/binary_tree_upside_down.jpg" alt=""></p>
+<h2 id="98-Valid-binary-search-tree"><a href="#98-Valid-binary-search-tree" class="headerlink" title="98. Valid binary search tree"></a>98. Valid binary search tree</h2><h3 id="Problem-3"><a href="#Problem-3" class="headerlink" title="Problem"></a>Problem</h3><p>Given a binary tree, determine if it is a valid binary search tree (BST).<br>Assume a BST is defined as follows:<br>The left subtree of a node contains only nodes with keys less than the node’s key.<br>The right subtree of a node contains only nodes with keys greater than the node’s key.<br>Both the left and right subtrees must also be binary search trees.<br>Example 1:<br>    2<br>   / \<br>  1   3<br>Binary tree [2,1,3], return true.<br>Example 2:<br>    1<br>   / \<br>  2   3</p>
+<h3 id="Solution-3"><a href="#Solution-3" class="headerlink" title="Solution"></a>Solution</h3><h4 id="Inorder-traversal"><a href="#Inorder-traversal" class="headerlink" title="Inorder traversal"></a>Inorder traversal</h4><p>根据二叉搜索树的性质，我们知道二叉搜索树中序遍历之后是一个 sorted list，所以最直观的方法就是中序遍历存到一个 list，然后看它是不是 sorted。这样的空间复杂度是 O(N)，时间复杂度由排序算法决定。</p>
+<h4 id="Global-max"><a href="#Global-max" class="headerlink" title="Global max"></a>Global max</h4><p>用 global max 能让空间复杂度变成 O(1)？这个还不知道。。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"># Definition for a binary tree node.</div><div class="line"># class TreeNode(object):</div><div class="line">#     def __init__(self, x):</div><div class="line">#         self.val = x</div><div class="line">#         self.left = None</div><div class="line">#         self.right = None</div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    def isValidBST(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not root:</div><div class="line">            return True</div><div class="line">        list = self.getList(root)</div><div class="line">        max = float(&apos;inf&apos;)</div><div class="line">        while list:</div><div class="line">            node = list.pop()</div><div class="line">            if node &gt;= max:</div><div class="line">                return False</div><div class="line">            max = node</div><div class="line">        return True</div><div class="line"></div><div class="line">    def getList(self, root):</div><div class="line">        if not root:</div><div class="line">            return []</div><div class="line">        return self.getList(root.left)+[root.val]+self.getList(root.right)</div></pre></td></tr></table></figure></p>
+<h4 id="Range"><a href="#Range" class="headerlink" title="Range"></a>Range</h4><p>分解子问题，每一个 node 都大于它的 left child 并且小于它的 right child。所以可以写一个 helper function，传入 (node, min, max) 来判断 node 在不在正确的区间里。主要问题如下：</p>
+<ul>
+<li>how to compare cross-layer</li>
+<li>how to get a valid range for each node<br>implementation: pass parameter top-to-bottom, helper(current_node,min,max)</li>
+</ul>
+<p>注意小知识点，python 里找 float 的最小值，float(‘-inf’)，最大值，float(‘inf’)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line"></div><div class="line">    def isValidBST(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        def isBST(root, max=float(&apos;inf&apos;), min=float(&apos;-inf&apos;)):</div><div class="line">            if not root:</div><div class="line">                return True</div><div class="line">            if root.val &gt;= max or root.val &lt;= min:</div><div class="line">                return False</div><div class="line">            return isBST(root.left, root.val, min) and isBST(root.right, max, root.val)</div><div class="line">        return isBST(root)</div></pre></td></tr></table></figure>
+<h2 id="333-Largest-BST-Subtree"><a href="#333-Largest-BST-Subtree" class="headerlink" title="333. Largest BST Subtree"></a>333. Largest BST Subtree</h2><h3 id="Problem-4"><a href="#Problem-4" class="headerlink" title="Problem"></a>Problem</h3><p>Given a binary tree, find the largest subtree which is a Binary Search Tree (BST), where largest means subtree with largest number of nodes in it.</p>
+<p>Note:<br>A subtree must include all of its descendants.<br>Here’s an example:<br>    10<br>    / \<br>   5  15<br>  / \   \<br> 1   8   7<br>The Largest BST Subtree in this case is the highlighted one.<br>The return value is the subtree’s size, which is 3.</p>
+<h3 id="Solution-4"><a href="#Solution-4" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">    brute-force: O(n^2)</div><div class="line"></div><div class="line">Followup: make it O(n)</div><div class="line">    Current layer: if both left subtree and right subtree are BST and left.max&lt;=root.val&lt;=right.min,then current subtree is BST and size=left.size+right.size+1,else,current subtree is not BST and size=max(left.size,right.size)</div><div class="line">    Recursive down:</div><div class="line">        base case: if not root</div><div class="line">        recursive case:</div><div class="line">            left=recursive(root.left), right=recursive(root.right)</div><div class="line">    Return up:</div><div class="line">        return res which includes:</div><div class="line">            - isBST: if current subtree is BST</div><div class="line">            - max: max value of left subtree</div><div class="line">            - min: min value of right subtree</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line"># Definition for a binary tree node.</div><div class="line"># class TreeNode(object):</div><div class="line">#     def __init__(self, x):</div><div class="line">#         self.val = x</div><div class="line">#         self.left = None</div><div class="line">#         self.right = None</div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    brute-force: O(n^2)</div><div class="line"></div><div class="line">    def largestBSTSubtree(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        def isBST(root, max=float(&apos;inf&apos;), min=float(&apos;-inf&apos;)):</div><div class="line">            if not root:</div><div class="line">                return True</div><div class="line">            if root.val &gt;= max or root.val &lt;= min:</div><div class="line">                return False</div><div class="line">            return isBST(root.left, root.val, min) and isBST(root.right, max, root.val)</div><div class="line"></div><div class="line">        def size(root):</div><div class="line">            if not root:</div><div class="line">                return 0</div><div class="line">            return size(root.left) + size(root.right) + 1</div><div class="line"></div><div class="line">        if isBST(root):</div><div class="line">            return size(root)</div><div class="line">        return max(self.largestBSTSubtree(root.left), self.largestBSTSubtree(root.right))</div><div class="line">        &apos;&apos;&apos;</div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    def largestBSTSubtree(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        class Result(object):</div><div class="line">            def __init__(self,myMax=float(&apos;-inf&apos;),myMin=float(&apos;inf&apos;)):</div><div class="line">                self.isBST=True</div><div class="line">                self.max=myMax</div><div class="line">                self.min=myMin</div><div class="line">                self.size=0</div><div class="line"></div><div class="line">        def recursive(root):</div><div class="line">            res=Result()</div><div class="line">            # base case</div><div class="line">            if not root:</div><div class="line">                return res</div><div class="line">            # recursive case</div><div class="line">            left=recursive(root.left)</div><div class="line">            right=recursive(root.right)</div><div class="line">            res.max=max(root.val,right.max)</div><div class="line">            res.min=min(root.val,left.min)</div><div class="line">            # current layer</div><div class="line">            if left.isBST and right.isBST and left.max&lt;=root.val and right.min&gt;=root.val:</div><div class="line">                res.size=left.size+right.size+1</div><div class="line">                res.isBST=True</div><div class="line">            else:</div><div class="line">                res.isBST=False</div><div class="line">                res.size=max(left.size,right.size)</div><div class="line">            return res</div><div class="line"></div><div class="line">        res= recursive(root)  </div><div class="line">        return res.size</div></pre></td></tr></table></figure>
+<h2 id="298-Binary-Tree-Longest-Consecutive-Sequence"><a href="#298-Binary-Tree-Longest-Consecutive-Sequence" class="headerlink" title="298. Binary Tree Longest Consecutive Sequence"></a>298. Binary Tree Longest Consecutive Sequence</h2><h3 id="Problem-5"><a href="#Problem-5" class="headerlink" title="Problem"></a>Problem</h3><p>Given a binary tree, find the length of the longest consecutive sequence path.<br>The path refers to any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The longest consecutive path need to be from parent to child (cannot be the reverse).<br>For example,<br>   1<br>    \<br>     3<br>    / \<br>   2   4<br>        \<br>         5<br>Longest consecutive sequence path is 3-4-5, so return 3.<br>   2<br>    \<br>     3<br>    /<br>   2<br>  /<br> 1<br>Longest consecutive sequence path is 2-3,not3-2-1, so return 2.</p>
+<p>直接想到的是，preorder 遍历，得到 list，用 count 更新 current max。然而这是有问题的！以 example 为例，遍历后的 list 是 [1,3,2,4,5],它把 2,4 连起来了，但是 2,4 属于不同的分支，所以不能这么做。</p>
+<p>换一种思路，用 recursion 的方法，左子树的 max length, 右子树的 max length，和本身目前的 max length，求最大值。</p>
+<p>第一个传进去的是什么？float(‘inf’)</p>
+<h3 id="Solution-5"><a href="#Solution-5" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">recurse down</div><div class="line">helper(node.left, global_max, node.val)</div><div class="line">helper(node.right, global_max, node.val)</div><div class="line"></div><div class="line">return up</div><div class="line">max (curr_lengh, left_max_length, right_max_length)</div><div class="line"></div><div class="line">current level</div><div class="line">global_max = node.val == lastVal + 1 : length + 1 : 1</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def longestConsecutive(self, root):</div><div class="line">        if not root:</div><div class="line">            return 0</div><div class="line"></div><div class="line">        return self.helper(root, 1, float(&apos;inf&apos;))</div><div class="line"></div><div class="line">    def helper(self, node, global_max, lastVal):</div><div class="line">        if not node:</div><div class="line">            return global_max</div><div class="line">        global_max = global_max + 1 if node.val == lastVal + 1 else 1</div><div class="line">        return max(global_max, self.helper(node.left, global_max, node.val), self.helper(node.right, global_max, node.val))</div></pre></td></tr></table></figure>
+<h1 id="待补充"><a href="#待补充" class="headerlink" title="待补充"></a>待补充</h1><p>trie or prefix tree，full binary tree，complete binary tree，heap</p>
+<h2 id="222-Count-Complete-Tree-Nodes"><a href="#222-Count-Complete-Tree-Nodes" class="headerlink" title="222. Count Complete Tree Nodes"></a>222. Count Complete Tree Nodes</h2><h3 id="Problem-6"><a href="#Problem-6" class="headerlink" title="Problem"></a>Problem</h3><p>Given a complete binary tree, count the number of nodes.</p>
+<p>Definition of a complete binary tree from Wikipedia:<br>In a complete binary tree every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.</p>
+<h3 id="Solution-6"><a href="#Solution-6" class="headerlink" title="Solution"></a>Solution</h3><p>Time complexity: O(h^2)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Primitive idea:</div><div class="line">    traversal, BFS, DFS(preorder, inorder, postorder), takes O(n) time.</div><div class="line">Faster:</div><div class="line">    List all posibilities of a complete trees and we can conlude there&apos;re two cases one is the height of left subtree equals that of right subtree, in this case, the right subtree is always full, another case is that the height of left subtree is smaller than that of right subtree, then the left subtree is full. It&apos;s easy to count the nodes of full tree.</div><div class="line">    We can use recursive method to solve this problem. That is,</div><div class="line">    if height(left)==height(right): count(root)=2**leftH-1+1+count(root.right)</div><div class="line">    else: count(root)==2**rightH-1+1+count(root.left)</div><div class="line">    Time complexity: O(logn^2)</div><div class="line">Tips:</div><div class="line">    1&lt;&lt;h is faster than 2**h but remember to use () due to precedence</div><div class="line">    be careful about getHeight method if not root should return -1 instead of 0</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"># Definition for a binary tree node.</div><div class="line"># class TreeNode(object):</div><div class="line">#     def __init__(self, x):</div><div class="line">#         self.val = x</div><div class="line">#         self.left = None</div><div class="line">#         self.right = None</div><div class="line"></div><div class="line"></div><div class="line">class Solution(object):</div><div class="line"></div><div class="line">    def countNodes(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        def getHeight(root):</div><div class="line">            if not root:</div><div class="line">                return-1</div><div class="line">            return getHeight(root.left) + 1</div><div class="line"></div><div class="line">        # base case</div><div class="line">        if not root:</div><div class="line">            return 0</div><div class="line">        # recursive case</div><div class="line">        leftH = getHeight(root)</div><div class="line">        rightH = getHeight(root.right) + 1</div><div class="line">        # left subtree is full</div><div class="line">        if leftH == rightH:</div><div class="line">            return (1 &lt;&lt; leftH) + self.countNodes(root.right)</div><div class="line">        # right subtree is full</div><div class="line">        else:</div><div class="line">            return (1 &lt;&lt; rightH) + self.countNodes(root.left)</div></pre></td></tr></table></figure></p>
+<h2 id="270-Closest-Binary-Search-Tree-Value"><a href="#270-Closest-Binary-Search-Tree-Value" class="headerlink" title="270. Closest Binary Search Tree Value"></a>270. Closest Binary Search Tree Value</h2><h3 id="Problem-7"><a href="#Problem-7" class="headerlink" title="Problem"></a>Problem</h3><p>Given a non-empty binary search tree and a target value, find the value in the BST that is closest to the target.</p>
+<p>Note:<br>Given target value is a floating point.<br>You are guaranteed to have only one unique value in the BST that is closest to the target.</p>
+<h3 id="Solution-7"><a href="#Solution-7" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">- Solution: keeps a global closest variable and update it when doing the search. Time complexity: O(logN). Space complexity: O(1)</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"># Definition for a binary tree node.</div><div class="line"># class TreeNode(object):</div><div class="line">#     def __init__(self, x):</div><div class="line">#         self.val = x</div><div class="line">#         self.left = None</div><div class="line">#         self.right = None</div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    def closestValue(self, root, target):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :type target: float</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not root: return None</div><div class="line">        closest=root.val</div><div class="line">        diff=abs(root.val-target)</div><div class="line">        while root:</div><div class="line">            if abs(root.val-target)&lt;diff:</div><div class="line">                diff=abs(root.val-target)</div><div class="line">                closest=root.val</div><div class="line">            root=root.right if root.val&lt;target else root.left</div><div class="line">        return closest</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    def closestValue(self, root, target):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :type target: float</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not root: return None</div><div class="line">        if not root.left and not root.right: return root.val</div><div class="line">        def inorderTraversal(root):</div><div class="line">            if not root: return []</div><div class="line">            return inorderTraversal(root.left)+[root.val]+inorderTraversal(root.right)</div><div class="line">        vals=inorderTraversal(root)</div><div class="line">        for i in range(len(vals)):</div><div class="line">            if target&lt;vals[i]:</div><div class="line">                if abs(target-vals[i])&lt;abs(target-vals[i-1]):</div><div class="line">                    return vals[i]</div><div class="line">                else:</div><div class="line">                    return vals[i-1]</div><div class="line">        return vals[-1]</div><div class="line">        &apos;&apos;&apos;</div></pre></td></tr></table></figure>
+<h2 id="272-Closest-Binary-Search-Tree-Value-II"><a href="#272-Closest-Binary-Search-Tree-Value-II" class="headerlink" title="272. Closest Binary Search Tree Value II"></a>272. Closest Binary Search Tree Value II</h2><h3 id="Problem-8"><a href="#Problem-8" class="headerlink" title="Problem"></a>Problem</h3><p>Given a non-empty binary search tree and a target value, find k values in the BST that are closest to the target.</p>
+<p>Note:<br>Given target value is a floating point.<br>You may assume k is always valid, that is: k ≤ total nodes.<br>You are guaranteed to have only one unique set of k values in the BST that are closest to the target.<br>Follow up:<br>Assume that the BST is balanced, could you solve it in less than O(n) runtime (where n = total nodes)?</p>
+<h3 id="Solution-8"><a href="#Solution-8" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">assume k is smaller than the # of nodes in BST</div><div class="line"></div><div class="line">Wrong solution:</div><div class="line">    Recall Closest Binary Search Tree Value I, maybe we can maintain a k-size of diff priorityqueue and k-size of closest priorityqueue and do the pop and push the same way as problem I?</div><div class="line">    -&gt; We can do that but only when H&gt;=k where H is the height of BST, but when H&lt;k, we should add more values into closest, it&apos;s hard to decide or to track these nodes because we may need to access the predecessors.</div><div class="line">    -&gt; So we may think of two helper function getSuccessor, getPredecessor,</div><div class="line"></div><div class="line">- Solution 1:</div><div class="line">    - have an in-order traversal and get a sorted array, then find the closest value to the target in the sorted array, and look forward and backwards to get k closest values.</div><div class="line">    - or, same idea, have two stacks one stores the values that are smaller than the target, and the other stores the values that are larger than the target, and finally merge it</div><div class="line">    - O(n) time complexity</div><div class="line"></div><div class="line">- Solution 2:</div><div class="line">    - first find the closest value cur to target, while k&lt;0, find the closest smaller value to the cur and the closest larger value to the cur, compare them to find the the closest value to the target and add it to the result list till there&apos;re k values in the result</div><div class="line">    - O(klogn) time complexity</div><div class="line"></div><div class="line"></div><div class="line">Corner case:</div><div class="line">    - Solution 1 must consider case when target&lt;0</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"># Definition for a binary tree node.</div><div class="line"># class TreeNode(object):</div><div class="line">#     def __init__(self, x):</div><div class="line">#         self.val = x</div><div class="line">#         self.left = None</div><div class="line">#         self.right = None</div><div class="line">from collections import deque</div><div class="line">class Solution(object):</div><div class="line">    # O(klogn)</div><div class="line">    def closestKValues(self, root, target, k):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :type target: float</div><div class="line">        :type k: int</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not root: return None</div><div class="line">        closest=self.getClosestVal(root,target)</div><div class="line">        res=[closest.val]</div><div class="line">        k-=1</div><div class="line">        # merge k values</div><div class="line">        s=self.getSmaller(root,closest.val)</div><div class="line">        l=self.getLarger(root,closest.val)</div><div class="line">        while k&gt;0:</div><div class="line">            if not s:</div><div class="line">                res.append(l.val)</div><div class="line">                l=self.getLarger(root,l.val)</div><div class="line">            elif not l:</div><div class="line">                res.append(s.val)</div><div class="line">                s=self.getSmaller(root,s.val)</div><div class="line">            elif abs(s.val-target)&lt;abs(l.val-target):</div><div class="line">                res.append(s.val)</div><div class="line">                s=self.getSmaller(root,s.val)</div><div class="line">            else:</div><div class="line">                res.append(l.val)</div><div class="line">                l=self.getLarger(root,l.val)</div><div class="line">            k-=1;</div><div class="line">        return res</div><div class="line"></div><div class="line"></div><div class="line">    def getSmaller(self,root,t):</div><div class="line">        s=None</div><div class="line">        while root:</div><div class="line">            if root.val&lt;t:</div><div class="line">                s=root</div><div class="line">                root=root.right</div><div class="line">            else:</div><div class="line">                root=root.left</div><div class="line">        return s</div><div class="line"></div><div class="line">    def getLarger(self,root,t):</div><div class="line">        l=None</div><div class="line">        while root:</div><div class="line">            if root.val&gt;t:</div><div class="line">                l=root</div><div class="line">                root=root.left</div><div class="line">            else:</div><div class="line">                root=root.right  </div><div class="line">        return l</div><div class="line"></div><div class="line">    def getClosestVal(self,root,target):</div><div class="line">        closest=root</div><div class="line">        diff=abs(root.val-target)</div><div class="line">        while root:</div><div class="line">            if abs(root.val-target)&lt;diff:</div><div class="line">                diff=abs(root.val-target)</div><div class="line">                closest=root</div><div class="line">            root=root.right if root.val&lt;target else root.left</div><div class="line">        return closest</div><div class="line"></div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    # O(n)</div><div class="line">    def closestKValues(self, root, target, k):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :type target: float</div><div class="line">        :type k: int</div><div class="line">        :rtype: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not root: return None</div><div class="line">        def dfs(root):</div><div class="line">            if not root: return []</div><div class="line">            return dfs(root.left)+[root.val]+dfs(root.right)</div><div class="line"></div><div class="line">        values=dfs(root)</div><div class="line">        # get smaller values and larger values</div><div class="line">        res,smaller,larger=[],[],[]</div><div class="line">        for v in values:</div><div class="line">            if v&lt;target:</div><div class="line">                smaller.append(v)</div><div class="line">            elif v&gt;target:</div><div class="line">                larger.append(v)</div><div class="line">            else:</div><div class="line">                res.append(v)</div><div class="line">                k-=1</div><div class="line">        # merge k values</div><div class="line">        if target&lt;0:</div><div class="line">            smaller=smaller[::-1]</div><div class="line">        larger=larger[::-1]</div><div class="line">        while k&gt;0:</div><div class="line">            if not smaller:</div><div class="line">                res.append(larger.pop())</div><div class="line">            elif not larger:</div><div class="line">                res.append(smaller.pop())</div><div class="line">            elif abs(smaller[-1]-target)&lt;abs(larger[-1]-target):</div><div class="line">                res.append(smaller.pop())</div><div class="line">            else:</div><div class="line">                res.append(larger.pop())</div><div class="line">            k-=1;</div><div class="line">        return res</div><div class="line">        &apos;&apos;&apos;</div></pre></td></tr></table></figure>
+<h2 id="366-Find-Leaves-of-Binary-Tree"><a href="#366-Find-Leaves-of-Binary-Tree" class="headerlink" title="366. Find Leaves of Binary Tree"></a>366. Find Leaves of Binary Tree</h2><h3 id="Problem-9"><a href="#Problem-9" class="headerlink" title="Problem"></a>Problem</h3><p>Given a binary tree, collect a tree’s nodes as if you were doing this: Collect and remove all leaves, repeat until the tree is empty.</p>
+<p>Example:<br>Given binary tree<br>          1<br>         / \<br>        2   3<br>       / \<br>      4   5<br>Returns [4, 5, 3], [2], [1].</p>
+<p>Explanation:<br>1.Removing the leaves [4, 5, 3] would result in this tree:</p>
+<pre><code>  1
+ /
+2          
+</code></pre><p>2.Now removing the leaf [2] would result in this tree:</p>
+<pre><code>1          
+</code></pre><p>3.Now removing the leaf [1] would result in the empty tree:</p>
+<pre><code>[]         
+</code></pre><p>Returns [4, 5, 3], [2], [1].</p>
+<h3 id="Solution-9"><a href="#Solution-9" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">    brute-force</div><div class="line">    string encoding(preorder): 124##5##3##</div><div class="line"></div><div class="line">Followup: make it O(n)</div><div class="line">    nodes with the same height should be leaves for each turn</div><div class="line">&apos;&apos;&apos;</div><div class="line"># Definition for a binary tree node.</div><div class="line"># class TreeNode(object):</div><div class="line">#     def __init__(self, x):</div><div class="line">#         self.val = x</div><div class="line">#         self.left = None</div><div class="line">#         self.right = None</div><div class="line"></div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    def findLeaves(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: List[List[int]]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not root: return []</div><div class="line">        def getHeight(root):</div><div class="line">            if not root: return 0</div><div class="line">            return max(getHeight(root.left),getHeight(root.right))+1</div><div class="line"></div><div class="line">        def traverse(root):</div><div class="line">            global res</div><div class="line">            if not root:</div><div class="line">                return 0</div><div class="line">            lev=max(traverse(root.left),traverse(root.right))+1</div><div class="line">            res[lev-1].append(root.val)</div><div class="line">            return lev</div><div class="line"></div><div class="line">        global res</div><div class="line">        h=getHeight(root)</div><div class="line">        res=[list() for i in range(h)]</div><div class="line">        traverse(root)</div><div class="line">        return res</div><div class="line">        &apos;&apos;&apos;</div><div class="line"></div><div class="line">    def findLeaves(self, root):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type root: TreeNode</div><div class="line">        :rtype: List[List[int]]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not root:</div><div class="line">            return []</div><div class="line"></div><div class="line">        def traverse(root, res):</div><div class="line">            if not root:</div><div class="line">                return 0</div><div class="line">            lev = max(traverse(root.left, res), traverse(root.right, res)) + 1</div><div class="line">            res[lev].append(root.val)</div><div class="line">            return lev</div><div class="line"></div><div class="line">        res = collections.defaultdict(list)</div><div class="line">        traverse(root, res)</div><div class="line">        return res.values()</div></pre></td></tr></table></figure>
+<h2 id="307-Range-Sum-Query-Mutable-Binary-indexed-tree"><a href="#307-Range-Sum-Query-Mutable-Binary-indexed-tree" class="headerlink" title="307. Range Sum Query - Mutable (Binary indexed tree)"></a>307. Range Sum Query - Mutable (Binary indexed tree)</h2><h3 id="Problem-10"><a href="#Problem-10" class="headerlink" title="Problem"></a>Problem</h3><p>Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.</p>
+<p>The update(i, val) function modifies nums by updating the element at index i to val.<br>Example:<br>Given nums = [1, 3, 5]</p>
+<p>sumRange(0, 2) -&gt; 9<br>update(1, 2)<br>sumRange(0, 2) -&gt; 8<br>Note:<br>The array is only modifiable by the update function.<br>You may assume the number of calls to update and sumRange function is distributed evenly.</p>
+<h3 id="Solution-10"><a href="#Solution-10" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">update: O(1)</div><div class="line">sumRange: O(n)</div><div class="line"></div><div class="line">class NumArray(object):</div><div class="line">    def __init__(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        initialize your data structure here.</div><div class="line">        :type nums: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.nums=nums</div><div class="line"></div><div class="line">    def update(self, i, val):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type i: int</div><div class="line">        :type val: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.nums[i]=val</div><div class="line"></div><div class="line"></div><div class="line">    def sumRange(self, i, j):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        sum of elements nums[i..j], inclusive.</div><div class="line">        :type i: int</div><div class="line">        :type j: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        return sum(self.nums[i:j+1])</div><div class="line">        &apos;&apos;&apos;</div><div class="line">&apos;&apos;&apos;</div><div class="line">Use self.bit to represent Binary Indexed Tree. Section sums are stored in self.c[1..len(nums)]. x &amp; -x is lowbit function, which will return x&apos;s rightmost bit 1, e.g. lowbit(7) = 1, lowbit(20) = 4.</div><div class="line"></div><div class="line">Both update and sumRange takes O(logn) time.</div><div class="line">See http://www.cnblogs.com/grandyang/p/4985506.html</div><div class="line">&apos;&apos;&apos;</div><div class="line">class NumArray(object):</div><div class="line">    def __init__(self, nums):</div><div class="line">        self.n = len(nums)</div><div class="line">        self.nums, self.bit = [0] * (self.n + 1), [0] * (self.n + 1)</div><div class="line">        for i,n in enumerate(nums):</div><div class="line">            self.update(i,n)</div><div class="line"></div><div class="line">    def update(self, i, val):</div><div class="line">        diff, self.nums[i] = val - self.nums[i], val</div><div class="line">        i += 1</div><div class="line">        while i &lt;= self.n:</div><div class="line">            self.bit[i] += diff</div><div class="line">            i += (i &amp; -i)</div><div class="line"></div><div class="line">    def sumRange(self, i, j):</div><div class="line">        res, j = 0, j + 1</div><div class="line">        while j:</div><div class="line">            res += self.bit[j]</div><div class="line">            j -= (j &amp; -j)</div><div class="line">        while i:</div><div class="line">            res -= self.bit[i]</div><div class="line">            i -= (i &amp; -i)</div><div class="line">        return res</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/树/" rel="tag">#树</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/11/Search Engines笔记 - Query Processing/" rel="next" title="Search Engines笔记 - Query Processing">
+                <i class="fa fa-chevron-left"></i> Search Engines笔记 - Query Processing
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/18/数据结构和算法 -- TWO-SUM 问题和 python dict/" rel="prev" title="数据结构和算法 -- TWO-SUM 问题和python dict">
+                数据结构和算法 -- TWO-SUM 问题和python dict <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#最大最小值"><span class="nav-number">1.</span> <span class="nav-text">最大最小值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其它"><span class="nav-number">2.</span> <span class="nav-text">其它</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础"><span class="nav-number"></span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#complexity"><span class="nav-number">2.</span> <span class="nav-text">complexity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary-search-tree-二叉搜索树"><span class="nav-number">3.</span> <span class="nav-text">Binary search tree 二叉搜索树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Balanced-binary-tree-平衡树"><span class="nav-number">4.</span> <span class="nav-text">Balanced binary tree 平衡树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历方法"><span class="nav-number">5.</span> <span class="nav-text">遍历方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stack-amp-DFS"><span class="nav-number">5.1.</span> <span class="nav-text">stack & DFS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#先根-144-Binary-Tree-Preorder-Traversal"><span class="nav-number">5.1.1.</span> <span class="nav-text">先根(144.Binary Tree Preorder Traversal)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中根-94-Binary-Tree-Inorder-Traversal"><span class="nav-number">5.1.2.</span> <span class="nav-text">中根(94.Binary Tree Inorder Traversal)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后根-145-Binary-Tree-Postorder-Traversal"><span class="nav-number">5.1.3.</span> <span class="nav-text">后根(145.Binary Tree Postorder Traversal)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#queue-amp-BFS-102-Binary-Tree-Level-Order-Traversal"><span class="nav-number">5.2.</span> <span class="nav-text">queue & BFS(102. Binary Tree Level Order Traversal)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem"><span class="nav-number">5.2.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solution"><span class="nav-number">5.2.2.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解题策略"><span class="nav-number"></span> <span class="nav-text">解题策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Divide-and-conquer"><span class="nav-number">1.</span> <span class="nav-text">Divide and conquer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特定路径的问题"><span class="nav-number">2.</span> <span class="nav-text">特定路径的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树和其他数据结构的相互转换"><span class="nav-number">3.</span> <span class="nav-text">树和其他数据结构的相互转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寻找特定节点"><span class="nav-number">4.</span> <span class="nav-text">寻找特定节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意点"><span class="nav-number">5.</span> <span class="nav-text">注意点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题"><span class="nav-number"></span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#101-Symmetric-Tree"><span class="nav-number">1.</span> <span class="nav-text">101. Symmetric Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-1"><span class="nav-number">1.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">1.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#156-Binary-tree-upside-down"><span class="nav-number">2.</span> <span class="nav-text">156. Binary tree upside down</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-2"><span class="nav-number">2.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">2.2.</span> <span class="nav-text">Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Stack-解法"><span class="nav-number">2.2.1.</span> <span class="nav-text">Stack 解法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Recursive-解法"><span class="nav-number">2.2.2.</span> <span class="nav-text">Recursive 解法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#98-Valid-binary-search-tree"><span class="nav-number">3.</span> <span class="nav-text">98. Valid binary search tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-3"><span class="nav-number">3.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-3"><span class="nav-number">3.2.</span> <span class="nav-text">Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Inorder-traversal"><span class="nav-number">3.2.1.</span> <span class="nav-text">Inorder traversal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Global-max"><span class="nav-number">3.2.2.</span> <span class="nav-text">Global max</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Range"><span class="nav-number">3.2.3.</span> <span class="nav-text">Range</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#333-Largest-BST-Subtree"><span class="nav-number">4.</span> <span class="nav-text">333. Largest BST Subtree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-4"><span class="nav-number">4.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-4"><span class="nav-number">4.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#298-Binary-Tree-Longest-Consecutive-Sequence"><span class="nav-number">5.</span> <span class="nav-text">298. Binary Tree Longest Consecutive Sequence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-5"><span class="nav-number">5.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-5"><span class="nav-number">5.2.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#待补充"><span class="nav-number"></span> <span class="nav-text">待补充</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#222-Count-Complete-Tree-Nodes"><span class="nav-number">1.</span> <span class="nav-text">222. Count Complete Tree Nodes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-6"><span class="nav-number">1.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-6"><span class="nav-number">1.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#270-Closest-Binary-Search-Tree-Value"><span class="nav-number">2.</span> <span class="nav-text">270. Closest Binary Search Tree Value</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-7"><span class="nav-number">2.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-7"><span class="nav-number">2.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#272-Closest-Binary-Search-Tree-Value-II"><span class="nav-number">3.</span> <span class="nav-text">272. Closest Binary Search Tree Value II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-8"><span class="nav-number">3.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-8"><span class="nav-number">3.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#366-Find-Leaves-of-Binary-Tree"><span class="nav-number">4.</span> <span class="nav-text">366. Find Leaves of Binary Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-9"><span class="nav-number">4.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-9"><span class="nav-number">4.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#307-Range-Sum-Query-Mutable-Binary-indexed-tree"><span class="nav-number">5.</span> <span class="nav-text">307. Range Sum Query - Mutable (Binary indexed tree)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-10"><span class="nav-number">5.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-10"><span class="nav-number">5.2.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/09/17/数据结构和算法 -- 树/';
+      var disqus_title = "数据结构和算法 -- 树";
+      var disqus_url = 'http://www.shuang0420.com/2016/09/17/数据结构和算法 -- 树/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

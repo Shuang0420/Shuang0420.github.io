@@ -1,0 +1,1029 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,machine learning," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Graphical Models">
+<meta property="og:url" content="http://www.shuang0420.com/2016/12/04/Graphical Models/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/Bayesian.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/Chain.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/MultipleEffects.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/MultipleCauses.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/s.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/fac1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/dn.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/inf.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/use.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/pj1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/inf.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Graphical Models">
+<meta name="twitter:description" content="CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/Bayesian.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/12/04/Graphical Models/"/>
+
+
+  <title> Graphical Models | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Graphical Models
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-12-04T23:13:47+08:00" content="2016-12-04">
+              2016-12-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/04/Graphical Models/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/12/04/Graphical Models/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。<br><a id="more"></a></p>
+<h1 id="Graphical-Models"><a href="#Graphical-Models" class="headerlink" title="Graphical Models"></a>Graphical Models</h1><h2 id="Key-idea"><a href="#Key-idea" class="headerlink" title="Key idea"></a>Key idea</h2><ul>
+<li>Conditional independence assumptions useful (but Naive Bayes is extrem)</li>
+<li>Probabilistic graphical models are a joint probability distribution defined over a graph</li>
+</ul>
+<p>Two types of graphical models:</p>
+<ul>
+<li>Directed graphs (Bayesian Networks)</li>
+<li>Undirected graphs (Markov Random Fields)</li>
+</ul>
+<p><strong>hard bias:</strong><br>Distribution shares conditional independent assumptions</p>
+<h2 id="Independence"><a href="#Independence" class="headerlink" title="Independence"></a>Independence</h2><h3 id="Marginal-Independence"><a href="#Marginal-Independence" class="headerlink" title="Marginal Independence"></a>Marginal Independence</h3><p><strong>Definition:</strong>    X    is marginally    independent    of Y if<br>$$(\forall i,j)P(X=x_i,Y=y_j)=P(X=x_i)P(Y=y_j)$$</p>
+<p>变种：<br>$(\forall i,j)P(X=x_i|Y=y_j)=P(X=x_i)$<br>$(\forall i,j)P(Y=y_j|X=x_i)=P(Y=y_j)$</p>
+<h3 id="Conditional-Independence"><a href="#Conditional-Independence" class="headerlink" title="Conditional Independence"></a>Conditional Independence</h3><p><strong>Definition:</strong>    X    is conditional independent of    Y    given    Z, if    the    probability    distribution governing X is    independent    of the value of Y,    given    the    value    of Z<br>$$(\forall i,j,k)P(X=x_i|Y=y_j|Z=z_k)=P(X=x_i|Z=z_k)$$<br>即<br>$$P(X|Y,Z)=P(X|Z)$$</p>
+<h1 id="DGM-Directed-Graphical-Models"><a href="#DGM-Directed-Graphical-Models" class="headerlink" title="DGM(Directed Graphical Models)"></a>DGM(Directed Graphical Models)</h1><p>DGM = Bayes Nets = Bayes Belief Networks<br>Directed graph = (potentially very large) set of conditional independent assumptions = factorization of joint probability(Likelihood function)</p>
+<h2 id="Bayesian-Networks"><a href="#Bayesian-Networks" class="headerlink" title="Bayesian Networks"></a>Bayesian Networks</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/Bayesian.jpg" class="ful-image" alt="Bayesian.jpg">
+<h2 id="Causality"><a href="#Causality" class="headerlink" title="Causality"></a>Causality</h2><p>Causality =&gt; DCM<br>cannot infer causality from DCM<br>eg. A-&gt;B-&gt;C or C-&gt;B-&gt;A gives same DCM  $C \bot A|B =&gt; A \bot C|B$</p>
+<h2 id="Types-of-DGM"><a href="#Types-of-DGM" class="headerlink" title="Types of DGM"></a>Types of DGM</h2><h3 id="Eg-Chain-of-events"><a href="#Eg-Chain-of-events" class="headerlink" title="Eg. Chain of events"></a>Eg. Chain of events</h3><p>Cloudy -&gt; Rain -&gt; Wetgrass<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/Chain.jpg" class="ful-image" alt="Chain.jpg"><br>I(C;W)&gt;=0<br>I(C;W|R)=0 $C \bot W|R$</p>
+<h3 id="Eg-Multiple-Effects"><a href="#Eg-Multiple-Effects" class="headerlink" title="Eg. Multiple Effects"></a>Eg. Multiple Effects</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/MultipleEffects.jpg" class="ful-image" alt="MultipleEffects.jpg">
+<p>Cloudy -&gt; Rain<br>       -&gt; Sprinkler<br>I(R;S)&gt;=0 $R NOT \bot S$<br>I(R,S|C)=0 $R \bot S|C$  </p>
+<h3 id="Eg-Multiple-Causes"><a href="#Eg-Multiple-Causes" class="headerlink" title="Eg. Multiple Causes"></a>Eg. Multiple Causes</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/MultipleCauses.jpg" class="ful-image" alt="MultipleCauses.jpg">
+<p>Rain -&gt; Wetgrass<br>Sprinkler -&gt; Wetgrass<br>I(R;S)=0 $R \bot S$<br>I(R,S|W)&gt;=0 $R NOT \bot S|W$</p>
+<p>“Explaining away”<br>look one of the factor explains the result</p>
+<h2 id="Factoring-and-Count-parameters"><a href="#Factoring-and-Count-parameters" class="headerlink" title="Factoring and Count parameters"></a>Factoring and Count parameters</h2><p>Factoring 主要靠的是 chain rule 和 conditional independence assumptions，计算参数则主要看每个节点的父节点数。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/s.jpg" class="ful-image" alt="s.jpg"><br>without independent Assumptions<br>P(S,B,L,C,T,F)=P(S)P(B|S)P(L|S,B)P(C|S,B,L)P(T|S,B,L,C)P(F|S,B,L,C,T)<br><strong># of paras</strong> 1+2+4+8+16+32</p>
+<p>with these assumptions, condition only on immediate parent<br>=P(S)P(B)P(L|S)P(C|S,B)P(T|S,B)P(T|L)P(F|S,L,C)<br><strong># of paras</strong> 1+1+2+4+2+8=18<br><strong>dominate factor:</strong> largest number of parents that any one node has</p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>再具体一点分析，假设我们有一个警报系统，有以下元素组成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">An	alarm	system</div><div class="line">       B	–	Did	a	burglary	occur?</div><div class="line">       E	–	Did	an	earthquake	occur?</div><div class="line">       A	–	Did	the	alarm	go	off?</div><div class="line">       M	–	Mary	calls</div><div class="line">       J	–	John	calls</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>Factoring joint distributions</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">P(M,J,A,B,E)	=		</div><div class="line">                P(M	|J,A,B,E)	P(J,A,B,E)	=</div><div class="line">                P(M	|	J,A,B,E)	P(J	|	A,B,E)	P(A|	B,E)	=		</div><div class="line">                P(M	|	J,A,B,E)	P(J	|	A,B,E)	P(A	|	B,E)	P(B,E)</div><div class="line">                P(M	|	J,A,B,E)	P(J	|	A,B,E)	P(A	|	B,E)P(B	|	E)P(E)</div></pre></td></tr></table></figure>
+</li>
+<li><p>Draw    Bayesian Network</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/fac1.jpg" class="ful-image" alt="fac1.jpg">
+<p>对上图来说，共需要 31 个参数。<br>M: 2^4<br>J: 2^3<br>A: 2^2<br>B: 2^1<br>E: 2^0</p>
+</li>
+<li>Use knowledge of domain<br>-&gt; P(B)P(E)P(A|B,E)P(J|A)P(M|A)<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/dn.jpg" class="ful-image" alt="dn.jpg">
+现在，需要 10 个参数（A:4, B:1, E:1, J:2, M:2），我们少用了 21 个参数！</li>
+</ol>
+<h2 id="Use"><a href="#Use" class="headerlink" title="Use"></a>Use</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/inf.jpg" class="ful-image" alt="inf.jpg">
+<p>distribution posterior $P(Xt|Xo,\overline \theta)$<br>argmax $Xt = argmax \ P(Xt|Xo,\overline \theta)$</p>
+<p><strong>Using the model</strong><br>Given the model (struct+params) input-&gt;output</p>
+<p>Likelihood function twice<br>$P(X_k=0|X_1,..X_{k-1},X_{k+1}…X_p)$<br>$P(X_k=1|X_1,..X_{k-1},X_{k+1}…X_p)$<br>(if binary) normalize the two values, and gets the posterior</p>
+<p>Condition on X1,X3,X5,X7<br>want to know: distribution over X2,X4,X6,X8<br>need to cal<br>$P(X_2=0,X_4=0,X_6=0,X_8=0,|X_1,..X_{k-1},X_{k+1}…X_p)$<br>$P(X_2=0,X_4=0,X_6=0,X_8=1,|X_1,..X_{k-1},X_{k+1}…X_p)$<br>…<br>$P(X_2=1,X_4=1,X_6=1,X_8=1,|X_1,..X_{k-1},X_{k+1}…X_p)$<br>cal all combinations, normalize, to get the posterior</p>
+<p>exp(# of unobserved values)</p>
+<h3 id="Eg-1-Computing-full-joints"><a href="#Eg-1-Computing-full-joints" class="headerlink" title="Eg.1 Computing full joints"></a>Eg.1 Computing full joints</h3><p>$P(B,\lnot E,A,J,\lnot M)$<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/use.jpg" class="ful-image" alt="use.jpg"></p>
+<h3 id="Eg-2-Compute-partial-joints"><a href="#Eg-2-Compute-partial-joints" class="headerlink" title="Eg.2 Compute partial joints"></a>Eg.2 Compute partial joints</h3><p>$P(B|J, \lnot M)$</p>
+<p>$P(B|J, \lnot M)={P(B,J, \lnot M) \over P(B,J, \lnot M)+P(\lnot B,J,\lnot M)}$</p>
+<p><strong>Compute $P(B,J, \lnot M)$</strong><br>Sum    all    instances    with these settings    (the sum is over the possible    assignments    to the other two variables,    E    and    A)<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/pj1.jpg" class="ful-image" alt="pj1.jpg"></p>
+<p>有简化的方法如 Variable elimination，这里不展开。</p>
+<h1 id="Things-we-do-with-regard-to-a-ML-framework"><a href="#Things-we-do-with-regard-to-a-ML-framework" class="headerlink" title="Things we do with regard to a ML framework"></a>Things we do with regard to a ML framework</h1><ol>
+<li><p>Using it (“inference”)<br>DGM: DP, transforming the tree, approximate inference</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Graphical%20Models/inf.jpg" class="ful-image" alt="inf.jpg">
+<p>distribution posterior $P(Xt|Xo,\overline \theta)$<br>argmax $Xt = argmax \ P(Xt|Xo,\overline \theta)$</p>
+</li>
+<li><p>Parameter learning: Learning/Deriving/Fitting the parameters (select weights/transition…) <strong>&lt;= soft bias</strong>/loss function/objective function/optimization function<br>from completed data -&gt; easy: relative frequency+smoothing<br>from incompleted data(some days may be missing) -&gt; hard: EM</p>
+<p> for 1,2<br> UGM<br> consideration: largest number of click</p>
+<p> DGM<br> consideration: max number of parents</p>
+</li>
+<li><p>Structure learning: Learning/Deriving/Selecting (select neurons,graph…) <strong>&lt;= hard bias</strong><br>the number of possible structure is huge<br>very very had, usually not enough data<br>use greedy, AIC, BIC</p>
+</li>
+</ol>
+<h2 id="ML-Para-learning-in-DGM"><a href="#ML-Para-learning-in-DGM" class="headerlink" title="ML-Para learning in DGM"></a>ML-Para learning in DGM</h2><p>$\hat \theta_{ML} = argmax \ L(observed \ data|\overline \theta)$<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    C R S W</div><div class="line">D1  0 0 0 1</div><div class="line">D2  0 1 1 1</div><div class="line">...</div><div class="line">Dn</div></pre></td></tr></table></figure></p>
+<p>$P(C)={\# of \ C \over N}$<br>$P(S|C=1)={\#(C=1|S=1) \over \#(C=1)}$<br>Relative frequency + Smoothing</p>
+<h2 id="Select-the-structure"><a href="#Select-the-structure" class="headerlink" title="Select the structure"></a>Select the structure</h2><p><strong>Model Hierarchy</strong><br>more and more expressive =&gt; complexity of model</p>
+<p><strong>simple vs fitting tradeoff</strong><br>AIC: max<br>BIC: fewest para</p>
+<p>CAL:<br>$\delta log L(D|\theta)$</p>
+<h1 id="Conditional-Random-Fields"><a href="#Conditional-Random-Fields" class="headerlink" title="Conditional Random Fields"></a>Conditional Random Fields</h1><p>CRF = UGM Trained Discriminatively<br>$argmax \ L(labels|inputs,\theta)$</p>
+<p><strong>generative modeling</strong><br>$\theta=argmax \ L(D|\theta)$<br>MAP=argmax P(|x)</p>
+<p><strong>discriminative method</strong><br>$argmin \ ERR(classifier|D,\theta)$<br>better when training data is small</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/machine-learning/" rel="tag">#machine learning</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/04/EM算法/" rel="next" title="EM算法">
+                <i class="fa fa-chevron-left"></i> EM算法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/07/Search Engines笔记 - Federated Search/" rel="prev" title="Search Engines笔记 - Federated Search">
+                Search Engines笔记 - Federated Search <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Graphical-Models"><span class="nav-number">1.</span> <span class="nav-text">Graphical Models</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Key-idea"><span class="nav-number">1.1.</span> <span class="nav-text">Key idea</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Independence"><span class="nav-number">1.2.</span> <span class="nav-text">Independence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Marginal-Independence"><span class="nav-number">1.2.1.</span> <span class="nav-text">Marginal Independence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conditional-Independence"><span class="nav-number">1.2.2.</span> <span class="nav-text">Conditional Independence</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DGM-Directed-Graphical-Models"><span class="nav-number">2.</span> <span class="nav-text">DGM(Directed Graphical Models)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bayesian-Networks"><span class="nav-number">2.1.</span> <span class="nav-text">Bayesian Networks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Causality"><span class="nav-number">2.2.</span> <span class="nav-text">Causality</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Types-of-DGM"><span class="nav-number">2.3.</span> <span class="nav-text">Types of DGM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Eg-Chain-of-events"><span class="nav-number">2.3.1.</span> <span class="nav-text">Eg. Chain of events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eg-Multiple-Effects"><span class="nav-number">2.3.2.</span> <span class="nav-text">Eg. Multiple Effects</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eg-Multiple-Causes"><span class="nav-number">2.3.3.</span> <span class="nav-text">Eg. Multiple Causes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Factoring-and-Count-parameters"><span class="nav-number">2.4.</span> <span class="nav-text">Factoring and Count parameters</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example"><span class="nav-number">2.4.1.</span> <span class="nav-text">Example</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use"><span class="nav-number">2.5.</span> <span class="nav-text">Use</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Eg-1-Computing-full-joints"><span class="nav-number">2.5.1.</span> <span class="nav-text">Eg.1 Computing full joints</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eg-2-Compute-partial-joints"><span class="nav-number">2.5.2.</span> <span class="nav-text">Eg.2 Compute partial joints</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Things-we-do-with-regard-to-a-ML-framework"><span class="nav-number">3.</span> <span class="nav-text">Things we do with regard to a ML framework</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ML-Para-learning-in-DGM"><span class="nav-number">3.1.</span> <span class="nav-text">ML-Para learning in DGM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Select-the-structure"><span class="nav-number">3.2.</span> <span class="nav-text">Select the structure</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conditional-Random-Fields"><span class="nav-number">4.</span> <span class="nav-text">Conditional Random Fields</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/12/04/Graphical Models/';
+      var disqus_title = "Graphical Models";
+      var disqus_url = 'http://www.shuang0420.com/2016/12/04/Graphical Models/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

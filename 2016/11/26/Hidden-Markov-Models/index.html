@@ -1,0 +1,1045 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,machine learning," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 10601 的课程笔记。上一章讲了 Bayesian networks，我们发现它对 joint distributions 建模很有用，然而却不能解释 temporal/sequence models，也没法解释循环问题。所以需要引入另一个模型，隐马尔可夫模型（Hidden Markov Model，HMM）。HMM 用来描述一个含有隐含未知参数的马尔可夫过程。难点是从可观察的参数中确定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hidden-Markov-Models">
+<meta property="og:url" content="http://www.shuang0420.com/2016/11/26/Hidden-Markov-Models/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 10601 的课程笔记。上一章讲了 Bayesian networks，我们发现它对 joint distributions 建模很有用，然而却不能解释 temporal/sequence models，也没法解释循环问题。所以需要引入另一个模型，隐马尔可夫模型（Hidden Markov Model，HMM）。HMM 用来描述一个含有隐含未知参数的马尔可夫过程。难点是从可观察的参数中确定">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/mm.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/die1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/die2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/die3.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/hmm.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/gm.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/graph.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/alpha.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/forwardStep.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/forward.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/beta.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/backward.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/vi.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/vie.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/fb_alg.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/fb1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/a.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/b.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hidden-Markov-Models">
+<meta name="twitter:description" content="CMU 10601 的课程笔记。上一章讲了 Bayesian networks，我们发现它对 joint distributions 建模很有用，然而却不能解释 temporal/sequence models，也没法解释循环问题。所以需要引入另一个模型，隐马尔可夫模型（Hidden Markov Model，HMM）。HMM 用来描述一个含有隐含未知参数的马尔可夫过程。难点是从可观察的参数中确定">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/mm.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2016/11/26/Hidden-Markov-Models/"/>
+
+
+  <title> Hidden-Markov-Models | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hidden-Markov-Models
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-11-26T23:13:47+08:00" content="2016-11-26">
+              2016-11-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/26/Hidden-Markov-Models/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/26/Hidden-Markov-Models/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 10601 的课程笔记。上一章讲了 Bayesian networks，我们发现它对 joint distributions 建模很有用，然而却不能解释 temporal/sequence models，也没法解释循环问题。所以需要引入另一个模型，隐马尔可夫模型（Hidden Markov Model，HMM）。HMM 用来描述一个含有隐含未知参数的马尔可夫过程。难点是从可观察的参数中确定该过程的隐含参数，然后利用这些参数来作进一步的分析。<br><a id="more"></a></p>
+<h1 id="Markov-Process"><a href="#Markov-Process" class="headerlink" title="Markov Process"></a>Markov Process</h1><p>要素</p>
+<ul>
+<li>States: 所有可能出现的状态。$S={S_0, S_1, …S_n}$</li>
+<li>Transition probabilities: 状态和状态间转换的概率。$P(q_t=S_i|q_{t-1}=S_j)$</li>
+</ul>
+<p>假设<br><strong>First order markov assumption</strong><br>Transition probability depends only on current state<br>即 $P(q_t=S_i|q_{t-1}=S_j,q_{t-2}=S_k) = P(q_t=S_i|q_{t-1}=S_j) = a_{ji}$<br>$a_{ji} &gt;=0 \ \forall j,i$ 且 $\sum_{i=0}^N a_{ji}=1 \ \forall j$<br>即 $q_t \bot q_j|q_{t-1} \ j&lt;t-1$<br>即 Markov Process only remembers one state at a time 不具备记忆特质（memorylessness），条件概率仅仅与系统的当前状态相关，而与它的过去历史或未来状态，都是独立、不相关</p>
+<p>$P(q_1….q_T) = \prod P(q_t|q1….q_{t-1}) = \prod P(q_t|q_{t-1})$</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/mm.jpg" class="ful-image" alt="mm.jpg">
+<h1 id="隐马尔可夫-HMM"><a href="#隐马尔可夫-HMM" class="headerlink" title="隐马尔可夫(HMM)"></a>隐马尔可夫(HMM)</h1><h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><ul>
+<li>signal processing</li>
+<li>speech processing</li>
+<li>low level NLP: eg. POS tagging, phrase chunking, target information extraction</li>
+</ul>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>用一个例子来描述吧，网上有一篇帖子讲的非常好，这里就直接引用过来了。</p>
+<p>假设我手里有三个不同的骰子。第一个骰子是我们平常见的骰子（称这个骰子为 D6），6个面，每个面（1，2，3，4，5，6）出现的概率是1/6。第二个骰子是个四面体（称这个骰子为 D4），每个面（1，2，3，4）出现的概率是1/4。第三个骰子有八个面（称这个骰子为 D8），每个面（1，2，3，4，5，6，7，8）出现的概率是1/8。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/die1.jpg" class="ful-image" alt="die1.jpg">
+<p>假设我们开始掷骰子，我们先从三个骰子里挑一个，挑到每一个骰子的概率都是1/3。然后我们掷骰子，得到一个数字，1，2，3，4，5，6，7，8中的一个。不停的重复上述过程，我们会得到一串数字，每个数字都是 1，2，3，4，5，6，7，8中的一个。例如我们可能得到这么一串数字（掷骰子10次）：1 6 3 5 2 7 3 5 2 4</p>
+<p>这串数字叫做可见状态链(observations)。但是在隐马尔可夫模型中，我们不仅仅有这么一串可见状态链，还有一串隐含状态链。在这个例子里，这串隐含状态链就是你用的骰子的序列。比如，隐含状态链有可能是：D6 D8 D8 D6 D4 D8 D6 D6 D4 D8 (states)</p>
+<p>一般来说，HMM中说到的马尔可夫链其实是指隐含状态链，因为隐含状态（骰子）之间存在转换概率（transition probability）。在我们这个例子里，D6 的下一个状态是 D4，D6，D8 的概率都是1/3。D4，D8的下一个状态是 D4，D6，D8 的转换概率也都一样是 1/3。这样设定是为了最开始容易说清楚，但是我们其实是可以随意设定转换概率的。比如，我们可以这样定义，D6 后面不能接 D4，D6 后面是 D6 的概率是0.9，是 D8 的概率是 0.1。这样就是一个新的 HMM。</p>
+<p>同样的，尽管可见状态之间没有转换概率，但是隐含状态和可见状态之间有一个概率叫做输出概率（emission probability）。就我们的例子来说，六面骰（D6）产生 1 的输出概率是 1/6。产生 2，3，4，5，6 的概率也都是 1/6。我们同样可以对输出概率进行其他定义。比如，我有一个被赌场动过手脚的六面骰子，掷出来是1的概率更大，是 1/2，掷出来是 2，3，4，5，6 的概率是 1/10。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/die2.jpg" class="ful-image" alt="die2.jpg">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/die3.jpg" class="ful-image" alt="die3.jpg">
+<h2 id="要素"><a href="#要素" class="headerlink" title="要素"></a>要素</h2><p>定义一些 notation。</p>
+<ul>
+<li>States(S): 隐含状态。$S={S_0, S_1, …S_n}$</li>
+<li>Transition probabilities(A): 状态和状态间转换的概率P(Si-&gt;Sj)。<br>$P(q_t=S_i|q_{t-1}=S_j)=a_{ji}$<br>n*n matrix of transition probabilities</li>
+<li>Emission probabilities(B) / Output prob distribution (at state j for symbol k): 发射概率（隐状态表现为显状态的概率）。状态 j 下，表现为 k 的概率。<br>$P(y_t=O_k|q_t=S_j)=b_j(k)$<br>n*m matrix of emission probabilities</li>
+<li>Observations: 观测序列(可见状态)。$O={O_0, O_1, …O_n}$</li>
+<li>Prior: 初始概率（隐状态）</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/hmm.jpg" class="ful-image" alt="hmm.jpg">
+<h2 id="Probabilistic-graphical-models"><a href="#Probabilistic-graphical-models" class="headerlink" title="Probabilistic graphical models"></a>Probabilistic graphical models</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/gm.jpg" class="ful-image" alt="gm.jpg">
+<h1 id="HMM-的问题与解决"><a href="#HMM-的问题与解决" class="headerlink" title="HMM 的问题与解决"></a>HMM 的问题与解决</h1><p>对于HMM来说，如果提前知道所有隐含状态之间的转换概率和所有隐含状态到所有可见状态之间的输出概率，做模拟是相当容易的。但是应用 HMM 模型时候呢，往往是缺失了一部分信息的，有时候你知道骰子有几种，每种骰子是什么，但是不知道掷出来的骰子序列；有时候你只是看到了很多次掷骰子的结果，剩下的什么都不知道。如果应用算法去估计这些缺失的信息，就成了一个很重要的问题。和 HMM 模型相关的算法主要分为三类，分别解决三种问题。</p>
+<h2 id="Evaluation-Problem"><a href="#Evaluation-Problem" class="headerlink" title="Evaluation Problem"></a>Evaluation Problem</h2><ul>
+<li>Problem: Compute probability of observation sequence given a model $P(O|\lambda)$<br>Given $\lambda, \overline O=O1,…Ot, =&gt; Calculate  \ P(\overline O|\lambda)$<br>知道骰子有几种（隐含状态数量），每种骰子是什么（转换概率），根据掷骰子掷出的结果（可见状态链），我想知道掷出这个结果的概率。</li>
+<li>Solution: Forward Algorithm, Viterbi Algorithm</li>
+</ul>
+<p>问这个问题的目的在于检测观察到的结果是否和已知的模型吻合。如果很多次结果都对应了比较小的概率，那么就说明我们已知的模型很有可能是错的，有人偷偷把我们的骰子給换了。</p>
+<h2 id="Decoding-Problem"><a href="#Decoding-Problem" class="headerlink" title="Decoding Problem"></a>Decoding Problem</h2><ul>
+<li>Problem: Find the state sequence Q which maximizes<br>Given $\lambda = (A,B), \overline O=O1,…Ot, =&gt; Calculate $$\overline Q_{MAP}=argmax P(\overline Q|\overline O,\lambda)=argmax {P(\overline Q,\overline O|\lambda) \over P(\overline O|\lambda)} = argmax P(\overline Q,\overline O|\lambda)$<br>知道骰子有几种（隐含状态数量），每种骰子是什么（转换概率），根据掷骰子掷出的结果（可见状态链），我想知道每次掷出来的都是哪种骰子（隐含状态链）。</li>
+<li>Solution: Viterbi Algorithm</li>
+</ul>
+<p>这个问题其实有两种解法，会给出两个不同的答案。每个答案都对，只不过这些答案的意义不一样。第一种解法求最大似然状态路径，说通俗点呢，就是我求一串骰子序列，这串骰子序列产生观测结果的概率最大。第二种解法呢，就不是求一组骰子序列了，而是求每次掷出的骰子分别是某种骰子的概率。比如说我看到结果后，我可以求得第一次掷骰子是D4的概率是0.5，D6的概率是0.3，D8的概率是0.2.第一种解法我会在下面说到，但是第二种解法我就不写在这里了，如果大家有兴趣，我们另开一个问题继续写吧。</p>
+<h2 id="Training-Learning-Problem"><a href="#Training-Learning-Problem" class="headerlink" title="Training(Learning) Problem"></a>Training(Learning) Problem</h2><ul>
+<li>Problem: Adjust model parameters to maximize probability of observed sequences<br>Given $\overline O=O1…Ot$ =&gt; Estimate $\hat \lambda_{ML} = argmax P(\overline O|\lambda)$<br>知道骰子有几种（隐含状态数量），不知道每种骰子是什么（转换概率），观测到很多次掷骰子的结果（可见状态链），我想反推出每种骰子是什么（转换概率）。</li>
+<li>Solution: Forward-Backward Algorithm</li>
+</ul>
+<p>这个问题很重要，因为这是最常见的情况。很多时候我们只有可见结果，不知道 HMM 模型里的参数，我们需要从可见结果估计出这些参数，这是建模的一个必要步骤。</p>
+<p>Estimate A, B<br>$a_{ij_{ML}} = {\#(i-&gt;j) \over \#(i)}$ + SMOOTHING<br>$b_{j(Ok)_{ML}} = {\#(j \quad AND \quad Ok) \over \#(j)}$ + SMOOTHING</p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h3 id="Forward-Algorithm-前向算法"><a href="#Forward-Algorithm-前向算法" class="headerlink" title="Forward Algorithm 前向算法"></a>Forward Algorithm 前向算法</h3><p>$\alpha = P(O_1 O_2 … O_t, q_t = S_j|\lambda)$<br>基本逻辑是：穷举所有的骰子序列，还是计算每个骰子序列对应的概率，但是这回，把所有算出来的概率相加，得到的总概率就是我们要求的结果。<br>我们还需要一个 prior, 来表示 no states before 的情况。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/graph.jpg" class="ful-image" alt="graph.jpg"></p>
+<p>$P(\overline O|\lambda)=a_{q0q1}b_{q1(y1)}a_{q1q2}b_{q2(y2)}…a_{q_{t-1}qt}b_{qt(yt)}$<br>即 $P(\overline O|\lambda)=\sum_QP(\overline O,\overline Q|\lambda)$</p>
+<p>递归的方法来计算 $\alpha$<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/alpha.jpg" class="ful-image" alt="alpha.jpg"></p>
+<p>图解<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/forwardStep.jpg" class="ful-image" alt="forwardStep.jpg"></p>
+<p>例子<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/forward.jpg" class="ful-image" alt="forward.jpg"></p>
+<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line">from math import *</div><div class="line">from logsum import log_sum</div><div class="line">import sys</div><div class="line"></div><div class="line"></div><div class="line">def initiate(transFile, emitFile, priorFile):</div><div class="line">    global states, trans, emit, prior</div><div class="line">    states, trans = probFileHandler(transFile)</div><div class="line">    noUse, emit = probFileHandler(emitFile)</div><div class="line">    prior = priorFileHandler(priorFile)</div><div class="line">    # print &apos;states &apos;, states</div><div class="line">    # print &apos;trans &apos;, trans</div><div class="line">    # print &apos;prior &apos;, prior</div><div class="line"></div><div class="line"></div><div class="line">def probFileHandler(myFile):</div><div class="line">    # states S</div><div class="line">    S = []</div><div class="line">    # transition or emit probability</div><div class="line">    P = dict()</div><div class="line">    # trans or emit</div><div class="line">    f = open(myFile)</div><div class="line">    for line in f:</div><div class="line">        words = line.strip().split()</div><div class="line">        S.append(words[0])</div><div class="line">        d = dict([[words[i].split(&apos;:&apos;)[0], log(float(words[i].split(&apos;:&apos;)[1]))]</div><div class="line">                  for i in range(1, len(words))])</div><div class="line">        P[words[0]] = d</div><div class="line">    return S, P</div><div class="line"></div><div class="line"></div><div class="line">def priorFileHandler(myFile):</div><div class="line">    f = open(myFile)</div><div class="line">    prior = dict()</div><div class="line">    for line in f:</div><div class="line">        words = line.strip().split()</div><div class="line">        prior[words[0]] = log(float(words[1]))</div><div class="line">    return prior</div><div class="line"></div><div class="line"></div><div class="line">def forward(word, alpha):</div><div class="line">    global states, trans, emit, prior</div><div class="line">    res = []</div><div class="line">    # initial state</div><div class="line">    if not alpha:</div><div class="line">        for i in range(len(states)):</div><div class="line">            curState = states[i]</div><div class="line">            # use prior as trans_ji, at[j]*aji, use logsum</div><div class="line">            res.append(prior[curState] + emit[curState][word])</div><div class="line">    # if not initial state, iterate</div><div class="line">    else:</div><div class="line">        for i in range(len(states)):</div><div class="line">            curState_i = states[i]</div><div class="line">            for j in range(len(states)):</div><div class="line">                curState_j = states[j]</div><div class="line">                trans_ji = trans[curState_j][curState_i]</div><div class="line">                if j == 0:</div><div class="line">                    curRes = alpha[j] + trans_ji</div><div class="line">                else:</div><div class="line">                    # sum up all at[j]*aji, use logsum</div><div class="line">                    curRes = log_sum(curRes, alpha[j] + trans_ji)</div><div class="line">            # generate emit probability at t+1 at state i and multiply</div><div class="line">            curRes += emit[curState_i][word]</div><div class="line">            res.append(curRes)</div><div class="line">    return res</div><div class="line"></div><div class="line"></div><div class="line">def devFileHandler(myFile):</div><div class="line">    f = open(myFile)</div><div class="line">    for line in f:</div><div class="line">        words = line.strip().split()</div><div class="line">        alpha = []</div><div class="line">        for word in words:</div><div class="line">            alpha = forward(word, alpha)</div><div class="line">        res = alpha[0]</div><div class="line">        # P(O|lambda)=alphaT*(endingStateN)</div><div class="line">        for i in range(1, len(alpha)):</div><div class="line">            res = log_sum(res, alpha[i])</div><div class="line">        print res</div><div class="line"></div><div class="line"></div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    devFile = sys.argv[1]</div><div class="line">    transFile = sys.argv[2]</div><div class="line">    emitFile = sys.argv[3]</div><div class="line">    priorFile = sys.argv[4]</div><div class="line">    initiate(transFile, emitFile, priorFile)</div><div class="line">    devFileHandler(devFile)</div></pre></td></tr></table></figure></p>
+<h3 id="Backward-Algorithm"><a href="#Backward-Algorithm" class="headerlink" title="Backward Algorithm"></a>Backward Algorithm</h3><p>$\beta_t(i)=P(O_{t+1}O_{t+2}…O_T|q_t=S_i, \lambda)$</p>
+<p>同样，递归的方法来计算 $\beta$<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/beta.jpg" class="ful-image" alt="beta.jpg"></p>
+<p>例子<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/backward.jpg" class="ful-image" alt="backward.jpg"></p>
+<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line">from math import *</div><div class="line">from logsum import log_sum</div><div class="line">import sys</div><div class="line"></div><div class="line"></div><div class="line">def initiate(transFile, emitFile, priorFile):</div><div class="line">    global states, trans, emit, prior</div><div class="line">    states, trans = probFileHandler(transFile)</div><div class="line">    noUse, emit = probFileHandler(emitFile)</div><div class="line">    prior = priorFileHandler(priorFile)</div><div class="line">    # print &apos;states &apos;, states</div><div class="line">    # print &apos;trans &apos;, trans</div><div class="line">    # print &apos;prior &apos;, prior</div><div class="line"></div><div class="line"></div><div class="line">def probFileHandler(myFile):</div><div class="line">    # states S</div><div class="line">    S = []</div><div class="line">    # transition or emit probability</div><div class="line">    P = dict()</div><div class="line">    # trans or emit</div><div class="line">    f = open(myFile)</div><div class="line">    for line in f:</div><div class="line">        words = line.strip().split()</div><div class="line">        S.append(words[0])</div><div class="line">        d = dict([[words[i].split(&apos;:&apos;)[0], log(float(words[i].split(&apos;:&apos;)[1]))]</div><div class="line">                  for i in range(1, len(words))])</div><div class="line">        P[words[0]] = d</div><div class="line">    return S, P</div><div class="line"></div><div class="line"></div><div class="line">def priorFileHandler(myFile):</div><div class="line">    f = open(myFile)</div><div class="line">    prior = dict()</div><div class="line">    for line in f:</div><div class="line">        words = line.strip().split()</div><div class="line">        prior[words[0]] = log(float(words[1]))</div><div class="line">    return prior</div><div class="line"></div><div class="line"></div><div class="line">def backward(word, beta):</div><div class="line">    global states, trans, emit, prior</div><div class="line">    res = []</div><div class="line">    for i in range(len(states)):</div><div class="line">        curState_i = states[i]</div><div class="line">        for j in range(len(states)):</div><div class="line">            curState_j = states[j]</div><div class="line">            # transpose matrix!!!!</div><div class="line">            trans_ij = trans[curState_i][curState_j]</div><div class="line">            if j == 0:</div><div class="line">                curRes = beta[j] + trans_ij + emit[curState_j][word]</div><div class="line">            else:</div><div class="line">                # sum up all at[j]*aji*emit[j], use logsum</div><div class="line">                curRes = log_sum(</div><div class="line">                    curRes, beta[j] + trans_ij + emit[curState_j][word])</div><div class="line">        res.append(curRes)</div><div class="line">    return res</div><div class="line"></div><div class="line"></div><div class="line">def devFileHandler(myFile):</div><div class="line">    f = open(myFile)</div><div class="line">    for line in f:</div><div class="line">        words = line.strip().split()</div><div class="line">        # initialize, all states could be ending states</div><div class="line">        beta = [0.0 for i in range(len(states))]</div><div class="line"></div><div class="line">        for i in range(len(words) - 1, 0, -1):</div><div class="line">            beta = backward(words[i], beta)</div><div class="line"></div><div class="line">        res = prior[states[0]] + emit[states[0]][words[0]] + beta[0]</div><div class="line"></div><div class="line">        for i in range(1, len(beta)):</div><div class="line">            res = log_sum(res, prior[states[i]] +</div><div class="line">                          emit[states[i]][words[0]] + beta[i])</div><div class="line">        print res</div><div class="line"></div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    devFile = sys.argv[1]</div><div class="line">    transFile = sys.argv[2]</div><div class="line">    emitFile = sys.argv[3]</div><div class="line">    priorFile = sys.argv[4]</div><div class="line">    initiate(transFile, emitFile, priorFile)</div><div class="line">    devFileHandler(devFile)</div></pre></td></tr></table></figure></p>
+<h3 id="Viterbi-Algorithm"><a href="#Viterbi-Algorithm" class="headerlink" title="Viterbi Algorithm"></a>Viterbi Algorithm</h3><p>Viterbi 被广泛应用到分词，词性标注等应用场景。和 Forward algorithm 差不多，两点改变：</p>
+<ol>
+<li>把 SUM 改成 MAX。</li>
+<li>记录 MAX 的h状态。</li>
+</ol>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/vi.jpg" class="ful-image" alt="vi.jpg">
+<p>例子<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/vie.jpg" class="ful-image" alt="vie.jpg"></p>
+<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line">from math import *</div><div class="line">from logsum import log_sum</div><div class="line">import sys</div><div class="line">import copy</div><div class="line"></div><div class="line"></div><div class="line">def initiate(transFile, emitFile, priorFile):</div><div class="line">    global states, trans, emit, prior</div><div class="line">    states, trans = probFileHandler(transFile)</div><div class="line">    noUse, emit = probFileHandler(emitFile)</div><div class="line">    prior = priorFileHandler(priorFile)</div><div class="line">    # print &apos;states &apos;, states</div><div class="line">    # print &apos;trans &apos;, trans</div><div class="line">    # print &apos;prior &apos;, prior</div><div class="line"></div><div class="line"></div><div class="line">def probFileHandler(myFile):</div><div class="line">    # states S</div><div class="line">    S = []</div><div class="line">    # transition or emit probability</div><div class="line">    P = dict()</div><div class="line">    # trans or emit</div><div class="line">    f = open(myFile)</div><div class="line">    for line in f:</div><div class="line">        words = line.strip().split()</div><div class="line">        S.append(words[0])</div><div class="line">        d = dict([[words[i].split(&apos;:&apos;)[0], log(float(words[i].split(&apos;:&apos;)[1]))]</div><div class="line">                  for i in range(1, len(words))])</div><div class="line">        P[words[0]] = d</div><div class="line">    return S, P</div><div class="line"></div><div class="line"></div><div class="line">def priorFileHandler(myFile):</div><div class="line">    f = open(myFile)</div><div class="line">    prior = dict()</div><div class="line">    for line in f:</div><div class="line">        words = line.strip().split()</div><div class="line">        prior[words[0]] = log(float(words[1]))</div><div class="line">    return prior</div><div class="line"></div><div class="line"></div><div class="line">def viterbi(word, alpha, resPath):</div><div class="line">    global states, trans, emit, prior</div><div class="line">    res = []</div><div class="line">    curPath = []</div><div class="line">    # initial state</div><div class="line">    if alpha == []:</div><div class="line">        for i in range(len(states)):</div><div class="line">            curState = states[i]</div><div class="line">            # use prior as trans_ji, at[j]*aji, use logsum</div><div class="line">            res.append(prior[curState] + emit[curState][word])</div><div class="line">            curPath.append([i])</div><div class="line">    # if not initial state, iterate</div><div class="line">    else:</div><div class="line">        for i in range(len(states)):</div><div class="line">            curState_i = states[i]</div><div class="line">            curMaxIndex = 0</div><div class="line">            for j in range(len(states)):</div><div class="line">                curState_j = states[j]</div><div class="line">                trans_ji = trans[curState_j][curState_i]</div><div class="line">                if j == 0:</div><div class="line">                    curMax = alpha[j] + trans_ji + emit[curState_i][word]</div><div class="line">                else:</div><div class="line">                    # sum up all at[j]*aji, use logsum</div><div class="line">                    curRes = alpha[j] + trans_ji + emit[curState_i][word]</div><div class="line">                    if curMax &lt; curRes:</div><div class="line">                        curMax = curRes</div><div class="line">                        curMaxIndex = j</div><div class="line">            # generate emit probability at t+1 at state i and multiply</div><div class="line">            #curMax += emit[curState_i][word]</div><div class="line">            res.append(curMax)</div><div class="line">            # choose max</div><div class="line">            curPath.append(copy.deepcopy(resPath[curMaxIndex]))</div><div class="line">            curPath[i].append(i)</div><div class="line">    return res, curPath</div><div class="line"></div><div class="line"></div><div class="line">def devFileHandler(myFile):</div><div class="line">    f = open(myFile)</div><div class="line">    for line in f:</div><div class="line">        words = line.strip().split()</div><div class="line">        alpha = []</div><div class="line">        resPath = []</div><div class="line">        for word in words:</div><div class="line">            alpha, resPath = viterbi(word, alpha, resPath)</div><div class="line">        final = resPath[alpha.index(max(alpha))]</div><div class="line">        for i in range(len(words)):</div><div class="line">            print words[i] + &apos;_&apos; + states[final[i]],</div><div class="line">        print</div><div class="line"></div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    devFile = sys.argv[1]</div><div class="line">    transFile = sys.argv[2]</div><div class="line">    emitFile = sys.argv[3]</div><div class="line">    priorFile = sys.argv[4]</div><div class="line">    initiate(transFile, emitFile, priorFile)</div><div class="line">    devFileHandler(devFile)</div></pre></td></tr></table></figure></p>
+<h3 id="Forward-Backward-Algorithm"><a href="#Forward-Backward-Algorithm" class="headerlink" title="Forward-Backward Algorithm"></a>Forward-Backward Algorithm</h3><p>算法<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/fb_alg.jpg" class="ful-image" alt="fb_alg.jpg"></p>
+<p>计算 $\alpha$, $\beta$,$\Xi$<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/fb1.jpg" class="ful-image" alt="fb1.jpg"></p>
+<p>时间复杂度 O(N<em>N</em>T)</p>
+<p>Baum-Welch Reestimation<br>估计 $\overline \lambda$</p>
+<p>$$\overline a_{ij} = {expected \ number \ of \ trans \ from  \ Si \ to \ Sj \over expected \ number \ of \ trans \ from  \ Si}$$<br>=&gt;<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/a.jpg" class="ful-image" alt="a.jpg"></p>
+<p>$$\overline b_{j(k)} =  {expected \ number \ of \ times \ in \ state \ j \ with \ symbol \ k \over expected \ number \ of \ times \ in \ state \ j } $$<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Hidden-Markov-Models/b.jpg" class="ful-image" alt="b.jpg"></p>
+<blockquote>
+<p><a href="http://transcoder.baidu.com/from=844b/bd_page_type=1/ssid=0/uid=0/pu=usm%402%2Csz%401320_2001%2Cta%40iphone_1_8.4_3_600/baiduid=CBD7FA29AA4245050D07B584C50F010C/w=0_10_/t=iphone/l=3/tc?ref=www_iphone&amp;lid=3007046878162640498&amp;order=3&amp;fm=alop&amp;tj=www_normal_3_0_10_title&amp;vit=osres&amp;m=8&amp;srd=1&amp;cltj=cloud_title&amp;asres=1&amp;nt=wnor&amp;title=%E4%B8%80%E6%96%87%E6%90%9E%E6%87%82HMM%28%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%29-skyme-%E5%8D%9A%E5%AE%A2%E5%9B%AD&amp;dict=30&amp;w_qd=IlPT2AEptyoA_yiRASq&amp;sec=16841&amp;di=9e95f6fbe62aeac3&amp;bdenc=1&amp;tch=124.784.240.607.1.45488462&amp;nsrc=IlPT2AEptyoA_yixCFOxXnANedT62v3IEQGG_ytK1DK6mlrte4viZQRAUTjmLXrTUS4dgTCctRcIwXOc0nhunM5X&amp;eqid=29bb2d3423d4de00100000065833361c&amp;wd=&amp;clk_info=%7B%22srcid%22%3A%221599%22%2C%22tplname%22%3A%22www_normal%22%2C%22t%22%3A1479751205634%2C%22xpath%22%3A%22div-a-h3%22%7D" target="_blank" rel="external">一文搞懂HMM（隐马尔可夫模型）</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/machine-learning/" rel="tag">#machine learning</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/23/神经网络-链式反向梯度传导/" rel="next" title="深度学习-链式反向梯度传导">
+                <i class="fa fa-chevron-left"></i> 深度学习-链式反向梯度传导
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/28/Bayesian-Learning/" rel="prev" title="Bayesian Learning">
+                Bayesian Learning <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Markov-Process"><span class="nav-number">1.</span> <span class="nav-text">Markov Process</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#隐马尔可夫-HMM"><span class="nav-number">2.</span> <span class="nav-text">隐马尔可夫(HMM)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用途"><span class="nav-number">2.1.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">2.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要素"><span class="nav-number">2.3.</span> <span class="nav-text">要素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Probabilistic-graphical-models"><span class="nav-number">2.4.</span> <span class="nav-text">Probabilistic graphical models</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HMM-的问题与解决"><span class="nav-number">3.</span> <span class="nav-text">HMM 的问题与解决</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Evaluation-Problem"><span class="nav-number">3.1.</span> <span class="nav-text">Evaluation Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Decoding-Problem"><span class="nav-number">3.2.</span> <span class="nav-text">Decoding Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Training-Learning-Problem"><span class="nav-number">3.3.</span> <span class="nav-text">Training(Learning) Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">3.4.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Forward-Algorithm-前向算法"><span class="nav-number">3.4.1.</span> <span class="nav-text">Forward Algorithm 前向算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Backward-Algorithm"><span class="nav-number">3.4.2.</span> <span class="nav-text">Backward Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Viterbi-Algorithm"><span class="nav-number">3.4.3.</span> <span class="nav-text">Viterbi Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forward-Backward-Algorithm"><span class="nav-number">3.4.4.</span> <span class="nav-text">Forward-Backward Algorithm</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/11/26/Hidden-Markov-Models/';
+      var disqus_title = "Hidden-Markov-Models";
+      var disqus_url = 'http://www.shuang0420.com/2016/11/26/Hidden-Markov-Models/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

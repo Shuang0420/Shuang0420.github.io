@@ -1,0 +1,1015 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="对第 30 届神经信息处理系统大会（NIPS 2016）中百度首席科学家吴恩达教授的演讲Nuts and Bolts of Building Applications using Deep Learning，做的笔记。最重要内容是 偏差/方差(bias/variance)分析框架。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="会议笔记 - Nuts and Bolts of Applying Deep Learning">
+<meta property="og:url" content="http://www.shuang0420.com/2017/03/17/会议笔记 - Nuts and Bolts of Applying Deep Learning/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="对第 30 届神经信息处理系统大会（NIPS 2016）中百度首席科学家吴恩达教授的演讲Nuts and Bolts of Building Applications using Deep Learning，做的笔记。最重要内容是 偏差/方差(bias/variance)分析框架。">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/1.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/2.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/3.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/4.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/7.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/8.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/9.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/5.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/10.jpg">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/6.jpg">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="会议笔记 - Nuts and Bolts of Applying Deep Learning">
+<meta name="twitter:description" content="对第 30 届神经信息处理系统大会（NIPS 2016）中百度首席科学家吴恩达教授的演讲Nuts and Bolts of Building Applications using Deep Learning，做的笔记。最重要内容是 偏差/方差(bias/variance)分析框架。">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/03/17/会议笔记 - Nuts and Bolts of Applying Deep Learning/"/>
+
+
+  <title> 会议笔记 - Nuts and Bolts of Applying Deep Learning | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                会议笔记 - Nuts and Bolts of Applying Deep Learning
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-03-17T12:44:02+08:00" content="2017-03-17">
+              2017-03-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Deep-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep learning</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/17/会议笔记 - Nuts and Bolts of Applying Deep Learning/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/17/会议笔记 - Nuts and Bolts of Applying Deep Learning/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>对第 30 届神经信息处理系统大会（NIPS 2016）中百度首席科学家吴恩达教授的演讲<a href="https://www.youtube.com/watch?v=F1ka6a13S9I" target="_blank" rel="external">Nuts and Bolts of Building Applications using Deep Learning</a>，做的笔记。最重要内容是 <strong>偏差/方差(bias/variance)分析框架</strong>。<br><a id="more"></a></p>
+<p><a href="http://www.leiphone.com/news/201612/PTmKczqq5XWr2n8c.html" target="_blank" rel="external">中文 PPT</a></p>
+<h1 id="深度学习的崛起"><a href="#深度学习的崛起" class="headerlink" title="深度学习的崛起"></a>深度学习的崛起</h1><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/1.jpg" class="ful-image" alt="1.jpg">
+<p>吴恩达在开场提到：深度学习为何这么火？答案很简单：因为数据规模正在推动深度学习的进步。</p>
+<p>从图中得到的：</p>
+<ol>
+<li>不同于传统机器学习模型，对 DL 来说，数据量和 performance 几乎是线性的关系</li>
+<li>在小数据集部分(small data regime)，也就是 x轴最左边，不同方法的差别是非常小的，然而随着数据量的增大，变化就非常快了</li>
+</ol>
+<p>吴恩达还提到了一点，你为了某个 task 去得到/使用一个数据集是一回事，你去维护这个数据集让它 scaleable 又是另一回事。所以对商业应用，一般需要两个团队，系统团队(systems team)和算法团队(algorithms team)。</p>
+<h1 id="主要的-DL-模型"><a href="#主要的-DL-模型" class="headerlink" title="主要的 DL 模型"></a>主要的 DL 模型</h1><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/2.jpg" class="ful-image" alt="2.jpg">
+<ul>
+<li>普通神经网络(General DL)<br>  全连接模型</li>
+<li>顺序模型(Sequence Models)   (1D  顺序)<br>  RNN,  GRU,  LSTM,  CTC,  注意力模型</li>
+<li>图像模型(Image Models)<br>  CNN</li>
+<li>未来的 AI(Unsupervised and Reinforcement learning)<br>  无监督学习（稀疏编码 ICA,  SFA,）增强学习</li>
+</ul>
+<h1 id="端到端的学习"><a href="#端到端的学习" class="headerlink" title="端到端的学习"></a>端到端的学习</h1><p>AI 工程师并不用花很多时间在特征工程或者说中间层的特征表达上(intermediate representations)，而是可以直接从一端(原始输入)到另一端(输出)。另外，DL 能产生的不是一个简单的数字(i.e. a class prediction)，它还能产生特征向量。比如在图像标注(Image captioning)中，CNN 用来产生输入图像的特征向量，然后这个向量又会被作为 RNN 的主要输入，来为图像产生标注(caption)。另外的例子如翻译、语音识别，图像生成等。</p>
+<p>这看起来很简单，貌似 DL 就可以完全取代之前的 ML 模型了？<strong>并！不！是！</strong> 始终要记得一个前提，这种端对端的方法只有在数据量足够大的时候才能有好的表现，所以，如果大的数据集很难获得，那么就要用 DL 模型就要很谨慎了。在实践过程中，并不是所有的场合都有大的标注数据集，所以加入了人工设计的特征信息(hand-engineered information)和领域知识(feild expertise)的模型往往占了上风。</p>
+<h1 id="深度学习策略"><a href="#深度学习策略" class="headerlink" title="深度学习策略"></a>深度学习策略</h1><p>一个机器学习工程师在建模的时候会有很多问题：</p>
+<ul>
+<li>什么时候去找更多的数据？</li>
+<li>要不要用更长的时间去训练?</li>
+<li>什么时候要重新思考一下架构(architecture)？</li>
+<li>什么时候引入/丢掉正则项？<br>…</li>
+</ul>
+<p>为了系统解决这个问题，Ng 带来了一个 <strong>偏差/方差(bias/variance)</strong> 分析框架。</p>
+<h2 id="数据集划分"><a href="#数据集划分" class="headerlink" title="数据集划分"></a>数据集划分</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/3.jpg" class="ful-image" alt="3.jpg">
+<p>在大多数的 DL 问题中，训练集和测试集通常来自不同的分布，这种情况下，将数据分成 train/dev/test 可能会有点 tricky。有些人可能会从训练集中砍一部分来做开发集，如第一行。而实际上这样的效果是很差的，因为通常意义上来说，我们希望我们的开发集和测试集来自同一个分布，否则，很有可能工程师花费很多很多的时间在开发集上进行调参，然而测试集和开发集上的结果非常的不同，就浪费了很多精力。</p>
+<p>因此，聪明的做法是像图中的第二行，将测试集分为 dev/test 两部分。Ng 建议说，在实践中，可以对两个分布的数据集都划分一部分作为开发集，如第三行的图，这样，不同错误之间的 gap 可以帮助我们更好的分析问题(如下图)。</p>
+<h2 id="错误分类"><a href="#错误分类" class="headerlink" title="错误分类"></a>错误分类</h2><p>先来了解一下三种错误</p>
+<ol>
+<li>人类水平误差(human level error)</li>
+<li>训练集误差(training set error)</li>
+<li>开发集误差(validation set error)</li>
+</ol>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/4.jpg" class="ful-image" alt="4.jpg">
+<h3 id="高偏差-high-bias"><a href="#高偏差-high-bias" class="headerlink" title="高偏差(high bias)"></a>高偏差(high bias)</h3><p>来看一下 <strong>高偏差(high bias)</strong>，对应的问题是 underfitting，训练集的错误率就很高，这种情况下，需要建立更大的模型<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/7.jpg" class="ful-image" alt="7.jpg"></p>
+<h3 id="高方差-high-variance"><a href="#高方差-high-variance" class="headerlink" title="高方差(high variance)"></a>高方差(high variance)</h3><p><strong>高方差(high variance)</strong>，对应的问题是 overfitting，在训练集上表现的非常完美，然而开发集和测试集却有很高的错误率。下一步是引入正则或者多加些数据来调优。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/8.jpg" class="ful-image" alt="8.jpg">
+<h3 id="高偏差和高方差"><a href="#高偏差和高方差" class="headerlink" title="高偏差和高方差"></a>高偏差和高方差</h3><p><strong>高偏差(high bias) 和 高方差(high variance)</strong> 都很高的话，就要多加入数据，或者重新设计一下架构(或者用新的模型)了<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/9.jpg" class="ful-image" alt="9.jpg"></p>
+<h2 id="分析框架"><a href="#分析框架" class="headerlink" title="分析框架"></a>分析框架</h2><p>所以分析框架就来了<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/5.jpg" class="ful-image" alt="5.jpg"></p>
+<p>中文版<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/10.jpg" class="ful-image" alt="10.jpg"></p>
+<h1 id="人类的表现水平"><a href="#人类的表现水平" class="headerlink" title="人类的表现水平"></a>人类的表现水平</h1><p>当 DL 在处理某项任务上比人类表现还差时，你经常会看到最快的进步，而当它能达到甚至超越人类的精度后，模型就应该趋于稳定了(意思说我们就不要再去动它了)。为什么呢？因为数据集会有一个理论上的”极限”，之后对模型的种种优化很有可能只是无用功，另外，人类往往很擅长做这些任务，要超过人类的表现，从边际收益看太不划算了。</p>
+<p>再次重申下，<strong>人类水平的误差和贝叶斯最优误差不是一回事</strong>，如果你不知道这一点，那么很可能在训练模型后的下一步做无用功。</p>
+<p>举个例子，一个图像识别的任务，如果下图左下角的表现，也就是 train error: 8%，dev error: 10%，而人类水平的误差是 1%，那么你可以尝试增加模型大小，增加训练时间等方式来提升模型，然而如果人类水平的误差是 7.5%，那这更多的是一个方差的问题，你可能需要花更多时间来合成数据，或者找和测试集更相似的数据来训练模型。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BC%9A%E8%AE%AE%E7%AC%94%E8%AE%B0%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/6.jpg" class="ful-image" alt="6.jpg"></p>
+<p>顺便提一句，总是有优化空间的，即使已经达到了人类水平的精度，也总有一些数据子集效果不怎么好，可以在这上面努力。</p>
+<p>最后，说一下怎么来定义人类水平的误差，以医疗领域的图像标签任务为例，有下面的集中误差，选哪一个作为人类水平误差？</p>
+<ul>
+<li>普通人类(typical human): 5%</li>
+<li>普通医生(general doctor): 1%</li>
+<li>专家医生(specialized doctor): 0.8%</li>
+<li>专家会诊(group of specialized doctors): 0.5%</li>
+</ul>
+<p>答案是选最后一个，因为和贝叶斯最优误差最接近。</p>
+<h1 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h1><p>最后，Ng 提出了两点建议，来帮助大家提高作为 DL 工程师的能力。</p>
+<ul>
+<li><strong>Practice, Practice, Practice:</strong> 参与 Kaggle 的竞赛，多读相关的博客，参与论坛讨论…</li>
+<li><strong>Do the Dirty Work:</strong> 读大量的论文，做实验尝试去得到和论文一样的结果，很快，你就会有自己的想法，建自己的模型啦~</li>
+</ul>
+<blockquote>
+<p>参考链接：<br><a href="https://www.youtube.com/watch?v=F1ka6a13S9I" target="_blank" rel="external">Nuts and Bolts of Applying Deep Learning (Andrew Ng)</a><br><a href="https://medium.com/@aniketvartak/nuts-and-bolts-of-applying-deep-learning-summary-84b8a8e873d5#.97e4f1hq3" target="_blank" rel="external">Nuts and Bolts of Applying Deep Learning — Summary</a><br><a href="https://kevinzakka.github.io/2016/09/26/applying-deep-learning/" target="_blank" rel="external">Nuts and Bolts of Applying Deep Learning</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/14/论文笔记 - LightRNN - Memory and Computation-Efficient Recurrent Neural Networks/" rel="next" title="论文笔记 - LightRNN - Memory and Computation-Efficient Recurrent Neural Networks">
+                <i class="fa fa-chevron-left"></i> 论文笔记 - LightRNN - Memory and Computation-Efficient Recurrent Neural Networks
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/18/NLP 笔记 -Information Extraction/" rel="prev" title="NLP笔记 - Information Extraction">
+                NLP笔记 - Information Extraction <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#深度学习的崛起"><span class="nav-number">1.</span> <span class="nav-text">深度学习的崛起</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主要的-DL-模型"><span class="nav-number">2.</span> <span class="nav-text">主要的 DL 模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#端到端的学习"><span class="nav-number">3.</span> <span class="nav-text">端到端的学习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深度学习策略"><span class="nav-number">4.</span> <span class="nav-text">深度学习策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据集划分"><span class="nav-number">4.1.</span> <span class="nav-text">数据集划分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误分类"><span class="nav-number">4.2.</span> <span class="nav-text">错误分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高偏差-high-bias"><span class="nav-number">4.2.1.</span> <span class="nav-text">高偏差(high bias)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高方差-high-variance"><span class="nav-number">4.2.2.</span> <span class="nav-text">高方差(high variance)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高偏差和高方差"><span class="nav-number">4.2.3.</span> <span class="nav-text">高偏差和高方差</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析框架"><span class="nav-number">4.3.</span> <span class="nav-text">分析框架</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#人类的表现水平"><span class="nav-number">5.</span> <span class="nav-text">人类的表现水平</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习建议"><span class="nav-number">6.</span> <span class="nav-text">学习建议</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/03/17/会议笔记 - Nuts and Bolts of Applying Deep Learning/';
+      var disqus_title = "会议笔记 - Nuts and Bolts of Applying Deep Learning";
+      var disqus_url = 'http://www.shuang0420.com/2017/03/17/会议笔记 - Nuts and Bolts of Applying Deep Learning/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

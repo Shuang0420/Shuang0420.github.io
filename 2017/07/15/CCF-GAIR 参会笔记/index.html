@@ -1,0 +1,1341 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="AI,chatbot,IoT,物联网,CV," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="回国后参加的第一场大规模的人工智能峰会，感觉收获还是很多的，对部分之前学过的东西做了一遍梳理，对当前工业界的发展现状有了一定了解，对学术界的最新进展有了些体会，最后还结识了一批志同道合的朋友，值回票价。这一篇作为峰会的笔记，记录一些我认为重要的东西，有些零散，参加的场次有限，看官们见谅～">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CCF-GAIR 参会笔记">
+<meta property="og:url" content="http://www.shuang0420.com/2017/07/15/CCF-GAIR 参会笔记/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="回国后参加的第一场大规模的人工智能峰会，感觉收获还是很多的，对部分之前学过的东西做了一遍梳理，对当前工业界的发展现状有了一定了解，对学术界的最新进展有了些体会，最后还结识了一批志同道合的朋友，值回票价。这一篇作为峰会的笔记，记录一些我认为重要的东西，有些零散，参加的场次有限，看官们见谅～">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/CV%20understanding.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/video%20lifecycle.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/video%20summ1.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/caption.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/P3D%20res.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/chat.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/caption.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/%E5%95%86%E6%B1%A4.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/%E5%9B%BE%E9%BA%9F.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/x5.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/x5.2.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/xx.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/xx2.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.3.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.4.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.5.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.6.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.7.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.8.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.9.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.10.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.11.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.12.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.13.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.14.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.15.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.16.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.17.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.18.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.19.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.20.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.21.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.22.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/7.1.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.1.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.2.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/8.1.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/8.2.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/8.3.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/8.4.png">
+<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/8.5.png">
+<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CCF-GAIR 参会笔记">
+<meta name="twitter:description" content="回国后参加的第一场大规模的人工智能峰会，感觉收获还是很多的，对部分之前学过的东西做了一遍梳理，对当前工业界的发展现状有了一定了解，对学术界的最新进展有了些体会，最后还结识了一批志同道合的朋友，值回票价。这一篇作为峰会的笔记，记录一些我认为重要的东西，有些零散，参加的场次有限，看官们见谅～">
+<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/CV%20understanding.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.com/2017/07/15/CCF-GAIR 参会笔记/"/>
+
+
+  <title> CCF-GAIR 参会笔记 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CCF-GAIR 参会笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-07-15T09:02:27+08:00" content="2017-07-15">
+              2017-07-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Others/" itemprop="url" rel="index">
+                    <span itemprop="name">Others</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/07/15/CCF-GAIR 参会笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/07/15/CCF-GAIR 参会笔记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>回国后参加的第一场大规模的人工智能峰会，感觉收获还是很多的，对部分之前学过的东西做了一遍梳理，对当前工业界的发展现状有了一定了解，对学术界的最新进展有了些体会，最后还结识了一批志同道合的朋友，值回票价。这一篇作为峰会的笔记，记录一些我认为重要的东西，有些零散，参加的场次有限，看官们见谅～<br><a id="more"></a></p>
+<h1 id="AI-发展前沿"><a href="#AI-发展前沿" class="headerlink" title="AI 发展前沿"></a>AI 发展前沿</h1><p>这一部分各位演讲嘉宾从宏观角度概括了下 AI 的发展现状。</p>
+<h2 id="AI-的典型任务和应用"><a href="#AI-的典型任务和应用" class="headerlink" title="AI 的典型任务和应用"></a>AI 的典型任务和应用</h2><blockquote>
+<p><strong>潘云鹤</strong>——中国工程院院士，国务院学位委员会委员、中国科学技术协会顾问、中国图象图形学学会名誉理事长、中国计算机学会理事、中国人工智能学会副理事长。中国智能CAD领域的开拓者，创造性地将人工智能引入CAD技术。</p>
+</blockquote>
+<p>主要介绍了 AI 行业的一些基本情况，像人工智能的典型任务、应用、重点方向之类，毕竟是刚开场的演讲，听的比较仔细。<br>人工智能应用的 7 个基本领域：</p>
+<ul>
+<li><strong>机器定理证明(逻辑和推理)</strong> — 仿解题者<br>主要是研究计算机进行逻辑推理</li>
+<li><strong>机器翻译(自然语言理解)</strong> — 仿译者<br>研究计算机自然语言理解</li>
+<li><strong>专家系统(问题求解和知识表达)</strong> — 仿专家(医生，维修者)<br>研究问题求解和知识表达</li>
+<li><strong>博弈(树搜索)</strong> — 仿弈者<br>最早的时候研究搜索，后来逐渐转化为神经网络</li>
+<li><strong>模式识别(多媒体认知)</strong> — 仿认知者<br>主要用于视觉、听觉或者各种各样媒体的认知</li>
+<li><strong>学习(神经网络)</strong> — 仿初学者<br>主要是研究神经网络</li>
+<li><strong>机器人和智能控制(感知和控制)</strong> — 仿生物动作<br>主要是研究和模拟人的感知和控制</li>
+</ul>
+<p>形成了符号学派、连接学派、行为学派。<br>AI 从萌芽到现在的蓬勃发展期间出现了三次低谷，得到的教训大致是<strong>驱动 AI 的发展主要是靠创新、软件和知识，而非硬件</strong>，<strong>知识不能靠专家手工表达，要靠从环境中自动学习</strong></p>
+<p>一些新的技术已经初露端倪，表现在近几年 AI 技术的前沿中，主要有</p>
+<ul>
+<li><strong>大数据智能</strong><br>DeepMind 已为谷歌挣钱，提高了谷歌 15% 的用电效率</li>
+<li><strong>基于网络的群体智能</strong><br>群智计算按难易程度分为三种类型：实现任务分配的<strong>众包模式(Crowd-sourcing)</strong>，较复杂、支持<strong>工作流模式的群体智能(Complex workflows)</strong>，以及最复杂的<strong>协同求解问题的生态系统模式(Problem solving ecosystem)</strong><br>大规模个体通过互联网参与和交互，可以表现出超乎寻常的智慧能力，是解决开放复杂问题的新途径，成功的如 AppStore，Wiki 百科等</li>
+<li><strong>跨媒体推理</strong><br>在语言、视觉、图形和听觉之间语义贯通，是实现联想、推理、概括等智能的重要关键</li>
+<li><p><strong>无人系统</strong><br>无人系统迅猛发展的速度远快于机器人，因为类人和类动物的机器人，往往不如机械进行智能化和自主化升级来的高效<br>如 (海康)智能分拣机器人，泊车机器人</p>
+<p>​<br><strong>AI 的基础和目标:</strong> 模拟人的智能 =&gt; 人机融合 =&gt; 群体智能</p>
+</li>
+</ul>
+<p>直接上图了<br><img class="ful-image" alt="1.1.jpeg"><br><img class="ful-image" alt="1.2.jpeg"><br><img class="ful-image" alt="1.3.jpeg"><br><img class="ful-image" alt="1.4.jpeg"><br><img class="ful-image" alt="1.5.jpeg"><br><img class="ful-image" alt="1.6.jpeg"><br><img class="ful-image" alt="1.7.jpeg"><br><img class="ful-image" alt="1.8.jpeg"></p>
+<h2 id="The-Rise-of-AI-And-The-Challenges-of-Human-Aware-AI-Systems"><a href="#The-Rise-of-AI-And-The-Challenges-of-Human-Aware-AI-Systems" class="headerlink" title="The Rise of AI And The Challenges of Human-Aware AI Systems"></a>The Rise of AI And The Challenges of Human-Aware AI Systems</h2><blockquote>
+<p><strong>Subbarao Kambhampati</strong>——AAAI主席，亚利桑拿州立大学教授，同时也在很多的国际机构任职，主要研究自动化的决策机制，特别是在人工感知的人工智能领域。</p>
+</blockquote>
+<p>同样讲了 AI 进展，不过划分方式略有不同。<br><img class="ful-image" alt="2.1.jpeg"></p>
+<p>提供了一个很有意思的视角， AI 系统的发展过程和人的学习过程是截然相反的。为什么呢？因为在有 conscious theories 的基础上编程更容易，毕竟 cognitive/reasoning intelligence 一直在发展嘛，还因为我们并没有特别意识到/了解 perceptual intelligence，为什么当今的 AI 能够走入千家万户的视野呢？正是因为 perceptual abilities 让 AI 不再是瞎的聋的，现在的 AI 可以更加的智能，可以存在在各种载体之上，如智能手机，智能音箱，汽车等等。</p>
+<img class="ful-image" alt="2.2.jpeg">
+<p>教授还指出了几个研究方向：<strong>从小数据中学习、机器的常识、不完整性和交互。</strong></p>
+<h2 id="模式识别研究回顾与展望"><a href="#模式识别研究回顾与展望" class="headerlink" title="模式识别研究回顾与展望"></a>模式识别研究回顾与展望</h2><blockquote>
+<p><strong>谭铁牛</strong>——中国科学院院士、英国皇家工程院外籍院士、发展中国家科学院院士、巴西科学院外籍院士，发表专著11部、文章500多篇，还有100多项发明。获得了一系列的国家级的奖，现在是中国图象图形学会理事长、中国人工智能学会副理事长。</p>
+</blockquote>
+<p>主要讲了模式识别的 <strong>基本概念／发展现状／研究方向</strong>。深深的觉得 ppt 做的实在很棒，讲的也很棒，感觉最棒的！直接上图！<br><img class="ful-image" alt="3.1.jpeg"><br><img class="ful-image" alt="3.2.jpeg"><br><img class="ful-image" alt="3.3.jpeg"></p>
+<p><strong>模式识别的现状：</strong></p>
+<ul>
+<li>面向特定任务的模式识别已经取得突破性进展，有的性能已可与人类媲美；</li>
+<li>统计与机遇神经网络的模式识别目前占主导地位，深度学习开创了新局面；</li>
+<li>通用模式识别系统依然任重道远；</li>
+<li>鲁棒性、自适应性和可泛化性是进一步发展的三大瓶颈。</li>
+</ul>
+<p><strong>现有模式识别的局限性:</strong></p>
+<ul>
+<li><strong>鲁棒性</strong><br>​    容易收到对抗样本的攻击<br>​    如 CV 中的局部形变／旋转变化／光照变化／遮挡／背景凌乱／多样性／尺度变化</li>
+<li><strong>自适应性差</strong><br>​    不能自适应开放环境下数据分布的快速变化</li>
+<li><strong>可解释性差</strong><br>​    人在判别过程中可以轻易使用具有逻辑关系的规则；机器特别是深度学习常作为黑箱模型，无法为高风险应用提供具有说服力的决策</li>
+</ul>
+<p>在人工智能非常火爆的时候，模式识别领域有如下值得<strong>关注的研究方向</strong>：</p>
+<ul>
+<li><strong>从神经生物学领域获得启发的模式识别</strong><br>神经元(类型、发放特性、突触可塑性)／神经回路(前向、侧向、后向连接)／功能区域(多任务协同、注意、记忆机制)／学习机制(人的学习特性和学习过程)<br>学习过程：发育学习、强化学习<br>学习方法：迁移学习、知识学习<br>学习效果：生成学习、概念学习(e.g., Bayesian Program Learning)</li>
+<li><strong>面向大规模多源异构数据的鲁棒特征表达</strong><br>考虑如何在跨景跨媒、多源异质的视觉大数据中找到具有较好泛化性和不变性的表达<br>e.g., 定序测量特征(Ordinal Measure)</li>
+<li><strong>结构与统计相结合的模式识别新理论</strong></li>
+<li><strong>数据与知识相结合的模式识别</strong><img class="ful-image" alt="3.4.jpeg"></li>
+<li><strong>以互联网为中心的模式识别</strong></li>
+</ul>
+<h1 id="AI-学术前沿"><a href="#AI-学术前沿" class="headerlink" title="AI 学术前沿"></a>AI 学术前沿</h1><p>这一场主要分析了学术界的各位的最新研究进展</p>
+<h2 id="Smart-Robotic-Systems-that-Work-in-Real-Outdoor-Environments"><a href="#Smart-Robotic-Systems-that-Work-in-Real-Outdoor-Environments" class="headerlink" title="Smart Robotic Systems that Work in Real Outdoor Environments"></a>Smart Robotic Systems that Work in Real Outdoor Environments</h2><blockquote>
+<p><strong>金出武雄</strong>——机器人领域的鼻祖级专家，卡耐基梅隆大学的创始人，同时也是非常著名的荣誉教授，主要研究机器人工、机器人学，享誉全世界的指路者。</p>
+</blockquote>
+<p>虽然是自家学校的，还是木有认真听。开头主要讲了一个例子，在车上加一个 smart headlight，使得雨滴在图片里面的成像变得很淡，可以毫无障碍在雨雪天的夜晚出行， 因为他一开始就在讲汽车灯光在下雨天各种反射怎么怎么样……然后我就……就没兴趣了TAT……</p>
+<img class="ful-image" alt="4.1.jpeg">
+<h2 id="A-society-of-AI-Agents-群体智能的社会"><a href="#A-society-of-AI-Agents-群体智能的社会" class="headerlink" title="A society of AI Agents 群体智能的社会"></a>A society of AI Agents 群体智能的社会</h2><blockquote>
+<p>汪军， 伦敦大学学院（UCL）计算机系教授、互联网科学与大数据分析专业主任。主要研究智能信息系统，主要包括数据挖掘，计算广告学，推荐系统，机器学习，强化学习，生成模型等等。他发表了100多篇学术论文，多次获得最佳论文奖。是国际公认的计算广告学和智能推荐系统专家。</p>
+</blockquote>
+<p>讲多智能体怎样竞争怎样协作怎样通讯。从多智体群体的特征切入，介绍多智体的强化学习特性。同一环境下，不同的智体既可以单独处理各自的任务，又可以联合在一起处理优化一个主要的目标方程(一般是长期的 reward 方程)。强化学习的优点就是在没有足够训练数据时，系统会和环境进行交互，得到反馈信息，交互过程中不断学习，在应用上比较灵活</p>
+<p><strong>Multi-agent reinforcement learning(MARL)</strong> 的应用有互联网广告的机器招标(Machine Bidding in Online Advertising)，通过对投放广告后的用户的反馈的不断学习，就可以帮助企业精准找到目标用户。再如 AI 玩星际游戏(AI plays StarCraft)等，主要考虑的是智体的通讯问题，多个智体之间怎么合作，达到双向联通。</p>
+<img class="ful-image" alt="5.1.jpeg">
+<p>其他的应用比如宜家的商场设计，需要模拟人的行为流向，同时让环境跟着用户的变化而变化，把路径安排最优，来优化用户的停留时长(stay)和购买金额(purchase) ，再比如迷宫的设计，一方面给定一个环境，让智体通过强化学习找到最优的策略走出来，另一方面是当智体的智能水平不再提高时，就可以来优化环境，使它更难出去。</p>
+<p>多智能强化学习的研究仍然处于非常初步的阶段，主要有两个问题</p>
+<ul>
+<li><strong>Problem1:</strong> current research is limited to only less than 20 agents<br>许多现实场景中的多智体数量可以达到百万、甚至千万级，比如 uber 的场合怎么办？共享单车怎么办？</li>
+<li><strong>Problem2: </strong> the environment is assumed to be given and not designable<br>不是去学环境的设计，而是让人工智能更加适应环境，而很多情况下，很多环境也需要有适应的过程，比如说宜家，强化学习的环境，根据用户的变化，变化环境。用随机 agents 模拟人在店铺走的情况，收集人力图，反馈到铺面设计，来最大用户停留时间/用户消费</li>
+</ul>
+<p>怎么处理百万级的 agent，一种方法是从自然界中找灵感，可以学习生态学／生物学的 self-organisation(自组织)理论，当一些小的智体遵循这个规则的时候，就会体现一个种群的特质。这些模型可以用宏观的事情解决宏观的问题，但是缺少一种微观的方法去观察这个世界。老虎和羊的模型 Lotka-Volterra model the dynamics of the artificial population 描述了相互竞争的两个种群数量之间的动态关系。汪军教授在此模型上做了一个创新，提出了老虎-羊-兔子模型(Tiger-sheep-rabbit model)，给智体强化学习能力以后，就和 LV 模型中的猞猁抓兔子的动态显现十分相似。当智体之间联合一起优化某一个目标或单独优化自己的目标，作为一个群体，他们就有了内在的规律。如果找到这些规律，对开发智体模型是非常有帮助的。</p>
+<h1 id="计算机视觉专场"><a href="#计算机视觉专场" class="headerlink" title="计算机视觉专场"></a>计算机视觉专场</h1><h2 id="Video-Content-3C-Creation-Curation-Consumption"><a href="#Video-Content-3C-Creation-Curation-Consumption" class="headerlink" title="Video Content 3C: Creation, Curation, Consumption"></a>Video Content 3C: Creation, Curation, Consumption</h2><blockquote>
+<p>梅涛，微软亚洲研究院资深研究员。</p>
+</blockquote>
+<p>CV understanding 问题分为几个层次(or 不同粒度)：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/CV%20understanding.png" class="ful-image" alt="CV%20understanding.png"></p>
+<p>从图像到视频的变换，实际是从二维到三维的变换，除了要理解每一帧的图片的 object，还要理解帧/物体在 cross, multiple-frame的动态运动。</p>
+<p>视频内容的生命周期大致可以分为三个部分，即视频的<strong>创作(creation)、处理(curation)和消费(consumption)</strong>。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/video%20lifecycle.png" class="ful-image" alt="video%20lifecycle.png">
+<h3 id="Creation"><a href="#Creation" class="headerlink" title="Creation"></a>Creation</h3><p>先来看一下视频是怎么产生的。首先把 Video 切成一个个的 shots(镜头/段落)，每个镜头 group(组合) 成一个 story(scene)，每一个镜头还可以细分成 sub-shots，每个 sub-shot 可以用 key-frame 来表示。通过这种分层的结构可以把 video 这样一个非线性的东西分成一个 structure data，这就是做 video summarization 的前提。</p>
+<p>Video summarization 分两种，static summary 和 dynamic summary。</p>
+<ul>
+<li><strong>static summary:</strong> automatic selection of representative video keyframes(e.g., 5 keyframes)<br>主要是选择具有高度代表性的 keyframe 来表示视频，一个 5 分钟的 video 给你 5 个 keyframe 你就知道这个视频讲了什么</li>
+<li><strong>dynamic summary:</strong> automatic generation of a short clip for fast preview(e.g., 30 second)<br>8 分钟的 video 生成 30 秒的 highlight，概括 video 的所有内容。spots video 知道哪些 segment 是最 hightlight 最精彩的，你最应该看哪部分</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/video%20summ1.png" class="ful-image" alt="video%20summ1.png">
+<p><strong>Video Creation</strong> 的涉及的技术还有 <strong>stabilization and photography</strong>，怎么把拍的抖动的 video 变得平稳，怎么分辨 video 中的物体哪些是静止的哪些是动态的，然后产生 animation；另外和文字结合的技术/应用如 <strong>video generation</strong>，给出文字，来产生一个 video，像给一个动作，video 能展示这个动作。</p>
+<h3 id="Curation"><a href="#Curation" class="headerlink" title="Curation"></a>Curation</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/caption.png" class="ful-image" alt="action">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/P3D%20res.png" class="ful-image" alt="P3D%20res.png">
+<p><strong>Curation</strong> 涉及的技术还有 <strong>pose estimation from RGB video</strong>，应用比如说智能健身教练，通过把动作分解来告诉你哪一个动作是不准确的；还有在 <strong>video captioning</strong> 方面的应用，可以把视频描述做的更生动，比如说原来只能识别一群人(a group of people)，加上 pose estimation 可以识别一群人在跳舞(a group of people are dancing)。还有<strong>auto-commenting</strong>，给视频自动评论，把原有的 caption 变成有人的情感对话的 comments，比如说棒球比赛的动图，可以产生<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">I love baseball</div><div class="line">that&apos;s how to play baseball</div><div class="line">That&apos;s an amazing play</div><div class="line">- [Li, Yao, Mei, MM&apos;16]</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/chat.png" class="ful-image" alt="chat.png">
+<p><strong>Video caption</strong> 的经典方法是2D/3D CNN 学一个 video 的表达，然后做一个 embedding，把 embedding 的结果加上 text embedding 放到 rnn 去学。如果加上一个 relevant loss，结果还会与内容相关<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/caption.png" class="ful-image" alt="caption.png"></p>
+<h3 id="Consumption"><a href="#Consumption" class="headerlink" title="Consumption"></a>Consumption</h3><p>最后一个环节是 <strong>Video Consumption</strong>，应用像 video instagram，可以给 video 加上 style，或者说滤镜，变成 <strong>stylist video</strong>；也可以做 <strong>style transfer</strong>，比如说把油画的 style transfer 到自拍/风景照中；还有的应用像 <strong>segmentation</strong>，把人抠出来放到另一个场景里，把异地情侣放到一个房间里聊天；更难一点的还可以做 <strong>storytelling</strong>，把很多视频中的图像组合成一个吸引人的故事讲给观众听；另外还有 <strong>video advertising</strong>，来分析广告应该放什么位置，什么时间段选什么广告(是不是和插入点信息相关)，比如说广告和内容可以无缝衔接，也可以在故事高潮的时候/最 boring 的时候放广告。视频广告主要有两种度量方式，一个是 discontinuity，来衡量一个广告插入点的故事情节是否连续；另一个是 attractiveness，来衡量一段原始视频的内容是否精彩。这两者的权衡同事也就是广告商(advertiser)或用户(viewer)需求的权衡。</p>
+<h2 id="产业落地和产业化路径"><a href="#产业落地和产业化路径" class="headerlink" title="产业落地和产业化路径"></a>产业落地和产业化路径</h2><p>下一个是演讲者是中山大学教授、商汤科技执行研发总监林倞老师，又是母校，主题是 <strong>深度驱动的人工智能：从学术创新到产业落地</strong>，主要还是介绍了下商汤现在的主要业务。再下一个演讲者是魏京京，图麟科技 CEO，主题是 <strong>计算机视觉的产业化路径</strong>，也就不多说了。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/%E5%95%86%E6%B1%A4.png" class="ful-image" alt="%E5%95%86%E6%B1%A4.png"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/%E5%9B%BE%E9%BA%9F.png" class="ful-image" alt="%E5%9B%BE%E9%BA%9F.png"></p>
+<h3 id="X-数据驱动的-Seeta-视觉引擎与平台"><a href="#X-数据驱动的-Seeta-视觉引擎与平台" class="headerlink" title="X 数据驱动的 Seeta 视觉引擎与平台"></a>X 数据驱动的 Seeta 视觉引擎与平台</h3><blockquote>
+<p><strong>山世光</strong>，中科院计算所研究员、博导，基金委优青，CCF青年科学奖获得者，现任中科院智能信息处理重点实验室常务副主任，中科视拓创始人、董事长兼CTO，任IEEE，TIP，CVIU， PRL，Neurocomputing，FCS等国际学术刊物的编委。</p>
+</blockquote>
+<p>主要记录几个点，原文可以看 <a href="https://mp.weixin.qq.com/s?__biz=MzI5NTIxNTg0OA==&amp;mid=2247486265&amp;idx=1&amp;sn=1fc14df04e82246a5cd9a07057d07942&amp;chksm=ec57bcbedb2035a892af812d7b5c956d2ff2724e7a49106be3ba727324317bda1f5a97c2408c&amp;mpshare=1&amp;scene=1&amp;srcid=0723MBBvTvlpZbp7a3JWqs28&amp;key=188350111ce3d613ac3953993817f8b9270b517e7b0422a23477402db218ce42c4c732a3a525331afcbc526a9eb4caf21181d9e39bc1e66aefddf83addea04865518c9653c66346e4e23146c56d33db5&amp;ascene=0&amp;uin=Nzc1Mjc0MDYw&amp;devicetype=iMac+MacBookPro13%2C3+OSX+OSX+10.12.3+build(16D30" target="_blank" rel="external">中科视拓CTO山世光：如何用X数据驱动AI成长 | CCF-GAIR 2017</a>&amp;version=12020610&amp;nettype=WIFI&amp;fontScale=100&amp;pass_ticket=fYv8LK1dmtHud6qxDzyk0NQoTcNdpkYbWuD9vGD4pepNxlPLVOKnmpPFU3ig4ZlD)</p>
+<p><strong>增强学习适合：可以自动判断对错的领域</strong><br>例如：棋类、游戏类<br>视觉、听觉、理解、情感，通通不太行</p>
+<p><strong>深度学习适合：好数据肥沃、可以归纳学习的领域</strong></p>
+<ol>
+<li>数据采集、获取、标注便利的领域，例如视觉，语音，互联网+行业</li>
+<li>需要演绎推理的领域非常困难，理解需要演绎和引申，没有太多可作为的地方</li>
+</ol>
+<p>X 数据有五个含义：</p>
+<ul>
+<li><strong>大数据</strong><br>大数据驱动的视觉引擎的设计；</li>
+<li><strong>小数据</strong><br>在很多场景下，我们获得智能的能力并不是依赖于大量的数据学习，反而是一些小数据，所以要考虑的十四，怎样在小数据的情况下使得我们的算法也能够有效果。通常的思路自然是迁移学习，最简单的是做 finetune 模型，把一个已经训练好的模型，再用小量的数据做调整和优化，使得它适应这些小数据所代表的应用场景。另一个思路是多模态的数据，实现跨模态的比对和融合利用；</li>
+<li><strong>脏数据</strong><br>很好理解了，现在的数据都有大量的噪声，要雇人在大量的数据中把它们标注出来太不容易了，干脆就基于有噪声的数据实现机器学习。所以山世光等人在今年提出具有“自纠错学习”能力的深度学习方法，在深度学习的过程中，一边去学习算法，一边去估计哪些样本的标签可能是错误的，把一些可能错误的标签修正过来，从而得到更好的算法。<br>这里的脏可能还有另一层含义，比如说图像识别中有遮挡的情况，山世光等人也提出了一个算法，能够把面部的遮挡部分、脏的部分补出来，补出来之后再去实现感知。把这两个过程迭代起来，形成联合的学习，这个工作发表在去年的 CVPR 上面，取得了非常不错的效果。</li>
+<li><strong>无监督数据</strong><br>比如说特定的物体没有标注数据，怎样利用没有标签的数据来训练模型。解决方法如 Bi-shifting 深度模型，实现从源域到无监督目标域到知识迁移。(M.Kan, et al, ICCV2015)</li>
+<li><strong>增广数据</strong><br>通过对已有少量数据进行修改的方式，来生成大量数据。有两类方法，一种是模型方法，比如说 3D 重建，另一种是 GAN 方法。</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/x5.png" class="ful-image" alt="x5.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/x5.2.png" class="ful-image" alt="x5.2.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/xx.png" class="ful-image" alt="xx.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/xx2.png" class="ful-image" alt="xx2.png">
+<p>AI 未来发展需要注意的三个问题：</p>
+<ul>
+<li><strong>鲁棒性</strong><br>鲁棒性可能是 AI 和视觉智能一个最致命的问题</li>
+<li><strong>多模态数据协同</strong><br>对于人来说，除了眼睛之外，我们有很多其它信息来对我们的智力发育提供帮助，包括语音、姿态、动作、以及背后有大量的知识库作支撑。因此，人本身是需要一个多模态系统协同工作的鲁棒AI，这带给我们一个思路，AI的成长和发育也需要多模态</li>
+<li><strong>基于小样本的自主学习</strong><br>AI 发育的非常重要的一点，就是如何基于小数据甚至是 0 数据完成智能的发育和后天的学习。比如说我跟大家描述一下某个人长成什么样子，你并没有见过这个人，你并没有见过这个人的照片，我们称为0数据，你如何能够识别这个人，是对AI的一个挑战。类似这样的应用场景，将来会有非常多的研究空间。</li>
+</ul>
+<h3 id="圆桌对话"><a href="#圆桌对话" class="headerlink" title="圆桌对话"></a>圆桌对话</h3><p>五位圆桌嘉宾包括：中科院计算所研究员、中科视拓董事长兼 CTO 山世光、阅面科技 CEO 赵京雷、图麟科技 CEO 魏京京、瑞为智能 CEO 詹东晖以及臻识科技 CEO 任鹏。<br>感觉最有意义的一个问题是：<strong>你觉得人工智能技术在落地过程中最大的难点是什么</strong>。几位嘉宾一致同意说是<strong>闭环</strong>。最核心的是<strong>市场需求和当前技术达到的闭环</strong>，产品结果和客户需求有差距，要怎么迭代。做产品的时候有很多取舍的东西，要去平衡你的功能、性能，满足客户的指标、期望，最后在产品设计和成本相关的这些方面，其实一个核心就是闭环。创业过程中<strong>最关键的不是你有什么技术，而是你把已有的技术跟他的痛点结合，这个问题不是技术的问题，基本上就是商业问题，需要付出的努力不是做技术的来做的，而是你要接地气，围着客户做讨论、设计和服务，让他慢慢接受你，这是很痛苦的，也是做技术创业需要转换的地方。</strong>我们所谓的技术完美，当然我们希望「快、准、稳」。快是随便找一个很烂的芯片就可以做；准是什么情况下都能工作；稳是不会出现差错，这样落地和闭环就不会出现难题了，<strong>但是我们现在真的做不到。比如刚才说的万分之一，很多时候是达不到的，在这个阶段最难的是怎么去找到客户的需求和技术的边界能够结合的应用，再配合上其他的一些条件，能够满足用户的需求。</strong>刚才几位说得都对，技术不完美还是一个很大的障碍。</p>
+<p><a href="http://t.cn/R9h2w8p" target="_blank" rel="external">CV+圆桌对话：算法不是唯一考量，创业公司的商业闭环才是最大难点</a></p>
+<h1 id="机器学习专场"><a href="#机器学习专场" class="headerlink" title="机器学习专场"></a>机器学习专场</h1><h2 id="AI-in-games"><a href="#AI-in-games" class="headerlink" title="AI in games"></a>AI in games</h2><blockquote>
+<p>田渊栋，Facebook 人工智能研究院研究员</p>
+</blockquote>
+<p>游戏平台，作为虚拟环境，是非常好的一个数据来源。因为量大，无穷尽，获取速度快，有科学的平台可以提供重复科研的环境。游戏数据的特点：</p>
+<ul>
+<li>infinite supply of fully labeled data</li>
+<li>controllable and replicable</li>
+<li>low cost per sample</li>
+<li>faster than real-time</li>
+<li>less safety and ethical concerns</li>
+<li>complicated dynamics with simple rules</li>
+</ul>
+<p>像围棋，非常简单的规则可以得到一个很有意思的过程，可以从过程中抽取一些概念，得到一些人类推理的知识。然而现实生活中规则太多，不一定是个很好的研究开端。</p>
+<p>游戏平台作为数据做研究也存在一些问题：</p>
+<ul>
+<li>Algorithm is slow and data-inefficient<br>人玩游戏玩几盘就好了，计算机要大量的数据，虽然道最后计算机可以玩的很好</li>
+<li>require a lot of resources<br>研究限于比较大的公司</li>
+<li>abstract game to real-world<br>游戏能不能扩展到现实世界是个很大的问题<br>让游戏更真实 =&gt; 现在的游戏越来越真实，和现实生活非常接近</li>
+<li>hard to benchmark the progress</li>
+</ul>
+<p>显而易见，解决方案是：<br>=&gt; better algorithm/system<br>=&gt; better environment</p>
+<p>这两个都是目前游戏 AI 的研究方向，还有 domain transfer，也是一个研究方向。</p>
+<blockquote>
+<p>Even with a super-super computer, it is not possible to search the entire space.</p>
+</blockquote>
+<p>很多人以为机器能够搜索游戏的所有可能，所以能胜过人类，其实这是一个误解。我们能做的是有限搜索，从当前局面出发，哪一步是最好的，extensive search =&gt; evaluation</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.3.png" class="ful-image" alt="6.3.png">
+<p>星际这样的游戏，可能的步数是指数级的，怎么做还是个开放性的问题</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.4.png" class="ful-image" alt="6.4.png">
+<p>围棋用深度学习的方法 CNN 学出评估函数。怎么估计下一步怎么走？怎么评估？</p>
+<p><strong>How to model policy/value function?</strong><br><strong>traditional approach</strong></p>
+<ul>
+<li>Many manual steps</li>
+<li>Conflicting parameters, not scalable<br>有些时候规则是冲突的，大师没办法直观的告诉 ai 什么时候用哪条规则，有的时候是看直觉的，ai 没法学</li>
+<li>require strong domain knowledge</li>
+</ul>
+<p><strong>deep learning</strong></p>
+<ul>
+<li>End-to-end training<br>lots of data, less tuning</li>
+<li>minimal domain knowledge</li>
+<li><p>amazing performance</p>
+<p>​<br>Case study: AlphaGo   依靠 Monte Carlo Tree Search, aggregate win rates, and search towards the good nodes. 从根节点一路找最大概率走到叶节点，这样的好处是如果发现有些招数很糟糕，那么走了两步就不会继续往下走了，如果发现有些招数不错，可能会一路走下去，走个五六十层，这样可能会发现一些很有意思的招数。</p>
+</li>
+</ul>
+<p>主要策略思想<br><strong>Policy network：</strong> 根据大量人类棋谱学出来<br><strong>Value network: </strong> 网络自己学，把状态中某个步骤拿出来，给每个状态提供一个标定，拿出来训练</p>
+<p><strong>future work</strong></p>
+<ul>
+<li>richer game scenarios<br> multiple base(expand? Rush? Defending?)<br> ​more complicated units 精细控制每个决定，现在智能控制9个</li>
+<li>more realistic action space<br>Assign one action per unit</li>
+<li>model-based reinforcement learning<br>MCTS with perfect information and perfect dynamics also achieves ~70%<br>现在游戏都是慢慢摸索的，然而对复杂的游戏需要对游戏有大致估计</li>
+<li>self-play(Trained AI versus Trained AI)<br>自对弈</li>
+</ul>
+<h2 id="互联网数据下的模型探索"><a href="#互联网数据下的模型探索" class="headerlink" title="互联网数据下的模型探索"></a>互联网数据下的模型探索</h2><blockquote>
+<p>盖坤博士，阿里，P9,阿里妈妈精准展示广告投放</p>
+</blockquote>
+<p><a href="https://arxiv.org/pdf/1704.05194.pdf" target="_blank" rel="external">Learning Piece-wise Linear Models from Large Scale Data for Ad Click Prediction</a><br><a href="https://arxiv.org/pdf/1706.06978.pdf" target="_blank" rel="external">Deep Interest Network for Click-Through Rate Prediction</a></p>
+<h3 id="互联网数据和经典模型"><a href="#互联网数据和经典模型" class="headerlink" title="互联网数据和经典模型"></a>互联网数据和经典模型</h3><p>互联网数据业界经典的处理方法，典型问题：CTR 预估(点击率预估)</p>
+<p><strong>数据特点</strong></p>
+<ul>
+<li><strong>样本量大</strong> 百亿样本</li>
+<li><strong>特征维度大</strong> 无损表示<br>id 特征，原始特征，稀疏的鉴别式特征，轻松超十亿级<br>原始特征，用户特征+物料特征<br>加上交叉特征，笛卡尔积之类的，轻松上千亿</li>
+<li><strong>稀疏</strong>数据</li>
+</ul>
+<p><strong>经典做法</strong></p>
+<ul>
+<li>简单线性模型 Logistic Regression<br>线性模型+sigmoid一个非线性变换，变成一个概率模式</li>
+<li>稀疏正则 L1-Norm 特征筛选<br>压制不太重要的特征</li>
+<li>处理非线性：人工特征工程<br>LR 是线性模型，能力有限，要挖掘非线性特征，只能做人工特征，笛卡尔积，做交叉，做种种特征</li>
+</ul>
+<p><strong>问题</strong></p>
+<ul>
+<li><strong>人工能力有限</strong>，很难对非线性模式挖掘完全重复</li>
+<li>依赖人力和领域经验，方法推广到其他问题的代价大：<strong>不够智能</strong></li>
+</ul>
+<p><strong>已有的非线性模型</strong></p>
+<ul>
+<li><strong>Kernel 方法(kernel svm)</strong><br>复杂度太高，一般来说光存储 kernel 矩阵就是数据量平方级</li>
+<li><strong>Tree base 方法(如 GBDT)</strong><br>在低维强特征上表现非常好，但在大规模弱特征上(如 id 特征)表现不行<br>​实际上是树的缺点，假如说是 user id, item id 两个信息，建树会带来一个灾难，每个叶子节点在一维特征上做 split，意味着来判断某个特征是不是 id，跟到叶子路径：if(user id == useri &amp;&amp; item id == itemj) 条件判断，变成了根到叶子的组合判断，就变成了一个记忆，判断为记忆历史行为，缺乏推广性</li>
+<li><strong>矩阵分解(Topic Model, LDA 等)</strong><br>适用于两种 id 的情况，不适合多种 id 输入</li>
+<li><strong>Factorization machines</strong><br>只拟合有限次关系(二次关系)<br>无法拟合其他非线性关系：例如三种特征的交叉，值的高阶变换等</li>
+</ul>
+<p><strong>我们需要的特性</strong></p>
+<ul>
+<li>足够强的非线性拟合能力</li>
+<li>良好的泛化能力</li>
+<li>规模化能力</li>
+</ul>
+<h3 id="分片线性模型和学习算法-MLR"><a href="#分片线性模型和学习算法-MLR" class="headerlink" title="分片线性模型和学习算法 MLR"></a>分片线性模型和学习算法 MLR</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.5.png" class="ful-image" alt="6.5.png">
+<p>分片数为 1 就是一个线性模型，分片数过多会过拟合，实际过程中是用一个搜索的方法来确定分片数。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.6.png" class="ful-image" alt="6.6.png"></p>
+<p>分片用 softmax，预测模型用 LR，实际就是一个 MOE 模型，外面再加一个 LR 级联<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.7.png" class="ful-image" alt="6.7.png"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.8.png" class="ful-image" alt="6.8.png"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.9.png" class="ful-image" alt="6.9.png"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.10.png" class="ful-image" alt="6.10.png"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.11.png" class="ful-image" alt="6.11.png"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.12.png" class="ful-image" alt="6.12.png"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.13.png" class="ful-image" alt="6.13.png"></p>
+<h3 id="大规模-ID-特征-MLR-实践"><a href="#大规模-ID-特征-MLR-实践" class="headerlink" title="大规模 ID 特征 + MLR 实践"></a>大规模 ID 特征 + MLR 实践</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.14.png" class="ful-image" alt="6.14.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.15.png" class="ful-image" alt="6.15.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.16.png" class="ful-image" alt="6.16.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.17.png" class="ful-image" alt="6.17.png">
+<h3 id="深层用户兴趣分布网络"><a href="#深层用户兴趣分布网络" class="headerlink" title="深层用户兴趣分布网络"></a>深层用户兴趣分布网络</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.18.png" class="ful-image" alt="6.18.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.19.png" class="ful-image" alt="6.19.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.20.png" class="ful-image" alt="6.20.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.21.png" class="ful-image" alt="6.21.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.22.png" class="ful-image" alt="6.22.png">
+<h2 id="认知分析-透过机器重新审视商业本质"><a href="#认知分析-透过机器重新审视商业本质" class="headerlink" title="认知分析-透过机器重新审视商业本质"></a>认知分析-透过机器重新审视商业本质</h2><blockquote>
+<p>杨洋，商业认知分析平台iPIN创始人兼CEO。创办iPIN前，杨洋曾在美国国家旅游与电子商务实验室（NLTeC）从事搜索引擎研究，曾师从世界著名信息科学家Rajiv Banker和Pei-yu Chen从事多年大规模众包集智数据分析和研究，并获得博士学位，曾任哈尔滨工业大学管理学院副教授。此外还有过多次互联网创业经历，并曾在NASDAQ上市公司YY Inc.担任全球化负责人。</p>
+</blockquote>
+<p>人对信息的处理过程，<strong>感知 -&gt; 认知 -&gt; 分析 -&gt; 决策</strong>。人类对认知的理解还不是很成熟，这也是人工智能的天花板之一，如何让机器去掌握人类常识。</p>
+<p>从生物学／物理学／哲学／社会学／经济学／市场心理学／神经科学各个角度阐述了什么是认知。比如说在我们看来，信任/不信任是同一个维度的问题，然而神经科学发现不是，你可以同时信任一个人，不信任一个人，可以爱一个人，同时恨一个人。无论哪个领域，整体的逻辑差不多是：</p>
+<blockquote>
+<p>认知是<strong>真相</strong>在具体<strong>场景</strong>下的<strong>投影</strong></p>
+</blockquote>
+<p>实现机器认知的条件</p>
+<ul>
+<li>信息可靠</li>
+<li>信息充分</li>
+<li>精细建模<br>如何对小规模数据敏感，dl 很难达到</li>
+<li>不懂就“问”<br>机器能主动发问</li>
+</ul>
+<p>还讲了一些具体应用，个人发展应用类的如完美志愿，涉及到生涯规划，用机器学习的方法来看人是怎么发展的，让机器去学习总结大量的(潜)规则，再如前程导航，SCCT 理论来规划你的人生；企业发展应用如人才分析引擎，把不可矢量的东西都矢量化，从认知层面去做计算，等等。</p>
+<h2 id="用人工智能打造教学机器人提升十倍教育效率"><a href="#用人工智能打造教学机器人提升十倍教育效率" class="headerlink" title="用人工智能打造教学机器人提升十倍教育效率"></a>用人工智能打造教学机器人提升十倍教育效率</h2><blockquote>
+<p>栗浩洋 「非你莫属」BOSS，社交APP「朋友印象」创始人，国内第一家人工智能自适应网络教育公司「乂学教育」创始人。黑马会上海会长，黑马连营主任导师，央视二套「实战商学院」导师，第一财经《中国经营者》特约嘉宾，《商界时尚》杂志封面人物。曾先后被福布斯、第一财经、i黑马、36Kr等100多家媒体采访报道。</p>
+</blockquote>
+<p>总体逻辑，实现<strong>有教无类，教无定法，因材施教</strong>。</p>
+<p>MOOC &amp; 传统教学无区别对待所有的学生和所有知识点，每个人的起点和终点不一样，然而老师教的是线性的。智适应系统，能精确侦测不同学生的<strong>知识漏洞</strong>，利用知识状态空间+知识空间理论来精准定位学生知识点掌握状态，还可以从大量数据中发现强关联的知识点和弱关联知识点。同时，精准把知识点分拆定位；又由于每个学生掌握一个知识点所需的时间是不同的，逻辑方向是不同的，所以要做个性化的匹配和学习内容推荐</p>
+<p>个性化匹配</p>
+<ul>
+<li>学生画像+内容侧写</li>
+<li>机器学习+概率图模型</li>
+<li>个性化学习内容和路径匹配</li>
+</ul>
+<p>哎，感觉把我们当投资人或者顾客了。。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/7.1.png" class="ful-image" alt="7.1.png"></p>
+<h1 id="智能助手专场"><a href="#智能助手专场" class="headerlink" title="智能助手专场"></a>智能助手专场</h1><p>这一场本来应该是我最感兴趣的一场，无奈嘉宾讲的都很泛，可能是因为中间设计的技术太多，没法展开吧。</p>
+<h2 id="远程语音交互的技术挑战和商业思考"><a href="#远程语音交互的技术挑战和商业思考" class="headerlink" title="远程语音交互的技术挑战和商业思考"></a>远程语音交互的技术挑战和商业思考</h2><blockquote>
+<p>陈孝良，北京声智科技有限公司。</p>
+</blockquote>
+<p>人机交互的升级大致来说分三个时代，最开始是<strong>PC互联网时代</strong>，主要依赖键盘、鼠标，后来是<strong>移动互联网时代</strong>，以智能机为代表，大量依赖触摸屏，到现在的<strong>AI互联网时代</strong>，以远程语音交互为主要交互方式，当然这不是唯一的，还有其他的方式辅助。</p>
+<p><strong>技术挑战：</strong> 远场语音交互技术瓶颈在于声学和场景<br>近场可以近似理解为只是实验室的理想环境，远场要考虑更多</p>
+<ul>
+<li>语音识别率 95%，但用户体验不好<br>行业目标：以语音控制模式打造极致(速度、精度)产品体验<br>核心瓶颈：远场语音识别、远场场景适配、NLP 精确反馈</li>
+<li>语义理解技术有本质性突破<br>行业目标：拟人化，全功能型产品，实现听你所言，知你所想<br>核心瓶颈：声光电多种传感的融合，NLP 技术的实质性突破</li>
+</ul>
+<p><strong>技术挑战：</strong></p>
+<ul>
+<li>器件<br>需要升级，然而麦克风的性能、精度，核心技术不在国内，标量麦克风=&gt;矢量麦克风，国内相对落后</li>
+<li>芯片</li>
+<li>算法<br>如离线关键词识别(语音唤醒)、离线声纹识别(Voice ID)，AEC 回声消除，Adaptive Beamforming, Speech Dereverberation，声源定位技术，孤立样本学习，深度强化学习</li>
+<li>商业<br>语音交互产业化的风险在于不确定的启动周期，到了启动周期爆发时间就只有三年<br>产品，内容和服务，标准和知识产权，</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.1.png" class="ful-image" alt="6.1.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/6.2.png" class="ful-image" alt="6.2.png">
+<h2 id="对话即应用：过去仍在，未来已来"><a href="#对话即应用：过去仍在，未来已来" class="headerlink" title="对话即应用：过去仍在，未来已来"></a>对话即应用：过去仍在，未来已来</h2><blockquote>
+<p>戴帅湘，蓦然认知 CEO前百度主任架构师，并长期担任百度 Query 理解方向负责人，荣获第一个百度语义技术的最高奖。</p>
+</blockquote>
+<p>感觉讲的更多是 IoT 的内容，讲了未来发展趋势，几个融合</p>
+<ul>
+<li>VOI 和 GUI 的融合<br>GUI 人适应机器，处理简单的、特定的任务，VOI，机器适应人，可以处理相对模糊的，复杂的任务</li>
+<li>多场景融合<br>关注长尾的需求</li>
+<li>设备之间的协同<br>比如说车+家的互联，把家里的空调调到24度</li>
+<li>知识和服务的融合</li>
+</ul>
+<h2 id="设备时代结束，助手时代到来"><a href="#设备时代结束，助手时代到来" class="headerlink" title="设备时代结束，助手时代到来"></a>设备时代结束，助手时代到来</h2><blockquote>
+<p>刘耀平，暴风TV CEO，被誉为“互联网电视第一人”。</p>
+</blockquote>
+<p><strong>听到(DSP) =&gt; 听清(ASR) =&gt; 听懂(NLP) =&gt; 做到(SKILL)</strong></p>
+<p>介绍了暴风家庭助手，感觉像 echo show 的中文版，视频看上去不错，不知道真正体验如何。</p>
+<p>讲了未来趋势：</p>
+<ul>
+<li>多设备协同计算(多助手)，未来一定是助手与助手之间的联网和协同，</li>
+<li>多屏协同服务，服务在多屏呈现，屏幕无处不在</li>
+<li>跨空间场景迁移</li>
+</ul>
+<p>未来会产生家庭社交平台，人与助手，助手与助手，人与人的交互。</p>
+<h1 id="AI-专场"><a href="#AI-专场" class="headerlink" title="AI+专场"></a>AI+专场</h1><h2 id="机器写稿技术与应用"><a href="#机器写稿技术与应用" class="headerlink" title="机器写稿技术与应用"></a>机器写稿技术与应用</h2><blockquote>
+<p>万小军，北京大学计算机科学技术研究所研究员。</p>
+</blockquote>
+<p>运用到机器写稿技术的主要单位有</p>
+<ul>
+<li>媒体：新华社、头条、南都等</li>
+<li>互联网企业：微软、百度、腾讯、头条等</li>
+<li>科研院所</li>
+</ul>
+<p>写稿类型一般有体育、财经、民生、娱乐新闻，以及绝句、诗歌等。</p>
+<p><strong>原创 vs 二次创作</strong><br>机器写稿有两种方式，一种是原创，一种是二次创作。原创一般是之前没有稿件，只有结构化的数据，借助结构化的数据去生成新的稿件。比如说写一个天气预报的报道，或者年报、财报都直接可以从数据中生成。而关于一个已经有相关报道的事件，我们可以借助这些报道进行一些拼凑、改写成为新的稿件，这就是二次创作。</p>
+<p><strong>基础技术研究</strong></p>
+<ul>
+<li>自动文摘</li>
+<li>自然语言生成</li>
+<li>文本推荐</li>
+<li>文本复述</li>
+</ul>
+<p><strong>应用技术研究</strong></p>
+<ul>
+<li>新闻资讯自动生成</li>
+<li>新闻综述自动生成</li>
+<li>用户评论自动生成</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/8.1.png" class="ful-image" alt="8.1.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/8.2.png" class="ful-image" alt="8.2.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/8.3.png" class="ful-image" alt="8.3.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/8.4.png" class="ful-image" alt="8.4.png">
+<p>一些应用：</p>
+<ol>
+<li>看明星的微博，判断是否有新闻价值，如果有，结合微博、评论信息、背景信息，生成新闻；</li>
+<li>新闻资讯的生成，长短可控，几十字、上千字的简讯／资讯；</li>
+<li>新闻综述自动生成：根据同一事件的多篇新闻报道，自动生成篇幅较长的事件综述。用 wikinews 做的实验，主要过程：新闻采集 =》(子话题选择)段落划分 =》段落排序 =》段落选择与合并</li>
+<li>用户评论自动生成，根据制定的用户观点数据(产品特性+评分)，自动生成对应的产品评论，基于深度学习模型，根据产品特性和评分，生成自然语言的评论<img src="http://ox5l2b8f4.bkt.clouddn.com/images/CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0/8.5.png" class="ful-image" alt="8.5.png">
+</li>
+</ol>
+<p>趋势展望</p>
+<ul>
+<li>让稿件具有态度和立场，更加人性化</li>
+<li>通过推理与归纳，撰写深度报道</li>
+</ul>
+<h2 id="智影：AI-让视频更简单"><a href="#智影：AI-让视频更简单" class="headerlink" title="智影：AI 让视频更简单"></a>智影：AI 让视频更简单</h2><blockquote>
+<p>康洪文，慧川智能 CEO</p>
+</blockquote>
+<p>感觉很酷炫的样子，通过明星识别、场景识别、行为识别以及视频标签化后，可以根据文字来自动生成配套的视频。举个应用的例子，如果微信公众号的很多文章都可以配上配套的短视频，是不是很棒！</p>
+<p><a href="http://api.zenvideo.cn/#/" target="_blank" rel="external">智影</a></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>结尾引用某嘉宾的话，未来的世界<strong>无商业不智能，无智能不商业</strong>。从消费和生产两方面来看，<strong>消费互联网解决了高效的流通，产业互联网解决了正确的生产。</strong>看吧，我们赶上了最好的时代，同志们加油～ (P.S.最后和来自各大高校的童鞋以及雷锋网的小伙伴们面了个基，可惜奕欣姐姐嫌弃合照就不上图了。。)</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" rel="tag">#AI</a>
+          
+            <a href="/tags/chatbot/" rel="tag">#chatbot</a>
+          
+            <a href="/tags/IoT/" rel="tag">#IoT</a>
+          
+            <a href="/tags/物联网/" rel="tag">#物联网</a>
+          
+            <a href="/tags/CV/" rel="tag">#CV</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/10/NLP 笔记 - Machine Translation-Neuron models/" rel="next" title="NLP 笔记 - Neural Machine Translation">
+                <i class="fa fa-chevron-left"></i> NLP 笔记 - Neural Machine Translation
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/21/递归神经网络 RNN 笔记/" rel="prev" title="递归神经网络 RNN 笔记">
+                递归神经网络 RNN 笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">160</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AI-发展前沿"><span class="nav-number">1.</span> <span class="nav-text">AI 发展前沿</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AI-的典型任务和应用"><span class="nav-number">1.1.</span> <span class="nav-text">AI 的典型任务和应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Rise-of-AI-And-The-Challenges-of-Human-Aware-AI-Systems"><span class="nav-number">1.2.</span> <span class="nav-text">The Rise of AI And The Challenges of Human-Aware AI Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模式识别研究回顾与展望"><span class="nav-number">1.3.</span> <span class="nav-text">模式识别研究回顾与展望</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AI-学术前沿"><span class="nav-number">2.</span> <span class="nav-text">AI 学术前沿</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Smart-Robotic-Systems-that-Work-in-Real-Outdoor-Environments"><span class="nav-number">2.1.</span> <span class="nav-text">Smart Robotic Systems that Work in Real Outdoor Environments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-society-of-AI-Agents-群体智能的社会"><span class="nav-number">2.2.</span> <span class="nav-text">A society of AI Agents 群体智能的社会</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机视觉专场"><span class="nav-number">3.</span> <span class="nav-text">计算机视觉专场</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Video-Content-3C-Creation-Curation-Consumption"><span class="nav-number">3.1.</span> <span class="nav-text">Video Content 3C: Creation, Curation, Consumption</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Creation"><span class="nav-number">3.1.1.</span> <span class="nav-text">Creation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Curation"><span class="nav-number">3.1.2.</span> <span class="nav-text">Curation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Consumption"><span class="nav-number">3.1.3.</span> <span class="nav-text">Consumption</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#产业落地和产业化路径"><span class="nav-number">3.2.</span> <span class="nav-text">产业落地和产业化路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#X-数据驱动的-Seeta-视觉引擎与平台"><span class="nav-number">3.2.1.</span> <span class="nav-text">X 数据驱动的 Seeta 视觉引擎与平台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#圆桌对话"><span class="nav-number">3.2.2.</span> <span class="nav-text">圆桌对话</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#机器学习专场"><span class="nav-number">4.</span> <span class="nav-text">机器学习专场</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AI-in-games"><span class="nav-number">4.1.</span> <span class="nav-text">AI in games</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互联网数据下的模型探索"><span class="nav-number">4.2.</span> <span class="nav-text">互联网数据下的模型探索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#互联网数据和经典模型"><span class="nav-number">4.2.1.</span> <span class="nav-text">互联网数据和经典模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分片线性模型和学习算法-MLR"><span class="nav-number">4.2.2.</span> <span class="nav-text">分片线性模型和学习算法 MLR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大规模-ID-特征-MLR-实践"><span class="nav-number">4.2.3.</span> <span class="nav-text">大规模 ID 特征 + MLR 实践</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深层用户兴趣分布网络"><span class="nav-number">4.2.4.</span> <span class="nav-text">深层用户兴趣分布网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#认知分析-透过机器重新审视商业本质"><span class="nav-number">4.3.</span> <span class="nav-text">认知分析-透过机器重新审视商业本质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用人工智能打造教学机器人提升十倍教育效率"><span class="nav-number">4.4.</span> <span class="nav-text">用人工智能打造教学机器人提升十倍教育效率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#智能助手专场"><span class="nav-number">5.</span> <span class="nav-text">智能助手专场</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#远程语音交互的技术挑战和商业思考"><span class="nav-number">5.1.</span> <span class="nav-text">远程语音交互的技术挑战和商业思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对话即应用：过去仍在，未来已来"><span class="nav-number">5.2.</span> <span class="nav-text">对话即应用：过去仍在，未来已来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设备时代结束，助手时代到来"><span class="nav-number">5.3.</span> <span class="nav-text">设备时代结束，助手时代到来</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AI-专场"><span class="nav-number">6.</span> <span class="nav-text">AI+专场</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#机器写稿技术与应用"><span class="nav-number">6.1.</span> <span class="nav-text">机器写稿技术与应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#智影：AI-让视频更简单"><span class="nav-number">6.2.</span> <span class="nav-text">智影：AI 让视频更简单</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">7.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/07/15/CCF-GAIR 参会笔记/';
+      var disqus_title = "CCF-GAIR 参会笔记";
+      var disqus_url = 'http://www.shuang0420.com/2017/07/15/CCF-GAIR 参会笔记/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>
