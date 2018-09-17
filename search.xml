@@ -96,7 +96,7 @@
 <ol>
 <li>难以实现远距离的 state-state interaction</li>
 </ol>
-<h2 id="深度学习方法"><a href="#深度学习方法" class="headerlink" title="深度学习方法"></a>深度学习方法</h2><p>最经典的 <a href="hiheng Huang, Wei Xu, Kai Yu. Bidirectional LSTM-CRF Models for Sequence Tagging. CoRR. 2015">LSTM+CRF</a>，端到端的判别式模型，LSTM 利用过去的输入特征，CRF 利用句子级的标注信息，可以有效地使用过去和未来的标注来预测当前的标注。</p>
+<h2 id="深度学习方法"><a href="#深度学习方法" class="headerlink" title="深度学习方法"></a>深度学习方法</h2><h3 id="LSTM-CRF"><a href="#LSTM-CRF" class="headerlink" title="LSTM+CRF"></a>LSTM+CRF</h3><p>最经典的 <a href="hiheng Huang, Wei Xu, Kai Yu. Bidirectional LSTM-CRF Models for Sequence Tagging. CoRR. 2015">LSTM+CRF</a>，端到端的判别式模型，LSTM 利用过去的输入特征，CRF 利用句子级的标注信息，可以有效地使用过去和未来的标注来预测当前的标注。</p>
 <img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/LSTM%2BCRF.png">
 <h2 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h2><p>评估 IR 系统或者文本分类的任务，我们通常会用到 precision，recall，F1 这种 set-based metrics，见<a href="http://www.shuang0420.com/2016/09/20/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/">信息检索评价的 Unranked Boolean Retrieval Model 部分</a>，但是在这里对 NER 这种 sequence 类型任务的评估，如果用这些 metrics，可能出现 boundary error 之类的问题。因为 NER 的评估是按每个 entity 而不是每个 token 来计算的，我们需要看 entity 的 boundary。</p>
 <p>以下面一句话为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">First Bank of Chicago announced earnings...</div></pre></td></tr></table></figure></p>
@@ -269,12 +269,12 @@
 <h2 id="监督学习-评价指标"><a href="#监督学习-评价指标" class="headerlink" title="监督学习-评价指标"></a>监督学习-评价指标</h2><p>最常用的 Precision, Recall, F1</p>
 <img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/8.jpg" class="ful-image" alt="8.jpg">
 <h2 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h2><p>如果测试集和训练集很相似，那么监督学习的准确率会很高，然而，它对不同 genre 的泛化能力有限，模型比较脆弱，也很难扩展新的关系；另一方面，获取这么大的训练集代价也是昂贵的。</p>
-<h2 id="半监督学习"><a href="#半监督学习" class="headerlink" title="半监督学习"></a>半监督学习</h2><h3 id="Seed-based-or-bootstrapping-approaches"><a href="#Seed-based-or-bootstrapping-approaches" class="headerlink" title="Seed-based or bootstrapping approaches"></a>Seed-based or bootstrapping approaches</h3><p>半监督学习主要是利用少量的标注信息进行学习，这方面的工作主要是<strong>基于 Bootstrap 的方法</strong>以及<strong>远程监督方法（distance supervision）</strong>。<strong>基于 Bootstrap 的方法</strong> 主要是利用少量实例作为初始种子(seed tuples)的集合，然后利用 pattern 学习方法进行学习，通过不断迭代从非结构化数据中抽取实例，然后从新学到的实例中学习新的 pattern 并扩充 pattern 集合，寻找和发现新的潜在关系三元组。<strong>远程监督</strong> 方法主要是对知识库与非结构化文本对齐来自动构建大量训练数据，减少模型对人工标注数据的依赖，增强模型跨领域适应能力。</p>
-<p>漆桂林,高桓,吴天星.知识图谱研究进展[J].情报工程,2017,3(1):004-025</p>
+<h2 id="半监督学习"><a href="#半监督学习" class="headerlink" title="半监督学习"></a>半监督学习</h2><h3 id="研究综述-1"><a href="#研究综述-1" class="headerlink" title="研究综述"></a>研究综述</h3><p>漆桂林,高桓,吴天星.知识图谱研究进展[J].情报工程,2017,3(1):004-025</p>
 <blockquote>
 <p>Brin[23]等人通过少量的实例学习种子模板，从网络上大量非结构化文本中抽取新的实例，同时学习新的抽取模板，其主要贡献是构建了 DIPRE 系统；Agichtein[24]在 Brin 的基础上对新抽取的实例进行可信度的评分和完善关系描述的模式，设计实现了 Snowball 抽取系统；此后的一些系统都沿着 Bootstrap 的方法，但会加入更合理的对 pattern 描述、更加合理的限制条件和评分策略，或者基于先前系统抽取结果上构建大规模 pattern；如 NELL（Never-EndingLanguage Learner）系统[25-26]，NELL 初始化一个本体和种子 pattern，从大规模的 Web 文本中学习，通过对学习到的内容进行打分来提高准确率，目前已经获得了 280 万个事实。</p>
 </blockquote>
 <p>[23] brin s. Extracting Patterns and relations fromthe World Wide Web[J]. lecture notes in computerScience, 1998, 1590:172-183.<br>[24] Agichtein E, Gravano L. Snowball : Extractingrelations from large Plain-text collections[c]// acMConference on Digital Libraries. ACM, 2000:85-94.<br>[25] Carlson A, Betteridge J, Kisiel B, et al. Toward anarchitecture for never-Ending language learning.[c]// twenty-Fourth aaai conference on artificialIntelligence, AAAI 2010, Atlanta, Georgia, Usa, July.DBLP, 2010:529-573.<br>[26] Mitchell T, Fredkin E. Never-ending Languagelearning[M]// never-Ending language learning.Alphascript Publishing, 2014.</p>
+<h3 id="Seed-based-or-bootstrapping-approaches"><a href="#Seed-based-or-bootstrapping-approaches" class="headerlink" title="Seed-based or bootstrapping approaches"></a>Seed-based or bootstrapping approaches</h3><p>半监督学习主要是利用少量的标注信息进行学习，这方面的工作主要是<strong>基于 Bootstrap 的方法</strong>以及<strong>远程监督方法（distance supervision）</strong>。<strong>基于 Bootstrap 的方法</strong> 主要是利用少量实例作为初始种子(seed tuples)的集合，然后利用 pattern 学习方法进行学习，通过不断迭代从非结构化数据中抽取实例，然后从新学到的实例中学习新的 pattern 并扩充 pattern 集合，寻找和发现新的潜在关系三元组。<strong>远程监督</strong> 方法主要是对知识库与非结构化文本对齐来自动构建大量训练数据，减少模型对人工标注数据的依赖，增强模型跨领域适应能力。</p>
 <h4 id="Relation-Bootstrapping"><a href="#Relation-Bootstrapping" class="headerlink" title="Relation Bootstrapping"></a>Relation Bootstrapping</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">•  Gather a set of seed pairs that have relation R</div><div class="line">•  Iterate:</div><div class="line">1.  Find sentences with these pairs</div><div class="line">2.  Look at the context between or around the pair and generalize the context to create patterns</div><div class="line">3.  Use the patterns for grep for more pairs</div></pre></td></tr></table></figure>
 <p>看一个完整的例子<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/6.jpg" class="ful-image" alt="6.jpg"></p>
 <p>从 5 对种子开始，找到包含种子的实例，替换关键词，形成 pattern，迭代匹配，就为 $(authoer, book)$ 抽取到了 relation pattern，<strong><em>x, by y</em></strong>, 和 <strong><em>x, one of y’s</em></strong></p>
@@ -308,9 +308,9 @@
 <img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/DS_att.png" class="ful-image" alt="DS_att.png"></li>
 <li><strong>Entity representation</strong><br>引入了实体的背景知识（Freebase 和 Wikipedia 提供的实体描述信息），增强了实体表达（entity representation），D 是 (entity, description) 的集合表示，$e_i$ 是实体表示，$d_i$ 通过另一个传统 CNN 对收集到的实体的描述句抽特征得到<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/ed.png" class="ful-image" alt="ed.png">
 希望 $e_i$ 和 $d_i$ 尽可能相似，定义两者间的误差：<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/errors.png" class="ful-image" alt="errors.png">
+最后的损失函数是交叉熵和实体描述误差的加权和：<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/final_loss.png" class="ful-image" alt="final_loss.png">
 </li>
 </ol>
-<p>最后的损失函数是交叉熵和实体描述误差的加权和：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/final_loss.png" class="ful-image" alt="final_loss.png"></p>
 <h4 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h4><p><strong>优点：</strong></p>
 <ul>
 <li>可以利用丰富的知识库信息，减少一定的人工标注</li>
@@ -326,7 +326,7 @@
 </blockquote>
 <p>[27] Bollegala D T, Matsuo Y, Ishizuka M. Measuringthe similarity between implicit semantic relationsfrom the Web[J]. Www Madrid! track semantic/dataWeb, 2009:651-660.<br>[28] Bollegala D T, Matsuo Y, Ishizuka M. RelationalDuality: Unsupervised Extraction of semantic relations between Entities on the Web[c]//International Conference on World Wide Web, WWW 2010, Raleigh, North Carolina, Usa, April. DBLP, 2010:151-160.</p>
 <p><strong>Open Information Extraction</strong> 从网络中抽取关系，没有训练数据，没有关系列表。过程如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1. Use parsed data to train a “trustworthy tuple” classifier</div><div class="line">2. Single-pass extract all relations between NPs, keep if trustworthy</div><div class="line">3. Assessor ranks relations based on text redundancy</div><div class="line"></div><div class="line">E.g.,</div><div class="line">(FCI, specializes in, sobware development)</div><div class="line">(Tesla, invented, coil transformer)</div></pre></td></tr></table></figure></p>
-<h2 id="半监督-无监督学习的评价指标"><a href="#半监督-无监督学习的评价指标" class="headerlink" title="半监督/无监督学习的评价指标"></a>半监督/无监督学习的评价指标</h2><p>因为抽取的是新的关系，并不能准确的计算 precision 和 recall，所以我们只能估计，从结果集中随机抽取一个关系的 sample，然后人工来检验准确率</p>
+<h2 id="半监督-无监督学习-评价指标"><a href="#半监督-无监督学习-评价指标" class="headerlink" title="半监督/无监督学习-评价指标"></a>半监督/无监督学习-评价指标</h2><p>因为抽取的是新的关系，并不能准确的计算 precision 和 recall，所以我们只能估计，从结果集中随机抽取一个关系的 sample，然后人工来检验准确率</p>
 <p>$$\hat P = {\text {Number of correctly extracted relations in the sample} \over \text {Total number of extracted relations in the sample}}$$</p>
 <p>也可以计算不同 recall level 上的 precision，比如说分别计算在前 1000，10,000，100,000 个新的关系中的 precision，在各个情况下随机取样。</p>
 <p>然而，并没有方法来计算 recall。</p>
@@ -356,7 +356,7 @@
     <entry>
       <title><![CDATA[99/100 天纪念日 - 第 1 期]]></title>
       <url>http://www.shuang0420.com/2018/08/06/love99/</url>
-      <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
+      <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
       
         
         <tags>
@@ -9808,85 +9808,6 @@ Weights for each of 10*10*5 neurons: 5*5*3=75
     </entry>
     
     <entry>
-      <title><![CDATA[EM算法]]></title>
-      <url>http://www.shuang0420.com/2016/12/04/EM%E7%AE%97%E6%B3%95/</url>
-      <content type="html"><![CDATA[<p>CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。<br><a id="more"></a></p>
-<h1 id="Mixtures-of-Gaussians"><a href="#Mixtures-of-Gaussians" class="headerlink" title="Mixtures of Gaussians"></a>Mixtures of Gaussians</h1><p>MLE 的通用步骤：<br>Steps:</p>
-<ol>
-<li>写出似然函数；</li>
-<li>对似然函数取对数，并整理；</li>
-<li>求导数，令导数为0，得到似然方程；</li>
-<li>解似然方程，得到的参数即为所求；</li>
-</ol>
-<p>然而有的时候我们会陷入困境，因为似然方程没法求解，比如 Mixtures of Gaussians。</p>
-<h2 id="One-Gaussian"><a href="#One-Gaussian" class="headerlink" title="One Gaussian"></a>One Gaussian</h2><p><strong>Given data:</strong> X1,…Xn<br><strong>Modeling assumption:</strong> Xi(independently) ~ Gaussian, $\sigma^2$=1/2<br><strong>LE</strong><br>$$P(x_1,..,x_n|\mu)={1 \over \sqrt{2 \pi \sigma^2}} e^{-(x_i-\mu)^2 \over 2 \sigma^2} $$</p>
-<p><strong>MLE:</strong> $\hat \mu_{ML}= argmax \ L(x_1,..,x_n|\mu)$<br>$\mu_{ML} = {\sum_{i=1}^n \ x_i \over n} = \overline x_i$</p>
-<h2 id="K-Gaussians"><a href="#K-Gaussians" class="headerlink" title="K Gaussians"></a>K Gaussians</h2><p><strong>Given data:</strong> X1,…Xn<br><strong>Modeling assumption:</strong> Xi(independently) ~ Mixture of K Gaussians    $\sigma^2$=1/2, $\mu_1,…\mu_k$<br><strong>Prior probability over Gaussians:</strong> $\lambda_1,…,\lambda_k \ 0 \le \lambda_j \le 1 \ \sum \lambda_j=1$, distribution of j is unknown, $\lambda_j, \mu_j$ is unknown<br><strong>LE</strong><br>$$<br>\begin{aligned}<br>P(x_1,..,x_n|\hat \lambda,\hat \mu,\sigma^2=0.5) &amp; = \prod_i^n[\sum_j^k P(Gaussian \ j \ was \ chosen)P(xi|Gaussian \ j \ was \ chosen)] \\<br> &amp; = \prod_i^n[\sum_j^k \lambda_j{1 \over \sqrt{2 \pi \sigma^2}} e^{-(x_i-\mu_j)^2 \over 2 \sigma_j^2}]<br>\end{aligned}<br>$$</p>
-<p><strong>MLE:</strong> $(\hat \mu, \hat \lambda)_{ML}= argmax \ L(x1,..,xn|\hat \lambda,\hat \mu,\sigma^2=0.5)$</p>
-<p><strong>How to find MLE?</strong></p>
-<h2 id="“SOFT”-K-MEANS"><a href="#“SOFT”-K-MEANS" class="headerlink" title="“SOFT” K-MEANS"></a>“SOFT” K-MEANS</h2><p><strong>soft:</strong> our guesses are probabilities and taking values in [0,1]<br><strong>hard:</strong> represents a single best guess (taking values in {0,1} or {1,…k})</p>
-<p>Special case of the EM Algorithm<br>$\sigma^2$=1/2</p>
-<p><strong>初始化</strong><br>初始化分布参数θ, $\mu^{(0)}$,$\lambda^{(0)}$</p>
-<p><strong>重复 EM 步骤直到收敛</strong><br><strong>1.E-step</strong><br>Fill in    the    missing    variables    with the expected values<br>根据参数初始值或上一次迭代的模型参数来计算出隐性变量的后验概率，其实就是隐性变量的期望。作为隐藏变量的现估计值：<br>$$w_j^{(i)}=P(z^{(i)}=j|x^{(i)};\mu,\lambda,\sigma^2=0.5) $$</p>
-<p><strong>2.M-Step</strong><br>Regular    maximum    likelihood estimation    (MLE)    using    the    values computed    in the E step    and    the    values of    the    other    variables<br>将似然函数最大化以获得新的参数值 $\mu^{(l+1)}$,$\lambda^{(l+1)}$</p>
-<ul>
-<li>l: index over EM iterations</li>
-<li>j: index of Gaussians</li>
-<li>i: index of datapoints<br>$$\hat \lambda_j={\# j \ was \ chosen \over n}={\sum_{i=1}^n w_j^{(i)} \over n}$$<br>$$\hat \mu_j={\sum_{i=1}^n w_j^{(i)} x^{(i)} \over \sum_{i=1}^n w_j^{(i)}}$$</li>
-</ul>
-<p><strong>EM Algorithm guarantees:</strong><br>$$L(D|\theta^{[0]}) \le L(D|\theta^{[1]}) \le L(D|\theta^{[2]})…$$<br>This is a Non-decreasing function. And if the likelihood function is bounded, the sequence will converge. Here the example is bounded, because $\sigma$ is fixed.<br>It might end up with local optimal.</p>
-<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EM%E7%AE%97%E6%B3%95/draft.jpg" class="ful-image" alt="draft.jpg">
-<p>第一次 iteration 的表格表示<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EM%E7%AE%97%E6%B3%95/table.jpg" class="ful-image" alt="table.jpg"></p>
-<h1 id="General-EM-algorithm"><a href="#General-EM-algorithm" class="headerlink" title="General EM algorithm"></a>General EM algorithm</h1><p><strong>X</strong> observed data<br><strong>Z</strong> unobserved ‘data’<br><strong>Complete data</strong> Y=(X,Z)<br><strong>Likelihood function</strong> $L(X,Z|\theta)$ known</p>
-<p><strong>Problem:</strong> find MLE<br>$$<br>  \begin{aligned}<br>  \hat \theta_{ML} &amp; = argmax \ L(X|\theta)= argmax \sum_Z P(X,Z|\theta) \\<br>   &amp; = argmax \sum_Z P(Z|\theta)P(X|Z,\theta) \\<br>   &amp; = argmax \sum_Z P(X|\theta)P(Z|X,\theta)P(X|Z,\theta)<br>  \end{aligned}<br>$$</p>
-<p><strong>Chicken-egg Problem</strong> with regard to P(Z),$\theta$<br>先有鸡还是先有蛋的问题。当我们知道了哪些 datapoints 属于同一个高斯分布的时候，我们才能够对这个分布的参数作出靠谱的预测，然而现在 datapoints 混在了一起，我们不知道哪个属于哪个，也就没办法估计参数。反过来，只有当我们对 K 个分布的参数作了准确的估计的时候，才知道哪些 datapoints 属于同一个高斯分布。<br>所以陷入了僵局，怎么办？不如就先随便整一个值出来，看你怎么变，然后我再根据你的变化调整我的变化，然后如此迭代着不断互相推导，最终就会收敛到一个解。这就是EM算法的基本思想。 -&gt; chicken stay, egg change</p>
-<p><strong>EM solution</strong></p>
-<ol>
-<li>Initialize $\theta$ to some value</li>
-<li>EM 方程<br>$$\theta^{[l+1]}=argmax \ E_{Z|\theta^l}[logP(Z,X|\theta)]$$<br>E 就是 expectation 的 E, write expression for E as function of $\theta$, expression: auxiliary function $Q(\theta^{[l]}|\theta)$<br>M 就是 argmax 的 M, find the MAX over $\theta$<br>=&gt;<br><strong>Simple EM solution:</strong><ul>
-<li><strong>E-step:</strong> express MLE as function of X’s and Z’s<br>know the value of Z, what would the ML solution</li>
-<li><strong>M-step:</strong> replace each Z with $E[Z|\theta]$</li>
-</ul>
-</li>
-</ol>
-<p><strong>EM guarantees</strong><br>$$L(X|\theta^{[l]}) \le L(X|\theta^{l+1})$$</p>
-<p>If likelihood is bounded, the sequence will converge.</p>
-<p><strong>Special but most commonly use:</strong><br>$L(X,Z|\theta)$ is a member of the exponential family</p>
-<h1 id="适用情景"><a href="#适用情景" class="headerlink" title="适用情景"></a>适用情景</h1><p>When to use:</p>
-<ul>
-<li>Data is only partially observable</li>
-<li>Unsupervised clustering(target value unobservable)</li>
-<li>Supervised learning(some instance attributes unobservable)</li>
-</ul>
-<p>Some uses:</p>
-<ul>
-<li>Train Bayesian Belief Networks</li>
-<li>Unsupervised clustering(AUTOCLASS)</li>
-<li>Learning Hidden Markov Models</li>
-</ul>
-<blockquote>
-<p>参考链接：<br><a href="http://blog.csdn.net/zouxy09/article/details/8537620" target="_blank" rel="external">从最大似然到EM算法浅解</a><br><a href="http://www.cnblogs.com/jerrylead/archive/2011/04/06/2006936.html" target="_blank" rel="external">（EM算法）The EM Algorithm</a><br><a href="http://blog.csdn.net/livecoldsun/article/details/40833829" target="_blank" rel="external"> EM（Expectation-Maximization）算法 </a></p>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> Machine Learning </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> NLP </tag>
-            
-            <tag> machine learning </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Graphical Models]]></title>
       <url>http://www.shuang0420.com/2016/12/04/Graphical%20Models/</url>
       <content type="html"><![CDATA[<p>CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。<br><a id="more"></a></p>
@@ -9957,6 +9878,85 @@ Weights for each of 10*10*5 neurons: 5*5*3=75
 <h1 id="Conditional-Random-Fields"><a href="#Conditional-Random-Fields" class="headerlink" title="Conditional Random Fields"></a>Conditional Random Fields</h1><p>CRF = UGM Trained Discriminatively<br>$argmax \ L(labels|inputs,\theta)$</p>
 <p><strong>generative modeling</strong><br>$\theta=argmax \ L(D|\theta)$<br>MAP=argmax P(|x)</p>
 <p><strong>discriminative method</strong><br>$argmin \ ERR(classifier|D,\theta)$<br>better when training data is small</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Machine Learning </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> NLP </tag>
+            
+            <tag> machine learning </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[EM算法]]></title>
+      <url>http://www.shuang0420.com/2016/12/04/EM%E7%AE%97%E6%B3%95/</url>
+      <content type="html"><![CDATA[<p>CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。<br><a id="more"></a></p>
+<h1 id="Mixtures-of-Gaussians"><a href="#Mixtures-of-Gaussians" class="headerlink" title="Mixtures of Gaussians"></a>Mixtures of Gaussians</h1><p>MLE 的通用步骤：<br>Steps:</p>
+<ol>
+<li>写出似然函数；</li>
+<li>对似然函数取对数，并整理；</li>
+<li>求导数，令导数为0，得到似然方程；</li>
+<li>解似然方程，得到的参数即为所求；</li>
+</ol>
+<p>然而有的时候我们会陷入困境，因为似然方程没法求解，比如 Mixtures of Gaussians。</p>
+<h2 id="One-Gaussian"><a href="#One-Gaussian" class="headerlink" title="One Gaussian"></a>One Gaussian</h2><p><strong>Given data:</strong> X1,…Xn<br><strong>Modeling assumption:</strong> Xi(independently) ~ Gaussian, $\sigma^2$=1/2<br><strong>LE</strong><br>$$P(x_1,..,x_n|\mu)={1 \over \sqrt{2 \pi \sigma^2}} e^{-(x_i-\mu)^2 \over 2 \sigma^2} $$</p>
+<p><strong>MLE:</strong> $\hat \mu_{ML}= argmax \ L(x_1,..,x_n|\mu)$<br>$\mu_{ML} = {\sum_{i=1}^n \ x_i \over n} = \overline x_i$</p>
+<h2 id="K-Gaussians"><a href="#K-Gaussians" class="headerlink" title="K Gaussians"></a>K Gaussians</h2><p><strong>Given data:</strong> X1,…Xn<br><strong>Modeling assumption:</strong> Xi(independently) ~ Mixture of K Gaussians    $\sigma^2$=1/2, $\mu_1,…\mu_k$<br><strong>Prior probability over Gaussians:</strong> $\lambda_1,…,\lambda_k \ 0 \le \lambda_j \le 1 \ \sum \lambda_j=1$, distribution of j is unknown, $\lambda_j, \mu_j$ is unknown<br><strong>LE</strong><br>$$<br>\begin{aligned}<br>P(x_1,..,x_n|\hat \lambda,\hat \mu,\sigma^2=0.5) &amp; = \prod_i^n[\sum_j^k P(Gaussian \ j \ was \ chosen)P(xi|Gaussian \ j \ was \ chosen)] \\<br> &amp; = \prod_i^n[\sum_j^k \lambda_j{1 \over \sqrt{2 \pi \sigma^2}} e^{-(x_i-\mu_j)^2 \over 2 \sigma_j^2}]<br>\end{aligned}<br>$$</p>
+<p><strong>MLE:</strong> $(\hat \mu, \hat \lambda)_{ML}= argmax \ L(x1,..,xn|\hat \lambda,\hat \mu,\sigma^2=0.5)$</p>
+<p><strong>How to find MLE?</strong></p>
+<h2 id="“SOFT”-K-MEANS"><a href="#“SOFT”-K-MEANS" class="headerlink" title="“SOFT” K-MEANS"></a>“SOFT” K-MEANS</h2><p><strong>soft:</strong> our guesses are probabilities and taking values in [0,1]<br><strong>hard:</strong> represents a single best guess (taking values in {0,1} or {1,…k})</p>
+<p>Special case of the EM Algorithm<br>$\sigma^2$=1/2</p>
+<p><strong>初始化</strong><br>初始化分布参数θ, $\mu^{(0)}$,$\lambda^{(0)}$</p>
+<p><strong>重复 EM 步骤直到收敛</strong><br><strong>1.E-step</strong><br>Fill in    the    missing    variables    with the expected values<br>根据参数初始值或上一次迭代的模型参数来计算出隐性变量的后验概率，其实就是隐性变量的期望。作为隐藏变量的现估计值：<br>$$w_j^{(i)}=P(z^{(i)}=j|x^{(i)};\mu,\lambda,\sigma^2=0.5) $$</p>
+<p><strong>2.M-Step</strong><br>Regular    maximum    likelihood estimation    (MLE)    using    the    values computed    in the E step    and    the    values of    the    other    variables<br>将似然函数最大化以获得新的参数值 $\mu^{(l+1)}$,$\lambda^{(l+1)}$</p>
+<ul>
+<li>l: index over EM iterations</li>
+<li>j: index of Gaussians</li>
+<li>i: index of datapoints<br>$$\hat \lambda_j={\# j \ was \ chosen \over n}={\sum_{i=1}^n w_j^{(i)} \over n}$$<br>$$\hat \mu_j={\sum_{i=1}^n w_j^{(i)} x^{(i)} \over \sum_{i=1}^n w_j^{(i)}}$$</li>
+</ul>
+<p><strong>EM Algorithm guarantees:</strong><br>$$L(D|\theta^{[0]}) \le L(D|\theta^{[1]}) \le L(D|\theta^{[2]})…$$<br>This is a Non-decreasing function. And if the likelihood function is bounded, the sequence will converge. Here the example is bounded, because $\sigma$ is fixed.<br>It might end up with local optimal.</p>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EM%E7%AE%97%E6%B3%95/draft.jpg" class="ful-image" alt="draft.jpg">
+<p>第一次 iteration 的表格表示<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EM%E7%AE%97%E6%B3%95/table.jpg" class="ful-image" alt="table.jpg"></p>
+<h1 id="General-EM-algorithm"><a href="#General-EM-algorithm" class="headerlink" title="General EM algorithm"></a>General EM algorithm</h1><p><strong>X</strong> observed data<br><strong>Z</strong> unobserved ‘data’<br><strong>Complete data</strong> Y=(X,Z)<br><strong>Likelihood function</strong> $L(X,Z|\theta)$ known</p>
+<p><strong>Problem:</strong> find MLE<br>$$<br>  \begin{aligned}<br>  \hat \theta_{ML} &amp; = argmax \ L(X|\theta)= argmax \sum_Z P(X,Z|\theta) \\<br>   &amp; = argmax \sum_Z P(Z|\theta)P(X|Z,\theta) \\<br>   &amp; = argmax \sum_Z P(X|\theta)P(Z|X,\theta)P(X|Z,\theta)<br>  \end{aligned}<br>$$</p>
+<p><strong>Chicken-egg Problem</strong> with regard to P(Z),$\theta$<br>先有鸡还是先有蛋的问题。当我们知道了哪些 datapoints 属于同一个高斯分布的时候，我们才能够对这个分布的参数作出靠谱的预测，然而现在 datapoints 混在了一起，我们不知道哪个属于哪个，也就没办法估计参数。反过来，只有当我们对 K 个分布的参数作了准确的估计的时候，才知道哪些 datapoints 属于同一个高斯分布。<br>所以陷入了僵局，怎么办？不如就先随便整一个值出来，看你怎么变，然后我再根据你的变化调整我的变化，然后如此迭代着不断互相推导，最终就会收敛到一个解。这就是EM算法的基本思想。 -&gt; chicken stay, egg change</p>
+<p><strong>EM solution</strong></p>
+<ol>
+<li>Initialize $\theta$ to some value</li>
+<li>EM 方程<br>$$\theta^{[l+1]}=argmax \ E_{Z|\theta^l}[logP(Z,X|\theta)]$$<br>E 就是 expectation 的 E, write expression for E as function of $\theta$, expression: auxiliary function $Q(\theta^{[l]}|\theta)$<br>M 就是 argmax 的 M, find the MAX over $\theta$<br>=&gt;<br><strong>Simple EM solution:</strong><ul>
+<li><strong>E-step:</strong> express MLE as function of X’s and Z’s<br>know the value of Z, what would the ML solution</li>
+<li><strong>M-step:</strong> replace each Z with $E[Z|\theta]$</li>
+</ul>
+</li>
+</ol>
+<p><strong>EM guarantees</strong><br>$$L(X|\theta^{[l]}) \le L(X|\theta^{l+1})$$</p>
+<p>If likelihood is bounded, the sequence will converge.</p>
+<p><strong>Special but most commonly use:</strong><br>$L(X,Z|\theta)$ is a member of the exponential family</p>
+<h1 id="适用情景"><a href="#适用情景" class="headerlink" title="适用情景"></a>适用情景</h1><p>When to use:</p>
+<ul>
+<li>Data is only partially observable</li>
+<li>Unsupervised clustering(target value unobservable)</li>
+<li>Supervised learning(some instance attributes unobservable)</li>
+</ul>
+<p>Some uses:</p>
+<ul>
+<li>Train Bayesian Belief Networks</li>
+<li>Unsupervised clustering(AUTOCLASS)</li>
+<li>Learning Hidden Markov Models</li>
+</ul>
+<blockquote>
+<p>参考链接：<br><a href="http://blog.csdn.net/zouxy09/article/details/8537620" target="_blank" rel="external">从最大似然到EM算法浅解</a><br><a href="http://www.cnblogs.com/jerrylead/archive/2011/04/06/2006936.html" target="_blank" rel="external">（EM算法）The EM Algorithm</a><br><a href="http://blog.csdn.net/livecoldsun/article/details/40833829" target="_blank" rel="external"> EM（Expectation-Maximization）算法 </a></p>
+</blockquote>
 ]]></content>
       
         <categories>
@@ -10584,6 +10584,118 @@ python nb.py split.train split.test</pre>
     </entry>
     
     <entry>
+      <title><![CDATA[Search Engines笔记 - Authority Metrics]]></title>
+      <url>http://www.shuang0420.com/2016/11/04/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章 Authority Metrics（权威指数），用来判断哪些来源的信息更值得信任。介绍 PageRank、Topic-Sensitive PageRank(TSPR)、T-Fresh、Hyperlink-Induced Topic Search(HITS) 四种指数计算方式。<br><a id="more"></a></p>
+<h1 id="链接分析"><a href="#链接分析" class="headerlink" title="链接分析"></a>链接分析</h1><p>链接分析思想最早起源于引文分析领域，通过分析文献之间的引用模式来量化学术论文的影响力。文献引用代表某篇学术论文对所引用论文的权威度的认可。类似的，对于 Web 网页，我们把超链接看成是一个网页对另一个网页的权威度的认可。当然，并不是所有引用都代表权威度认可，因为某个人可以建立多个 web 网页来指向同一个目标网页，人工来提高目标网页入链数。这种链接通常叫垃圾链接或链接作弊（link spam）。尽管如此，引用现象的普遍性和可靠性足以使搜索引擎通过精妙的链接分析方法推导出有用的排序因子。链接分析也被证明是在 web 采集中选择下一个采集网页的非常好的方法之一。给定查询下，链接分析结果已经成为 Web 搜索引擎在计算某个网页的组合得分中的一个因子。PageRank 和 HITS 就是常用的两种链接分析方法。</p>
+<h2 id="基本假设"><a href="#基本假设" class="headerlink" title="基本假设"></a>基本假设</h2><ol>
+<li>指向页面 B 的锚文本是对 B 的一个很好的描述。</li>
+<li>A 到 B 的超链接表示 A 的作者对 B 的认可。</li>
+</ol>
+<h2 id="锚文本"><a href="#锚文本" class="headerlink" title="锚文本"></a>锚文本</h2><h3 id="什么是锚文本"><a href="#什么是锚文本" class="headerlink" title="什么是锚文本"></a>什么是锚文本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;http://www.acm.org/jacm/&quot;&gt;Journal of the ACM.&lt;/a&gt;</div></pre></td></tr></table></figure>
+<p>这个 HTML 代码片段给出了一个指向 Journal of the ACM 的链接。链接指向 <a href="http://www.acm.org/jacm/，锚文本是" target="_blank" rel="external">http://www.acm.org/jacm/，锚文本是</a> Journal of the ACM。</p>
+<h3 id="锚文本的作用"><a href="#锚文本的作用" class="headerlink" title="锚文本的作用"></a>锚文本的作用</h3><p>Web 上随处可见的现象是，很多网页的内容并不包含对自身的精确描述，尤其是公司网页，因为它们往往是用作商业宣传而不是介绍公司内容。如 IBM 是计算机制造商，但公司主页 (www.ibm.com) 的 HTML 代码的任何地方都不包含词项 computer。这时候，锚文本的作用就体现出来了。锚文本的词项可以作为索引目标网页的词项，也就是说 computer 的 inverted list 包含了 www.ibm.com，这时再用一个特别的指示器表示这些词项在锚文本而不是网页内部，网页评分时也基于 term frequency 计算锚文本的 term weight，在多个锚文本中高频出现的词项(如 Click 和 here)会收到惩罚。<br>除了锚文本，锚文本周围窗口的文本(extended anchor text)，通常也可以当成锚文本来使用。</p>
+<h3 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h3><p>网站可以通过构造具有误导性的锚文本来指向自己，以此提高在某些 query term 的排名。</p>
+<h1 id="PageRank"><a href="#PageRank" class="headerlink" title="PageRank"></a>PageRank</h1><p>PageRank 是 query-independent 的，也就是说与用户输入的查询无关。PageRank 高的网页并不代表一定适合某个特定的 query。如 kanye west wikipedia 网页有很高的 PageRank，但并不适合 “obama family tree” 这个特定的 query。</p>
+<h2 id="Random-Walk-Algorithm"><a href="#Random-Walk-Algorithm" class="headerlink" title="Random Walk Algorithm"></a>Random Walk Algorithm</h2><p>PageRank 可以被看作是一个随机游走的算法。基本思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指向的链接，这样无所事事、漫无目的地在网页上跳来跳去，PageRank 就是估计这个悠闲的上网者分布在各个网页上的概率。</p>
+<ol>
+<li>随机选一个网页 A 。</li>
+<li>网页 A 有 n 条出链（outlinks），这时候有两种方法进行下一步。<ul>
+<li>随机在出链中选一个到下一个网页。</li>
+<li>随机从所有 web 网页里选一个其它网页(teleport)。（因为网页 A 可能没有出链）</li>
+</ul>
+</li>
+<li>不断重复以上过程。</li>
+</ol>
+<p>随机游走中访问越频繁的网页越重要。<br>计算方法<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg"></p>
+<h2 id="Voting-Algorithm"><a href="#Voting-Algorithm" class="headerlink" title="Voting Algorithm"></a>Voting Algorithm</h2><p>PageRank 也可以被看作是一个 Voting algorithm。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    p votes for each page that it links to</div></pre></td></tr></table></figure></p>
+<p>再具体些<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">For each page p</div><div class="line">  current PR = 1 / |C|    C: Number of nodes in the graph next PR = 0</div><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    use p’s current PR to update the next PR of each outlink page</div><div class="line">  For each page p</div><div class="line">    current PR = next PR</div><div class="line">    next PR = 0</div></pre></td></tr></table></figure></p>
+<ul>
+<li>每次循环，网页 Pi 可以左 PR(Pi) 次投票。</li>
+<li>把投票平均分发给每一个它指向的网页。</li>
+<li>如果两个网页在第 i 次循环中有相同的 PageRank:<br>PR(p1)=0.4, p1 有 2 个 outlinks, 那么 p1 的每一个 vote 是 0.4/2=0.2<br>PR(p2)=0.4, p2 有 4 个 outlinks, 那么 p2 的每一个 vote 是 0.4/4=0.1</li>
+</ul>
+<p>在每一个循环中, PR 的计算方法都如之前的图示。</p>
+<h2 id="d-的选择"><a href="#d-的选择" class="headerlink" title="d 的选择"></a>d 的选择</h2><p>假定 A 有两条出链，指向 B 和 C，B 和 C 各自有一条出链，都指向 A。<br>如果 d=0.5，那么经历 14 次循环 PR 会 converge<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg"></p>
+<p>如果 d=0.85，那么经历 58 次循环 PR 会 converge<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg"></p>
+<h2 id="Transformation-of-PageRank"><a href="#Transformation-of-PageRank" class="headerlink" title="Transformation of PageRank"></a>Transformation of PageRank</h2><p>有些 PageRank varies over a wide range，我们可以把这个 range 进行压缩和转化。如<br>$$PR_T = log_{10}(PR)+11$$</p>
+<p>效果是<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg"></p>
+<p>Google 的 PageRank 范围是 1-10，我们通常说的 PageRank 都是经过这种转化的 PageRank。</p>
+<h2 id="怎样产生-high-PageRank"><a href="#怎样产生-high-PageRank" class="headerlink" title="怎样产生 high PageRank"></a>怎样产生 high PageRank</h2><ul>
+<li>有很多入链</li>
+<li>有很多来自具有高 PageRank 网页的入链</li>
+<li>入链有很少的出链<br>因为在每一次 propagation 时，一个网页的 PR 会被它的出链平分，所以一个有很多出链的入链网页并不是非常有帮助。</li>
+</ul>
+<h2 id="PageRank-的其它问题"><a href="#PageRank-的其它问题" class="headerlink" title="PageRank 的其它问题"></a>PageRank 的其它问题</h2><ul>
+<li>同一个站点的网页链接算不算？</li>
+<li>新的网页的 PR 怎么算？</li>
+<li>怎么处理 sinks（没有出链的网页）?</li>
+<li>怎么处理 link farms 和链接交换？</li>
+</ul>
+<p>还有一个问题就是 PR 是 topic-independent 的，一个网页可能有很高的 PR 但是对某个 query 来说却是一个很坏的选择。Topic-Sensitive PageRank(TSPR) 可以解决这个问题。</p>
+<h1 id="Topic-Sensitive-PageRank-TSPR"><a href="#Topic-Sensitive-PageRank-TSPR" class="headerlink" title="Topic-Sensitive PageRank(TSPR)"></a>Topic-Sensitive PageRank(TSPR)</h1><p>之前考虑的 PageRank 是等概率跳到一个随机网页的情况，关于 topic PageRank，我们考虑的是非等概率跳到一个随机网页的情况，计算的是基于特定兴趣/主题的 PageRank。如一个体育迷希望有关体育主题的网页的排名高于非体育主题的网页，假定这些有关体育的网页在 web 图中彼此相近，那么随机游走过程中，一个喜欢体育网页的人就可能在这类网页上停留大量的时间，因此，体育类网页的稳态分布概率被提升。</p>
+<p>主要逻辑是</p>
+<ul>
+<li>在索引过程中，每一个网页都被自动分配一个 topic (用文本分类的方法)。</li>
+<li>为每一个网页计算一个 topic-specific 的 PageRank。</li>
+<li>每一个 query 都被分配一个 topic，根据用户在这个 search session 中浏览的网页来确定 topic。</li>
+<li>对每一个页面，只考虑 topic-related PageRank，如 $PR_{sports}(d)$</li>
+</ul>
+<p><strong>注：</strong> DMOZ 是一个著名的开放式分类目录，有很多可以用来做 training data 的网页。可以从 top-level 中定义 topics。</p>
+<h1 id="T-Fresh"><a href="#T-Fresh" class="headerlink" title="T-Fresh"></a>T-Fresh</h1><p>PageRank rewards older web pages。old web 网页有更多的时间来积累 inlinks，有些 link 可能是来自已经废弃不用的网页，然而用户可能更偏好新的网页。<br>网页快照提供了 freshness 的线索。</p>
+<ul>
+<li>Page freshness：网页最近什么时候被更新过。Page text(↑)，url(↑)，anchor text(↑↑)，new link(↑↑↑)</li>
+<li>Link freshness：有多少 inlinks 来自 fresh page。</li>
+<li>Decay freshness measures exponentially.</li>
+</ul>
+<p>follow a link 的概率取决于网页的新鲜度。<br>有 fresh inlinks 的 fresh page 有更高的 authority score。</p>
+<p><strong>BM2500+T-Fresh vs BM2500+PageRank</strong><br>Relevance: +8% in P@10，+11-30% in NDCG@k<br>Freshness: +8% in P@10，+10-12% in NDCG@k</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg">
+<p>其它相同作用的 model 如 TimedPageRank, T-Rank, BuzzRank, TemporalPageRank。</p>
+<h1 id="Hyperlink-Induced-Topic-Search-HITS"><a href="#Hyperlink-Induced-Topic-Search-HITS" class="headerlink" title="Hyperlink-Induced Topic Search(HITS)"></a>Hyperlink-Induced Topic Search(HITS)</h1><p>在泛主题搜索（broad-topic search），也就是 informational needs 时，主要有两种非常有用的网页结果。</p>
+<ul>
+<li>Authority 网页：一些权威性的网页。</li>
+<li>Hub 网页：导航型网页，本身不是权威型网页，而是对某个主题感兴趣的人花时间编辑整理出的权威型网页列表。可以通过这种导航型网页来帮我们找到权威型网页。</li>
+</ul>
+<p>一个好的 hub 网页会同时指向多个好的 authority 网页，而一个好的 authority 网页同时会被多个好的 hub 网页所指向。给定某个查询，我们对每个网页给出两个得分，一个是 hub 值，一个是 authority 值，所以对任何一个查询，我们都能得到两个排序结果列表。所以，我们其实可以给出一个 hub 值和 authority 值的循环定义，然后通过迭代计算求解。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg">
+<p>并不是对整个 web 计算 Hubs 和 Authority 分数。而是对一个小的 set 来进行计算，set 的创建方法如下：</p>
+<ul>
+<li>收集 query q 的 top n 网页构成 the root set</li>
+<li>用 root set 的入链和出链扩充这个 set。</li>
+</ul>
+<p>之后在这个网页子集上来计算 hub 和 authority 值。这个 set 的好处是有一个 strong, query-specific focus，而且 set 规模相对较小，大概只有 200 个网页。然而这些 score 必须在 query time 时进行计算。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg"></p>
+<p><strong>HITS 在大规模的搜索引擎中不会被使用</strong></p>
+<ul>
+<li>计算 spam 要比计算 PageRank 简单</li>
+<li>创建一个有 high hub score 的网页很简单</li>
+<li>运行成本比 PageRank 高。</li>
+</ul>
+<p>HITS 通常用于别的目标。如找 communities 或是找一个 community 里的专家，因为它们会有 tightly-bound hubs 和 authorities。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> NLP </category>
+            
+            <category> Search Engines </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> NLP </tag>
+            
+            <tag> Search Engines </tag>
+            
+            <tag> 信息检索 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Search Engines笔记 - Search logs]]></title>
       <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/</url>
       <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章开始的很多内容都是从论文的研究报告而来。重点是第四部分，怎样对 search log 划分 session，有哪些 feature 可以作为划分 session 的依据。<br><a id="more"></a></p>
@@ -10686,118 +10798,6 @@ python nb.py split.train split.test</pre>
 <li>用户把一个任务分成若干个子任务分阶段完成<br>比如今天查为什么，明天查怎么做</li>
 <li>子任务可能看起来是独立的实际确实相关的</li>
 </ul>
-]]></content>
-      
-        <categories>
-            
-            <category> NLP </category>
-            
-            <category> Search Engines </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> NLP </tag>
-            
-            <tag> Search Engines </tag>
-            
-            <tag> 信息检索 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Search Engines笔记 - Authority Metrics]]></title>
-      <url>http://www.shuang0420.com/2016/11/04/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章 Authority Metrics（权威指数），用来判断哪些来源的信息更值得信任。介绍 PageRank、Topic-Sensitive PageRank(TSPR)、T-Fresh、Hyperlink-Induced Topic Search(HITS) 四种指数计算方式。<br><a id="more"></a></p>
-<h1 id="链接分析"><a href="#链接分析" class="headerlink" title="链接分析"></a>链接分析</h1><p>链接分析思想最早起源于引文分析领域，通过分析文献之间的引用模式来量化学术论文的影响力。文献引用代表某篇学术论文对所引用论文的权威度的认可。类似的，对于 Web 网页，我们把超链接看成是一个网页对另一个网页的权威度的认可。当然，并不是所有引用都代表权威度认可，因为某个人可以建立多个 web 网页来指向同一个目标网页，人工来提高目标网页入链数。这种链接通常叫垃圾链接或链接作弊（link spam）。尽管如此，引用现象的普遍性和可靠性足以使搜索引擎通过精妙的链接分析方法推导出有用的排序因子。链接分析也被证明是在 web 采集中选择下一个采集网页的非常好的方法之一。给定查询下，链接分析结果已经成为 Web 搜索引擎在计算某个网页的组合得分中的一个因子。PageRank 和 HITS 就是常用的两种链接分析方法。</p>
-<h2 id="基本假设"><a href="#基本假设" class="headerlink" title="基本假设"></a>基本假设</h2><ol>
-<li>指向页面 B 的锚文本是对 B 的一个很好的描述。</li>
-<li>A 到 B 的超链接表示 A 的作者对 B 的认可。</li>
-</ol>
-<h2 id="锚文本"><a href="#锚文本" class="headerlink" title="锚文本"></a>锚文本</h2><h3 id="什么是锚文本"><a href="#什么是锚文本" class="headerlink" title="什么是锚文本"></a>什么是锚文本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;http://www.acm.org/jacm/&quot;&gt;Journal of the ACM.&lt;/a&gt;</div></pre></td></tr></table></figure>
-<p>这个 HTML 代码片段给出了一个指向 Journal of the ACM 的链接。链接指向 <a href="http://www.acm.org/jacm/，锚文本是" target="_blank" rel="external">http://www.acm.org/jacm/，锚文本是</a> Journal of the ACM。</p>
-<h3 id="锚文本的作用"><a href="#锚文本的作用" class="headerlink" title="锚文本的作用"></a>锚文本的作用</h3><p>Web 上随处可见的现象是，很多网页的内容并不包含对自身的精确描述，尤其是公司网页，因为它们往往是用作商业宣传而不是介绍公司内容。如 IBM 是计算机制造商，但公司主页 (www.ibm.com) 的 HTML 代码的任何地方都不包含词项 computer。这时候，锚文本的作用就体现出来了。锚文本的词项可以作为索引目标网页的词项，也就是说 computer 的 inverted list 包含了 www.ibm.com，这时再用一个特别的指示器表示这些词项在锚文本而不是网页内部，网页评分时也基于 term frequency 计算锚文本的 term weight，在多个锚文本中高频出现的词项(如 Click 和 here)会收到惩罚。<br>除了锚文本，锚文本周围窗口的文本(extended anchor text)，通常也可以当成锚文本来使用。</p>
-<h3 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h3><p>网站可以通过构造具有误导性的锚文本来指向自己，以此提高在某些 query term 的排名。</p>
-<h1 id="PageRank"><a href="#PageRank" class="headerlink" title="PageRank"></a>PageRank</h1><p>PageRank 是 query-independent 的，也就是说与用户输入的查询无关。PageRank 高的网页并不代表一定适合某个特定的 query。如 kanye west wikipedia 网页有很高的 PageRank，但并不适合 “obama family tree” 这个特定的 query。</p>
-<h2 id="Random-Walk-Algorithm"><a href="#Random-Walk-Algorithm" class="headerlink" title="Random Walk Algorithm"></a>Random Walk Algorithm</h2><p>PageRank 可以被看作是一个随机游走的算法。基本思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指向的链接，这样无所事事、漫无目的地在网页上跳来跳去，PageRank 就是估计这个悠闲的上网者分布在各个网页上的概率。</p>
-<ol>
-<li>随机选一个网页 A 。</li>
-<li>网页 A 有 n 条出链（outlinks），这时候有两种方法进行下一步。<ul>
-<li>随机在出链中选一个到下一个网页。</li>
-<li>随机从所有 web 网页里选一个其它网页(teleport)。（因为网页 A 可能没有出链）</li>
-</ul>
-</li>
-<li>不断重复以上过程。</li>
-</ol>
-<p>随机游走中访问越频繁的网页越重要。<br>计算方法<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg"></p>
-<h2 id="Voting-Algorithm"><a href="#Voting-Algorithm" class="headerlink" title="Voting Algorithm"></a>Voting Algorithm</h2><p>PageRank 也可以被看作是一个 Voting algorithm。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    p votes for each page that it links to</div></pre></td></tr></table></figure></p>
-<p>再具体些<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">For each page p</div><div class="line">  current PR = 1 / |C|    C: Number of nodes in the graph next PR = 0</div><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    use p’s current PR to update the next PR of each outlink page</div><div class="line">  For each page p</div><div class="line">    current PR = next PR</div><div class="line">    next PR = 0</div></pre></td></tr></table></figure></p>
-<ul>
-<li>每次循环，网页 Pi 可以左 PR(Pi) 次投票。</li>
-<li>把投票平均分发给每一个它指向的网页。</li>
-<li>如果两个网页在第 i 次循环中有相同的 PageRank:<br>PR(p1)=0.4, p1 有 2 个 outlinks, 那么 p1 的每一个 vote 是 0.4/2=0.2<br>PR(p2)=0.4, p2 有 4 个 outlinks, 那么 p2 的每一个 vote 是 0.4/4=0.1</li>
-</ul>
-<p>在每一个循环中, PR 的计算方法都如之前的图示。</p>
-<h2 id="d-的选择"><a href="#d-的选择" class="headerlink" title="d 的选择"></a>d 的选择</h2><p>假定 A 有两条出链，指向 B 和 C，B 和 C 各自有一条出链，都指向 A。<br>如果 d=0.5，那么经历 14 次循环 PR 会 converge<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg"></p>
-<p>如果 d=0.85，那么经历 58 次循环 PR 会 converge<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg"></p>
-<h2 id="Transformation-of-PageRank"><a href="#Transformation-of-PageRank" class="headerlink" title="Transformation of PageRank"></a>Transformation of PageRank</h2><p>有些 PageRank varies over a wide range，我们可以把这个 range 进行压缩和转化。如<br>$$PR_T = log_{10}(PR)+11$$</p>
-<p>效果是<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg"></p>
-<p>Google 的 PageRank 范围是 1-10，我们通常说的 PageRank 都是经过这种转化的 PageRank。</p>
-<h2 id="怎样产生-high-PageRank"><a href="#怎样产生-high-PageRank" class="headerlink" title="怎样产生 high PageRank"></a>怎样产生 high PageRank</h2><ul>
-<li>有很多入链</li>
-<li>有很多来自具有高 PageRank 网页的入链</li>
-<li>入链有很少的出链<br>因为在每一次 propagation 时，一个网页的 PR 会被它的出链平分，所以一个有很多出链的入链网页并不是非常有帮助。</li>
-</ul>
-<h2 id="PageRank-的其它问题"><a href="#PageRank-的其它问题" class="headerlink" title="PageRank 的其它问题"></a>PageRank 的其它问题</h2><ul>
-<li>同一个站点的网页链接算不算？</li>
-<li>新的网页的 PR 怎么算？</li>
-<li>怎么处理 sinks（没有出链的网页）?</li>
-<li>怎么处理 link farms 和链接交换？</li>
-</ul>
-<p>还有一个问题就是 PR 是 topic-independent 的，一个网页可能有很高的 PR 但是对某个 query 来说却是一个很坏的选择。Topic-Sensitive PageRank(TSPR) 可以解决这个问题。</p>
-<h1 id="Topic-Sensitive-PageRank-TSPR"><a href="#Topic-Sensitive-PageRank-TSPR" class="headerlink" title="Topic-Sensitive PageRank(TSPR)"></a>Topic-Sensitive PageRank(TSPR)</h1><p>之前考虑的 PageRank 是等概率跳到一个随机网页的情况，关于 topic PageRank，我们考虑的是非等概率跳到一个随机网页的情况，计算的是基于特定兴趣/主题的 PageRank。如一个体育迷希望有关体育主题的网页的排名高于非体育主题的网页，假定这些有关体育的网页在 web 图中彼此相近，那么随机游走过程中，一个喜欢体育网页的人就可能在这类网页上停留大量的时间，因此，体育类网页的稳态分布概率被提升。</p>
-<p>主要逻辑是</p>
-<ul>
-<li>在索引过程中，每一个网页都被自动分配一个 topic (用文本分类的方法)。</li>
-<li>为每一个网页计算一个 topic-specific 的 PageRank。</li>
-<li>每一个 query 都被分配一个 topic，根据用户在这个 search session 中浏览的网页来确定 topic。</li>
-<li>对每一个页面，只考虑 topic-related PageRank，如 $PR_{sports}(d)$</li>
-</ul>
-<p><strong>注：</strong> DMOZ 是一个著名的开放式分类目录，有很多可以用来做 training data 的网页。可以从 top-level 中定义 topics。</p>
-<h1 id="T-Fresh"><a href="#T-Fresh" class="headerlink" title="T-Fresh"></a>T-Fresh</h1><p>PageRank rewards older web pages。old web 网页有更多的时间来积累 inlinks，有些 link 可能是来自已经废弃不用的网页，然而用户可能更偏好新的网页。<br>网页快照提供了 freshness 的线索。</p>
-<ul>
-<li>Page freshness：网页最近什么时候被更新过。Page text(↑)，url(↑)，anchor text(↑↑)，new link(↑↑↑)</li>
-<li>Link freshness：有多少 inlinks 来自 fresh page。</li>
-<li>Decay freshness measures exponentially.</li>
-</ul>
-<p>follow a link 的概率取决于网页的新鲜度。<br>有 fresh inlinks 的 fresh page 有更高的 authority score。</p>
-<p><strong>BM2500+T-Fresh vs BM2500+PageRank</strong><br>Relevance: +8% in P@10，+11-30% in NDCG@k<br>Freshness: +8% in P@10，+10-12% in NDCG@k</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg">
-<p>其它相同作用的 model 如 TimedPageRank, T-Rank, BuzzRank, TemporalPageRank。</p>
-<h1 id="Hyperlink-Induced-Topic-Search-HITS"><a href="#Hyperlink-Induced-Topic-Search-HITS" class="headerlink" title="Hyperlink-Induced Topic Search(HITS)"></a>Hyperlink-Induced Topic Search(HITS)</h1><p>在泛主题搜索（broad-topic search），也就是 informational needs 时，主要有两种非常有用的网页结果。</p>
-<ul>
-<li>Authority 网页：一些权威性的网页。</li>
-<li>Hub 网页：导航型网页，本身不是权威型网页，而是对某个主题感兴趣的人花时间编辑整理出的权威型网页列表。可以通过这种导航型网页来帮我们找到权威型网页。</li>
-</ul>
-<p>一个好的 hub 网页会同时指向多个好的 authority 网页，而一个好的 authority 网页同时会被多个好的 hub 网页所指向。给定某个查询，我们对每个网页给出两个得分，一个是 hub 值，一个是 authority 值，所以对任何一个查询，我们都能得到两个排序结果列表。所以，我们其实可以给出一个 hub 值和 authority 值的循环定义，然后通过迭代计算求解。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg">
-<p>并不是对整个 web 计算 Hubs 和 Authority 分数。而是对一个小的 set 来进行计算，set 的创建方法如下：</p>
-<ul>
-<li>收集 query q 的 top n 网页构成 the root set</li>
-<li>用 root set 的入链和出链扩充这个 set。</li>
-</ul>
-<p>之后在这个网页子集上来计算 hub 和 authority 值。这个 set 的好处是有一个 strong, query-specific focus，而且 set 规模相对较小，大概只有 200 个网页。然而这些 score 必须在 query time 时进行计算。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg"></p>
-<p><strong>HITS 在大规模的搜索引擎中不会被使用</strong></p>
-<ul>
-<li>计算 spam 要比计算 PageRank 简单</li>
-<li>创建一个有 high hub score 的网页很简单</li>
-<li>运行成本比 PageRank 高。</li>
-</ul>
-<p>HITS 通常用于别的目标。如找 communities 或是找一个 community 里的专家，因为它们会有 tightly-bound hubs 和 authorities。</p>
 ]]></content>
       
         <categories>
@@ -10937,6 +10937,74 @@ python nb.py split.train split.test</pre>
     </entry>
     
     <entry>
+      <title><![CDATA[Distributed Systems笔记－Cryptographic Protocols]]></title>
+      <url>http://www.shuang0420.com/2016/11/02/Cryptographic-Protocols/</url>
+      <content type="html"><![CDATA[<p>CMU 95702 Distributed Systems 笔记。简单介绍几种加密、签名方式。<br><a id="more"></a></p>
+<p><a href="http://www.shuang0420.com/2016/10/02/AES%20%E5%92%8C%20RSA%E7%AC%94%E8%AE%B0/">AES 和 RSA 笔记</a> 的续章。</p>
+<h1 id="Scenario-1-Like-WWII-和-TEA"><a href="#Scenario-1-Like-WWII-和-TEA" class="headerlink" title="Scenario 1 (Like WWII 和 TEA)"></a>Scenario 1 (Like WWII 和 TEA)</h1><ol>
+<li>双方共享一把密钥。</li>
+<li>A 用密钥对信息加密。$E(K_AB,M_i)$，发送给 B</li>
+<li>B 用 $D(K_AB,{M_i}K_AB)$ 解密读取信息。</li>
+</ol>
+<p><strong>问题是：</strong><br>双方如何同步密钥？<br>怎么确定 B 收到的 ${M_i}K_AB$ 不是 replay of an old message?</p>
+<h1 id="Scenario-2-Like-Kerberos"><a href="#Scenario-2-Like-Kerberos" class="headerlink" title="Scenario 2 (Like Kerberos)"></a>Scenario 2 (Like Kerberos)</h1><ol>
+<li>A 向第三方 S 索要一张和 B 通话的 ticket。</li>
+<li>S 知道 A 的 password 所以他可以计算 $K_A$</li>
+<li>S 发送给 A $\{\{Ticket\}K_B,K_{AB}\}, K_A$</li>
+<li>A 知道自己的 password 所以可以计算 $K_A$，注意 A 的 password 不会在网络中传输。</li>
+<li>A 可以计算出 $K_{AB}$ 和 $\{Ticket\}K_B$</li>
+<li>A 向 B 发送一个读的请求，发送的信息是 $\{Ticket\}K_B$,Alice,Read</li>
+<li>B 用 $K_B$ 来读取 Ticket 的内容，Ticket 的内容是 $K_{AB}$，Alice</li>
+<li>A、B 可以用 session key 来交流了。</li>
+</ol>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg" class="ful-image" alt="Cryptographic-Protocols/scenario2.jpg">
+<p>可以防止 replay，但 <strong>问题是:</strong></p>
+<ul>
+<li>难以 scale,S 必须知道 $K_A$, $K_B$,…</li>
+<li>S 是唯一可能导致失败的因素。</li>
+</ul>
+<p>Kerberos 这一名词来源于希腊神话“三个头的狗——地狱之门守护者”系统设计上采用客户端/服务器结构与DES加密技术，并且能够进行相互认证，即客户端和服务器端均可对对方进行身份认证。可以用于防止窃听、防止 repla y攻击、保护数据完整性等场合，是一种应用对称密钥体制进行密钥管理的系统。</p>
+<h2 id="Needham-Schroeder-protocol"><a href="#Needham-Schroeder-protocol" class="headerlink" title="Needham-Schroeder protocol"></a>Needham-Schroeder protocol</h2><p>这层协议是 Kerberos 的基础，在这之后，Alice and Bob share a secret (KAB)</p>
+<h1 id="Scenario-3-Authentication"><a href="#Scenario-3-Authentication" class="headerlink" title="Scenario 3 (Authentication)"></a>Scenario 3 (Authentication)</h1><p>数字签名，用私钥签名，公钥解密。注意公钥加密比私钥慢 100-1000倍。<br>很难找到 digest(M1) == digest(M2)</p>
+<ol>
+<li>A 发送 Message＋用密钥加密的 Message 的 digest。{Digest(M)}$K_Apriv$</li>
+<li>B 收到签名的文件，取出 Message，计算 Message 的 digest。</li>
+<li>B 用 A 的公钥 $K_Apub$ 解密 {Digest(M)}$K_Apriv$ 然后和自己算的 digest 比较，如果匹配，签名验证。</li>
+</ol>
+<p><strong>问题：</strong><br>如果 A 说他没有签名？说自己的私钥泄漏了？只要 A、B 互相信任，还是有用的。</p>
+<h1 id="Scenario-4-Like-SSL"><a href="#Scenario-4-Like-SSL" class="headerlink" title="Scenario 4 (Like SSL)"></a>Scenario 4 (Like SSL)</h1><ol>
+<li>A 和 B 想要建立一个共享的密钥</li>
+<li>A 拿到 B 的公钥，这个公钥被可信任的第三方 T 签名认证了，所以这个公钥确实是 B 的。</li>
+<li>A 确认第三方 T 对 $K_Bpub$ 签名了。怎么确认？A 和 T 都有 B 的 public key，T 把 $K_Bpub$ 加密后给 A，A 对其进行解密然后比对自己手上的 B 的 public key 看是不是一致。</li>
+<li>A 生成了 $K_{AB}$ 并用 $K_Bpub$ 加密。</li>
+<li>B 有很多公钥所以 A 发送公钥的名字。</li>
+<li>A 发送了 key name $\{K_{AB}\}K_Bpub$</li>
+<li>B 用这个 key name 选择了对应的私钥并计算 $\{\{K_{AB}\}K_Bpub\}K_Bpriv == K_{AB}$</li>
+</ol>
+<p>最后 A 和 B 共享了对称的钥匙 $K_{AB}$</p>
+<p><strong>问题：</strong><br>在 A 第一次得到 B 的公钥时（A 认为这是 B 的公钥，然而这并不是，这是 C 也经过第三方 T 签名认证的公钥。</p>
+<p>TLS 和这个相似<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/TLS_config.jpg" class="ful-image" alt="Cryptographic-Protocols/TLS_config.jpg"></p>
+<h1 id="Message-Authentication-Codes-MACs"><a href="#Message-Authentication-Codes-MACs" class="headerlink" title="Message Authentication Codes(MACs)"></a>Message Authentication Codes(MACs)</h1><p>对称加密生成的数字签名。<br>双方都有 Key(K)，sender 把 Key(K) 通过 MAC 算法加密后连同 message 一起给 receiver，receiver 比对收到的 MAC 和自己用 MAC 算法对自己这里的 Key(K) 加密后的 MAC 是否一致，如果一致，那么信息真实性和完整性就得到了证实。</p>
+<p>用于数字签名，双方都算了一遍 MAC</p>
+<h1 id="JAVA-里的-keystore-和-truststore"><a href="#JAVA-里的-keystore-和-truststore" class="headerlink" title="JAVA 里的 keystore 和 truststore"></a>JAVA 里的 keystore 和 truststore</h1><p>keystore: 存了公钥、私钥、证书<br>truststore：存了公钥，只能存 server 发过来的东西</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Distributed Systems </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Web Service </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Distributed Systems笔记－middlewares]]></title>
       <url>http://www.shuang0420.com/2016/11/02/Web-service-middlewares/</url>
       <content type="html"><![CDATA[<p>CMU 95702 Distributed Systems 笔记。简单介绍分布式系统中解决 interoperability concern 的几种方案 Cobra’s CDR, Java serialization 和 XML/JSON。这章整理的比较简单。<br><a id="more"></a></p>
@@ -10992,74 +11060,6 @@ python nb.py split.train split.test</pre>
 </ul>
 <h3 id="Handle-duplicates"><a href="#Handle-duplicates" class="headerlink" title="Handle duplicates"></a>Handle duplicates</h3><p>根据 client 的 acknowledgement 来清空历史。</p>
 <h2 id="Request-Reply-Message-Structure"><a href="#Request-Reply-Message-Structure" class="headerlink" title="Request-Reply Message Structure"></a>Request-Reply Message Structure</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">messageType: int (0=Request, 1=Reply)</div><div class="line">requestId: int</div><div class="line">objectReference: RemoteObjectRef</div><div class="line">methodId: int or Method</div><div class="line">argument: array of bytes</div></pre></td></tr></table></figure>
-]]></content>
-      
-        <categories>
-            
-            <category> Distributed Systems </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Web Service </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Distributed Systems笔记－Cryptographic Protocols]]></title>
-      <url>http://www.shuang0420.com/2016/11/02/Cryptographic-Protocols/</url>
-      <content type="html"><![CDATA[<p>CMU 95702 Distributed Systems 笔记。简单介绍几种加密、签名方式。<br><a id="more"></a></p>
-<p><a href="http://www.shuang0420.com/2016/10/02/AES%20%E5%92%8C%20RSA%E7%AC%94%E8%AE%B0/">AES 和 RSA 笔记</a> 的续章。</p>
-<h1 id="Scenario-1-Like-WWII-和-TEA"><a href="#Scenario-1-Like-WWII-和-TEA" class="headerlink" title="Scenario 1 (Like WWII 和 TEA)"></a>Scenario 1 (Like WWII 和 TEA)</h1><ol>
-<li>双方共享一把密钥。</li>
-<li>A 用密钥对信息加密。$E(K_AB,M_i)$，发送给 B</li>
-<li>B 用 $D(K_AB,{M_i}K_AB)$ 解密读取信息。</li>
-</ol>
-<p><strong>问题是：</strong><br>双方如何同步密钥？<br>怎么确定 B 收到的 ${M_i}K_AB$ 不是 replay of an old message?</p>
-<h1 id="Scenario-2-Like-Kerberos"><a href="#Scenario-2-Like-Kerberos" class="headerlink" title="Scenario 2 (Like Kerberos)"></a>Scenario 2 (Like Kerberos)</h1><ol>
-<li>A 向第三方 S 索要一张和 B 通话的 ticket。</li>
-<li>S 知道 A 的 password 所以他可以计算 $K_A$</li>
-<li>S 发送给 A $\{\{Ticket\}K_B,K_{AB}\}, K_A$</li>
-<li>A 知道自己的 password 所以可以计算 $K_A$，注意 A 的 password 不会在网络中传输。</li>
-<li>A 可以计算出 $K_{AB}$ 和 $\{Ticket\}K_B$</li>
-<li>A 向 B 发送一个读的请求，发送的信息是 $\{Ticket\}K_B$,Alice,Read</li>
-<li>B 用 $K_B$ 来读取 Ticket 的内容，Ticket 的内容是 $K_{AB}$，Alice</li>
-<li>A、B 可以用 session key 来交流了。</li>
-</ol>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg" class="ful-image" alt="Cryptographic-Protocols/scenario2.jpg">
-<p>可以防止 replay，但 <strong>问题是:</strong></p>
-<ul>
-<li>难以 scale,S 必须知道 $K_A$, $K_B$,…</li>
-<li>S 是唯一可能导致失败的因素。</li>
-</ul>
-<p>Kerberos 这一名词来源于希腊神话“三个头的狗——地狱之门守护者”系统设计上采用客户端/服务器结构与DES加密技术，并且能够进行相互认证，即客户端和服务器端均可对对方进行身份认证。可以用于防止窃听、防止 repla y攻击、保护数据完整性等场合，是一种应用对称密钥体制进行密钥管理的系统。</p>
-<h2 id="Needham-Schroeder-protocol"><a href="#Needham-Schroeder-protocol" class="headerlink" title="Needham-Schroeder protocol"></a>Needham-Schroeder protocol</h2><p>这层协议是 Kerberos 的基础，在这之后，Alice and Bob share a secret (KAB)</p>
-<h1 id="Scenario-3-Authentication"><a href="#Scenario-3-Authentication" class="headerlink" title="Scenario 3 (Authentication)"></a>Scenario 3 (Authentication)</h1><p>数字签名，用私钥签名，公钥解密。注意公钥加密比私钥慢 100-1000倍。<br>很难找到 digest(M1) == digest(M2)</p>
-<ol>
-<li>A 发送 Message＋用密钥加密的 Message 的 digest。{Digest(M)}$K_Apriv$</li>
-<li>B 收到签名的文件，取出 Message，计算 Message 的 digest。</li>
-<li>B 用 A 的公钥 $K_Apub$ 解密 {Digest(M)}$K_Apriv$ 然后和自己算的 digest 比较，如果匹配，签名验证。</li>
-</ol>
-<p><strong>问题：</strong><br>如果 A 说他没有签名？说自己的私钥泄漏了？只要 A、B 互相信任，还是有用的。</p>
-<h1 id="Scenario-4-Like-SSL"><a href="#Scenario-4-Like-SSL" class="headerlink" title="Scenario 4 (Like SSL)"></a>Scenario 4 (Like SSL)</h1><ol>
-<li>A 和 B 想要建立一个共享的密钥</li>
-<li>A 拿到 B 的公钥，这个公钥被可信任的第三方 T 签名认证了，所以这个公钥确实是 B 的。</li>
-<li>A 确认第三方 T 对 $K_Bpub$ 签名了。怎么确认？A 和 T 都有 B 的 public key，T 把 $K_Bpub$ 加密后给 A，A 对其进行解密然后比对自己手上的 B 的 public key 看是不是一致。</li>
-<li>A 生成了 $K_{AB}$ 并用 $K_Bpub$ 加密。</li>
-<li>B 有很多公钥所以 A 发送公钥的名字。</li>
-<li>A 发送了 key name $\{K_{AB}\}K_Bpub$</li>
-<li>B 用这个 key name 选择了对应的私钥并计算 $\{\{K_{AB}\}K_Bpub\}K_Bpriv == K_{AB}$</li>
-</ol>
-<p>最后 A 和 B 共享了对称的钥匙 $K_{AB}$</p>
-<p><strong>问题：</strong><br>在 A 第一次得到 B 的公钥时（A 认为这是 B 的公钥，然而这并不是，这是 C 也经过第三方 T 签名认证的公钥。</p>
-<p>TLS 和这个相似<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/TLS_config.jpg" class="ful-image" alt="Cryptographic-Protocols/TLS_config.jpg"></p>
-<h1 id="Message-Authentication-Codes-MACs"><a href="#Message-Authentication-Codes-MACs" class="headerlink" title="Message Authentication Codes(MACs)"></a>Message Authentication Codes(MACs)</h1><p>对称加密生成的数字签名。<br>双方都有 Key(K)，sender 把 Key(K) 通过 MAC 算法加密后连同 message 一起给 receiver，receiver 比对收到的 MAC 和自己用 MAC 算法对自己这里的 Key(K) 加密后的 MAC 是否一致，如果一致，那么信息真实性和完整性就得到了证实。</p>
-<p>用于数字签名，双方都算了一遍 MAC</p>
-<h1 id="JAVA-里的-keystore-和-truststore"><a href="#JAVA-里的-keystore-和-truststore" class="headerlink" title="JAVA 里的 keystore 和 truststore"></a>JAVA 里的 keystore 和 truststore</h1><p>keystore: 存了公钥、私钥、证书<br>truststore：存了公钥，只能存 server 发过来的东西</p>
 ]]></content>
       
         <categories>
