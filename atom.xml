@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2018-09-17T11:14:59.000Z</updated>
+  <updated>2018-09-17T14:00:14.000Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.shuang0420.com/2018/09/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/"/>
     <id>http://www.shuang0420.com/2018/09/15/知识抽取-实体及关系抽取/</id>
     <published>2018-09-15T11:02:27.000Z</published>
-    <updated>2018-09-17T11:14:59.000Z</updated>
+    <updated>2018-09-17T14:00:14.000Z</updated>
     
     <content type="html"><![CDATA[<p>这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 <a href="http://www.shuang0420.com/2017/03/18/NLP%20笔记%20-Information%20Extraction/">NLP笔记 - Information Extraction</a> 和 <a href="http://www.shuang0420.com/2017/04/10/NLP笔记%20-%20Relation%20Extraction/">NLP笔记 - Relation Extraction</a>。</p>
 <p>知识抽取涉及的“知识”通常是 <strong>清楚的、事实性的信息</strong>，这些信息来自不同的来源和结构，而对不同数据源进行的知识抽取的方法各有不同，从结构化数据中获取知识用 D2R，其难点在于复杂表数据的处理，包括嵌套表、多列、外键关联等，从链接数据中获取知识用图映射，难点在于数据对齐，从半结构化数据中获取知识用包装器，难点在于 wrapper 的自动生成、更新和维护，这一篇主要讲从文本中获取知识，也就是我们广义上说的信息抽取。</p>
@@ -28,7 +28,7 @@
 <p>信息抽取三个最重要/最受关注的子任务：</p>
 <ul>
 <li><strong>实体抽取</strong><br>也就是命名实体识别，包括实体的检测（find）和分类（classify）</li>
-<li><strong>关系抽取</strong><br>通常我们说的<strong>三元组（triple）</strong> 抽取，一个谓词（predicate）带 2 个形参（argument），比如说 Founding-location(IBM,New York) 这类</li>
+<li><strong>关系抽取</strong><br>通常我们说的<strong>三元组（triple）</strong> 抽取，一个谓词（predicate）带 2 个形参（argument），如 Founding-location(IBM,New York) </li>
 <li><strong>事件抽取</strong><br>相当于一种多元关系的抽取</li>
 </ul>
 <p>篇幅限制，这一篇主要整理实体抽取和关系抽取，下一篇再上事件抽取。</p>
@@ -41,14 +41,12 @@
 <li><strong>Belief/Sentiment (BeSt)</strong><br>信念和情感</li>
 </ul>
 <p>至于 SemEval 主要是词义消歧评测，目的是增加人们对词义、多义现象的理解。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction%20copy/../../../Downloads/%E4%BF%A1%E6%81%AF%E6%8A%BD%E5%8F%96/SemEval.png" class="ful-image" alt="../../../Downloads/%E4%BF%A1%E6%81%AF%E6%8A%BD%E5%8F%96/SemEval.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BF%A1%E6%81%AF%E6%8A%BD%E5%8F%96/SemEval.png">
 <p>ACE 的 17 类关系<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/2.jpg" class="ful-image" alt="2.jpg"></p>
 <p>具体的应用实例<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/3.jpg" class="ful-image" alt="3.jpg"></p>
-<p>Wikipedia 的 info box<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/4.jpg" class="ful-image" alt="4.jpg"></p>
-<p>info box 信息可以转换成 RDF 三元组 $(subject \ predicate \ object)$ 如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Golden Gate Park location San Francisco  </div><div class="line">=&gt;</div><div class="line">dbpedia:Golden_Gate_Park dbpedia-owl:location dbpedia:San_Francisco</div></pre></td></tr></table></figure></p>
 <p>常用的 Freebase relations<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">people/person/nationality,</div><div class="line">people/person/profession,</div><div class="line">biology/organism_higher_classification,</div><div class="line">location/location/contains</div><div class="line">people/person/place-of-birth</div><div class="line">film/film/genre</div></pre></td></tr></table></figure></p>
 <p>还有的一些世界范围内知名的高质量大规模开放知识图谱，如包括 DBpedia、Yago、Wikidata、BabelNet、ConceptNet 以及 Microsoft Concept Graph等，中文的有开放知识图谱平台 OpenKG……</p>
-<h1 id="实体抽取"><a href="#实体抽取" class="headerlink" title="实体抽取"></a>实体抽取</h1><p>实体抽取或者说命名实体识别(NER)在信息抽取中扮演着重要角色，主要抽取的是文本中的原子信息元素，如<strong>人名、组织/机构名、地理位置、事件/日期、字符值、金额值</strong>等。实体抽取任务有两个关键词：<strong>find &amp; classify</strong>，找到命名实体，并进行分类。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/2.jpg" class="ful-image" alt="2.jpg"></p>
+<h1 id="实体抽取"><a href="#实体抽取" class="headerlink" title="实体抽取"></a>实体抽取</h1><p>实体抽取或者说命名实体识别（NER）在信息抽取中扮演着重要角色，主要抽取的是文本中的原子信息元素，如<strong>人名、组织/机构名、地理位置、事件/日期、字符值、金额值</strong>等。实体抽取任务有两个关键词：<strong>find &amp; classify</strong>，找到命名实体，并进行分类。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/2.jpg" class="ful-image" alt="2.jpg"></p>
 <p><strong>主要应用：</strong></p>
 <ul>
 <li>命名实体作为索引和超链接</li>
@@ -56,8 +54,7 @@
 <li>关系抽取（Relation Extraction）的准备步骤</li>
 <li>QA 系统，大多数答案都是命名实体</li>
 </ul>
-<h2 id="传统机器学习方法"><a href="#传统机器学习方法" class="headerlink" title="传统机器学习方法"></a>传统机器学习方法</h2><p>非常标准的机器学习方法：</p>
-<p><strong>Training:</strong></p>
+<h2 id="传统机器学习方法"><a href="#传统机器学习方法" class="headerlink" title="传统机器学习方法"></a>传统机器学习方法</h2><p>标准流程：<br><strong>Training:</strong></p>
 <ol>
 <li>收集代表性的训练文档</li>
 <li>为每个 token 标记命名实体(不属于任何实体就标 Others O)</li>
@@ -70,18 +67,17 @@
 <li>运行 sequence classifier 给每个 token 做标记</li>
 <li>输出命名实体</li>
 </ol>
-<h3 id="编码方式"><a href="#编码方式" class="headerlink" title="编码方式"></a>编码方式</h3><p>看一下最常用的两种给 sequence labeling 的编码方式，IO encoding 简单的为每个 token 标注，如果不是 NE 就标为 O(other)，所以一共需要 C+1 个类别(label)。而 IOB encoding 需要 2C+1 个类别(label)，因为它标了 NE boundary，B 代表 begining，NE 开始的位置，I 代表 continue，承接上一个 NE，如果连续出现两个 B，自然就表示上一个 B 已经结束了。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/3.jpg" class="ful-image" alt="3.jpg"></p>
+<h3 id="编码方式"><a href="#编码方式" class="headerlink" title="编码方式"></a>编码方式</h3><p>看一下最常用的两种 sequence labeling 的编码方式，<strong>IO encoding</strong> 简单的为每个 token 标注，如果不是 NE 就标为 O(other)，所以一共需要 C+1 个类别(label)。而 <strong>IOB encoding</strong> 需要 2C+1 个类别(label)，因为它标了 NE boundary，B 代表 begining，NE 开始的位置，I 代表 continue，承接上一个 NE，如果连续出现两个 B，自然就表示上一个 B 已经结束了。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/3.jpg" class="ful-image" alt="3.jpg"></p>
 <p>在 Stanford NER 里，用的其实是 IO encoding，有两个原因，一是 IO encoding 运行速度更快，二是在实践中，两种编码方式的效果差不多。IO encoding 确定 boundary 的依据是，如果有连续的 token 类别不为 O，那么类别相同，同属一个 NE；类别不相同，就分割，相同的 sequence 属同一个 NE。而实际上，两个 NE 是相同类别这样的现象出现的很少，如上面的例子，Sue，Mengqiu Huang 两个同是 PER 类别，并不多见，更重要的是，在实践中，虽然 IOB encoding 能规定 boundary，而实际上它也很少能做对，它也会把 Sue Mengqiu Huang 分为同一个 PER，这主要是因为更多的类别会带来数据的稀疏。</p>
 <h3 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h3><p>Features for sequence labeling:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">• Words</div><div class="line">    Current word (essentially like a learned dictionary)</div><div class="line">    Previous/next word (context)</div><div class="line">• Other kinds of inferred linguistic classification</div><div class="line">    Part of speech tags</div><div class="line">    Dependency relations</div><div class="line">• Label context</div><div class="line">    Previous (and perhaps next) label</div></pre></td></tr></table></figure>
 <p>再来看两个比较重要的 feature</p>
 <p><strong>Word substrings</strong><br>Word substrings (包括前后缀)的作用是很大的，以下面的例子为例，NE 中间有 ‘oxa’ 的十有八九是 drug，NE 中间有 ‘:’ 的则大多都是 movie，而以 field 结尾的 NE 往往是 place。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/4.jpg" class="ful-image" alt="4.jpg"></p>
-<p><strong>Word shapes</strong><br>可以做一个 mapping，把 <strong>单词长度(length)、大写(capitalization)、数字(numerals)、希腊字母(Greek eltters)、单词内部标点(internal punctuation)</strong> 这些字本身的特征都考虑进去。<br>如下面的表，把所有大写字母映射为 X，小写字母映射为 x，数字映射为 d…<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/5.jpg" class="ful-image" alt="5.jpg"></p>
-<h3 id="Sequence-models"><a href="#Sequence-models" class="headerlink" title="Sequence models"></a>Sequence models</h3><p>NLP 的很多数据都是序列类型，像 sequence of characters, words, phrases, lines, sentences，我们可以把任务当做是给每一个 item 打标签，如下图所示。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/6.jpg" class="ful-image" alt="6.jpg"></p>
-<p>常见的序列模型有 <strong>有向图模型</strong> 如 HMM，假设特征之间相互独立，找到使得 P(X,Y) 最大的参数，是生成式模型；<strong>无向图模型</strong> 如 CRF，没有特征独立的假设，找到使得 P(Y|X) 最大的参数，是判别式模型。CRF 优化的是联合概率（整个序列，实际就是最终目标），而不是每个时刻最优点的拼接，一般而言性能比 CRF 要好，在小数据上拟合也会更好。</p>
+<p><strong>Word shapes</strong><br>可以做一个 mapping，把 <strong>单词长度(length)、大写(capitalization)、数字(numerals)、希腊字母(Greek eltters)、单词内部标点(internal punctuation)</strong> 这些字本身的特征都考虑进去。<br>如下表，把所有大写字母映射为 X，小写字母映射为 x，数字映射为 d…<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/5.jpg" class="ful-image" alt="5.jpg"></p>
+<h3 id="序列模型"><a href="#序列模型" class="headerlink" title="序列模型"></a>序列模型</h3><p>NLP 的很多数据都是序列类型，像 sequence of characters, words, phrases, lines, sentences，我们可以把这些任务当做是给每一个 item 打标签，如下图：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/6.jpg" class="ful-image" alt="6.jpg"></p>
+<p>常见的序列模型有 <strong>有向图模型</strong> 如 HMM，假设特征之间相互独立，找到使得 P(X,Y) 最大的参数，生成式模型；<strong>无向图模型</strong> 如 CRF，没有特征独立的假设，找到使得 P(Y|X) 最大的参数，判别式模型。相对而言，CRF 优化的是联合概率（整个序列，实际就是最终目标），而不是每个时刻最优点的拼接，一般而言性能比 CRF 要好，在小数据上拟合也会更好。</p>
 <p>整个流程如图所示：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/7.jpg" class="ful-image" alt="7.jpg"></p>
-<p>可以讨论下最后的 inference</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/8.jpg" class="ful-image" alt="8.jpg">
+<p>讨论下最后的 inference<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/8.jpg" class="ful-image" alt="8.jpg"></p>
 <p>最基础的是 “decide one sequence at a time and move on”，也就是一个 <strong>greedy inference</strong>，比如在词性标注中，可能模型在位置 2 的时候挑了当前最好的 PoS tag，但是到了位置 4 的时候，其实发现位置 2 应该有更好的选择，然而，greedy inference 并不会 care 这些。因为它是贪婪的，只要当前最好就行了。除了 greedy inference，比较常见的还有 beam inference 和 viterbi inference。</p>
 <h4 id="Greedy-Inference"><a href="#Greedy-Inference" class="headerlink" title="Greedy Inference"></a>Greedy Inference</h4><p><strong>优点:</strong></p>
 <ol>
@@ -91,9 +87,7 @@
 </ol>
 <p><strong>缺点:</strong></p>
 <ol>
-<li><p>贪婪</p>
-<p>​</p>
-</li>
+<li>贪婪</li>
 </ol>
 <h4 id="Beam-Inference"><a href="#Beam-Inference" class="headerlink" title="Beam Inference"></a>Beam Inference</h4><ul>
 <li>在每一个位置，都保留 top k 种可能(当前的完整序列)</li>
@@ -106,9 +100,7 @@
 </ol>
 <p><strong>缺点:</strong></p>
 <ol>
-<li><p>不精确，不能保证找到全局最优</p>
-<p>​</p>
-</li>
+<li>不精确，不能保证找到全局最优</li>
 </ol>
 <h4 id="Viterbi-Inference"><a href="#Viterbi-Inference" class="headerlink" title="Viterbi Inference"></a>Viterbi Inference</h4><ul>
 <li>动态规划</li>
@@ -123,9 +115,9 @@
 <li>难以实现远距离的 state-state interaction</li>
 </ol>
 <h2 id="深度学习方法"><a href="#深度学习方法" class="headerlink" title="深度学习方法"></a>深度学习方法</h2><p>最经典的 <a href="hiheng Huang, Wei Xu, Kai Yu. Bidirectional LSTM-CRF Models for Sequence Tagging. CoRR. 2015">LSTM+CRF</a>，端到端的判别式模型，LSTM 利用过去的输入特征，CRF 利用句子级的标注信息，可以有效地使用过去和未来的标注来预测当前的标注。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction%20copy/../../../Downloads/%E4%BF%A1%E6%81%AF%E6%8A%BD%E5%8F%96/LSTM%2BCRF.png" class="ful-image" alt="../../../Downloads/%E4%BF%A1%E6%81%AF%E6%8A%BD%E5%8F%96/LSTM%2BCRF.png">
-<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>评估 IR 系统或者文本分类的任务，我们通常会用到 precision，recall，F1 这种 set-based metrics，见<a href="http://www.shuang0420.com/2016/09/20/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/">信息检索评价的 Unranked Boolean Retrieval Model 部分</a>，但是在这里对 NER 这种 sequence 类型任务的评估，如果用这些 metrics，可能会有一些问题，如 boundary error。因为 NER 的评估是按每个 entity 而不是每个 token 来计算的，我们需要看 entity 的 boundary。<br>以下面一句话为例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">First Bank of Chicago announced earnings...</div></pre></td></tr></table></figure>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E4%BF%A1%E6%81%AF%E6%8A%BD%E5%8F%96/LSTM%2BCRF.png">
+<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>评估 IR 系统或者文本分类的任务，我们通常会用到 precision，recall，F1 这种 set-based metrics，见<a href="http://www.shuang0420.com/2016/09/20/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/">信息检索评价的 Unranked Boolean Retrieval Model 部分</a>，但是在这里对 NER 这种 sequence 类型任务的评估，如果用这些 metrics，可能出现 boundary error 之类的问题。因为 NER 的评估是按每个 entity 而不是每个 token 来计算的，我们需要看 entity 的 boundary。</p>
+<p>以下面一句话为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">First Bank of Chicago announced earnings...</div></pre></td></tr></table></figure></p>
 <p>正确的 NE 应该是 First Bank of Chicago，类别是 ORG，然而系统识别了 Bank of Chicago，类别 ORG，也就是说，右边界(right boundary)是对的，但是左边界(left boundary)是错误的，这其实是一个常见的错误。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">正确的标注：</div><div class="line">ORG - (1,4)</div><div class="line"></div><div class="line">系统：</div><div class="line">ORG - (2,4)</div></pre></td></tr></table></figure>
 <p>而计算 precision，recall 的时候，我们会发现，对 ORG - (1,4) 而言，系统产生了一个 false negative，对 ORG - (2,4) 而言，系统产生了一个 false positive！所以系统有了 2 个错误。<strong>F1 measure</strong> 对 precision，recall 进行加权平均，结果会更好一些，所以经常用来作为 NER 任务的评估手段。另外，专家提出了别的建议，比如说给出 partial credit，如 MUC scorer metric，然而，对哪种 case 给多少的 credit，也需要精心设计。</p>
@@ -147,7 +139,7 @@
 <li><a href="http://aksw.org/Projects/AGDISTIS.html" target="_blank" rel="external">http://aksw.org/Projects/AGDISTIS.html</a></li>
 <li><a href="https://github.com/dalab/pboh-entity-linking" target="_blank" rel="external">https://github.com/dalab/pboh-entity-linking</a></li>
 </ul>
-<h1 id="Relation-Extractors"><a href="#Relation-Extractors" class="headerlink" title="Relation Extractors"></a>Relation Extractors</h1><p><strong>关系抽取</strong> 需要从文本中抽取两个或多个实体之间的语义关系，主要方法有下面几类：</p>
+<h1 id="关系抽取"><a href="#关系抽取" class="headerlink" title="关系抽取"></a>关系抽取</h1><p><strong>关系抽取</strong> 需要从文本中抽取两个或多个实体之间的语义关系，主要方法有下面几类：</p>
 <ul>
 <li><strong>基于模板的方法(hand-written patterns)</strong><ul>
 <li>基于触发词/字符串</li>
