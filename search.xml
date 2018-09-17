@@ -249,7 +249,7 @@
 <p>用了 L2 正则，然后基于这一距离定义了目标函数：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/AttCNN_loss2.png" class="ful-image" alt="AttCNN_loss2.png"></p>
 <p>两个距离分别为网络输出与正例和与负例的距离，负例照例用了所有错误类别中与输出最接近的，margin 设置的 1。</p>
 <p><strong>这应该是目前最好的方法，SemEval-2010 Task 8 上的 F1 值到了 88。</strong></p>
-<h4 id="Att-BLSTM-模型"><a href="#Att-BLSTM-模型" class="headerlink" title="Att-BLSTM 模型"></a>Att-BLSTM 模型</h4><p><a href="http://www.aclweb.org/anthology/P16-2034" target="_blank" rel="external">Peng Zhou et. al ACL 2016</a></p>
+<h4 id="Att-BLSTM"><a href="#Att-BLSTM" class="headerlink" title="Att-BLSTM"></a>Att-BLSTM</h4><p><a href="http://www.aclweb.org/anthology/P16-2034" target="_blank" rel="external">Peng Zhou et. al ACL 2016</a></p>
 <p>CNN 可以处理文本较短的输入，但是长距离的依赖还是需要 LSTM，这一篇就是中规中矩的 BiLSTM+Attn 来做关系分类任务。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/AttBLSM.png" class="ful-image" alt="AttBLSM.png"></p>
 <h4 id="评测"><a href="#评测" class="headerlink" title="评测"></a>评测</h4><p>各方法在 SemEval-2010 Task 8 上的评测：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/pipeline_perf.png" class="ful-image" alt="pipeline_perf.png"></p>
 <h3 id="Joint-Model"><a href="#Joint-Model" class="headerlink" title="Joint Model"></a>Joint Model</h3><p>Pipeline 的方法会导致误差的传递，端到端的方法直觉上会更优。</p>
