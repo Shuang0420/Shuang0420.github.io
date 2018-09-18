@@ -134,7 +134,7 @@
 <meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/ed.png">
 <meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/errors.png">
 <meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/final_loss.png">
-<meta property="og:updated_time" content="2018-09-17T15:43:13.000Z">
+<meta property="og:updated_time" content="2018-09-18T06:11:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="知识抽取-实体及关系抽取">
 <meta name="twitter:description" content="这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 NLP笔记 - Information Extraction 和 NLP笔记 - Relation Extraction，梳理了知识抽取的基本方法，包括传统机器学习及经典的深度学习方法。
@@ -631,7 +631,7 @@
 <li>Word embeddings</li>
 <li>Knowledge embeddings</li>
 </ul>
-<p>模型通常有 CNN/RNN + attention，损失函数 ranking loss 要优于 softmax。</p>
+<p>模型通常有 CNN/RNN + attention，损失函数 ranking loss 要优于交叉熵。</p>
 <h3 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h3><h4 id="CR-CNN"><a href="#CR-CNN" class="headerlink" title="CR-CNN"></a>CR-CNN</h4><p><a href="https://arxiv.org/pdf/1504.06580.pdf" target="_blank" rel="external">Santos et. al Computer Science 2015</a><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/CR-CNN.png" class="ful-image" alt="CR-CNN.png"></p>
 <p>输入层 word embedding + position embedding，用 6 个卷积核 + max pooling 生成句子向量表示，与关系（类别）向量做点积求相似度，作为关系分类的结果。<br>损失函数用的是  <strong>pairwise ranking loss function</strong></p>
 <img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/CR-CNN_loss.png" class="ful-image" alt="CR-CNN_loss.png">
