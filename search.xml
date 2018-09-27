@@ -356,7 +356,7 @@
     <entry>
       <title><![CDATA[99/100 天纪念日 - 第 1 期]]></title>
       <url>http://www.shuang0420.com/2018/08/06/love99/</url>
-      <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
+      <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
       
         
         <tags>
@@ -10584,108 +10584,97 @@ python nb.py split.train split.test</pre>
     </entry>
     
     <entry>
-      <title><![CDATA[Search Engines笔记 - Search logs]]></title>
-      <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章开始的很多内容都是从论文的研究报告而来。重点是第四部分，怎样对 search log 划分 session，有哪些 feature 可以作为划分 session 的依据。<br><a id="more"></a></p>
-<h1 id="User-information-collection"><a href="#User-information-collection" class="headerlink" title="User information collection"></a>User information collection</h1><p>大多数搜索引擎会保存每一次搜索的信息，主要有下面的内容：</p>
+      <title><![CDATA[Search Engines笔记 - Document Structure]]></title>
+      <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。文档的表示形式不只词袋一种，它可以有 fields，有 hierarchical structure(XML)，multiple representations of meaning, priors 等形式，这一章讲的就是检索模型怎么来处理这些复杂的文档表达。<br><a id="more"></a></p>
+<h1 id="Multiple-representations-of-meaning"><a href="#Multiple-representations-of-meaning" class="headerlink" title="Multiple representations of meaning"></a>Multiple representations of meaning</h1><blockquote>
+<p>Fields can be used to provide different representations of the same information</p>
+</blockquote>
+<p>三种表达方法。</p>
 <ul>
-<li>query</li>
-<li>timestamp</li>
-<li>IP address of the search client</li>
-<li>possibly an id recorded in a cookie or obtained another way</li>
-<li>information about the operating system and browser</li>
-<li>clickthrough information</li>
+<li><strong>Vector space</strong><br>– 每个 representation 提供独立的 ranking score<br>– 对每个分数求平均来得到一个最终的 ranking</li>
+<li><strong>Okapi</strong><br>– Representations 以不同的方式来表达相同含义<br>– 合并 representations 来得到一个更好的 representation</li>
+<li><strong>Indri</strong><br>– 每个 representation 提供一个 p(t|d) 的估计<br>– 有多种方法来合并这些估计</li>
 </ul>
-<p>目前公开的 web search logs</p>
+<h2 id="Vector-space"><a href="#Vector-space" class="headerlink" title="Vector space"></a>Vector space</h2><p><strong>Option 1:</strong> 一个词袋模型，包含了各种 filed 词汇<br>E.g., iPad::inlink, iPad::title, iPad::body, …</p>
+<p>这让 length normalization 变得更为复杂，比如说 inlink text 可能会和 title 或者 body text 混在一起。一般不用这种方法。</p>
+<p><strong>Option 2:</strong> Several vector spaces<br>$w_{title} *sim(query,title_i) +$<br>$w_{body} *sim(query,body_i) +$<br>$w_{inlink} *sim(query,inlink_i) +$<br>$w_{url} *sim(query,url_i) $</p>
+<p>这种方法易于管理，也易于扩展，Lucene 也采用了这种方法，然而关于怎么设置 weights，并没有什么 guidance。</p>
+<h2 id="Okapi"><a href="#Okapi" class="headerlink" title="Okapi"></a>Okapi</h2><blockquote>
+<p>Evidence from each field should be weighted differently</p>
+</blockquote>
+<p>一些 field 可能有更好的表达能力，如 inlink text，一些 field 可能更为冗长，如 body，所以不同的 fields 我们应该区别对待。</p>
+<p><strong>One solution</strong><br>• 把 query 看作 |F| 个词袋<br>• 对 query 匹配每个 field，然后 add the score</p>
+<p>然而 … 这打破了 BM25’s saturation assumption。在 |F| 个 field 里中出现了一次的字段，比在一个 field 里出现了|F|次的字段，有更大的影响，这并不是我们想要的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">5 fields × 1 occurrence = 5 × 0.4</div><div class="line">1 field × 5 occurrences = 0.77</div></pre></td></tr></table></figure></p>
+<p><strong>Solution:</strong> 用一个复合加权的 representation，一篇文档就用一个词袋</p>
+<p>$$tf_t=\sum_fw_ftf_{t,f}$$<br>$$doclen=\sum_fw_fdoclen_f$$</p>
+<p>F: the set of fields</p>
+<p>-&gt; 然后用标准的 BM25<br>但是 … BM25 有常量，可能我们需要 tune them on a per-field basis，可以用 BM25F。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg" class="ful-image" alt="BM25F.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/exampleW.jpg" class="ful-image" alt="exampleW.jpg"></p>
+<p><strong>特性：</strong></p>
 <ul>
-<li>The Excite log(1997)<br>18,113 users, 51,473 queries</li>
-<li>The AOL Log(2006)<br>$&gt;$ 650,000 users, $&gt;$ 20 million queries</li>
-<li>Alta Vista(1999)<br>285 million users, 1 billion queries</li>
-<li>Alta Vista(2001)<br>$&gt;$ 7 million queries</li>
+<li>一个 vocabulary 涵盖了所有的 fields<br>– 所以一个 term 有一个 global idf, 而不是一个 field-specific idf<br>– 对各种文档都有适用么?<pre><code>» E.g., 专利，医疗记录等
+</code></pre></li>
+<li>Field-specific tuning</li>
+<li>constants 的影响很难理解</li>
 </ul>
-<h2 id="Query-characteristics"><a href="#Query-characteristics" class="headerlink" title="Query characteristics"></a>Query characteristics</h2><h3 id="Query-Length-Average-terms-per-query-3-5-terms"><a href="#Query-Length-Average-terms-per-query-3-5-terms" class="headerlink" title="Query Length: Average terms per query: 3.5 terms"></a>Query Length: Average terms per query: 3.5 terms</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/queryLen.jpg" class="ful-image" alt="queryLen.jpg">
-<h3 id="Who-queries"><a href="#Who-queries" class="headerlink" title="Who queries"></a>Who queries</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/whoQueries.jpg" class="ful-image" alt="whoQueries.jpg">
-<h3 id="Query-Frequency-Query-Frequency-Follows-a-Power-Law"><a href="#Query-Frequency-Query-Frequency-Follows-a-Power-Law" class="headerlink" title="Query Frequency: Query Frequency Follows a Power Law"></a>Query Frequency: Query Frequency Follows a Power Law</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/queryFreq.jpg" class="ful-image" alt="queryFreq.jpg">
-<p><strong>Power Law</strong><br>$$Frequency(q) = K*Rank(q)^{- \alpha}$$</p>
-<ul>
-<li>K: positive constant</li>
-<li>Rank(q): popularity rank(r=1 is the most popular)</li>
-<li>$\alpha$: constant, about 2.4 for the Excite query log</li>
-</ul>
-<p>和 Zipf’s law 一样的 shape，但不一样的斜率。</p>
-<p>一小部分的 query 非常常见，而大部分的 query 非常少见。 =&gt; 通过 <strong>缓存</strong> 来提高搜索效率。</p>
-<h3 id="Vary-over-time"><a href="#Vary-over-time" class="headerlink" title="Vary over time"></a>Vary over time</h3><p>最常见的 query 总是在不断变化<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/queryFreqVary.jpg" class="ful-image" alt="queryFreqVary.jpg"></p>
-<p>来自 google 的统计数据</p>
-<ul>
-<li>每天的 query 中有 20% 在之前从未出现过。(占每天所有 unique query 的 50%)</li>
-<li>8% 的 query 是名字(names)</li>
-</ul>
-<h1 id="Model-query"><a href="#Model-query" class="headerlink" title="Model query"></a>Model query</h1><ul>
-<li>Query topics: What<br>比如说在雅虎目录下的分类。</li>
-<li>User demographics: Who<br>如用户的年龄、性别（用户提供）、收入、教育程度（从邮编等信息推断）等。</li>
-<li>Session characteristics: How<br>eg. session length, number of queries/session, % of queries with low/high click entropy</li>
-</ul>
-<h1 id="Represent-users"><a href="#Represent-users" class="headerlink" title="Represent users"></a>Represent users</h1><p>需要用到的工具: Pseudo documents, clustering, control vocabulary<br><strong>How to represent users？</strong></p>
-<ul>
-<li>在 “what” 维度上对用户进行聚类</li>
-<li>在 (“who”,”how”) 维度上进一步 investigate groups</li>
-<li>根据 group 的显著特征对其打上标签</li>
-</ul>
-<p>根据用户的 query type 来对用户进行聚类：</p>
+<h2 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h2><p>Indri 模型。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/indri.jpg" class="ful-image" alt="indri.jpg"></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/andSum.jpg" class="ful-image" alt="andSum.jpg">
+<p>#AND 和 #WAND 用来合并独立的概率<br>#SUM 和 #WSUM 用不同方法来估计同一个概率</p>
+<h1 id="Hierarchical-structure-XML"><a href="#Hierarchical-structure-XML" class="headerlink" title="Hierarchical structure(XML)"></a>Hierarchical structure(XML)</h1><p>Hierarchical structure 的文档通常用 Bayesian inference networks 来解决，如 indri。<br>首先对 flat 和 hierarchical structure 做一个区分。<br><strong>Flat</strong><br>元素之间是相互独立的，一个 term 只在包含了它的那个元素（通常是一个）里出现。<br>检索目的通常是一篇文档。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/1.jpg" class="ful-image" alt="1.jpg"><br><strong>Hierarchical</strong><br>元素之间是相互关联的，通常是包含的关系，一个 term 在所有包含了它的元素里出现。<br>检索目的可以是文档，也可以是元素。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/2.jpg" class="ful-image" alt="2.jpg"></p>
+<h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><p><strong>检索什么样的 element?</strong><br>• Document? Encounter? Diagnosis?</p>
+<p><strong>用怎样的 corpus statistics</strong><br>• Document vs. element</p>
+<p><strong>怎样组合来自不同 elements 的 evidence</strong><br>• Can we prefer patients that have several matching encounters?</p>
+<p><strong>Exact-match vs. best-match document structure</strong><br>• 可能 query 并不能完全匹配文档结构</p>
+<h2 id="Ranking-elements"><a href="#Ranking-elements" class="headerlink" title="Ranking elements"></a>Ranking elements</h2><p><strong>One option: Use Jelinek-Mercer smoothing</strong><br>$$P(q_i|e)=(1-\lambda)P_{MLE}P(q_i|e)+ \lambda P_{MLE}P(q_i|C)$$</p>
+<p>这种方法可能带来的问题是：</p>
 <ol>
-<li>从日志中得到 (user,query) pairs</li>
-<li>为用户创建 pseudo documents<br>标题: user id<br>内容: 每条 query 的前 10 篇文档对应的 Yahoo! 分类目录</li>
-<li>计算相似度<br>e.g. JS divergence, cosine</li>
+<li>文档结构不规范，这种情况经常在 web 文档中出现，如果文档里本来包含了 query term 然而因为文档不规范而找不到相应的 element，那么 score 可能为 0。</li>
+<li>query 可能太严格。<br>– #AND[title](iphone)：不匹配 “Apple Cuts Phone Price”<br>– #AND[paragraph](solutions to poverty)： “poverty” 和 “solutions” 可能出现在不同的段落里</li>
 </ol>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/pseudo.jpg" class="ful-image" alt="pseudo.jpg">
-<h2 id="Types-of-users"><a href="#Types-of-users" class="headerlink" title="Types of users"></a>Types of users</h2><p>这一部分主要是介绍不同类型的用户特征，这些聚类结果有什么用？=&gt; 为下一步的个性化搜索引擎做准备。</p>
-<h3 id="Informational-Users"><a href="#Informational-Users" class="headerlink" title="Informational Users"></a>Informational Users</h3><p><strong>How:</strong><br>• More likely to issue non-navigational queries<br>• Less likely to have single-click sessions<br>• More likely to use query suggestions</p>
-<p><strong>What:</strong><br>• Wide range of topics<br>• Little interest in adult content</p>
-<p><strong>Who:</strong><br>• More likely to be well-educated<br>• More likely to have above-average income</p>
-<h3 id="Navigational-Users"><a href="#Navigational-Users" class="headerlink" title="Navigational Users"></a>Navigational Users</h3><p><strong>How:</strong><br>• More likely to issue navigational queries<br>• More likely to have single-click sessions<br>• Less likely to use query suggestions</p>
-<p><strong>What:</strong><br>• Dominated by popular websites (Facebook, YouTube, Craigslist) Who<br>• Mostly representative of the entire population</p>
-<h3 id="Transactional-Users"><a href="#Transactional-Users" class="headerlink" title="Transactional Users"></a>Transactional Users</h3><p><strong>How:</strong><br>• Somewhat similar to navigational users. But, multiple sites can perform the transaction<br>• Diverse clicks<br>• Short interaction with search engine What<br>• Shopping, adult content, gaming</p>
-<p><strong>Who:</strong><br>• Depends heavily on the type of transaction<br>• Topic “recreation/games” associated with low income &amp; education</p>
-<h2 id="聚类结果-Selected-groups"><a href="#聚类结果-Selected-groups" class="headerlink" title="聚类结果 - Selected groups"></a>聚类结果 - Selected groups</h2><p><strong>Baby boomers:</strong><br>• 50 years old<br>• Interested in finance<br>• Simple navigational queries related to online banking</p>
-<p><strong>Challenged youth:</strong><br>• Average age of 34<br>• Low-income neighborhoods with low-level of education<br>• Interested in music<br>• Navigational sessions</p>
-<p><strong>Liberal females:</strong><br>• Mostly female from areas that voted Democratic<br>• Shopping queries<br>• Long sessions (browsing and comparison)</p>
-<p><strong>White conservatives:</strong><br>• Mostly male from areas that voted Republican<br>• Interested in automotive, business, home &amp; garden</p>
-<p><strong>Older users:</strong> Health / diseases &amp; conditions, gambling, travel<br><strong>People in their late 20s:</strong> Health / fitness, reproductive health<br><strong>Younger people:</strong> Games, education<br><strong>Low income:</strong> Music, comics &amp; animation, military<br><strong>Asian descent:</strong> Computers &amp; internet, programming &amp; development</p>
-<p><strong>Some topics typically receive few clicks:</strong><br>• News &amp; media, society &amp; culture, computers &amp; internet People are more likely to click on suggestions for some topics<br>• Health, science, arts</p>
-<p><strong>People with higher educational levels:</strong><br>• Tend to have shorter sessions<br>• Click on query suggestions less often<br>• Are more likely to submit tail queries</p>
-<h1 id="Segmenting-search-logs-into-sessions"><a href="#Segmenting-search-logs-into-sessions" class="headerlink" title="Segmenting search logs into sessions"></a>Segmenting search logs into sessions</h1><p>通常，我们会把 search log 划分为一个个基于 information need 的 dialogue<br>dialogue 形式，实际就是用户发出初始查询，搜索引擎给出结果，用户不满意，重新修改查询语句再次搜索，然后得到新的结果，不断循环的过程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Person: query</div><div class="line">Engine: search results</div><div class="line">Person: reformulated query</div><div class="line">Engine: new search results ...</div></pre></td></tr></table></figure></p>
-<p>那么问题来了，怎么来区分这些不同的 dialogues 呢？<br>我们定义 information need = a search session(dialogue)，最简单粗暴划分 session 的方法就是通过时间，比如说三十分钟内一系列的用户行为就算作一个 session。</p>
-<p>划分 session 可以考虑的因素：</p>
+<p>解决方案是，多加一个 smoothing。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/formula.jpg" class="ful-image" alt="formula.jpg"></p>
+<h2 id="Multiple-elements"><a href="#Multiple-elements" class="headerlink" title="Multiple elements"></a>Multiple elements</h2><p>这里我们探讨右图的情况。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/multiple.jpg" class="ful-image" alt="multiple.jpg"></p>
+<p>两种方法 Aggregation OR Combination。</p>
 <ul>
-<li>Time: Same session iff |timestamp (q2) – timestamp| (q1) &lt; ∆<br>often ∆ = 30 minutes</li>
-<li>Common term: Same session iff q1 ∩ q2 ≠ Ø<br>Probably high Precision, low Recall</li>
-<li>Rewrite classes: Common reformulation patterns<br>E.g., term added, deleted, or replaced<br>Probably high Precision, low Recall</li>
-<li>Edit distance</li>
-<li>Co-occurrence<br>e.g., PMI, Chi-square of queries in a query log</li>
-<li>Same clicks<br>queries have co-occurring clicks in a query log</li>
-<li>Document categories<br>ODP or Yahoo page category overlap of top 10 results</li>
-<li>Same/overlap retrieved documents<br>JSD similarity of top 10 results<br>cosine distance among results</li>
-<li>Classifiers<br>…</li>
+<li>Aggregation: Combine inverted lists</li>
+<li>Combination: Combine scores</li>
 </ul>
-<p>训练一个分类器是最好的方法，对任意一对 queries 大概有 95-97% 的准确率。然而 heuristics 也不差，尤其是 edit distance 和 cosine distance among results 都非常有效，时间尺度通常会和其他 heuristic 合用，效果更佳。</p>
-<p>各种 heuristic 都可以作为分类器的 Features</p>
+<h3 id="Aggregation"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</h3><p>Indri 允许在 query 里指定 aggregation type</p>
 <ul>
-<li>Temporal<br>– ≤ {5, 30, 60, 120} minutes, ∆ time, are_sequential</li>
-<li>Edit distance<br>– Several character and token-based metrics</li>
-<li>Query log<br>– Various types of (q1, q2) co-occurrence in a larger query log</li>
-<li>Web search<br>– Cosine distance of top 50 search results for each query<br>(“prisma”)</li>
+<li>term.element<br>– 如果没有指定 element, 那么默认 element 为 Document<br>– Example: apple.inlink</li>
+<li>结果: 一个 inverted list 包含了一个 element 的所有 instance</li>
 </ul>
-<p>我们训练分类器一般需要完成两个任务</p>
-<ul>
-<li>Boundary task: Given a pair of sequential queries</li>
-<li>Same task: Given a pair of queries</li>
-</ul>
-<h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><p>用户的信息需求可能是跨越了几天甚至是几周的，比如用户写论文、找学校信息等，可能出现的情况是：</p>
-<ul>
-<li>用户有交叉的任务<br>如查 paper 的时候顺便查下中午吃什么</li>
-<li>用户把一个任务分成若干个子任务分阶段完成<br>比如今天查为什么，明天查怎么做</li>
-<li>子任务可能看起来是独立的实际确实相关的</li>
-</ul>
+<p><strong>Example</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#wand( #wsum (0.3 apple.title 0.2 apple.inlink 0.5 apple.body ) #wsum (0.3 ipad.title 0.2 ipad.inlink 0.5 ipad.body ) )</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ainlink.jpg" class="ful-image" alt="ainlink.jpg">
+<p><strong>问题：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#AND( breast.paragraph cancer.paragraph treatment.paragraph )</div></pre></td></tr></table></figure></p>
+<p>对这一个查询，用 Aggregation 的话以下两篇文档会得到一样的分数，然而其实 D2 要比 D1 更相关。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ap.jpg" class="ful-image" alt="ap.jpg"></p>
+<h3 id="Combination"><a href="#Combination" class="headerlink" title="Combination"></a>Combination</h3><p>用 #MAX, #SUM, #OR 等 query operators 来合并 element scores。<br>首先我们来认识一下 query。<br>E.g.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[document] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
+<p>最外面的 element 是 document, 所以对 documents 进行排序</p>
+<ol>
+<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
+<li>对上一步产生的结果 #SUM 运算，结果是一个 (document, score) 列表</li>
+</ol>
+<p>E.g.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[paragraph] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
+<p>最外面的 element 是 paragraph, 所以对 paragraphs 进行排序</p>
+<ol>
+<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
+<li>对上一步产生的结果 #SUM 运算，结果是一个 (paragraph, score) 列表</li>
+</ol>
+<p>来考虑下不同的 combine query operator 产生的影响。</p>
+<p><strong>#MAX[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 只考虑 best sentence<br><strong>#SUM[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– poorly matching sentences 会让分数变低<br><strong>#OR[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 偏好有更多匹配的 sentences 的文档</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/c4.jpg" class="ful-image" alt="c4.jpg">
+<p>• #MAX considers them equal<br>• #AND prefers C4<br>• #OR prefers C1<br>• #AVERAGE prefers C4</p>
+<h3 id="Comparsion"><a href="#Comparsion" class="headerlink" title="Comparsion"></a>Comparsion</h3><p>假定目标是检索有 paragraphs 讨论 breast cancer treatment 的文档<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/compare.jpg" class="ful-image" alt="compare.jpg"><br><strong>Combination:</strong> Partial credit for sections that partially match<br><strong>Aggregation:</strong> The terms might not all be in the same section</p>
+<h2 id="Extents"><a href="#Extents" class="headerlink" title="Extents"></a>Extents</h2><p>Using extents as evidence<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND(</div><div class="line">  #OR[document](</div><div class="line">      #AND[sentence](iraq war))</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
+<p>• 检索的是 document<br>• <strong>偏好</strong> ‘iraq’ and ‘war’ 在同一句话里的文档<br>– 出现在 title 里会让分数有稍稍的提高，因为有 smoothing</p>
+<p>Using extents as a constraint<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND (</div><div class="line">  iraq.sentence</div><div class="line">  war.sentence</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
+<p>• 检索的是 document<br>• <strong>要求</strong> ‘iraq’ and ‘war’ 必须出现在同一句话的文档<br>  – 出现在文档的其它部分并不会有任何帮助</p>
+<h2 id="HLT-Applications"><a href="#HLT-Applications" class="headerlink" title="HLT Applications"></a>HLT Applications</h2><p>文档结构可以由 annotation processes 产生<br>• E.g., named entity annotators, semantic role labelers, …</p>
+<p>Retrieval of elements, using semantic role annotations<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#and[sentence](</div><div class="line">  #and[target_verb]( Loves</div><div class="line">      #and[./agent]( John )</div><div class="line">      #and[./patient]( Mary ) ) )</div></pre></td></tr></table></figure></p>
+<p>• ./element specifies that element is a child of the parent field</p>
+<h1 id="Table-retrieval"><a href="#Table-retrieval" class="headerlink" title="Table retrieval"></a>Table retrieval</h1><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table.jpg" class="ful-image" alt="table.jpg">
+<p>实际就是一个把 table 转化为 structure document 的问题。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table2.jpg" class="ful-image" alt="table2.jpg"></p>
+<h1 id="Summaries"><a href="#Summaries" class="headerlink" title="Summaries"></a>Summaries</h1><p><strong>Fields</strong><br>• 用于 independent evidence (author, title, journal, …)<br>• 用于 multiple representations (url, title, body, …)<br>• 了解差异<br>• 了解各个检索模型如何支持这些 fields<br>• 了解在 query 中如何使用这些 fields</p>
+<p><strong>Hierarchical structure</strong><br>• 怎样在多个 elements 都有匹配时 combine evidence<br>• Exact-match vs. best-match document structure<br>• 了解 Indri 怎样支持这些 elements<br>• 了解在 query 中如何使用这些 elements</p>
 ]]></content>
       
         <categories>
@@ -10822,97 +10811,108 @@ python nb.py split.train split.test</pre>
     </entry>
     
     <entry>
-      <title><![CDATA[Search Engines笔记 - Document Structure]]></title>
-      <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。文档的表示形式不只词袋一种，它可以有 fields，有 hierarchical structure(XML)，multiple representations of meaning, priors 等形式，这一章讲的就是检索模型怎么来处理这些复杂的文档表达。<br><a id="more"></a></p>
-<h1 id="Multiple-representations-of-meaning"><a href="#Multiple-representations-of-meaning" class="headerlink" title="Multiple representations of meaning"></a>Multiple representations of meaning</h1><blockquote>
-<p>Fields can be used to provide different representations of the same information</p>
-</blockquote>
-<p>三种表达方法。</p>
+      <title><![CDATA[Search Engines笔记 - Search logs]]></title>
+      <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章开始的很多内容都是从论文的研究报告而来。重点是第四部分，怎样对 search log 划分 session，有哪些 feature 可以作为划分 session 的依据。<br><a id="more"></a></p>
+<h1 id="User-information-collection"><a href="#User-information-collection" class="headerlink" title="User information collection"></a>User information collection</h1><p>大多数搜索引擎会保存每一次搜索的信息，主要有下面的内容：</p>
 <ul>
-<li><strong>Vector space</strong><br>– 每个 representation 提供独立的 ranking score<br>– 对每个分数求平均来得到一个最终的 ranking</li>
-<li><strong>Okapi</strong><br>– Representations 以不同的方式来表达相同含义<br>– 合并 representations 来得到一个更好的 representation</li>
-<li><strong>Indri</strong><br>– 每个 representation 提供一个 p(t|d) 的估计<br>– 有多种方法来合并这些估计</li>
+<li>query</li>
+<li>timestamp</li>
+<li>IP address of the search client</li>
+<li>possibly an id recorded in a cookie or obtained another way</li>
+<li>information about the operating system and browser</li>
+<li>clickthrough information</li>
 </ul>
-<h2 id="Vector-space"><a href="#Vector-space" class="headerlink" title="Vector space"></a>Vector space</h2><p><strong>Option 1:</strong> 一个词袋模型，包含了各种 filed 词汇<br>E.g., iPad::inlink, iPad::title, iPad::body, …</p>
-<p>这让 length normalization 变得更为复杂，比如说 inlink text 可能会和 title 或者 body text 混在一起。一般不用这种方法。</p>
-<p><strong>Option 2:</strong> Several vector spaces<br>$w_{title} *sim(query,title_i) +$<br>$w_{body} *sim(query,body_i) +$<br>$w_{inlink} *sim(query,inlink_i) +$<br>$w_{url} *sim(query,url_i) $</p>
-<p>这种方法易于管理，也易于扩展，Lucene 也采用了这种方法，然而关于怎么设置 weights，并没有什么 guidance。</p>
-<h2 id="Okapi"><a href="#Okapi" class="headerlink" title="Okapi"></a>Okapi</h2><blockquote>
-<p>Evidence from each field should be weighted differently</p>
-</blockquote>
-<p>一些 field 可能有更好的表达能力，如 inlink text，一些 field 可能更为冗长，如 body，所以不同的 fields 我们应该区别对待。</p>
-<p><strong>One solution</strong><br>• 把 query 看作 |F| 个词袋<br>• 对 query 匹配每个 field，然后 add the score</p>
-<p>然而 … 这打破了 BM25’s saturation assumption。在 |F| 个 field 里中出现了一次的字段，比在一个 field 里出现了|F|次的字段，有更大的影响，这并不是我们想要的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">5 fields × 1 occurrence = 5 × 0.4</div><div class="line">1 field × 5 occurrences = 0.77</div></pre></td></tr></table></figure></p>
-<p><strong>Solution:</strong> 用一个复合加权的 representation，一篇文档就用一个词袋</p>
-<p>$$tf_t=\sum_fw_ftf_{t,f}$$<br>$$doclen=\sum_fw_fdoclen_f$$</p>
-<p>F: the set of fields</p>
-<p>-&gt; 然后用标准的 BM25<br>但是 … BM25 有常量，可能我们需要 tune them on a per-field basis，可以用 BM25F。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg" class="ful-image" alt="BM25F.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/exampleW.jpg" class="ful-image" alt="exampleW.jpg"></p>
-<p><strong>特性：</strong></p>
+<p>目前公开的 web search logs</p>
 <ul>
-<li>一个 vocabulary 涵盖了所有的 fields<br>– 所以一个 term 有一个 global idf, 而不是一个 field-specific idf<br>– 对各种文档都有适用么?<pre><code>» E.g., 专利，医疗记录等
-</code></pre></li>
-<li>Field-specific tuning</li>
-<li>constants 的影响很难理解</li>
+<li>The Excite log(1997)<br>18,113 users, 51,473 queries</li>
+<li>The AOL Log(2006)<br>$&gt;$ 650,000 users, $&gt;$ 20 million queries</li>
+<li>Alta Vista(1999)<br>285 million users, 1 billion queries</li>
+<li>Alta Vista(2001)<br>$&gt;$ 7 million queries</li>
 </ul>
-<h2 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h2><p>Indri 模型。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/indri.jpg" class="ful-image" alt="indri.jpg"></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/andSum.jpg" class="ful-image" alt="andSum.jpg">
-<p>#AND 和 #WAND 用来合并独立的概率<br>#SUM 和 #WSUM 用不同方法来估计同一个概率</p>
-<h1 id="Hierarchical-structure-XML"><a href="#Hierarchical-structure-XML" class="headerlink" title="Hierarchical structure(XML)"></a>Hierarchical structure(XML)</h1><p>Hierarchical structure 的文档通常用 Bayesian inference networks 来解决，如 indri。<br>首先对 flat 和 hierarchical structure 做一个区分。<br><strong>Flat</strong><br>元素之间是相互独立的，一个 term 只在包含了它的那个元素（通常是一个）里出现。<br>检索目的通常是一篇文档。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/1.jpg" class="ful-image" alt="1.jpg"><br><strong>Hierarchical</strong><br>元素之间是相互关联的，通常是包含的关系，一个 term 在所有包含了它的元素里出现。<br>检索目的可以是文档，也可以是元素。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/2.jpg" class="ful-image" alt="2.jpg"></p>
-<h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><p><strong>检索什么样的 element?</strong><br>• Document? Encounter? Diagnosis?</p>
-<p><strong>用怎样的 corpus statistics</strong><br>• Document vs. element</p>
-<p><strong>怎样组合来自不同 elements 的 evidence</strong><br>• Can we prefer patients that have several matching encounters?</p>
-<p><strong>Exact-match vs. best-match document structure</strong><br>• 可能 query 并不能完全匹配文档结构</p>
-<h2 id="Ranking-elements"><a href="#Ranking-elements" class="headerlink" title="Ranking elements"></a>Ranking elements</h2><p><strong>One option: Use Jelinek-Mercer smoothing</strong><br>$$P(q_i|e)=(1-\lambda)P_{MLE}P(q_i|e)+ \lambda P_{MLE}P(q_i|C)$$</p>
-<p>这种方法可能带来的问题是：</p>
+<h2 id="Query-characteristics"><a href="#Query-characteristics" class="headerlink" title="Query characteristics"></a>Query characteristics</h2><h3 id="Query-Length-Average-terms-per-query-3-5-terms"><a href="#Query-Length-Average-terms-per-query-3-5-terms" class="headerlink" title="Query Length: Average terms per query: 3.5 terms"></a>Query Length: Average terms per query: 3.5 terms</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/queryLen.jpg" class="ful-image" alt="queryLen.jpg">
+<h3 id="Who-queries"><a href="#Who-queries" class="headerlink" title="Who queries"></a>Who queries</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/whoQueries.jpg" class="ful-image" alt="whoQueries.jpg">
+<h3 id="Query-Frequency-Query-Frequency-Follows-a-Power-Law"><a href="#Query-Frequency-Query-Frequency-Follows-a-Power-Law" class="headerlink" title="Query Frequency: Query Frequency Follows a Power Law"></a>Query Frequency: Query Frequency Follows a Power Law</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/queryFreq.jpg" class="ful-image" alt="queryFreq.jpg">
+<p><strong>Power Law</strong><br>$$Frequency(q) = K*Rank(q)^{- \alpha}$$</p>
+<ul>
+<li>K: positive constant</li>
+<li>Rank(q): popularity rank(r=1 is the most popular)</li>
+<li>$\alpha$: constant, about 2.4 for the Excite query log</li>
+</ul>
+<p>和 Zipf’s law 一样的 shape，但不一样的斜率。</p>
+<p>一小部分的 query 非常常见，而大部分的 query 非常少见。 =&gt; 通过 <strong>缓存</strong> 来提高搜索效率。</p>
+<h3 id="Vary-over-time"><a href="#Vary-over-time" class="headerlink" title="Vary over time"></a>Vary over time</h3><p>最常见的 query 总是在不断变化<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/queryFreqVary.jpg" class="ful-image" alt="queryFreqVary.jpg"></p>
+<p>来自 google 的统计数据</p>
+<ul>
+<li>每天的 query 中有 20% 在之前从未出现过。(占每天所有 unique query 的 50%)</li>
+<li>8% 的 query 是名字(names)</li>
+</ul>
+<h1 id="Model-query"><a href="#Model-query" class="headerlink" title="Model query"></a>Model query</h1><ul>
+<li>Query topics: What<br>比如说在雅虎目录下的分类。</li>
+<li>User demographics: Who<br>如用户的年龄、性别（用户提供）、收入、教育程度（从邮编等信息推断）等。</li>
+<li>Session characteristics: How<br>eg. session length, number of queries/session, % of queries with low/high click entropy</li>
+</ul>
+<h1 id="Represent-users"><a href="#Represent-users" class="headerlink" title="Represent users"></a>Represent users</h1><p>需要用到的工具: Pseudo documents, clustering, control vocabulary<br><strong>How to represent users？</strong></p>
+<ul>
+<li>在 “what” 维度上对用户进行聚类</li>
+<li>在 (“who”,”how”) 维度上进一步 investigate groups</li>
+<li>根据 group 的显著特征对其打上标签</li>
+</ul>
+<p>根据用户的 query type 来对用户进行聚类：</p>
 <ol>
-<li>文档结构不规范，这种情况经常在 web 文档中出现，如果文档里本来包含了 query term 然而因为文档不规范而找不到相应的 element，那么 score 可能为 0。</li>
-<li>query 可能太严格。<br>– #AND[title](iphone)：不匹配 “Apple Cuts Phone Price”<br>– #AND[paragraph](solutions to poverty)： “poverty” 和 “solutions” 可能出现在不同的段落里</li>
+<li>从日志中得到 (user,query) pairs</li>
+<li>为用户创建 pseudo documents<br>标题: user id<br>内容: 每条 query 的前 10 篇文档对应的 Yahoo! 分类目录</li>
+<li>计算相似度<br>e.g. JS divergence, cosine</li>
 </ol>
-<p>解决方案是，多加一个 smoothing。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/formula.jpg" class="ful-image" alt="formula.jpg"></p>
-<h2 id="Multiple-elements"><a href="#Multiple-elements" class="headerlink" title="Multiple elements"></a>Multiple elements</h2><p>这里我们探讨右图的情况。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/multiple.jpg" class="ful-image" alt="multiple.jpg"></p>
-<p>两种方法 Aggregation OR Combination。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/pseudo.jpg" class="ful-image" alt="pseudo.jpg">
+<h2 id="Types-of-users"><a href="#Types-of-users" class="headerlink" title="Types of users"></a>Types of users</h2><p>这一部分主要是介绍不同类型的用户特征，这些聚类结果有什么用？=&gt; 为下一步的个性化搜索引擎做准备。</p>
+<h3 id="Informational-Users"><a href="#Informational-Users" class="headerlink" title="Informational Users"></a>Informational Users</h3><p><strong>How:</strong><br>• More likely to issue non-navigational queries<br>• Less likely to have single-click sessions<br>• More likely to use query suggestions</p>
+<p><strong>What:</strong><br>• Wide range of topics<br>• Little interest in adult content</p>
+<p><strong>Who:</strong><br>• More likely to be well-educated<br>• More likely to have above-average income</p>
+<h3 id="Navigational-Users"><a href="#Navigational-Users" class="headerlink" title="Navigational Users"></a>Navigational Users</h3><p><strong>How:</strong><br>• More likely to issue navigational queries<br>• More likely to have single-click sessions<br>• Less likely to use query suggestions</p>
+<p><strong>What:</strong><br>• Dominated by popular websites (Facebook, YouTube, Craigslist) Who<br>• Mostly representative of the entire population</p>
+<h3 id="Transactional-Users"><a href="#Transactional-Users" class="headerlink" title="Transactional Users"></a>Transactional Users</h3><p><strong>How:</strong><br>• Somewhat similar to navigational users. But, multiple sites can perform the transaction<br>• Diverse clicks<br>• Short interaction with search engine What<br>• Shopping, adult content, gaming</p>
+<p><strong>Who:</strong><br>• Depends heavily on the type of transaction<br>• Topic “recreation/games” associated with low income &amp; education</p>
+<h2 id="聚类结果-Selected-groups"><a href="#聚类结果-Selected-groups" class="headerlink" title="聚类结果 - Selected groups"></a>聚类结果 - Selected groups</h2><p><strong>Baby boomers:</strong><br>• 50 years old<br>• Interested in finance<br>• Simple navigational queries related to online banking</p>
+<p><strong>Challenged youth:</strong><br>• Average age of 34<br>• Low-income neighborhoods with low-level of education<br>• Interested in music<br>• Navigational sessions</p>
+<p><strong>Liberal females:</strong><br>• Mostly female from areas that voted Democratic<br>• Shopping queries<br>• Long sessions (browsing and comparison)</p>
+<p><strong>White conservatives:</strong><br>• Mostly male from areas that voted Republican<br>• Interested in automotive, business, home &amp; garden</p>
+<p><strong>Older users:</strong> Health / diseases &amp; conditions, gambling, travel<br><strong>People in their late 20s:</strong> Health / fitness, reproductive health<br><strong>Younger people:</strong> Games, education<br><strong>Low income:</strong> Music, comics &amp; animation, military<br><strong>Asian descent:</strong> Computers &amp; internet, programming &amp; development</p>
+<p><strong>Some topics typically receive few clicks:</strong><br>• News &amp; media, society &amp; culture, computers &amp; internet People are more likely to click on suggestions for some topics<br>• Health, science, arts</p>
+<p><strong>People with higher educational levels:</strong><br>• Tend to have shorter sessions<br>• Click on query suggestions less often<br>• Are more likely to submit tail queries</p>
+<h1 id="Segmenting-search-logs-into-sessions"><a href="#Segmenting-search-logs-into-sessions" class="headerlink" title="Segmenting search logs into sessions"></a>Segmenting search logs into sessions</h1><p>通常，我们会把 search log 划分为一个个基于 information need 的 dialogue<br>dialogue 形式，实际就是用户发出初始查询，搜索引擎给出结果，用户不满意，重新修改查询语句再次搜索，然后得到新的结果，不断循环的过程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Person: query</div><div class="line">Engine: search results</div><div class="line">Person: reformulated query</div><div class="line">Engine: new search results ...</div></pre></td></tr></table></figure></p>
+<p>那么问题来了，怎么来区分这些不同的 dialogues 呢？<br>我们定义 information need = a search session(dialogue)，最简单粗暴划分 session 的方法就是通过时间，比如说三十分钟内一系列的用户行为就算作一个 session。</p>
+<p>划分 session 可以考虑的因素：</p>
 <ul>
-<li>Aggregation: Combine inverted lists</li>
-<li>Combination: Combine scores</li>
+<li>Time: Same session iff |timestamp (q2) – timestamp| (q1) &lt; ∆<br>often ∆ = 30 minutes</li>
+<li>Common term: Same session iff q1 ∩ q2 ≠ Ø<br>Probably high Precision, low Recall</li>
+<li>Rewrite classes: Common reformulation patterns<br>E.g., term added, deleted, or replaced<br>Probably high Precision, low Recall</li>
+<li>Edit distance</li>
+<li>Co-occurrence<br>e.g., PMI, Chi-square of queries in a query log</li>
+<li>Same clicks<br>queries have co-occurring clicks in a query log</li>
+<li>Document categories<br>ODP or Yahoo page category overlap of top 10 results</li>
+<li>Same/overlap retrieved documents<br>JSD similarity of top 10 results<br>cosine distance among results</li>
+<li>Classifiers<br>…</li>
 </ul>
-<h3 id="Aggregation"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</h3><p>Indri 允许在 query 里指定 aggregation type</p>
+<p>训练一个分类器是最好的方法，对任意一对 queries 大概有 95-97% 的准确率。然而 heuristics 也不差，尤其是 edit distance 和 cosine distance among results 都非常有效，时间尺度通常会和其他 heuristic 合用，效果更佳。</p>
+<p>各种 heuristic 都可以作为分类器的 Features</p>
 <ul>
-<li>term.element<br>– 如果没有指定 element, 那么默认 element 为 Document<br>– Example: apple.inlink</li>
-<li>结果: 一个 inverted list 包含了一个 element 的所有 instance</li>
+<li>Temporal<br>– ≤ {5, 30, 60, 120} minutes, ∆ time, are_sequential</li>
+<li>Edit distance<br>– Several character and token-based metrics</li>
+<li>Query log<br>– Various types of (q1, q2) co-occurrence in a larger query log</li>
+<li>Web search<br>– Cosine distance of top 50 search results for each query<br>(“prisma”)</li>
 </ul>
-<p><strong>Example</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#wand( #wsum (0.3 apple.title 0.2 apple.inlink 0.5 apple.body ) #wsum (0.3 ipad.title 0.2 ipad.inlink 0.5 ipad.body ) )</div></pre></td></tr></table></figure></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ainlink.jpg" class="ful-image" alt="ainlink.jpg">
-<p><strong>问题：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#AND( breast.paragraph cancer.paragraph treatment.paragraph )</div></pre></td></tr></table></figure></p>
-<p>对这一个查询，用 Aggregation 的话以下两篇文档会得到一样的分数，然而其实 D2 要比 D1 更相关。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ap.jpg" class="ful-image" alt="ap.jpg"></p>
-<h3 id="Combination"><a href="#Combination" class="headerlink" title="Combination"></a>Combination</h3><p>用 #MAX, #SUM, #OR 等 query operators 来合并 element scores。<br>首先我们来认识一下 query。<br>E.g.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[document] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
-<p>最外面的 element 是 document, 所以对 documents 进行排序</p>
-<ol>
-<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
-<li>对上一步产生的结果 #SUM 运算，结果是一个 (document, score) 列表</li>
-</ol>
-<p>E.g.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[paragraph] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
-<p>最外面的 element 是 paragraph, 所以对 paragraphs 进行排序</p>
-<ol>
-<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
-<li>对上一步产生的结果 #SUM 运算，结果是一个 (paragraph, score) 列表</li>
-</ol>
-<p>来考虑下不同的 combine query operator 产生的影响。</p>
-<p><strong>#MAX[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 只考虑 best sentence<br><strong>#SUM[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– poorly matching sentences 会让分数变低<br><strong>#OR[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 偏好有更多匹配的 sentences 的文档</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/c4.jpg" class="ful-image" alt="c4.jpg">
-<p>• #MAX considers them equal<br>• #AND prefers C4<br>• #OR prefers C1<br>• #AVERAGE prefers C4</p>
-<h3 id="Comparsion"><a href="#Comparsion" class="headerlink" title="Comparsion"></a>Comparsion</h3><p>假定目标是检索有 paragraphs 讨论 breast cancer treatment 的文档<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/compare.jpg" class="ful-image" alt="compare.jpg"><br><strong>Combination:</strong> Partial credit for sections that partially match<br><strong>Aggregation:</strong> The terms might not all be in the same section</p>
-<h2 id="Extents"><a href="#Extents" class="headerlink" title="Extents"></a>Extents</h2><p>Using extents as evidence<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND(</div><div class="line">  #OR[document](</div><div class="line">      #AND[sentence](iraq war))</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
-<p>• 检索的是 document<br>• <strong>偏好</strong> ‘iraq’ and ‘war’ 在同一句话里的文档<br>– 出现在 title 里会让分数有稍稍的提高，因为有 smoothing</p>
-<p>Using extents as a constraint<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND (</div><div class="line">  iraq.sentence</div><div class="line">  war.sentence</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
-<p>• 检索的是 document<br>• <strong>要求</strong> ‘iraq’ and ‘war’ 必须出现在同一句话的文档<br>  – 出现在文档的其它部分并不会有任何帮助</p>
-<h2 id="HLT-Applications"><a href="#HLT-Applications" class="headerlink" title="HLT Applications"></a>HLT Applications</h2><p>文档结构可以由 annotation processes 产生<br>• E.g., named entity annotators, semantic role labelers, …</p>
-<p>Retrieval of elements, using semantic role annotations<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#and[sentence](</div><div class="line">  #and[target_verb]( Loves</div><div class="line">      #and[./agent]( John )</div><div class="line">      #and[./patient]( Mary ) ) )</div></pre></td></tr></table></figure></p>
-<p>• ./element specifies that element is a child of the parent field</p>
-<h1 id="Table-retrieval"><a href="#Table-retrieval" class="headerlink" title="Table retrieval"></a>Table retrieval</h1><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table.jpg" class="ful-image" alt="table.jpg">
-<p>实际就是一个把 table 转化为 structure document 的问题。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table2.jpg" class="ful-image" alt="table2.jpg"></p>
-<h1 id="Summaries"><a href="#Summaries" class="headerlink" title="Summaries"></a>Summaries</h1><p><strong>Fields</strong><br>• 用于 independent evidence (author, title, journal, …)<br>• 用于 multiple representations (url, title, body, …)<br>• 了解差异<br>• 了解各个检索模型如何支持这些 fields<br>• 了解在 query 中如何使用这些 fields</p>
-<p><strong>Hierarchical structure</strong><br>• 怎样在多个 elements 都有匹配时 combine evidence<br>• Exact-match vs. best-match document structure<br>• 了解 Indri 怎样支持这些 elements<br>• 了解在 query 中如何使用这些 elements</p>
+<p>我们训练分类器一般需要完成两个任务</p>
+<ul>
+<li>Boundary task: Given a pair of sequential queries</li>
+<li>Same task: Given a pair of queries</li>
+</ul>
+<h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><p>用户的信息需求可能是跨越了几天甚至是几周的，比如用户写论文、找学校信息等，可能出现的情况是：</p>
+<ul>
+<li>用户有交叉的任务<br>如查 paper 的时候顺便查下中午吃什么</li>
+<li>用户把一个任务分成若干个子任务分阶段完成<br>比如今天查为什么，明天查怎么做</li>
+<li>子任务可能看起来是独立的实际确实相关的</li>
+</ul>
 ]]></content>
       
         <categories>
@@ -10931,74 +10931,6 @@ python nb.py split.train split.test</pre>
             <tag> Search Engines </tag>
             
             <tag> 信息检索 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Distributed Systems笔记－Cryptographic Protocols]]></title>
-      <url>http://www.shuang0420.com/2016/11/02/Cryptographic-Protocols/</url>
-      <content type="html"><![CDATA[<p>CMU 95702 Distributed Systems 笔记。简单介绍几种加密、签名方式。<br><a id="more"></a></p>
-<p><a href="http://www.shuang0420.com/2016/10/02/AES%20%E5%92%8C%20RSA%E7%AC%94%E8%AE%B0/">AES 和 RSA 笔记</a> 的续章。</p>
-<h1 id="Scenario-1-Like-WWII-和-TEA"><a href="#Scenario-1-Like-WWII-和-TEA" class="headerlink" title="Scenario 1 (Like WWII 和 TEA)"></a>Scenario 1 (Like WWII 和 TEA)</h1><ol>
-<li>双方共享一把密钥。</li>
-<li>A 用密钥对信息加密。$E(K_AB,M_i)$，发送给 B</li>
-<li>B 用 $D(K_AB,{M_i}K_AB)$ 解密读取信息。</li>
-</ol>
-<p><strong>问题是：</strong><br>双方如何同步密钥？<br>怎么确定 B 收到的 ${M_i}K_AB$ 不是 replay of an old message?</p>
-<h1 id="Scenario-2-Like-Kerberos"><a href="#Scenario-2-Like-Kerberos" class="headerlink" title="Scenario 2 (Like Kerberos)"></a>Scenario 2 (Like Kerberos)</h1><ol>
-<li>A 向第三方 S 索要一张和 B 通话的 ticket。</li>
-<li>S 知道 A 的 password 所以他可以计算 $K_A$</li>
-<li>S 发送给 A $\{\{Ticket\}K_B,K_{AB}\}, K_A$</li>
-<li>A 知道自己的 password 所以可以计算 $K_A$，注意 A 的 password 不会在网络中传输。</li>
-<li>A 可以计算出 $K_{AB}$ 和 $\{Ticket\}K_B$</li>
-<li>A 向 B 发送一个读的请求，发送的信息是 $\{Ticket\}K_B$,Alice,Read</li>
-<li>B 用 $K_B$ 来读取 Ticket 的内容，Ticket 的内容是 $K_{AB}$，Alice</li>
-<li>A、B 可以用 session key 来交流了。</li>
-</ol>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg" class="ful-image" alt="Cryptographic-Protocols/scenario2.jpg">
-<p>可以防止 replay，但 <strong>问题是:</strong></p>
-<ul>
-<li>难以 scale,S 必须知道 $K_A$, $K_B$,…</li>
-<li>S 是唯一可能导致失败的因素。</li>
-</ul>
-<p>Kerberos 这一名词来源于希腊神话“三个头的狗——地狱之门守护者”系统设计上采用客户端/服务器结构与DES加密技术，并且能够进行相互认证，即客户端和服务器端均可对对方进行身份认证。可以用于防止窃听、防止 repla y攻击、保护数据完整性等场合，是一种应用对称密钥体制进行密钥管理的系统。</p>
-<h2 id="Needham-Schroeder-protocol"><a href="#Needham-Schroeder-protocol" class="headerlink" title="Needham-Schroeder protocol"></a>Needham-Schroeder protocol</h2><p>这层协议是 Kerberos 的基础，在这之后，Alice and Bob share a secret (KAB)</p>
-<h1 id="Scenario-3-Authentication"><a href="#Scenario-3-Authentication" class="headerlink" title="Scenario 3 (Authentication)"></a>Scenario 3 (Authentication)</h1><p>数字签名，用私钥签名，公钥解密。注意公钥加密比私钥慢 100-1000倍。<br>很难找到 digest(M1) == digest(M2)</p>
-<ol>
-<li>A 发送 Message＋用密钥加密的 Message 的 digest。{Digest(M)}$K_Apriv$</li>
-<li>B 收到签名的文件，取出 Message，计算 Message 的 digest。</li>
-<li>B 用 A 的公钥 $K_Apub$ 解密 {Digest(M)}$K_Apriv$ 然后和自己算的 digest 比较，如果匹配，签名验证。</li>
-</ol>
-<p><strong>问题：</strong><br>如果 A 说他没有签名？说自己的私钥泄漏了？只要 A、B 互相信任，还是有用的。</p>
-<h1 id="Scenario-4-Like-SSL"><a href="#Scenario-4-Like-SSL" class="headerlink" title="Scenario 4 (Like SSL)"></a>Scenario 4 (Like SSL)</h1><ol>
-<li>A 和 B 想要建立一个共享的密钥</li>
-<li>A 拿到 B 的公钥，这个公钥被可信任的第三方 T 签名认证了，所以这个公钥确实是 B 的。</li>
-<li>A 确认第三方 T 对 $K_Bpub$ 签名了。怎么确认？A 和 T 都有 B 的 public key，T 把 $K_Bpub$ 加密后给 A，A 对其进行解密然后比对自己手上的 B 的 public key 看是不是一致。</li>
-<li>A 生成了 $K_{AB}$ 并用 $K_Bpub$ 加密。</li>
-<li>B 有很多公钥所以 A 发送公钥的名字。</li>
-<li>A 发送了 key name $\{K_{AB}\}K_Bpub$</li>
-<li>B 用这个 key name 选择了对应的私钥并计算 $\{\{K_{AB}\}K_Bpub\}K_Bpriv == K_{AB}$</li>
-</ol>
-<p>最后 A 和 B 共享了对称的钥匙 $K_{AB}$</p>
-<p><strong>问题：</strong><br>在 A 第一次得到 B 的公钥时（A 认为这是 B 的公钥，然而这并不是，这是 C 也经过第三方 T 签名认证的公钥。</p>
-<p>TLS 和这个相似<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/TLS_config.jpg" class="ful-image" alt="Cryptographic-Protocols/TLS_config.jpg"></p>
-<h1 id="Message-Authentication-Codes-MACs"><a href="#Message-Authentication-Codes-MACs" class="headerlink" title="Message Authentication Codes(MACs)"></a>Message Authentication Codes(MACs)</h1><p>对称加密生成的数字签名。<br>双方都有 Key(K)，sender 把 Key(K) 通过 MAC 算法加密后连同 message 一起给 receiver，receiver 比对收到的 MAC 和自己用 MAC 算法对自己这里的 Key(K) 加密后的 MAC 是否一致，如果一致，那么信息真实性和完整性就得到了证实。</p>
-<p>用于数字签名，双方都算了一遍 MAC</p>
-<h1 id="JAVA-里的-keystore-和-truststore"><a href="#JAVA-里的-keystore-和-truststore" class="headerlink" title="JAVA 里的 keystore 和 truststore"></a>JAVA 里的 keystore 和 truststore</h1><p>keystore: 存了公钥、私钥、证书<br>truststore：存了公钥，只能存 server 发过来的东西</p>
-]]></content>
-      
-        <categories>
-            
-            <category> Distributed Systems </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Web Service </tag>
             
         </tags>
         
@@ -11060,6 +10992,74 @@ python nb.py split.train split.test</pre>
 </ul>
 <h3 id="Handle-duplicates"><a href="#Handle-duplicates" class="headerlink" title="Handle duplicates"></a>Handle duplicates</h3><p>根据 client 的 acknowledgement 来清空历史。</p>
 <h2 id="Request-Reply-Message-Structure"><a href="#Request-Reply-Message-Structure" class="headerlink" title="Request-Reply Message Structure"></a>Request-Reply Message Structure</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">messageType: int (0=Request, 1=Reply)</div><div class="line">requestId: int</div><div class="line">objectReference: RemoteObjectRef</div><div class="line">methodId: int or Method</div><div class="line">argument: array of bytes</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> Distributed Systems </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Web Service </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Distributed Systems笔记－Cryptographic Protocols]]></title>
+      <url>http://www.shuang0420.com/2016/11/02/Cryptographic-Protocols/</url>
+      <content type="html"><![CDATA[<p>CMU 95702 Distributed Systems 笔记。简单介绍几种加密、签名方式。<br><a id="more"></a></p>
+<p><a href="http://www.shuang0420.com/2016/10/02/AES%20%E5%92%8C%20RSA%E7%AC%94%E8%AE%B0/">AES 和 RSA 笔记</a> 的续章。</p>
+<h1 id="Scenario-1-Like-WWII-和-TEA"><a href="#Scenario-1-Like-WWII-和-TEA" class="headerlink" title="Scenario 1 (Like WWII 和 TEA)"></a>Scenario 1 (Like WWII 和 TEA)</h1><ol>
+<li>双方共享一把密钥。</li>
+<li>A 用密钥对信息加密。$E(K_AB,M_i)$，发送给 B</li>
+<li>B 用 $D(K_AB,{M_i}K_AB)$ 解密读取信息。</li>
+</ol>
+<p><strong>问题是：</strong><br>双方如何同步密钥？<br>怎么确定 B 收到的 ${M_i}K_AB$ 不是 replay of an old message?</p>
+<h1 id="Scenario-2-Like-Kerberos"><a href="#Scenario-2-Like-Kerberos" class="headerlink" title="Scenario 2 (Like Kerberos)"></a>Scenario 2 (Like Kerberos)</h1><ol>
+<li>A 向第三方 S 索要一张和 B 通话的 ticket。</li>
+<li>S 知道 A 的 password 所以他可以计算 $K_A$</li>
+<li>S 发送给 A $\{\{Ticket\}K_B,K_{AB}\}, K_A$</li>
+<li>A 知道自己的 password 所以可以计算 $K_A$，注意 A 的 password 不会在网络中传输。</li>
+<li>A 可以计算出 $K_{AB}$ 和 $\{Ticket\}K_B$</li>
+<li>A 向 B 发送一个读的请求，发送的信息是 $\{Ticket\}K_B$,Alice,Read</li>
+<li>B 用 $K_B$ 来读取 Ticket 的内容，Ticket 的内容是 $K_{AB}$，Alice</li>
+<li>A、B 可以用 session key 来交流了。</li>
+</ol>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg" class="ful-image" alt="Cryptographic-Protocols/scenario2.jpg">
+<p>可以防止 replay，但 <strong>问题是:</strong></p>
+<ul>
+<li>难以 scale,S 必须知道 $K_A$, $K_B$,…</li>
+<li>S 是唯一可能导致失败的因素。</li>
+</ul>
+<p>Kerberos 这一名词来源于希腊神话“三个头的狗——地狱之门守护者”系统设计上采用客户端/服务器结构与DES加密技术，并且能够进行相互认证，即客户端和服务器端均可对对方进行身份认证。可以用于防止窃听、防止 repla y攻击、保护数据完整性等场合，是一种应用对称密钥体制进行密钥管理的系统。</p>
+<h2 id="Needham-Schroeder-protocol"><a href="#Needham-Schroeder-protocol" class="headerlink" title="Needham-Schroeder protocol"></a>Needham-Schroeder protocol</h2><p>这层协议是 Kerberos 的基础，在这之后，Alice and Bob share a secret (KAB)</p>
+<h1 id="Scenario-3-Authentication"><a href="#Scenario-3-Authentication" class="headerlink" title="Scenario 3 (Authentication)"></a>Scenario 3 (Authentication)</h1><p>数字签名，用私钥签名，公钥解密。注意公钥加密比私钥慢 100-1000倍。<br>很难找到 digest(M1) == digest(M2)</p>
+<ol>
+<li>A 发送 Message＋用密钥加密的 Message 的 digest。{Digest(M)}$K_Apriv$</li>
+<li>B 收到签名的文件，取出 Message，计算 Message 的 digest。</li>
+<li>B 用 A 的公钥 $K_Apub$ 解密 {Digest(M)}$K_Apriv$ 然后和自己算的 digest 比较，如果匹配，签名验证。</li>
+</ol>
+<p><strong>问题：</strong><br>如果 A 说他没有签名？说自己的私钥泄漏了？只要 A、B 互相信任，还是有用的。</p>
+<h1 id="Scenario-4-Like-SSL"><a href="#Scenario-4-Like-SSL" class="headerlink" title="Scenario 4 (Like SSL)"></a>Scenario 4 (Like SSL)</h1><ol>
+<li>A 和 B 想要建立一个共享的密钥</li>
+<li>A 拿到 B 的公钥，这个公钥被可信任的第三方 T 签名认证了，所以这个公钥确实是 B 的。</li>
+<li>A 确认第三方 T 对 $K_Bpub$ 签名了。怎么确认？A 和 T 都有 B 的 public key，T 把 $K_Bpub$ 加密后给 A，A 对其进行解密然后比对自己手上的 B 的 public key 看是不是一致。</li>
+<li>A 生成了 $K_{AB}$ 并用 $K_Bpub$ 加密。</li>
+<li>B 有很多公钥所以 A 发送公钥的名字。</li>
+<li>A 发送了 key name $\{K_{AB}\}K_Bpub$</li>
+<li>B 用这个 key name 选择了对应的私钥并计算 $\{\{K_{AB}\}K_Bpub\}K_Bpriv == K_{AB}$</li>
+</ol>
+<p>最后 A 和 B 共享了对称的钥匙 $K_{AB}$</p>
+<p><strong>问题：</strong><br>在 A 第一次得到 B 的公钥时（A 认为这是 B 的公钥，然而这并不是，这是 C 也经过第三方 T 签名认证的公钥。</p>
+<p>TLS 和这个相似<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/TLS_config.jpg" class="ful-image" alt="Cryptographic-Protocols/TLS_config.jpg"></p>
+<h1 id="Message-Authentication-Codes-MACs"><a href="#Message-Authentication-Codes-MACs" class="headerlink" title="Message Authentication Codes(MACs)"></a>Message Authentication Codes(MACs)</h1><p>对称加密生成的数字签名。<br>双方都有 Key(K)，sender 把 Key(K) 通过 MAC 算法加密后连同 message 一起给 receiver，receiver 比对收到的 MAC 和自己用 MAC 算法对自己这里的 Key(K) 加密后的 MAC 是否一致，如果一致，那么信息真实性和完整性就得到了证实。</p>
+<p>用于数字签名，双方都算了一遍 MAC</p>
+<h1 id="JAVA-里的-keystore-和-truststore"><a href="#JAVA-里的-keystore-和-truststore" class="headerlink" title="JAVA 里的 keystore 和 truststore"></a>JAVA 里的 keystore 和 truststore</h1><p>keystore: 存了公钥、私钥、证书<br>truststore：存了公钥，只能存 server 发过来的东西</p>
 ]]></content>
       
         <categories>
