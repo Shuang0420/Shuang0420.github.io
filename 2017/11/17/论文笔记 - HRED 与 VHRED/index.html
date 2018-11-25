@@ -93,13 +93,13 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/11/17/论文笔记 - HRED 与 VHRED/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="介绍一下经典的 HRED 和 VHRED。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20HRED%20%E4%B8%8E%20VHRED/VHRED.png">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20HRED%20%E4%B8%8E%20VHRED/VHRED.png">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记 - HRED 与 VHRED">
 <meta name="twitter:description" content="介绍一下经典的 HRED 和 VHRED。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png">
 
 
 
@@ -391,7 +391,7 @@
 <p>第一个想法是将上一个句子的 final state 作为下一个句子的 initial state，然后将句子信息不断传递下去，这样的话 context vector 里的信息会在 propagation 的过程中会被新句子的词语逐步稀释，对信息/梯度的传播极不友好。</p>
 <p>因此为了让信息更好的传递，我们可能会考虑把 final state 传递到下一个句子的 last state，而不是 initial state，然后用拼接或者非线性的方法来表达之前的和当前的句子信息。</p>
 <p>更干脆的，直接将语境中的多个 utterance vector 提取出来再用一个 RNN 来处理，捕捉 context 信息，这就有了分层 RNN。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png">
+<img src="http://shuang0420.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png">
 <p>简单来说，HRED 在传统 encoder-decoder 模型上，额外增加了一个 encoder，相比于普通的 RNN-LM 来说，考虑了 turn-taking nature，能够对上下文进行建模，减少了相邻句子间的计算步骤，有助于信息/梯度的传播，从而实现多轮对话。整个过程有下面三个阶段：</p>
 <ol>
 <li><strong>encoder RNN</strong><br>第一个 encoder 和标准的 seq2seq 相同，将一句话编码到固定长度的 utterance vector，也就是 RNN 的 last hidden state<br>encoder RNN 或者说 utterance RNN 记忆的是对话的细节</li>
@@ -403,7 +403,7 @@
 <p><strong>Denoising auto-encoder(dAE)</strong> 在输入数据引入一些随机噪声，要求 auto-encoder 去重构加噪声之前的原始观测值，来增加模型鲁棒性，避免过拟合。</p>
 <p>而 <strong>Variational Autoencoder(VAE)</strong> 则是在中间层（hidden layer）引入噪音，来重构输入数据，因此 auto-encoder 出来的样本具有更高的全局性。</p>
 <p><strong>VHRED(Latent Variable Hierarchical Recurrent Encoder-Decoder Model)</strong>，就是在 HRED 基础上引入了 VAE 的思想，不同的是在 reconstruction 时生成的是下一个 utterance 而不是原来的 input。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20HRED%20%E4%B8%8E%20VHRED/VHRED.png" class="ful-image" alt="VHRED.png">
+<img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20HRED%20%E4%B8%8E%20VHRED/VHRED.png" class="ful-image" alt="VHRED.png">
 <p>VHRED 是为了解决 RNNLM 和 HRED 很难产生有意义的、高质量的回复而提出的。传统 Seq2Seq 倾向于产生短的安全回答（safe response），因为它有确定性的编码和解码过程，着重拟合具体、有限的回复样本，缺少对 response 语义信息的理解。另外 decoder 时两个目标，一是生成下一个 token，二是占据控制真实输出路径的 embedding space 的一个位置，来影响之后 token 的生成，而由于梯度衰减的影响，模型会更聚焦第一个目标，response 的产生更容易限于 token level，尤其对于 high-entropy 的句子，模型更偏好短期预测而不是长期预测，所以模型很难产生长的、高质量的回复。</p>
 <p>VHRED 针对这个问题引入了全局（语义层面）的随机因素，一是能增强模型的 robustness，二是能捕捉 high level concepts。Latent variable 使得 response 不再和一个/几个固定的句子绑定，鼓励了回复的多样性。</p>
 <p>和 HRED 不同的是，VHRED 在第二个 context RNN 产生 context vector c 后，由 c sample 了一些高斯随机变量 z（latent variable），期望值和标准差由 c 决定（前向网络+矩阵乘法得到 $\mu$，+矩阵乘法和 softplus 得到 $\Sigma$），高斯变量和 context vector 拼接就得到了包含全局噪声的 vector，作为每个时间的观测值，和 query vector 一起放到 decoder 里产生 response。</p>

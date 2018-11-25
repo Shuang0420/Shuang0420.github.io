@@ -93,36 +93,36 @@
 <meta property="og:url" content="http://www.shuang0420.com/2016/12/07/Search Engines笔记 - Diversity/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 11642 的课程笔记。一个 query 可能表现了不同的信息需求，之前的相关性模型可能带来的结果是大多文档只能满足同一个信息需求，所以有些用户满意了，有些 user 抓狂了。我们希望检索到的 document 是能够 diverse 的，这样的话可以尽可能的满足不同用户的需求。这一章就讲了怎么实现 diversity。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/MMR.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step1.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step3.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step4.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/JS.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/R_LTR.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/l2r.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquad.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquadd.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s1.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s3.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s4.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s5.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquadb.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.0.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.d.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.1.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.3.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.4.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/vs.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/%CE%B1-NDCG.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/MMR.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step1.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step3.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step4.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/JS.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/R_LTR.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/l2r.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquad.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquadd.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s1.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s3.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s4.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s5.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquadb.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.0.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.d.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.1.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.3.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.4.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/vs.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/%CE%B1-NDCG.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Search Engines笔记 - Diversity">
 <meta name="twitter:description" content="CMU 11642 的课程笔记。一个 query 可能表现了不同的信息需求，之前的相关性模型可能带来的结果是大多文档只能满足同一个信息需求，所以有些用户满意了，有些 user 抓狂了。我们希望检索到的 document 是能够 diverse 的，这样的话可以尽可能的满足不同用户的需求。这一章就讲了怎么实现 diversity。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/MMR.png">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/MMR.png">
 
 
 
@@ -456,17 +456,17 @@
 </li>
 </ul>
 <h3 id="Maximum-Marginal-Relevance-MMR"><a href="#Maximum-Marginal-Relevance-MMR" class="headerlink" title="Maximum Marginal Relevance (MMR)"></a>Maximum Marginal Relevance (MMR)</h3><p><strong>主要思路：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">• Use the query to retrieve a ranking R of documents</div><div class="line">• Use MMR to rerank the top N documents (build a new ranking S)</div><div class="line">  – Select the 1st document based on how well it satisfies the query</div><div class="line">  – Select subsequent documents based on two criteria</div><div class="line">    » How well it satisfies the query</div><div class="line">    » How different it is from documents ranked above it</div></pre></td></tr></table></figure></p>
-<p>MMR 是贪心算法(greedy algorithm)。在每一个 step，都选择一个文档插入最后的 ranking list。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/MMR.png" class="ful-image" alt="MMR.png"></p>
+<p>MMR 是贪心算法(greedy algorithm)。在每一个 step，都选择一个文档插入最后的 ranking list。<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/MMR.png" class="ful-image" alt="MMR.png"></p>
 <p>R: The initial ranking<br>S: Documents already selected for the diverse ranking<br>  – Documents ranked above this position<br>Sim(di, dj): Similarity metric<br>  – E.g., vector space model or Jensen-Shannon Divergence</p>
 <p>举个例子，假设$\lambda = 0.6$，初始排名及其相关性分数如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Initial Ranking</div><div class="line">d1, 0.80</div><div class="line">d2, 0.78</div><div class="line">d3, 0.76</div><div class="line">d4, 0.74</div><div class="line">d5, 0.72</div><div class="line">d6, 0.70</div></pre></td></tr></table></figure></p>
 <p>第一步，选择与 query 最相关的文档 d1，并从 R 中移除 d1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Diversified Ranking</div><div class="line">d1</div></pre></td></tr></table></figure></p>
-<p>计算剩余文档与 {d1} 的相似度和对应的多样性分数<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step1.jpg" class="ful-image" alt="step1.jpg"></p>
+<p>计算剩余文档与 {d1} 的相似度和对应的多样性分数<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step1.jpg" class="ful-image" alt="step1.jpg"></p>
 <p>选择分数最高的文档作为多样性排名的第 2 篇文档，并从 R 中移除该文档<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Diversified Ranking</div><div class="line">d1</div><div class="line">d5</div></pre></td></tr></table></figure></p>
-<p>分别计算剩余文档与已排序文档 {d1, d5} 的相似度，选相似度最大的值，计算 MMR 分数<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step2.jpg" class="ful-image" alt="step2.jpg"></p>
+<p>分别计算剩余文档与已排序文档 {d1, d5} 的相似度，选相似度最大的值，计算 MMR 分数<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step2.jpg" class="ful-image" alt="step2.jpg"></p>
 <p>选择分数最高的文档作为多样性排名的第 3 篇文档，并从 R 中移除该文档<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Diversified Ranking</div><div class="line">d1</div><div class="line">d5</div><div class="line">d3</div></pre></td></tr></table></figure></p>
-<p>分别计算剩余文档与已排序文档 {d1, d5, d3} 的相似度，选相似度最大的值，计算 MMR 分数<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step3.jpg" class="ful-image" alt="step3.jpg"></p>
+<p>分别计算剩余文档与已排序文档 {d1, d5, d3} 的相似度，选相似度最大的值，计算 MMR 分数<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step3.jpg" class="ful-image" alt="step3.jpg"></p>
 <p>选择分数最高的文档作为多样性排名的第 4 篇文档，并从 R 中移除该文档<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Diversified Ranking</div><div class="line">d1</div><div class="line">d5</div><div class="line">d3</div><div class="line">d6</div></pre></td></tr></table></figure></p>
-<p>分别计算剩余文档与已排序文档 d1, d5, d3, d6 的相似度，选相似度最大的值，计算 MMR 分数<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step4.jpg" class="ful-image" alt="step4.jpg"></p>
+<p>分别计算剩余文档与已排序文档 d1, d5, d3, d6 的相似度，选相似度最大的值，计算 MMR 分数<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/step4.jpg" class="ful-image" alt="step4.jpg"></p>
 <p>选择分数最高的文档作为多样性排名的第 5 篇文档，并从 R 中移除该文档<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Diversified Ranking</div><div class="line">d1</div><div class="line">d5</div><div class="line">d3</div><div class="line">d6</div><div class="line">d2</div></pre></td></tr></table></figure></p>
 <p><strong>Repeat until all documents in the initial ranking are added to the diversified ranking</strong></p>
 <p>所以就有了最后的排名 {d1, d5, d3, d6, d2}</p>
@@ -474,7 +474,7 @@
 <h4 id="Similarity"><a href="#Similarity" class="headerlink" title="Similarity"></a>Similarity</h4><p>关于相似度的衡量。<br><strong>Anything-to-Anything Similarity</strong><br>Vector space 可以比较任意两个向量的相似度，应用广泛，如聚类。<br>BM25 不能用 anything-to-anything similarity，但可以用 language modeling framework</p>
 <p><strong>Probabilistic Similarity</strong><br>也有很多专门来计算 probability distribution similarity 的方法。KL divergence 就是其中很受欢迎的一种，然而它是不对称的，Jensen-Shannon Divergence 则是 KL divergence 的一个 symmetric and smoothed 的版本。</p>
 <p>$$JS(x||y)={1 \over 2} KL(x||M) + {1 \over 2}KL(y|M)$$<br>$$M={x+y \over 2}$$</p>
-<p>放到两个 document 的比较里<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/JS.jpg" class="ful-image" alt="JS.jpg"></p>
+<p>放到两个 document 的比较里<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/JS.jpg" class="ful-image" alt="JS.jpg"></p>
 <p>它也经常会用在 anything-to-anything similarity tasks 中。</p>
 <h3 id="Learning-to-Rank-for-diversification"><a href="#Learning-to-Rank-for-diversification" class="headerlink" title="Learning to Rank for diversification"></a>Learning to Rank for diversification</h3><p>MMR 是无监督的，而 Learning-to-Rank 就是 MMR 的 supervised 版本。</p>
 <p>如果直接用传统的 learning-to-rank 模型来优化一个多样性指标 (e.g., α-NDCG)，也就是用和相同模型、相同特征，但是用基于多样性的训练数据（e.g., pointwise, pairwise, or listwise training data），来学习怎样产生 diversity ranking，会发生什么？</p>
@@ -488,7 +488,7 @@
 <li>关于 sub-intents 的特征</li>
 </ul>
 <p>因此，机器学习算法难以找到适用于多样性模型的合适的权重，相反，多样性的训练数据还会让学习模型感到困惑。所以有了一个解决方案： <strong>Relational-LeToR（R-LeToR）</strong>，既考虑单个文档，又考虑文档与文档之间的关系，也就是说除传统 LeToR 需要的 <strong>relevance feature</strong> 之外，R-LeToR 还考虑了 <strong>relationship features</strong>，relationship 也就是相似度，计算的是候选文档与 higher-ranked documents 的相似度(和 MMR 的计算过程相似)</p>
-<p>与传统 listwise Le2R 的区别是 ranking function 中多了 relational feature R：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/R_LTR.png" class="ful-image" alt="R_LTR.png"></p>
+<p>与传统 listwise Le2R 的区别是 ranking function 中多了 relational feature R：<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/R_LTR.png" class="ful-image" alt="R_LTR.png"></p>
 <h4 id="Relational-features"><a href="#Relational-features" class="headerlink" title="Relational features"></a>Relational features</h4><p>Relational features 由相关性函数得到，其输入是文档相似度。</p>
 <p>文档间的相似度可以通过下面的方法计算：<br><strong> 文本相似度（Text similarity）:</strong><br>– E.g. KL-Divergence of document language models<br><strong> 主题相似度（Topic similarity）:</strong><br>– E.g. Cosine between docs’ topic distributions in topic models<br><strong> 类别相似度（Category similarity）:</strong><br>– E.g. Overlap of docs’ categories in a predefined ontology<br><strong> 链接相似度（Link similarity）:</strong><br>– E.g. whether docs have hyperlinks to each other<br><strong> URL similarity:</strong><br>– E.g. whether docs are from same website or not.</p>
 <p>相关性函数可以是当前文档与 all higher-ranked doc 的：</p>
@@ -516,7 +516,7 @@
 <h4 id="Learning-and-Ranking"><a href="#Learning-and-Ranking" class="headerlink" title="Learning and Ranking"></a>Learning and Ranking</h4><p>学习的过程和 ListMLE 完全相同，损失函数仍然是 likelihood loss，用 SGD 优化。</p>
 <p>排序时，因为文档依赖于之前的位置，无法像 ListMLE 一样直接计算 ranking score，所以</p>
 <ul>
-<li>在 n 个位置的每一个位置上<br>» 从剩余的文档中选择 P(di|Si,w) 最高的文档<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/l2r.jpg" class="ful-image" alt="l2r.jpg">
+<li>在 n 个位置的每一个位置上<br>» 从剩余的文档中选择 P(di|Si,w) 最高的文档<img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/l2r.jpg" class="ful-image" alt="l2r.jpg">
 » 更新与其他文档的相似性特征 (O(n))</li>
 </ul>
 <p>整个复杂度是 $O(n^2)$，而由于多样性算法是一种重排序方法，所以 n 不是很大，大多数情况下 n &lt;1000</p>
@@ -541,7 +541,7 @@
 <li>目前可用的最有效的方法之一</li>
 </ul>
 <h4 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h4><p><strong>Assumptions:</strong><br>• 每个查询 q 都有 {q1, …, qk} 这么多 query intents<br>• 这些 query intents 都是相互独立的</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquad.jpg" class="ful-image" alt="xquad.jpg">
+<img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquad.jpg" class="ful-image" alt="xquad.jpg">
 <p>R: Initial ranking (produced by some other method)<br>S: Diversified ranking (initially empty)<br>τ: Desired length of diversified ranking<br>$\lambda$: Balance between relevance and diversity</p>
 <ol>
 <li>用相关性模型得到文档集合 R</li>
@@ -550,13 +550,13 @@
 <li>把 d* 加入 S</li>
 </ol>
 <p><strong>Selection criteria:</strong><br>relevance 和 diversity 的平衡<br>$$(1-\lambda)P(d|q) + \lambda P(d,\overline S|q)$$</p>
-<p><strong>Diversity component:</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquadd.jpg" class="ful-image" alt="xquadd.jpg"></p>
-<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p>E.g.,<br>Step 1:<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s1.jpg" class="ful-image" alt="s1.jpg"></p>
-<p>Step 2:<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s2.jpg" class="ful-image" alt="s2.jpg"></p>
-<p>Step 3:<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s3.jpg" class="ful-image" alt="s3.jpg"></p>
-<p>Step 4:<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s4.jpg" class="ful-image" alt="s4.jpg"></p>
-<p>Step 5:<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s5.jpg" class="ful-image" alt="s5.jpg"></p>
-<p>rank<br>xQuAD 偏好能够满足多个 intents 的文档<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquadb.jpg" class="ful-image" alt="xquadb.jpg"></p>
+<p><strong>Diversity component:</strong><br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquadd.jpg" class="ful-image" alt="xquadd.jpg"></p>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p>E.g.,<br>Step 1:<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s1.jpg" class="ful-image" alt="s1.jpg"></p>
+<p>Step 2:<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s2.jpg" class="ful-image" alt="s2.jpg"></p>
+<p>Step 3:<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s3.jpg" class="ful-image" alt="s3.jpg"></p>
+<p>Step 4:<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s4.jpg" class="ful-image" alt="s4.jpg"></p>
+<p>Step 5:<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/s5.jpg" class="ful-image" alt="s5.jpg"></p>
+<p>rank<br>xQuAD 偏好能够满足多个 intents 的文档<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/xquadb.jpg" class="ful-image" alt="xquadb.jpg"></p>
 <h4 id="Weighting-queries"><a href="#Weighting-queries" class="headerlink" title="Weighting queries"></a>Weighting queries</h4><p>Santos, et al 研究了 weighting queries 的三种方法</p>
 <ul>
 <li>Uniform weights: 1 / |Q|</li>
@@ -581,32 +581,32 @@
 <li>与 xQuAD 的相对性能取决于 datasets and explicit topics.</li>
 </ul>
 <h4 id="算法-1"><a href="#算法-1" class="headerlink" title="算法"></a>算法</h4><p>PM-2 的思想其实来源自选举制的比例代表制的一种方法：Sainte-Laguë method</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.jpg" class="ful-image" alt="pm2.jpg">
+<img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.jpg" class="ful-image" alt="pm2.jpg">
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">• At each rank r</div><div class="line">  – 选择下一个必须覆盖的查询意图 qi，来保持排名中的意图比例覆盖率</div><div class="line">  – 选择一个覆盖了意图 qi 的文档 d </div><div class="line">  » 同时，文档 d 也可能涵盖其他查询意图</div><div class="line">  – 从原始排名 R 中删除文档 d</div><div class="line">  – 把 d 加入多样化排名S</div></pre></td></tr></table></figure>
 <p><strong>怎么计算下一个必须覆盖的查询意图 qi？</strong><br>$$qt[i]={v_i\over 2s_i+1}$$</p>
 <p>vi 是分配给这个意图的总文档数，实际等于 p(qi|q) x len(S)<br>si 代表已经分配给这个意图的文档，初始值为 0<br>最高的 quotient score 就对应下一个必须覆盖的意图</p>
-<h4 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h4><p>E.g., 原始的相关性排名<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.0.jpg" class="ful-image" alt="pm2.0.jpg"></p>
+<h4 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h4><p>E.g., 原始的相关性排名<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.0.jpg" class="ful-image" alt="pm2.0.jpg"></p>
 <p><strong>假设：</strong><br>λ=0.6<br>p(qi|q)=0.5<br>Ranking depth=8</p>
 <p>Step 0: 初始化变量<br>计算分配给各个意图的文档数 <strong>votes v[i]</strong><br>v[1] = 0.5×8 = 4<br>v[2] = 0.5×8 = 4</p>
 <p>初始化 <strong>slots assigned s[i]</strong><br>s[1] = 0<br>s[2]=0</p>
 <p>Step 1，计算 quotient score<br>qt[1] = 4 / (2×0+1) = 4<br>qt[2] = 4 / (2×0+1) = 4</p>
 <p>选择分数高的意图作为下一个必须覆盖的意图<br>$i^* = 1$</p>
-<p>计算 PM2 分数<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.d.jpg" class="ful-image" alt="pm2.d.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.1.jpg" class="ful-image" alt="pm2.1.jpg"></p>
+<p>计算 PM2 分数<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.d.jpg" class="ful-image" alt="pm2.d.jpg"><br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.1.jpg" class="ful-image" alt="pm2.1.jpg"></p>
 <p>d2 wins!</p>
 <p>Step 2<br><strong>slots assigned s[i]</strong><br>$$s[i]=s[i]+{P(d^*|q_i) \over \sum_qP(d^* |q_j)}$$<br>s[1] = 0+0.8/(0.8+0.1) = 0.89<br>s[2] = 0+0.1/(0.8+0.1) = 0.11</p>
 <p><strong>Quotient scores qt[i]</strong><br>$$qt[i]={v_i\over 2s_i+1}$$<br>qt[1] = 4 / (2×0.89+1) = 1.44<br>qt[2] = 4 / (2×0.11+1) = 3.27</p>
 <p><strong>selected intent</strong><br>$$argmax_i qt[i]$$<br>$i^* = 2$</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.2.jpg" class="ful-image" alt="pm2.2.jpg">
+<img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.2.jpg" class="ful-image" alt="pm2.2.jpg">
 <p>d5 wins!</p>
 <p>Step 3<br>s[1] = 0.89+0.3/(0.3+0.8) = 1.16<br>s[2] = 0.11+0.8/(0.3+0.8) = 0.84</p>
 <p>qt[1] = 4 / (2×1.16+1) = 1.20<br>qt[2] = 4 / (2×0.84+1) = 1.49</p>
 <p>$i^*=2$</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.3.jpg" class="ful-image" alt="pm2.3.jpg">
+<img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.3.jpg" class="ful-image" alt="pm2.3.jpg">
 <p>d4 wins!</p>
 <p>Step 4<br>s[1] = 1.16+0.2/(0.2+0.7) = 1.38<br>s[2] = 0.84+0.7/(0.2+0.7) = 1.62</p>
 <p>qt[1] = 4 / (2×1.38+1) = 1.06<br>qt[2] = 4 / (2×1.62+1) = 0.95</p>
 <p>$i^* = 1$</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.4.jpg" class="ful-image" alt="pm2.4.jpg">
+<img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/pm2.4.jpg" class="ful-image" alt="pm2.4.jpg">
 <p>d1 wins!</p>
 <p>Repeat until all documents in the initial ranking are added to the diversified ranking</p>
 <h3 id="xQuAD-vs-pm2"><a href="#xQuAD-vs-pm2" class="headerlink" title="xQuAD vs pm2"></a>xQuAD vs pm2</h3><p>xQuAD 选择涵盖多个 intents 的文档</p>
@@ -618,7 +618,7 @@
 <li>然后选择一个覆盖这个 intent 的文档</li>
 <li>如果这个文档能覆盖其它 intents，那么给它加分</li>
 </ul>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/vs.jpg" class="ful-image" alt="vs.jpg">
+<img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/vs.jpg" class="ful-image" alt="vs.jpg">
 <h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>显式方法比 MMR 更有效。但需要一个 query intents 的外部来源，从网络搜索引擎获取的 intents 往往不能令人满意，因为它总是依赖于某一个组织。<br>xQuAD 和 PM-2 都是无监督的，效果不如有监督的模型 R-LeToR。</p>
 <p>理想情况下，我们希望能结合这些方法的优点</p>
 <ul>
@@ -662,7 +662,7 @@
 <li>允许了多值(multi-valued)的相关性评估</li>
 <li>忽略了排名的多样性</li>
 </ul>
-<p>它的变种 α-NDCG<br>Uses an intent-aware gain calculation<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/%CE%B1-NDCG.jpg" class="ful-image" alt="%CE%B1-NDCG.jpg"></p>
+<p>它的变种 α-NDCG<br>Uses an intent-aware gain calculation<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/%CE%B1-NDCG.jpg" class="ful-image" alt="%CE%B1-NDCG.jpg"></p>
 <p>The gain vector for α-NDCG discounts intent redundancy</p>
 <ul>
 <li>1-α controls the discount</li>
@@ -726,16 +726,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/07/Search Engines笔记 - Federated Search/" rel="next" title="Search Engines笔记 - Federated Search">
-                <i class="fa fa-chevron-left"></i> Search Engines笔记 - Federated Search
+              <a href="/2016/12/04/EM算法/" rel="next" title="EM算法">
+                <i class="fa fa-chevron-left"></i> EM算法
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/10/Distributed Systems笔记－NFS、AFS、GFS/" rel="prev" title="Distributed Systems笔记－NFS、AFS、GFS">
-                Distributed Systems笔记－NFS、AFS、GFS <i class="fa fa-chevron-right"></i>
+              <a href="/2016/12/07/Search Engines笔记 - Federated Search/" rel="prev" title="Search Engines笔记 - Federated Search">
+                Search Engines笔记 - Federated Search <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

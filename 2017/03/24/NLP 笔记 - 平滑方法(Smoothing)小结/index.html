@@ -93,21 +93,21 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/03/24/NLP 笔记 - 平滑方法(Smoothing)小结/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="系统总结下之前零零散散提到过的 smoothing 方法。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/1.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/3.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/4.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/5.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/9.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/8.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/6.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/7.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/8.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/1.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/3.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/4.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/5.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/9.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/8.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/6.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/7.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/8.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 笔记 - 平滑方法(Smoothing)小结">
 <meta name="twitter:description" content="系统总结下之前零零散散提到过的 smoothing 方法。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/1.jpg">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/1.jpg">
 
 
 
@@ -410,9 +410,9 @@
 <h2 id="Additive-smoothing"><a href="#Additive-smoothing" class="headerlink" title="Additive smoothing"></a>Additive smoothing</h2><h3 id="Add-one-smoothing"><a href="#Add-one-smoothing" class="headerlink" title="Add-one smoothing"></a>Add-one smoothing</h3><p>也叫 Laplace smoothing，假设 we saw each word one more time than we did，下面以 bigram model 为例给出加 1 平滑的模型<br>MLE estimate:<br>$$P_{MLE}(w_i|w_{i-1})={c(w_{i-1}w_i) \over c(w_{i-1})}$$<br>Add-1 estimate:<br>$$P_{Add-1}(w_i|w_{i-1})={c(w_{i-1}w_i)+1 \over c(w_{i-1})+V}$$</p>
 <p>通常情况下，V={w:c(w)$\gt$0}$\cup${UNK}</p>
 <p>举个例子，假设语料库为下面三个句子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">JOHN READ MOBY DICK</div><div class="line">MARY READ A DIFFERENT BOOK</div><div class="line">SHE READ A BOOK BY CHER</div></pre></td></tr></table></figure></p>
-<p>那么 JOHN READ A BOOK 这个句子的概率是：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/1.jpg" class="ful-image" alt="1.jpg"></p>
-<p>而 CHEN READ A BOOK 这个句子出现的概率是：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/2.jpg" class="ful-image" alt="2.jpg"></p>
-<p>如果使用加1平滑，那么概率就变成了：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/3.jpg" class="ful-image" alt="3.jpg"></p>
+<p>那么 JOHN READ A BOOK 这个句子的概率是：<br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/1.jpg" class="ful-image" alt="1.jpg"></p>
+<p>而 CHEN READ A BOOK 这个句子出现的概率是：<br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/2.jpg" class="ful-image" alt="2.jpg"></p>
+<p>如果使用加1平滑，那么概率就变成了：<br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/3.jpg" class="ful-image" alt="3.jpg"></p>
 <p>加 1 平滑通常情况下是一种很糟糕的算法，与其他平滑方法相比显得非常差，然而我们可以把加 1 平滑用在其他任务中，如文本分类，或者非零计数没那么多的情况下。</p>
 <h3 id="Additive-smoothing-1"><a href="#Additive-smoothing-1" class="headerlink" title="Additive smoothing"></a>Additive smoothing</h3><p>对加 1 平滑的改进就是把 1 改成 $\delta$，且 $0 \lt \delta \le 1$，也就是 pretend we’ve seen each n-gram $\delta$ times more than we have，当然，Gale &amp; Church(1994) 吐槽了这种方法，说表现很差。</p>
 <p>$$P_{Add-1}(w_i|w_{i-1})={c(w_{i-1}w_i)+\delta \over c(w_{i-1})+\delta V}$$</p>
@@ -440,22 +440,22 @@
 <p>$$<br>  \begin{aligned}<br>  p(w_n|w_{n-1}w_{n-2}) &amp; = \lambda_1 (w^{n-1}_{n-2})p(w_n|w_{n-1}w_{n-2}) \\<br>   &amp; + \lambda_2 (w^{n-1}_{n-2})p(w_n|w_{n-1})  \\<br>   &amp; + \lambda_3 (w^{n-1}_{n-2})p(w_n)<br>  \end{aligned}<br>$$</p>
 <p>通常 $\lambda w^{n-1}_{n-2}$ 是用 EM 算法，在 held-out data 上训练得到(held-out interpolation) 或者在 cross-validation 下训练得到(deleted interpolation)。$\lambda w^{n-1}_{n-2}$ 的值依赖于上下文，高频的上下文通常会有高的 lambdas。</p>
 <h2 id="Katz-smoothing"><a href="#Katz-smoothing" class="headerlink" title="Katz smoothing"></a>Katz smoothing</h2><p>回退式算法。和 Good-Turing 一样，对计数进行调整，以 bigram 为例，非 0 计数的 bigram 都根据打折比率 $d_r$ 进行打折，比率约为 ${r^* \over r}$，这个比率是由 Good-Turing 计算得到的，然后根据下一个低阶分布(如 unigram)，对没有出现过的 bigram 重新分配从非零计数中减去的值。</p>
-<p>以 bigram 为例看看它是怎么做的：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/4.jpg" class="ful-image" alt="4.jpg"></p>
-<p>对于 $d_r$ 的一些探讨，当一个 n-gram 出现次数足够大时，MLE 其实是一个可靠的概率估计，而当计数不是足够大时，就可以采用 Good-Turing 对其进行平滑，让计数为 0 时，退回低阶模型。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/5.jpg" class="ful-image" alt="5.jpg"></p>
-<h2 id="Witten-Bell-smoothing"><a href="#Witten-Bell-smoothing" class="headerlink" title="Witten-Bell smoothing"></a>Witten-Bell smoothing</h2><p>一个 JM smoothing 的实例，当 n-gram $w^i_{i-n+1}$ 在训练数据中出现的时候，我们应该用高阶模型，否则，用低阶模型。所以 $1-w^i_{i-n+1}$ 应该是一个单词在训练数据中没有出现在 $w^i_{i-n+1}$ 后面的概率，可以用跟在 $w^i_{i-n+1}$ 后的 unique words 的数量来估计，公式为：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/9.jpg" class="ful-image" alt="9.jpg"></p>
+<p>以 bigram 为例看看它是怎么做的：<br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/4.jpg" class="ful-image" alt="4.jpg"></p>
+<p>对于 $d_r$ 的一些探讨，当一个 n-gram 出现次数足够大时，MLE 其实是一个可靠的概率估计，而当计数不是足够大时，就可以采用 Good-Turing 对其进行平滑，让计数为 0 时，退回低阶模型。<br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/5.jpg" class="ful-image" alt="5.jpg"></p>
+<h2 id="Witten-Bell-smoothing"><a href="#Witten-Bell-smoothing" class="headerlink" title="Witten-Bell smoothing"></a>Witten-Bell smoothing</h2><p>一个 JM smoothing 的实例，当 n-gram $w^i_{i-n+1}$ 在训练数据中出现的时候，我们应该用高阶模型，否则，用低阶模型。所以 $1-w^i_{i-n+1}$ 应该是一个单词在训练数据中没有出现在 $w^i_{i-n+1}$ 后面的概率，可以用跟在 $w^i_{i-n+1}$ 后的 unique words 的数量来估计，公式为：<br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/9.jpg" class="ful-image" alt="9.jpg"></p>
 <p>举个例子来理解一下，考虑 spite 和 constant 的 bigram，在 Europarl corpus 中，两个 bigram 都出现了 993 次，以 spite 开始的 bigram 只有 9 种，大多数情况下 spite 后面跟着 of(979次)，因为 in spite of 是常见的表达，而跟在 constant 后的单词有 415 种，所以，我们更有可能见到一个跟在 constant 后面的 bigram，Witten-Bell 平滑就考虑了这种单词预测的多样性，所以：</p>
 <p>$1-\lambda_{spite}={9 \over 9+993}=0.00898$<br>$1-\lambda_{constant}={415 \over 415+993}=0.29474$</p>
 <h2 id="Absolute-discounting"><a href="#Absolute-discounting" class="headerlink" title="Absolute discounting"></a>Absolute discounting</h2><p>和 Jelinek-Mercer 相似，Absolute discounting 包括了对高阶和低阶模型的差值，然而它并不是用高阶模型的 $P_{ML}$ 乘以一个 lambda，而是从每个非零计数里减掉一个固定的 discount $\delta \in [0,1]$</p>
-<p>先简单的来看下 bigram model，加上 Absolute discounting 就是：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/8.jpg" class="ful-image" alt="8.jpg"></p>
-<p>完整的公式<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/6.jpg" class="ful-image" alt="6.jpg"></p>
+<p>先简单的来看下 bigram model，加上 Absolute discounting 就是：<br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/8.jpg" class="ful-image" alt="8.jpg"></p>
+<p>完整的公式<br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/6.jpg" class="ful-image" alt="6.jpg"></p>
 <p>一般来说，$\delta$ 就直接取 0.75 好啦~</p>
 <h2 id="Kneser-Ney-smoothing"><a href="#Kneser-Ney-smoothing" class="headerlink" title="Kneser-Ney smoothing"></a>Kneser-Ney smoothing</h2><p>是 Absolute discounting 的一个扩展，对回退部分做了一个修正。</p>
 <p><strong>Idea: </strong> 只有在高阶模型的计数很小或者为 0 时，低阶模型才显得重要，(换种说法，只有在 bigram 没有出现过时，unigram 才有用)，因此应针对该目的进行优化</p>
 <p>举个例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Shannon game: I can&apos;t see without my reading (Francisco/glasses)?</div></pre></td></tr></table></figure></p>
 <p>reading 后面跟 Francisco 还是 glasses 呢？因为 “San Francisco” 是个很常见的地名，所以 Francisco 有一个很高的 unigram 概率，比 glasses 高，而 Francisco 偏偏只在 San 后面出现，这就非常不合理。而更合理的方式是，给 Francisco 一个较低的 unigram 概率，这样，bigram 模型表现会更好。</p>
 <p>改进的方案是，我们不看 how likely is w，而去看 how likely is w to appear as a novel continuation，也就是，对每个单词，我们看它对应的 bigram type 的数量，然后，每个 bigram type 在第一次出现的时候都是 novel continuation</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/7.jpg" class="ful-image" alt="7.jpg">
-<p>所以最后的公式为:<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/8.jpg" class="ful-image" alt="8.jpg"></p>
+<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/7.jpg" class="ful-image" alt="7.jpg">
+<p>所以最后的公式为:<br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95%28Smoothing%29%E5%B0%8F%E7%BB%93/8.jpg" class="ful-image" alt="8.jpg"></p>
 <h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><ul>
 <li>影响最大的因素是使用 modified backoff distribution，如 Kneser-Ney smoothing</li>
 <li>Jelinek-Mercer 平滑在小型训练数据集上表现更好，而 Katz 在大型训练集上表现更好</li>

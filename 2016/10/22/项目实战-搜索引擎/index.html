@@ -93,13 +93,13 @@
 <meta property="og:url" content="http://www.shuang0420.com/2016/10/22/项目实战-搜索引擎/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 11642 的 project。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/indri_operator.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/indri_operator.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目实战--搜索引擎">
 <meta name="twitter:description" content="CMU 11642 的 project。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg">
 
 
 
@@ -397,7 +397,7 @@
 <li>评估 query，用 <a href="http://www.shuang0420.com/2016/09/11/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Query%20Processing/">DAAT 策略</a>，对 leaf node 的 evaluation 就是如果这个 term 的 inverted list 存在，就获取它，注意有些 query term 是没有 inverted list 的。</li>
 <li>对所有文档按文档分数降序排序，如果分数相同，按 external document id 升序排序。</li>
 </ul>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg" class="ful-image" alt="%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg">
+<img src="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg" class="ful-image" alt="%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg">
 <h1 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h1><p>不同模型支持的 operator 各有不同<br>系统需要支持的 Operator 有 #OR, #AND, #SYN, #NEAR/n, #WINDOW/n, 对 BM25 模型来说，还需要支持 #SUM，对 Indri 模型来说，还需要支持 #AND, #WAND, #WSUM, #WINDOW</p>
 <h1 id="Fields"><a href="#Fields" class="headerlink" title="Fields"></a>Fields</h1><p>系统支持的 fields 有 ‘url’, ‘keywords’ (from the html ‘meta’ tag), ‘title’, ‘body’, 和 ‘inlink’ 5 种，query 形式为 apple.title。</p>
 <h1 id="Query"><a href="#Query" class="headerlink" title="Query"></a>Query</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#Operator( term_1.field term_2.field ... term_n.field )</div><div class="line">apples</div><div class="line">#AND (apple bananas)</div><div class="line">#OR (apple bananas)</div><div class="line">#NEAR/3 (apple pie)</div><div class="line">#NEAR/5 (pie apple)</div></pre></td></tr></table></figure>
@@ -413,7 +413,7 @@
 <h3 id="Ranked-boolean-retrieval"><a href="#Ranked-boolean-retrieval" class="headerlink" title="Ranked boolean retrieval"></a>Ranked boolean retrieval</h3><p>每个文档的分数是 query term 在该文档中的 term frequency。</p>
 <h2 id="Best-match"><a href="#Best-match" class="headerlink" title="Best-match"></a>Best-match</h2><p><a href="http://www.shuang0420.com/2016/09/30/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Best-Match/">Search Engines笔记 - Best-Match</a></p>
 <h3 id="BM25"><a href="#BM25" class="headerlink" title="BM25"></a>BM25</h3><p>需要支持的 Operator 有 #SYN, #NEAR/n, #SUM</p>
-<h3 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h3><p>需要支持的 Operator 有 #AND(Indri #and), #WAND, #WSUM, #WINDOW。默认的 operator 是 #AND，注意这里的 #AND 和 boolean retrieval 中的算法不一样。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/indri_operator.jpg" class="ful-image" alt="%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/indri_operator.jpg"></p>
+<h3 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h3><p>需要支持的 Operator 有 #AND(Indri #and), #WAND, #WSUM, #WINDOW。默认的 operator 是 #AND，注意这里的 #AND 和 boolean retrieval 中的算法不一样。<br><img src="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/indri_operator.jpg" class="ful-image" alt="%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/indri_operator.jpg"></p>
 <h1 id="Query-expansion"><a href="#Query-expansion" class="headerlink" title="Query expansion"></a>Query expansion</h1><p>基本逻辑是把 initial query 当做 classifier，用它来 label 部分 data，得到 top-ranked documents，然后用 labeled data 来产生更优的 classifier。基本过程：</p>
 <ul>
 <li>用原始 query 检索文档</li>

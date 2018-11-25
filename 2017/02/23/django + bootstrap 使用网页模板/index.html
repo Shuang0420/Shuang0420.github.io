@@ -93,13 +93,13 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/02/23/django + bootstrap 使用网页模板/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="项目需要，快速上手 Django 的笔记。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/process.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/pic.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/process.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/pic.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="django + bootstrap 使用网页模板">
 <meta name="twitter:description" content="项目需要，快速上手 Django 的笔记。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/process.jpg">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/process.jpg">
 
 
 
@@ -367,7 +367,7 @@
 
       
         <p>项目需要，快速上手 Django 的笔记。<br><a id="more"></a></p>
-<h1 id="初识-Django"><a href="#初识-Django" class="headerlink" title="初识 Django"></a>初识 Django</h1><p>Django 使用了类似 MVC 的架构，只是在定义和解释上略为不同，称为 MTV ( Model–Template–View )。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/process.jpg" class="ful-image" alt="process.jpg"></p>
+<h1 id="初识-Django"><a href="#初识-Django" class="headerlink" title="初识 Django"></a>初识 Django</h1><p>Django 使用了类似 MVC 的架构，只是在定义和解释上略为不同，称为 MTV ( Model–Template–View )。<br><img src="http://shuang0420.clouddn.com/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/process.jpg" class="ful-image" alt="process.jpg"></p>
 <p>Django 处理 request 的流程:</p>
 <ul>
 <li>浏览器送出 HTTP request</li>
@@ -432,7 +432,7 @@
 <p>注意要修改 html 里引用 css 和 js 的路径，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;link href=&quot;/static/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</div></pre></td></tr></table></figure></p>
 <h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>修改 mysite 下的 settings.py，添加 templates 的目录路径以及 static files 的目录路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">TEMPLATES = [</div><div class="line">    &#123;</div><div class="line">        &apos;BACKEND&apos;: &apos;django.template.backends.django.DjangoTemplates&apos;,</div><div class="line">        &apos;DIRS&apos;: [&apos;your directory/mysite/mysite/templates&apos;],</div><div class="line">        &apos;APP_DIRS&apos;: True,</div><div class="line">        &apos;OPTIONS&apos;: &#123;</div><div class="line">            &apos;context_processors&apos;: [</div><div class="line">                &apos;django.template.context_processors.debug&apos;,</div><div class="line">                &apos;django.template.context_processors.request&apos;,</div><div class="line">                &apos;django.contrib.auth.context_processors.auth&apos;,</div><div class="line">                &apos;django.contrib.messages.context_processors.messages&apos;,</div><div class="line">            ],</div><div class="line">        &#125;,</div><div class="line">    &#125;,</div><div class="line">]</div><div class="line"></div><div class="line"></div><div class="line"># Static files (CSS, JavaScript, Images)</div><div class="line"># https://docs.djangoproject.com/en/1.10/howto/static-files/</div><div class="line"></div><div class="line">STATIC_URL = &apos;/static/&apos;</div><div class="line">STATICFILES_DIRS = (</div><div class="line">        &apos;your directory/mysite/static/&apos;,</div><div class="line">)</div></pre></td></tr></table></figure></p>
 <h2 id="渲染"><a href="#渲染" class="headerlink" title="渲染"></a>渲染</h2><p>修改 mysample/views.py，渲染 html 文件而不是仅仅输出一段文字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">from django.shortcuts import render</div><div class="line">from django.http import HttpResponse</div><div class="line">from django.template import loader</div><div class="line"></div><div class="line"># Create your views here.</div><div class="line">def index(request):</div><div class="line">    return render_to_response(&apos;index.html&apos;)</div></pre></td></tr></table></figure></p>
-<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/pic.jpg" class="ful-image" alt="pic.jpg">
+<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><img src="http://shuang0420.clouddn.com/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/pic.jpg" class="ful-image" alt="pic.jpg">
 <blockquote>
 <p>参考链接<br><a href="http://www.jianshu.com/p/9caff5c3ab49" target="_blank" rel="external">Django简易教程之一（models）</a><br><a href="https://docs.djangoproject.com/en/1.8/intro/" target="_blank" rel="external">Django document</a><br><a href="http://django-intro-zh.readthedocs.io/zh_CN/latest/" target="_blank" rel="external">Django-intro 中文版</a></p>
 </blockquote>

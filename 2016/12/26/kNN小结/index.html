@@ -93,17 +93,17 @@
 <meta property="og:url" content="http://www.shuang0420.com/2016/12/26/kNN小结/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="回顾传统 kNN 算法以及优化方法。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/1.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/4.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/5.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/6.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/7.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/1.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/4.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/5.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/6.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/7.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kNN 小结">
 <meta name="twitter:description" content="回顾传统 kNN 算法以及优化方法。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/1.jpg">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/1.jpg">
 
 
 
@@ -381,7 +381,7 @@
 <p>$$d(x,y):=\sqrt {(x_1-y_1)^2+(x_2-y_2)^2+…+(x_n-y_n)^2}=\sqrt {\sum^n_{i=1}(x_i-y_i)^2}$$</p>
 <p>保存前 K 个点，可以用 <strong>最大堆(Max Heap)</strong> 实现。</p>
 <p>根据具体的问题，距离也可以采用 <strong>余弦距离、海明距离、编辑距离</strong> 等等。</p>
-<h1 id="k-值选取"><a href="#k-值选取" class="headerlink" title="k 值选取"></a>k 值选取</h1><img src="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/1.jpg" class="ful-image" alt="1.jpg">
+<h1 id="k-值选取"><a href="#k-值选取" class="headerlink" title="k 值选取"></a>k 值选取</h1><img src="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/1.jpg" class="ful-image" alt="1.jpg">
 <p>k 的选取是很重要的，看上面一个例子，蓝色和红色分别代表两个不同的类 B 和 R，绿色是输入 instance，我们要对其进行分类，可以发现，k 取 3 和 5 得到的分类结果是完全不同的。</p>
 <ul>
 <li>k=3，新的 instance 属于 R 类别，因为离它最近的 3 个 instance 是有 2 个属于 R，1 个属于 B。</li>
@@ -389,7 +389,7 @@
 </ul>
 <p>所以，<strong>k 怎么选？</strong></p>
 <p>事实上，通常来说，我们在一开始会选取一个较小的 k 值(k=1)，然后采取交叉验证(cross-validation)的方法，直到 k=n，取使交叉验证得到最好的结果的那个 k，经验上，k 小于数据集大小的平方根。</p>
-<p><strong>k 值太小 or k 值太大</strong><br>k 值太小容易产生过拟合，因为它很容易学到噪声，比如说 k=1，那么就只用看和输入 instance 最邻近的一个 instance，举个例子吧<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/2.jpg" class="ful-image" alt="2.jpg"></p>
+<p><strong>k 值太小 or k 值太大</strong><br>k 值太小容易产生过拟合，因为它很容易学到噪声，比如说 k=1，那么就只用看和输入 instance 最邻近的一个 instance，举个例子吧<br><img src="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/2.jpg" class="ful-image" alt="2.jpg"></p>
 <p>而另一方面，k 值太大，那么意味着你的模型变得更加的简单，比如说 k=N(N为训练样本的个数)，那么无论输入的 instance 是什么类别，都会归到训练集中 instance 最多的那个类，也就是说，根本没有进行训练，只是简单的 count 而已，并没有利用训练集的其他大量的有用信息。</p>
 <h1 id="评价"><a href="#评价" class="headerlink" title="评价"></a>评价</h1><p>KNN 是一种 instance-based method，对于未知和非正态分布的数据可以取得较高的分类准确率，优缺点如下：</p>
 <p><strong>优点：</strong></p>
@@ -412,19 +412,19 @@
 <h3 id="加快搜索-k-近邻"><a href="#加快搜索-k-近邻" class="headerlink" title="加快搜索 k 近邻"></a>加快搜索 k 近邻</h3><p>主要通过快速的搜索算法来实现，采用一定的方法加快搜索速度或减小搜索范围，如可以构造交叉索引表，利用匹配成功与否的历史来修改样本库的结构，使用样本和概念来构造层次或网络来组织训练样本。</p>
 <p>常用的方法是先建立数据索引，然后再进行快速匹配。因为实际数据一般都会呈现出簇状的聚类形态，通过设计有效的索引结构可以大大加快检索的速度。索引树属于这一类，其基本思想就是对搜索空间进行层次划分。根据划分的空间是否有混叠可以分为 Clipping 和 Overlapping 两种。前者划分空间没有重叠，其代表就是 k-d 树；后者划分空间相互有交叠，其代表为 R 树。(这里只介绍k-d树)</p>
 <h4 id="KD-Tree"><a href="#KD-Tree" class="headerlink" title="KD Tree"></a>KD Tree</h4><h5 id="构建-k-d-tree"><a href="#构建-k-d-tree" class="headerlink" title="构建 k-d tree"></a>构建 k-d tree</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">1.If Data-set为空，则返回空的k-d tree</div><div class="line">2.调用节点生成程序：</div><div class="line">    - 确定split域</div><div class="line">    对于所有描述子数据（特征矢量），统计它们在每个维上的数据方差。以SURF特征为例，描述子为64维，可计算64个方差。挑选出最大值，对应的维就是split域的值。数据方差大表明沿该坐标轴方向上的数据分散得比较开，在这个方向上进行数据分割有较好的分辨率</div><div class="line">    - 确定Node-data域</div><div class="line">    数据点集Data-set按其第split域的值排序。位于正中间的那个数据点被选为Node-data。此时新的Data-set&apos; = Data-set\Node-data（除去其中Node-data这一点）。</div><div class="line">3.dataleft = &#123;d属于Data-set&apos; &amp;&amp; d[split] ≤ Node-data[split]&#125;</div><div class="line">  Left_Range = &#123;Range &amp;&amp; dataleft&#125;</div><div class="line">  dataright = &#123;d属于Data-set&apos; &amp;&amp; d[split] &gt; Node-data[split]&#125;</div><div class="line">  Right_Range = &#123;Range &amp;&amp; dataright&#125;</div><div class="line">4.left = 由（dataleft，Left_Range）建立的k-d tree，即递归调用 createKDTree（dataleft，Left_Range）并设置 left 的 parent 域为 Kd；</div><div class="line">  right = 由（dataright，Right_Range）建立的k-d tree，即调用createKDTree（dataleft，Left_Range）并设置 right 的 parent 域为 Kd。</div></pre></td></tr></table></figure>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/4.jpg" class="ful-image" alt="4.jpg">
+<img src="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/4.jpg" class="ful-image" alt="4.jpg">
 <p>如上图的 2 维数据，构建 KD Tree 过程：</p>
 <ul>
 <li>确定 split 域的首先该取的值。分别计算 x，y 方向上数据的方差得知x方向上的方差最大，所以 split 域值首先取0，也就是 x 轴方向；</li>
 <li>确定 Node-data 的域值。根据 x 轴方向的值 2,4,5,7,8,9 排序选出中值为7，所以 Node-data = (7,2)。这样，该节点的分割超平面就是通过(7,2)并垂直于 split = 0(x轴)的直线x = 7；</li>
 <li>确定左子空间和右子空间。分割超平面x = 7将整个空间分为两部分，如图2所示。x &lt; =  7的部分为左子空间，包含3个节点{(2,3)，(5,4)，(4,7)}；另一部分为右子空间，包含2个节点{(9,6)，(8,1)}。</li>
 </ul>
-<p>最后生成的 k-d 树。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/5.jpg" class="ful-image" alt="5.jpg"></p>
+<p>最后生成的 k-d 树。<br><img src="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/5.jpg" class="ful-image" alt="5.jpg"></p>
 <h5 id="k-d-tree-寻找"><a href="#k-d-tree-寻找" class="headerlink" title="k-d tree 寻找"></a>k-d tree 寻找</h5><p>星号表示要查询的点(2.1,3.1)。通过二叉搜索，顺着搜索路径很快就能找到最邻近的近似点，也就是叶子节点(2,3)。而找到的叶子节点并不一定就是最邻近的，最邻近肯定距离查询点更近，应该位于以查询点为圆心且通过叶子节点的圆域内。为了找到真正的最近邻，还需要进行’回溯’操作：算法沿搜索路径反向查找是否有距离查询点更近的数据点。此例中先从(7,2)点开始进行二叉查找，然后到达(5,4)，最后到达(2,3)，此时搜索路径中的节点为&lt;(7,2)，(5,4)，(2,3)&gt;，首先以(2,3)作为当前最近邻点，计算其到查询点(2.1,3.1)的距离为0.1414，然后回溯到其父节点(5,4)，并判断在该父节点的其他子节点空间中是否有距离查询点更近的数据点。以(2.1,3.1)为圆心，以0.1414为半径画圆，如图4所示。发现该圆并不和超平面y = 4交割，因此不用进入(5,4)节点右子空间中去搜索。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/6.jpg" class="ful-image" alt="6.jpg">
+<img src="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/6.jpg" class="ful-image" alt="6.jpg">
 <p>再回溯到(7,2)，以(2.1,3.1)为圆心，以0.1414为半径的圆更不会与x = 7超平面交割，因此不用进入(7,2)右子空间进行查找。至此，搜索路径中的节点已经全部回溯完，结束整个搜索，返回最近邻点(2,3)，最近距离为0.1414。</p>
 <p>一个复杂点的例子如查找点为(2，4.5)。同样先进行二叉查找，先从(7,2)查找到(5,4)节点，在进行查找时是由y = 4为分割超平面的，由于查找点为y值为4.5，因此进入右子空间查找到(4,7)，形成搜索路径&lt;(7,2)，(5,4)，(4,7)&gt;，取(4,7)为当前最近邻点，计算其与目标查找点的距离为3.202。然后回溯到(5,4)，计算其与查找点之间的距离为3.041。以(2，4.5)为圆心，以3.041为半径作圆，如图5所示。可见该圆和y = 4超平面交割，所以需要进入(5,4)左子空间进行查找。此时需将(2,3)节点加入搜索路径中得&lt;(7,2)，(2,3)&gt;。回溯至(2,3)叶子节点，(2,3)距离(2,4.5)比(5,4)要近，所以最近邻点更新为(2，3)，最近距离更新为1.5。回溯至(7,2)，以(2,4.5)为圆心1.5为半径作圆，并不和x = 7分割超平面交割，如图6所示。至此，搜索路径回溯完。返回最近邻点(2,3)，最近距离1.5。k-d树查询算法的伪代码如表3所示。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/7.jpg" class="ful-image" alt="7.jpg">
+<img src="http://shuang0420.clouddn.com/images/kNN%E5%B0%8F%E7%BB%93/7.jpg" class="ful-image" alt="7.jpg">
 <p>上述两次实例表明，当查询点的邻域与分割超平面两侧空间交割时，需要查找另一侧子空间，导致检索过程复杂，效率下降。研究表明 N 个节点的 K 维 k-d 树搜索过程时间复杂度为：$O_{worst}=O(kN^{1-1/k})$。</p>
 <p>关于 kd tree 的介绍来自于 <a href="http://www.cnblogs.com/eyeszjwang/articles/2429382.html" target="_blank" rel="external">k-d tree算法</a></p>
 <h2 id="训练样本的维护"><a href="#训练样本的维护" class="headerlink" title="训练样本的维护"></a>训练样本的维护</h2><p>对训练样本库进行维护以满足 KNN 算法的需要，包括对训练样本库中的样本进行添加或删除。对样本库的维护并不是简单的增加删除样本，而是可采用适当的办法来保证空间的大小，如符合某种条件的样本可以加入数据库中，同时可以对数据库库中已有符合某种条件的样本进行删除。从而保证训练样本库中的样本提供 KNN 算法所需要的相对均匀的特征空间。</p>

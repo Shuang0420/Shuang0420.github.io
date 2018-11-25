@@ -93,13 +93,13 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/02/08/推荐系统--用户行为和实验设计/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="主要介绍推荐系统用户行为数据、实验设计，是接下来算法实验的基础。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/beCom.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/uir.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/beCom.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/uir.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="推荐系统--用户行为和实验设计">
 <meta name="twitter:description" content="主要介绍推荐系统用户行为数据、实验设计，是接下来算法实验的基础。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/beCom.jpg">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/beCom.jpg">
 
 
 
@@ -384,7 +384,7 @@
 <li>显性反馈行为(explicit feedback)<br>用户评分、喜欢/不喜欢</li>
 <li>隐性反馈行为(implicit feedback)<br>页面浏览行为、消费行为</li>
 </ul>
-<p>两者比较<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/beCom.jpg" class="ful-image" alt="beCom.jpg"></p>
+<p>两者比较<br><img src="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/beCom.jpg" class="ful-image" alt="beCom.jpg"></p>
 <p><strong>如何表示用户：</strong></p>
 <ul>
 <li>user id<br>产生行为的用户</li>
@@ -401,7 +401,7 @@
 <li>有上下文信息的隐性反馈数据集<br>包含 user id, item id, 用户对物品产生行为的 timestamp<br>如 Lastfm</li>
 <li>有上下文信息的显性反馈数据集<br>包含 user id, item id, 物品评分, 用户对物品产生行为的 timestamp<br>如 Netflix Prize</li>
 </ul>
-<h2 id="用户行为分析"><a href="#用户行为分析" class="headerlink" title="用户行为分析"></a>用户行为分析</h2><p><strong>物品流行度</strong> 和 <strong>用户活跃度</strong> 都近似于 <strong>长尾分布</strong>。下图表示用户活跃度和物品流行度的关系(MovieLens 数据集)。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/uir.jpg" class="ful-image" alt="uir.jpg"></p>
+<h2 id="用户行为分析"><a href="#用户行为分析" class="headerlink" title="用户行为分析"></a>用户行为分析</h2><p><strong>物品流行度</strong> 和 <strong>用户活跃度</strong> 都近似于 <strong>长尾分布</strong>。下图表示用户活跃度和物品流行度的关系(MovieLens 数据集)。<br><img src="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/uir.jpg" class="ful-image" alt="uir.jpg"></p>
 <p>一般认为，新用户倾向于浏览热门物品，因为对网站不熟悉，只能点击首页的热门物品，而老用户会逐渐开始浏览冷门物品。</p>
 <p>仅仅基于用户行为数据设计的推荐算法一般称为协同过滤算法，有很多种方法，这里介绍 <strong>基于邻域的方法(neighborhood-based)</strong>, <strong>隐语义模型(latent factor model)</strong>, <strong>基于图的随机游走算法(random walk on graph)</strong>，这其中，最有名、在业界得到最广泛应用的算法是基于邻域的方法。接下来的博客会一一讨论这些算法。</p>
 <h1 id="实验设计"><a href="#实验设计" class="headerlink" title="实验设计"></a>实验设计</h1><h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><p>采用 GroupLens 提供的 MovieLens 数据集，选中等大小的数据集，包含 6000 多用户对 4000 多部电影的 100 万条评分。</p>

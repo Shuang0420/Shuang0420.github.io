@@ -93,19 +93,19 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/09/05/项目实战-知识图谱初探/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="实践了下怎么建一个简单的知识图谱，两个版本，一个从 0 开始(start from scratch)，一个在 CN-DBpedia 基础上补充，把 MySQL，PostgreSQL，Neo4j 数据库都尝试了下。自己跌跌撞撞摸索可能踩坑了都不知道，欢迎讨论。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/CN_DBpedia%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/CN_DBpedia.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/%E7%9F%A5%E8%AF%86%E8%8E%B7%E5%8F%96.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/cfi.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/cninfo.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/spo.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/eg.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/show2.png">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/CN_DBpedia%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/CN_DBpedia.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/%E7%9F%A5%E8%AF%86%E8%8E%B7%E5%8F%96.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/cfi.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/cninfo.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/spo.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/eg.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/show2.png">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目实战--知识图谱初探">
 <meta name="twitter:description" content="实践了下怎么建一个简单的知识图谱，两个版本，一个从 0 开始(start from scratch)，一个在 CN-DBpedia 基础上补充，把 MySQL，PostgreSQL，Neo4j 数据库都尝试了下。自己跌跌撞撞摸索可能踩坑了都不知道，欢迎讨论。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/CN_DBpedia%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B.png">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/CN_DBpedia%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B.png">
 
 
 
@@ -374,7 +374,7 @@
       
         <p>实践了下怎么建一个简单的知识图谱，两个版本，一个从 0 开始(start from scratch)，一个在 CN-DBpedia 基础上补充，把 MySQL，PostgreSQL，Neo4j 数据库都尝试了下。自己跌跌撞撞摸索可能踩坑了都不知道，欢迎讨论。<br><a id="more"></a></p>
 <h1 id="CN-DBpedia-构建流程"><a href="#CN-DBpedia-构建流程" class="headerlink" title="CN-DBpedia 构建流程"></a>CN-DBpedia 构建流程</h1><p>知识库可以分为两种类型，一种是以 Freebase，Yago2 为代表的 Curated KBs，主要从维基百科和 WordNet 等知识库中抽取大量的实体及实体关系，像是一种结构化的维基百科。另一种是以 Stanford OpenIE，和我们学校 Never-Ending Language Learning (NELL) 为代表的 Extracted KBs，直接从上亿个非结构化网页中抽取实体关系三元组。与 Freebase 相比，这样得到的知识更加<strong>多样性</strong>，但同时精确度要低于 Curated KBs，因为实体关系和实体更多的是<strong>自然语言</strong>的形式，如“奥巴马出生在火奴鲁鲁。” 可以被表示为（“Obama”, “was also born in”, “ Honolulu”），</p>
-<p>下面以 CN-DBpedia 为例看下知识图谱大致是怎么构建的。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/CN_DBpedia%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B.png" class="ful-image" alt="CN_DBpedia%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B.png"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/CN_DBpedia.png" class="ful-image" alt="CN_DBpedia.png"></p>
+<p>下面以 CN-DBpedia 为例看下知识图谱大致是怎么构建的。<br><img src="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/CN_DBpedia%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B.png" class="ful-image" alt="CN_DBpedia%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B.png"><br><img src="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/CN_DBpedia.png" class="ful-image" alt="CN_DBpedia.png"></p>
 <p>上图分别是 CN-DBpedia 的构建流程和系统架构。知识图谱的构建是一个浩大的工程，从大方面来讲，分为<strong>知识获取、知识融合、知识验证、知识计算和应用</strong>几个部分，也就是上面架构图从下往上走的一个流程，简单来走一下这个流程。</p>
 <h2 id="数据支持层"><a href="#数据支持层" class="headerlink" title="数据支持层"></a>数据支持层</h2><p>最底下是知识获取及存储，或者说是<strong>数据支持层</strong>，首先从不同来源、不同结构的数据中<strong>获取</strong>知识，CN-DBpedia 的知识来源主要是通过爬取各种百科知识这类半结构化数据。</p>
 <p>至于<strong>数据存储</strong>，要考虑的是选什么样的数据库以及怎么设计 schema。选<strong>关系数据库</strong>还是<strong>NoSQL 数据库</strong>？要不要用<strong>内存数据库</strong>？要不要用<strong>图数据库</strong>？这些都需要根据数据场景慎重选择。CN-DBpedia 实际上是基于 mongo 数据库，参与开发的谢晨昊提到，一般只有在基于特定领域才可能会用到图数据库，就知识图谱而言，基于 json(bson) 的 mongo 就足够了。用到图查询的领域如征信，一般是需要要找两个公司之间的关联交易，会用到最短路径/社区计算等。</p>
@@ -387,7 +387,7 @@
 <li>从半结构化（网站）数据中获取知识：使用包装器<br>难点：方便的包装器定义方法，包装器自动生成、更新与维护</li>
 <li>从文本中获取知识：信息抽取<br>难点：结果的准确率与覆盖率</li>
 </ul>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/%E7%9F%A5%E8%AF%86%E8%8E%B7%E5%8F%96.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E8%8E%B7%E5%8F%96.png">
+<img src="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/%E7%9F%A5%E8%AF%86%E8%8E%B7%E5%8F%96.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E8%8E%B7%E5%8F%96.png">
 <p>尤其是纯文本数据会涉及到的 <strong>实体识别、实体链接、实体关系识别、概念抽取</strong> 等，需要用到许多自然语言处理的技术，包括但不仅限于分词、词性标注、分布式语义表达、篇章潜在主题分析、同义词构建、语义解析、依存句法、语义角色标注、语义相似度计算等等。</p>
 <p>第二部分才到融合，目的是将不同数据源获取的知识进行融合构建数据之间的关联。包括 <strong>实体对齐、属性对齐、冲突消解、规范化</strong> 等，这一部分很多都是 dirty work，更多的是做一个数据的映射、实体的匹配，可能还会涉及的是本体的构建和融合。最后融合而成的知识库存入上一部分提到的数据库中。如有必要，也需要如 Spark 等大数据平台提供高性能计算能力，支持快速运算。</p>
 <p>知识融合的四个难点：</p>
@@ -414,16 +414,16 @@
 <li><a href="http://data.cfi.cn/cfidata.aspx" target="_blank" rel="external">中财网数据引擎</a></li>
 <li><a href="http://www.cninfo.com.cn/cninfo-new/index" target="_blank" rel="external">巨潮资讯</a></li>
 </ul>
-<p>其中巨潮资讯还可以同时爬取高管以及公告信息。看一下数据<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/cfi.png" class="ful-image" alt="cfi.png"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/cninfo.png" class="ful-image" alt="cninfo.png"></p>
+<p>其中巨潮资讯还可以同时爬取高管以及公告信息。看一下数据<br><img src="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/cfi.png" class="ful-image" alt="cfi.png"><br><img src="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/cninfo.png" class="ful-image" alt="cninfo.png"></p>
 <p>换句话说，我们直接能得到规范的<strong>实体(公司、人)</strong>，以及规范的<strong>关系(高管)</strong>，当然也可以把高管展开，用下一层关系，董事长、监事之类，这就需要做进一步的清洗，也可能需要做关系的对齐。</p>
 <p>这里爬虫框架我用的是 scrapy+redis 分布式，每天可以定时爬取，爬下来的数据写好自动化清洗脚本，定时入库。</p>
 <h2 id="数据存储"><a href="#数据存储" class="headerlink" title="数据存储"></a>数据存储</h2><p>数据存储是非常重要的一环，第一个问题是选什么数据库，这里作为 starter，用的是关系型数据库 MySQL。设计了四张表，两张实体表分别存<strong>公司(company)</strong>和<strong>人物(person)</strong>的信息，一张关系表存公司和高管的<strong>对应关系(management)</strong>，最后一张 SPO 表存<strong>三元组</strong>。</p>
 <p><strong>为什么爬下来两张表，存储却要用 4 张表？</strong><br>一个考虑是知识图谱里典型的<strong>一词多义</strong>问题，相同实体名但有可能指向不同的意义，比如说 Paris 既可以表示巴黎，也可以表示人名，怎么办？让作为地名的 “Paris” 和作为人的 “Paris” 有各自独一无二的ID。“Paris1”（巴黎）通过一种内在关系与埃菲尔铁塔相联，而 “Paris2”（人）通过取消关系与各种真人秀相联。这里也是一样的场景，同名同姓不同人，需要用 id 做唯一性标识，也就是说我们需要对原来的数据格式做一个转换，不同的张三要标识成张三1，张三2… 那么，用什么来区别人呢？拍脑袋想用姓名、生日、性别来定义一个人，也就是说我们需要一张人物表，需要 (name, birth, sex) 来作<strong>composite unique key</strong> 表示每个人。公司也是相同的道理，不过这里只有上市公司，股票代码就可以作为唯一性标识。</p>
 <p>Person 表和 company 表是多对多的关系，这里需要做 normalization，用 management 这张表来把多对多转化为两个一对多的关系，(person_id, company_id) 就表示了这种映射。management 和 spo 表都表示了这种映射，为什么用两张表呢？是出于实体对齐的考虑。management 保存了原始的关系，”董事”、监事”等，而 spo 把这些关系都映射成”高管”，也就是说 management 可能需要通过映射才能得到 SPO 表，SPO 才是最终成型的表。</p>
 <p>可能有更简单的方法来处理上述问题，思考中，待更新—-</p>
-<p>我们知道知识库里的关系其实有两种，一种是<strong>属性(property)</strong>，一种是<strong>关系(relation)</strong>。那么还有一个问题是 <strong>SPO 需不需要存储属性？</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/spo.png" class="ful-image" alt="spo.png"></p>
+<p>我们知道知识库里的关系其实有两种，一种是<strong>属性(property)</strong>，一种是<strong>关系(relation)</strong>。那么还有一个问题是 <strong>SPO 需不需要存储属性？</strong><br><img src="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/spo.png" class="ful-image" alt="spo.png"></p>
 <p>最后要注意的一点是，每条记录要保存创建时间以及最后更新时间，做一个简单的版本控制。</p>
-<h2 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h2><p>Flask 做 server，d3 做可视化，可以检索公司名/人名获取相应的图谱，如下图。之后会试着更新有向图版本。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/eg.png" class="ful-image" alt="eg.png"></p>
+<h2 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h2><p>Flask 做 server，d3 做可视化，可以检索公司名/人名获取相应的图谱，如下图。之后会试着更新有向图版本。<br><img src="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/eg.png" class="ful-image" alt="eg.png"></p>
 <h1 id="Start-from-CN-DBpedia"><a href="#Start-from-CN-DBpedia" class="headerlink" title="Start from CN-DBpedia"></a>Start from CN-DBpedia</h1><p>把 CN-DBpedia 的三元组数据，大概 6500 万条，导入数据库，这里尝试了 PostgreSQL。然后检索了 112 家上市公司的注册公司名称，只有 69 家公司返回了结果，属性、关系都不是很完善，说明了通用知识图谱有其不完整性(也有可能需要先做一次 mention2entity，可能它的标准实体并不是注册信息的公司名称，不过 API 小范围试了下很多是 Unknown Mention)。</p>
 <p>做法也很简单，把前面 <strong>Start from scratch</strong> 中得到的 SPO 表插入到这里的 SPO 表就好了。这么简单？因为这个场景下不用做实体对齐和关系对齐。</p>
 <h1 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h1><p>这只是个 hello world 项目，在此基础上可以进行很多有趣的拓展，最相近的比如说加入企业和股东的关系，可以进行<strong>企业最终控制人查询</strong>(e.g.,基于股权投资关系寻找持股比例最大的股东，最终追溯至自然人或国有资产管理部门)。再往后可以做企业社交图谱查询、企业与企业的路径发现、企业风险评估、反欺诈等等等等。具体来说：</p>
@@ -433,7 +433,7 @@
 <li>展开知识融合(实体链接、关系链接、冲突消解等)、验证工作(纠错、更新等)</li>
 </ol>
 <p>最后补充一下用 Neo4j 方式产生的可视化图，有两种方法。一是把上面说到的 MySQL/PostgreSQL 里的 company 表和 person 表存成 node，node 之间的关系由 spo 表中 type == relation 的 record 中产生；二是更直接的，从 spo 表中，遇到 type == property 就给 node(subject) 增加属性({predicate:object})，遇到 type == relation 就给 node 增加关系((Nsubject) - [r:predicate]-&gt; node(Nobject))，得到下面的图，移动鼠标到相应位置就可以在下方查看到关系和节点的属性。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/show2.png" class="ful-image" alt="show2.png">
+<img src="http://shuang0420.clouddn.com/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%88%9D%E6%8E%A2/show2.png" class="ful-image" alt="show2.png">
 <p><a href="https://github.com/Shuang0420/knowledge_graph_demo" target="_blank" rel="external">项目地址</a></p>
 
       

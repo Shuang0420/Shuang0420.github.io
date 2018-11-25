@@ -93,25 +93,25 @@
 <meta property="og:url" content="http://www.shuang0420.com/2016/11/04/Search Engines笔记 - Document Structure/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 11642 的课程笔记。文档的表示形式不只词袋一种，它可以有 fields，有 hierarchical structure(XML)，multiple representations of meaning, priors 等形式，这一章讲的就是检索模型怎么来处理这些复杂的文档表达。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/exampleW.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/indri.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/andSum.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/1.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/formula.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/multiple.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ainlink.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ap.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/c4.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/compare.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table2.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/exampleW.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/indri.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/andSum.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/1.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/formula.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/multiple.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ainlink.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ap.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/c4.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/compare.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table2.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Search Engines笔记 - Document Structure">
 <meta name="twitter:description" content="CMU 11642 的课程笔记。文档的表示形式不只词袋一种，它可以有 fields，有 hierarchical structure(XML)，multiple representations of meaning, priors 等形式，这一章讲的就是检索模型怎么来处理这些复杂的文档表达。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg">
 
 
 
@@ -413,7 +413,7 @@
 <p><strong>Solution:</strong> 用一个复合加权的 representation，一篇文档就用一个词袋</p>
 <p>$$tf_t=\sum_fw_ftf_{t,f}$$<br>$$doclen=\sum_fw_fdoclen_f$$</p>
 <p>F: the set of fields</p>
-<p>-&gt; 然后用标准的 BM25<br>但是 … BM25 有常量，可能我们需要 tune them on a per-field basis，可以用 BM25F。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg" class="ful-image" alt="BM25F.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/exampleW.jpg" class="ful-image" alt="exampleW.jpg"></p>
+<p>-&gt; 然后用标准的 BM25<br>但是 … BM25 有常量，可能我们需要 tune them on a per-field basis，可以用 BM25F。<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg" class="ful-image" alt="BM25F.jpg"><br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/exampleW.jpg" class="ful-image" alt="exampleW.jpg"></p>
 <p><strong>特性：</strong></p>
 <ul>
 <li>一个 vocabulary 涵盖了所有的 fields<br>– 所以一个 term 有一个 global idf, 而不是一个 field-specific idf<br>– 对各种文档都有适用么?<pre><code>» E.g., 专利，医疗记录等
@@ -421,10 +421,10 @@
 <li>Field-specific tuning</li>
 <li>constants 的影响很难理解</li>
 </ul>
-<h2 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h2><p>Indri 模型。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/indri.jpg" class="ful-image" alt="indri.jpg"></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/andSum.jpg" class="ful-image" alt="andSum.jpg">
+<h2 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h2><p>Indri 模型。<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/indri.jpg" class="ful-image" alt="indri.jpg"></p>
+<img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/andSum.jpg" class="ful-image" alt="andSum.jpg">
 <p>#AND 和 #WAND 用来合并独立的概率<br>#SUM 和 #WSUM 用不同方法来估计同一个概率</p>
-<h1 id="Hierarchical-structure-XML"><a href="#Hierarchical-structure-XML" class="headerlink" title="Hierarchical structure(XML)"></a>Hierarchical structure(XML)</h1><p>Hierarchical structure 的文档通常用 Bayesian inference networks 来解决，如 indri。<br>首先对 flat 和 hierarchical structure 做一个区分。<br><strong>Flat</strong><br>元素之间是相互独立的，一个 term 只在包含了它的那个元素（通常是一个）里出现。<br>检索目的通常是一篇文档。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/1.jpg" class="ful-image" alt="1.jpg"><br><strong>Hierarchical</strong><br>元素之间是相互关联的，通常是包含的关系，一个 term 在所有包含了它的元素里出现。<br>检索目的可以是文档，也可以是元素。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/2.jpg" class="ful-image" alt="2.jpg"></p>
+<h1 id="Hierarchical-structure-XML"><a href="#Hierarchical-structure-XML" class="headerlink" title="Hierarchical structure(XML)"></a>Hierarchical structure(XML)</h1><p>Hierarchical structure 的文档通常用 Bayesian inference networks 来解决，如 indri。<br>首先对 flat 和 hierarchical structure 做一个区分。<br><strong>Flat</strong><br>元素之间是相互独立的，一个 term 只在包含了它的那个元素（通常是一个）里出现。<br>检索目的通常是一篇文档。<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/1.jpg" class="ful-image" alt="1.jpg"><br><strong>Hierarchical</strong><br>元素之间是相互关联的，通常是包含的关系，一个 term 在所有包含了它的元素里出现。<br>检索目的可以是文档，也可以是元素。<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/2.jpg" class="ful-image" alt="2.jpg"></p>
 <h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><p><strong>检索什么样的 element?</strong><br>• Document? Encounter? Diagnosis?</p>
 <p><strong>用怎样的 corpus statistics</strong><br>• Document vs. element</p>
 <p><strong>怎样组合来自不同 elements 的 evidence</strong><br>• Can we prefer patients that have several matching encounters?</p>
@@ -435,8 +435,8 @@
 <li>文档结构不规范，这种情况经常在 web 文档中出现，如果文档里本来包含了 query term 然而因为文档不规范而找不到相应的 element，那么 score 可能为 0。</li>
 <li>query 可能太严格。<br>– #AND[title](iphone)：不匹配 “Apple Cuts Phone Price”<br>– #AND[paragraph](solutions to poverty)： “poverty” 和 “solutions” 可能出现在不同的段落里</li>
 </ol>
-<p>解决方案是，多加一个 smoothing。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/formula.jpg" class="ful-image" alt="formula.jpg"></p>
-<h2 id="Multiple-elements"><a href="#Multiple-elements" class="headerlink" title="Multiple elements"></a>Multiple elements</h2><p>这里我们探讨右图的情况。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/multiple.jpg" class="ful-image" alt="multiple.jpg"></p>
+<p>解决方案是，多加一个 smoothing。<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/formula.jpg" class="ful-image" alt="formula.jpg"></p>
+<h2 id="Multiple-elements"><a href="#Multiple-elements" class="headerlink" title="Multiple elements"></a>Multiple elements</h2><p>这里我们探讨右图的情况。<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/multiple.jpg" class="ful-image" alt="multiple.jpg"></p>
 <p>两种方法 Aggregation OR Combination。</p>
 <ul>
 <li>Aggregation: Combine inverted lists</li>
@@ -448,9 +448,9 @@
 <li>结果: 一个 inverted list 包含了一个 element 的所有 instance</li>
 </ul>
 <p><strong>Example</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#wand( #wsum (0.3 apple.title 0.2 apple.inlink 0.5 apple.body ) #wsum (0.3 ipad.title 0.2 ipad.inlink 0.5 ipad.body ) )</div></pre></td></tr></table></figure></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ainlink.jpg" class="ful-image" alt="ainlink.jpg">
+<img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ainlink.jpg" class="ful-image" alt="ainlink.jpg">
 <p><strong>问题：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#AND( breast.paragraph cancer.paragraph treatment.paragraph )</div></pre></td></tr></table></figure></p>
-<p>对这一个查询，用 Aggregation 的话以下两篇文档会得到一样的分数，然而其实 D2 要比 D1 更相关。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ap.jpg" class="ful-image" alt="ap.jpg"></p>
+<p>对这一个查询，用 Aggregation 的话以下两篇文档会得到一样的分数，然而其实 D2 要比 D1 更相关。<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ap.jpg" class="ful-image" alt="ap.jpg"></p>
 <h3 id="Combination"><a href="#Combination" class="headerlink" title="Combination"></a>Combination</h3><p>用 #MAX, #SUM, #OR 等 query operators 来合并 element scores。<br>首先我们来认识一下 query。<br>E.g.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[document] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
 <p>最外面的 element 是 document, 所以对 documents 进行排序</p>
 <ol>
@@ -465,9 +465,9 @@
 </ol>
 <p>来考虑下不同的 combine query operator 产生的影响。</p>
 <p><strong>#MAX[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 只考虑 best sentence<br><strong>#SUM[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– poorly matching sentences 会让分数变低<br><strong>#OR[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 偏好有更多匹配的 sentences 的文档</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/c4.jpg" class="ful-image" alt="c4.jpg">
+<img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/c4.jpg" class="ful-image" alt="c4.jpg">
 <p>• #MAX considers them equal<br>• #AND prefers C4<br>• #OR prefers C1<br>• #AVERAGE prefers C4</p>
-<h3 id="Comparsion"><a href="#Comparsion" class="headerlink" title="Comparsion"></a>Comparsion</h3><p>假定目标是检索有 paragraphs 讨论 breast cancer treatment 的文档<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/compare.jpg" class="ful-image" alt="compare.jpg"><br><strong>Combination:</strong> Partial credit for sections that partially match<br><strong>Aggregation:</strong> The terms might not all be in the same section</p>
+<h3 id="Comparsion"><a href="#Comparsion" class="headerlink" title="Comparsion"></a>Comparsion</h3><p>假定目标是检索有 paragraphs 讨论 breast cancer treatment 的文档<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/compare.jpg" class="ful-image" alt="compare.jpg"><br><strong>Combination:</strong> Partial credit for sections that partially match<br><strong>Aggregation:</strong> The terms might not all be in the same section</p>
 <h2 id="Extents"><a href="#Extents" class="headerlink" title="Extents"></a>Extents</h2><p>Using extents as evidence<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND(</div><div class="line">  #OR[document](</div><div class="line">      #AND[sentence](iraq war))</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
 <p>• 检索的是 document<br>• <strong>偏好</strong> ‘iraq’ and ‘war’ 在同一句话里的文档<br>– 出现在 title 里会让分数有稍稍的提高，因为有 smoothing</p>
 <p>Using extents as a constraint<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND (</div><div class="line">  iraq.sentence</div><div class="line">  war.sentence</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
@@ -475,8 +475,8 @@
 <h2 id="HLT-Applications"><a href="#HLT-Applications" class="headerlink" title="HLT Applications"></a>HLT Applications</h2><p>文档结构可以由 annotation processes 产生<br>• E.g., named entity annotators, semantic role labelers, …</p>
 <p>Retrieval of elements, using semantic role annotations<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#and[sentence](</div><div class="line">  #and[target_verb]( Loves</div><div class="line">      #and[./agent]( John )</div><div class="line">      #and[./patient]( Mary ) ) )</div></pre></td></tr></table></figure></p>
 <p>• ./element specifies that element is a child of the parent field</p>
-<h1 id="Table-retrieval"><a href="#Table-retrieval" class="headerlink" title="Table retrieval"></a>Table retrieval</h1><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table.jpg" class="ful-image" alt="table.jpg">
-<p>实际就是一个把 table 转化为 structure document 的问题。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table2.jpg" class="ful-image" alt="table2.jpg"></p>
+<h1 id="Table-retrieval"><a href="#Table-retrieval" class="headerlink" title="Table retrieval"></a>Table retrieval</h1><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table.jpg" class="ful-image" alt="table.jpg">
+<p>实际就是一个把 table 转化为 structure document 的问题。<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table2.jpg" class="ful-image" alt="table2.jpg"></p>
 <h1 id="Summaries"><a href="#Summaries" class="headerlink" title="Summaries"></a>Summaries</h1><p><strong>Fields</strong><br>• 用于 independent evidence (author, title, journal, …)<br>• 用于 multiple representations (url, title, body, …)<br>• 了解差异<br>• 了解各个检索模型如何支持这些 fields<br>• 了解在 query 中如何使用这些 fields</p>
 <p><strong>Hierarchical structure</strong><br>• 怎样在多个 elements 都有匹配时 combine evidence<br>• Exact-match vs. best-match document structure<br>• 了解 Indri 怎样支持这些 elements<br>• 了解在 query 中如何使用这些 elements</p>
 
@@ -535,8 +535,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/02/Cryptographic-Protocols/" rel="next" title="Distributed Systems笔记－Cryptographic Protocols">
-                <i class="fa fa-chevron-left"></i> Distributed Systems笔记－Cryptographic Protocols
+              <a href="/2016/11/04/Search-Engines笔记-Authority-Metrics/" rel="next" title="Search Engines笔记 - Authority Metrics">
+                <i class="fa fa-chevron-left"></i> Search Engines笔记 - Authority Metrics
               </a>
             
           </div>

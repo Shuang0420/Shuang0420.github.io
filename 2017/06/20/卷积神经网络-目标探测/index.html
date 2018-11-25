@@ -93,42 +93,42 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/06/20/卷积神经网络-目标探测/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="介绍目标探测的基本方法，传统方法 DPM，神经网络分类 R-CNN 系列方法和神经网络回归 YoLo 系列方法。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E4%BB%BB%E5%8A%A1.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%B4%E6%8E%A5%E6%80%9D%E8%B7%AF.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/cat1.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%E4%BA%A7%E7%94%9F.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/dpm1.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/dpm2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn1.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn3.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn4.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn5.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn6.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn7.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%95%B0%E6%8D%AE%E9%9B%86.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/IoU.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/crnn9.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/fast%20rcnn.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E5%85%B1%E4%BA%AB%E5%8D%B7%E7%A7%AF.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%89%B9%E5%BE%81%E4%B8%80%E8%87%B4%E5%8C%96.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/fast%20rcnn.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%80%A7%E8%83%BD.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%80%A7%E8%83%BD2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn1.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn3.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/YoLo.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo3.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo4.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/ssd.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E4%BB%BB%E5%8A%A1.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%B4%E6%8E%A5%E6%80%9D%E8%B7%AF.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/cat1.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%E4%BA%A7%E7%94%9F.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/dpm1.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/dpm2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn1.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn3.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn4.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn5.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn6.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn7.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%95%B0%E6%8D%AE%E9%9B%86.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/IoU.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/crnn9.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/fast%20rcnn.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E5%85%B1%E4%BA%AB%E5%8D%B7%E7%A7%AF.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%89%B9%E5%BE%81%E4%B8%80%E8%87%B4%E5%8C%96.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/fast%20rcnn.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%80%A7%E8%83%BD.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%80%A7%E8%83%BD2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn1.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn3.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/YoLo.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo3.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo4.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/ssd.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="卷积神经网络 CNN 笔记 - 目标探测">
 <meta name="twitter:description" content="介绍目标探测的基本方法，传统方法 DPM，神经网络分类 R-CNN 系列方法和神经网络回归 YoLo 系列方法。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B.png">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B.png">
 
 
 
@@ -396,13 +396,13 @@
 
       
         <p>介绍目标探测的基本方法，传统方法 DPM，神经网络分类 R-CNN 系列方法和神经网络回归 YoLo 系列方法。<br><a id="more"></a></p>
-<h1 id="目标探测"><a href="#目标探测" class="headerlink" title="目标探测"></a>目标探测</h1><p>先来看下什么是目标探测，下图<strong>矩形框(running box)</strong>表示的物体都可以作为目标探测的对象。不止矩形框，椭圆形框在某些场合更适合做目标探测，因为它能更好的捕捉对象，并对物体朝向做相应调整，机变性更好。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B.png"></p>
-<p>目标探测的任务一般分为<strong>单目标探测</strong>和<strong>多目标探测</strong>。目的一是找到目标的位置坐标，二是判定目标类别。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E4%BB%BB%E5%8A%A1.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E4%BB%BB%E5%8A%A1.png"></p>
+<h1 id="目标探测"><a href="#目标探测" class="headerlink" title="目标探测"></a>目标探测</h1><p>先来看下什么是目标探测，下图<strong>矩形框(running box)</strong>表示的物体都可以作为目标探测的对象。不止矩形框，椭圆形框在某些场合更适合做目标探测，因为它能更好的捕捉对象，并对物体朝向做相应调整，机变性更好。<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B.png"></p>
+<p>目标探测的任务一般分为<strong>单目标探测</strong>和<strong>多目标探测</strong>。目的一是找到目标的位置坐标，二是判定目标类别。<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E4%BB%BB%E5%8A%A1.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E4%BB%BB%E5%8A%A1.png"></p>
 <p>目标探测的<strong>应用场景</strong>有安防、自动驾驶等。从技术方面讲，目标探测传统方法用的是<strong>DPM</strong>，虽然目前已经被神经网络超越，但是很多思想可以借鉴。神经网络大体上有两类方法，一类是分类方法主要是<strong>RCNN系列方法</strong> ，先找到若干候选区，然后一个区域一个区域排查，判断有没有要找的物体；另一类是回归方法主要是<strong>YoLo系列方法</strong>，直接找到区域，以及区域有什么物体。</p>
 <p>下面来看下目标探测的两个直接思路。</p>
-<h2 id="直接思路一：回归问题"><a href="#直接思路一：回归问题" class="headerlink" title="直接思路一：回归问题"></a>直接思路一：回归问题</h2><p>一类思路是把目标探测看作是一个<strong>回归问题</strong>。直接生成 class score，也就是判断是该类别(物品)的 confidence value，和 box coordinates，也就是检测框的坐标值。整个任务的损失函数其实是位置差和分类差的一个组合。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%B4%E6%8E%A5%E6%80%9D%E8%B7%AF.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%B4%E6%8E%A5%E6%80%9D%E8%B7%AF.png"></p>
-<h2 id="直接思路二：局部识别问题"><a href="#直接思路二：局部识别问题" class="headerlink" title="直接思路二：局部识别问题"></a>直接思路二：局部识别问题</h2><p>另一类思路是在很多位置上尝试识别，能够完成识别的地方就是目标位置。如下图，我们生成潜在的<strong>候选区域(proposal)</strong>，然后采用分类器逐个判别这些区域内图像是不是目标物体，如果是，可以把候选区域做延展(用 regression)，看有没有更合适的候选框。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/cat1.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/cat1.png"></p>
-<p>一个问题是<strong>怎样找到这些候选位置？</strong><br>一种方法是用不同 scale 的 sliding windows 来遍历所有的位置，这种方法代价太高，另一种更有效的方法是直接计算候选区域。现在有很多算法能够有效的产生候选区域，比较常用的是 <strong>EdgeBoxes</strong>（在 RCNN 中使用）。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%E4%BA%A7%E7%94%9F.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%E4%BA%A7%E7%94%9F.png"></p>
+<h2 id="直接思路一：回归问题"><a href="#直接思路一：回归问题" class="headerlink" title="直接思路一：回归问题"></a>直接思路一：回归问题</h2><p>一类思路是把目标探测看作是一个<strong>回归问题</strong>。直接生成 class score，也就是判断是该类别(物品)的 confidence value，和 box coordinates，也就是检测框的坐标值。整个任务的损失函数其实是位置差和分类差的一个组合。<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%B4%E6%8E%A5%E6%80%9D%E8%B7%AF.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%9B%B4%E6%8E%A5%E6%80%9D%E8%B7%AF.png"></p>
+<h2 id="直接思路二：局部识别问题"><a href="#直接思路二：局部识别问题" class="headerlink" title="直接思路二：局部识别问题"></a>直接思路二：局部识别问题</h2><p>另一类思路是在很多位置上尝试识别，能够完成识别的地方就是目标位置。如下图，我们生成潜在的<strong>候选区域(proposal)</strong>，然后采用分类器逐个判别这些区域内图像是不是目标物体，如果是，可以把候选区域做延展(用 regression)，看有没有更合适的候选框。<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/cat1.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/cat1.png"></p>
+<p>一个问题是<strong>怎样找到这些候选位置？</strong><br>一种方法是用不同 scale 的 sliding windows 来遍历所有的位置，这种方法代价太高，另一种更有效的方法是直接计算候选区域。现在有很多算法能够有效的产生候选区域，比较常用的是 <strong>EdgeBoxes</strong>（在 RCNN 中使用）。<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%E4%BA%A7%E7%94%9F.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%E4%BA%A7%E7%94%9F.png"></p>
 <h1 id="传统方法-DPM"><a href="#传统方法-DPM" class="headerlink" title="传统方法-DPM"></a>传统方法-DPM</h1><p>传统方法主要包括 3 个步骤：</p>
 <ol>
 <li>利用不同尺度的滑动窗口在图像上进行区域搜索，定位候选区域；</li>
@@ -410,7 +410,7 @@
 <li>利用分类器进行分类识别，svm等</li>
 </ol>
 <p>主要思路就是提取图像特征，制作出激励模板，在原始图像滑动计算，得到激励效果图，然后根据激励分布确定目标位置。如下图人物识别把人为设计的激励模板和 HOG 特征图结合，如果有人，会得到加强的激励，然而同样的，柱子也会得到激励。</p>
-<p><strong>DPM(Deformable Part Model)</strong>可以看做是<strong>HOG(Histograms of Oriented Gradients)+SVM(Surpport Vector Machine) 方法</strong>的扩展，大体思路是一致的 — 先计算梯度方向直方图，然后用 SVM 训练得到物体的梯度模型。有了这样的模板就可以直接用来分类了，简单理解就是模型和目标匹配。DPM 只是在模型上做了很多改进工作。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/dpm1.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/dpm1.png"></p>
+<p><strong>DPM(Deformable Part Model)</strong>可以看做是<strong>HOG(Histograms of Oriented Gradients)+SVM(Surpport Vector Machine) 方法</strong>的扩展，大体思路是一致的 — 先计算梯度方向直方图，然后用 SVM 训练得到物体的梯度模型。有了这样的模板就可以直接用来分类了，简单理解就是模型和目标匹配。DPM 只是在模型上做了很多改进工作。<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/dpm1.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/dpm1.png"></p>
 <p>由于目标可能会形变，之前模型不能很好的适应复杂场景的探测，所以一个改进是各个部分单独考虑，对物体的不同部分单独进行学习，所以<strong>DPM</strong>把物体看成了多个组成部件(比如说人脸的鼻子，嘴巴等)，用部件间的关系来描述物体，这个特点非常符合自然界许多物体的非刚性特征。基本思路如下:</p>
 <ol>
 <li>产生多个模板，整体模板(root filter)以及不同局部模板(part filter)<br>root filter 包含目标的整体信息，而 part filter 采用高分辨率的细节建模，看的梯度会更加精细</li>
@@ -419,30 +419,30 @@
 <li>对融合特征进行传统分类，回归，得到目标位置</li>
 <li>模型在图像特定位置和尺度的得分， 等于 root filter 的得分加上各个 part filter 得分的总和。每个 part filter 的得分等于该 part 在所有空间位置的得分的最大值，而部件在某位置的得分等于 part filter 在此位置的得分减去此位置的变形代价(也就是 part 偏离其理想位置的程度)</li>
 </ol>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/dpm2.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/dpm2.jpg">
+<img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/dpm2.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/dpm2.jpg">
 <p>DPM 的优点是方法比较直观、简单，运算速度快，也可以适应运动物体变形，很好的处理遮挡、非刚性可变和视觉变换问题，到 2012 年前，是最好的方法。然而 DPM 也有一些缺点</p>
 <ul>
 <li>性能一般</li>
 <li>激励特征人为设计，表达能力有限，工作量大，难以进行迁移学习</li>
 <li>大幅度旋转无法适应，稳定性差</li>
 </ul>
-<h1 id="神经网络分类-R-CNN-系列方法"><a href="#神经网络分类-R-CNN-系列方法" class="headerlink" title="神经网络分类: R-CNN 系列方法"></a>神经网络分类: R-CNN 系列方法</h1><h2 id="R-CNN-CVPR2014-TPAMI2015"><a href="#R-CNN-CVPR2014-TPAMI2015" class="headerlink" title="R-CNN(CVPR2014, TPAMI2015)"></a>R-CNN(CVPR2014, TPAMI2015)</h2><h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>神经网络的分类思想是<strong>对多个位置，不同尺寸，用卷积神经网络判断区域内图片是不是某物</strong>，<strong>候选位置(proposal)</strong>提出方法一般用 <strong>EdgeBox</strong>。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn1.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn1.png"></p>
-<p>R-CNN 最初提出的时候选择 20 类进行探测，是在 ImageNet 模型的基础上，把 1000 类的分类模型变成能识别 21 类(20类+other)的 Fine-tune 分类模型。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn2.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn2.jpg"><br>=&gt;<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn3.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn3.jpg"></p>
-<p><strong>特征的提取过程:</strong> 对图片计算候选区域；对候选区域切分图片，对切分部分进行 resize 变成输入大小；提取相应高级特征；存储特征(大容量，200-300G空间存储图片)<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn4.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn4.jpg"></p>
-<p><strong>单独目标探测器训练：</strong>对每一类进行单独训练，保证每一类训练数据平衡，每一类都是 binary 分类(yes/no)。比如猫的分类器，可能大部分图片没有一个理想的猫，只有一个耳朵，这不算猫，我们要与真值进行比较，看左上右下区域，如果重合(共有区域)比较多，就认为是猫的图片。每一类都有很多的正例反例(1/0)。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn5.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn5.jpg"></p>
-<p><strong>单独目标回归器训练-基于候选区域微调:</strong> 同样的，每一类单独训练，保证每一类训练数据平衡，这里是每一类做 BBOX 回归。目的是在知道是不是猫以及位置的偏移后，用回归对位置进行 offset，离真值(ground truth)更近，最终的探测精度会更高。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn6.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn6.jpg"></p>
+<h1 id="神经网络分类-R-CNN-系列方法"><a href="#神经网络分类-R-CNN-系列方法" class="headerlink" title="神经网络分类: R-CNN 系列方法"></a>神经网络分类: R-CNN 系列方法</h1><h2 id="R-CNN-CVPR2014-TPAMI2015"><a href="#R-CNN-CVPR2014-TPAMI2015" class="headerlink" title="R-CNN(CVPR2014, TPAMI2015)"></a>R-CNN(CVPR2014, TPAMI2015)</h2><h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>神经网络的分类思想是<strong>对多个位置，不同尺寸，用卷积神经网络判断区域内图片是不是某物</strong>，<strong>候选位置(proposal)</strong>提出方法一般用 <strong>EdgeBox</strong>。<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn1.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn1.png"></p>
+<p>R-CNN 最初提出的时候选择 20 类进行探测，是在 ImageNet 模型的基础上，把 1000 类的分类模型变成能识别 21 类(20类+other)的 Fine-tune 分类模型。<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn2.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn2.jpg"><br>=&gt;<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn3.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn3.jpg"></p>
+<p><strong>特征的提取过程:</strong> 对图片计算候选区域；对候选区域切分图片，对切分部分进行 resize 变成输入大小；提取相应高级特征；存储特征(大容量，200-300G空间存储图片)<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn4.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn4.jpg"></p>
+<p><strong>单独目标探测器训练：</strong>对每一类进行单独训练，保证每一类训练数据平衡，每一类都是 binary 分类(yes/no)。比如猫的分类器，可能大部分图片没有一个理想的猫，只有一个耳朵，这不算猫，我们要与真值进行比较，看左上右下区域，如果重合(共有区域)比较多，就认为是猫的图片。每一类都有很多的正例反例(1/0)。<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn5.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn5.jpg"></p>
+<p><strong>单独目标回归器训练-基于候选区域微调:</strong> 同样的，每一类单独训练，保证每一类训练数据平衡，这里是每一类做 BBOX 回归。目的是在知道是不是猫以及位置的偏移后，用回归对位置进行 offset，离真值(ground truth)更近，最终的探测精度会更高。<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn6.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn6.jpg"></p>
 <p><strong>总的来说，R-CNN 的测试过程就是</strong></p>
 <ol>
 <li>对每个图像生成 1k-2k 个候选区域</li>
 <li>对每个候选区域，使用深度网络进行特征计算</li>
 <li>特征喂给每一类的 svm 分类器，判别是否属于该类分类；同时用回归修正候选框位置</li>
-<li>后续处理<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn7.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn7.jpg">
+<li>后续处理<img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn7.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/rcnn7.jpg">
 </li>
 </ol>
-<h3 id="常用数据集"><a href="#常用数据集" class="headerlink" title="常用数据集"></a>常用数据集</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%95%B0%E6%8D%AE%E9%9B%86.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%95%B0%E6%8D%AE%E9%9B%86.jpg">
+<h3 id="常用数据集"><a href="#常用数据集" class="headerlink" title="常用数据集"></a>常用数据集</h3><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%95%B0%E6%8D%AE%E9%9B%86.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%95%B0%E6%8D%AE%E9%9B%86.jpg">
 <h3 id="评估方法"><a href="#评估方法" class="headerlink" title="评估方法"></a>评估方法</h3><ul>
 <li><strong>MAP(mean average precision)</strong></li>
-<li><strong>IoU</strong>，真值和预测值多重叠部分与两者的并集的比值，一般大于 0.5 就认为是正确的<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/IoU.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/IoU.jpg">
+<li><strong>IoU</strong>，真值和预测值多重叠部分与两者的并集的比值，一般大于 0.5 就认为是正确的<img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/IoU.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/IoU.jpg">
 </li>
 </ul>
 <h3 id="R-CNN-结果对比"><a href="#R-CNN-结果对比" class="headerlink" title="R-CNN 结果对比"></a>R-CNN 结果对比</h3><p>Regionlets(2013) 并没有经过 fine-tune，R-CNN(2014, AlexNet) 用事先训练好的分类器进行了 fine-tune，R-CNN+bbox reg(AlexNet)，用了 regression，加了 offset 对检测框做了范围调整，R-CNN(vgg-16)把 base model 改成了 vgg</p>
@@ -450,7 +450,7 @@
 <ol>
 <li>Finetune</li>
 <li>回归微调</li>
-<li>Base 模型<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/crnn9.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/crnn9.jpg">
+<li>Base 模型<img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/crnn9.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/crnn9.jpg">
 </li>
 </ol>
 <h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p><strong>优点:</strong></p>
@@ -469,27 +469,27 @@
 <ul>
 <li>共享卷积计算<br>增加 ROI pooling layer</li>
 <li>完整训练(end-to-end)<br>用 softmax 代替 svm 分类，用多目标损失函数加入候选框回归，除 region proposal 提取外实现了 end-to-end</li>
-<li>多目标一起学习<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/fast%20rcnn.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/fast%20rcnn.jpg">
+<li>多目标一起学习<img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/fast%20rcnn.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/fast%20rcnn.jpg">
 </li>
 </ul>
 <h3 id="共享卷积计算"><a href="#共享卷积计算" class="headerlink" title="共享卷积计算"></a>共享卷积计算</h3><p>Fast R-CNN 在最后一个卷积层后加了一个 ROI pooling layer，实际上就是上面提到的 SPP-NET 的一个精简版，特点是:</p>
 <ol>
 <li>卷积计算保持空间位置</li>
 <li>共同区域的卷积计算只需进行一次</li>
-<li>切割候选区+提取特征图=计算完整特征图+切割对应候选区<br>把图片的 region proposal 切割出来，resize，提取特征，其实就等同于在原图特征图里找到 region proposal<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E5%85%B1%E4%BA%AB%E5%8D%B7%E7%A7%AF.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E5%85%B1%E4%BA%AB%E5%8D%B7%E7%A7%AF.jpg">
+<li>切割候选区+提取特征图=计算完整特征图+切割对应候选区<br>把图片的 region proposal 切割出来，resize，提取特征，其实就等同于在原图特征图里找到 region proposal<img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E5%85%B1%E4%BA%AB%E5%8D%B7%E7%A7%AF.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E5%85%B1%E4%BA%AB%E5%8D%B7%E7%A7%AF.jpg">
 </li>
 </ol>
-<p>一个重要的问题是<strong>不同区域的特征如何保持一致？</strong><br>全连接层要求接的区域形状一致；所以要特征图里区域的一致性处理，也就是做一个 pooling<br><strong>特征一致化 - Max Pooling</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%89%B9%E5%BE%81%E4%B8%80%E8%87%B4%E5%8C%96.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%89%B9%E5%BE%81%E4%B8%80%E8%87%B4%E5%8C%96.jpg"></p>
+<p>一个重要的问题是<strong>不同区域的特征如何保持一致？</strong><br>全连接层要求接的区域形状一致；所以要特征图里区域的一致性处理，也就是做一个 pooling<br><strong>特征一致化 - Max Pooling</strong><br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%89%B9%E5%BE%81%E4%B8%80%E8%87%B4%E5%8C%96.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E7%89%B9%E5%BE%81%E4%B8%80%E8%87%B4%E5%8C%96.jpg"></p>
 <p>局部区域<br>100x50 =&gt;按 4:2 pooling<br>50x100 =&gt; 按 2:4 pooling<br>=&gt; 25x25 feature<br>=&gt; 225 FC</p>
 <p>如果 pooling size 不完美，其实也没有问题，pooling 本身就是填充 pooling 后的图的每一个 pixel，只要从 pooling 前某区域选一个 pixel 值即可，不一定要规整</p>
-<h3 id="位置-类别联合学习"><a href="#位置-类别联合学习" class="headerlink" title="位置 + 类别联合学习"></a>位置 + 类别联合学习</h3><p><strong>图片 =&gt; cnn feature map计算 =&gt; proposal应用 =&gt; feature map相应区域做 region pooling 得到固定大小的 feature map =&gt; classification &amp; regression</strong><br>用 softmax 代替 svm 分类，使用<strong>多任务损失函数(multi-task loss)</strong>，将候选框回归直接加入到 cnn 网络中训练，除去 region proposal 的提取阶段，这样的训练过程是端到端的(end-to-end)，整个网络的训练和测试十分方便<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/fast%20rcnn.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/fast%20rcnn.png"></p>
-<h3 id="性能提升"><a href="#性能提升" class="headerlink" title="性能提升"></a>性能提升</h3><p>看一下性能提升的情况<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%80%A7%E8%83%BD.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%80%A7%E8%83%BD.jpg"><br>然而前提是 不考虑候选区域(proposal)的生成，如果加上候选区域(proposal)的时间<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%80%A7%E8%83%BD2.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%80%A7%E8%83%BD2.jpg"><br>region proposal 的提取使用 selective search，目标检测时间大多消耗在这上面(提region proposal 2~3s，而提特征分类只需0.32s)，无法满足实时应用，那么，怎么解决候选区域的计算呢？一个方法是也靠神经网络。</p>
+<h3 id="位置-类别联合学习"><a href="#位置-类别联合学习" class="headerlink" title="位置 + 类别联合学习"></a>位置 + 类别联合学习</h3><p><strong>图片 =&gt; cnn feature map计算 =&gt; proposal应用 =&gt; feature map相应区域做 region pooling 得到固定大小的 feature map =&gt; classification &amp; regression</strong><br>用 softmax 代替 svm 分类，使用<strong>多任务损失函数(multi-task loss)</strong>，将候选框回归直接加入到 cnn 网络中训练，除去 region proposal 的提取阶段，这样的训练过程是端到端的(end-to-end)，整个网络的训练和测试十分方便<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/fast%20rcnn.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/fast%20rcnn.png"></p>
+<h3 id="性能提升"><a href="#性能提升" class="headerlink" title="性能提升"></a>性能提升</h3><p>看一下性能提升的情况<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%80%A7%E8%83%BD.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%80%A7%E8%83%BD.jpg"><br>然而前提是 不考虑候选区域(proposal)的生成，如果加上候选区域(proposal)的时间<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%80%A7%E8%83%BD2.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/%E6%80%A7%E8%83%BD2.jpg"><br>region proposal 的提取使用 selective search，目标检测时间大多消耗在这上面(提region proposal 2~3s，而提特征分类只需0.32s)，无法满足实时应用，那么，怎么解决候选区域的计算呢？一个方法是也靠神经网络。</p>
 <h2 id="Faster-R-CNN-NIPS2015"><a href="#Faster-R-CNN-NIPS2015" class="headerlink" title="Faster R-CNN(NIPS2015)"></a>Faster R-CNN(NIPS2015)</h2><h3 id="RPN-Region-Proposal-Network"><a href="#RPN-Region-Proposal-Network" class="headerlink" title="RPN(Region Proposal Network)"></a>RPN(Region Proposal Network)</h3><p>用神经网络来解决候选区域的生成问题，主要是神经网络特征增加一组输出 <strong>RPN(Region Proposal Network)候选区域网络</strong></p>
 <ol>
 <li>直接产生候选区域，无需额外生成<br>本质上是 sliding window，RPN 只需在最后的卷积层上滑动一遍，因为 anchor 机制和候选框回归可以得到多尺度多长宽比多 region proposal</li>
 <li>直接用于后续特征图切割</li>
 </ol>
-<p>最后的特征图中有很多个 pixel，每个 pixel 和卷积核进行计算，生成 k 个可能的 prpoposal(实际中 k 往往=9，一个区域可能同时被多个物体占用，所以尽可能把可能分布的形状都生成)，每个 proposal 有个 score 的计算。如图，左边是 3x3 的卷积网络的特征图，右边是 k 个 anchor box(相当于小的候选生成单元)。我们对特征图进行 sliding window 的计算，每个 pixel 生成 256 长的向量(向量长度其实是自己设计的，vgg 建议 512-d)，这个向量用来生成 k 个 proposal 的值，以及对应的 2k score(是/不是目标物体)，4k 个 coordinates(上下左右坐标)。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn1.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn1.jpg"></p>
+<p>最后的特征图中有很多个 pixel，每个 pixel 和卷积核进行计算，生成 k 个可能的 prpoposal(实际中 k 往往=9，一个区域可能同时被多个物体占用，所以尽可能把可能分布的形状都生成)，每个 proposal 有个 score 的计算。如图，左边是 3x3 的卷积网络的特征图，右边是 k 个 anchor box(相当于小的候选生成单元)。我们对特征图进行 sliding window 的计算，每个 pixel 生成 256 长的向量(向量长度其实是自己设计的，vgg 建议 512-d)，这个向量用来生成 k 个 proposal 的值，以及对应的 2k score(是/不是目标物体)，4k 个 coordinates(上下左右坐标)。<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn1.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn1.jpg"></p>
 <p><strong>网络输出的值：</strong></p>
 <ol>
 <li>是不是一个目标</li>
@@ -505,7 +505,7 @@
 <li>使用在 ImageNet 上预训练的模型初始化网络参数，微调 RPN 网络；</li>
 <li>使用(1)中RPN网络提取 region proposal 训练 Fast R-CNN网络；</li>
 <li>使用(2)的 Fast R-CNN 网络重新初始化 RPN, 固定卷积层进行微调；</li>
-<li>固定(2)中 Fast R-CNN 的卷积层，使用 (3) 中 RPN 提取的 region proposal 微调网络<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn2.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn2.jpg">
+<li>固定(2)中 Fast R-CNN 的卷积层，使用 (3) 中 RPN 提取的 region proposal 微调网络<img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn2.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn2.jpg">
 </li>
 </ol>
 <p>Faster R-CNN 用了<strong>直接联合学习(joint learning)</strong> 的方法，如上图，一个网络有 4 个损失函数</p>
@@ -515,23 +515,23 @@
 <li>Fast R-CNN 分类</li>
 <li>Fast R-CNN 基于候选位置回归<br>联合学习的方法产生了更少的候选区，但是精度不会受到影响，速度却快了 10 倍，接近于实时处理(@K40 GPU, 12G)。</li>
 </ol>
-<h3 id="性能提升-1"><a href="#性能提升-1" class="headerlink" title="性能提升"></a>性能提升</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn3.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn3.jpg">
+<h3 id="性能提升-1"><a href="#性能提升-1" class="headerlink" title="性能提升"></a>性能提升</h3><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn3.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/faster%20rcnn3.jpg">
 <p>接近于实时处理，然而还是很难实时的目标探测，下面的 YOLO 这类方法可以达到实时性。</p>
-<h1 id="神经网络回归-YoLo-系列方法"><a href="#神经网络回归-YoLo-系列方法" class="headerlink" title="神经网络回归: YoLo 系列方法"></a>神经网络回归: YoLo 系列方法</h1><h2 id="YoLo"><a href="#YoLo" class="headerlink" title="YoLo"></a>YoLo</h2><h3 id="算法-1"><a href="#算法-1" class="headerlink" title="算法"></a>算法</h3><p>YoLo 将目标探测任务看作目标区域预测和类别预测的回归问题，用单个神经网络直接预测物品边界和类别分数，可以<strong>直接找到物体是什么，在哪里</strong>。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/YoLo.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/YoLo.jpg"></p>
+<h1 id="神经网络回归-YoLo-系列方法"><a href="#神经网络回归-YoLo-系列方法" class="headerlink" title="神经网络回归: YoLo 系列方法"></a>神经网络回归: YoLo 系列方法</h1><h2 id="YoLo"><a href="#YoLo" class="headerlink" title="YoLo"></a>YoLo</h2><h3 id="算法-1"><a href="#算法-1" class="headerlink" title="算法"></a>算法</h3><p>YoLo 将目标探测任务看作目标区域预测和类别预测的回归问题，用单个神经网络直接预测物品边界和类别分数，可以<strong>直接找到物体是什么，在哪里</strong>。<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/YoLo.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/YoLo.jpg"></p>
 <p>把图片分成 SxS 的格子(grid cell)，一般是 7x7 的网络，每个网格生成：</p>
 <ol>
 <li>B 个 Bbox，4 个 coordinates + 1 个 confidence score</li>
 <li>N 个类别分数 $Pr(Class_i|Object)$<br>与 Anchor 不同的是，这里有 N 个分数，表示属于每一类的分数分别是多少</li>
 </ol>
-<p>S=7, B=2, N=20<br><strong>总共的回归目标：</strong> SxSx(5B+N)<br>​     2x5+20=30 个参数，49x30=1470 个数值，用来回归<br><strong>候选区域个数：</strong> (B=2) 98 个 &lt;&lt; Faster R-CNN<br>每个小区域生成 2 个候选区，一个小的区域就是一个粗糙的 proposal，对小区域进行大范围的 regression，找到目标<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo2.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo2.jpg"></p>
-<p><strong>损失函数:</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo3.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo3.png"></p>
+<p>S=7, B=2, N=20<br><strong>总共的回归目标：</strong> SxSx(5B+N)<br>​     2x5+20=30 个参数，49x30=1470 个数值，用来回归<br><strong>候选区域个数：</strong> (B=2) 98 个 &lt;&lt; Faster R-CNN<br>每个小区域生成 2 个候选区，一个小的区域就是一个粗糙的 proposal，对小区域进行大范围的 regression，找到目标<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo2.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo2.jpg"></p>
+<p><strong>损失函数:</strong><br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo3.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo3.png"></p>
 <h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p><strong>性能：</strong></p>
 <ul>
 <li>实时运行</li>
 <li>精度稍微下降</li>
 <li>定位精度较差</li>
 </ul>
-<p>经过大量的 pooling，位置的响应会有一定弱化<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo4.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo4.png"></p>
+<p>经过大量的 pooling，位置的响应会有一定弱化<br><img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo4.png" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/yolo4.png"></p>
 <h3 id="Limitations"><a href="#Limitations" class="headerlink" title="Limitations"></a>Limitations</h3><ol>
 <li>YoLo 的每一个网格只预测两个 boxes，一种类别。这导致模型对相邻目标预测准确率下降。因此，YOLO 对成队列的目标（如一群鸟）识别准确率较低。</li>
 <li>YoLo 是从数据中学习预测 bounding boxes，因此，对新的或者不常见角度的目标无法识别。</li>
@@ -543,7 +543,7 @@
 <li>速度 21:46 (vgg base)</li>
 <li>精度 66.4:74.3</li>
 </ul>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/ssd.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/ssd.jpg">
+<img src="http://shuang0420.clouddn.com/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/ssd.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E7%9B%AE%E6%A0%87%E6%8E%A2%E6%B5%8B/ssd.jpg">
 <blockquote>
 <p>参考链接：<br><a href="http://bealin.github.io/2016/10/23/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E2%80%94%E2%80%94%E4%BB%8ERCNN%E3%80%81Fast-RCNN%E5%88%B0Faster-RCNN/" target="_blank" rel="external">目标检测方法——从RCNN、Fast-RCNN到Faster-RCNN</a><br><a href="https://zhuanlan.zhihu.com/p/25045711" target="_blank" rel="external">YOLO：实时快速目标检测</a></p>
 </blockquote>

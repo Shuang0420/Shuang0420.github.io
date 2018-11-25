@@ -93,16 +93,16 @@
 <meta property="og:url" content="http://www.shuang0420.com/2018/03/17/扯扯 Semi-hard Negative Samples/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="谈谈排序模型的 negative sampling 问题。取不好题目TAT…">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss_for.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/form.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/cosine_loss.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/semi_hard.png">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss_for.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/form.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/cosine_loss.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/semi_hard.png">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="扯扯 Semi-hard Negative Samples">
 <meta name="twitter:description" content="谈谈排序模型的 negative sampling 问题。取不好题目TAT…">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss.png">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss.png">
 
 
 
@@ -389,12 +389,12 @@
 <blockquote>
 <p>Here we want to ensure that an image $x^a_i (anchor)$ of a specific person is closer to all other images $x^p_i(positive)$ of the same person than it is to any image  $x^n_i(negitive)$  of any other person.</p>
 </blockquote>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss.png" class="ful-image" alt="triple_loss.png">
-<p>然后 loss 的设定就是说通过学习，使得类间距离大于类内距离，$\alpha$ 作为 positive/negtive 边界，是一个常量。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss_for.png" class="ful-image" alt="triple_loss_for.png"></p>
+<img src="http://shuang0420.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss.png" class="ful-image" alt="triple_loss.png">
+<p>然后 loss 的设定就是说通过学习，使得类间距离大于类内距离，$\alpha$ 作为 positive/negtive 边界，是一个常量。<br><img src="http://shuang0420.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss_for.png" class="ful-image" alt="triple_loss_for.png"></p>
 <p>Triplets 显然不能穷举，这样一来筛选 triplets 就很重要，为了最快收敛考虑当然是首选最难区分的图像对了，也就是 hard positive ($argmax_{x^p_i}||f(x^a_i)-f(x^p_i)||^2_2$) 和 hard negative ($argmin_{x^n_i}||f(x^a_i)-f(x^n_i)||^2_2$)。举个例子，如果整体样本集是 1000 个人每个人 40 张图片，给定某个人的图片来选 triple，那么自然选这个人另外 39 张图片中和它最不相似的图片作为 hard positive，以及剩下 40*999 张图片中和它最相似的图片作为 hard negative。</p>
-<p>挑选 hard positive 和 hard negative 有 offline (generate triplets every n steps) 和 online (select triplets within a mini-batch) 方法。论文重点聚焦在了 online 方法，在一个大的 mini-batch （1800 个样本）中选择所有的 anchor-positive pairs，同时，来选择一定的 hard anchor-negative pairs，但选择 hardest negatives 在实际当中容易导致在训练最开始的时候就陷入局部最优，所以实际会选择 semi-hard negatives，使挑选样本满足下面的式子：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/form.png" class="ful-image" alt="form.png"></p>
-<p>这个约束就是 semi-hard。再回过头来看开始的 repo，模型用 RNN 对 question 和 answer 进行编码，然后用 cosine ranking loss，也就是让 question 和 right answer 的 cosine 距离小于 question 和 wrong answer 的 cosine 距离。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/cosine_loss.png" class="ful-image" alt="cosine_loss.png"></p>
-<p>wrong answer 采用 neagtive sampling，选择难度适当的 wrong answer，或者说选择当前模型能正确分类但是没那么 confident 的 wrong answer。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/semi_hard.png" class="ful-image" alt="semi_hard.png"></p>
+<p>挑选 hard positive 和 hard negative 有 offline (generate triplets every n steps) 和 online (select triplets within a mini-batch) 方法。论文重点聚焦在了 online 方法，在一个大的 mini-batch （1800 个样本）中选择所有的 anchor-positive pairs，同时，来选择一定的 hard anchor-negative pairs，但选择 hardest negatives 在实际当中容易导致在训练最开始的时候就陷入局部最优，所以实际会选择 semi-hard negatives，使挑选样本满足下面的式子：<br><img src="http://shuang0420.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/form.png" class="ful-image" alt="form.png"></p>
+<p>这个约束就是 semi-hard。再回过头来看开始的 repo，模型用 RNN 对 question 和 answer 进行编码，然后用 cosine ranking loss，也就是让 question 和 right answer 的 cosine 距离小于 question 和 wrong answer 的 cosine 距离。<br><img src="http://shuang0420.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/cosine_loss.png" class="ful-image" alt="cosine_loss.png"></p>
+<p>wrong answer 采用 neagtive sampling，选择难度适当的 wrong answer，或者说选择当前模型能正确分类但是没那么 confident 的 wrong answer。<br><img src="http://shuang0420.clouddn.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/semi_hard.png" class="ful-image" alt="semi_hard.png"></p>
 <p>他们是发现 too hard answer 会使模型难以收敛，而实验表明：</p>
 <blockquote>
 <p>Semi-hard negative samples, which are further than the right answer, but still within the margin - works best</p>

@@ -93,13 +93,13 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/04/07/NLP 笔记 - Knowledge Representation/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="作为 NLP 笔记 - Meaning Representation Languages 这一篇的补充，简单介绍了事件(event)，时间(time)，信念(beliefs) 的意义表示。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Knowledge%20Representation/time2.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Knowledge%20Representation/time3.png">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Knowledge%20Representation/time2.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Knowledge%20Representation/time3.png">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 笔记 - Knowledge Representation">
 <meta name="twitter:description" content="作为 NLP 笔记 - Meaning Representation Languages 这一篇的补充，简单介绍了事件(event)，时间(time)，信念(beliefs) 的意义表示。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Knowledge%20Representation/time2.png">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Knowledge%20Representation/time2.png">
 
 
 
@@ -411,7 +411,7 @@
 <p>表示存在一个吃饭的事件，Martin 是这个事件的行为者，Fish 是被吃的东西，这样的表示方法不需要说明量词的确定数目，无论出现多少角色和填充项都可以结合到谓词中，也不需要对角色进行意义假设。</p>
 <h1 id="Representing-Time"><a href="#Representing-Time" class="headerlink" title="Representing Time"></a>Representing Time</h1><p>很多句子包含了时间的信息，上面的语义表达并没有讨论时间表示的问题，这里介绍下时间表达的基本概念<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- Martin went from the kitchen to the yard</div><div class="line">- ISA(e,Going) ∧ Goer(e, Martin) ∧ Origin(e,kitchen) ∧ Target(e,yard)</div><div class="line"></div><div class="line">Issue</div><div class="line">- no tense information: past? present? future?</div><div class="line"></div><div class="line">Fluents</div><div class="line">- A predicate that is true at a given time: T(f,t)</div></pre></td></tr></table></figure></p>
 <p>我们可以增加时间变量<strong>事件的时间段(e.g., IntervalOf(w,i))、事件的终点(e.g., EndPoint(i,e))以及由动词时态(e.g., Precedes(e,Now))</strong>来说明关于这个终点到当前时间的时间谓词，然而简单动词的关系并不是直截了当的，现在时可以用于说明将来事件，将来时也可以用于说明一个过去事件，为了处理这种现象，Reichenbach(1947)提出了参照点(reference point)的概念，如下</p>
-<p>E: event, R: reference, U: utterance<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Knowledge%20Representation/time2.png" class="ful-image" alt="time2.png"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Knowledge%20Representation/time3.png" class="ful-image" alt="time3.png"></p>
+<p>E: event, R: reference, U: utterance<br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Knowledge%20Representation/time2.png" class="ful-image" alt="time2.png"><br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Knowledge%20Representation/time3.png" class="ful-image" alt="time3.png"></p>
 <p>下面的例子中，departed 这个事件就是参照点(reference time)，吃饭事件在参照点之前<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">When Mary&apos;s flight departed, I had eaten lunch.</div></pre></td></tr></table></figure></p>
 <h1 id="Representing-Beliefs"><a href="#Representing-Beliefs" class="headerlink" title="Representing Beliefs"></a>Representing Beliefs</h1><p>有一些单词和词语的意义表示包含的逻辑公式并不一定在现实世界中真实存在，而是某个假设世界中的东西，这些单词具有“创造世界的能力”，如 believe, want, imagine, know 等。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Example</div><div class="line">- Milo believes that Martin ate fish</div><div class="line"></div><div class="line">One possible representation</div><div class="line">- ∃ e,b: ISA(e,Eating) ∧ Eater(e,Martin) ∧ Eaten(e,Fish) ∧ ISA(b,Believing) ∧ Believer(b,Milo) ∧ Believed(b,e)</div></pre></td></tr></table></figure>

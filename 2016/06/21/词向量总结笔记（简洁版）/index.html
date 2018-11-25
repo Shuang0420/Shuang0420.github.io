@@ -94,13 +94,13 @@
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="综合各家博客整理的词向量总结笔记。">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%A5%87%E5%BC%82%E5%80%BC.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/2.jpg">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/cnn%E4%BC%98%E5%8C%96%E5%87%BD%E6%95%B0.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/1.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/1.jpg">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/skipgram.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/3.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/3.jpg">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E4%BB%BB%E5%8A%A1%E8%AF%84%E4%BB%B7.png">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="词向量总结笔记（简洁版）">
 <meta name="twitter:description" content="综合各家博客整理的词向量总结笔记。">
@@ -408,7 +408,7 @@
 <h2 id="基于迭代的方法"><a href="#基于迭代的方法" class="headerlink" title="基于迭代的方法"></a>基于迭代的方法</h2><p>创建一个模型，它能够一步步迭代地进行学习，并最终得出每个单词基于其上下文的条件概率。</p>
 <h3 id="n-gram"><a href="#n-gram" class="headerlink" title="n-gram"></a>n-gram</h3><p><strong>基本思想：</strong> 一个词出现的概率只与它前面固定数目的词相关。<br>主要工作是在预料中统计各种词串出现的次数以及平滑化处理，概率值计算号之后就存储起来，下次需要计算一个句子的概率时，只需找到相关的概率参数，将它们连乘起来就好了。<br>建立一个概率模型，它包含已知和未知参数。每增加一个训练样本，它就能从模型的输入、输出和期望输出（标签），多学到一点点未知参数的信息。<br>在每次迭代过程中，这个模型都能够评估其误差，并按照一定的更新规则，惩罚那些导致误差的参数。(误差“反向传播”法)。</p>
 <h3 id="CBOW"><a href="#CBOW" class="headerlink" title="CBOW"></a>CBOW</h3><p>以 {“The”, “cat”, “over”, “the”, “puddle”} 为上下文，能够预测或产生它们中心的词语”jumped”。模型输入为 x(c)，模型输出为 y，y 就是中心词 ‘jumped’。对于每个词语 wi 学习了两个向量。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/2.jpg" class="ful-image" alt="2.jpg">
+<img src="http://shuang0420.clouddn.com/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/2.jpg" class="ful-image" alt="2.jpg">
 <p>连续词袋模型（CBOW）中的各个记号：</p>
 <ul>
 <li>$W_i$：单词表 V 中的第 i 个单词, one-hot 向量</li>
@@ -433,7 +433,7 @@
 <p><img src="http://7xu83c.com1.z0.glb.clouddn.com/cnn%E4%BC%98%E5%8C%96%E5%87%BD%E6%95%B0.png" alt=""></p>
 <h3 id="Skip-Gram"><a href="#Skip-Gram" class="headerlink" title="Skip-Gram"></a>Skip-Gram</h3><p>与上面提到的模型对应的另一种思路，是以中心的词语 ”jumped” 为输入，能够预测或产生它周围的词语 ”The”, “cat”, “over”, “the”, “puddle” 等。这里我们叫 ”jumped” 为上下文。我们把它叫做Skip-Gram 模型。</p>
 <p>这个模型的建立与连续词袋模型（CBOW）非常相似，但本质上是交换了输入和输出的位置。我们令输入的 one-hot 向量（中心词）为 x（因为它只有一个），输出向量为 y(j)。U 和 V 的定义与连续词袋模型一样。看一下网络结构图：</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/1.jpg" class="ful-image" alt="1.jpg">
+<img src="http://shuang0420.clouddn.com/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/1.jpg" class="ful-image" alt="1.jpg">
 <p>举个例子，假设现在的数据集如下：</p>
 <pre>the quick brown fox jumped over the lazy dog</pre>
 
@@ -484,7 +484,7 @@
 <li>CBOW 从输入的上下文信息来预测目标词</li>
 <li>Skip-gram 模型则是相反的，从目标词来预测上下文信息<br>一般而言，这种方式上的区别使得 CBOW 模型更适合应用在小规模的数据集上，能够对很多的分布式信息进行平滑处理；而 Skip-Gram 模型则比较适合用于大规模的数据集上。</li>
 </ul>
-<p>另外一点是，embeddings 可以来捕捉关系！<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/3.jpg" class="ful-image" alt="3.jpg"></p>
+<p>另外一点是，embeddings 可以来捕捉关系！<br><img src="http://shuang0420.clouddn.com/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/3.jpg" class="ful-image" alt="3.jpg"></p>
 <h2 id="向量空间模型-Vector-space-models-VSMs"><a href="#向量空间模型-Vector-space-models-VSMs" class="headerlink" title="向量空间模型(Vector space models, VSMs)"></a>向量空间模型(Vector space models, VSMs)</h2><p>将词语表示为一个连续的词向量，并且语义接近的词语对应的词向量在空间上也是接近的。<br><strong>分布式假说理论：</strong> 该假说的思想是如果两个词的上下文(context)相同，那么这两个词所表达的语义也是一样的；换言之，两个词的语义是否相同或相似，取决于两个词的上下文内容，上下文相同表示两个词是可以等价替换的。</p>
 <p>词向量生成方法主要分两大类：</p>
 <ul>

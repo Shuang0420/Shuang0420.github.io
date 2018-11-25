@@ -93,18 +93,18 @@
 <meta property="og:url" content="http://www.shuang0420.com/2016/11/28/Bayesian-Learning/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 10601 的课程笔记。朴素贝叶斯思想即对于给出的待分类项，求解在此项出现的条件下各个类别出现的概率，哪个最大，就认为此待分类项属于哪个类别。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/bayesg.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/nb.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/nb1.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/nb6.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/nb7.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/nb9.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/algorithm.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Bayesian-Learning/bayesg.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Bayesian-Learning/nb.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Bayesian-Learning/nb1.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Bayesian-Learning/nb6.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Bayesian-Learning/nb7.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Bayesian-Learning/nb9.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Bayesian-Learning/algorithm.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Bayesian Learning">
 <meta name="twitter:description" content="CMU 10601 的课程笔记。朴素贝叶斯思想即对于给出的待分类项，求解在此项出现的条件下各个类别出现的概率，哪个最大，就认为此待分类项属于哪个类别。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/bayesg.jpg">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/Bayesian-Learning/bayesg.jpg">
 
 
 
@@ -399,7 +399,7 @@
 <li>Provides “gold standard” for evaluating other learning algorithms</li>
 <li>Additional insight into Occam’s razor</li>
 </ul>
-<h2 id="图示"><a href="#图示" class="headerlink" title="图示"></a>图示</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/bayesg.jpg" class="ful-image" alt="bayesg.jpg">
+<h2 id="图示"><a href="#图示" class="headerlink" title="图示"></a>图示</h2><img src="http://shuang0420.clouddn.com/images/Bayesian-Learning/bayesg.jpg" class="ful-image" alt="bayesg.jpg">
 <p>要记住的是: today’s posterior is tomorrow’s prior</p>
 <h2 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h2><p>$$P(h|D)= {P(D|h)P(h) \over P(D)}$$<br>P(h) = prior probability of hypothesis h<br>P(D) = prior probability of training data D<br>P(h|D) = probability of h given D<br>P(D|h) = probability of D given h</p>
 <p>推导非常简单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">P(h,D) = P(h)P(D|h)</div><div class="line">       = P(D)P(h|D)</div></pre></td></tr></table></figure></p>
@@ -477,9 +477,9 @@
 <p>$$<br>\begin{aligned}<br>P(X|Y)  &amp; = P(X1,X2|Y) \\<br> &amp; = P(X1|X2,Y)P(X2|Y) \\<br> &amp; = P(X1|Y)P(X2|Y)<br>\end{aligned}<br>$$</p>
 <p>更加 general 的形式 <strong>Factor L(|Y)</strong><br>$$P(X1,X2…Xn|Y)=\prod_{i=1}^nP(X_i|Y)$$</p>
 <p>同样的，Y and the Xi are boolean variables，这时候，我们只需要 2n 个参数来定义 $P(X_i = x_{ik}|Y = y_j)$!</p>
-<p>首先我们产生 label，然后从 label 我们产生每一个属性。我们可以用下面的图来表示这种关系。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/nb.jpg" class="ful-image" alt="nb.jpg"></p>
+<p>首先我们产生 label，然后从 label 我们产生每一个属性。我们可以用下面的图来表示这种关系。<br><img src="http://shuang0420.clouddn.com/images/Bayesian-Learning/nb.jpg" class="ful-image" alt="nb.jpg"></p>
 <p>这个假设经常会被打破，然而即使是 horrible assumption，Naive Bayes 的效果也非常好。<br>tend to give extreme result</p>
-<h2 id="Derivation-of-Naive-Bayes-Algorithm"><a href="#Derivation-of-Naive-Bayes-Algorithm" class="headerlink" title="Derivation of Naive Bayes Algorithm"></a>Derivation of Naive Bayes Algorithm</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/nb1.jpg" class="ful-image" alt="nb1.jpg">
+<h2 id="Derivation-of-Naive-Bayes-Algorithm"><a href="#Derivation-of-Naive-Bayes-Algorithm" class="headerlink" title="Derivation of Naive Bayes Algorithm"></a>Derivation of Naive Bayes Algorithm</h2><img src="http://shuang0420.clouddn.com/images/Bayesian-Learning/nb1.jpg" class="ful-image" alt="nb1.jpg">
 <p>在 conditional independent assumption 下，可以继续得到<br>$$P(Y=y_k|X1…Xn)={P(Y=y_k)\prod_i P(X_i|Y=y_k) \over \sum_j P(Y=y_j)\prod_iP(Xi|Y=y_j)} \ (2)$$</p>
 <p>$$Y \ &lt;= \ argmax \ {P(Y=y_k)\prod_i P(X_i|Y=y_k) \over \sum_j P(Y=y_j)\prod_iP(Xi|Y=y_j)}$$</p>
 <p>简化下就是<br>$$Y \ &lt;= \ argmax \ P(Y=y_k)\prod_i P(X_i|Y=y_i=k) \ (3)$$</p>
@@ -488,10 +488,10 @@
 <p>这需要 nJK 个参数，对每个 j,k value 都满足  $1 = \sum_j \theta_{ijk}$，也就是 n(J-1)K 个参数。</p>
 <p>另外我们要定义 prior probability over Y<br>$$\pi_k=P(Y=y_k)$$<br>需要 K-1 个参数。</p>
 <h3 id="Estimate-parameters"><a href="#Estimate-parameters" class="headerlink" title="Estimate parameters"></a>Estimate parameters</h3><p>有两种估计参数的方法。Maximum likelihood 和 Bayesian MAP。</p>
-<p><strong>MLE:</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/nb6.jpg" class="ful-image" alt="nb6.jpg"></p>
-<p>这种情况下有一个危险，当没有 example 符合条件的情况下，$\theta$ 可能为 0，所以我们需要 smooth。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/nb7.jpg" class="ful-image" alt="nb7.jpg"></p>
+<p><strong>MLE:</strong><br><img src="http://shuang0420.clouddn.com/images/Bayesian-Learning/nb6.jpg" class="ful-image" alt="nb6.jpg"></p>
+<p>这种情况下有一个危险，当没有 example 符合条件的情况下，$\theta$ 可能为 0，所以我们需要 smooth。<br><img src="http://shuang0420.clouddn.com/images/Bayesian-Learning/nb7.jpg" class="ful-image" alt="nb7.jpg"></p>
 <p>J: the number of distinct values Xi can take on<br>l: determines the strength of this smoothing</p>
-<p>同样的，估计 $\pi_k$<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/nb9.jpg" class="ful-image" alt="nb9.jpg"></p>
+<p>同样的，估计 $\pi_k$<br><img src="http://shuang0420.clouddn.com/images/Bayesian-Learning/nb9.jpg" class="ful-image" alt="nb9.jpg"></p>
 <p>K: the number of distinct values Y can take on<br>l: determines the strength of the prior assumptions relative to the observed data D.</p>
 <p><strong>MAP classifier:</strong><br>$Vmap = argmax P(v|a_1=x_1…a_n=x_n)=argmax P(v)L(a_1=x_1…a_n=x_n|v)$</p>
 <p>为了估计 prior，我们需要 O(k) 个 parameter，这一般不是问题。<br>估计 L 的概率，我么需要 EXP(n) 个 parameter。</p>
@@ -513,7 +513,7 @@
 
 <p>$$Vnb = argmax \hat P(vj)\prod \hat P(ai|vj)$$</p>
 <p>P(y)P(sun|y)P(cool|y)P(high|y)P(strong|y)=0.005<br>P(n)P(sun|n)P(cool|n)P(high|n)P(strong|n)=0.021</p>
-<h2 id="Learn-Naive-Bayes-Text"><a href="#Learn-Naive-Bayes-Text" class="headerlink" title="Learn Naive Bayes Text"></a>Learn Naive Bayes Text</h2><h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Bayesian-Learning/algorithm.jpg" class="ful-image" alt="algorithm.jpg">
+<h2 id="Learn-Naive-Bayes-Text"><a href="#Learn-Naive-Bayes-Text" class="headerlink" title="Learn Naive Bayes Text"></a>Learn Naive Bayes Text</h2><h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><img src="http://shuang0420.clouddn.com/images/Bayesian-Learning/algorithm.jpg" class="ful-image" alt="algorithm.jpg">
 <h3 id="python-代码"><a href="#python-代码" class="headerlink" title="python 代码"></a>python 代码</h3><p>运行命令</p>
 <pre>
 python nb.py split.train split.test</pre>

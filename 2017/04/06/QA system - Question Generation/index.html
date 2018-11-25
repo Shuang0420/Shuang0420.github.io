@@ -93,22 +93,22 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/04/06/QA system - Question Generation/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="关于如何从给定文本中产生合适的问句。–持续更新中–">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/1.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/0.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/3.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/4.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/5.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/6.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/7.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/8.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/9.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/10.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/1.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/0.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/3.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/4.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/5.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/6.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/7.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/8.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/9.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/10.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="QA system - Question Generation">
 <meta name="twitter:description" content="关于如何从给定文本中产生合适的问句。–持续更新中–">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/1.jpg">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/1.jpg">
 
 
 
@@ -406,7 +406,7 @@
 </ul>
 <p>在 QG 系统中，我们需要的是 Declarative Sentences</p>
 <h1 id="QG-Framework"><a href="#QG-Framework" class="headerlink" title="QG Framework"></a>QG Framework</h1><p>问句如何产生？一般是从文章中提取出合适的可以产生问句的 candidate，然后对其进行变形来得到。很多有用的问题可以被看做是把一个陈述句通过 <strong>词汇(lexical)、句法(syntactic)、语义(semantic)</strong> 层面的转化得到的。因此，在产生问句的阶段，我们需要把原有的句子转化为陈述句。</p>
-<p>看一下 question generation 的框架。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/1.jpg" class="ful-image" alt="1.jpg"></p>
+<p>看一下 question generation 的框架。<br><img src="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/1.jpg" class="ful-image" alt="1.jpg"></p>
 <p><strong>Stage 1</strong>，通过改变词汇来将原有语句转化为陈述句。有些句子很复杂，有些句子我们只需要某些成分，所以可以通过一些方法将原有的句子化简，形成能够产生问句的陈述句。在这个阶段，很多 NLP transformation 的方法都会被用到，包括 extractive summarization, sentence compression, sentence splitting, sentence fusion, paraphrase, textual entailment, lexical semantics for word substitution 等。</p>
 <p><strong>Stage 2</strong>，通过进行一些句法层面的转化(如 WH-movement, subject-auxiliary inversion 等)将陈述句转换为问句，这个模块又叫 question transducer。</p>
 <p><strong>Stage 3</strong>，对上一阶段产生的问题进行排序，特征可以是 source sentence, input sentences, question, transformation 各部分的特征集合。</p>
@@ -419,13 +419,13 @@
 </ul>
 <h2 id="Stage-1"><a href="#Stage-1" class="headerlink" title="Stage 1"></a>Stage 1</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p><strong>输入：</strong> 原始文本<br><strong>输出：</strong> 陈述句</p>
 <p>过于复杂的句子往往会导致不自然或者没有意义的问句，因此我们首先需要进行预处理以便简化 transformation。可以做的比如移除一些短语类型，像是句子开始的连词，句子层次的修饰语等，在论文 headline generation (Dorr and Zajic, 2003) and summarization (Toutanova et al., 2007) 中有具体介绍。一些规则如下</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/2.jpg" class="ful-image" alt="2.jpg">
+<img src="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/2.jpg" class="ful-image" alt="2.jpg">
 <h3 id="Practice"><a href="#Practice" class="headerlink" title="Practice"></a>Practice</h3><p>实际项目中为了得到更快的速度，我们大大简化了这一流程，首先，忽略所有过长的句子(&gt;=50个单词)，其次，只选择 <strong>同位语(APPOSITION)、动词修饰短语(VERB_MODIFIER)、名词动词结构的短语(NP_VP)</strong> 三种类型的句子成分作为产生问句的 candidate。</p>
 <p>规则<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NP_VP = &quot;S &lt; (NP=np ?$PP=pp1 $.. (VP=vp &lt; (/VB.?/=tensed ?$.. SBAR=reason)))&quot;</div><div class="line">APPOSITION = &quot;NP !&lt; CC !&lt; CONJP &lt; (NP=np1 $.. (/,/ $.. (NP=app $.. /,/)))&quot;</div><div class="line">VERB_MODIFIER = &quot;NP=noun &gt; NP $.. VP=modifier&quot;</div></pre></td></tr></table></figure></p>
 <p>操作这些规则还是用 tregex，由于是 python，选择 Stanford coreNLP，具体见 <a href="http://www.shuang0420.com/2017/03/24/ParseTree操作若干-Tregex%20and%20Stanford%20CoreNLP/">ParseTree操作若干-Tregex and Stanford CoreNLP</a>。</p>
 <p>对标注好的部分进行重组，形成规范化的简单句子。以 NP_VP 规则为例，就是形成 NP + VP + PP1的句子。</p>
 <h2 id="Stage-2"><a href="#Stage-2" class="headerlink" title="Stage 2"></a>Stage 2</h2><p><strong>输入：</strong> 上一步产生的陈述句<br><strong>输出：</strong> 一个问句集合</p>
-<p>先来看一下流程图，下图描述了如何从给定文本产生一个问句，带*的表示特殊疑问句必须的步骤，一般疑问句不需要。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/0.jpg" class="ful-image" alt="0.jpg"></p>
+<p>先来看一下流程图，下图描述了如何从给定文本产生一个问句，带*的表示特殊疑问句必须的步骤，一般疑问句不需要。<br><img src="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/0.jpg" class="ful-image" alt="0.jpg"></p>
 <p>answer type 可以是名词短语或者是介词短语，能够产生 who, what, where, when, how much 这类的问句。系统可以进行扩展来产生其他的类似 how, why, what kind of 这类的问句。</p>
 <p>一个句子可能存在多个可能的 answer phrase，而一个 answer phrase 可能产生多个 question phrase，举个例子</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Declarative sentence:</div><div class="line">Francium was discovered by Marguerite Perey in France in 1939</div><div class="line"></div><div class="line">Possible questions:</div><div class="line">• Where was francium discovered by Marguerite Perey in 1939?</div><div class="line">• When was francium discovered by Marguerite Perey in France?</div><div class="line">• Was francium discovered by Marguerite Perey in France in 1939?</div><div class="line">• By what was francium discovered in France in 1939?</div></pre></td></tr></table></figure>
@@ -437,14 +437,14 @@
 <li>invert the subject and auxiliary verb;</li>
 <li>insert one of the question phrases</li>
 </ul>
-<p>一个完整的例子<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/3.jpg" class="ful-image" alt="3.jpg"></p>
+<p>一个完整的例子<br><img src="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/3.jpg" class="ful-image" alt="3.jpg"></p>
 <h3 id="Marking-Unmovable-Phrases"><a href="#Marking-Unmovable-Phrases" class="headerlink" title="Marking Unmovable Phrases"></a>Marking Unmovable Phrases</h3><p>input tree 中有些短语由于 WH-movement 的限制，是不可能作为 answer phrases 的，所以我们可以预先把这些成分用 UNMV- 标记给替换掉，这部分的操作可以是并行的，因为它们的顺序不重要。当然这里有两条规则是例外的，它们用在限制 input tree 的下一步传播，适用于所有其他规则，第一条规则把 UNMV- 节点下的所有节点都标记为 UNMV-。第二条规则把 movable 节点下的所有节点标记为 UNMV-，因为名词短语是可以移动的 islands，名词短语是可以移动的这一事实限制很有用，比如说，在关系从句中的短语是不能移动的，如下面产生的问句是不合理的。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Input sentence:</div><div class="line">I bought the book that inspired Bob.</div><div class="line"></div><div class="line">Question:</div><div class="line">Who did I buy the book that inspired?</div></pre></td></tr></table></figure>
-<p>具体规则如下：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/4.jpg" class="ful-image" alt="4.jpg"></p>
+<p>具体规则如下：<br><img src="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/4.jpg" class="ful-image" alt="4.jpg"></p>
 <h3 id="Generating-Possible-Question-Phrases"><a href="#Generating-Possible-Question-Phrases" class="headerlink" title="Generating Possible Question Phrases"></a>Generating Possible Question Phrases</h3><p>transducer 查看所有可能的 answer phrase，对每一个可能，复制 input tree，移除 answer phrase，产生可能的 question phrase(这个过程在 yes-no 问句中省略)。</p>
 <p>给定一个 answer phrase，question phrase 包含一个 question word(e.g., who,what,where,when)，也可能是个介词短语如 whose car，跟着 answer phrase 的 head。</p>
 <p>对一个给定的 answer phrase，系统使用这个短语的 entity label 和句法结构来产生一系列可能的 question phrase，每一个都用来产生最后的问句。下图描述了产生 question phrase 的一些限制。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/5.jpg" class="ful-image" alt="5.jpg">
+<img src="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/5.jpg" class="ful-image" alt="5.jpg">
 <h3 id="Practice-1"><a href="#Practice-1" class="headerlink" title="Practice"></a>Practice</h3><p>实践中我们用 spacy 来检测 named entity，主要是因为 spacy 的速度很快，</p>
 <p>先对所有 word 进行遍历，找到 PRP 或者 NUM，判断是否能形成 whose 以及 how many/how much 的问题，同时记录是否有 named entity，如果有，再来看 named entity</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if word.tag_.startswith(&apos;PRP&apos;) and is_possessive(word):</div><div class="line">	question_phrase = &apos;whose&apos;</div><div class="line">if word.pos_.startswith(&apos;NUM&apos;) and word.ent_type_ != &apos;DATE&apos;::</div><div class="line">	question_phrase = &apos;how many_how much&apos;</div></pre></td></tr></table></figure>
@@ -456,7 +456,7 @@
 <p>如 John saw Mary 会变成 John did see Mary。</p>
 <p>如果 auxiliary verb 已经存在了，那么并不需要 decomposition，如 John has seen Mary 会变成 Who has John seen。</p>
 <p>下图识别了需要 decompose 的动词</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/6.jpg" class="ful-image" alt="6.jpg">
+<img src="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/6.jpg" class="ful-image" alt="6.jpg">
 <p>另外，可以通过 WordNet 来 lemmatize each verb first by checking morphological variants，每次从动词的最右边去掉一个字母直到在 WordNet 里找到匹配的单词，这种方法非常适合英文因为大多数动词都可以从 lemma 添加几个字母(如 ed)派生得到，或者从 WordNet 里的 lemma 匹配得到。</p>
 <h4 id="Practice-2"><a href="#Practice-2" class="headerlink" title="Practice"></a>Practice</h4><p>这里用到了 patterns.en 的包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">from patterns.en import lemma</div><div class="line"># check if contains auxiliary</div><div class="line">def has_auxiliary(head_verb_tag, verb):</div><div class="line">    if head_verb_tag==&apos;MD&apos; or lemma(verb[0]) in [&apos;be&apos;,&apos;do&apos;,&apos;have&apos;] and len(verb)&gt;1:</div><div class="line">        return True</div><div class="line">    return False</div><div class="line"></div><div class="line"></div><div class="line"># decomposition of verb</div><div class="line">def decompose_verb(verb, verb_tag):</div><div class="line">    tense = verb_tense_dict[verb_tag]</div><div class="line">    return conjugate(&apos;do&apos;, tense), lemma(verb)</div></pre></td></tr></table></figure></p>
 <h3 id="Subject-Auxiliary-Inversion"><a href="#Subject-Auxiliary-Inversion" class="headerlink" title="Subject-Auxiliary Inversion"></a>Subject-Auxiliary Inversion</h3><p>这一部分仍然是对句子的操作，目的是把陈述句变成问句。</p>
@@ -465,13 +465,13 @@
 <h3 id="Inserting-Question-Phrases"><a href="#Inserting-Question-Phrases" class="headerlink" title="Inserting Question Phrases"></a>Inserting Question Phrases</h3><p>将每个可能的 question phrase 插入作为 SBARQ 的子节点，如果是一般疑问句，就不用进行这一步了。</p>
 <h3 id="Post-processing"><a href="#Post-processing" class="headerlink" title="Post-processing"></a>Post-processing</h3><p>为了保证正确的 formatting and punctuation。句号要改为问号，输出要 detokenized，移除多余的空格。另外，所有包含了代词(pronouns)的问句都太模糊了(e.g., What does it have as a head of state)，所以可以过滤掉所有有人称代词(personal pronouns)，所属代词(possessive pronouns)，以及只包含了限定词(determiners)的名词短语。</p>
 <p>当然，改进的版本是进行指代消解。</p>
-<h2 id="Stage-3"><a href="#Stage-3" class="headerlink" title="Stage 3"></a>Stage 3</h2><h3 id="Discriminative-reranker"><a href="#Discriminative-reranker" class="headerlink" title="Discriminative reranker"></a>Discriminative reranker</h3><img src="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/7.jpg" class="ful-image" alt="7.jpg">
+<h2 id="Stage-3"><a href="#Stage-3" class="headerlink" title="Stage 3"></a>Stage 3</h2><h3 id="Discriminative-reranker"><a href="#Discriminative-reranker" class="headerlink" title="Discriminative reranker"></a>Discriminative reranker</h3><img src="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/7.jpg" class="ful-image" alt="7.jpg">
 <p>上图描述了 bad question 出现的一些原因。在产生一大堆可能的问题后，我们要对问句进行排序。论文提到的是用 logistic regression 来定义一个 acceptable probability p(a|q,t) 和 unacceptable probability p(u|q,t) = 1-p(a|q,t)。先训练一个 boolean model ，只要出现上面的任何一种问题，就认为这个问句是 unacceptable 的。接着训练一个 aggregate model，模型如下</p>
 <p>$$p(a|q,t)=\prod^K_{i=1}p_i(a_i|q,t)$$</p>
 <p>其中 i 是影响 acceptable 的各个因素(grammaticality, making sense, vagueness, etc.), K 在这里是 8。</p>
 <p>用到的特征如下图，目标函数是 regularized log-likelihood，regularizaiton constant 由 cross-validation 选择产生。用到的训练集有 WIKI-ENG，WIKI-SIMP 和 theWall Street Journal data in the Penn Treebank</p>
 <p>(Marcus et al., 1993)。实验结果表明，aggregate ranking 在 P@10 上提升了 43.3%，在 P@25 上提升了40%。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/8.jpg" class="ful-image" alt="8.jpg">
+<img src="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/8.jpg" class="ful-image" alt="8.jpg">
 <h3 id="Practice-3"><a href="#Practice-3" class="headerlink" title="Practice"></a>Practice</h3><p>实际中我们并没有来训练模型，主要是因为找不到合适的有标注的训练集。我们用了非常简单的几个标准来进行排序。</p>
 <ul>
 <li>Complexity<br>看 question 包含了多少个单词<br>划分4 个 bucket [0, 5], [5, 20], [20, 30], [30,…]，如果在 [5,20] 之间，给最高分，在 [0, 5] 或者 [30,…] 间，就给 penalty</li>
@@ -487,11 +487,11 @@
 <p>将句子中的 head word 随机替换成同等词性的词。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">=&gt; Had the dog slept on the mat?</div><div class="line"></div><div class="line">No!</div></pre></td></tr></table></figure></p>
 <h1 id="WH-Question"><a href="#WH-Question" class="headerlink" title="WH Question"></a>WH Question</h1><p> <strong>Detect Candidate Sentences and Mark Movable Phrases</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- Input:</div><div class="line">In 2008, because Olympics is coming, 5 valuable pandas including Jingjing were born in Beijing, China.</div><div class="line">- Rule:</div><div class="line">S &lt; (NP=np ?$PP=pp1 $.. (VP=vp &lt; (/VB.?/=tensed ?$.. SBAR=reason)))</div></pre></td></tr></table></figure>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/9.jpg" class="ful-image" alt="9.jpg">
+<img src="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/9.jpg" class="ful-image" alt="9.jpg">
 <p><strong>Yes-no Questions</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- Yes Question:</div><div class="line">Were 5 valuable pandas including Jingjing born in Beijing , China in 2008?</div><div class="line">- No Question:</div><div class="line">Were the swallows born in Beijing , China in 2008?</div></pre></td></tr></table></figure>
 <p><strong>Choose Answer Phrases and Generate Question Phrases</strong></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/QA%20system%20-%20Question%20Generation/10.jpg" class="ful-image" alt="10.jpg">
+<img src="http://shuang0420.clouddn.com/images/QA%20system%20-%20Question%20Generation/10.jpg" class="ful-image" alt="10.jpg">
 <p><strong>Decompose Verb</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Eg.1. In 2008, because Olympics is coming, 5 valuable pandas including Jingjing were born in Beijing, China.</div><div class="line">were =&gt; were</div><div class="line">Eg.2. All four allies retained shared responsibility for Berlin.</div><div class="line">retained =&gt; did retain</div></pre></td></tr></table></figure>
 <p><strong>Invert Subject and Auxiliary and Insert Question Phrase</strong></p>

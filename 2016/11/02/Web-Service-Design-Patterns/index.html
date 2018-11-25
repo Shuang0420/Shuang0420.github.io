@@ -93,15 +93,15 @@
 <meta property="og:url" content="http://www.shuang0420.com/2016/11/02/Web-Service-Design-Patterns/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 95702 Distributed Systems 笔记。简单介绍 XML-RPC、SOAP、REST 三种 web 服务实现方案以及 RPC、Message、Resource 三种 patterns。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/RPC.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/message.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/resource.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/conclusion.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/RPC.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/message.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/resource.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/conclusion.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Distributed Systems笔记－Web Service Design Patterns">
 <meta name="twitter:description" content="CMU 95702 Distributed Systems 笔记。简单介绍 XML-RPC、SOAP、REST 三种 web 服务实现方案以及 RPC、Message、Resource 三种 patterns。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/RPC.jpg">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/RPC.jpg">
 
 
 
@@ -461,7 +461,7 @@
 <p>request/response 是 RPC 的默认模式，request/acknowlege 会 less coupled(seperation of concerns)，request 可以在队列中等待，之后再进行处理，这样可以提高 scalability。如果 client 不想再等待的时候 block，那么可以用 asynchronous response handler。</p>
 <h3 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h3><p>通过 http 调用别的机器上的进程／方法<br>为什么 RPC 呢？就是无法在一个进程内，甚至一个计算机内通过本地调用的方式完成的需求，比如不同的系统间的通讯，甚至不同的组织间的通讯。由于计算能力需要横向扩展，需要在多台机器组成的集群上部署应用.</p>
 <p>RPC 的协议有很多，比如最早的 CORBA，Java RMI，Web Service的 RPC 风格，Hessian，Thrift，甚至 Rest API。</p>
-<p>通信细节<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/RPC.jpg" class="ful-image" alt="Web-Service-Design-Patterns/RPC.jpg"></p>
+<p>通信细节<br><img src="http://shuang0420.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/RPC.jpg" class="ful-image" alt="Web-Service-Design-Patterns/RPC.jpg"></p>
 <ol>
 <li>服务消费方（client）调用以本地调用方式调用服务；</li>
 <li>client stub 接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体；</li>
@@ -474,13 +474,13 @@
 </ol>
 <p>RPC的目标就是要2~8这些步骤都封装起来，让用户对这些细节透明。</p>
 <h2 id="Message"><a href="#Message" class="headerlink" title="Message"></a>Message</h2><p>通过 http 给别的机器发送 command 命令、通知、其它信息，不用和别的进程 direct coupling，也不用知道别的机器的方法的签名。message 只包含一个参数。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/message.jpg" class="ful-image" alt="Web-Service-Design-Patterns/message.jpg">
+<img src="http://shuang0420.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/message.jpg" class="ful-image" alt="Web-Service-Design-Patterns/message.jpg">
 <p>这时候的 message 不包括 procedure name 和 parameter list，service descriptor 通常是 WSDL 和 XSDL，作用是生成一个 service connector(proxy)，service 的主要任务是分发，要求 service 更加的聪明，能够评估消息内容并决定去执行哪个进程调用哪个方法。</p>
 <p>response 包括了相关 service 的地址（url）。<br>Framework: SOAP, WS-Policy, WS-Security</p>
 <p>默认是 request/acknowledge 模式而不是 request/response。<br>追加一条新的 message type 很简单。</p>
-<h2 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h2><p>操作另一台机器上的数据，不用和别的进程 direct coupling，最小化 the need for domain specific api’s。<br>消息内容是一个 http 方法，一个 uri，一个 media type。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/resource.jpg" class="ful-image" alt="Web-Service-Design-Patterns/resource.jpg"></p>
+<h2 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h2><p>操作另一台机器上的数据，不用和别的进程 direct coupling，最小化 the need for domain specific api’s。<br>消息内容是一个 http 方法，一个 uri，一个 media type。<br><img src="http://shuang0420.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/resource.jpg" class="ful-image" alt="Web-Service-Design-Patterns/resource.jpg"></p>
 <p>Resource API 可能是 Restful 的。<br>request/acknowledge 或者 request/response。<br>会产生 Security risk 因为 uri is hackable</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/conclusion.jpg" class="ful-image" alt="Web-Service-Design-Patterns/conclusion.jpg">
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><img src="http://shuang0420.clouddn.com/images/Web-Service-Design-Patterns/Web-Service-Design-Patterns/conclusion.jpg" class="ful-image" alt="Web-Service-Design-Patterns/conclusion.jpg">
 <p>如果要建一个分布式系统，high performance(speed) 是最主要的要求，那么以下选项选哪个？</p>
 <ul>
 <li>REST sytle web service</li>
@@ -554,8 +554,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/02/Web-service-middlewares/" rel="prev" title="Distributed Systems笔记－middlewares">
-                Distributed Systems笔记－middlewares <i class="fa fa-chevron-right"></i>
+              <a href="/2016/11/02/Cryptographic-Protocols/" rel="prev" title="Distributed Systems笔记－Cryptographic Protocols">
+                Distributed Systems笔记－Cryptographic Protocols <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

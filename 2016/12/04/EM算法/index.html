@@ -93,13 +93,13 @@
 <meta property="og:url" content="http://www.shuang0420.com/2016/12/04/EM算法/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EM%E7%AE%97%E6%B3%95/draft.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EM%E7%AE%97%E6%B3%95/table.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/EM%E7%AE%97%E6%B3%95/draft.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/EM%E7%AE%97%E6%B3%95/table.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EM算法">
 <meta name="twitter:description" content="CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/EM%E7%AE%97%E6%B3%95/draft.jpg">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/EM%E7%AE%97%E6%B3%95/draft.jpg">
 
 
 
@@ -391,8 +391,8 @@
 <li>i: index of datapoints<br>$$\hat \lambda_j={\# j \ was \ chosen \over n}={\sum_{i=1}^n w_j^{(i)} \over n}$$<br>$$\hat \mu_j={\sum_{i=1}^n w_j^{(i)} x^{(i)} \over \sum_{i=1}^n w_j^{(i)}}$$</li>
 </ul>
 <p><strong>EM Algorithm guarantees:</strong><br>$$L(D|\theta^{[0]}) \le L(D|\theta^{[1]}) \le L(D|\theta^{[2]})…$$<br>This is a Non-decreasing function. And if the likelihood function is bounded, the sequence will converge. Here the example is bounded, because $\sigma$ is fixed.<br>It might end up with local optimal.</p>
-<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EM%E7%AE%97%E6%B3%95/draft.jpg" class="ful-image" alt="draft.jpg">
-<p>第一次 iteration 的表格表示<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/EM%E7%AE%97%E6%B3%95/table.jpg" class="ful-image" alt="table.jpg"></p>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><img src="http://shuang0420.clouddn.com/images/EM%E7%AE%97%E6%B3%95/draft.jpg" class="ful-image" alt="draft.jpg">
+<p>第一次 iteration 的表格表示<br><img src="http://shuang0420.clouddn.com/images/EM%E7%AE%97%E6%B3%95/table.jpg" class="ful-image" alt="table.jpg"></p>
 <h1 id="General-EM-algorithm"><a href="#General-EM-algorithm" class="headerlink" title="General EM algorithm"></a>General EM algorithm</h1><p><strong>X</strong> observed data<br><strong>Z</strong> unobserved ‘data’<br><strong>Complete data</strong> Y=(X,Z)<br><strong>Likelihood function</strong> $L(X,Z|\theta)$ known</p>
 <p><strong>Problem:</strong> find MLE<br>$$<br>  \begin{aligned}<br>  \hat \theta_{ML} &amp; = argmax \ L(X|\theta)= argmax \sum_Z P(X,Z|\theta) \\<br>   &amp; = argmax \sum_Z P(Z|\theta)P(X|Z,\theta) \\<br>   &amp; = argmax \sum_Z P(X|\theta)P(Z|X,\theta)P(X|Z,\theta)<br>  \end{aligned}<br>$$</p>
 <p><strong>Chicken-egg Problem</strong> with regard to P(Z),$\theta$<br>先有鸡还是先有蛋的问题。当我们知道了哪些 datapoints 属于同一个高斯分布的时候，我们才能够对这个分布的参数作出靠谱的预测，然而现在 datapoints 混在了一起，我们不知道哪个属于哪个，也就没办法估计参数。反过来，只有当我们对 K 个分布的参数作了准确的估计的时候，才知道哪些 datapoints 属于同一个高斯分布。<br>所以陷入了僵局，怎么办？不如就先随便整一个值出来，看你怎么变，然后我再根据你的变化调整我的变化，然后如此迭代着不断互相推导，最终就会收敛到一个解。这就是EM算法的基本思想。 -&gt; chicken stay, egg change</p>
@@ -485,8 +485,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/07/Search Engines笔记 - Federated Search/" rel="prev" title="Search Engines笔记 - Federated Search">
-                Search Engines笔记 - Federated Search <i class="fa fa-chevron-right"></i>
+              <a href="/2016/12/07/Search Engines笔记 - Diversity/" rel="prev" title="Search Engines笔记 - Diversity">
+                Search Engines笔记 - Diversity <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

@@ -93,21 +93,21 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/05/10/NLP 笔记 - Text Summarization/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="Stanford Dan Jurafsky &amp;amp; Chris Manning: Natural Language Processing 课程笔记。文档/会议/邮件摘要，QA 系统回答 what/how 等复杂问题，都需要自动摘要技术。本篇主要讲基于查询的摘要。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/google%20snippets.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/summarization%20stages.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/topic%20signature.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/supervised%20content%20selection.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/query-focused%20multi-document%20summarization.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/Simplifying%20sentences.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/de%EF%AC%81nition%20questions.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/dIE%20METHOD.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE-2.png">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE%20EXAMPLE.png">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/google%20snippets.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/summarization%20stages.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/topic%20signature.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/supervised%20content%20selection.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/query-focused%20multi-document%20summarization.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/Simplifying%20sentences.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/de%EF%AC%81nition%20questions.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/dIE%20METHOD.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE-2.png">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE%20EXAMPLE.png">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 笔记 - Text Summarization">
 <meta name="twitter:description" content="Stanford Dan Jurafsky &amp;amp; Chris Manning: Natural Language Processing 课程笔记。文档/会议/邮件摘要，QA 系统回答 what/how 等复杂问题，都需要自动摘要技术。本篇主要讲基于查询的摘要。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/google%20snippets.png">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/google%20snippets.png">
 
 
 
@@ -408,7 +408,7 @@
 <p>本章主要讨论 <strong>Extractive summarization</strong></p>
 <h1 id="Baseline-Model"><a href="#Baseline-Model" class="headerlink" title="Baseline Model"></a>Baseline Model</h1><p>好的作者常常会在标题和第一句话就表达主题，因此最简单的 baseline 就是抽取文档中的首句作为摘要。</p>
 <h1 id="Generating-snippets-query-focused-summaries"><a href="#Generating-snippets-query-focused-summaries" class="headerlink" title="Generating snippets: query-focused summaries"></a>Generating snippets: query-focused summaries</h1><p>看一下 Google snippets</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/google%20snippets.png" class="ful-image" alt="google%20snippets.png">
+<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/google%20snippets.png" class="ful-image" alt="google%20snippets.png">
 <ul>
 <li>Single-­‐document summarization</li>
 <li>Query-­‐focused summarization</li>
@@ -420,7 +420,7 @@
 <li><strong>information ordering</strong><br>对抽取的句子进行排序</li>
 <li><strong>sentence realization</strong><br>形成摘要</li>
 </ul>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/summarization%20stages.png" class="ful-image" alt="summarization%20stages.png">
+<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/summarization%20stages.png" class="ful-image" alt="summarization%20stages.png">
 <h2 id="Base-Summarization-Algorithm"><a href="#Base-Summarization-Algorithm" class="headerlink" title="Base Summarization Algorithm"></a>Base Summarization Algorithm</h2><p>对一个 base summarization algorithm 而言，其实只需要做第一步 conent selection，之后的 information ordering 即保留句子在源文档的位置，sentence realization 即保留原句。</p>
 <h3 id="Unsupervised-content-selection"><a href="#Unsupervised-content-selection" class="headerlink" title="Unsupervised content selection"></a>Unsupervised content selection</h3><p>我们需要选择的是<strong>salient or informative</strong>的句子，一般来说，salient words 有两种选择方法</p>
 <ul>
@@ -433,11 +433,11 @@
 <li>计算每个单词的 log-likelihood ratio(LLR) ，根据 threshold 进行选择</li>
 <li>选择所有出现在 query 里的单词</li>
 </ul>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/topic%20signature.png" class="ful-image" alt="topic%20signature.png">
+<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/topic%20signature.png" class="ful-image" alt="topic%20signature.png">
 <p><strong>Step2: weigh a sentence(or window)</strong><br>在上一步计算的单词分数基础上，计算每个句子/短语窗口的分数<br>$$weight(s)={1 \over |S|} \sum_{w \in S} weight(w)$$<br>选择 top k 个句子。</p>
 <h3 id="Supervised-content-selection"><a href="#Supervised-content-selection" class="headerlink" title="Supervised content selection"></a>Supervised content selection</h3><p>其实是一个二分类问题，对文档中的每一个句子，用分类器进行二值分类，1 代表这个句子可以作为摘要输出句子，0 代表不能。</p>
 <p>监督学习方法难点是获得训练集，很有可能摘要句子并不是文档中的完整句子，所以需要事先把文档句子和摘要句子对齐，才能得到分类标签。然后对文档句子抽取特征将句子映射为特征向量，再训练分类器，可以用的算法如 <strong>Naive Bayes/Decision Tree/HMM/CRF/LR/SVM/SVM-HMM等</strong></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/supervised%20content%20selection.png" class="ful-image" alt="supervised%20content%20selection.png">
+<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/supervised%20content%20selection.png" class="ful-image" alt="supervised%20content%20selection.png">
 <h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>上面提到的只是最基础的方法，对非监督方法而言，还有下面的方法</p>
 <ul>
 <li>线性组合方法：利用手工构建的评分函数，采取若干重要特征并手工设定特征权重，以此来对句子重要性进行得分计算。</li>
@@ -464,9 +464,9 @@
 </ol>
 <p>属于研究热点，有很大提升空间。</p>
 <h2 id="Bottom-up-snippet-method"><a href="#Bottom-up-snippet-method" class="headerlink" title="Bottom-up snippet method"></a>Bottom-up snippet method</h2><p>处理框架：</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/query-focused%20multi-document%20summarization.png" class="ful-image" alt="query-focused%20multi-document%20summarization.png">
+<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/query-focused%20multi-document%20summarization.png" class="ful-image" alt="query-focused%20multi-document%20summarization.png">
 <h3 id="Sentence-Simplification"><a href="#Sentence-Simplification" class="headerlink" title="Sentence Simplification"></a>Sentence Simplification</h3><p>首先简化句子，可以删除 <strong>同位语/定语从句/没有命名实体的介词短语/句子开头的状语</strong> 等</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/Simplifying%20sentences.png" class="ful-image" alt="Simplifying%20sentences.png">
+<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/Simplifying%20sentences.png" class="ful-image" alt="Simplifying%20sentences.png">
 <h3 id="Sentence-Extraction"><a href="#Sentence-Extraction" class="headerlink" title="Sentence Extraction"></a>Sentence Extraction</h3><h4 id="Maximal-Marginal-Relevance-MMR"><a href="#Maximal-Marginal-Relevance-MMR" class="headerlink" title="Maximal Marginal Relevance(MMR)"></a>Maximal Marginal Relevance(MMR)</h4><p>MMR 是一种从多个文档中进行选择的递归(iterative)方法，递归的从文档中选取最合适的句子插入到 summary/answer 中，两个指标是<strong>相关性(relevant)</strong>，以及 <strong>新颖度(novel)</strong>。这在<a href="http://www.shuang0420.com/2016/12/07/Search%20Engines笔记%20-%20Diversity/">Search Engines笔记 - Diversity</a>也提到过。</p>
 <ul>
 <li><strong>Relevant</strong><br>与 query 最相关的句子，high cosine similarity to the query</li>
@@ -480,9 +480,9 @@
 <li>专题排序(Topical ordering)<br>从源文档中学习主题排序</li>
 </ul>
 <h2 id="Information-Extraction-Method"><a href="#Information-Extraction-Method" class="headerlink" title="Information Extraction Method"></a>Information Extraction Method</h2><p>用信息抽取(IE)的方法来回答，比如说一个人物传记类的问题答案通常包含人物的 <strong>生卒年月，国籍，教育程度，名望/荣誉等</strong>，一个定义类问题(definition)通常包括 <strong>属(genus)或者上位词(hypernym)</strong>，如 The Hajj is a type of ritual，一个关于用药的医学类问题通常包括 <strong>问题(medical condition)、治疗(intervention, the drug or procedure)和结果(outcome)</strong></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/de%EF%AC%81nition%20questions.png" class="ful-image" alt="de%EF%AC%81nition%20questions.png">
+<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/de%EF%AC%81nition%20questions.png" class="ful-image" alt="de%EF%AC%81nition%20questions.png">
 <p>上图是课程提到的 IE 方法框架，暂时不是很理解 predicate identification 这一步，感觉 <a href="http://acl-arc.comp.nus.edu.sg/archives/acl-arc-090501d3/data/pdf/anthology-PDF/H/H01/H01-1054.pdf" target="_blank" rel="external">Multidocument Summarization via Information Extraction</a>这篇文档的框架更加 straight-forward 一些。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/dIE%20METHOD.png" class="ful-image" alt="IE%20METHOD.png">
+<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/dIE%20METHOD.png" class="ful-image" alt="IE%20METHOD.png">
 <h1 id="Evaluating-summaries-ROUGE"><a href="#Evaluating-summaries-ROUGE" class="headerlink" title="Evaluating summaries: ROUGE"></a>Evaluating summaries: ROUGE</h1><p>ROUGE 是内部评价指标，以 BLEU 为基础，虽然比不上人工评价，但是用起来很方便</p>
 <p>给定一个文档 D，以及一个自动生成的文本摘要 X：</p>
 <ol>
@@ -490,9 +490,9 @@
 <li>运行系统，产生自动文本摘要 X</li>
 <li>计算 reference summaries 中的 bigram 在 X 里出现的比例</li>
 </ol>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE-2.png" class="ful-image" alt="ROUGE-2.png">
+<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE-2.png" class="ful-image" alt="ROUGE-2.png">
 <p>举个例子，问句是 “What is water spinach?”，Human 1, Human 2, Human 3 是人工产生的 reference summaries，System answer 是自动摘要，计算如下</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE%20EXAMPLE.png" class="ful-image" alt="ROUGE%20EXAMPLE.png">
+<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE%20EXAMPLE.png" class="ful-image" alt="ROUGE%20EXAMPLE.png">
 
       
     </div>

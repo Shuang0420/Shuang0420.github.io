@@ -93,19 +93,19 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/04/10/NLP笔记 - Relation Extraction/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="Stanford NLP 关于关系抽取的笔记，仅探讨如何提取关系的三元组(triple)，即一个谓词(predicate)带 2 个形参(argument)，比如说 Founding-location(IBM,New York) 这类。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/2.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/3.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/4.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/5.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/7.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/8.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/6.jpg">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/9.jpg">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/2.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/3.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/4.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/5.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/7.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/8.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/6.jpg">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/9.jpg">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP笔记 - Relation Extraction">
 <meta name="twitter:description" content="Stanford NLP 关于关系抽取的笔记，仅探讨如何提取关系的三元组(triple)，即一个谓词(predicate)带 2 个形参(argument)，比如说 Founding-location(IBM,New York) 这类。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/2.jpg">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/2.jpg">
 
 
 
@@ -393,11 +393,11 @@
 </ul>
 <p>先来看下关系抽取的数据集以及现有的关系定义。比较有名的<strong>ACE(Automated Content Extraction)</strong>有 6 大类关系 17 个子类，用于医疗的<strong>UMLS</strong> 有 134 中 entity type，54 种关系……</p>
 <p>还有的一些世界范围内知名的高质量大规模开放知识图谱，如包括 DBpedia、Yago、Wikidata、BabelNet、ConceptNet 以及 Microsoft Concept Graph等，中文的有开放知识图谱平台 OpenKG……</p>
-<p>ACE 的 17 类关系<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/2.jpg" class="ful-image" alt="2.jpg"></p>
+<p>ACE 的 17 类关系<br><img src="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/2.jpg" class="ful-image" alt="2.jpg"></p>
 <p>具体的应用实例</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/3.jpg" class="ful-image" alt="3.jpg">
+<img src="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/3.jpg" class="ful-image" alt="3.jpg">
 <p>Wikipedia 的 info box</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/4.jpg" class="ful-image" alt="4.jpg">
+<img src="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/4.jpg" class="ful-image" alt="4.jpg">
 <p>info box 信息可以转换成 RDF 三元组 $(subject \ predicate \ object)$ 如</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Golden Gate Park location San Francisco  </div><div class="line">=&gt;</div><div class="line">dbpedia:Golden_Gate_Park dbpedia-owl:location dbpedia:San_Francisco</div></pre></td></tr></table></figure>
 <p>常用的 Freebase relations</p>
@@ -420,7 +420,7 @@
 <p>另一个直觉是，更多的关系是在特定是实体之间的，所以我们可以用 Named entity tag 来帮助关系抽取，比如说</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">•  located-in (ORGANIZATION, LOCATION)</div><div class="line">•  founded (PERSON, ORGANIZATION)</div><div class="line">•  cures (DRUG, DISEASE)</div></pre></td></tr></table></figure>
 <p>然后想到了我们可以把基于字符串的 pattern 和基于 ner 的 pattern 结合起来，就有了下面的例子。                </p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/5.jpg" class="ful-image" alt="5.jpg">
+<img src="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/5.jpg" class="ful-image" alt="5.jpg">
 <p>对应的工具有 Stanford CoreNLP 的 tokensRegex。</p>
 <p>手写规则的<strong>优点</strong>是：</p>
 <ul>
@@ -495,9 +495,9 @@
 <li>Trigger list for family: kinship terms<br>parent, wife, husband, grandparent, etc. [from WordNet]</li>
 <li>Gazetteer:<br>List of useful geo or geopolitical words<br>  Country name list<br>  Other sub-entities</li>
 </ul>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/7.jpg" class="ful-image" alt="7.jpg">
+<img src="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/7.jpg" class="ful-image" alt="7.jpg">
 <h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>最常用的 Precision, Recall, F1</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/8.jpg" class="ful-image" alt="8.jpg">
+<img src="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/8.jpg" class="ful-image" alt="8.jpg">
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>如果测试集和训练集很相似，那么监督学习的准确率会很高，然而，它对不同 genre 的泛化能力有限，模型比较脆弱，另一方面，获取这么大的训练集代价也是昂贵的。</p>
 <h1 id="Semi-supervised-realation-extraction"><a href="#Semi-supervised-realation-extraction" class="headerlink" title="Semi-supervised realation extraction"></a>Semi-supervised realation extraction</h1><h2 id="Seed-based-or-bootstrapping-approaches"><a href="#Seed-based-or-bootstrapping-approaches" class="headerlink" title="Seed-based or bootstrapping approaches"></a>Seed-based or bootstrapping approaches</h2><p>半监督学习主要是利用少量的标注信息进行学习，这方面的工作主要是基于 Bootstrap 的方法。基于 Bootstrap 的方法主要是利用少量的实例作为初始种子(seed tuples)的集合，然后利用 pattern 学习方法进行学习，通过不断的迭代，从非结构化数据中抽取实例，然后从新学到的实例中学习新的 pattern 并扩充 pattern 集合。</p>
 <p>漆桂林,高桓,吴天星.知识图谱研究进展[J].情报工程,2017,3(1):004-025</p>
@@ -511,14 +511,14 @@
 <p><strong>Relation Bootstrapping</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">•  Gather a set of seed pairs that have relation R</div><div class="line">•  Iterate:</div><div class="line">1.  Find sentences with these pairs</div><div class="line">2.  Look at the context between or around the pair and generalize the context to create patterns</div><div class="line">3.  Use the patterns for grep for more pairs</div></pre></td></tr></table></figure>
 <p>看一个完整的例子</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/6.jpg" class="ful-image" alt="6.jpg">
+<img src="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/6.jpg" class="ful-image" alt="6.jpg">
 <p>从 5 对种子开始，找到包含种子的实例，替换关键词，形成 pattern，迭代匹配，就为 $(authoer, book)$ 抽取到了 relation pattern，<strong><em>x, by y</em></strong>, 和 <strong><em>x, one of y’s</em></strong></p>
 <h3 id="Snowball"><a href="#Snowball" class="headerlink" title="Snowball"></a>Snowball</h3><p>对 Dipre 算法的改进。Snowball 也是一种相似的迭代算法，Dipre 的 X,Y 可以是任何字符串，而 Snowball 要求 X,Y 必须是命名实体，并且 Snowball 对每个 pattern 计算了 confidence value</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Group instances w/similar prefix, middle, suffix, extract patterns</div><div class="line">	•  But require that X and Y be named entites</div><div class="line">	•  And compute a confidence for each pattern</div><div class="line"></div><div class="line">.69 ORGANIZATION &#123;&apos;s, in, headquaters&#125; LOCATION</div><div class="line">.75 LOCATION &#123;in, based&#125; ORGANIZATION</div></pre></td></tr></table></figure>
 <h2 id="Distant-Supervision"><a href="#Distant-Supervision" class="headerlink" title="Distant Supervision"></a>Distant Supervision</h2><p>Distant Supervision 其实结合了 bootstrapping 和监督学习的长处，它使用一个大的数据库来得到海量的 seed example，然后从这些 example 中创建许多的 feature，最后与有监督的分类器相结合。</p>
 <p>与监督学习相似的是这种方法用许多的 feature 训练了一个分类器，通过详细的人工创造的知识进行监督，不需要用迭代的方法来扩充 pattern。</p>
 <p>与无监督学习相似的是这种方法采用了大量没有标注的数据，对训练语料库中的 genre 并不敏感，适合泛化。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/9.jpg" class="ful-image" alt="9.jpg">
+<img src="http://shuang0420.clouddn.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20Relation%20Extraction/9.jpg" class="ful-image" alt="9.jpg">
 <p>​        </p>
 <h1 id="Unsupervised-relation-extraction"><a href="#Unsupervised-relation-extraction" class="headerlink" title="Unsupervised relation extraction"></a>Unsupervised relation extraction</h1><blockquote>
 <p>Bollegala[27]从搜索引擎摘要中获取和聚合抽取模板，将模板聚类后发现由实体对代表的隐含语义关系; Bollegala[28]使用联合聚类(Co-clustering)算法，利用关系实例和关系模板的对偶性，提高了关系模板聚类效果，同时使用 L1 正则化 Logistics 回归模型，在关系模板聚类结果中筛选出代表性的抽取模板，使得关系抽取在准确率和召回率上都有所提高。</p>

@@ -93,12 +93,12 @@
 <meta property="og:url" content="http://www.shuang0420.com/2018/04/01/论文笔记 - Bi-Directional Attention Flow for Machine Comprehension/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="BiDAF，相对复杂 attention 机制。">
-<meta property="og:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Bi-Directional%20Attention%20Flow%20for%20Machine%20Comprehension/bidaf.png">
-<meta property="og:updated_time" content="2018-09-17T11:14:29.000Z">
+<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Bi-Directional%20Attention%20Flow%20for%20Machine%20Comprehension/bidaf.png">
+<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记 - Bi-Directional Attention Flow for Machine Comprehension">
 <meta name="twitter:description" content="BiDAF，相对复杂 attention 机制。">
-<meta name="twitter:image" content="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Bi-Directional%20Attention%20Flow%20for%20Machine%20Comprehension/bidaf.png">
+<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Bi-Directional%20Attention%20Flow%20for%20Machine%20Comprehension/bidaf.png">
 
 
 
@@ -391,7 +391,7 @@
 <li>Memory-less，在每一个时刻，仅仅对 query 和当前时刻的 context paragraph 进行计算，并不直接依赖上一时刻的 attention，这使得后面的 attention 计算不会受到之前错误的 attention 信息的影响</li>
 <li>计算了 query-to-context（Q2C） 和 context-to-query（C2Q）两个方向的 attention 信息，认为  C2Q 和 Q2C 实际上能够相互补充。实验发现模型在开发集上去掉 C2Q 与 去掉 Q2C 相比，分别下降了 12 和 10 个百分点，显然 C2Q 这个方向上的 attention 更为重要</li>
 </ol>
-<h1 id="Model-Architecture"><a href="#Model-Architecture" class="headerlink" title="Model Architecture"></a>Model Architecture</h1><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Bi-Directional%20Attention%20Flow%20for%20Machine%20Comprehension/bidaf.png" class="ful-image" alt="bidaf.png">
+<h1 id="Model-Architecture"><a href="#Model-Architecture" class="headerlink" title="Model Architecture"></a>Model Architecture</h1><img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Bi-Directional%20Attention%20Flow%20for%20Machine%20Comprehension/bidaf.png" class="ful-image" alt="bidaf.png">
 <p><strong>论文提出的是六层结构：</strong><br><strong>Character Embedding Layer -&gt; Word Embedding Layer -&gt; Contextual Embedding Layer -&gt; Attention Flow Layer -&gt; Modeling Layer -&gt; Output Layer</strong></p>
 <p>然而我还是压缩成五层结构来讲吧：</p>
 <ol>
