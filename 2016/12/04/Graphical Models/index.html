@@ -93,22 +93,22 @@
 <meta property="og:url" content="http://www.shuang0420.com/2016/12/04/Graphical Models/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Graphical%20Models/Bayesian.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Graphical%20Models/Chain.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Graphical%20Models/MultipleEffects.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Graphical%20Models/MultipleCauses.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Graphical%20Models/s.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Graphical%20Models/fac1.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Graphical%20Models/dn.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Graphical%20Models/inf.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Graphical%20Models/use.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Graphical%20Models/pj1.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Graphical%20Models/inf.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Graphical%20Models/Bayesian.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Graphical%20Models/Chain.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Graphical%20Models/MultipleEffects.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Graphical%20Models/MultipleCauses.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Graphical%20Models/s.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Graphical%20Models/fac1.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Graphical%20Models/dn.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Graphical%20Models/inf.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Graphical%20Models/use.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Graphical%20Models/pj1.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Graphical%20Models/inf.jpg">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graphical Models">
 <meta name="twitter:description" content="CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/Graphical%20Models/Bayesian.jpg">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/Graphical%20Models/Bayesian.jpg">
 
 
 
@@ -390,15 +390,15 @@
 <p>变种：<br>$(\forall i,j)P(X=x_i|Y=y_j)=P(X=x_i)$<br>$(\forall i,j)P(Y=y_j|X=x_i)=P(Y=y_j)$</p>
 <h3 id="Conditional-Independence"><a href="#Conditional-Independence" class="headerlink" title="Conditional Independence"></a>Conditional Independence</h3><p><strong>Definition:</strong>    X    is conditional independent of    Y    given    Z, if    the    probability    distribution governing X is    independent    of the value of Y,    given    the    value    of Z<br>$$(\forall i,j,k)P(X=x_i|Y=y_j|Z=z_k)=P(X=x_i|Z=z_k)$$<br>即<br>$$P(X|Y,Z)=P(X|Z)$$</p>
 <h1 id="DGM-Directed-Graphical-Models"><a href="#DGM-Directed-Graphical-Models" class="headerlink" title="DGM(Directed Graphical Models)"></a>DGM(Directed Graphical Models)</h1><p>DGM = Bayes Nets = Bayes Belief Networks<br>Directed graph = (potentially very large) set of conditional independent assumptions = factorization of joint probability(Likelihood function)</p>
-<h2 id="Bayesian-Networks"><a href="#Bayesian-Networks" class="headerlink" title="Bayesian Networks"></a>Bayesian Networks</h2><img src="http://shuang0420.clouddn.com/images/Graphical%20Models/Bayesian.jpg" class="ful-image" alt="Bayesian.jpg">
+<h2 id="Bayesian-Networks"><a href="#Bayesian-Networks" class="headerlink" title="Bayesian Networks"></a>Bayesian Networks</h2><img src="http://images.shuang0420.com/images/Graphical%20Models/Bayesian.jpg" class="ful-image" alt="Bayesian.jpg">
 <h2 id="Causality"><a href="#Causality" class="headerlink" title="Causality"></a>Causality</h2><p>Causality =&gt; DCM<br>cannot infer causality from DCM<br>eg. A-&gt;B-&gt;C or C-&gt;B-&gt;A gives same DCM  $C \bot A|B =&gt; A \bot C|B$</p>
-<h2 id="Types-of-DGM"><a href="#Types-of-DGM" class="headerlink" title="Types of DGM"></a>Types of DGM</h2><h3 id="Eg-Chain-of-events"><a href="#Eg-Chain-of-events" class="headerlink" title="Eg. Chain of events"></a>Eg. Chain of events</h3><p>Cloudy -&gt; Rain -&gt; Wetgrass<br><img src="http://shuang0420.clouddn.com/images/Graphical%20Models/Chain.jpg" class="ful-image" alt="Chain.jpg"><br>I(C;W)&gt;=0<br>I(C;W|R)=0 $C \bot W|R$</p>
-<h3 id="Eg-Multiple-Effects"><a href="#Eg-Multiple-Effects" class="headerlink" title="Eg. Multiple Effects"></a>Eg. Multiple Effects</h3><img src="http://shuang0420.clouddn.com/images/Graphical%20Models/MultipleEffects.jpg" class="ful-image" alt="MultipleEffects.jpg">
+<h2 id="Types-of-DGM"><a href="#Types-of-DGM" class="headerlink" title="Types of DGM"></a>Types of DGM</h2><h3 id="Eg-Chain-of-events"><a href="#Eg-Chain-of-events" class="headerlink" title="Eg. Chain of events"></a>Eg. Chain of events</h3><p>Cloudy -&gt; Rain -&gt; Wetgrass<br><img src="http://images.shuang0420.com/images/Graphical%20Models/Chain.jpg" class="ful-image" alt="Chain.jpg"><br>I(C;W)&gt;=0<br>I(C;W|R)=0 $C \bot W|R$</p>
+<h3 id="Eg-Multiple-Effects"><a href="#Eg-Multiple-Effects" class="headerlink" title="Eg. Multiple Effects"></a>Eg. Multiple Effects</h3><img src="http://images.shuang0420.com/images/Graphical%20Models/MultipleEffects.jpg" class="ful-image" alt="MultipleEffects.jpg">
 <p>Cloudy -&gt; Rain<br>       -&gt; Sprinkler<br>I(R;S)&gt;=0 $R NOT \bot S$<br>I(R,S|C)=0 $R \bot S|C$  </p>
-<h3 id="Eg-Multiple-Causes"><a href="#Eg-Multiple-Causes" class="headerlink" title="Eg. Multiple Causes"></a>Eg. Multiple Causes</h3><img src="http://shuang0420.clouddn.com/images/Graphical%20Models/MultipleCauses.jpg" class="ful-image" alt="MultipleCauses.jpg">
+<h3 id="Eg-Multiple-Causes"><a href="#Eg-Multiple-Causes" class="headerlink" title="Eg. Multiple Causes"></a>Eg. Multiple Causes</h3><img src="http://images.shuang0420.com/images/Graphical%20Models/MultipleCauses.jpg" class="ful-image" alt="MultipleCauses.jpg">
 <p>Rain -&gt; Wetgrass<br>Sprinkler -&gt; Wetgrass<br>I(R;S)=0 $R \bot S$<br>I(R,S|W)&gt;=0 $R NOT \bot S|W$</p>
 <p>“Explaining away”<br>look one of the factor explains the result</p>
-<h2 id="Factoring-and-Count-parameters"><a href="#Factoring-and-Count-parameters" class="headerlink" title="Factoring and Count parameters"></a>Factoring and Count parameters</h2><p>Factoring 主要靠的是 chain rule 和 conditional independence assumptions，计算参数则主要看每个节点的父节点数。<br><img src="http://shuang0420.clouddn.com/images/Graphical%20Models/s.jpg" class="ful-image" alt="s.jpg"><br>without independent Assumptions<br>P(S,B,L,C,T,F)=P(S)P(B|S)P(L|S,B)P(C|S,B,L)P(T|S,B,L,C)P(F|S,B,L,C,T)<br><strong># of paras</strong> 1+2+4+8+16+32</p>
+<h2 id="Factoring-and-Count-parameters"><a href="#Factoring-and-Count-parameters" class="headerlink" title="Factoring and Count parameters"></a>Factoring and Count parameters</h2><p>Factoring 主要靠的是 chain rule 和 conditional independence assumptions，计算参数则主要看每个节点的父节点数。<br><img src="http://images.shuang0420.com/images/Graphical%20Models/s.jpg" class="ful-image" alt="s.jpg"><br>without independent Assumptions<br>P(S,B,L,C,T,F)=P(S)P(B|S)P(L|S,B)P(C|S,B,L)P(T|S,B,L,C)P(F|S,B,L,C,T)<br><strong># of paras</strong> 1+2+4+8+16+32</p>
 <p>with these assumptions, condition only on immediate parent<br>=P(S)P(B)P(L|S)P(C|S,B)P(T|S,B)P(T|L)P(F|S,L,C)<br><strong># of paras</strong> 1+1+2+4+2+8=18<br><strong>dominate factor:</strong> largest number of parents that any one node has</p>
 <h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>再具体一点分析，假设我们有一个警报系统，有以下元素组成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">An	alarm	system</div><div class="line">       B	–	Did	a	burglary	occur?</div><div class="line">       E	–	Did	an	earthquake	occur?</div><div class="line">       A	–	Did	the	alarm	go	off?</div><div class="line">       M	–	Mary	calls</div><div class="line">       J	–	John	calls</div></pre></td></tr></table></figure></p>
 <ol>
@@ -406,26 +406,26 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">P(M,J,A,B,E)	=		</div><div class="line">                P(M	|J,A,B,E)	P(J,A,B,E)	=</div><div class="line">                P(M	|	J,A,B,E)	P(J	|	A,B,E)	P(A|	B,E)	=		</div><div class="line">                P(M	|	J,A,B,E)	P(J	|	A,B,E)	P(A	|	B,E)	P(B,E)</div><div class="line">                P(M	|	J,A,B,E)	P(J	|	A,B,E)	P(A	|	B,E)P(B	|	E)P(E)</div></pre></td></tr></table></figure>
 </li>
 <li><p>Draw    Bayesian Network</p>
-<img src="http://shuang0420.clouddn.com/images/Graphical%20Models/fac1.jpg" class="ful-image" alt="fac1.jpg">
+<img src="http://images.shuang0420.com/images/Graphical%20Models/fac1.jpg" class="ful-image" alt="fac1.jpg">
 <p>对上图来说，共需要 31 个参数。<br>M: 2^4<br>J: 2^3<br>A: 2^2<br>B: 2^1<br>E: 2^0</p>
 </li>
-<li>Use knowledge of domain<br>-&gt; P(B)P(E)P(A|B,E)P(J|A)P(M|A)<img src="http://shuang0420.clouddn.com/images/Graphical%20Models/dn.jpg" class="ful-image" alt="dn.jpg">
+<li>Use knowledge of domain<br>-&gt; P(B)P(E)P(A|B,E)P(J|A)P(M|A)<img src="http://images.shuang0420.com/images/Graphical%20Models/dn.jpg" class="ful-image" alt="dn.jpg">
 现在，需要 10 个参数（A:4, B:1, E:1, J:2, M:2），我们少用了 21 个参数！</li>
 </ol>
-<h2 id="Use"><a href="#Use" class="headerlink" title="Use"></a>Use</h2><img src="http://shuang0420.clouddn.com/images/Graphical%20Models/inf.jpg" class="ful-image" alt="inf.jpg">
+<h2 id="Use"><a href="#Use" class="headerlink" title="Use"></a>Use</h2><img src="http://images.shuang0420.com/images/Graphical%20Models/inf.jpg" class="ful-image" alt="inf.jpg">
 <p>distribution posterior $P(Xt|Xo,\overline \theta)$<br>argmax $Xt = argmax \ P(Xt|Xo,\overline \theta)$</p>
 <p><strong>Using the model</strong><br>Given the model (struct+params) input-&gt;output</p>
 <p>Likelihood function twice<br>$P(X_k=0|X_1,..X_{k-1},X_{k+1}…X_p)$<br>$P(X_k=1|X_1,..X_{k-1},X_{k+1}…X_p)$<br>(if binary) normalize the two values, and gets the posterior</p>
 <p>Condition on X1,X3,X5,X7<br>want to know: distribution over X2,X4,X6,X8<br>need to cal<br>$P(X_2=0,X_4=0,X_6=0,X_8=0,|X_1,..X_{k-1},X_{k+1}…X_p)$<br>$P(X_2=0,X_4=0,X_6=0,X_8=1,|X_1,..X_{k-1},X_{k+1}…X_p)$<br>…<br>$P(X_2=1,X_4=1,X_6=1,X_8=1,|X_1,..X_{k-1},X_{k+1}…X_p)$<br>cal all combinations, normalize, to get the posterior</p>
 <p>exp(# of unobserved values)</p>
-<h3 id="Eg-1-Computing-full-joints"><a href="#Eg-1-Computing-full-joints" class="headerlink" title="Eg.1 Computing full joints"></a>Eg.1 Computing full joints</h3><p>$P(B,\lnot E,A,J,\lnot M)$<br><img src="http://shuang0420.clouddn.com/images/Graphical%20Models/use.jpg" class="ful-image" alt="use.jpg"></p>
+<h3 id="Eg-1-Computing-full-joints"><a href="#Eg-1-Computing-full-joints" class="headerlink" title="Eg.1 Computing full joints"></a>Eg.1 Computing full joints</h3><p>$P(B,\lnot E,A,J,\lnot M)$<br><img src="http://images.shuang0420.com/images/Graphical%20Models/use.jpg" class="ful-image" alt="use.jpg"></p>
 <h3 id="Eg-2-Compute-partial-joints"><a href="#Eg-2-Compute-partial-joints" class="headerlink" title="Eg.2 Compute partial joints"></a>Eg.2 Compute partial joints</h3><p>$P(B|J, \lnot M)$</p>
 <p>$P(B|J, \lnot M)={P(B,J, \lnot M) \over P(B,J, \lnot M)+P(\lnot B,J,\lnot M)}$</p>
-<p><strong>Compute $P(B,J, \lnot M)$</strong><br>Sum    all    instances    with these settings    (the sum is over the possible    assignments    to the other two variables,    E    and    A)<br><img src="http://shuang0420.clouddn.com/images/Graphical%20Models/pj1.jpg" class="ful-image" alt="pj1.jpg"></p>
+<p><strong>Compute $P(B,J, \lnot M)$</strong><br>Sum    all    instances    with these settings    (the sum is over the possible    assignments    to the other two variables,    E    and    A)<br><img src="http://images.shuang0420.com/images/Graphical%20Models/pj1.jpg" class="ful-image" alt="pj1.jpg"></p>
 <p>有简化的方法如 Variable elimination，这里不展开。</p>
 <h1 id="Things-we-do-with-regard-to-a-ML-framework"><a href="#Things-we-do-with-regard-to-a-ML-framework" class="headerlink" title="Things we do with regard to a ML framework"></a>Things we do with regard to a ML framework</h1><ol>
 <li><p>Using it (“inference”)<br>DGM: DP, transforming the tree, approximate inference</p>
-<img src="http://shuang0420.clouddn.com/images/Graphical%20Models/inf.jpg" class="ful-image" alt="inf.jpg">
+<img src="http://images.shuang0420.com/images/Graphical%20Models/inf.jpg" class="ful-image" alt="inf.jpg">
 <p>distribution posterior $P(Xt|Xo,\overline \theta)$<br>argmax $Xt = argmax \ P(Xt|Xo,\overline \theta)$</p>
 </li>
 <li><p>Parameter learning: Learning/Deriving/Fitting the parameters (select weights/transition…) <strong>&lt;= soft bias</strong>/loss function/objective function/optimization function<br>from completed data -&gt; easy: relative frequency+smoothing<br>from incompleted data(some days may be missing) -&gt; hard: EM</p>
@@ -497,16 +497,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/29/Search Engines笔记 - ReDDE Algorithm for Resource Selection /" rel="next" title="论文笔记 - ReDDE Algorithm for Resource Selection">
-                <i class="fa fa-chevron-left"></i> 论文笔记 - ReDDE Algorithm for Resource Selection
+              <a href="/2016/12/04/EM算法/" rel="next" title="EM算法">
+                <i class="fa fa-chevron-left"></i> EM算法
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/04/EM算法/" rel="prev" title="EM算法">
-                EM算法 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/12/07/Search Engines笔记 - Diversity/" rel="prev" title="Search Engines笔记 - Diversity">
+                Search Engines笔记 - Diversity <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

@@ -99,14 +99,14 @@
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/metrics_reconsider.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/NCDG.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/RBP%20.png">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.pic.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.eg.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.eg2.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/TDI.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/TDI.pic.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/TD.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/compare.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.pic.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.eg.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.eg2.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/TDI.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/TDI.pic.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/TD.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/compare.jpg">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Search Engines笔记 - Evaluating Search Effectiveness">
@@ -487,15 +487,15 @@
 <li>每种方法(“A” and “B”)呈现文档的概率是相同的</li>
 <li>用户(random clicker)点击的文档来自 “A” 或者 “B”的概率都是 50%</li>
 </ul>
-<p><strong>算法：</strong><br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.jpg" class="ful-image" alt="balI.jpg"></p>
-<p>算法非常简单。首先决定从哪个方法开始，然后交替把文档加入 interleaved ranking，如果遇到了已经评估过的文档，就直接 counter++，但是不把文档加进 interleaved ranking 里。<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.pic.jpg" class="ful-image" alt="balI.pic.jpg"></p>
+<p><strong>算法：</strong><br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.jpg" class="ful-image" alt="balI.jpg"></p>
+<p>算法非常简单。首先决定从哪个方法开始，然后交替把文档加入 interleaved ranking，如果遇到了已经评估过的文档，就直接 counter++，但是不把文档加进 interleaved ranking 里。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.pic.jpg" class="ful-image" alt="balI.pic.jpg"></p>
 <p>这样我们就得到了一个 ranking，然后我们还有一组数据是用户 click 的顺序。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">I   C</div><div class="line">i1  </div><div class="line">i2  c1</div><div class="line">i3</div><div class="line">i4</div><div class="line">i5  c2</div><div class="line">i6</div><div class="line">i7</div><div class="line">i8  c_max</div></pre></td></tr></table></figure></p>
 <p>$a_1,…,a_k$ 的集合与 $b_1,…b_k$ 的集合的并集包含了所有在 $i_1,…,i_{c_{max}}$ 中的文档，然后我们可以计算在 a’s top k 的点击数和 b’s top k 的点击数，得到最多 clicks 的方法获胜。<br>$$\Delta(A,B) = {wins(A)+0.5*ties(A,B) \over wins(A)+wins(B)+ties(A,B)}$$</p>
-<p><strong>E.g.,</strong><br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.eg.jpg" class="ful-image" alt="balI.eg.jpg"></p>
-<p>然而 Balanced-Interleaving 也可能带来意想不到的结果，如下图，假设用户随机点击了一个 result，那么有 3/4 的结果都是对 B 有利的，为什么？因为 3/4 的文档在 B 里的 ranking 都比 A 高！<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.eg2.jpg" class="ful-image" alt="balI.eg2.jpg"></p>
-<h3 id="Team-draft-interleaving"><a href="#Team-draft-interleaving" class="headerlink" title="Team-draft interleaving"></a>Team-draft interleaving</h3><p><strong>算法：</strong><br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/TDI.jpg" class="ful-image" alt="TDI.jpg"></p>
-<p>每一轮都随机产生先取哪种方法，如果有重复，跳过，取下一个。<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/TDI.pic.jpg" class="ful-image" alt="TDI.pic.jpg"></p>
-<p>之后的步骤与 Balanced-Interleaving 相同。Team-draft 也可能产生难以预料的结果，如下图。<br><img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/TD.jpg" class="ful-image" alt="TD.jpg"></p>
+<p><strong>E.g.,</strong><br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.eg.jpg" class="ful-image" alt="balI.eg.jpg"></p>
+<p>然而 Balanced-Interleaving 也可能带来意想不到的结果，如下图，假设用户随机点击了一个 result，那么有 3/4 的结果都是对 B 有利的，为什么？因为 3/4 的文档在 B 里的 ranking 都比 A 高！<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/balI.eg2.jpg" class="ful-image" alt="balI.eg2.jpg"></p>
+<h3 id="Team-draft-interleaving"><a href="#Team-draft-interleaving" class="headerlink" title="Team-draft interleaving"></a>Team-draft interleaving</h3><p><strong>算法：</strong><br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/TDI.jpg" class="ful-image" alt="TDI.jpg"></p>
+<p>每一轮都随机产生先取哪种方法，如果有重复，跳过，取下一个。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/TDI.pic.jpg" class="ful-image" alt="TDI.pic.jpg"></p>
+<p>之后的步骤与 Balanced-Interleaving 相同。Team-draft 也可能产生难以预料的结果，如下图。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/TD.jpg" class="ful-image" alt="TD.jpg"></p>
 <h2 id="Metrics-1"><a href="#Metrics-1" class="headerlink" title="Metrics"></a>Metrics</h2><ul>
 <li>Abandonment rate: % of queries that receive no clicks</li>
 <li>Reformulation rate: % of queries that are reformulated</li>
@@ -516,7 +516,7 @@
 <ul>
 <li>Inexpensive, adaptive, sensitive to small differences</li>
 </ul>
-<img src="http://shuang0420.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/compare.jpg" class="ful-image" alt="compare.jpg">
+<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/compare.jpg" class="ful-image" alt="compare.jpg">
 
       
     </div>

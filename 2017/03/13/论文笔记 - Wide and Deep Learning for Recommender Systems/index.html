@@ -93,16 +93,16 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/03/13/论文笔记 - Wide and Deep Learning for Recommender Systems/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="Google Play 用的深度神经网络推荐系统，主要思路是将 Memorization(Wide Model) 和 Generalization(Deep Model) 取长补短相结合。论文见 Wide &amp;amp; Deep Learning for Recommender Systems">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/1.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/3.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/4.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/5.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/6.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/1.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/3.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/4.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/5.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/6.jpg">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记 - Wide and Deep Learning for Recommender Systems">
 <meta name="twitter:description" content="Google Play 用的深度神经网络推荐系统，主要思路是将 Memorization(Wide Model) 和 Generalization(Deep Model) 取长补短相结合。论文见 Wide &amp;amp; Deep Learning for Recommender Systems">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/1.jpg">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/1.jpg">
 
 
 
@@ -382,7 +382,7 @@
 
       
         <p>Google Play 用的深度神经网络推荐系统，主要思路是将 Memorization(Wide Model) 和 Generalization(Deep Model) 取长补短相结合。论文见 <a href="https://arxiv.org/pdf/1606.07792.pdf" target="_blank" rel="external">Wide &amp; Deep Learning for Recommender Systems</a><br><a id="more"></a></p>
-<h1 id="Overview-of-System"><a href="#Overview-of-System" class="headerlink" title="Overview of System"></a>Overview of System</h1><img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/1.jpg" class="ful-image" alt="1.jpg">
+<h1 id="Overview-of-System"><a href="#Overview-of-System" class="headerlink" title="Overview of System"></a>Overview of System</h1><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/1.jpg" class="ful-image" alt="1.jpg">
 <p>先来看一下推荐系统的整体架构，由两个部分组成，<strong>检索系统(或者说候选生成系统）</strong> 和 <strong>排序系统(排序网络)</strong>。首先，用 <strong>检索(retrieval)</strong> 的方法对大数据集进行初步筛选，返回最匹配 query 的一部分物品列表，这里的检索通常会结合采用 <strong>机器学习模型(machine-learned models)</strong> 和 <strong>人工定义规则(human-defined rules)</strong> 两种方法。从大规模样本中召回最佳候选集之后，再使用 <strong>排序系统</strong> 对每个物品进行算分、排序，分数 P(y|x)，y 是用户采取的行动(比如说下载行为)，x 是特征，包括</p>
 <ul>
 <li><strong>User features</strong><br>  e.g., country, language, demographics</li>
@@ -390,7 +390,7 @@
 <li><strong>Impression features</strong><br>  e.g., app age, historical statistics of an app</li>
 </ul>
 <p>WDL 就是用在排序系统中。</p>
-<h1 id="Wide-and-Deep-Learning"><a href="#Wide-and-Deep-Learning" class="headerlink" title="Wide and Deep Learning"></a>Wide and Deep Learning</h1><p>简单来说，人脑就是一个不断记忆（memorization）并且归纳（generalization）的过程，而这篇论文的思想，就是将宽线性模型（Wide Model，用于记忆，下图左侧）和深度神经网络模型（Deep Model，用于归纳，下图右侧）结合，汲取各自优势形成了 Wide &amp; Deep 模型用于推荐排序（下图中间）。<br><img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/3.jpg" class="ful-image" alt="3.jpg"></p>
+<h1 id="Wide-and-Deep-Learning"><a href="#Wide-and-Deep-Learning" class="headerlink" title="Wide and Deep Learning"></a>Wide and Deep Learning</h1><p>简单来说，人脑就是一个不断记忆（memorization）并且归纳（generalization）的过程，而这篇论文的思想，就是将宽线性模型（Wide Model，用于记忆，下图左侧）和深度神经网络模型（Deep Model，用于归纳，下图右侧）结合，汲取各自优势形成了 Wide &amp; Deep 模型用于推荐排序（下图中间）。<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/3.jpg" class="ful-image" alt="3.jpg"></p>
 <h2 id="Wide-Model"><a href="#Wide-Model" class="headerlink" title="Wide Model"></a>Wide Model</h2><blockquote>
 <p><strong>Memorization</strong> can be loosely defined as learning the frequent co-occurrence of items or features and exploiting the correlation available in the historical data.</p>
 </blockquote>
@@ -419,10 +419,10 @@
 <li>Joint Training 同时训练 wide &amp; deep 模型，优化的参数包括两个模型各自的参数以及 weights of sum</li>
 <li>Ensemble 中的模型是分别独立训练的，互不干扰，只有在预测时才会联系在一起</li>
 </ul>
-<img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/4.jpg" class="ful-image" alt="4.jpg">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/4.jpg" class="ful-image" alt="4.jpg">
 <p>用 mini-batch stochastic optimization 来进行训练，可以看下这篇论文<a href="https://www.cs.cmu.edu/~muli/file/minibatch_sgd.pdf" target="_blank" rel="external">Efficient Mini-batch Training for Stochastic Optimization</a>。</p>
-<p>在论文提到的实验中，训练时 Wide Model 部分用了 <a href="https://pdfs.semanticscholar.org/7bdf/20d18b5a9411d729a0736c6a3a9a4b52bf4f.pdf" target="_blank" rel="external">Follow-the-regularized-learder(FTRL)</a>+ L1 正则，Deep Model 用了 <a href="http://www.jmlr.org/papers/volume12/duchi11a/duchi11a.pdf" target="_blank" rel="external">AdaGrad</a>，对于逻辑回归，模型预测如下：<br><img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/5.jpg" class="ful-image" alt="5.jpg"></p>
-<h1 id="System-Implementation"><a href="#System-Implementation" class="headerlink" title="System Implementation"></a>System Implementation</h1><p>pipeline 如下图<br><img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/6.jpg" class="ful-image" alt="6.jpg"></p>
+<p>在论文提到的实验中，训练时 Wide Model 部分用了 <a href="https://pdfs.semanticscholar.org/7bdf/20d18b5a9411d729a0736c6a3a9a4b52bf4f.pdf" target="_blank" rel="external">Follow-the-regularized-learder(FTRL)</a>+ L1 正则，Deep Model 用了 <a href="http://www.jmlr.org/papers/volume12/duchi11a/duchi11a.pdf" target="_blank" rel="external">AdaGrad</a>，对于逻辑回归，模型预测如下：<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/5.jpg" class="ful-image" alt="5.jpg"></p>
+<h1 id="System-Implementation"><a href="#System-Implementation" class="headerlink" title="System Implementation"></a>System Implementation</h1><p>pipeline 如下图<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Wide%20and%20Deep%20Learning%20for%20Recommender%20Systems/6.jpg" class="ful-image" alt="6.jpg"></p>
 <h2 id="Data-Generation"><a href="#Data-Generation" class="headerlink" title="Data Generation"></a>Data Generation</h2><p><strong>Label:</strong> 标准是 app acquisition，用户下载为 1，否则为 0<br><strong>Vocabularies:</strong> 将类别特征(categorical features)映射为整型的 id，连续的实值先用累计分布函数CDF归一化到[0,1]，再划档离散化。</p>
 <blockquote>
 <p>Continuous real-valued features are normalized to [0, 1] by mapping a feature value x to its cumulative distribution function P(X ≤ x), divided into $n_q$ quantiles. The normalized value is $i-1 \over n_q-1$for values in the i-th quantiles.</p>

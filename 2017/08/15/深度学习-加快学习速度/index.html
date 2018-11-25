@@ -93,15 +93,15 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/08/15/深度学习-加快学习速度/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="Andrew Ng. Deep Learning Course 2 Improving Deep Neural Networks 笔记，讲加快学习速度的几种方法，包括 input normalization，batch normalization，mini-batch，Momentum，RMSprop，Adam，learning rate decay 等。">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_0.png">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_1.png">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch.png">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch2.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_0.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_1.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch2.png">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习-学习优化(Andrew Ng. DL 笔记)">
 <meta name="twitter:description" content="Andrew Ng. Deep Learning Course 2 Improving Deep Neural Networks 笔记，讲加快学习速度的几种方法，包括 input normalization，batch normalization，mini-batch，Momentum，RMSprop，Adam，learning rate decay 等。">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_0.png">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_0.png">
 
 
 
@@ -374,8 +374,8 @@
 <li>零均值化<br>$u={1\over m} \sum^m_{i=1}x^{(i)}$<br>$x=x-u$</li>
 <li>方差归一化<br>$\sigma^2={1\over m}\sum^m_{i=1}x^{(i)}**2$<br>$x/=\sigma^2$</li>
 </ol>
-<p><strong>归一化后的数据分布：</strong><br><img src="http://shuang0420.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_0.png" class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_0.png"></p>
-<p><strong>问题是为什么要归一化？或者说什么时候需要归一化？</strong><br><img src="http://shuang0420.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_1.png" class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_1.png"></p>
+<p><strong>归一化后的数据分布：</strong><br><img src="http://images.shuang0420.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_0.png" class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_0.png"></p>
+<p><strong>问题是为什么要归一化？或者说什么时候需要归一化？</strong><br><img src="http://images.shuang0420.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_1.png" class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/normalize_input_1.png"></p>
 <p>一方面是可以提高学习速率，主要考虑 <strong>代价函数</strong>，左图代表未归一化的代价函数，右图代表归一化的代价函数，未归一化的代价函数是狭长的，需要更小的学习率，更多的迭代才能到最小值，而归一化后的函数是偏球形的，无论从哪个位置开始，梯度下降法都能够更直接的找到最小值，这样就可以在梯度下降中使用较大步长，优化代价函数 J 更简单快速。</p>
 <p>另一个角度是从数据分布角度来看，如果训练数据和测试数据的分布不同，网络的泛化能力会大大降低，另一方面，如果每个 mini-batch 的数据分布不同，网络就需要去学习适应不同的分布，这也会影响学习速度。</p>
 <p>当然有些时候并不需要归一化，比如说如果数据本身特征值就在相似范围内，那么归一化就不是很重要，相反，如果特征值的取值范围差别很大，有些特征值从 0 到 1，有些从 1 到 1000，归一化特征就很重要了。</p>
@@ -386,8 +386,8 @@
 <p>在测试阶段，每次只有一个样本，$\mu, \sigma$ 哪里来？这需要我们进行估算，可以在网络训练完后运行整个训练集得到 $\mu, \sigma$，也可以在训练时做指数加权平均，来粗略估算 $\mu, \sigma$，然后在测试中使用。</p>
 <p>最后提一点，由于 Norm 对 z 加了噪音，所以有轻微的 regularization effect 的效果，迫使后面的单元不会过分依赖前面任何一个单元， 当然越大的 mini-batch size 会减小这种效果。</p>
 <h1 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a>优化算法</h1><h2 id="Mini-batch"><a href="#Mini-batch" class="headerlink" title="Mini-batch"></a>Mini-batch</h2><p>对整个训练集进行梯度下降时，必须处理完整个训练集后，才能将进行一步梯度下降法，如果把训练集分割为小一点的子训练集(mini-batch)，每次同时处理单个 mini-batch，那么 1个 epoch 虽然只遍历了一次训练集，却能够做 5000 个(如下图)梯度下降</p>
-<img src="http://shuang0420.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch.png" class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch.png">
-<img src="http://shuang0420.clouddn.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch2.png" class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch2.png">
+<img src="http://images.shuang0420.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch.png" class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch.png">
+<img src="http://images.shuang0420.com/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch2.png" class="ful-image" alt="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E5%8A%A0%E5%BF%AB%E5%AD%A6%E4%B9%A0%E9%80%9F%E5%BA%A6/mini_batch2.png">
 <p>Mini-batch 梯度下降法比 batch 梯度下降运行更快，那么一个问题是 <strong>怎么选择 mini-batch size?</strong></p>
 <ul>
 <li>size=m<br>Batch gradient descent(BGD)<br>每一次迭代都对 m 个样本进行计算，计算量大，耗时长</li>

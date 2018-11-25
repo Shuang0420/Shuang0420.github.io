@@ -93,16 +93,16 @@
 <meta property="og:url" content="http://www.shuang0420.com/2016/11/02/Web-service-middlewares/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 95702 Distributed Systems 笔记。简单介绍分布式系统中解决 interoperability concern 的几种方案 Cobra’s CDR, Java serialization 和 XML/JSON。这章整理的比较简单。">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/middlewarelayer.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/corba_cdr.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/java.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/object_reference.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/UDP.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Web-service-middlewares/Web-service-middlewares/middlewarelayer.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Web-service-middlewares/Web-service-middlewares/corba_cdr.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Web-service-middlewares/Web-service-middlewares/java.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Web-service-middlewares/Web-service-middlewares/object_reference.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Web-service-middlewares/Web-service-middlewares/UDP.jpg">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Distributed Systems笔记－middlewares">
 <meta name="twitter:description" content="CMU 95702 Distributed Systems 笔记。简单介绍分布式系统中解决 interoperability concern 的几种方案 Cobra’s CDR, Java serialization 和 XML/JSON。这章整理的比较简单。">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/middlewarelayer.jpg">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/Web-service-middlewares/Web-service-middlewares/middlewarelayer.jpg">
 
 
 
@@ -370,7 +370,7 @@
 
       
         <p>CMU 95702 Distributed Systems 笔记。简单介绍分布式系统中解决 interoperability concern 的几种方案 Cobra’s CDR, Java serialization 和 XML/JSON。这章整理的比较简单。<br><a id="more"></a></p>
-<img src="http://shuang0420.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/middlewarelayer.jpg" class="ful-image" alt="Web-service-middlewares/middlewarelayer.jpg">
+<img src="http://images.shuang0420.com/images/Web-service-middlewares/Web-service-middlewares/middlewarelayer.jpg" class="ful-image" alt="Web-service-middlewares/middlewarelayer.jpg">
 <p>一言以蔽之，middleware 是为了更好的与 remote server 交流。</p>
 <h1 id="Interoperability-concern"><a href="#Interoperability-concern" class="headerlink" title="Interoperability concern"></a>Interoperability concern</h1><p>分布式系统里的互操作性问题。</p>
 <ul>
@@ -382,11 +382,11 @@
 <p>假设 client 把一个 java object 发给了 server，这个 object 的内容可以重新被封装成 c++ 的 object 吗？<strong>不可以！</strong></p>
 <h1 id="三种解决方案"><a href="#三种解决方案" class="headerlink" title="三种解决方案"></a>三种解决方案</h1><h2 id="CORBA’s-CDR"><a href="#CORBA’s-CDR" class="headerlink" title="CORBA’s CDR"></a>CORBA’s CDR</h2><p>双方都知道 message 的 data type 和 order。双方在交流前都有一个 IDL(Interface description language 接口描述语言)，这和 google 的 protocol buffers 差不多。XML, XSDL, WSDL 都可以作为 IDL。</p>
 <p>如下面一段 C 的代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">struct Person &#123;</div><div class="line">  string name;</div><div class="line">  string place;</div><div class="line">  long year;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<img src="http://shuang0420.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/corba_cdr.jpg" class="ful-image" alt="Web-service-middlewares/corba_cdr.jpg">
+<img src="http://images.shuang0420.com/images/Web-service-middlewares/Web-service-middlewares/corba_cdr.jpg" class="ful-image" alt="Web-service-middlewares/corba_cdr.jpg">
 <p>我们可以让 CORBA Interface Compiler 来做合适的 marshalling 和 unmarshalling operation，无论是 C 还是 JAVA。<br>CORBA’s CDR 的特点是 - 非常快！所以传送的信息不包括 data type，只有表格中的右边一栏数据。</p>
 <h2 id="Java-serialization"><a href="#Java-serialization" class="headerlink" title="Java serialization"></a>Java serialization</h2><p>Java’s serialization 本身可以用来 marshal 和 unmarshal，所以并不需要 IDL。双方事先也不知道 data type。</p>
 <p>如下面一段 Java 的代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Person implements Serializable&#123;</div><div class="line">  string name;</div><div class="line">  string place;</div><div class="line">  long year;</div><div class="line">  public Person(String nm,place,year) &#123;</div><div class="line">    nm=name;this.place=place;this.year=year;</div><div class="line">  &#125;</div><div class="line">  // more methods</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<img src="http://shuang0420.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/java.jpg" class="ful-image" alt="Web-service-middlewares/java.jpg">
+<img src="http://images.shuang0420.com/images/Web-service-middlewares/Web-service-middlewares/java.jpg" class="ful-image" alt="Web-service-middlewares/java.jpg">
 <p>Java 序列化的特点是有很多 data (如 class name, version number, data type 等)来 describe 真正的 data。</p>
 <h2 id="Web-Service-use-of-XML"><a href="#Web-Service-use-of-XML" class="headerlink" title="Web Service use of XML"></a>Web Service use of XML</h2><p>格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;p:person xmlns:p=“http://www.andrew.cmu.edu/~mm6”&gt;</div><div class="line">  &lt;p:name&gt;Smith&lt;/p:name&gt;</div><div class="line">  &lt;p:place&gt;London&lt;/p:place&gt;</div><div class="line">  &lt;p:year&gt;1934&lt;/p:year&gt;</div><div class="line">&lt;/p:person&gt;</div></pre></td></tr></table></figure></p>
 <ul>
@@ -412,8 +412,8 @@
 <li>Describe how the protocols of the internet allow for heterogeneity</li>
 <li>Describe how middleware allows for heterogenity<br>hides low level implementation</li>
 </ul>
-<h1 id="Pass-pointers"><a href="#Pass-pointers" class="headerlink" title="Pass pointers"></a>Pass pointers</h1><p>在分布式的 OOP 中，我们需要传送 pointers，包括以下信息。<br><img src="http://shuang0420.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/object_reference.jpg" class="ful-image" alt="Web-service-middlewares/object_reference.jpg"></p>
-<h1 id="UDP-Based-Request-Reply-Protocol"><a href="#UDP-Based-Request-Reply-Protocol" class="headerlink" title="UDP Based Request-Reply Protocol"></a>UDP Based Request-Reply Protocol</h1><p>直接上图和代码。<br><img src="http://shuang0420.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/UDP.jpg" class="ful-image" alt="Web-service-middlewares/UDP.jpg"></p>
+<h1 id="Pass-pointers"><a href="#Pass-pointers" class="headerlink" title="Pass pointers"></a>Pass pointers</h1><p>在分布式的 OOP 中，我们需要传送 pointers，包括以下信息。<br><img src="http://images.shuang0420.com/images/Web-service-middlewares/Web-service-middlewares/object_reference.jpg" class="ful-image" alt="Web-service-middlewares/object_reference.jpg"></p>
+<h1 id="UDP-Based-Request-Reply-Protocol"><a href="#UDP-Based-Request-Reply-Protocol" class="headerlink" title="UDP Based Request-Reply Protocol"></a>UDP Based Request-Reply Protocol</h1><p>直接上图和代码。<br><img src="http://images.shuang0420.com/images/Web-service-middlewares/Web-service-middlewares/UDP.jpg" class="ful-image" alt="Web-service-middlewares/UDP.jpg"></p>
 <p>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Client side:</div><div class="line">public byte[] doOperation (RemoteObjectRef o, int methodId, byte[] arguments)</div><div class="line">sends a request message to the remote object and returns the reply.</div><div class="line">The arguments specify the remote object, the method to be invoked and the</div><div class="line">arguments of that method.</div><div class="line"></div><div class="line">Server side:</div><div class="line">public byte[] getRequest ();</div><div class="line">acquires a client request via the server port.</div><div class="line"></div><div class="line">coolOperation</div><div class="line">select object, execute, method</div><div class="line"></div><div class="line">public void sendReply (byte[] reply, InetAddress clientHost, int clientPort);</div><div class="line">sends the reply message reply to the client at its Internet address and port.</div></pre></td></tr></table></figure></p>
 <h2 id="Failure-model"><a href="#Failure-model" class="headerlink" title="Failure model"></a>Failure model</h2><p>doOperation 可能在 waiting 的时候 timeout，我们要做什么？</p>
 <ul>
@@ -474,16 +474,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/02/Cryptographic-Protocols/" rel="next" title="Distributed Systems笔记－Cryptographic Protocols">
-                <i class="fa fa-chevron-left"></i> Distributed Systems笔记－Cryptographic Protocols
+              <a href="/2016/11/02/Web-Service-Design-Patterns/" rel="next" title="Distributed Systems笔记－Web Service Design Patterns">
+                <i class="fa fa-chevron-left"></i> Distributed Systems笔记－Web Service Design Patterns
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/04/Search-Engines笔记-Authority-Metrics/" rel="prev" title="Search Engines笔记 - Authority Metrics">
-                Search Engines笔记 - Authority Metrics <i class="fa fa-chevron-right"></i>
+              <a href="/2016/11/02/Cryptographic-Protocols/" rel="prev" title="Distributed Systems笔记－Cryptographic Protocols">
+                Distributed Systems笔记－Cryptographic Protocols <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

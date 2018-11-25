@@ -93,12 +93,12 @@
 <meta property="og:url" content="http://www.shuang0420.com/2018/03/05/论文笔记 - 基于神经网络的推理/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="DeepMind Relational Reasoning(RNs)">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E5%9F%BA%E4%BA%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%8E%A8%E7%90%86%20/RN_vqa.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E5%9F%BA%E4%BA%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%8E%A8%E7%90%86%20/RN_vqa.png">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记 - 基于神经网络的推理">
 <meta name="twitter:description" content="DeepMind Relational Reasoning(RNs)">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E5%9F%BA%E4%BA%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%8E%A8%E7%90%86%20/RN_vqa.png">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E5%9F%BA%E4%BA%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%8E%A8%E7%90%86%20/RN_vqa.png">
 
 
 
@@ -401,7 +401,7 @@
 <li><strong>RNs作用在一个集合上</strong>，对输入和输出都是与顺序无关的（input/output invariation）</li>
 </ol>
 <h2 id="Tasks"><a href="#Tasks" class="headerlink" title="Tasks"></a>Tasks</h2><p>简单提一下和 NLP 有关的任务。</p>
-<h3 id="VQA"><a href="#VQA" class="headerlink" title="VQA"></a>VQA</h3><img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E5%9F%BA%E4%BA%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%8E%A8%E7%90%86%20/RN_vqa.png" class="ful-image" alt="RN_vqa.png">
+<h3 id="VQA"><a href="#VQA" class="headerlink" title="VQA"></a>VQA</h3><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E5%9F%BA%E4%BA%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%8E%A8%E7%90%86%20/RN_vqa.png" class="ful-image" alt="RN_vqa.png">
 <p>RN 在 VQA 任务上的结构也很简单，CNN 处理图像，LSTM 编码 question，然后两两配对的 spatial cell（红蓝；黄红；蓝黄…）和 question embedding 拼接，后面接几个 FC 层，最后 softmax 得到某个 answer word。</p>
 <p>Word-embedding: dim32; LSTM: dim128<br>$g_\theta$: 4-layer MLP, dim256-256-256, RELU<br>$f_\phi$: 3-layer MLP, dim256-256-29, RELU<br>$f_\phi (\sum_{i,j}g_\theta(o_i, o_j, q)$: 综合所有组合 $g_\theta(o_i, o_j;q)$，implicitly 提取有用的组合预测最终答案</p>
 <h3 id="bAbI"><a href="#bAbI" class="headerlink" title="bAbI"></a>bAbI</h3><p>RN 在 bAbI 测试集上的结构，每个问题之前的最多 20个句子作为 support set，使用 LSTM-dim32 把 support set 连同每个句子在 set 里的相对位置编码转化为 RN 的 object set，同时使用另一个 LSTM-dim32 的 encoding state 表示问题。</p>

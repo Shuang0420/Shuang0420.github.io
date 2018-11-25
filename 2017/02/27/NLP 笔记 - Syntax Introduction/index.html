@@ -93,16 +93,16 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/02/27/NLP 笔记 - Syntax Introduction/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 11611 的课程笔记。讲句法的相关概念，sentence parsing 的两大结构(Constituency structure and Dependency structure)，以及Chomsky Hierarchy。">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/1.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/2.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/3.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/ch.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/rl.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/1.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/2.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/3.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/ch.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/rl.jpg">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 笔记 - Syntax Introduction">
 <meta name="twitter:description" content="CMU 11611 的课程笔记。讲句法的相关概念，sentence parsing 的两大结构(Constituency structure and Dependency structure)，以及Chomsky Hierarchy。">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/1.jpg">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/1.jpg">
 
 
 
@@ -419,7 +419,7 @@
 <p>所有这些都是对的，但没有一个 always right。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">E.g.</div><div class="line">– Oswald shot Kennedy</div><div class="line">– Kennedy was shot by Oswald – Oswald was shot by Ruby</div><div class="line">– Who shot Oswald?</div><div class="line"></div><div class="line"></div><div class="line">• Active/Passive</div><div class="line">– Oswald shot Kennedy</div><div class="line">– Kennedy was shot by Oswald</div><div class="line"></div><div class="line">• Relative clauses</div><div class="line">– Oswald who shot Kennedy was shot by Ruby</div><div class="line">– Kennedy who Oswald shot didn&apos;t shoot anybody</div><div class="line"></div><div class="line">• Syntactic (not semantic)</div><div class="line">– The batter hit the ball. [subject is semantic agent]</div><div class="line">– The ball was hit by the batter. [subject is semantic patient]</div><div class="line">– The ball was given a whack by the batter. [subject is semantic recipient]</div><div class="line">– &#123;George, the key, the wind&#125; opened the door.</div><div class="line"></div><div class="line">• Subject ≠ topic</div><div class="line">– I just married the most beautiful woman in the world.</div><div class="line">– Now beans, I like.</div><div class="line">– As for democracy, I think it’s the best form of government.</div><div class="line"></div><div class="line">• English subjects</div><div class="line">– agree with the verb</div><div class="line">– when pronouns, in nominative case (I/she/he vs. me/her/him)</div><div class="line">– omitted from infinitive clauses (I tried __ to read the book, I hoped __ to be chosen)</div><div class="line"></div><div class="line">• English objects</div><div class="line">– when pronouns, in accusative case</div><div class="line">– become subjects in passive sentences</div></pre></td></tr></table></figure>
 <h2 id="Subcategorization-and-dependency-次范畴化和依存关系"><a href="#Subcategorization-and-dependency-次范畴化和依存关系" class="headerlink" title="Subcategorization and dependency(次范畴化和依存关系)"></a>Subcategorization and dependency(次范畴化和依存关系)</h2><p><strong>次范畴化和依存关系(subcategorization and dependency)</strong> 涉及到单词和短语之间的某些类别的关系，如动词 want 后可以接不定式(I want to fly to Detroit) 或名词短语(I want a flight to Detroit)，这种事实称为动词的次范畴(subcategorization)，也是之后再讨论。</p>
-<h1 id="Two-views-of-linguistic-structure"><a href="#Two-views-of-linguistic-structure" class="headerlink" title="Two views of linguistic structure"></a>Two views of linguistic structure</h1><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/1.jpg" class="ful-image" alt="1.jpg">
+<h1 id="Two-views-of-linguistic-structure"><a href="#Two-views-of-linguistic-structure" class="headerlink" title="Two views of linguistic structure"></a>Two views of linguistic structure</h1><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/1.jpg" class="ful-image" alt="1.jpg">
 <h2 id="Constituency-phrase-structure"><a href="#Constituency-phrase-structure" class="headerlink" title="Constituency (phrase structure)"></a>Constituency (phrase structure)</h2><blockquote>
 <p><strong>Phrase structure</strong> organizes words into nested constituents. It’s represented by trees generated by a context-free grammar. An important construct is the constituent (complete sub-tree).</p>
 </blockquote>
@@ -434,7 +434,7 @@
 <li>提供了最重要的屈折特征(inflectional features)的单词<br>  Inflection includes things like tense, number, and gender</li>
 </ul>
 <p>来看一些 Dependency structure 的作用，一个从句子产生的角度来看，可以通过 head 确定名词词组(noun phrase)的单复数，以此来决定后面动词的单复数。看下面的例子，只有 “teacher/teachers” 这个 head 决定了 noun phrase 是单数还是复数，“class/classes”，“child/children” 并没有什么用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Singular Plural</div><div class="line">• The teacher blinks</div><div class="line">• The short teacher blinks</div><div class="line">• The teacher of the class blinks</div><div class="line">• The teacher of the classes blinks</div><div class="line">• The children’s teacher blinks</div><div class="line">• The child’s teacher blinks</div><div class="line"></div><div class="line"></div><div class="line">• The teachers blink</div><div class="line">• The short teachers blink</div><div class="line">• The teachers of the class blink</div><div class="line">• The teachers of the classes blink</div><div class="line">• The children’s teachers blink</div><div class="line">• The child’s teachers blink</div></pre></td></tr></table></figure></p>
-<p>另一个应用是 QA 系统，如下，要回答 Who won an award? 这个问题，可能会有两个答案，student 或者 Alan，然而看 dependency parse tree 可以发现，student 和 won 之间有直接的联系(direct link)，所以结果当然是 student won an award<br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/2.jpg" class="ful-image" alt="2.jpg"><br><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/3.jpg" class="ful-image" alt="3.jpg"></p>
+<p>另一个应用是 QA 系统，如下，要回答 Who won an award? 这个问题，可能会有两个答案，student 或者 Alan，然而看 dependency parse tree 可以发现，student 和 won 之间有直接的联系(direct link)，所以结果当然是 student won an award<br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/2.jpg" class="ful-image" alt="2.jpg"><br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/3.jpg" class="ful-image" alt="3.jpg"></p>
 <h1 id="Chomsky-Hierarchy"><a href="#Chomsky-Hierarchy" class="headerlink" title="Chomsky Hierarchy"></a>Chomsky Hierarchy</h1><h2 id="Formal-Grammar"><a href="#Formal-Grammar" class="headerlink" title="Formal Grammar"></a>Formal Grammar</h2><p>一个形式语法(formal grammar) G 定义了一个 formal language，用 L(G)来表示，包括以下部分：</p>
 <ul>
 <li><strong>N:</strong> a set of non-terminal symbols</li>
@@ -449,7 +449,7 @@
 <li><strong>Derivation:</strong>  sequence of top-down production steps</li>
 <li><strong>Parse tree:</strong>  graphical representation of the derivation<br>  A string is grammatical iff there exists a derivation for it.</li>
 </ul>
-<h2 id="Chomsky-Hierarchy-1"><a href="#Chomsky-Hierarchy-1" class="headerlink" title="Chomsky Hierarchy"></a>Chomsky Hierarchy</h2><img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/ch.jpg" class="ful-image" alt="ch.jpg">
+<h2 id="Chomsky-Hierarchy-1"><a href="#Chomsky-Hierarchy-1" class="headerlink" title="Chomsky Hierarchy"></a>Chomsky Hierarchy</h2><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/ch.jpg" class="ful-image" alt="ch.jpg">
 <p>Chomsky 根据 production rule 的形式，把形式语法分为4类：</p>
 <ol>
 <li>0型语法(type 0 grammar)：重写规则为 φ → ψ，并且要求 φ 不是 empty string。</li>
@@ -462,7 +462,7 @@
 <p>An intuition (from Jurafsky &amp; MarEn, p. 533): “…if a regular language has any long strings (longer than the number of states in the automaton), there must be some sort of loop in the automaton for the language. We can use this fact by showing that if a language doesn’t have such a loop, then it can’t be regular.”</p>
 </blockquote>
 <p>如果一个 RL 有任何长字符串（比自动机中的状态数更长），在该语言的自动机中必定有某种循环。我们可以使用这个事实表明，如果一种语言没有这样的循环，那么它不能是 regular 的。</p>
-<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/rl.jpg" class="ful-image" alt="rl.jpg">
+<img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/rl.jpg" class="ful-image" alt="rl.jpg">
 <p>由此可见英语是 regular language<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">L1 = (the cat|dog|mouse|...)* (chased|bit|ate|...)* likes tuna fish</div><div class="line">L2 = English</div><div class="line">L1 ∩ L2 = (the cat|dog|mouse|...)^n (chased|bit|ate|...)^(n-1) likes tuna fish</div></pre></td></tr></table></figure></p>
 <p><a href="http://blog.sina.com.cn/s/blog_72d083c70100pkir.html" target="_blank" rel="external">语法的Chomsky层级</a></p>
 

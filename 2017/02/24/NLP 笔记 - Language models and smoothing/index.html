@@ -93,12 +93,12 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/02/24/NLP 笔记 - Language models and smoothing/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 11611 的课程笔记。Language model 在别的课中不管是单机还是分布式都实现过好几次，然而却没有深入系统的研究过。">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Language%20models%20and%20smoothing/perplexity.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Language%20models%20and%20smoothing/perplexity.jpg">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 笔记 - Language models and smoothing">
 <meta name="twitter:description" content="CMU 11611 的课程笔记。Language model 在别的课中不管是单机还是分布式都实现过好几次，然而却没有深入系统的研究过。">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Language%20models%20and%20smoothing/perplexity.jpg">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Language%20models%20and%20smoothing/perplexity.jpg">
 
 
 
@@ -458,7 +458,7 @@
 <h2 id="Perplexity"><a href="#Perplexity" class="headerlink" title="Perplexity"></a>Perplexity</h2><blockquote>
 <p>Perplexity is the inverse probability of test set normalized by the number of words</p>
 </blockquote>
-<img src="http://shuang0420.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Language%20models%20and%20smoothing/perplexity.jpg" class="ful-image" alt="perplexity.jpg">
+<img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Language%20models%20and%20smoothing/perplexity.jpg" class="ful-image" alt="perplexity.jpg">
 <p>第二个式子用了 chain rule，第三个式子是 bigram 的情况。举个例子来理解 perplexity，如果一个句子由 0-9 位数字随机生成，那么这个句子的 perplexity 是多少？假定每个 digit 出现的概率都是 1/10。=&gt; PP(W)=(1/10)^-1=10</p>
 <p>我们的目标是最小化 perplexity，lower perplexity=better model。</p>
 <p>理论基础是 <strong>熵(entropy)</strong>，熵在 NLP 中是非常有价值的，可以用来度量一个特定语法中的信息量是多少，度量给定语法和给定语言的匹配程度有多高，预测一个给定的 N-gram 中的下一个单词是什么，如果给定两个语法和一个语料库，我们还可以使用熵来估计哪个语法和语料库匹配的更好…</p>

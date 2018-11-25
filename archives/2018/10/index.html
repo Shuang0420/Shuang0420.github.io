@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="negative sampling,负采样," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -87,22 +87,15 @@
 
 
 
-<meta name="description" content="谈谈排序模型的 negative sampling 问题。取不好题目TAT…">
-<meta property="og:type" content="article">
-<meta property="og:title" content="扯扯 Semi-hard Negative Samples">
-<meta property="og:url" content="http://www.shuang0420.com/2018/03/17/扯扯 Semi-hard Negative Samples/index.html">
+<meta name="description" content="读万卷书，行万里路 @SYSU @CMU">
+<meta property="og:type" content="website">
+<meta property="og:title" content="徐阿衡">
+<meta property="og:url" content="http://www.shuang0420.com/archives/2018/10/index.html">
 <meta property="og:site_name" content="徐阿衡">
-<meta property="og:description" content="谈谈排序模型的 negative sampling 问题。取不好题目TAT…">
-<meta property="og:image" content="http://images.shuang0420.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss.png">
-<meta property="og:image" content="http://images.shuang0420.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss_for.png">
-<meta property="og:image" content="http://images.shuang0420.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/form.png">
-<meta property="og:image" content="http://images.shuang0420.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/cosine_loss.png">
-<meta property="og:image" content="http://images.shuang0420.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/semi_hard.png">
-<meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
+<meta property="og:description" content="读万卷书，行万里路 @SYSU @CMU">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="扯扯 Semi-hard Negative Samples">
-<meta name="twitter:description" content="谈谈排序模型的 negative sampling 问题。取不好题目TAT…">
-<meta name="twitter:image" content="http://images.shuang0420.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss.png">
+<meta name="twitter:title" content="徐阿衡">
+<meta name="twitter:description" content="读万卷书，行万里路 @SYSU @CMU">
 
 
 
@@ -131,10 +124,10 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2018/03/17/扯扯 Semi-hard Negative Samples/"/>
+  <link rel="canonical" href="http://www.shuang0420.com/archives/2018/10/"/>
 
 
-  <title> 扯扯 Semi-hard Negative Samples | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Archive | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="en">
@@ -155,7 +148,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left  page-archive  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
@@ -277,216 +270,65 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-collapse">
+    <span class="archive-move-on"></span>
+
+    <span class="archive-page-counter">
+      
+      
+       
+        
+      Great! 161 posts in total. Keep on posting.
+    </span>
+
     
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                扯扯 Semi-hard Negative Samples
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2018-03-17T13:02:27+08:00" content="2018-03-17">
-              2018-03-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/NLP/" itemprop="url" rel="index">
-                    <span itemprop="name">NLP</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/NLP/Chatbot/" itemprop="url" rel="index">
-                    <span itemprop="name">Chatbot</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2018/03/17/扯扯 Semi-hard Negative Samples/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/17/扯扯 Semi-hard Negative Samples/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-              &nbsp; | &nbsp;
-              <span class="page-pv"><i class="fa fa-file-o"></i>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
-              </span>
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
-      
-        <p>谈谈排序模型的 negative sampling 问题。取不好题目TAT…<br><a id="more"></a></p>
-<p>之前在用 Dual Encoder 这类 ranking model 时，发现在一些问题上尽管大方向上匹配的很好，比如人名问题答的都是人名，歌曲问题回答的都是歌曲名，但是具体到再细的粒度就完全匹配不上了。明明知道这显然是 negative sampling 的问题，却一直没找到好的解决方案，毕竟 google 一下 negative sampling 发现前 5 页都是在讲 word2vec……</p>
-<p>感觉这应该算是 ranking 模型中一个非常实际也非常常见的问题。在训练的时候，我们一般不会在整个模板库上进行排序，这样效率太低也容易错，而是会做随机负采样，比如随机选 19 个负样本，和正确答案一起作为候选答案（ranking size=20）。但在实际应用中，又往往需要对整个模板库排序，或者至少要用别的方法召回一批样本（包含正确答案）再进行预测。这样一来，如果训练时随机的负样本太弱太简单（和正确答案差异性很大），而在预测时候选答案又太难太挑战（和正确答案很相似），效果当然就不好了。</p>
-<p>当时自己折腾的时候尝试过很多方法，比如扩大 ranking size，多采样负样本，发现收益并不大，也试过先召回一部分和答案相似的样本，再做 reranking，或者在 DE 前或者后加别的 ranking 来进一步缩小范围，也是收效甚微，另外资源限制很多实验都没跑的很完美就暂时把这个问题放下了。直到最近看到了 <a href="https://github.com/tambetm/allenAI" target="_blank" rel="external">tambetm/allenAI</a> 这个，发现这个小哥哥用了一种不错的 negative sampling 的方法，看上去很有道理的样子，借鉴的还是 15 年的工作，哎都怪我读书少之前木有接触过现在才发现(╥﹏╥)</p>
-<p>简单来说就是选择难度适当的错误回复（<strong>semi-hard negative samples</strong>）作为负样本，这个 idea 来自 15年 FaceNet 那篇文章，过去瞅了瞅，就从 FaceNet 讲起吧。FaceNet 最大特点应该就是提出了 Triplet Loss 的概念，也就是在向量空间内，希望保证单个个体的图像 $x^a_i (anchor)$和该个体的所有其它图像 $x^p_i(positive)$ 之间的特征距离尽可能的小，而与其它个体的图像 $x^n_i(negitive)$ 之间的特征距离要尽可能的大（差不多就是 LDA 的思路嘛，最大化类间距离最小化类内距离）。</p>
-<blockquote>
-<p>Here we want to ensure that an image $x^a_i (anchor)$ of a specific person is closer to all other images $x^p_i(positive)$ of the same person than it is to any image  $x^n_i(negitive)$  of any other person.</p>
-</blockquote>
-<img src="http://images.shuang0420.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss.png" class="ful-image" alt="triple_loss.png">
-<p>然后 loss 的设定就是说通过学习，使得类间距离大于类内距离，$\alpha$ 作为 positive/negtive 边界，是一个常量。<br><img src="http://images.shuang0420.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/triple_loss_for.png" class="ful-image" alt="triple_loss_for.png"></p>
-<p>Triplets 显然不能穷举，这样一来筛选 triplets 就很重要，为了最快收敛考虑当然是首选最难区分的图像对了，也就是 hard positive ($argmax_{x^p_i}||f(x^a_i)-f(x^p_i)||^2_2$) 和 hard negative ($argmin_{x^n_i}||f(x^a_i)-f(x^n_i)||^2_2$)。举个例子，如果整体样本集是 1000 个人每个人 40 张图片，给定某个人的图片来选 triple，那么自然选这个人另外 39 张图片中和它最不相似的图片作为 hard positive，以及剩下 40*999 张图片中和它最相似的图片作为 hard negative。</p>
-<p>挑选 hard positive 和 hard negative 有 offline (generate triplets every n steps) 和 online (select triplets within a mini-batch) 方法。论文重点聚焦在了 online 方法，在一个大的 mini-batch （1800 个样本）中选择所有的 anchor-positive pairs，同时，来选择一定的 hard anchor-negative pairs，但选择 hardest negatives 在实际当中容易导致在训练最开始的时候就陷入局部最优，所以实际会选择 semi-hard negatives，使挑选样本满足下面的式子：<br><img src="http://images.shuang0420.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/form.png" class="ful-image" alt="form.png"></p>
-<p>这个约束就是 semi-hard。再回过头来看开始的 repo，模型用 RNN 对 question 和 answer 进行编码，然后用 cosine ranking loss，也就是让 question 和 right answer 的 cosine 距离小于 question 和 wrong answer 的 cosine 距离。<br><img src="http://images.shuang0420.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/cosine_loss.png" class="ful-image" alt="cosine_loss.png"></p>
-<p>wrong answer 采用 neagtive sampling，选择难度适当的 wrong answer，或者说选择当前模型能正确分类但是没那么 confident 的 wrong answer。<br><img src="http://images.shuang0420.com/images/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/semi_hard.png" class="ful-image" alt="semi_hard.png"></p>
-<p>他们是发现 too hard answer 会使模型难以收敛，而实验表明：</p>
-<blockquote>
-<p>Semi-hard negative samples, which are further than the right answer, but still within the margin - works best</p>
-</blockquote>
-<p>参考连接：</p>
-<blockquote>
-<p><a href="https://zhuanlan.zhihu.com/p/24837264" target="_blank" rel="external">谷歌人脸识别系统FaceNet解析</a><br><a href="https://arxiv.org/abs/1503.03832" target="_blank" rel="external">FaceNet: A Unified Embedding for Face Recognition and Clustering</a></p>
-</blockquote>
-
-      
-    </div>
-
-    <div>
       
         
-<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
-    <div>欢迎关注：徐阿衡的微信公众号</div>
-</div>
-
-
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>客官，打个赏呗~</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
-          <p>微信打赏</p>
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2018">2018</h2>
         </div>
       
       
-    </div>
-  </div>
-
 
       
-    </div>
 
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/negative-sampling/" rel="tag">#negative sampling</a>
-          
-            <a href="/tags/负采样/" rel="tag">#负采样</a>
-          
-        </div>
-      
+  <article class="post post-type-normal" itemscope itemtype="//schema.org/Article">
+    <header class="post-header">
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/03/05/论文笔记 - 基于神经网络的推理/" rel="next" title="论文笔记 - 基于神经网络的推理">
-                <i class="fa fa-chevron-left"></i> 论文笔记 - 基于神经网络的推理
-              </a>
-            
-          </div>
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2018/10/15/知识抽取-事件抽取/" itemprop="url">
+              
+                <span itemprop="name">知识抽取-事件抽取</span>
+              
+            </a>
+        
+      </h1>
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/25/论文笔记 - Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution/" rel="prev" title="论文笔记 - Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution">
-                论文笔记 - Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-10-15T19:02:27+08:00"
+              content="2018-10-15" >
+          10-15
+        </time>
+      </div>
 
-      
-      
-
-
-
-    </footer>
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+    
+
+  </section>
+
+  
+
 
 
           </div>
@@ -494,17 +336,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
-     
-  </div>
-
 
         </div>
         
@@ -524,17 +355,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
@@ -642,17 +464,6 @@
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <p class="post-toc-empty">This post does not have a Table of Contents</p>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -769,24 +580,11 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
+  
+    <script type="text/javascript" id="motion.page.archive">
+      $('.archive-year').velocity('transition.slideLeftIn');
+    </script>
+  
 
 
   
@@ -804,9 +602,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'httpshuang0420githubio';
-      var disqus_identifier = '2018/03/17/扯扯 Semi-hard Negative Samples/';
-      var disqus_title = "扯扯 Semi-hard Negative Samples";
-      var disqus_url = 'http://www.shuang0420.com/2018/03/17/扯扯 Semi-hard Negative Samples/';
+      var disqus_identifier = 'archives/2018/10/index.html';
+      var disqus_title = "";
+      var disqus_url = '';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
@@ -817,8 +615,6 @@
       }
 
       run_disqus_script('count.js');
-      
-        run_disqus_script('embed.js');
       
     </script>
   

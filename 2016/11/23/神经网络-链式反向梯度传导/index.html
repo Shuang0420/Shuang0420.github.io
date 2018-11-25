@@ -93,12 +93,12 @@
 <meta property="og:url" content="http://www.shuang0420.com/2016/11/23/神经网络-链式反向梯度传导/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="反向梯度传播实例。">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E9%93%BE%E5%BC%8F%E5%8F%8D%E5%90%91%E6%A2%AF%E5%BA%A6%E4%BC%A0%E5%AF%BC/1.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E9%93%BE%E5%BC%8F%E5%8F%8D%E5%90%91%E6%A2%AF%E5%BA%A6%E4%BC%A0%E5%AF%BC/1.jpg">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习-链式反向梯度传导">
 <meta name="twitter:description" content="反向梯度传播实例。">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E9%93%BE%E5%BC%8F%E5%8F%8D%E5%90%91%E6%A2%AF%E5%BA%A6%E4%BC%A0%E5%AF%BC/1.jpg">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E9%93%BE%E5%BC%8F%E5%8F%8D%E5%90%91%E6%A2%AF%E5%BA%A6%E4%BC%A0%E5%AF%BC/1.jpg">
 
 
 
@@ -369,7 +369,7 @@
 <p><strong>计算顺序：</strong> 从 loss 向输入传播<br><strong>导数存储：</strong> 每层的导数 $(\Delta y, \Delta x)$ 结果进行存储，用于下一层导数的计算。</p>
 <p>假设 $loss = ax_{1,t}+bx_{2,t}+cx_{3,t}+d-y$，当前参数 $m_0 = [a_0, b_0,c_0,d_0]$，那么计算梯度 $\Delta m=[x_{1,t}, x_{2,t}, x_{3,t}, 1]$，也就是分别求偏导。参数的更新为 $m:=m-\eta \Delta m$</p>
 <p>下面的例子，黑色加深部分是前向计算的结果，我们的目的是求反向传播梯度。(原谅我 poor hand-writting :( )</p>
-<img src="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E9%93%BE%E5%BC%8F%E5%8F%8D%E5%90%91%E6%A2%AF%E5%BA%A6%E4%BC%A0%E5%AF%BC/1.jpg" class="ful-image" alt="1.jpg">
+<img src="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E9%93%BE%E5%BC%8F%E5%8F%8D%E5%90%91%E6%A2%AF%E5%BA%A6%E4%BC%A0%E5%AF%BC/1.jpg" class="ful-image" alt="1.jpg">
 <p><strong>小结：</strong></p>
 <ol>
 <li>随机初始化参数</li>

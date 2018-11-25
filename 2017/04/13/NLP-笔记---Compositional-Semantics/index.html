@@ -93,29 +93,29 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/04/13/NLP-笔记---Compositional-Semantics/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 11611 的课程笔记。主要讲了两种语义分析的方法: Lexicalized CFG 及 CCG，补充介绍了词汇语义学的一些概念。比较基础，网上参考资料较少，具体需要研究相关论文。">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20parsing%20eg..png">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/5.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/6.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/CCG1.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20parsing%20eg.2.png">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/coor3.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR1.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR2.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR3.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR3.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/parsing%20choice.png">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/learning.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20modeling.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/CFG%20vs%20CCG.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/thematic%20roles.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/7.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/Verb%20Subcategorization.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/selection%20restriction.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20parsing%20eg..png">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/5.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/6.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/CCG1.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20parsing%20eg.2.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/coor3.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR1.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR2.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR3.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR3.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/parsing%20choice.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/learning.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20modeling.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/CFG%20vs%20CCG.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/thematic%20roles.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/7.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/Verb%20Subcategorization.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/selection%20restriction.jpg">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 笔记 - Compositional Semantics">
 <meta name="twitter:description" content="CMU 11611 的课程笔记。主要讲了两种语义分析的方法: Lexicalized CFG 及 CCG，补充介绍了词汇语义学的一些概念。比较基础，网上参考资料较少，具体需要研究相关论文。">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20parsing%20eg..png">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20parsing%20eg..png">
 
 
 
@@ -427,17 +427,17 @@
 <li>Until the root of the sentence</li>
 </ol>
 <p>最简单的例子</p>
-<img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20parsing%20eg..png" class="ful-image" alt="semantic%20parsing%20eg..png">
+<img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20parsing%20eg..png" class="ful-image" alt="semantic%20parsing%20eg..png">
 <p>稍复杂的例子，bottom-up</p>
-<img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/5.jpg" class="ful-image" alt="5.jpg">
+<img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/5.jpg" class="ful-image" alt="5.jpg">
 <p>当然还有一种对应的是从上往下，follow SLP</p>
-<img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/6.jpg" class="ful-image" alt="6.jpg">
+<img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/6.jpg" class="ful-image" alt="6.jpg">
 <h3 id="歧义"><a href="#歧义" class="headerlink" title="歧义"></a>歧义</h3><p>由于句法和词汇都存在歧义，因此句法驱动的语义分析将产生成倍的歧义意义表示，解决这些歧义并不是语义分析器的工作，而是通过使用领域知识和上下文知识在候选项中进行选择的后续理解处理。当然也可以通过使用鲁棒的词性标注器、介词短语附着机制以及词义排歧原理，以减少歧义表示的数量。</p>
 <h2 id="Using-CCG-Steedman-1996"><a href="#Using-CCG-Steedman-1996" class="headerlink" title="Using CCG(Steedman 1996)"></a>Using CCG(Steedman 1996)</h2><p>CCG(Combinatorial Categorial Grammar)的<strong>基本思路</strong>是先将词/短语和类别(categories)配对，然后逐步的对类别进行组合，通过 logical form 来捕捉句子的完整含义。</p>
 <blockquote>
 <p><strong>CCG</strong> assigns a category to each word and constructs a parse by combining pairs of categories to form an S. Not all pairs of categories can combine. A pair is allowed to combine if one category(e.g. A) is contained within the category next to it(e.g. B/A) and lies on the side indicated by the slash(\ for left, / for right). When two categories combine, the result is a new category, taken from the left of the slash(B in this example)</p>
 </blockquote>
-<img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/CCG1.jpg" class="ful-image" alt="CCG1.jpg">
+<img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/CCG1.jpg" class="ful-image" alt="CCG1.jpg">
 <p>CCG Category 由两部分组成，左边是句法(syntax)，右边是语义(semantics)<br>Syntax 包含基本符号和运算符</p>
 <ul>
 <li>Primitive symbols: N, S, NP, ADJ and PP</li>
@@ -451,7 +451,7 @@
 <li>Type raising:<br>– A = X/(X\A)</li>
 </ul>
 <p>Semantics 包含逻辑语言，如 lambda calculus，将 syntax 和 semantics 匹配起来就形成了 CCG Category，如<br>(S\NP)/ADJ: $\lambda f.\lambda x.f(x)$</p>
-<p>一个简单的例子<br><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20parsing%20eg.2.png" class="ful-image" alt="semantic%20parsing%20eg.2.png"></p>
+<p>一个简单的例子<br><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20parsing%20eg.2.png" class="ful-image" alt="semantic%20parsing%20eg.2.png"></p>
 <p>CCG 的优点</p>
 <ul>
 <li>简化了组合规则(combinatory rules)</li>
@@ -460,16 +460,16 @@
 <li>句法和语义成分之间是一对一的关系</li>
 </ul>
 <h3 id="Handling-Coordination"><a href="#Handling-Coordination" class="headerlink" title="Handling Coordination"></a>Handling Coordination</h3><h4 id="Constituent-Coordination"><a href="#Constituent-Coordination" class="headerlink" title="Constituent Coordination"></a>Constituent Coordination</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- John likes Mary and dislikes Bob.</div><div class="line">  NP (VP and VP)</div></pre></td></tr></table></figure>
-<p>如上面的例子可以直接通过 coordination rule 来 parse<br><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/coor3.jpg" class="ful-image" alt="coor3.jpg"></p>
+<p>如上面的例子可以直接通过 coordination rule 来 parse<br><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/coor3.jpg" class="ful-image" alt="coor3.jpg"></p>
 <h4 id="Non-constituent-coordination"><a href="#Non-constituent-coordination" class="headerlink" title="Non-constituent coordination"></a>Non-constituent coordination</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- John likes and Mary dislikes Bob.</div></pre></td></tr></table></figure>
-<p>然而这个例子就只能通过 Type raising 来解决<br><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR1.jpg" class="ful-image" alt="TR1.jpg"></p>
-<p>完整的例子<br><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR2.jpg" class="ful-image" alt="TR2.jpg"><br><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR3.jpg" class="ful-image" alt="TR3.jpg"><br><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR3.jpg" class="ful-image" alt="TR3.jpg"></p>
+<p>然而这个例子就只能通过 Type raising 来解决<br><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR1.jpg" class="ful-image" alt="TR1.jpg"></p>
+<p>完整的例子<br><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR2.jpg" class="ful-image" alt="TR2.jpg"><br><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR3.jpg" class="ful-image" alt="TR3.jpg"><br><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/TR3.jpg" class="ful-image" alt="TR3.jpg"></p>
 <h3 id="UW-SPF"><a href="#UW-SPF" class="headerlink" title="UW SPF"></a>UW SPF</h3><p>UW 有一个开源项目 <a href="https://github.com/cornell-lic/spf" target="_blank" rel="external">University of Washington Semantic Parsing Framework (UW SPF)</a>，将语义分析的任务分成了三个子问题 <strong>Parsing -&gt; Learning -&gt; Modeling</strong></p>
-<p><strong>Parsing choice</strong><br><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/parsing%20choice.png" class="ful-image" alt="parsing%20choice.png"><br><strong>Note:</strong> 项目中用了 Combinatory Categorial Grammars</p>
-<p><strong>Learning</strong><br><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/learning.jpg" class="ful-image" alt="learning.jpg"><br><strong>Note</strong>: 项目中用了 Unified learning algorithm</p>
-<p><strong>Semantic Modeling</strong><br><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20modeling.jpg" class="ful-image" alt="semantic%20modeling.jpg"></p>
+<p><strong>Parsing choice</strong><br><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/parsing%20choice.png" class="ful-image" alt="parsing%20choice.png"><br><strong>Note:</strong> 项目中用了 Combinatory Categorial Grammars</p>
+<p><strong>Learning</strong><br><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/learning.jpg" class="ful-image" alt="learning.jpg"><br><strong>Note</strong>: 项目中用了 Unified learning algorithm</p>
+<p><strong>Semantic Modeling</strong><br><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/semantic%20modeling.jpg" class="ful-image" alt="semantic%20modeling.jpg"></p>
 <p>更多见 <a href="http://yoavartzi.com/tutorial/" target="_blank" rel="external">Semantic Parsing with Combinatory Categorial Grammars</a></p>
-<h2 id="CCGs-vs-CFGs"><a href="#CCGs-vs-CFGs" class="headerlink" title="CCGs vs. CFGs"></a>CCGs vs. CFGs</h2><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/CFG%20vs%20CCG.jpg" class="ful-image" alt="CFG%20vs%20CCG.jpg">
+<h2 id="CCGs-vs-CFGs"><a href="#CCGs-vs-CFGs" class="headerlink" title="CCGs vs. CFGs"></a>CCGs vs. CFGs</h2><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/CFG%20vs%20CCG.jpg" class="ful-image" alt="CFG%20vs%20CCG.jpg">
 <h1 id="补充：词汇语义学-Lexical-Semantics"><a href="#补充：词汇语义学-Lexical-Semantics" class="headerlink" title="补充：词汇语义学(Lexical Semantics)"></a>补充：词汇语义学(Lexical Semantics)</h1><p>词汇语义学方面的知识可以用于基于 CFG 的语义分析。先看一下词位之间以及词位的含义之间的各种关系</p>
 <ul>
 <li>同形关系(homonymy) 指词形(包括字形和音形)相同但意义不同的词之间的关系</li>
@@ -482,11 +482,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Houston&apos;s Billy Hatcher broke a bat.</div><div class="line">He opened a rawer.</div></pre></td></tr></table></figure>
 <p>通过 FOPC 可以得到下面的部分表示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">∃e,x,y ISA(e,Breaking) ∧ Breaker(e,BillyHatcher) ∧ BrokenThing(e,y) ∧ ISA(y,BaseballBat)</div><div class="line">∃e,x,y ISA(e,Opening) ∧ Opener(e,he) ∧ OpenedThing(e,y) ∧ ISA(y,Door)</div></pre></td></tr></table></figure></p>
 <p>可以发现，动词 break 和 open 的主语的角色分别为 Breaker 和 Opener，然而每种可能发生事的深层角色(deep role)都是特定的，比如 Breaking 事件中的 Breaker，Opening 事件中的 Opener，Eating 事件中的 Eater 等，但 Breaking 和 Opener 有一些共同点，它们都是有意志的行为人，常常是有生命的，并且对它们的事件负有直接因果责任，题元角色(Thematic Roles)就是表示这种共性的一种方式，比如说我们把这两个动词的主语称为 agent。</p>
-<p>常用的 Thematic roles 及其定义<br><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/thematic%20roles.jpg" class="ful-image" alt="thematic%20roles.jpg"></p>
+<p>常用的 Thematic roles 及其定义<br><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/thematic%20roles.jpg" class="ful-image" alt="thematic%20roles.jpg"></p>
 <p>The Thematic Grid or Case Frame shows<br>• How many arguments the verb has<br>• What roles the arguments have<br>• Where to find each argument<br>  For example, you can find the agent in the subject position</p>
-<img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/7.jpg" class="ful-image" alt="7.jpg">
+<img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/7.jpg" class="ful-image" alt="7.jpg">
 <p>Thematic roles 的另一个用途是，通过<strong>题元层级(thematic hierarchy)</strong>来决定主语和宾语，如上，如果一个动词的题元描述包括一个 AGENT，一个 INSTRUMENT，和一个 THEME，那么 AGENT 被实现为主语，如果题元描述值包括一个 INSTRUMENT 和一个 THEME，那么 INSTRUMENT 成为主语。</p>
-<h2 id="Verb-Subcategorization"><a href="#Verb-Subcategorization" class="headerlink" title="Verb Subcategorization"></a>Verb Subcategorization</h2><p>动词可以有不同数量的 argument，以及不同的 VP 规则，应用 SUBCAT 特征，可以创建 allowed arguments 的集合。<br><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/Verb%20Subcategorization.jpg" class="ful-image" alt="Verb%20Subcategorization.jpg"></p>
+<h2 id="Verb-Subcategorization"><a href="#Verb-Subcategorization" class="headerlink" title="Verb Subcategorization"></a>Verb Subcategorization</h2><p>动词可以有不同数量的 argument，以及不同的 VP 规则，应用 SUBCAT 特征，可以创建 allowed arguments 的集合。<br><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/Verb%20Subcategorization.jpg" class="ful-image" alt="Verb%20Subcategorization.jpg"></p>
 <h2 id="Selectional-Restriction"><a href="#Selectional-Restriction" class="headerlink" title="Selectional Restriction"></a>Selectional Restriction</h2><p><strong>选择限制(selectional restriction)</strong>是一种语义约束，通过容许词位对那些能够与它们在一个句子中出现的词位和短语设置某些语义限制，来增加语义角色。举个例子，看下面四个句子，前两个句子很正常，我们可以说 dog, child 是开心的，因为他们是动物，有情绪，所以可以把他们和 happy 联系起来，然而后两个句子就非常的诡异，事实上它们违反了选择限制(selectional restriction)。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. The dog was happy.</div><div class="line">2. The child was happy.</div><div class="line">3. The rock was happy.</div><div class="line">4. The napkin was happy.</div></pre></td></tr></table></figure>
 <p>我们可以通过面向事件的意义表示，来捕捉选择限制的语义，像 eat 这样的动词的语义贡献可以表示为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">∃e,x,y Eating(e) ∧ Agent(e, x) ∧ Theme(e,y)</div></pre></td></tr></table></figure></p>
@@ -494,7 +494,7 @@
 <p>当遇到像 ate a hamburger 这样的短语，语义分析器能够形成如下的表示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">∃e,x,y Eating(e) ∧ Agent(e, x) ∧ Theme(e,y) ∧ ISA(y, EdibleThing) ∧ ISA(y, Hamburger)</div></pre></td></tr></table></figure></p>
 <p>这个表示是完全合理的，假如在知识库中有一个合理的事实集，y 在范畴 Hamburger 中的成员属性与它再范畴 EdibleThing 中的成员属性是一致的。相反，ate a takeoff 这样的短语是不合理的，因为 takeoff 中的成员属性与范畴 EdibleThing 中的成员属性不一致。然而这种方法预先假定存在一个大规模的关于组成选择限制的概念的事实逻辑库，遗憾的是，尽管这类知识库正在建设，但还没有普遍使用，而且几乎没有达到任务所需规模的知识库。</p>
 <p>一个更实际的方法是利用 WordNet 信息库中的上下位关系，这种方法中，语义角色的选择限制是用 WordNet 的同义集而不是逻辑概念来表述的，如果填充语义角色的词位是由谓词给语义角色指定的同义集的上位词中的一个，那么这个给定的意义表示可以被判断为良构的。</p>
-<p>如在 WordNet 的 60，000 个同义集中，有一个 {food, nutrient} 的同义集，我们可以将它指定为对动词 eat 的 THEME 角色的选择限制，也就是将这个橘色的填充者限定为再这个同义集或其下位词中，看下图，hamburger 的上位关系链显示它确实为 food<br><img src="http://shuang0420.clouddn.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/selection%20restriction.jpg" class="ful-image" alt="selection%20restriction.jpg"></p>
+<p>如在 WordNet 的 60，000 个同义集中，有一个 {food, nutrient} 的同义集，我们可以将它指定为对动词 eat 的 THEME 角色的选择限制，也就是将这个橘色的填充者限定为再这个同义集或其下位词中，看下图，hamburger 的上位关系链显示它确实为 food<br><img src="http://images.shuang0420.com/images/NLP-%E7%AC%94%E8%AE%B0---Compositional-Semantics/selection%20restriction.jpg" class="ful-image" alt="selection%20restriction.jpg"></p>
 
       
     </div>

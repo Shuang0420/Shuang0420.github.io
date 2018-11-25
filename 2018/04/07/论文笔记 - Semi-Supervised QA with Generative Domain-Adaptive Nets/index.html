@@ -93,17 +93,17 @@
 <meta property="og:url" content="http://www.shuang0420.com/2018/04/07/论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="GDAN，Question Generation 和 Question Answering 相结合，利用少量的有标注的 QA 对 + 大量的无标注的 QA 对来训练 QA 模型。">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/GA_reader.png">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue1.png">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue2.png">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue22.png">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/model.png">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/algo.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/GA_reader.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue1.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue2.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue22.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/model.png">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/algo.png">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets">
 <meta name="twitter:description" content="GDAN，Question Generation 和 Question Answering 相结合，利用少量的有标注的 QA 对 + 大量的无标注的 QA 对来训练 QA 模型。">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/GA_reader.png">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/GA_reader.png">
 
 
 
@@ -396,21 +396,21 @@
 <p>生成模型 G 产生的 (q, p, a) 作为判别模型的输入。</p>
 <h2 id="Discriminative-Model-gated-attention-reader"><a href="#Discriminative-Model-gated-attention-reader" class="headerlink" title="Discriminative Model - gated-attention reader"></a>Discriminative Model - gated-attention reader</h2><p>对 P(a|p,q)进行建模。输入是人为标注数据 L 以及模型产生的数据 U，由于 L 和 U 来自不同分布，所以引入了 domain tag 来区分两类数据，“true”来表示人为标记数据 L，“gen”标签来表示模型生成数据 U（Johnson et al., 2016; Chu et al., 2017）。在测试时，只加入 d_true。</p>
 <p>论文这里用了 GA (gated-attention) Reader 作为基本结构，也是 CMU 出的模型，当然事实上别的模型也可以。模型很简单，embedding 层用词向量，encoder 层用双向 GRU 分别得到 $H_q$ 和 $H^k_p$，context-query attention 层用 gated attention($H^k_p$, $H_q$ 做 element-wise 乘法)做下一层网络的输入，重复进入 encoder 和 attention 层进行编码和乘法（共 k 层），最后将 p, q 做內积（inner product）得到一个最终向量输入 output 层，output 层用两个 softmax 分别预测答案在段落中的起始和结束位置。</p>
-<img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/GA_reader.png" class="ful-image" alt="GA_reader.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/GA_reader.png" class="ful-image" alt="GA_reader.png">
 <h2 id="Loss-function"><a href="#Loss-function" class="headerlink" title="Loss function"></a>Loss function</h2><p>整体的目标函数：</p>
 <p>$$max_D \ J(L, d_{true, D})+ J(U_G, d_{gen}, D)$$<br>$$max_G \ J(U_G, d_{true}, D)$$</p>
 <h2 id="Training-Algorithm"><a href="#Training-Algorithm" class="headerlink" title="Training Algorithm"></a>Training Algorithm</h2><p>主要要解决下面两个问题。</p>
-<h3 id="Issue-1-discrepancy-between-datasets"><a href="#Issue-1-discrepancy-between-datasets" class="headerlink" title="Issue 1: discrepancy between datasets"></a>Issue 1: discrepancy between datasets</h3><img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue1.png" class="ful-image" alt="issue1.png">
+<h3 id="Issue-1-discrepancy-between-datasets"><a href="#Issue-1-discrepancy-between-datasets" class="headerlink" title="Issue 1: discrepancy between datasets"></a>Issue 1: discrepancy between datasets</h3><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue1.png" class="ful-image" alt="issue1.png">
 <p>如上，判别模型很容易在 U 上 overfit，所以才用了 domain tag 做区分。</p>
-<h3 id="Issue-2-jointly-train-G-and-D"><a href="#Issue-2-jointly-train-G-and-D" class="headerlink" title="Issue 2: jointly train G and D"></a>Issue 2: jointly train G and D</h3><img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue2.png" class="ful-image" alt="issue2.png">
+<h3 id="Issue-2-jointly-train-G-and-D"><a href="#Issue-2-jointly-train-G-and-D" class="headerlink" title="Issue 2: jointly train G and D"></a>Issue 2: jointly train G and D</h3><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue2.png" class="ful-image" alt="issue2.png">
 <p>如上，如果用 auto-encoder，容易让 question 和 answer 的表达非常接近，question 甚至可能完全 copy answer，所以这里用了判别模型。</p>
 <blockquote>
 <p>Intuitively, the goal of G is to generate “useful” questions where the usefulness is measured by the probability that the generated questions can be answered correctly by D</p>
 </blockquote>
-<img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue22.png" class="ful-image" alt="issue22.png">
-<h3 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h3><img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/model.png" class="ful-image" alt="model.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue22.png" class="ful-image" alt="issue22.png">
+<h3 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h3><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/model.png" class="ful-image" alt="model.png">
 <p>分两个阶段：<br><strong>第一阶段:</strong> 固定 G，利用 d_true 和 d_gen，用 SGD 来更新 D。在 L 上计算 MLE 来完成 G 的初始化，对 D 进行随机初始化。<br><strong>第二阶段:</strong> 固定 D，利用 d_true，用 RL 和 SGD 更新 G。由于 G 的输出是不可导的，所以用到了 reinforce algorithm。action space 是长度为 T’ 的所有可能的 questions，reward 是 $J(U_G,d_{true}, D)$。</p>
-<img src="http://shuang0420.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/algo.png" class="ful-image" alt="algo.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/algo.png" class="ful-image" alt="algo.png">
 <h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p>QANet 那篇论文中提到了另一篇 Question Generation 的论文：</p>
 <blockquote>
 <p>Zhou et al. (2017) improved the diversity of the SQuAD data by generating more questions. However, as reported by Wang et al. (2017), their method did not help improve the performance.</p>

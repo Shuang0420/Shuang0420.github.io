@@ -93,17 +93,17 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/01/21/神经网络-从线性到非线性/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="这一篇讨论常用的非线性激励函数。">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/shallow.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/sigmoid.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/tanh.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/relu.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/leakyrelu.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/activationF.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/shallow.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/sigmoid.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/tanh.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/relu.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/leakyrelu.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/activationF.jpg">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习-从线性到非线性">
 <meta name="twitter:description" content="这一篇讨论常用的非线性激励函数。">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/shallow.jpg">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/shallow.jpg">
 
 
 
@@ -371,7 +371,7 @@
 
       
         <p>这一篇讨论常用的非线性激励函数。<br><a id="more"></a></p>
-<h1 id="全连接神经网络"><a href="#全连接神经网络" class="headerlink" title="全连接神经网络"></a>全连接神经网络</h1><p>一个浅层的神经网络，如下图其实就可以看作一个 logistic regression 模型加上非线性激励函数。<br><img src="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/shallow.jpg" class="ful-image" alt="shallow.jpg"></p>
+<h1 id="全连接神经网络"><a href="#全连接神经网络" class="headerlink" title="全连接神经网络"></a>全连接神经网络</h1><p>一个浅层的神经网络，如下图其实就可以看作一个 logistic regression 模型加上非线性激励函数。<br><img src="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/shallow.jpg" class="ful-image" alt="shallow.jpg"></p>
 <p>一个神经元的组成：</p>
 <ul>
 <li>输入：n 维向量</li>
@@ -389,7 +389,7 @@
 <p><strong>非线性：</strong> 当激活函数是线性的时候，一个两层的神经网络就可以逼近基本上所有的函数了。但是，如果激活函数是恒等激活函数的时候（即f(x)=x），就不满足这个性质了，而且如果MLP使用的是恒等激活函数，那么其实整个网络跟单层神经网络是等价的。<br><strong>可微性：</strong> 当优化方法是基于梯度的时候，这个性质是必须的。<br><strong>单调性：</strong> 当激活函数是单调的时候，单层网络能够保证是凸函数。<br><strong>f(x)≈x：</strong> 当激活函数满足这个性质的时候，如果参数的初始化是random的很小的值，那么神经网络的训练将会很高效；如果不满足这个性质，那么就需要很用心的去设置初始值。<br><strong>输出值的范围：</strong> 当激活函数输出值是 有限 的时候，基于梯度的优化方法会更加 稳定，因为特征的表示受有限权值的影响更显著；当激活函数的输出是 无限 的时候，模型的训练会更加高效，不过在这种情况小，一般需要更小的learning rate.</p>
 </blockquote>
 <p>这些性质，也正是我们使用激活函数的原因。</p>
-<h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><h2 id="Sigmoid"><a href="#Sigmoid" class="headerlink" title="Sigmoid"></a>Sigmoid</h2><img src="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/sigmoid.jpg" class="ful-image" alt="sigmoid.jpg">
+<h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><h2 id="Sigmoid"><a href="#Sigmoid" class="headerlink" title="Sigmoid"></a>Sigmoid</h2><img src="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/sigmoid.jpg" class="ful-image" alt="sigmoid.jpg">
 <p>公式：<br>$$f(x)=sigmoid(x)={1 \over 1+e^{-x}}$$</p>
 <p>对其求导<br>$$<br>  \begin{aligned}<br>  {df \over dx} &amp; = -{1 \over (1+e^{-x})^2}(-e^{-x}) \\<br>  &amp; =  {1 \over 1+e^{-x}} {e^{-x} \over 1+e^{-x}} \\<br>   &amp; = {1 \over 1+e^{-x}} {1+e^{-x}-1 \over 1+e^{-x}} \\<br>   &amp; = f(x)(1-f(x))<br>  \end{aligned}<br>$$</p>
 <p>Sigmoid 将数据映射到 [0,1]</p>
@@ -401,11 +401,11 @@
 <li>梯度下降非常明显，且两头过于平坦，容易出现梯度消失的情况<br>当输入非常大或者非常小的时候(saturation)，神经元的梯度是接近于0的，从图中可以看出梯度的趋势。所以，你需要尤其注意参数的初始值来避免 saturation 的情况。如果初始值很大的话，大部分神经元可能都会处在 saturation 的状态而把 gradient kill 掉，这会导致网络变的很难学习。</li>
 <li>输出值域不对称（非0均值）<br>后一层的神经元将得到上一层输出的非 0 均值的信号作为输入，产生的一个结果就是：如果数据进入神经元的时候是正的(e.g. x&gt;0 elementwise in f=wTx+b)，那么 w 计算出的梯度也会始终都是正的。</li>
 </ol>
-<h2 id="tanh"><a href="#tanh" class="headerlink" title="tanh"></a>tanh</h2><img src="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/tanh.jpg" class="ful-image" alt="tanh.jpg">
+<h2 id="tanh"><a href="#tanh" class="headerlink" title="tanh"></a>tanh</h2><img src="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/tanh.jpg" class="ful-image" alt="tanh.jpg">
 <p>公式：<br>$$f(x)=tanh(x)={2 \over 1+e^{-2x}}-1$$</p>
 <p>对其求导<br>我们知道 $tanh(x)={sinh(x) \over cosh(x)}$，所以对 f(x) 求导也就是对 ${sinh(x) \over cosh(x)}$ 求导。<br>$$<br>  \begin{aligned}<br>  {df \over dx} &amp; = {cosh^2(x)-sinh^2(x) \over cosh^2(x)} \\<br>  &amp; =  1-tanh^2(x) \\<br>   &amp; = 1-f(x)^2<br>  \end{aligned}<br>$$</p>
 <p>tanh 将数据映射到 [-1,1]，解决了 sigmoid 输出值域不对称问题，然而两头依旧过于平坦，梯度损失仍然明显。</p>
-<h2 id="ReLU-Rectified-linear-unit"><a href="#ReLU-Rectified-linear-unit" class="headerlink" title="ReLU(Rectified linear unit)"></a>ReLU(Rectified linear unit)</h2><img src="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/relu.jpg" class="ful-image" alt="relu.jpg">
+<h2 id="ReLU-Rectified-linear-unit"><a href="#ReLU-Rectified-linear-unit" class="headerlink" title="ReLU(Rectified linear unit)"></a>ReLU(Rectified linear unit)</h2><img src="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/relu.jpg" class="ful-image" alt="relu.jpg">
 <p>$$f(x)=max(0,x)$$</p>
 <p>也就是 x&lt;0 取0，否则取本身。</p>
 <p><strong>优点：</strong></p>
@@ -423,11 +423,11 @@
 <p>(-) Unfortunately, ReLU units can be fragile during training and can “die”. For example, a large gradient flowing through a ReLU neuron could cause the weights to update in such a way that the neuron will never activate on any datapoint again. If this happens, then the gradient flowing through the unit will forever be zero from that point on. That is, the ReLU units can irreversibly die during training since they can get knocked off the data manifold. For example, you may find that as much as 40% of your network can be “dead” (i.e. neurons that never activate across the entire training dataset) if the learning rate is set too high. With a proper setting of the learning rate this is less frequently an issue.</p>
 </blockquote>
 <p>有实验说，大概 80%-90%的特征都会被截断，然而 ReLU 仍然是非常常用的激励函数，因为特征足够多。</p>
-<h2 id="Leaky-ReLU"><a href="#Leaky-ReLU" class="headerlink" title="Leaky ReLU"></a>Leaky ReLU</h2><img src="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/leakyrelu.jpg" class="ful-image" alt="leakyrelu.jpg">
+<h2 id="Leaky-ReLU"><a href="#Leaky-ReLU" class="headerlink" title="Leaky ReLU"></a>Leaky ReLU</h2><img src="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/leakyrelu.jpg" class="ful-image" alt="leakyrelu.jpg">
 <p>对 ReLU 的改进，解决 dying ReLU 的问题。x&lt;0 时乘上一个 a 取较小的值，一般 a=0.01，可以保留更多的参数，反向梯度有部分损失。</p>
 <p>为什么不变成 y=x？那不就回到了线性回归了嘛。</p>
 <h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>一般现在都直接取 ReLU，然而如果使用 ReLU，一定要小心设置 learning rate，要注意不要让你的网络出现很多 “dead” 神经元，如果这个问题不好解决，那么可以试试 Leaky ReLU、PReLU、random ReLU 或者 Maxout。另外，现在主流的做法，会多做一步batch normalization，尽可能保证每一层网络的输入具有相同的分布，见<a href="https://arxiv.org/abs/1502.03167" target="_blank" rel="external">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</a>。</p>
-<img src="http://shuang0420.clouddn.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/activationF.jpg" class="ful-image" alt="activationF.jpg">
+<img src="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%88%B0%E9%9D%9E%E7%BA%BF%E6%80%A7/activationF.jpg" class="ful-image" alt="activationF.jpg">
 <p><strong>sigmoid 缺点：</strong></p>
 <ol>
 <li>两头过于平坦</li>

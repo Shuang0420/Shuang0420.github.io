@@ -93,16 +93,16 @@
 <meta property="og:url" content="http://www.shuang0420.com/2017/02/17/推荐系统--隐语义模型LFM/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="主要介绍 隐语义模型 LFM(latent factor model)。">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/loss_func.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/cal.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/exp1.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/exp2.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/summary.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/loss_func.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/cal.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/exp1.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/exp2.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/summary.jpg">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="推荐系统--隐语义模型LFM">
 <meta name="twitter:description" content="主要介绍 隐语义模型 LFM(latent factor model)。">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/loss_func.jpg">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/loss_func.jpg">
 
 
 
@@ -426,11 +426,11 @@
 <li>对每个用户采样负样本时，要选取哪些很热门，但用户却没有行为的物品<br>  对于冷门物品，可能用户压根没发现，所以谈不上是否感兴趣</li>
 </ul>
 <p>负样本采样过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">items: dictionary of items where user takes action</div><div class="line">items_pool: list of candidate items; the more popular item i is, the more often item i appear</div><div class="line">&apos;&apos;&apos;</div><div class="line">def RandomSelectNegativeSample(self, items):</div><div class="line">    ret = dict()</div><div class="line">    for i in items.keys():</div><div class="line">        ret[i] = 1</div><div class="line">    n=0</div><div class="line">    for i in range(0, len(items) * 3): # make the number of negative samples close to that of positvie</div><div class="line">        item = items_pool[random.randint(0, len(items_pool) - 1)]</div><div class="line">        if item in ret:</div><div class="line">            continue</div><div class="line">        ret[item] = 0</div><div class="line">        n+=1</div><div class="line">        if n &gt; len(items):</div><div class="line">            break</div><div class="line">    return ret</div></pre></td></tr></table></figure></p>
-<h3 id="损失函数及学习过程"><a href="#损失函数及学习过程" class="headerlink" title="损失函数及学习过程"></a>损失函数及学习过程</h3><p>得到一个用户-物品集 K={(u,i)}，如果(u,i)是正样本，则有 $r_{ui}=1$，否则$r_{ui}=0$，然后通过随机梯度下降来优化损失函数找到最合适的参数 p 和 q：<br><img src="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/loss_func.jpg" class="ful-image" alt="loss_func.jpg"></p>
-<img src="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/cal.jpg" class="ful-image" alt="cal.jpg">
+<h3 id="损失函数及学习过程"><a href="#损失函数及学习过程" class="headerlink" title="损失函数及学习过程"></a>损失函数及学习过程</h3><p>得到一个用户-物品集 K={(u,i)}，如果(u,i)是正样本，则有 $r_{ui}=1$，否则$r_{ui}=0$，然后通过随机梯度下降来优化损失函数找到最合适的参数 p 和 q：<br><img src="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/loss_func.jpg" class="ful-image" alt="loss_func.jpg"></p>
+<img src="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/cal.jpg" class="ful-image" alt="cal.jpg">
 <p>$\lambda ||p_u||^2 + \lambda ||q_i||^2$ 是防止过拟合的正则化项，$\lambda$ 通过实验获得。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">def LatentFactorModel(user_items, F, N, alpha, lambda):</div><div class="line">    [P, Q] = InitModel(user_items, F)</div><div class="line">    for step in range(0,N):</div><div class="line">        for user, items in user_items.items():</div><div class="line">            samples = RandSelectNegativeSamples(items)</div><div class="line">            for item, rui in samples.items():</div><div class="line">                eui = rui - Predict(user, item)</div><div class="line">                for f in range(0, F):</div><div class="line">                    P[user][f] += alpha * (eui * Q[item][f] - lambda * P[user][f])</div><div class="line">                    Q[item][f] += alpha * (eui * P[user][f] - lambda * Q[item][f])</div><div class="line">        alpha *= 0.9</div><div class="line"></div><div class="line">def Recommend(user, P, Q):</div><div class="line">    rank = dict()</div><div class="line">    for f, puf in P[user].items():</div><div class="line">        for i, qfi in Q[f].items():</div><div class="line">            if i not in rank:</div><div class="line">             rank[i] += puf * qfi</div><div class="line">    return rank</div></pre></td></tr></table></figure>
-<h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><p>4 个隐类中排名最高的一些电影<br><img src="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/exp1.jpg" class="ful-image" alt="exp1.jpg"></p>
+<h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><p>4 个隐类中排名最高的一些电影<br><img src="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/exp1.jpg" class="ful-image" alt="exp1.jpg"></p>
 <p>参数：</p>
 <ul>
 <li>隐特征个数 F</li>
@@ -440,13 +440,13 @@
 </ul>
 <p>实验发现，ratio 对 LFM 性能影响最大，随着负样本数目的增加，LFM 的准确率和召回率有明显提高，当 ratio &gt; 10后趋于稳定，同时，随着负样本数目增加，覆盖率不断降低，流行度不断增加，说明 ratio 参数控制了推荐算法发掘长尾的能力。另外，与之前实验比较，在所有指标上都优于 UserCF 和 ItemCF。然而当数据集非常稀疏时，LFM 的性能会明显下降。</p>
 <p>固定 F=100, alpha=0.02, lambda=0.01,研究 ratio 对推荐性能的影响。</p>
-<img src="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/exp2.jpg" class="ful-image" alt="exp2.jpg">
+<img src="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/exp2.jpg" class="ful-image" alt="exp2.jpg">
 <h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p>LFM 模型在实际使用中有一个困难，就是很难实现实时推荐。经典的 LFM 模型每次训练都需要扫描所有的用户行为记录，并且需要在用户行为记录上反复迭代来优化参数，所以每次训练都很耗时，实际应用中只能每天训练一次。在新闻推荐中，冷启动问题非常明显，每天都会有大量的新闻，这些新闻往往如昙花一现，在很短的时间获得很多人的关注，然后在很短时间内失去关注，实时性就非常重要。雅虎对此提出了一个解决方案。</p>
 <p>首先，利用新闻链接的内容属性(关键词、类别等)得到链接 i 的内容特征向量 yi，其次，实时收集用户对链接的行为，并且用这些数据得到链接 i 的隐特征向量 qi，然后，利用下面的公式预测用户 u 是否会单击链接 i:</p>
 <p>$$r_{ui}=x^T_uy_i+p^T_uq_i$$</p>
 <p>$y_i$: 根据物品的内容属性直接生成<br>$x_{uk}$: 用户 u 对内容特征 k 的兴趣程度，用户向量 $x_u$ 可以根据历史行为记录获得，每天计算一次<br>$p_u$,$q_i$: 实时拿到的用户最近几小时的行为训练 LFM 模型获得</p>
 <p>对于一个新加入的物品 i，可以通过 $x^T_uy_i$估计用户 u 对物品 i 的兴趣，然后经过几个小时后，通过 $p^T_uq_i$得到更准确的预测值。</p>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>与<a href="http://www.shuang0420.com/2017/02/10/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%9F%BA%E4%BA%8E%E9%82%BB%E5%9F%9F%E7%9A%84%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4%E7%AE%97%E6%B3%95/">基于邻域的方法</a>相比的优缺点：<br><img src="http://shuang0420.clouddn.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/summary.jpg" class="ful-image" alt="summary.jpg"></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>与<a href="http://www.shuang0420.com/2017/02/10/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%9F%BA%E4%BA%8E%E9%82%BB%E5%9F%9F%E7%9A%84%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4%E7%AE%97%E6%B3%95/">基于邻域的方法</a>相比的优缺点：<br><img src="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/summary.jpg" class="ful-image" alt="summary.jpg"></p>
 
       
     </div>

@@ -93,13 +93,13 @@
 <meta property="og:url" content="http://www.shuang0420.com/2016/11/02/Cryptographic-Protocols/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 95702 Distributed Systems 笔记。简单介绍几种加密、签名方式。">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg">
-<meta property="og:image" content="http://shuang0420.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/TLS_config.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg">
+<meta property="og:image" content="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/TLS_config.jpg">
 <meta property="og:updated_time" content="2018-11-25T08:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Distributed Systems笔记－Cryptographic Protocols">
 <meta name="twitter:description" content="CMU 95702 Distributed Systems 笔记。简单介绍几种加密、签名方式。">
-<meta name="twitter:image" content="http://shuang0420.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg">
+<meta name="twitter:image" content="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg">
 
 
 
@@ -384,7 +384,7 @@
 <li>B 用 $K_B$ 来读取 Ticket 的内容，Ticket 的内容是 $K_{AB}$，Alice</li>
 <li>A、B 可以用 session key 来交流了。</li>
 </ol>
-<img src="http://shuang0420.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg" class="ful-image" alt="Cryptographic-Protocols/scenario2.jpg">
+<img src="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg" class="ful-image" alt="Cryptographic-Protocols/scenario2.jpg">
 <p>可以防止 replay，但 <strong>问题是:</strong></p>
 <ul>
 <li>难以 scale,S 必须知道 $K_A$, $K_B$,…</li>
@@ -410,7 +410,7 @@
 </ol>
 <p>最后 A 和 B 共享了对称的钥匙 $K_{AB}$</p>
 <p><strong>问题：</strong><br>在 A 第一次得到 B 的公钥时（A 认为这是 B 的公钥，然而这并不是，这是 C 也经过第三方 T 签名认证的公钥。</p>
-<p>TLS 和这个相似<br><img src="http://shuang0420.clouddn.com/images/Cryptographic-Protocols/Cryptographic-Protocols/TLS_config.jpg" class="ful-image" alt="Cryptographic-Protocols/TLS_config.jpg"></p>
+<p>TLS 和这个相似<br><img src="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/TLS_config.jpg" class="ful-image" alt="Cryptographic-Protocols/TLS_config.jpg"></p>
 <h1 id="Message-Authentication-Codes-MACs"><a href="#Message-Authentication-Codes-MACs" class="headerlink" title="Message Authentication Codes(MACs)"></a>Message Authentication Codes(MACs)</h1><p>对称加密生成的数字签名。<br>双方都有 Key(K)，sender 把 Key(K) 通过 MAC 算法加密后连同 message 一起给 receiver，receiver 比对收到的 MAC 和自己用 MAC 算法对自己这里的 Key(K) 加密后的 MAC 是否一致，如果一致，那么信息真实性和完整性就得到了证实。</p>
 <p>用于数字签名，双方都算了一遍 MAC</p>
 <h1 id="JAVA-里的-keystore-和-truststore"><a href="#JAVA-里的-keystore-和-truststore" class="headerlink" title="JAVA 里的 keystore 和 truststore"></a>JAVA 里的 keystore 和 truststore</h1><p>keystore: 存了公钥、私钥、证书<br>truststore：存了公钥，只能存 server 发过来的东西</p>
@@ -466,16 +466,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/02/Web-Service-Design-Patterns/" rel="next" title="Distributed Systems笔记－Web Service Design Patterns">
-                <i class="fa fa-chevron-left"></i> Distributed Systems笔记－Web Service Design Patterns
+              <a href="/2016/11/02/Web-service-middlewares/" rel="next" title="Distributed Systems笔记－middlewares">
+                <i class="fa fa-chevron-left"></i> Distributed Systems笔记－middlewares
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/02/Web-service-middlewares/" rel="prev" title="Distributed Systems笔记－middlewares">
-                Distributed Systems笔记－middlewares <i class="fa fa-chevron-right"></i>
+              <a href="/2016/11/04/Search Engines笔记 - Search logs/" rel="prev" title="Search Engines笔记 - Search logs">
+                Search Engines笔记 - Search logs <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
