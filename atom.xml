@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2018-11-25T10:26:59.000Z</updated>
+  <updated>2018-11-25T12:40:40.000Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.shuang0420.com/2018/10/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/"/>
     <id>http://www.shuang0420.com/2018/10/15/知识抽取-事件抽取/</id>
     <published>2018-10-15T11:02:27.000Z</published>
-    <updated>2018-11-25T10:26:59.000Z</updated>
+    <updated>2018-11-25T12:40:40.000Z</updated>
     
     <content type="html"><![CDATA[<p>接上一篇知识抽取-实体及关系抽取，前置知识在这一篇不多做解释啦。<br><a id="more"></a></p>
 <p>事件是促使事情状态和关系改变的条件[Dong et.al., 2010]。目前已存在的知识资源（如维基百科等） 所描述实体及实体间的关系大多是静态的，而事件能描述粒度更大的、动态的、 结构化的知识，是现有知识资源的重要补充。</p>
@@ -195,7 +195,7 @@
 <p>根据 DS 在 RE 中的应用，可以假设如果一个句子中出现了所有的论元，那么这个句子就可以被作为是一个事件，句子中的动词就可以作为触发词。然而<strong>一个事件中的论元可能出现在多个句子中</strong>，如果用所有论元来进行句子的回标，那么能抽出的训练数据就非常少了，所以应该对论元进行排序，选择有代表性的伦愿你进行回标。</p>
 <p>整个流程如下，首先对 Freebase 中的核心论元进行检测，根据<strong>角色显著性（role saliency）、事件相关性（ event relevance）和核心率（key rate）</strong> 对论元进行优先级排序，接着利用所有的核心论元去 Wikipeida 中回标，根据<strong>触发率（trigger rate）、触发词频率（ trigger candidate frequency）、触发词事件频率（trigger event type frequency）</strong>来进行触发词检测，这一阶段得到的触发词表中只有动词，缺少名词，也存在噪声，于是再利用 FrameNet 过滤动词性触发词中的噪声，同时扩展名词性触发词，最后利用 Soft Distant Supervision 来自动生成标注数据。</p>
 <img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/Yubo.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/Yubo.png">
-<p>还有方法如 Karthik Narasimhan et al., EMNLP 2016，从网络获取同一事件的不同报道，再使用强化学习方法，做信息融合的决策（互补信息的融合、冗余信息的选择）。</p>
+<p>还有方法如 <a href="https://arxiv.org/pdf/1603.07954.pdf" target="_blank" rel="external">Karthik Narasimhan et al., EMNLP 2016</a>，从网络获取同一事件的不同报道，再使用强化学习方法，做信息融合的决策（互补信息的融合、冗余信息的选择）。</p>
 <img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/karthik.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/karthik.png">
 <h3 id="跨语料迁移"><a href="#跨语料迁移" class="headerlink" title="跨语料迁移"></a>跨语料迁移</h3><p>由于目前中文事件抽取缺少公认语料，很多学者尝试利用现有大量的高质量英文标注语料辅助中文事件抽取。Chen 等首次提出该想法并利用跨语言协同训练的 Bootstrap 方法进行事件抽取[Chen and Ji, 2009]。Ji 提出基于中英文单语事件抽取系统和基于并行语料两种构建跨语言同义谓词集合的方法辅助进行中文事件抽取[Ji, 2009]，Zhu 等利用机器翻译同时扩大中文和英文训练语料，联合利用两种语料进行事件抽取[Zhu et.al., 2014]。Hsi 等联合利用符号特征和分布式特征的方法，利用英文事件语料提升中文事件抽取的性能[Hsi et.al., 2016]。</p>
 <p><a href="http://www.nlpr.ia.ac.cn/cip/~liukang/liukangPageFile/Liu_aaai2018.pdf" target="_blank" rel="external">Event Detection via Gated Multilingual Attention Mechanism, AAAI2018</a></p>
@@ -211,9 +211,8 @@
 <p>特定领域方面，国内很多机构均面向实际应用展开特定领域的事件抽取研究， 覆盖突发灾难、金融、军事、体育、音乐等多个领域。例如，Zhou 等针对金融领域事件中的收购、分红和贷款三个典型事件，提出自动构建抽取规则集的方法进行中文金融领域事件抽取 [Zhou, 2003]；Liang 等利用事件框架的归纳和继承特性实现对灾难事件的抽取[Liang and Wu, 2006]。</p>
 <p>其他方向的一些 Paper:<br><strong>特征表示：</strong><br>– Argument Attention: Exploiting Argument Information to Improve Event Detection via Supervised Attention Mechanisms  (ACL2017)<br><strong>多事件抽取：</strong><br>– HBTNGMA: Collective Event Detection via a Hierarchical and Bias Tagging Networks with Gated<br> Multi-level Attention (EMNLP-2018)<br><strong>篇章级事件抽取：</strong><br>– DCFEE: A Document-level Chinese Financial Event Extraction System based on Automatically Labeled<br> Training Data (ACL 2018)<br><strong>事件关系抽取：</strong><br>– ATT-ERNN: Attention-based Event Relevance Model for Stock Price Movement Prediction (CCKS-2017 Best Paper Award)<br>– MLNN: Event Coreference Resolution via Multi-loss Neural Network without Arguments （CCKS-2018）</p>
 <h1 id="事件监测和追踪"><a href="#事件监测和追踪" class="headerlink" title="事件监测和追踪"></a>事件监测和追踪</h1><img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/general2.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/general2.png">
-<p>主流方法包括基于相似度聚类和基于概率统计两类。在这不多做介绍。</p>
-<p>参考文献：<br>知识图谱发展报告 2018<br>事件抽取与金融事件图谱构建</p>
-<p>关注公众号回复事件抽取获得下载地址</p>
+<p>主流方法包括基于相似度聚类和基于概率统计两类。在这不多做介绍。以后有时间再补充。</p>
+<p>关注公众号回复“事件抽取”获得相关综述及论文下载地址~</p>
 ]]></content>
     
     <summary type="html">
