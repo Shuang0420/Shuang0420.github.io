@@ -42,7 +42,7 @@
 <li><strong>AutoSlog</strong>（Riloff）<br>基本假设：<br>a. 事件元素首次提及之处即可确定该元素与事件间的关系<br>b. 事件元素周围的语句中包含了事件元素在事件中的角色描述<br>通过监督学习和人工审查来建立抽取规则。通过训练数据中已经填充好的槽（filled slot），AutoSlog 解析 slot 附近的句法结构，来自动形成抽取规则，由于这个过程产生的模板 too-general，所以需要人工来审核。本质上形成的是一个字典。<br>举个例子<br><em>Ricardo Castellar, the mayor, was kidnapped yesterday by the FMLN.</em><br>假设 Ricardo Castellar 被标注成了 victim，AutoSlog 根据句法分析判断出 Ricardo Castellar 是主语，然后触发了主语的相关规则 (subj) passive-verb，将句子中相关的单词填充进去就得到了规则 (victim) was kidnapped，所以在之后的文本中，只要 kidnapped 在一个被动结构中出现，它对应的主语就会被标记为 victim。</li>
 <li><strong>PALKA</strong><br>基本假设：特定领域中高频出现的语言表达方式是可数的<br>用语义框架和短语模式结构来表示特定领域中的抽取模式，通过融入 WordNet 的语义信息，PALKA 在特定领域可取得接近纯人工抽取的效果。</li>
 </ul>
-<h3 id="弱监督"><a href="#弱监督" class="headerlink" title="弱监督"></a>弱监督</h3><p>人工标注耗时耗力，且存在一致性问题，而弱监督方法不需要对语料进行完全标注，只需人工对语料进行一定的预分类或者制定种子模板，由机器根据预分类语料或种子模板自动进行模式学习。</p>
+<h3 id="基于弱监督"><a href="#基于弱监督" class="headerlink" title="基于弱监督"></a>基于弱监督</h3><p>人工标注耗时耗力，且存在一致性问题，而弱监督方法不需要对语料进行完全标注，只需人工对语料进行一定的预分类或者制定种子模板，由机器根据预分类语料或种子模板自动进行模式学习。</p>
 <p>一些系统：</p>
 <ul>
 <li><strong>AutoSlog-TS</strong><br>Riloff and Shoen, 1995<br>AutoSlog-TS 不需要进行文本的标注，只需要一个预先分类好的训练语料，类别是与该领域相关还是不相关。过程是先过一遍语料库，对每一个名词短语（根据句法分析识别）都产生对应的抽取规则，然后再整体过一遍语料库，产生每个规则的一些相关统计数据，基本的 idea 是与不相关文本相比，<strong>在相关文本中更常出现的抽取规则更有可能是好的抽取规则</strong>。假设训练语料中相关与不相关的文本比例是 1:1，对产生的每条抽取规则计算相关比率 relevance rate，相关文档中出现规则的实例数/整个语料库中出现规则的实例数，那么 relevance rate &lt; 50% 的抽取规则就被丢弃了，剩下的规则会按照 relevance_rate * log(frequency) 的形式从高到低进行排序，然后由人工进行审核。</li>
@@ -88,7 +88,7 @@
 <li>使用词向量作为输入，蕴含更为丰富的语言特征</li>
 <li>自动提取句子特征， 避免了人工特征设计的繁琐工作</li>
 </ol>
-<h3 id="DMCNN-Pipeline"><a href="#DMCNN-Pipeline" class="headerlink" title="DMCNN - Pipeline"></a>DMCNN - Pipeline</h3><p><a href="https://pdfs.semanticscholar.org/ca70/480f908ec60438e91a914c1075b9954e7834.pdf" target="_blank" rel="external">Event Extraction via Dynamic Multi-Pooling Convolutional Neural Networks Yubo Chen et. al., ACL 2015</a></p>
+<h3 id="Pipeline-DMCNN"><a href="#Pipeline-DMCNN" class="headerlink" title="Pipeline - DMCNN"></a>Pipeline - DMCNN</h3><p><a href="https://pdfs.semanticscholar.org/ca70/480f908ec60438e91a914c1075b9954e7834.pdf" target="_blank" rel="external">Event Extraction via Dynamic Multi-Pooling Convolutional Neural Networks Yubo Chen et. al., ACL 2015</a></p>
 <p>自然语言处理中，传统 CNN 使用的最大池化对一个 feature map 只能得到一个最大值，这对事件抽取并不适用，因为事件抽取中一个句子中可能会包含多个事件，一个 argument candidate 在不同的 trigger 下也会扮演不同的角色，传统的最大池化只保留“最重要”的信息，而丢失的信息会导致 multiple-event sentence 下的事件漏分。DMCNN 使用动态多池化卷积能实现对一个句子中不同部分的最大值获取，以保留更多有价值的信息，逻辑和 PCNN 相似。</p>
 <p>DMCNN 作者把事件抽取看做两个阶段的多分类任务，第一步是<strong>触发词分类（trigger classification）</strong>，利用 DMCNN 对句子中每个词进行分类，判断是否是触发词，如果句子中存在触发词，执行第二步<strong>论元分类（argument classification）</strong>，同样使用 DMCNN，给 trigger 分配 arguments，同时匹配 arguments 到 role，以第二个任务为例介绍一下过程。</p>
 <img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn.png">
@@ -137,7 +137,7 @@
 <img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn2.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn2.png">
 <p><strong>DMCNN 的表现：</strong><br><img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn3.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn3.png"><br><img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn4.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn4.png"></p>
 <p>DMCNN 的效果是突破性的，但分两个阶段的预测仍有误差传递的问题，也没有利用好 trigger 和 argument 之间的依赖关系。</p>
-<h3 id="Joint-Model-BiRNN"><a href="#Joint-Model-BiRNN" class="headerlink" title="Joint Model(BiRNN)"></a>Joint Model(BiRNN)</h3><p><a href="http://www.aclweb.org/anthology/N16-1034" target="_blank" rel="external">JRNN: Joint Event Extraction via Recurrent Neural Networks, ACL 2016</a></p>
+<h3 id="Joint-Model-JRNN"><a href="#Joint-Model-JRNN" class="headerlink" title="Joint Model - JRNN"></a>Joint Model - JRNN</h3><p><a href="http://www.aclweb.org/anthology/N16-1034" target="_blank" rel="external">JRNN: Joint Event Extraction via Recurrent Neural Networks, ACL 2016</a></p>
 <p>Nguyen et.al., 2016 通过 RNN 用联合方法解决时间抽取的问题，继承了 Li (2013) 和 Chen (2015) 的优点，并克服了它们的一些缺陷。</p>
 <img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/JRNN1.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/JRNN1.png">
 <ul>
@@ -169,11 +169,11 @@
 <p>当输入句子包含多个事件时（1/N），JRNN 明显优于其他方法。特别是，JRNN 在触发词识别上 DMCNN 好13.9％，而论元分类的相应改进为 6.5％，从而进一步表明 JRNN 具有记忆功能的好处。在单事件句子（1/1）的表现上，JRNN 在触发词分类上仍然是最好的系统，尽管在论元分类上比 DMCNN 要差一些。</p>
 <h2 id="弱监督-语料扩充"><a href="#弱监督-语料扩充" class="headerlink" title="弱监督/语料扩充"></a>弱监督/语料扩充</h2><p>有监督的方法需要大量的标注样本，人工标注耗时耗力，还存在一致性的问题，因此弱监督方法也是事件抽取的一个重要分支。Chen 等提出利用部分高质量的标注语料训练分类器，然后利用初步训练好的分类器判断未标注的数据，选取高置信度的分类样本作为训练样本，通过迭代自动扩充训练样本[Chen and Ji, 2009]。Liao 等在相关文档中使用自训练的（Self-Training）的半监督学习方法扩展标注语料，并利用全局推理的方法考虑样例的多样性进而完成事件抽取；进一步提出同时针对词汇和句子两个粒度训练最大熵分类器，并用协同训练（Co-training）的方法扩展标注数据，进而对分类器进行更充分的训练[Liao and Grishman, 2011a; 2011b]。</p>
 <p>而目前，弱监督/训练数据生成方面比较流行的方向有 <strong>利用外部资源，通过远程监督，以及跨语料迁移的方法</strong>。</p>
-<h3 id="外部资源"><a href="#外部资源" class="headerlink" title="外部资源"></a>外部资源</h3><p><a href="http://www.aclweb.org/anthology/P16-1201" target="_blank" rel="external">Leveraging FrameNet to Improve Automatic Event Detection</a></p>
+<h3 id="外部资源"><a href="#外部资源" class="headerlink" title="外部资源"></a>外部资源</h3><p><a href="http://www.aclweb.org/anthology/P16-1201" target="_blank" rel="external">Leveraging FrameNet to Improve Automatic Event Detection, ACL2016</a></p>
 <p>FrameNet 是语言学家定义及标注的语义框架资源，采用层级的组织结构，有1000+框架、1000+词法单元、150000+标注例句。在结构上，FrameNet 和事件抽取有着很高的相似性，一个框架由一个词法单元和若干框架元素组成，一个事件有触发词和若干事件角色组成。另外，FrameNet 中很多 frame 其实也能够表示某些事件，如<br><img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/framenet.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/framenet.png"></p>
 <p>因此，Liu 等利用 ACE 语料训练的分类器去判定 FrameNet 中句子的事件类别，再利用全局推断将 FrameNet 的语义框架和 ACE 中的事件类别进行映射，进而利用 FrameNet 中人工标注的事件样例扩展训练数据以提升事件检测性能 [Liu et.al., 2016b]。<br><img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/framenet1.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/framenet1.png"></p>
-<h3 id="远程监督"><a href="#远程监督" class="headerlink" title="远程监督"></a>远程监督</h3><p><a href="http://www.nlpr.ia.ac.cn/cip/~liukang/liukangPageFile/ACL2017-Chen.pdf" target="_blank" rel="external">Automatically Labeled Data Generation for Large Scale Event Extraction</a></p>
-<p>Yubo Chen, ACL 2017 提出运用结构化的知识库来以及远程监督的方法来自动生成大规模事件语料。</p>
+<h3 id="远程监督"><a href="#远程监督" class="headerlink" title="远程监督"></a>远程监督</h3><p><a href="http://www.nlpr.ia.ac.cn/cip/~liukang/liukangPageFile/ACL2017-Chen.pdf" target="_blank" rel="external">Automatically Labeled Data Generation for Large Scale Event Extraction, ACL2017</a></p>
+<p>Yubo Chen 提出运用结构化的知识库来以及远程监督的方法来自动生成大规模事件语料。</p>
 <img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/event_relation.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/event_relation.png">
 <p>当把关系抽取中常用的远程监督方法用到事件抽取中时，会发现有下面两个问题，一是<strong>现有事件知识库（如 Freebase）中缺乏触发词信息</strong>，如上图，在关系抽取中，我们可以用两个论元 Barack Obama, Michelle Obama 进行回标，但是在事件抽取中，marriage 这一事件类型在 Freebase 中被表示为 m.02nqglv，所以我们不能直接用事件类型和论元来进行回标，在用 DS 前，必须先检测触发词。</p>
 <p>根据 DS 在 RE 中的应用，可以假设如果一个句子中出现了所有的论元，那么这个句子就可以被作为是一个事件，句子中的动词就可以作为触发词。然而<strong>一个事件中的论元可能出现在多个句子中</strong>，如果用所有论元来进行句子的回标，那么能抽出的训练数据就非常少了，所以应该对论元进行排序，选择有代表性的伦愿你进行回标。</p>
