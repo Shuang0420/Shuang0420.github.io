@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2018-11-25T12:40:40.000Z</updated>
+  <updated>2018-11-25T12:41:43.000Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.shuang0420.com/2018/10/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/"/>
     <id>http://www.shuang0420.com/2018/10/15/知识抽取-事件抽取/</id>
     <published>2018-10-15T11:02:27.000Z</published>
-    <updated>2018-11-25T12:40:40.000Z</updated>
+    <updated>2018-11-25T12:41:43.000Z</updated>
     
     <content type="html"><![CDATA[<p>接上一篇知识抽取-实体及关系抽取，前置知识在这一篇不多做解释啦。<br><a id="more"></a></p>
 <p>事件是促使事情状态和关系改变的条件[Dong et.al., 2010]。目前已存在的知识资源（如维基百科等） 所描述实体及实体间的关系大多是静态的，而事件能描述粒度更大的、动态的、 结构化的知识，是现有知识资源的重要补充。</p>
@@ -212,7 +212,7 @@
 <p>其他方向的一些 Paper:<br><strong>特征表示：</strong><br>– Argument Attention: Exploiting Argument Information to Improve Event Detection via Supervised Attention Mechanisms  (ACL2017)<br><strong>多事件抽取：</strong><br>– HBTNGMA: Collective Event Detection via a Hierarchical and Bias Tagging Networks with Gated<br> Multi-level Attention (EMNLP-2018)<br><strong>篇章级事件抽取：</strong><br>– DCFEE: A Document-level Chinese Financial Event Extraction System based on Automatically Labeled<br> Training Data (ACL 2018)<br><strong>事件关系抽取：</strong><br>– ATT-ERNN: Attention-based Event Relevance Model for Stock Price Movement Prediction (CCKS-2017 Best Paper Award)<br>– MLNN: Event Coreference Resolution via Multi-loss Neural Network without Arguments （CCKS-2018）</p>
 <h1 id="事件监测和追踪"><a href="#事件监测和追踪" class="headerlink" title="事件监测和追踪"></a>事件监测和追踪</h1><img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/general2.png" class="ful-image" alt="%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/general2.png">
 <p>主流方法包括基于相似度聚类和基于概率统计两类。在这不多做介绍。以后有时间再补充。</p>
-<p>关注公众号回复“事件抽取”获得相关综述及论文下载地址~</p>
+<p><strong>关注公众号回复“事件抽取”获得相关综述及论文下载地址~</strong></p>
 ]]></content>
     
     <summary type="html">
