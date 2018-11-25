@@ -4,9 +4,241 @@
   
     
     <entry>
+      <title><![CDATA[知识抽取-事件抽取]]></title>
+      <url>http://www.shuang0420.com/2018/09/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/</url>
+      <content type="html"><![CDATA[<p>接上一篇知识抽取-实体及关系抽取，前置知识在这一篇不多做解释啦。<br><a id="more"></a></p>
+<p>事件是促使事情状态和关系改变的条件[Dong et.al., 2010]。目前已存在的知识资源（如维基百科等） 所描述实体及实体间的关系大多是静态的，而事件能描述粒度更大的、动态的、 结构化的知识，是现有知识资源的重要补充。</p>
+<p>与[关系抽取]相比，事件抽取同样需要从文本中抽取 predicate 和对应的 arguments，但不同的是，关系抽取的问题是 binary 的，且两个 arguments 通常都会在同一个句子中出现，而事件抽取的难点在于，有多个 arguments 和 modifiers，且有些 arguments 不是必须的（some of which are omitted in any given instance of an event），这使得 bootstrapping/distant learning/coreference 都变得非常困难。</p>
+<p>事件抽取的任务可以分两大类：</p>
+<ul>
+<li><strong>事件识别和抽取</strong><br>从描述事件信息的文本中识别并抽取出事件信息并以结构化的形式呈现出来，包括发生的时间、地点、参与角色以及与之相关的动作或者状态的改变。</li>
+<li><strong>事件检测和追踪</strong><br>事件检测与追踪旨在将文本新闻流按照其报道的事件进行组织，为传统媒体多种来源的新闻监控提供核心技术，以便让用户了解新闻及其发展。具体而言，事件发现与跟踪包括三个主要任务：<strong>分割，发现和跟踪</strong>，将新闻文本分解为事件， 发现新的（不可预见的）事件，并跟踪以前报道事件的发展。<br>事件发现任务又可细分为<strong>历史事件发现</strong>和<strong>在线事件发现</strong>两种形式，前者目标是从按时间排序的新闻文档中发现以前没有识别的事件，后者则是从实时新闻流中实时发现新的事件。</li>
+</ul>
+<p>本文的重点在于事件识别与抽取。首先看一下相关的核心概念：</p>
+<ul>
+<li><strong>事件描述（Event Mention）</strong><br>描述事件的词组/句子/句群，包含一个 trigger 以及任意数量的 arguments</li>
+<li><strong>事件触发（Event Trigger）</strong><br>事件描述中最能代表事件发生的词汇，决定事件类别的重要特征，一般是动词或者名词</li>
+<li><strong>事件元素（Event Argument）</strong><br>事件的重要信息，或者说是实体描述（entity mention），主要由实体、属性值等表达完整语义的细粒度单位组成</li>
+<li><strong>元素角色（Argument Role）</strong><br>事件元素在事件中扮演的角色，事件元素与事件的语义关系，可以理解为 slot</li>
+<li><strong>事件类型（Event Type）</strong></li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/general.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/general.png">
+<p>其实也可以把事件抽取理解成从文本中找到特定类别的事件，然后进行填表的过程。</p>
+<h1 id="事件识别和抽取"><a href="#事件识别和抽取" class="headerlink" title="事件识别和抽取"></a>事件识别和抽取</h1><p>事件识别和抽取的任务定义：</p>
+<blockquote>
+<p>Given a text document, an event extraction system should <strong>predict event triggers</strong> with specific <strong>sub-types</strong> and <strong>their arguments for each sentence</strong>.</p>
+</blockquote>
+<p>也就是说，事件抽取任务最基础的部分包括：</p>
+<ul>
+<li>识别事件触发词及事件类型 </li>
+<li>抽取事件元素（Event Argument）同时判断其角色（Argument Role）</li>
+<li>抽出描述事件的词组或句子</li>
+</ul>
+<p>当然还有一些其他的子任务包括事件属性标注、事件共指消解等。</p>
+<p>事件抽取大多是分阶段进行，通常由 trigger classifier 开始，如果有 trigger，把 trigger 以及它的上下文作为特征进行分类判断事件类型，再进行下一步的 argument classifier，对句子中的每个 entity mention 进行分类，判断是否是 argument，如果是，判定它的角色。</p>
+<h2 id="基于模式匹配的方法"><a href="#基于模式匹配的方法" class="headerlink" title="基于模式匹配的方法"></a>基于模式匹配的方法</h2><p>MUCs 最开始，事件抽取的系统都是基于人工编写的规则，基于语法树或者正则表达式，如 CIRCUS (Lehnert 1991), RAPIER (Califf &amp; Mooney 1997), SRV (Freitag 1998), AutoSlog (Riloff 1993), LIEP (Huffman 1995), PALKA (Kim &amp; Moldovan 1995), CRYSTAL (Soderland et al. 1995), HASTEN (Krupka 1995) 等等，后来，慢慢的有了监督学习的模型，在 ACE 的阶段，大多数系统都是基于监督学习了，但由于标注一致性的问题，系统的效果普遍较差，ACE 事件抽取只举行了一次，在 2005 年。</p>
+<p>下面先来看一下基于模板的抽取方法，基本都是通过句法（syntactic）和语义约束（semantic constraints）来进行识别。</p>
+<h3 id="基于人工标注语料"><a href="#基于人工标注语料" class="headerlink" title="基于人工标注语料"></a>基于人工标注语料</h3><p>在早期，模板创建过程通常从一个大的标注集开始，模板的产生完全基于人工标注语料，学习效果高度依赖于人工标注质量。</p>
+<ul>
+<li><strong>AutoSlog</strong>（Riloff）<br>基本假设：<ol>
+<li>事件元素首次提及之处即可确定该元素与事件间的关系</li>
+<li>事件元素周围的语句中包含了事件元素在事件中的角色描述<br>通过监督学习和人工审查来建立抽取规则。通过训练数据中已经填充好的槽（filled slot），AutoSlog 解析 slot 附近的句法结构，来自动形成抽取规则，由于这个过程产生的模板 too-general，所以需要人工来审核。本质上形成的是一个字典。<br>举个例子<br><em>Ricardo Castellar, the mayor, was kidnapped yesterday by the FMLN.</em><br>假设 Ricardo Castellar 被标注成了 victim，AutoSlog 根据句法分析判断出 Ricardo Castellar 是主语，然后触发了主语的相关规则 \<subj\> passive-verb，将句子中相关的单词填充进去就得到了规则 \<victim\> was kidnapped，所以在之后的文本中，只要 kidnapped 在一个被动结构中出现，它对应的主语就会被标记为 victim。</victim\></subj\></li>
+</ol>
+</li>
+<li><strong>PALKA</strong><br>基本假设：特定领域中高频出现的语言表达方式是可数的<br>用语义框架和短语模式结构来表示特定领域中的抽取模式，通过融入 WordNet 的语义信息，PALKA 在特定领域可取得接近纯人工抽取的效果。</li>
+</ul>
+<h3 id="弱监督"><a href="#弱监督" class="headerlink" title="弱监督"></a>弱监督</h3><p>不需要对语料进行完全标注，只需人工对语料进行一定的预分类或者制定种子模板，由机器根据预分类语料或种子模板自动进行模式学习。</p>
+<p>一些系统：</p>
+<ul>
+<li><strong>AutoSlog-TS</strong><br>Riloff and Shoen, 1995<br>AutoSlog-TS 不需要进行文本的标注，只需要一个预先分类好的训练语料，类别是与该领域相关还是不相关。过程是先过一遍语料库，对每一个名词短语（根据句法分析识别）都产生对应的抽取规则，然后再整体过一遍语料库，产生每个规则的一些相关统计数据，基本的 idea 是与不相关文本相比，<strong>在相关文本中更常出现的抽取规则更有可能是好的抽取规则</strong>。假设训练语料中相关与不相关的文本比例是 1:1，对产生的每条抽取规则计算相关比率 relevance rate，相关文档中出现规则的实例数/整个语料库中出现规则的实例数，那么 relevance rate &lt; 50% 的抽取规则就被丢弃了，剩下的规则会按照 relevance_rate * log(frequency) 的形式从高到低进行排序，然后由人工进行审核。</li>
+<li><strong>TIMES</strong><br>Chai and Biermann, 1998<br>引入了领域无关的概念知识库 WordNet，提升模式学习的泛化能力，并通过人工或规则进行词义消歧，使最终的模式更加准确</li>
+<li><strong>NEXUS</strong><br>Piskorski et.al., 2001; Tanev et.al., 2008<br>用聚类对语料进行预处理</li>
+<li><strong>GenPAM</strong><br>Jiang, 2005<br>在由特例生成泛化模式的学习过程中，有效利用模式间的相似性实现词义消歧，最大限度地减少了人工的工作量和对系统的干预</li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>基于模式匹配的方法在特定领域中性能较好，知识表示简洁，便于理解和后续应用，但对于语言、领域和文档形式都有不同程度的依赖，覆盖度和可移植性较差。</p>
+<p>模式匹配的方法中，模板准确性是影响整个方法性能的重要因素。在实际应用中，模式匹配方法应用非常广泛，主要特点是高准确率低召回率，要提高召回率，一是要建立更完整的模板库，二是可以用半监督的方法来建 trigger 字典。</p>
+<h2 id="基于统计-传统机器学习"><a href="#基于统计-传统机器学习" class="headerlink" title="基于统计 - 传统机器学习"></a>基于统计 - 传统机器学习</h2><p>建立在统计模型基础上，分为 pipeline 和 joint model 两大类。</p>
+<h4 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h4><p>将事件抽取任务转化为多阶段的分类问题（管道抽取），需要顺序执行下面的分类器：</p>
+<ol>
+<li><strong>事件触发词分类器（Trigger Classifier）</strong><br>判断词汇是否是事件触发词，以及事件类别</li>
+<li><strong>元素分类器（Argument Classifier）</strong><br>词组是否是事件元素</li>
+<li><strong>元素角色分类器（Role Classifier）</strong><br>判定元素的角色类别</li>
+<li><strong>属性分类器（Attribute Classifier）</strong><br>判定事件属性</li>
+<li><strong>可报告性分类器（Reportable-Event Classifier）</strong><br>判定是否存在值得报告的事件实例</li>
+</ol>
+<p>分类器可以用 MaxEnt, SVM。重点还是在于提取和集成有区分性的特征，包括 <strong>句子级信息</strong> 和 <strong>篇章级信息</strong>。</p>
+<p><strong>句子级信息：</strong>与候选词相关的词法特征、上下文特征、实体特征、句法特征、语言学特征等，如：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/features.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/features.png"></p>
+<p><strong>篇章级特征：</strong><br>跨文档利用全局信息。对于一个句子级的抽取结果不仅要考虑当前的置信度，还要考虑与待抽取文本相关的文本对它的影响，以及全局信息如事件与话题的关系，事件与事件的共现信息等，主要工作有：</p>
+<ul>
+<li>Ji and Grishman, 2008</li>
+<li>Liao and Grishman, 2010</li>
+<li>Hong et.al., 2011</li>
+<li>Liu et.al., 2016a</li>
+</ul>
+<p>Pipeline 方法的问题也很明显：</p>
+<ul>
+<li>误差传递，导致性能衰减</li>
+<li>各环节预测任务独立，缺少互动，如忽略了事件触发词和事件元素之间的相互影响</li>
+<li>无法处理全局的依赖关系</li>
+</ul>
+<h4 id="Joint-Model"><a href="#Joint-Model" class="headerlink" title="Joint Model"></a>Joint Model</h4><p>又分为 Joint Inference 和 Joint Modeling 两种。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/joint_inference.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/joint_inference.png"></p>
+<p><strong>Joint Inference</strong> 使用集成学习的思路，将各模型通过整体优化目标整合起来，可以通过整数规划等方法进行优化。<br><strong>Joint Modeling (Structured)</strong> 又可以称为基于结构的方法，将事件结构看作依存树，抽取任务相应转化为依存树结构预测问题，触发词识别和元素抽取可以同时完成，共享隐层特征，使用搜索进行求解，避免了误差传播导致的性能下降，另外，全局特征也可以从整体的结构中学习得到，从而使用全局的信息来提升局部的预测。相关工作有：</p>
+<ul>
+<li>Li et.al., 2013a<br>Li 提出基于结构感知机的联合模型同时完成事件触发词识别和事件元素识别两个子任务，并通过 beam search 缩小搜索解空间</li>
+<li>Li et.al., 2014<br>为了利用更多的句子级信息，Li 等提出利用结构预测模型将实体、关系和事件进行联合抽取</li>
+</ul>
+<p>尽管 Li 等人的联合系统优势明显，但在未见词和特征上缺乏泛化，人工提取的特征集是离散表达，能力有限。</p>
+<p>几种方法的 trigger 和 argument 抽取结果，可以看出，实体之间协同消歧对效果提升非常明显<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/perf1.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/perf1.png"></p>
+<h3 id="基于统计-深度学习"><a href="#基于统计-深度学习" class="headerlink" title="基于统计 - 深度学习"></a>基于统计 - 深度学习</h3><p>上面的方法在特征提取过程中还是会依赖依存分析、句法分析、词性标注等传统的外部 NLP 工具，还是会造成误差积累，另外有些语言和领域并没有这类处理工具，加之特征也需要人工设定，2015 年起基于深度学习的事件抽取方法逐渐成为研究热点，相比于传统机器学习，深度学习方法优势明显：</p>
+<ol>
+<li>减少对外部 NLP 工具的依赖 ， 甚至不依赖 NLP 工具 ， 建立成端对端的系统</li>
+<li>使用词向量作为输入，蕴含更为丰富的语言特征</li>
+<li>自动提取句子特征， 避免了人工特征设计的繁琐工作</li>
+</ol>
+<h3 id="DMCNN-Pipeline"><a href="#DMCNN-Pipeline" class="headerlink" title="DMCNN - Pipeline"></a>DMCNN - Pipeline</h3><p><a href="https://pdfs.semanticscholar.org/ca70/480f908ec60438e91a914c1075b9954e7834.pdf" target="_blank" rel="external">Event Extraction via Dynamic Multi-Pooling Convolutional Neural Networks Yubo Chen et. al., ACL 2015</a></p>
+<p>自然语言处理中，传统 CNN 使用的最大池化对一个 feature map 只能得到一个最大值，这对事件抽取并不适用，因为事件抽取中一个句子中可能会包含多个事件，一个 argument candidate 在不同的 trigger 下也会扮演不同的角色，传统的最大池化只保留“最重要”的信息，而丢失的信息会导致 multiple-event sentence 下的事件漏分。DMCNN 使用动态多池化卷积能实现对一个句子中不同部分的最大值获取，以保留更多有价值的信息，逻辑和 PCNN 相似。</p>
+<p>DMCNN 作者把事件抽取看做两个阶段的多分类任务，第一步是<strong>触发词分类（trigger classification）</strong>，利用 DMCNN 对句子中每个词进行分类，判断是否是触发词，如果句子中存在触发词，执行第二步<strong>论元分类（argument classification）</strong>，同样使用 DMCNN，给 trigger 分配 arguments，同时匹配 arguments 到 role，以第二个任务为例介绍一下过程。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn.png">
+<p>主要包括四个部分，以 argument classification 为例：</p>
+<ol>
+<li><strong>词向量学习；</strong></li>
+<li><strong>Lexical-level   词汇级别特征提取；</strong><ul>
+<li>候选论元/触发词及其前后单词的词向量 </li>
+</ul>
+</li>
+<li><strong>Sentence-level  句子级别特征提取；</strong><ul>
+<li>输入特征：<ul>
+<li>Context-word feature(CWF)</li>
+<li>Position feature(PF)<ul>
+<li>当前词语和候选论元/触发词之间的相对距离，距离值用向量表示，随机初始化</li>
+</ul>
+</li>
+<li>Event-type feature(EF)<ul>
+<li>当前 trigger 对应的事件类型特征</li>
+</ul>
+</li>
+<li>CWF, PF, EF 拼接作为卷积的输入</li>
+</ul>
+</li>
+<li>卷积后，根据 candidate argument 和 predicted trigger 将 feature map 分成三部分，分别对各部分进行最大池化</li>
+</ul>
+</li>
+<li><strong>Output 分类输出</strong><ul>
+<li>拼接词汇级别和句子级别的特征 F=[L, P]</li>
+<li>O = WF+b 算分，进行 softmax，得到 argument role 的类别</li>
+</ul>
+</li>
+</ol>
+<p><strong>Trigger classification 阶段：</strong></p>
+<ul>
+<li><strong>Lexical-level</strong><ul>
+<li>只使用候选触发词和其左右token</li>
+</ul>
+</li>
+<li><strong>Sentence-level</strong><ul>
+<li>CWF + PF，PF 只使用候选触发词的位置作为嵌入位置特征</li>
+<li>句子由触发词分割成两部分</li>
+</ul>
+</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn2.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn2.png">
+<p>损失函数依旧是 log likelihood。数据集用的 ACE2005 英文数据集，实验结果</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn3.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn3.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn4.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn4.png">
+<p>DMCNN 的效果是突破性的，但分两个阶段的预测仍有误差传递的问题，也没有利用好 trigger 和 argument 之间的依赖关系。</p>
+<h4 id="Joint-Model-BiRNN"><a href="#Joint-Model-BiRNN" class="headerlink" title="Joint Model(BiRNN)"></a>Joint Model(BiRNN)</h4><p><a href="http://www.aclweb.org/anthology/N16-1034" target="_blank" rel="external">JRNN: Joint Event Extraction via Recurrent Neural Networks, ACL 2016</a></p>
+<p>Nguyen et.al., 2016 通过 RNN 用联合方法解决时间抽取的问题，继承了 Li (2013) 和 Chen (2015) 的优点，并克服了它们的一些缺陷。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/JRNN1.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/JRNN1.png">
+<ul>
+<li><strong>Encoding phase</strong><ul>
+<li>word embedding + entity type embedding + dependency tree relation<br>dependency tree relation 是 binary 的，个人理解应该是维度对应依存树中单词间所有可能的关系（如 conj_and, advcl 等），只有在依存树 W 中存在与 w_i 连接的一条对应边（如 conj_and 连接了 w_i 与 w_j）时，该维度（conj_and 对应维度）的值才设为 1，这个向量在 Li et al., 2013 的研究中是有用的。<br>没有用到位置特征，因为同时预测 trigger 和 argument roles，没有固定的锚点。</li>
+<li>双向 GRU 进行编码</li>
+</ul>
+</li>
+<li><strong>Prediction phase</strong><ul>
+<li>对 W 对应的 trigger 和 argument role 分别维护了一个 binary memory vector $G^{trg}_i$ , binary memory matrices $G^{arg}_i$ 以及  $G^{arg/trg}_i$ </li>
+<li>每个时间点 i，或者说对 $w_i$<ul>
+<li>对 $w_i$ 进行 trigger 预测</li>
+<li>如果 trigger 预测结果 $t<em>i$ 是 other，那么 $a\</em>{ij}$  j 从 1-k 都设为 other，然后进行下一步，否则对所有的 entity mention e1, e2,…,ek 进行 argument role 预测</li>
+<li>利用上一步的记忆向量以及之前步骤的预测来计算 $G^{trg}_i$,  $G^{arg}_i$ and $G^{arg/trg}_i$ </li>
+</ul>
+</li>
+<li><strong>Output:</strong><ul>
+<li>trigger subtype $t_i$ for $w_i$</li>
+<li>predicted argument roles $a_{i1}$, $a_{i2}$,…$a_{ik}$</li>
+<li>memory vector/matrics  $G^{trg}_i$,  $G^{arg}_i$ and $G^{arg/trg}_i$ </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Memory 向量代表的是同一个句子中 trigger 和 argument role 的相互关系，$G^{trg}_i$  代表的是 trigger subtypes 之间的关系，表示在 i 之前已经识别出哪些子事件，比如说句子中检测到了 Die 事件，那么很有可能下面会同时会出现 Attack 事件；</p>
+<p>$G^{arg}_i$ 代表的是 argument role 之间的关系，总结了 entity mention 在过去扮演的 arugment roles 信息；$G^{arg/trg}_i$ 对应的是 arugment roles 和 trigger subtypes 之间的关系，表示 entity mention 在之前特定 event subtypes 扮演过 argument，$G^{arg/trg}_i[j][t]=1$ 代表 $e_j$ 在之前的 subtype t 中被认为是 argument。 实验表明，$G^{trg}$ 并没有帮助反而会导致整体性能下降，而 $G^{arg/trg}$ 还是很有效的。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/JRNN2.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/JRNN2.png">
+<p>当输入句子包含多个事件时（1/N），JRNN 明显优于其他方法。特别是，JRNN在触发标记方面比DMCNN好13.9％，而参数角色标记的相应改进为6.5％，从而进一步表明 JRNN 具有记忆功能的好处。在单事件句子（1/1）的表现上，JRNN在 trigger 分类上仍然是最好的系统，尽管在 argument role 上比 DMCNN 要差一些。</p>
+<h2 id="弱监督-语料扩充"><a href="#弱监督-语料扩充" class="headerlink" title="弱监督/语料扩充"></a>弱监督/语料扩充</h2><p>有监督的方法需要大量的标注样本，人工标注耗时耗力，一致性差，因此弱监督方法也是事件抽取的一个重要分支。Chen 等提出利用部分高质量的标注语料训练分类器，然后利用初步训练好的分类器判断未标注的数据，选取高置信度的分类样本作为训练样本，通过迭代自动扩充训练样本[Chen and Ji, 2009]。Liao 等在相关文档中使用自训练的（Self-Training）的半监督学习方法扩展标注语料，并利用全局推理的方法考虑样例的多样性进而完成事件抽取；进一步提出同时针对词汇和句子两个粒度训练最大熵分类器，并用协同训练（Co-training）的方法扩展标注数据，进而对分类器进行更充分的训练[Liao and Grishman, 2011a; 2011b]。</p>
+<p>而目前，弱监督/训练数据生成方面比较流行的方向有下面几类，利用外部资源，通过远程监督，以及跨语料迁移的方法。</p>
+<h4 id="外部资源"><a href="#外部资源" class="headerlink" title="外部资源"></a>外部资源</h4><p><a href="http://www.aclweb.org/anthology/P16-1201" target="_blank" rel="external">Leveraging FrameNet to Improve Automatic Event Detection</a></p>
+<p>FrameNet 是语言学家定义及标注的语义框架资源，采用层级的组织结构，有1000+框架、1000+词法单元、150000+标注例句。在结构上，FrameNet 和事件抽取有着很高的相似性，一个框架由一个词法单元和若干框架元素组成，一个事件有触发词和若干事件角色组成。另外，Framenet 中很多 frame 其实也能够表示某些事件，如<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/framenet.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/framenet.png"></p>
+<p>因此，Liu 等利用 ACE 语料训练的分类器去判定 FrameNet 中句子的事件类别，再利用全局推断将 FrameNet 的语义框架和 ACE 中的事件类别进行映射，进而利用 FrameNet 中人工标注的事件样例扩展训练数据以提升事件检测性能 [Liu et.al., 2016b]。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/framenet1.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/framenet1.png"></p>
+<h4 id="远程监督"><a href="#远程监督" class="headerlink" title="远程监督"></a>远程监督</h4><p><a href="http://www.nlpr.ia.ac.cn/cip/~liukang/liukangPageFile/ACL2017-Chen.pdf" target="_blank" rel="external">Automatically Labeled Data Generation for Large Scale Event Extraction</a></p>
+<p>Yubo Chen, ACL 2017 提出运用结构化的知识库来以及远程监督的方法来自动生成大规模事件语料。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/event_relation.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/event_relation.png">
+<p>当把关系抽取中常用的远程监督方法用到事件抽取中时，会发现有下面的两个问题，一是<strong>现有事件知识库（如 Freebase）中缺乏触发词信息</strong>，如上图，在关系抽取中，我们可以用两个元素 Barack Obama, Michelle Obama 进行回标，但是在事件抽取中，结婚这一事件类型在 Freebase 中被表示为 m.02nqglv，所以我们不能直接用事件类型和元素来进行回标，在用 DS 前，必须先检测触发词。</p>
+<p>根据 DS 在 RE 中的应用，可以假设如果一个句子中出现了所有的元素，那么这个句子就可以被作为是一个事件，句子中的动词就可以作为触发词。然而<strong>一个事件中的元素可能出现在多个句子中</strong>，如果用所有元素来进行句子的回标，那么能抽出的训练数据就非常少了，所以应该对元素进行排序，选择有代表性的元素进行回标。</p>
+<p>整个流程如下，首先对 Freebase 中的核心元素进行检测，考虑<strong>角色显著性（role saliency）、事件相关性（ event relevance）和核心率（key rate）</strong>，接着利用所有的核心元素去 Wikipeida 中回标，根据<strong>触发率（trigger rate）、触发词频率（ trigger candidate frequency）、触发词事件频率（trigger event type frequency）</strong>来进行触发词检测，这一阶段得到的触发词表中只有动词，缺少名词，也存在噪声，于是再利用 FrameNet 过滤动词性触发词中的噪声，同时扩展名词性触发词，最后利用 Soft Distant Supervision 来自动生成标注数据。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/Yubo.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/Yubo.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/marriage.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/marriage.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/autodata.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/autodata.png">
+<p>还有方法如 Karthik Narasimhan et al., EMNLP 2016，从网络获取同一事件的不同报道，再使用强化学习方法，做信息融合的决策（互补信息的融合、冗余信息的选择）。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/karthik.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/karthik.png">
+<h4 id="跨语料迁移"><a href="#跨语料迁移" class="headerlink" title="跨语料迁移"></a>跨语料迁移</h4><p>由于目前中文事件抽取缺少公认语料，很多学者尝试利用现有大量的高质量英文标注语料辅助中文事件抽取。Chen 等首次提出该想法并利用跨语言协同训练的 Bootstrap 方法进行事件抽取[Chen and Ji, 2009]。Ji 提出基于中英文单语事件抽取系统和基于并行语料两种构建跨语言同义谓词集合的方法辅助进行中文事件抽取[Ji, 2009]，Zhu 等利用机器翻译同时扩大中文和英文训练语料，联合利用两种语料进行事件抽取[Zhu et.al., 2014]。Hsi 等联合利用符号特征和分布式特征的方法，利用英文事件语料提升中文事件抽取的性能[Hsi et.al., 2016]。</p>
+<p><a href="http://www.nlpr.ia.ac.cn/cip/~liukang/liukangPageFile/Liu_aaai2018.pdf" target="_blank" rel="external">Event Detection via Gated Multilingual Attention Mechanism, AAAI2018</a></p>
+<p>Motivation 是：</p>
+<ol>
+<li>多语言一致性，不同语言中表达了相同含义的句子往往包含相同的语义成分<br>如 MeiGuo TanKe 和 American tank 表达了相同含义，都是武器</li>
+<li>多语言互补，某个词在一种语言中有歧义，但在另一种语言中缺没有歧义<br>如英文 fire，因为有开火和解雇两种意思，所以对应事件可能是 Attack 也可能是 End-Position，然而在中文中开火，Attach 类型，解雇就是 End-Position 类型，两个词没有相同语义</li>
+</ol>
+<p>所以文章提出了两种 attention 机制，一是利用多语言一致性，分别对每种语言进行单语语境的关注，对每个候选触发词，对其上下文进行注意力机制，注意力权重表示句子中不同单词对预测事件类型的重要性，二是利用互补信息，用 gated cross-lingual attention 来模拟其他语言的可信度，gate 来控制目标语言流向源语言的信息，集成多语言的信息。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/GMLATT.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/GMLATT.png">
+<h3 id="中文事件抽取"><a href="#中文事件抽取" class="headerlink" title="中文事件抽取"></a>中文事件抽取</h3><p>目前事件抽取的相关研究大部分是面向英文文本，中文文本的工作才刚起步，一方面，中文的自身特点（需要分词、缺少时态和形态的变换）有一定挑战，另一方面，数据集上也缺乏统一、公认的语料资源和相关评测。尽管如此，近年来中文事件抽取在公开评测、领域扩展及上述的跨语料迁移方面也都取得了一些进展。</p>
+<p>公开评测方面，除了在模型方面的创新[Chen and Ng, 2012;Li et.al., 2012a;2013b]，在中文语言特性的利用方面，Li 等通过中文词语的形态结构、同义词等信息捕获更多的未知触发词，进而解决中文事件抽取面临的分词错误和训练数据稀疏等问题； 进一步细分中文事件触发词内部的组合语义（复合、附加和转化），进而提高系统的性能[Li et.al., 2012b]。Ding 等利用聚类的方法自动生成新事件类型的语料， 在抽取过程中特别地考虑了待抽取文本的 HowNet 相似度[Ding et.al., 2013]。</p>
+<p>特定领域方面，国内很多机构均面向实际应用展开特定领域的事件抽取研究， 覆盖突发灾难、金融、军事、体育、音乐等多个领域。例如，Zhou 等针对金融领域事件中的收购、分红和贷款三个典型事件，提出自动构建抽取规则集的方法进行中文金融领域事件抽取 [Zhou, 2003]；Liang 等利用事件框架的归纳和继承特性实现对灾难事件的抽取[Liang and Wu, 2006]。</p>
+<p>还有其他一些其他方向的 Paper:<br><strong>特征表示：</strong><br>– Argument Attention: Exploiting Argument Information to Improve Event Detection via Supervised Attention Mechanisms  (ACL2017)<br><strong>多事件抽取：</strong><br>– HBTNGMA: Collective Event Detection via a Hierarchical and Bias Tagging Networks with Gated<br> Multi-level Attention (EMNLP-2018)<br><strong>篇章级事件抽取：</strong><br>– DCFEE: A Document-level Chinese Financial Event Extraction System based on Automatically Labeled<br> Training Data (ACL 2018)<br><strong>事件关系抽取：</strong><br>– ATT-ERNN: Attention-based Event Relevance Model for Stock Price Movement Prediction (CCKS-2017 Best Paper Award)<br>– MLNN: Event Coreference Resolution via Multi-loss Neural Network without Arguments （CCKS-2018）</p>
+<h1 id="事件监测和追踪"><a href="#事件监测和追踪" class="headerlink" title="事件监测和追踪"></a>事件监测和追踪</h1><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/general2.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/general2.png">
+<p>主流方法包括基于相似度聚类和基于概率统计两类。在这不多做介绍。</p>
+<p>参考文献：<br>知识图谱发展报告 2018<br>事件抽取与金融事件图谱构建</p>
+<p>关注公众号回复事件抽取获得下载地址</p>
+]]></content>
+      
+        <categories>
+            
+            <category> NLP </category>
+            
+            <category> Knowledge Graph </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> NLP </tag>
+            
+            <tag> Relation Extraction </tag>
+            
+            <tag> Information Extraction </tag>
+            
+            <tag> Event Extraction </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[知识抽取-实体及关系抽取]]></title>
       <url>http://www.shuang0420.com/2018/09/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/</url>
       <content type="html"><![CDATA[<p>这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 <a href="http://www.shuang0420.com/2017/03/18/NLP%20笔记%20-Information%20Extraction/">NLP笔记 - Information Extraction</a> 和 <a href="http://www.shuang0420.com/2017/04/10/NLP笔记%20-%20Relation%20Extraction/">NLP笔记 - Relation Extraction</a>，梳理了知识抽取的基本方法，包括传统机器学习及经典的深度学习方法。</p>
+<a id="more"></a>
 <p>知识抽取涉及的“知识”通常是 <strong>清楚的、事实性的信息</strong>，这些信息来自不同的来源和结构，而对不同数据源进行的知识抽取的方法各有不同，从结构化数据中获取知识用 D2R，其难点在于复杂表数据的处理，包括嵌套表、多列、外键关联等，从链接数据中获取知识用图映射，难点在于数据对齐，从半结构化数据中获取知识用包装器，难点在于 wrapper 的自动生成、更新和维护，这一篇主要讲从文本中获取知识，也就是我们广义上说的信息抽取。</p>
 <img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/general.png">
 <p>信息抽取三个最重要/最受关注的子任务：</p>
@@ -161,7 +393,7 @@
 <li>难以维护</li>
 <li>可移植性差</li>
 </ul>
-<h2 id="监督学习-机器学习"><a href="#监督学习-机器学习" class="headerlink" title="监督学习-机器学习"></a>监督学习-机器学习</h2><h3 id="研究综述"><a href="#研究综述" class="headerlink" title="研究综述"></a>研究综述</h3><p>漆桂林,高桓,吴天星.知识图谱研究进展[J].情报工程,2017,3(1):004-025</p>
+<h2 id="监督学习-传统机器学习"><a href="#监督学习-传统机器学习" class="headerlink" title="监督学习-传统机器学习"></a>监督学习-传统机器学习</h2><h3 id="研究综述"><a href="#研究综述" class="headerlink" title="研究综述"></a>研究综述</h3><p>漆桂林,高桓,吴天星.知识图谱研究进展[J].情报工程,2017,3(1):004-025</p>
 <blockquote>
 <p>Zhou[13] 在 Kambhatla 的基础上加入了基本词组块信息和 WordNet，使用 SVM 作为分类器，在实体关系识别的准确率达到了 55.5%，实验表明实体类别信息的特征有助于提高关系抽取性能； Zelenko[14] 等人使用浅层句法分析树上最小公共子树来表达关系实例，计算两颗子树之间的核函数，通过训练例如 SVM 模型的分类器来对实例进行分。但基于核函数的方法的问题是召回率普遍较低，这是由于相似度计算过程匹配约束比较严格，因此在后续研究对基于核函数改进中，大部分是围绕改进召回率。但随着时间的推移，语料的增多、深度学习在图像和语音领域获得成功，信息抽取逐渐转向了基于神经模型的研究，相关的语料被提出作为测试标准，如 SemEval-2010 task 8[15]。基于神经网络方法的研究有，Hashimoto[16] 等人利用 Word Embedding 方法从标注语料中学习特定的名词对的上下文特征，然后将该特征加入到神经网络分类器中，在 SemEval-2010 task 8 上取得了 F1 值 82.8% 的效果。基于神经网络模型显著的特点是不需要加入太多的特征，一般可用的特征有词向量、位置等，因此有人提出利用基于联合抽取模型，这种模型可以同时抽取实体和其之间的关系。联合抽取模型的优点是可以避免流水线模型存在的错误累积[17-22]。其中比较有代表性的工作是[20]，该方法通过提出全新的全局特征作为算法的软约束，进而同时提高关系抽取和实体抽取的准确率，该方法在 ACE 语料上比传统的流水线方法 F1 提高了 1.5%，；另一项工作是 [22]，利用双层的 LSTM-RNN 模型训练分类模型，第一层 LSTM 输入的是词向量、位置特征和词性来识别实体的类型。训练得到的 LSTM 中隐藏层的分布式表达和实体的分类标签信息作为第二层 RNN 模型的输入，第二层的输入实体之间的依存路径，第二层训练对关系的分类，通过神经网络同时优化 LSTM 和 RNN 的模型参数，实验与另一个采用神经网络的联合抽取模型[21]相比在关系分类上有一定的提升。但无论是流水线方法还是联合抽取方法，都属于有监督学习，因此需要大量的训练语料，尤其是对基于神经网络的方法，需要大量的语料进行模型训练，因此这些方法都不适用于构建大规模的 Knowledge Base。</p>
 </blockquote>
@@ -9235,284 +9467,6 @@ Weights for each of 10*10*5 neurons: 5*5*3=75
     </entry>
     
     <entry>
-      <title><![CDATA[Search Engines笔记 - Federated Search]]></title>
-      <url>http://www.shuang0420.com/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。垂直数据库能获得更准确的搜索结果。那么对一个 query，我们可以放到合适的多个垂直数据库里检索，然后合并结果呈现给用户。<br><a id="more"></a><br>简单解释就是结果来自多个数据库。用图片表示<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs1.jpg" class="ful-image" alt="fs1.jpg"></p>
-<p>当然，大多数数据库与我们的需求并不相关，所以可以略过。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs2.jpg" class="ful-image" alt="fs2.jpg"></p>
-<p>Search portals 可以有不同的策略来处理不同类型的请求</p>
-<ul>
-<li>搜索非结构化数据<ul>
-<li>将初始查询映射为对应的结构化查询</li>
-<li>将查询定向到特定的搜索引擎<br>» 汽车，音乐，图片，视频…</li>
-</ul>
-</li>
-<li>搜索结构化数据（数据库） - 例如，邮政编码，股票代码…<ul>
-<li>调用服务或进程<ul>
-<li>如，计算器，股票价格，航班跟踪…</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs3.jpg" class="ful-image" alt="fs3.jpg">
-<h1 id="Constrains"><a href="#Constrains" class="headerlink" title="Constrains"></a>Constrains</h1><p><strong>不合作环境</strong></p>
-<ul>
-<li>没有特别的 federated search 的支持</li>
-<li>资源不受信任</li>
-</ul>
-<p><strong>合作环境</strong></p>
-<ul>
-<li>资源支持公共协议/ API</li>
-<li>资源是受信任的，能够提供准确的信息</li>
-</ul>
-<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
-<li>Resource representation(资源表达)。即获取每个数据库的信息</li>
-<li>Resource selection(资源选择)。即对 resource/databases 进行排序，对每个查询选择少量资源进行检索。</li>
-<li>Result-merging(结果合并)。即对来自不同搜索引擎／数据库对结果进行 merge，产生最终展现给用户的 ranking list。</li>
-</ol>
-<p>其中 1 是在线下完成的(offline)，2、3 是在查询时完成的。</p>
-<h1 id="Resource-representation"><a href="#Resource-representation" class="headerlink" title="Resource representation"></a>Resource representation</h1><p><strong>如何表达资源的内容？</strong></p>
-<ol>
-<li>Bag of words: terms and frequencies</li>
-<li>Sample queries: Queries that this resource is good for</li>
-<li>Sample documents: Typical documents from this resource</li>
-</ol>
-<p>一个例子解释<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/rr1.jpg" class="ful-image" alt="rr1.jpg"></p>
-<p><strong>资源的内容信息如何获取</strong></p>
-<ul>
-<li>通过 protocol 向资源发出请求</li>
-<li>对 query log 请求相关性评价 (relevance assessments)</li>
-<li>Query-based sampling: 提交查询，查看返回的内容</li>
-</ul>
-<p>下面主要介绍第三种 <strong>query-based sampling</strong></p>
-<h2 id="Query-based-sampling"><a href="#Query-based-sampling" class="headerlink" title="Query-based sampling"></a>Query-based sampling</h2><p>过程</p>
-<ol>
-<li>选择一个初始查询</li>
-<li>重复 N 次（例如，N = 100）<ul>
-<li>向搜索引擎提交查询</li>
-<li>下载一些结果（例如，2-4 条）</li>
-<li>得到并更新 representation (words and frequencies)</li>
-<li>从新的 representation 中随机选择 query term(s)形成新的查询</li>
-</ul>
-</li>
-</ol>
-<p><strong>为什么可行?</strong><br>因为词汇分布服从 Heaps’ Law</p>
-<p><strong>如果第一条查询非常糟糕怎么办？</strong><br>如在一个医学领域的语料库里找 car，可能并没有结果(如果是 boolean ranking 的话)，那么就重新选择一个查询？</p>
-<p><strong>抽样的大小有什么影响</strong><br>一条 query 取多少文档呢？实验决定吧，2-4 篇应该就够了</p>
-<p><strong>在合作环境下随机采样</strong><br>只比 query-based sampling 好一点点</p>
-<h1 id="Resource-selection"><a href="#Resource-selection" class="headerlink" title="Resource selection"></a>Resource selection</h1><p>两大类方法，无监督学习通常是通过对 P(ri|q) 排序来解决，监督算法通常通过分类解决。</p>
-<h2 id="Unsupervised-Resource-Selection"><a href="#Unsupervised-Resource-Selection" class="headerlink" title="Unsupervised Resource Selection"></a>Unsupervised Resource Selection</h2><p><strong>Task:</strong> 给定查询 q，决定要搜索的资源(resources)</p>
-<p>无监督方法将这个问题看作 resource ranking 的问题。</p>
-<ol>
-<li>估计 p(ri|q)</li>
-<li>选择前 k 个资源<br>– 通常 k 是给出的<br>– 动态设置 k 是一个开放的研究问题</li>
-</ol>
-<p>两种具体方法，content-based methods 和 query-based methods</p>
-<ul>
-<li>Content-based methods(基于内容的方法)<br>– 对各个资源下 query 和 content 的相似度 $S(q,c)$ 来对资源进行排序<br>– 有不同的方法来实现，区分点在于：<br>» Representation type: bag of words vs. sampled documents<br>» Ranking algorithm: e.g., CORI</li>
-<li>Query-based methods(基于查询的方法)<br>– 对 query，搜索各个资源下的 query log，找出 match 的 query，然后求当前 query 和历史 query 的相似度 $S(q,q_{past})$，对资源进行排序<br>– 之前用的并不多，因为缺少好的 query log</li>
-</ul>
-<h3 id="Content-based-methods"><a href="#Content-based-methods" class="headerlink" title="Content-based methods"></a>Content-based methods</h3><h4 id="Bag-of-words-method"><a href="#Bag-of-words-method" class="headerlink" title="Bag-of-words method"></a>Bag-of-words method</h4><p>基本思想是 <strong>将每个资源视为一个（非常大的）词袋(bag of words)</strong>，排序算法可以用 KL divergence 或者 query likelihood 等方法。<br>eg. CORI<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/cori.jpg" class="ful-image" alt="cori.jpg"></p>
-<p>然而，Bag of words methods (e.g., CORI)是根据 resources 和 query 的相似度进行的排序，这并不是我们的初衷。这种方法 <strong>偏好具有较高 p(qi|Rj) 的资源</strong>，通常意义上也就是 homogeneous (通常很小)的资源。这并不是我们需要的，我们想要的是，选择能够返回更多相关文档的资源，sampled document method 更能达到这个目标。</p>
-<p><strong>Bag of words (“large documents”) 方法的特点</strong></p>
-<ul>
-<li>大文档更好的代表了 resource representation</li>
-<li>偏好具有较大比例相关内容的资源<br>– i.e., small or homogeneous resources</li>
-<li>非常有效，很有竞争力</li>
-</ul>
-<h4 id="Sample-documents-method"><a href="#Sample-documents-method" class="headerlink" title="Sample documents method"></a>Sample documents method</h4><p><strong>基本思想：</strong> 对每个资源采样然后合并得到一个 centralized index，记录每个文档来自哪个 resource。<br>eg. ReDDE<br>给定一个查询</p>
-<ol>
-<li>搜索 centralized sample index 得到相关文档</li>
-<li>取前 T 的文档</li>
-<li>检查哪些资源提供了这些相关文档</li>
-<li>估计每个资源中相关文档的数量<br>• 计算资源 i 中高于阈值 T 的文档数量 n<br>• n * resource_size / sample_size</li>
-</ol>
-<p>ReDDE 可以看作是 sample-based voting method，每个 top-ranked document 可以看作是对它属于的那个资源的一个投票。</p>
-<p><strong>特点：</strong></p>
-<ul>
-<li>高召回率: 选择包含更多相关文档的资源</li>
-<li>高准确率: 选择能够返回更多的出现在合并结果集 top T 的文档的资源</li>
-<li>有很多算法的变种<br>– 来自更可靠/权威的资源的 sample 获得更多的投票<br>– 更相关的 sample 获得更多的投票</li>
-</ul>
-<h4 id="CORI-vs-ReDDE"><a href="#CORI-vs-ReDDE" class="headerlink" title="CORI vs ReDDE"></a>CORI vs ReDDE</h4><ul>
-<li>ReDDE 相对而言更加准确<br>– 通常效果更好，几乎不会有更糟的情况</li>
-<li>当各个 collection size 的分布是 skewed 时，ReDDE 的性能优于 CORI<br>– CORI 偏向小集合。他们更可能是同质的，它错过了大型，异质的 collections<br>– ReDDE 对大型 collection 的偏见没那么强</li>
-<li>CORI 比 ReDDE 更有效<br>– 一个资源一个文档 vs. 一个资源多个文档</li>
-</ul>
-<h2 id="Supervised-Resource-Selection"><a href="#Supervised-Resource-Selection" class="headerlink" title="Supervised Resource Selection"></a>Supervised Resource Selection</h2><p>当我们有可用的训练数据时，就可以进行有监督的资源选择</p>
-<ul>
-<li>利用广泛的特征</li>
-<li>将任务框架化为分类问题</li>
-<li>让机器学习算法学习如何给不同的特征分配权重</li>
-</ul>
-<p><strong>Main issues</strong></p>
-<ul>
-<li>特征工程</li>
-<li>获取训练数据</li>
-<li>确定要选择的资源数</li>
-</ul>
-<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p><strong>Task:</strong> 给定一个查询，选择一个或更多的 verticals</p>
-<p>将问题定义为一个 “one-vs-all” 的分类任务</p>
-<ul>
-<li>对每个 vertical 都训练一个分类器</li>
-<li>对 “no vertical” (web only) 也训练一个分类器</li>
-<li>E.g., Arguello, et al (2009) 用了逻辑回归模型</li>
-</ul>
-<p><strong>典型的选择策略</strong></p>
-<ul>
-<li>选择一个具有最高置信度(confidence score)的分类器</li>
-<li>选择 n 个最好的分类器</li>
-<li>选择所有置信度分数高于 threshold 的分类器</li>
-</ul>
-<h3 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h3><p><strong>Query features</strong></p>
-<ul>
-<li>Boolean: keywords and regular expressions<br>– E.g., “weather”, “news”, “videos”, …</li>
-<li>Geographic: Probabilities associated with geographic entities<br>– E.g., “Pittsburgh pizza”</li>
-<li>Category: query’s affinity to a set of topic categories<pre><code>– E.g., “Cancun vacations”
-</code></pre></li>
-</ul>
-<p><strong>Corpus Features</strong><br>ReDDE 是非常流行的资源排序算法</p>
-<p><strong>Clarity (Cronen-Townsend, et al., 2002)</strong><br>Clarity 用来预测给定语料库上的查询的有效性，本质上是 top-ranked 文档和完整集合之间的 KL divergence，如果排名靠前的文档看起来像是 collection 的 random sample，搜索结果将会很差</p>
-<p><strong>Query Log Features</strong></p>
-<ul>
-<li>人工评估/点击率</li>
-</ul>
-<p><strong>qlog feature</strong></p>
-<ul>
-<li>用查询日志中的 query 来构建语言模型 v</li>
-<li>用 query likelihood 来建模 $P(q|v)=\prod_t^q P(t|v)$</li>
-<li>p(t | v) is a smoothed MLE</li>
-</ul>
-<p><strong>Soft.ReDDE feature:</strong></p>
-<ul>
-<li>用查询日志中的 query 来构建语言模型 v</li>
-<li>用 query 对外部的 collection 检索<br>– E.g., wikipedia</li>
-<li>选择前 n 个文档</li>
-<li>文档 di 的投票是 KLD (di || v)<br>– 与查询日志相似的文档具有更高的投票</li>
-</ul>
-<h1 id="Result-merging"><a href="#Result-merging" class="headerlink" title="Result merging"></a>Result merging</h1><p><strong>主要问题：</strong><br><strong>idf</strong><br>同一个 term，在不同数据库的 idf 不同怎么办？</p>
-<p><strong>scores</strong><br>不同数据库的 doc score 不是可比的怎么办？</p>
-<p><strong>＝&gt; Map resource-specific scores to resource-neutral scores</strong></p>
-<p><strong>Result merging</strong></p>
-<ul>
-<li>用所有的 sampled documents 创建一个 index (offline)</li>
-<li>从选定的资源里检索文档<br>– 因为资源并不提供文档分数，所以对每个文档计算 sim (q, d)<br>– 利用 index 的 corpus statistics 来计算每个文档的 authority score</li>
-<li>score(d) = f ( sim (q, d), authority (d) )</li>
-</ul>
-<h2 id="Semi-Supervised-Learning"><a href="#Semi-Supervised-Learning" class="headerlink" title="Semi-Supervised Learning"></a>Semi-Supervised Learning</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss.jpg" class="ful-image" alt="ss.jpg">
-<p>由资源 i 返回的一些文档可能同时出现在 sample index 里<br>对这些文档我们有两个分数</p>
-<ul>
-<li>Sample index (resource neutral) score</li>
-<li>Resource i (resource-specific) score<br>这就是我们用来学习 f (resource-specific) = resource-neutral 的训练数据</li>
-</ul>
-<p>对这个所需的 “normalization” 用线性函数进行建模，因为线性模型可以利用少量的数据进行训练，而且 Ad-hoc CORI 的合并就是线性的<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss2.jpg" class="ful-image" alt="ss2.jpg"></p>
-<p>使用线性回归(linear regression)推导出权重</p>
-<ul>
-<li>f（resource-specific score）= a×dRi，j + b = resource-neutral score</li>
-<li>每个(query, resource) pair 对应不同的函数</li>
-</ul>
-<p><strong>它有效么?</strong><br>目前为止是最好的选择，因为 mapping 是 query-specific 和 resource-specific 的。</p>
-<p><strong>有没有足够的训练数据?</strong><br>通常有，因为 resource selection 和 sample index 可以用相同的文档。如果没有，下载 1-3 篇文档来产生训练数据。</p>
-<h1 id="Large-Scale-Search-Architecture"><a href="#Large-Scale-Search-Architecture" class="headerlink" title="Large-Scale Search Architecture"></a>Large-Scale Search Architecture</h1><p>之前讲过 large-scale search architecture 的相关内容。我们可以把数据集分为两层 <strong>高价值</strong> 和 <strong>低价值</strong>，然后将每一层进行分区(shards)，再将分区分配给计算机。</p>
-<p>事实上我们并不需要对每个查询都检索每一个分区，这样做成本很高，为什么不直接搜索最好/最合适的分区呢？</p>
-<p>通常带来的结果是：</p>
-<ul>
-<li>高准确率 (尤其是 top ranks)</li>
-<li>低召回率 (可能会错过许多有用的文档)<br>– 只搜索了少量资源，这也是广泛应用的障碍</li>
-</ul>
-<p><strong>所以分为两步:</strong></p>
-<ol>
-<li>资源定义(Resource definition)<ul>
-<li>对文档分区</li>
-</ul>
-</li>
-<li>资源选择(Resource selection)<ul>
-<li>对特定 query 选择要搜索的分区</li>
-</ul>
-</li>
-</ol>
-<p>下面进行详细的介绍。</p>
-<h2 id="Resource-definition"><a href="#Resource-definition" class="headerlink" title="Resource definition"></a>Resource definition</h2><p><strong>Goal:</strong> 搜索更少的分区得到更高的 recall</p>
-<p><strong>Requirement:</strong><br>对于可能提交的任何 query，大多数的相关文档必须出现在同一个分区中</p>
-<p><strong>How:</strong><br>把 closely-associated documents 也就是相似（相同主题）的文档归到同一个分区。</p>
-<p><strong>Hypothesis:</strong> Closely-associated ≈ topically-related &amp; Each shard covers one topic/subject</p>
-<p><strong>对给定的语料库，应该使用哪些 topics/subjects?</strong></p>
-<ul>
-<li>人工开发类别? – LCSH, DMOZ, Reuters, …</li>
-<li>自动学习 corpus-specific topics? – Clustering, LDA, PLSA, …</li>
-</ul>
-<p>我们想要一个可以应用于任何语料库的解决方案，因此，需要能自动学习基于语料库的特定的主题。许多算法能产生语料库特定的“主题”：</p>
-<ul>
-<li>聚类: E.g., k-means clustering</li>
-<li>主题模型: E.g., Latent Dirichlet Allocation (LDA)</li>
-</ul>
-<p>当然我们也要保证解决方案必须对 large collections 是有效的：</p>
-<ul>
-<li>从 collection 的一个随机样本里创建主题</li>
-<li>将其余文档分配给最相似的主题</li>
-</ul>
-<h2 id="Resource-selection-1"><a href="#Resource-selection-1" class="headerlink" title="Resource selection"></a>Resource selection</h2><p><strong>Goal:</strong> 给定查询，选择最好的分区</p>
-<p><strong>两类重要的资源选择算法:</strong></p>
-<ul>
-<li>Model-based: CORI, CRCS, Taily, …</li>
-<li>Sample-based: ReDDE, SUSHI, Rank-S, …</li>
-</ul>
-<p>有很多好的算法</p>
-<ul>
-<li>Sample-based 的算法被认为是最有效的</li>
-<li>在初始工作中常常使用 ReDDE 变种</li>
-<li>Taily 和 Rank-S 也经常被研究/考虑</li>
-</ul>
-<p><strong>对每个分区采样:</strong><br>将样本存储到 sample index 里 =&gt; offline</p>
-<p><strong>给定查询</strong></p>
-<ul>
-<li>搜索 sample index，得到 top documents</li>
-<li>Top documents 对它们所在的分区投票</li>
-<li>将 query 发送到得到最多投票的分区<br>=&gt; online</li>
-</ul>
-<h2 id="Cost"><a href="#Cost" class="headerlink" title="Cost"></a>Cost</h2><p>$C_{Total}$:</p>
-<ul>
-<li>处理 inverted list 的数量</li>
-<li>用于资源选择</li>
-<li>用于分区选择</li>
-<li>I/O 和计算成本</li>
-</ul>
-<p>Selective search 分为两步：</p>
-<ul>
-<li>选择要搜索的分区（resource selection）</li>
-<li>搜索所选的分区</li>
-</ul>
-<p>ReDDE 具有更高的计算成本</p>
-<p><strong>Key techniques</strong></p>
-<ol>
-<li>Resource definition for selective search<br>– How to partition a large corpus effectively</li>
-<li>Resource representation<br>– How to represent the contents of each resource<br>– Vocabulary-based, sample-documents-based, feature-based</li>
-<li>Resource selection<br>– How to select the right resources for a particular query</li>
-</ol>
-]]></content>
-      
-        <categories>
-            
-            <category> NLP </category>
-            
-            <category> Search Engines </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> NLP </tag>
-            
-            <tag> Search Engines </tag>
-            
-            <tag> 信息检索 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Search Engines笔记 - Diversity]]></title>
       <url>http://www.shuang0420.com/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/</url>
       <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。一个 query 可能表现了不同的信息需求，之前的相关性模型可能带来的结果是大多文档只能满足同一个信息需求，所以有些用户满意了，有些 user 抓狂了。我们希望检索到的 document 是能够 diverse 的，这样的话可以尽可能的满足不同用户的需求。这一章就讲了怎么实现 diversity。<br><a id="more"></a></p>
@@ -9802,6 +9756,284 @@ Weights for each of 10*10*5 neurons: 5*5*3=75
             <tag> 信息检索 </tag>
             
             <tag> 多样化 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Search Engines笔记 - Federated Search]]></title>
+      <url>http://www.shuang0420.com/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。垂直数据库能获得更准确的搜索结果。那么对一个 query，我们可以放到合适的多个垂直数据库里检索，然后合并结果呈现给用户。<br><a id="more"></a><br>简单解释就是结果来自多个数据库。用图片表示<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs1.jpg" class="ful-image" alt="fs1.jpg"></p>
+<p>当然，大多数数据库与我们的需求并不相关，所以可以略过。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs2.jpg" class="ful-image" alt="fs2.jpg"></p>
+<p>Search portals 可以有不同的策略来处理不同类型的请求</p>
+<ul>
+<li>搜索非结构化数据<ul>
+<li>将初始查询映射为对应的结构化查询</li>
+<li>将查询定向到特定的搜索引擎<br>» 汽车，音乐，图片，视频…</li>
+</ul>
+</li>
+<li>搜索结构化数据（数据库） - 例如，邮政编码，股票代码…<ul>
+<li>调用服务或进程<ul>
+<li>如，计算器，股票价格，航班跟踪…</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs3.jpg" class="ful-image" alt="fs3.jpg">
+<h1 id="Constrains"><a href="#Constrains" class="headerlink" title="Constrains"></a>Constrains</h1><p><strong>不合作环境</strong></p>
+<ul>
+<li>没有特别的 federated search 的支持</li>
+<li>资源不受信任</li>
+</ul>
+<p><strong>合作环境</strong></p>
+<ul>
+<li>资源支持公共协议/ API</li>
+<li>资源是受信任的，能够提供准确的信息</li>
+</ul>
+<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
+<li>Resource representation(资源表达)。即获取每个数据库的信息</li>
+<li>Resource selection(资源选择)。即对 resource/databases 进行排序，对每个查询选择少量资源进行检索。</li>
+<li>Result-merging(结果合并)。即对来自不同搜索引擎／数据库对结果进行 merge，产生最终展现给用户的 ranking list。</li>
+</ol>
+<p>其中 1 是在线下完成的(offline)，2、3 是在查询时完成的。</p>
+<h1 id="Resource-representation"><a href="#Resource-representation" class="headerlink" title="Resource representation"></a>Resource representation</h1><p><strong>如何表达资源的内容？</strong></p>
+<ol>
+<li>Bag of words: terms and frequencies</li>
+<li>Sample queries: Queries that this resource is good for</li>
+<li>Sample documents: Typical documents from this resource</li>
+</ol>
+<p>一个例子解释<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/rr1.jpg" class="ful-image" alt="rr1.jpg"></p>
+<p><strong>资源的内容信息如何获取</strong></p>
+<ul>
+<li>通过 protocol 向资源发出请求</li>
+<li>对 query log 请求相关性评价 (relevance assessments)</li>
+<li>Query-based sampling: 提交查询，查看返回的内容</li>
+</ul>
+<p>下面主要介绍第三种 <strong>query-based sampling</strong></p>
+<h2 id="Query-based-sampling"><a href="#Query-based-sampling" class="headerlink" title="Query-based sampling"></a>Query-based sampling</h2><p>过程</p>
+<ol>
+<li>选择一个初始查询</li>
+<li>重复 N 次（例如，N = 100）<ul>
+<li>向搜索引擎提交查询</li>
+<li>下载一些结果（例如，2-4 条）</li>
+<li>得到并更新 representation (words and frequencies)</li>
+<li>从新的 representation 中随机选择 query term(s)形成新的查询</li>
+</ul>
+</li>
+</ol>
+<p><strong>为什么可行?</strong><br>因为词汇分布服从 Heaps’ Law</p>
+<p><strong>如果第一条查询非常糟糕怎么办？</strong><br>如在一个医学领域的语料库里找 car，可能并没有结果(如果是 boolean ranking 的话)，那么就重新选择一个查询？</p>
+<p><strong>抽样的大小有什么影响</strong><br>一条 query 取多少文档呢？实验决定吧，2-4 篇应该就够了</p>
+<p><strong>在合作环境下随机采样</strong><br>只比 query-based sampling 好一点点</p>
+<h1 id="Resource-selection"><a href="#Resource-selection" class="headerlink" title="Resource selection"></a>Resource selection</h1><p>两大类方法，无监督学习通常是通过对 P(ri|q) 排序来解决，监督算法通常通过分类解决。</p>
+<h2 id="Unsupervised-Resource-Selection"><a href="#Unsupervised-Resource-Selection" class="headerlink" title="Unsupervised Resource Selection"></a>Unsupervised Resource Selection</h2><p><strong>Task:</strong> 给定查询 q，决定要搜索的资源(resources)</p>
+<p>无监督方法将这个问题看作 resource ranking 的问题。</p>
+<ol>
+<li>估计 p(ri|q)</li>
+<li>选择前 k 个资源<br>– 通常 k 是给出的<br>– 动态设置 k 是一个开放的研究问题</li>
+</ol>
+<p>两种具体方法，content-based methods 和 query-based methods</p>
+<ul>
+<li>Content-based methods(基于内容的方法)<br>– 对各个资源下 query 和 content 的相似度 $S(q,c)$ 来对资源进行排序<br>– 有不同的方法来实现，区分点在于：<br>» Representation type: bag of words vs. sampled documents<br>» Ranking algorithm: e.g., CORI</li>
+<li>Query-based methods(基于查询的方法)<br>– 对 query，搜索各个资源下的 query log，找出 match 的 query，然后求当前 query 和历史 query 的相似度 $S(q,q_{past})$，对资源进行排序<br>– 之前用的并不多，因为缺少好的 query log</li>
+</ul>
+<h3 id="Content-based-methods"><a href="#Content-based-methods" class="headerlink" title="Content-based methods"></a>Content-based methods</h3><h4 id="Bag-of-words-method"><a href="#Bag-of-words-method" class="headerlink" title="Bag-of-words method"></a>Bag-of-words method</h4><p>基本思想是 <strong>将每个资源视为一个（非常大的）词袋(bag of words)</strong>，排序算法可以用 KL divergence 或者 query likelihood 等方法。<br>eg. CORI<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/cori.jpg" class="ful-image" alt="cori.jpg"></p>
+<p>然而，Bag of words methods (e.g., CORI)是根据 resources 和 query 的相似度进行的排序，这并不是我们的初衷。这种方法 <strong>偏好具有较高 p(qi|Rj) 的资源</strong>，通常意义上也就是 homogeneous (通常很小)的资源。这并不是我们需要的，我们想要的是，选择能够返回更多相关文档的资源，sampled document method 更能达到这个目标。</p>
+<p><strong>Bag of words (“large documents”) 方法的特点</strong></p>
+<ul>
+<li>大文档更好的代表了 resource representation</li>
+<li>偏好具有较大比例相关内容的资源<br>– i.e., small or homogeneous resources</li>
+<li>非常有效，很有竞争力</li>
+</ul>
+<h4 id="Sample-documents-method"><a href="#Sample-documents-method" class="headerlink" title="Sample documents method"></a>Sample documents method</h4><p><strong>基本思想：</strong> 对每个资源采样然后合并得到一个 centralized index，记录每个文档来自哪个 resource。<br>eg. ReDDE<br>给定一个查询</p>
+<ol>
+<li>搜索 centralized sample index 得到相关文档</li>
+<li>取前 T 的文档</li>
+<li>检查哪些资源提供了这些相关文档</li>
+<li>估计每个资源中相关文档的数量<br>• 计算资源 i 中高于阈值 T 的文档数量 n<br>• n * resource_size / sample_size</li>
+</ol>
+<p>ReDDE 可以看作是 sample-based voting method，每个 top-ranked document 可以看作是对它属于的那个资源的一个投票。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>高召回率: 选择包含更多相关文档的资源</li>
+<li>高准确率: 选择能够返回更多的出现在合并结果集 top T 的文档的资源</li>
+<li>有很多算法的变种<br>– 来自更可靠/权威的资源的 sample 获得更多的投票<br>– 更相关的 sample 获得更多的投票</li>
+</ul>
+<h4 id="CORI-vs-ReDDE"><a href="#CORI-vs-ReDDE" class="headerlink" title="CORI vs ReDDE"></a>CORI vs ReDDE</h4><ul>
+<li>ReDDE 相对而言更加准确<br>– 通常效果更好，几乎不会有更糟的情况</li>
+<li>当各个 collection size 的分布是 skewed 时，ReDDE 的性能优于 CORI<br>– CORI 偏向小集合。他们更可能是同质的，它错过了大型，异质的 collections<br>– ReDDE 对大型 collection 的偏见没那么强</li>
+<li>CORI 比 ReDDE 更有效<br>– 一个资源一个文档 vs. 一个资源多个文档</li>
+</ul>
+<h2 id="Supervised-Resource-Selection"><a href="#Supervised-Resource-Selection" class="headerlink" title="Supervised Resource Selection"></a>Supervised Resource Selection</h2><p>当我们有可用的训练数据时，就可以进行有监督的资源选择</p>
+<ul>
+<li>利用广泛的特征</li>
+<li>将任务框架化为分类问题</li>
+<li>让机器学习算法学习如何给不同的特征分配权重</li>
+</ul>
+<p><strong>Main issues</strong></p>
+<ul>
+<li>特征工程</li>
+<li>获取训练数据</li>
+<li>确定要选择的资源数</li>
+</ul>
+<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p><strong>Task:</strong> 给定一个查询，选择一个或更多的 verticals</p>
+<p>将问题定义为一个 “one-vs-all” 的分类任务</p>
+<ul>
+<li>对每个 vertical 都训练一个分类器</li>
+<li>对 “no vertical” (web only) 也训练一个分类器</li>
+<li>E.g., Arguello, et al (2009) 用了逻辑回归模型</li>
+</ul>
+<p><strong>典型的选择策略</strong></p>
+<ul>
+<li>选择一个具有最高置信度(confidence score)的分类器</li>
+<li>选择 n 个最好的分类器</li>
+<li>选择所有置信度分数高于 threshold 的分类器</li>
+</ul>
+<h3 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h3><p><strong>Query features</strong></p>
+<ul>
+<li>Boolean: keywords and regular expressions<br>– E.g., “weather”, “news”, “videos”, …</li>
+<li>Geographic: Probabilities associated with geographic entities<br>– E.g., “Pittsburgh pizza”</li>
+<li>Category: query’s affinity to a set of topic categories<pre><code>– E.g., “Cancun vacations”
+</code></pre></li>
+</ul>
+<p><strong>Corpus Features</strong><br>ReDDE 是非常流行的资源排序算法</p>
+<p><strong>Clarity (Cronen-Townsend, et al., 2002)</strong><br>Clarity 用来预测给定语料库上的查询的有效性，本质上是 top-ranked 文档和完整集合之间的 KL divergence，如果排名靠前的文档看起来像是 collection 的 random sample，搜索结果将会很差</p>
+<p><strong>Query Log Features</strong></p>
+<ul>
+<li>人工评估/点击率</li>
+</ul>
+<p><strong>qlog feature</strong></p>
+<ul>
+<li>用查询日志中的 query 来构建语言模型 v</li>
+<li>用 query likelihood 来建模 $P(q|v)=\prod_t^q P(t|v)$</li>
+<li>p(t | v) is a smoothed MLE</li>
+</ul>
+<p><strong>Soft.ReDDE feature:</strong></p>
+<ul>
+<li>用查询日志中的 query 来构建语言模型 v</li>
+<li>用 query 对外部的 collection 检索<br>– E.g., wikipedia</li>
+<li>选择前 n 个文档</li>
+<li>文档 di 的投票是 KLD (di || v)<br>– 与查询日志相似的文档具有更高的投票</li>
+</ul>
+<h1 id="Result-merging"><a href="#Result-merging" class="headerlink" title="Result merging"></a>Result merging</h1><p><strong>主要问题：</strong><br><strong>idf</strong><br>同一个 term，在不同数据库的 idf 不同怎么办？</p>
+<p><strong>scores</strong><br>不同数据库的 doc score 不是可比的怎么办？</p>
+<p><strong>＝&gt; Map resource-specific scores to resource-neutral scores</strong></p>
+<p><strong>Result merging</strong></p>
+<ul>
+<li>用所有的 sampled documents 创建一个 index (offline)</li>
+<li>从选定的资源里检索文档<br>– 因为资源并不提供文档分数，所以对每个文档计算 sim (q, d)<br>– 利用 index 的 corpus statistics 来计算每个文档的 authority score</li>
+<li>score(d) = f ( sim (q, d), authority (d) )</li>
+</ul>
+<h2 id="Semi-Supervised-Learning"><a href="#Semi-Supervised-Learning" class="headerlink" title="Semi-Supervised Learning"></a>Semi-Supervised Learning</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss.jpg" class="ful-image" alt="ss.jpg">
+<p>由资源 i 返回的一些文档可能同时出现在 sample index 里<br>对这些文档我们有两个分数</p>
+<ul>
+<li>Sample index (resource neutral) score</li>
+<li>Resource i (resource-specific) score<br>这就是我们用来学习 f (resource-specific) = resource-neutral 的训练数据</li>
+</ul>
+<p>对这个所需的 “normalization” 用线性函数进行建模，因为线性模型可以利用少量的数据进行训练，而且 Ad-hoc CORI 的合并就是线性的<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss2.jpg" class="ful-image" alt="ss2.jpg"></p>
+<p>使用线性回归(linear regression)推导出权重</p>
+<ul>
+<li>f（resource-specific score）= a×dRi，j + b = resource-neutral score</li>
+<li>每个(query, resource) pair 对应不同的函数</li>
+</ul>
+<p><strong>它有效么?</strong><br>目前为止是最好的选择，因为 mapping 是 query-specific 和 resource-specific 的。</p>
+<p><strong>有没有足够的训练数据?</strong><br>通常有，因为 resource selection 和 sample index 可以用相同的文档。如果没有，下载 1-3 篇文档来产生训练数据。</p>
+<h1 id="Large-Scale-Search-Architecture"><a href="#Large-Scale-Search-Architecture" class="headerlink" title="Large-Scale Search Architecture"></a>Large-Scale Search Architecture</h1><p>之前讲过 large-scale search architecture 的相关内容。我们可以把数据集分为两层 <strong>高价值</strong> 和 <strong>低价值</strong>，然后将每一层进行分区(shards)，再将分区分配给计算机。</p>
+<p>事实上我们并不需要对每个查询都检索每一个分区，这样做成本很高，为什么不直接搜索最好/最合适的分区呢？</p>
+<p>通常带来的结果是：</p>
+<ul>
+<li>高准确率 (尤其是 top ranks)</li>
+<li>低召回率 (可能会错过许多有用的文档)<br>– 只搜索了少量资源，这也是广泛应用的障碍</li>
+</ul>
+<p><strong>所以分为两步:</strong></p>
+<ol>
+<li>资源定义(Resource definition)<ul>
+<li>对文档分区</li>
+</ul>
+</li>
+<li>资源选择(Resource selection)<ul>
+<li>对特定 query 选择要搜索的分区</li>
+</ul>
+</li>
+</ol>
+<p>下面进行详细的介绍。</p>
+<h2 id="Resource-definition"><a href="#Resource-definition" class="headerlink" title="Resource definition"></a>Resource definition</h2><p><strong>Goal:</strong> 搜索更少的分区得到更高的 recall</p>
+<p><strong>Requirement:</strong><br>对于可能提交的任何 query，大多数的相关文档必须出现在同一个分区中</p>
+<p><strong>How:</strong><br>把 closely-associated documents 也就是相似（相同主题）的文档归到同一个分区。</p>
+<p><strong>Hypothesis:</strong> Closely-associated ≈ topically-related &amp; Each shard covers one topic/subject</p>
+<p><strong>对给定的语料库，应该使用哪些 topics/subjects?</strong></p>
+<ul>
+<li>人工开发类别? – LCSH, DMOZ, Reuters, …</li>
+<li>自动学习 corpus-specific topics? – Clustering, LDA, PLSA, …</li>
+</ul>
+<p>我们想要一个可以应用于任何语料库的解决方案，因此，需要能自动学习基于语料库的特定的主题。许多算法能产生语料库特定的“主题”：</p>
+<ul>
+<li>聚类: E.g., k-means clustering</li>
+<li>主题模型: E.g., Latent Dirichlet Allocation (LDA)</li>
+</ul>
+<p>当然我们也要保证解决方案必须对 large collections 是有效的：</p>
+<ul>
+<li>从 collection 的一个随机样本里创建主题</li>
+<li>将其余文档分配给最相似的主题</li>
+</ul>
+<h2 id="Resource-selection-1"><a href="#Resource-selection-1" class="headerlink" title="Resource selection"></a>Resource selection</h2><p><strong>Goal:</strong> 给定查询，选择最好的分区</p>
+<p><strong>两类重要的资源选择算法:</strong></p>
+<ul>
+<li>Model-based: CORI, CRCS, Taily, …</li>
+<li>Sample-based: ReDDE, SUSHI, Rank-S, …</li>
+</ul>
+<p>有很多好的算法</p>
+<ul>
+<li>Sample-based 的算法被认为是最有效的</li>
+<li>在初始工作中常常使用 ReDDE 变种</li>
+<li>Taily 和 Rank-S 也经常被研究/考虑</li>
+</ul>
+<p><strong>对每个分区采样:</strong><br>将样本存储到 sample index 里 =&gt; offline</p>
+<p><strong>给定查询</strong></p>
+<ul>
+<li>搜索 sample index，得到 top documents</li>
+<li>Top documents 对它们所在的分区投票</li>
+<li>将 query 发送到得到最多投票的分区<br>=&gt; online</li>
+</ul>
+<h2 id="Cost"><a href="#Cost" class="headerlink" title="Cost"></a>Cost</h2><p>$C_{Total}$:</p>
+<ul>
+<li>处理 inverted list 的数量</li>
+<li>用于资源选择</li>
+<li>用于分区选择</li>
+<li>I/O 和计算成本</li>
+</ul>
+<p>Selective search 分为两步：</p>
+<ul>
+<li>选择要搜索的分区（resource selection）</li>
+<li>搜索所选的分区</li>
+</ul>
+<p>ReDDE 具有更高的计算成本</p>
+<p><strong>Key techniques</strong></p>
+<ol>
+<li>Resource definition for selective search<br>– How to partition a large corpus effectively</li>
+<li>Resource representation<br>– How to represent the contents of each resource<br>– Vocabulary-based, sample-documents-based, feature-based</li>
+<li>Resource selection<br>– How to select the right resources for a particular query</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> NLP </category>
+            
+            <category> Search Engines </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> NLP </tag>
+            
+            <tag> Search Engines </tag>
+            
+            <tag> 信息检索 </tag>
             
         </tags>
         
@@ -10584,121 +10816,6 @@ python nb.py split.train split.test</pre>
     </entry>
     
     <entry>
-      <title><![CDATA[Search Engines笔记 - Document Structure]]></title>
-      <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。文档的表示形式不只词袋一种，它可以有 fields，有 hierarchical structure(XML)，multiple representations of meaning, priors 等形式，这一章讲的就是检索模型怎么来处理这些复杂的文档表达。<br><a id="more"></a></p>
-<h1 id="Multiple-representations-of-meaning"><a href="#Multiple-representations-of-meaning" class="headerlink" title="Multiple representations of meaning"></a>Multiple representations of meaning</h1><blockquote>
-<p>Fields can be used to provide different representations of the same information</p>
-</blockquote>
-<p>三种表达方法。</p>
-<ul>
-<li><strong>Vector space</strong><br>– 每个 representation 提供独立的 ranking score<br>– 对每个分数求平均来得到一个最终的 ranking</li>
-<li><strong>Okapi</strong><br>– Representations 以不同的方式来表达相同含义<br>– 合并 representations 来得到一个更好的 representation</li>
-<li><strong>Indri</strong><br>– 每个 representation 提供一个 p(t|d) 的估计<br>– 有多种方法来合并这些估计</li>
-</ul>
-<h2 id="Vector-space"><a href="#Vector-space" class="headerlink" title="Vector space"></a>Vector space</h2><p><strong>Option 1:</strong> 一个词袋模型，包含了各种 filed 词汇<br>E.g., iPad::inlink, iPad::title, iPad::body, …</p>
-<p>这让 length normalization 变得更为复杂，比如说 inlink text 可能会和 title 或者 body text 混在一起。一般不用这种方法。</p>
-<p><strong>Option 2:</strong> Several vector spaces<br>$w_{title} *sim(query,title_i) +$<br>$w_{body} *sim(query,body_i) +$<br>$w_{inlink} *sim(query,inlink_i) +$<br>$w_{url} *sim(query,url_i) $</p>
-<p>这种方法易于管理，也易于扩展，Lucene 也采用了这种方法，然而关于怎么设置 weights，并没有什么 guidance。</p>
-<h2 id="Okapi"><a href="#Okapi" class="headerlink" title="Okapi"></a>Okapi</h2><blockquote>
-<p>Evidence from each field should be weighted differently</p>
-</blockquote>
-<p>一些 field 可能有更好的表达能力，如 inlink text，一些 field 可能更为冗长，如 body，所以不同的 fields 我们应该区别对待。</p>
-<p><strong>One solution</strong><br>• 把 query 看作 |F| 个词袋<br>• 对 query 匹配每个 field，然后 add the score</p>
-<p>然而 … 这打破了 BM25’s saturation assumption。在 |F| 个 field 里中出现了一次的字段，比在一个 field 里出现了|F|次的字段，有更大的影响，这并不是我们想要的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">5 fields × 1 occurrence = 5 × 0.4</div><div class="line">1 field × 5 occurrences = 0.77</div></pre></td></tr></table></figure></p>
-<p><strong>Solution:</strong> 用一个复合加权的 representation，一篇文档就用一个词袋</p>
-<p>$$tf_t=\sum_fw_ftf_{t,f}$$<br>$$doclen=\sum_fw_fdoclen_f$$</p>
-<p>F: the set of fields</p>
-<p>-&gt; 然后用标准的 BM25<br>但是 … BM25 有常量，可能我们需要 tune them on a per-field basis，可以用 BM25F。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg" class="ful-image" alt="BM25F.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/exampleW.jpg" class="ful-image" alt="exampleW.jpg"></p>
-<p><strong>特性：</strong></p>
-<ul>
-<li>一个 vocabulary 涵盖了所有的 fields<br>– 所以一个 term 有一个 global idf, 而不是一个 field-specific idf<br>– 对各种文档都有适用么?<pre><code>» E.g., 专利，医疗记录等
-</code></pre></li>
-<li>Field-specific tuning</li>
-<li>constants 的影响很难理解</li>
-</ul>
-<h2 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h2><p>Indri 模型。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/indri.jpg" class="ful-image" alt="indri.jpg"></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/andSum.jpg" class="ful-image" alt="andSum.jpg">
-<p>#AND 和 #WAND 用来合并独立的概率<br>#SUM 和 #WSUM 用不同方法来估计同一个概率</p>
-<h1 id="Hierarchical-structure-XML"><a href="#Hierarchical-structure-XML" class="headerlink" title="Hierarchical structure(XML)"></a>Hierarchical structure(XML)</h1><p>Hierarchical structure 的文档通常用 Bayesian inference networks 来解决，如 indri。<br>首先对 flat 和 hierarchical structure 做一个区分。<br><strong>Flat</strong><br>元素之间是相互独立的，一个 term 只在包含了它的那个元素（通常是一个）里出现。<br>检索目的通常是一篇文档。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/1.jpg" class="ful-image" alt="1.jpg"><br><strong>Hierarchical</strong><br>元素之间是相互关联的，通常是包含的关系，一个 term 在所有包含了它的元素里出现。<br>检索目的可以是文档，也可以是元素。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/2.jpg" class="ful-image" alt="2.jpg"></p>
-<h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><p><strong>检索什么样的 element?</strong><br>• Document? Encounter? Diagnosis?</p>
-<p><strong>用怎样的 corpus statistics</strong><br>• Document vs. element</p>
-<p><strong>怎样组合来自不同 elements 的 evidence</strong><br>• Can we prefer patients that have several matching encounters?</p>
-<p><strong>Exact-match vs. best-match document structure</strong><br>• 可能 query 并不能完全匹配文档结构</p>
-<h2 id="Ranking-elements"><a href="#Ranking-elements" class="headerlink" title="Ranking elements"></a>Ranking elements</h2><p><strong>One option: Use Jelinek-Mercer smoothing</strong><br>$$P(q_i|e)=(1-\lambda)P_{MLE}P(q_i|e)+ \lambda P_{MLE}P(q_i|C)$$</p>
-<p>这种方法可能带来的问题是：</p>
-<ol>
-<li>文档结构不规范，这种情况经常在 web 文档中出现，如果文档里本来包含了 query term 然而因为文档不规范而找不到相应的 element，那么 score 可能为 0。</li>
-<li>query 可能太严格。<br>– #AND[title](iphone)：不匹配 “Apple Cuts Phone Price”<br>– #AND[paragraph](solutions to poverty)： “poverty” 和 “solutions” 可能出现在不同的段落里</li>
-</ol>
-<p>解决方案是，多加一个 smoothing。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/formula.jpg" class="ful-image" alt="formula.jpg"></p>
-<h2 id="Multiple-elements"><a href="#Multiple-elements" class="headerlink" title="Multiple elements"></a>Multiple elements</h2><p>这里我们探讨右图的情况。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/multiple.jpg" class="ful-image" alt="multiple.jpg"></p>
-<p>两种方法 Aggregation OR Combination。</p>
-<ul>
-<li>Aggregation: Combine inverted lists</li>
-<li>Combination: Combine scores</li>
-</ul>
-<h3 id="Aggregation"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</h3><p>Indri 允许在 query 里指定 aggregation type</p>
-<ul>
-<li>term.element<br>– 如果没有指定 element, 那么默认 element 为 Document<br>– Example: apple.inlink</li>
-<li>结果: 一个 inverted list 包含了一个 element 的所有 instance</li>
-</ul>
-<p><strong>Example</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#wand( #wsum (0.3 apple.title 0.2 apple.inlink 0.5 apple.body ) #wsum (0.3 ipad.title 0.2 ipad.inlink 0.5 ipad.body ) )</div></pre></td></tr></table></figure></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ainlink.jpg" class="ful-image" alt="ainlink.jpg">
-<p><strong>问题：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#AND( breast.paragraph cancer.paragraph treatment.paragraph )</div></pre></td></tr></table></figure></p>
-<p>对这一个查询，用 Aggregation 的话以下两篇文档会得到一样的分数，然而其实 D2 要比 D1 更相关。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ap.jpg" class="ful-image" alt="ap.jpg"></p>
-<h3 id="Combination"><a href="#Combination" class="headerlink" title="Combination"></a>Combination</h3><p>用 #MAX, #SUM, #OR 等 query operators 来合并 element scores。<br>首先我们来认识一下 query。<br>E.g.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[document] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
-<p>最外面的 element 是 document, 所以对 documents 进行排序</p>
-<ol>
-<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
-<li>对上一步产生的结果 #SUM 运算，结果是一个 (document, score) 列表</li>
-</ol>
-<p>E.g.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[paragraph] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
-<p>最外面的 element 是 paragraph, 所以对 paragraphs 进行排序</p>
-<ol>
-<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
-<li>对上一步产生的结果 #SUM 运算，结果是一个 (paragraph, score) 列表</li>
-</ol>
-<p>来考虑下不同的 combine query operator 产生的影响。</p>
-<p><strong>#MAX[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 只考虑 best sentence<br><strong>#SUM[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– poorly matching sentences 会让分数变低<br><strong>#OR[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 偏好有更多匹配的 sentences 的文档</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/c4.jpg" class="ful-image" alt="c4.jpg">
-<p>• #MAX considers them equal<br>• #AND prefers C4<br>• #OR prefers C1<br>• #AVERAGE prefers C4</p>
-<h3 id="Comparsion"><a href="#Comparsion" class="headerlink" title="Comparsion"></a>Comparsion</h3><p>假定目标是检索有 paragraphs 讨论 breast cancer treatment 的文档<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/compare.jpg" class="ful-image" alt="compare.jpg"><br><strong>Combination:</strong> Partial credit for sections that partially match<br><strong>Aggregation:</strong> The terms might not all be in the same section</p>
-<h2 id="Extents"><a href="#Extents" class="headerlink" title="Extents"></a>Extents</h2><p>Using extents as evidence<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND(</div><div class="line">  #OR[document](</div><div class="line">      #AND[sentence](iraq war))</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
-<p>• 检索的是 document<br>• <strong>偏好</strong> ‘iraq’ and ‘war’ 在同一句话里的文档<br>– 出现在 title 里会让分数有稍稍的提高，因为有 smoothing</p>
-<p>Using extents as a constraint<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND (</div><div class="line">  iraq.sentence</div><div class="line">  war.sentence</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
-<p>• 检索的是 document<br>• <strong>要求</strong> ‘iraq’ and ‘war’ 必须出现在同一句话的文档<br>  – 出现在文档的其它部分并不会有任何帮助</p>
-<h2 id="HLT-Applications"><a href="#HLT-Applications" class="headerlink" title="HLT Applications"></a>HLT Applications</h2><p>文档结构可以由 annotation processes 产生<br>• E.g., named entity annotators, semantic role labelers, …</p>
-<p>Retrieval of elements, using semantic role annotations<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#and[sentence](</div><div class="line">  #and[target_verb]( Loves</div><div class="line">      #and[./agent]( John )</div><div class="line">      #and[./patient]( Mary ) ) )</div></pre></td></tr></table></figure></p>
-<p>• ./element specifies that element is a child of the parent field</p>
-<h1 id="Table-retrieval"><a href="#Table-retrieval" class="headerlink" title="Table retrieval"></a>Table retrieval</h1><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table.jpg" class="ful-image" alt="table.jpg">
-<p>实际就是一个把 table 转化为 structure document 的问题。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table2.jpg" class="ful-image" alt="table2.jpg"></p>
-<h1 id="Summaries"><a href="#Summaries" class="headerlink" title="Summaries"></a>Summaries</h1><p><strong>Fields</strong><br>• 用于 independent evidence (author, title, journal, …)<br>• 用于 multiple representations (url, title, body, …)<br>• 了解差异<br>• 了解各个检索模型如何支持这些 fields<br>• 了解在 query 中如何使用这些 fields</p>
-<p><strong>Hierarchical structure</strong><br>• 怎样在多个 elements 都有匹配时 combine evidence<br>• Exact-match vs. best-match document structure<br>• 了解 Indri 怎样支持这些 elements<br>• 了解在 query 中如何使用这些 elements</p>
-]]></content>
-      
-        <categories>
-            
-            <category> NLP </category>
-            
-            <category> Search Engines </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> NLP </tag>
-            
-            <tag> Search Engines </tag>
-            
-            <tag> 信息检索 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Search Engines笔记 - Authority Metrics]]></title>
       <url>http://www.shuang0420.com/2016/11/04/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/</url>
       <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章 Authority Metrics（权威指数），用来判断哪些来源的信息更值得信任。介绍 PageRank、Topic-Sensitive PageRank(TSPR)、T-Fresh、Hyperlink-Induced Topic Search(HITS) 四种指数计算方式。<br><a id="more"></a></p>
@@ -10937,73 +11054,115 @@ python nb.py split.train split.test</pre>
     </entry>
     
     <entry>
-      <title><![CDATA[Distributed Systems笔记－middlewares]]></title>
-      <url>http://www.shuang0420.com/2016/11/02/Web-service-middlewares/</url>
-      <content type="html"><![CDATA[<p>CMU 95702 Distributed Systems 笔记。简单介绍分布式系统中解决 interoperability concern 的几种方案 Cobra’s CDR, Java serialization 和 XML/JSON。这章整理的比较简单。<br><a id="more"></a></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/middlewarelayer.jpg" class="ful-image" alt="Web-service-middlewares/middlewarelayer.jpg">
-<p>一言以蔽之，middleware 是为了更好的与 remote server 交流。</p>
-<h1 id="Interoperability-concern"><a href="#Interoperability-concern" class="headerlink" title="Interoperability concern"></a>Interoperability concern</h1><p>分布式系统里的互操作性问题。</p>
+      <title><![CDATA[Search Engines笔记 - Document Structure]]></title>
+      <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。文档的表示形式不只词袋一种，它可以有 fields，有 hierarchical structure(XML)，multiple representations of meaning, priors 等形式，这一章讲的就是检索模型怎么来处理这些复杂的文档表达。<br><a id="more"></a></p>
+<h1 id="Multiple-representations-of-meaning"><a href="#Multiple-representations-of-meaning" class="headerlink" title="Multiple representations of meaning"></a>Multiple representations of meaning</h1><blockquote>
+<p>Fields can be used to provide different representations of the same information</p>
+</blockquote>
+<p>三种表达方法。</p>
 <ul>
-<li>Big/Little Endian byte ordering may differ</li>
-<li>Floating point representation may differ</li>
-<li>Binary vs Unicode<br>如果 j=3, binary 表示就是 00…011，而 unicode 表示是 0000000000110011，如果两端没有达成一致，那么就会出错。<br>The receiver had better know which one we are using。</li>
+<li><strong>Vector space</strong><br>– 每个 representation 提供独立的 ranking score<br>– 对每个分数求平均来得到一个最终的 ranking</li>
+<li><strong>Okapi</strong><br>– Representations 以不同的方式来表达相同含义<br>– 合并 representations 来得到一个更好的 representation</li>
+<li><strong>Indri</strong><br>– 每个 representation 提供一个 p(t|d) 的估计<br>– 有多种方法来合并这些估计</li>
 </ul>
-<p>假设我们用 C++ 写了 TCP server，那么我们可以写个 JAVA TCP connection 来连接 server 吗？<strong>可以！</strong><br>C++ 和 JAVA 都知道怎么 open 一个 TCP connection。</p>
-<p>假设 client 把一个 java object 发给了 server，这个 object 的内容可以重新被封装成 c++ 的 object 吗？<strong>不可以！</strong></p>
-<h1 id="三种解决方案"><a href="#三种解决方案" class="headerlink" title="三种解决方案"></a>三种解决方案</h1><h2 id="CORBA’s-CDR"><a href="#CORBA’s-CDR" class="headerlink" title="CORBA’s CDR"></a>CORBA’s CDR</h2><p>双方都知道 message 的 data type 和 order。双方在交流前都有一个 IDL(Interface description language 接口描述语言)，这和 google 的 protocol buffers 差不多。XML, XSDL, WSDL 都可以作为 IDL。</p>
-<p>如下面一段 C 的代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">struct Person &#123;</div><div class="line">  string name;</div><div class="line">  string place;</div><div class="line">  long year;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/corba_cdr.jpg" class="ful-image" alt="Web-service-middlewares/corba_cdr.jpg">
-<p>我们可以让 CORBA Interface Compiler 来做合适的 marshalling 和 unmarshalling operation，无论是 C 还是 JAVA。<br>CORBA’s CDR 的特点是 - 非常快！所以传送的信息不包括 data type，只有表格中的右边一栏数据。</p>
-<h2 id="Java-serialization"><a href="#Java-serialization" class="headerlink" title="Java serialization"></a>Java serialization</h2><p>Java’s serialization 本身可以用来 marshal 和 unmarshal，所以并不需要 IDL。双方事先也不知道 data type。</p>
-<p>如下面一段 Java 的代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Person implements Serializable&#123;</div><div class="line">  string name;</div><div class="line">  string place;</div><div class="line">  long year;</div><div class="line">  public Person(String nm,place,year) &#123;</div><div class="line">    nm=name;this.place=place;this.year=year;</div><div class="line">  &#125;</div><div class="line">  // more methods</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/java.jpg" class="ful-image" alt="Web-service-middlewares/java.jpg">
-<p>Java 序列化的特点是有很多 data (如 class name, version number, data type 等)来 describe 真正的 data。</p>
-<h2 id="Web-Service-use-of-XML"><a href="#Web-Service-use-of-XML" class="headerlink" title="Web Service use of XML"></a>Web Service use of XML</h2><p>格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;p:person xmlns:p=“http://www.andrew.cmu.edu/~mm6”&gt;</div><div class="line">  &lt;p:name&gt;Smith&lt;/p:name&gt;</div><div class="line">  &lt;p:place&gt;London&lt;/p:place&gt;</div><div class="line">  &lt;p:year&gt;1934&lt;/p:year&gt;</div><div class="line">&lt;/p:person&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="Vector-space"><a href="#Vector-space" class="headerlink" title="Vector space"></a>Vector space</h2><p><strong>Option 1:</strong> 一个词袋模型，包含了各种 filed 词汇<br>E.g., iPad::inlink, iPad::title, iPad::body, …</p>
+<p>这让 length normalization 变得更为复杂，比如说 inlink text 可能会和 title 或者 body text 混在一起。一般不用这种方法。</p>
+<p><strong>Option 2:</strong> Several vector spaces<br>$w_{title} *sim(query,title_i) +$<br>$w_{body} *sim(query,body_i) +$<br>$w_{inlink} *sim(query,inlink_i) +$<br>$w_{url} *sim(query,url_i) $</p>
+<p>这种方法易于管理，也易于扩展，Lucene 也采用了这种方法，然而关于怎么设置 weights，并没有什么 guidance。</p>
+<h2 id="Okapi"><a href="#Okapi" class="headerlink" title="Okapi"></a>Okapi</h2><blockquote>
+<p>Evidence from each field should be weighted differently</p>
+</blockquote>
+<p>一些 field 可能有更好的表达能力，如 inlink text，一些 field 可能更为冗长，如 body，所以不同的 fields 我们应该区别对待。</p>
+<p><strong>One solution</strong><br>• 把 query 看作 |F| 个词袋<br>• 对 query 匹配每个 field，然后 add the score</p>
+<p>然而 … 这打破了 BM25’s saturation assumption。在 |F| 个 field 里中出现了一次的字段，比在一个 field 里出现了|F|次的字段，有更大的影响，这并不是我们想要的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">5 fields × 1 occurrence = 5 × 0.4</div><div class="line">1 field × 5 occurrences = 0.77</div></pre></td></tr></table></figure></p>
+<p><strong>Solution:</strong> 用一个复合加权的 representation，一篇文档就用一个词袋</p>
+<p>$$tf_t=\sum_fw_ftf_{t,f}$$<br>$$doclen=\sum_fw_fdoclen_f$$</p>
+<p>F: the set of fields</p>
+<p>-&gt; 然后用标准的 BM25<br>但是 … BM25 有常量，可能我们需要 tune them on a per-field basis，可以用 BM25F。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg" class="ful-image" alt="BM25F.jpg"><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/exampleW.jpg" class="ful-image" alt="exampleW.jpg"></p>
+<p><strong>特性：</strong></p>
 <ul>
-<li>相对前两种方法来说会比较慢。因为它是 text 形式而前两种方法是 binary 形式。</li>
-<li>HTTP header 需要声明 Content-Type: text/xml; charset: ISO-8859-1</li>
-<li>可以表示任何 binary message，因为 binary data（图片和其它加密的元素）可以被表示成 Base64</li>
-<li>必须遵循 XSDL 的语法。</li>
-<li>支持各平台。</li>
+<li>一个 vocabulary 涵盖了所有的 fields<br>– 所以一个 term 有一个 global idf, 而不是一个 field-specific idf<br>– 对各种文档都有适用么?<pre><code>» E.g., 专利，医疗记录等
+</code></pre></li>
+<li>Field-specific tuning</li>
+<li>constants 的影响很难理解</li>
 </ul>
-<h2 id="Web-Service-use-of-JSON"><a href="#Web-Service-use-of-JSON" class="headerlink" title="Web Service use of JSON"></a>Web Service use of JSON</h2><p>格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123; “person” : &#123; “name” : “Smith”</div><div class="line">“place”:”London”</div><div class="line">“year”:”1934”&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h2><p>Indri 模型。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/indri.jpg" class="ful-image" alt="indri.jpg"></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/andSum.jpg" class="ful-image" alt="andSum.jpg">
+<p>#AND 和 #WAND 用来合并独立的概率<br>#SUM 和 #WSUM 用不同方法来估计同一个概率</p>
+<h1 id="Hierarchical-structure-XML"><a href="#Hierarchical-structure-XML" class="headerlink" title="Hierarchical structure(XML)"></a>Hierarchical structure(XML)</h1><p>Hierarchical structure 的文档通常用 Bayesian inference networks 来解决，如 indri。<br>首先对 flat 和 hierarchical structure 做一个区分。<br><strong>Flat</strong><br>元素之间是相互独立的，一个 term 只在包含了它的那个元素（通常是一个）里出现。<br>检索目的通常是一篇文档。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/1.jpg" class="ful-image" alt="1.jpg"><br><strong>Hierarchical</strong><br>元素之间是相互关联的，通常是包含的关系，一个 term 在所有包含了它的元素里出现。<br>检索目的可以是文档，也可以是元素。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/2.jpg" class="ful-image" alt="2.jpg"></p>
+<h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><p><strong>检索什么样的 element?</strong><br>• Document? Encounter? Diagnosis?</p>
+<p><strong>用怎样的 corpus statistics</strong><br>• Document vs. element</p>
+<p><strong>怎样组合来自不同 elements 的 evidence</strong><br>• Can we prefer patients that have several matching encounters?</p>
+<p><strong>Exact-match vs. best-match document structure</strong><br>• 可能 query 并不能完全匹配文档结构</p>
+<h2 id="Ranking-elements"><a href="#Ranking-elements" class="headerlink" title="Ranking elements"></a>Ranking elements</h2><p><strong>One option: Use Jelinek-Mercer smoothing</strong><br>$$P(q_i|e)=(1-\lambda)P_{MLE}P(q_i|e)+ \lambda P_{MLE}P(q_i|C)$$</p>
+<p>这种方法可能带来的问题是：</p>
+<ol>
+<li>文档结构不规范，这种情况经常在 web 文档中出现，如果文档里本来包含了 query term 然而因为文档不规范而找不到相应的 element，那么 score 可能为 0。</li>
+<li>query 可能太严格。<br>– #AND[title](iphone)：不匹配 “Apple Cuts Phone Price”<br>– #AND[paragraph](solutions to poverty)： “poverty” 和 “solutions” 可能出现在不同的段落里</li>
+</ol>
+<p>解决方案是，多加一个 smoothing。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/formula.jpg" class="ful-image" alt="formula.jpg"></p>
+<h2 id="Multiple-elements"><a href="#Multiple-elements" class="headerlink" title="Multiple elements"></a>Multiple elements</h2><p>这里我们探讨右图的情况。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/multiple.jpg" class="ful-image" alt="multiple.jpg"></p>
+<p>两种方法 Aggregation OR Combination。</p>
 <ul>
-<li>可以表示任何 binary message，因为 binary data（图片和其它加密的元素）可以被表示成 Base64</li>
-<li>必须遵循 JSON 的语法。</li>
+<li>Aggregation: Combine inverted lists</li>
+<li>Combination: Combine scores</li>
 </ul>
-<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><ul>
-<li>Marshalling and external data representation<br>binary, xml/json text</li>
-<li>Interoperability<br>corba flexibility, java requires both sides, xml/json interoperable</li>
-<li>Security</li>
-<li>Reliability<br>TCP: reliable as it checks if the message is arrived<br>UDP: not reliable</li>
-<li>Performance<br>corba &gt; java &gt; xml/json(package and unpackage)</li>
-<li>Remote references</li>
-<li>Full OOP</li>
-<li>Describe how the protocols of the internet allow for heterogeneity</li>
-<li>Describe how middleware allows for heterogenity<br>hides low level implementation</li>
-</ul>
-<h1 id="Pass-pointers"><a href="#Pass-pointers" class="headerlink" title="Pass pointers"></a>Pass pointers</h1><p>在分布式的 OOP 中，我们需要传送 pointers，包括以下信息。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/object_reference.jpg" class="ful-image" alt="Web-service-middlewares/object_reference.jpg"></p>
-<h1 id="UDP-Based-Request-Reply-Protocol"><a href="#UDP-Based-Request-Reply-Protocol" class="headerlink" title="UDP Based Request-Reply Protocol"></a>UDP Based Request-Reply Protocol</h1><p>直接上图和代码。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/UDP.jpg" class="ful-image" alt="Web-service-middlewares/UDP.jpg"></p>
-<p>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Client side:</div><div class="line">public byte[] doOperation (RemoteObjectRef o, int methodId, byte[] arguments)</div><div class="line">sends a request message to the remote object and returns the reply.</div><div class="line">The arguments specify the remote object, the method to be invoked and the</div><div class="line">arguments of that method.</div><div class="line"></div><div class="line">Server side:</div><div class="line">public byte[] getRequest ();</div><div class="line">acquires a client request via the server port.</div><div class="line"></div><div class="line">coolOperation</div><div class="line">select object, execute, method</div><div class="line"></div><div class="line">public void sendReply (byte[] reply, InetAddress clientHost, int clientPort);</div><div class="line">sends the reply message reply to the client at its Internet address and port.</div></pre></td></tr></table></figure></p>
-<h2 id="Failure-model"><a href="#Failure-model" class="headerlink" title="Failure model"></a>Failure model</h2><p>doOperation 可能在 waiting 的时候 timeout，我们要做什么？</p>
+<h3 id="Aggregation"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</h3><p>Indri 允许在 query 里指定 aggregation type</p>
 <ul>
-<li>返回给 caller 一个错误信息</li>
-<li>response 可能会丢失，所以我们告诉 client 让 client try and try 直到确认服务器挂了。这带来的结果是 client 可能会收到同样的信息。</li>
+<li>term.element<br>– 如果没有指定 element, 那么默认 element 为 Document<br>– Example: apple.inlink</li>
+<li>结果: 一个 inverted list 包含了一个 element 的所有 instance</li>
 </ul>
-<h3 id="Handle-duplicates"><a href="#Handle-duplicates" class="headerlink" title="Handle duplicates"></a>Handle duplicates</h3><p>根据 client 的 acknowledgement 来清空历史。</p>
-<h2 id="Request-Reply-Message-Structure"><a href="#Request-Reply-Message-Structure" class="headerlink" title="Request-Reply Message Structure"></a>Request-Reply Message Structure</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">messageType: int (0=Request, 1=Reply)</div><div class="line">requestId: int</div><div class="line">objectReference: RemoteObjectRef</div><div class="line">methodId: int or Method</div><div class="line">argument: array of bytes</div></pre></td></tr></table></figure>
+<p><strong>Example</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#wand( #wsum (0.3 apple.title 0.2 apple.inlink 0.5 apple.body ) #wsum (0.3 ipad.title 0.2 ipad.inlink 0.5 ipad.body ) )</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ainlink.jpg" class="ful-image" alt="ainlink.jpg">
+<p><strong>问题：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#AND( breast.paragraph cancer.paragraph treatment.paragraph )</div></pre></td></tr></table></figure></p>
+<p>对这一个查询，用 Aggregation 的话以下两篇文档会得到一样的分数，然而其实 D2 要比 D1 更相关。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ap.jpg" class="ful-image" alt="ap.jpg"></p>
+<h3 id="Combination"><a href="#Combination" class="headerlink" title="Combination"></a>Combination</h3><p>用 #MAX, #SUM, #OR 等 query operators 来合并 element scores。<br>首先我们来认识一下 query。<br>E.g.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[document] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
+<p>最外面的 element 是 document, 所以对 documents 进行排序</p>
+<ol>
+<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
+<li>对上一步产生的结果 #SUM 运算，结果是一个 (document, score) 列表</li>
+</ol>
+<p>E.g.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[paragraph] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
+<p>最外面的 element 是 paragraph, 所以对 paragraphs 进行排序</p>
+<ol>
+<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
+<li>对上一步产生的结果 #SUM 运算，结果是一个 (paragraph, score) 列表</li>
+</ol>
+<p>来考虑下不同的 combine query operator 产生的影响。</p>
+<p><strong>#MAX[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 只考虑 best sentence<br><strong>#SUM[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– poorly matching sentences 会让分数变低<br><strong>#OR[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 偏好有更多匹配的 sentences 的文档</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/c4.jpg" class="ful-image" alt="c4.jpg">
+<p>• #MAX considers them equal<br>• #AND prefers C4<br>• #OR prefers C1<br>• #AVERAGE prefers C4</p>
+<h3 id="Comparsion"><a href="#Comparsion" class="headerlink" title="Comparsion"></a>Comparsion</h3><p>假定目标是检索有 paragraphs 讨论 breast cancer treatment 的文档<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/compare.jpg" class="ful-image" alt="compare.jpg"><br><strong>Combination:</strong> Partial credit for sections that partially match<br><strong>Aggregation:</strong> The terms might not all be in the same section</p>
+<h2 id="Extents"><a href="#Extents" class="headerlink" title="Extents"></a>Extents</h2><p>Using extents as evidence<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND(</div><div class="line">  #OR[document](</div><div class="line">      #AND[sentence](iraq war))</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
+<p>• 检索的是 document<br>• <strong>偏好</strong> ‘iraq’ and ‘war’ 在同一句话里的文档<br>– 出现在 title 里会让分数有稍稍的提高，因为有 smoothing</p>
+<p>Using extents as a constraint<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND (</div><div class="line">  iraq.sentence</div><div class="line">  war.sentence</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
+<p>• 检索的是 document<br>• <strong>要求</strong> ‘iraq’ and ‘war’ 必须出现在同一句话的文档<br>  – 出现在文档的其它部分并不会有任何帮助</p>
+<h2 id="HLT-Applications"><a href="#HLT-Applications" class="headerlink" title="HLT Applications"></a>HLT Applications</h2><p>文档结构可以由 annotation processes 产生<br>• E.g., named entity annotators, semantic role labelers, …</p>
+<p>Retrieval of elements, using semantic role annotations<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#and[sentence](</div><div class="line">  #and[target_verb]( Loves</div><div class="line">      #and[./agent]( John )</div><div class="line">      #and[./patient]( Mary ) ) )</div></pre></td></tr></table></figure></p>
+<p>• ./element specifies that element is a child of the parent field</p>
+<h1 id="Table-retrieval"><a href="#Table-retrieval" class="headerlink" title="Table retrieval"></a>Table retrieval</h1><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table.jpg" class="ful-image" alt="table.jpg">
+<p>实际就是一个把 table 转化为 structure document 的问题。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table2.jpg" class="ful-image" alt="table2.jpg"></p>
+<h1 id="Summaries"><a href="#Summaries" class="headerlink" title="Summaries"></a>Summaries</h1><p><strong>Fields</strong><br>• 用于 independent evidence (author, title, journal, …)<br>• 用于 multiple representations (url, title, body, …)<br>• 了解差异<br>• 了解各个检索模型如何支持这些 fields<br>• 了解在 query 中如何使用这些 fields</p>
+<p><strong>Hierarchical structure</strong><br>• 怎样在多个 elements 都有匹配时 combine evidence<br>• Exact-match vs. best-match document structure<br>• 了解 Indri 怎样支持这些 elements<br>• 了解在 query 中如何使用这些 elements</p>
 ]]></content>
       
         <categories>
             
-            <category> Distributed Systems </category>
+            <category> NLP </category>
+            
+            <category> Search Engines </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> Web Service </tag>
+            <tag> NLP </tag>
+            
+            <tag> Search Engines </tag>
+            
+            <tag> 信息检索 </tag>
             
         </tags>
         
@@ -11060,6 +11219,79 @@ python nb.py split.train split.test</pre>
 <h1 id="Message-Authentication-Codes-MACs"><a href="#Message-Authentication-Codes-MACs" class="headerlink" title="Message Authentication Codes(MACs)"></a>Message Authentication Codes(MACs)</h1><p>对称加密生成的数字签名。<br>双方都有 Key(K)，sender 把 Key(K) 通过 MAC 算法加密后连同 message 一起给 receiver，receiver 比对收到的 MAC 和自己用 MAC 算法对自己这里的 Key(K) 加密后的 MAC 是否一致，如果一致，那么信息真实性和完整性就得到了证实。</p>
 <p>用于数字签名，双方都算了一遍 MAC</p>
 <h1 id="JAVA-里的-keystore-和-truststore"><a href="#JAVA-里的-keystore-和-truststore" class="headerlink" title="JAVA 里的 keystore 和 truststore"></a>JAVA 里的 keystore 和 truststore</h1><p>keystore: 存了公钥、私钥、证书<br>truststore：存了公钥，只能存 server 发过来的东西</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Distributed Systems </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Web Service </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Distributed Systems笔记－middlewares]]></title>
+      <url>http://www.shuang0420.com/2016/11/02/Web-service-middlewares/</url>
+      <content type="html"><![CDATA[<p>CMU 95702 Distributed Systems 笔记。简单介绍分布式系统中解决 interoperability concern 的几种方案 Cobra’s CDR, Java serialization 和 XML/JSON。这章整理的比较简单。<br><a id="more"></a></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/middlewarelayer.jpg" class="ful-image" alt="Web-service-middlewares/middlewarelayer.jpg">
+<p>一言以蔽之，middleware 是为了更好的与 remote server 交流。</p>
+<h1 id="Interoperability-concern"><a href="#Interoperability-concern" class="headerlink" title="Interoperability concern"></a>Interoperability concern</h1><p>分布式系统里的互操作性问题。</p>
+<ul>
+<li>Big/Little Endian byte ordering may differ</li>
+<li>Floating point representation may differ</li>
+<li>Binary vs Unicode<br>如果 j=3, binary 表示就是 00…011，而 unicode 表示是 0000000000110011，如果两端没有达成一致，那么就会出错。<br>The receiver had better know which one we are using。</li>
+</ul>
+<p>假设我们用 C++ 写了 TCP server，那么我们可以写个 JAVA TCP connection 来连接 server 吗？<strong>可以！</strong><br>C++ 和 JAVA 都知道怎么 open 一个 TCP connection。</p>
+<p>假设 client 把一个 java object 发给了 server，这个 object 的内容可以重新被封装成 c++ 的 object 吗？<strong>不可以！</strong></p>
+<h1 id="三种解决方案"><a href="#三种解决方案" class="headerlink" title="三种解决方案"></a>三种解决方案</h1><h2 id="CORBA’s-CDR"><a href="#CORBA’s-CDR" class="headerlink" title="CORBA’s CDR"></a>CORBA’s CDR</h2><p>双方都知道 message 的 data type 和 order。双方在交流前都有一个 IDL(Interface description language 接口描述语言)，这和 google 的 protocol buffers 差不多。XML, XSDL, WSDL 都可以作为 IDL。</p>
+<p>如下面一段 C 的代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">struct Person &#123;</div><div class="line">  string name;</div><div class="line">  string place;</div><div class="line">  long year;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/corba_cdr.jpg" class="ful-image" alt="Web-service-middlewares/corba_cdr.jpg">
+<p>我们可以让 CORBA Interface Compiler 来做合适的 marshalling 和 unmarshalling operation，无论是 C 还是 JAVA。<br>CORBA’s CDR 的特点是 - 非常快！所以传送的信息不包括 data type，只有表格中的右边一栏数据。</p>
+<h2 id="Java-serialization"><a href="#Java-serialization" class="headerlink" title="Java serialization"></a>Java serialization</h2><p>Java’s serialization 本身可以用来 marshal 和 unmarshal，所以并不需要 IDL。双方事先也不知道 data type。</p>
+<p>如下面一段 Java 的代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Person implements Serializable&#123;</div><div class="line">  string name;</div><div class="line">  string place;</div><div class="line">  long year;</div><div class="line">  public Person(String nm,place,year) &#123;</div><div class="line">    nm=name;this.place=place;this.year=year;</div><div class="line">  &#125;</div><div class="line">  // more methods</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/java.jpg" class="ful-image" alt="Web-service-middlewares/java.jpg">
+<p>Java 序列化的特点是有很多 data (如 class name, version number, data type 等)来 describe 真正的 data。</p>
+<h2 id="Web-Service-use-of-XML"><a href="#Web-Service-use-of-XML" class="headerlink" title="Web Service use of XML"></a>Web Service use of XML</h2><p>格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;p:person xmlns:p=“http://www.andrew.cmu.edu/~mm6”&gt;</div><div class="line">  &lt;p:name&gt;Smith&lt;/p:name&gt;</div><div class="line">  &lt;p:place&gt;London&lt;/p:place&gt;</div><div class="line">  &lt;p:year&gt;1934&lt;/p:year&gt;</div><div class="line">&lt;/p:person&gt;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>相对前两种方法来说会比较慢。因为它是 text 形式而前两种方法是 binary 形式。</li>
+<li>HTTP header 需要声明 Content-Type: text/xml; charset: ISO-8859-1</li>
+<li>可以表示任何 binary message，因为 binary data（图片和其它加密的元素）可以被表示成 Base64</li>
+<li>必须遵循 XSDL 的语法。</li>
+<li>支持各平台。</li>
+</ul>
+<h2 id="Web-Service-use-of-JSON"><a href="#Web-Service-use-of-JSON" class="headerlink" title="Web Service use of JSON"></a>Web Service use of JSON</h2><p>格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123; “person” : &#123; “name” : “Smith”</div><div class="line">“place”:”London”</div><div class="line">“year”:”1934”&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>可以表示任何 binary message，因为 binary data（图片和其它加密的元素）可以被表示成 Base64</li>
+<li>必须遵循 JSON 的语法。</li>
+</ul>
+<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><ul>
+<li>Marshalling and external data representation<br>binary, xml/json text</li>
+<li>Interoperability<br>corba flexibility, java requires both sides, xml/json interoperable</li>
+<li>Security</li>
+<li>Reliability<br>TCP: reliable as it checks if the message is arrived<br>UDP: not reliable</li>
+<li>Performance<br>corba &gt; java &gt; xml/json(package and unpackage)</li>
+<li>Remote references</li>
+<li>Full OOP</li>
+<li>Describe how the protocols of the internet allow for heterogeneity</li>
+<li>Describe how middleware allows for heterogenity<br>hides low level implementation</li>
+</ul>
+<h1 id="Pass-pointers"><a href="#Pass-pointers" class="headerlink" title="Pass pointers"></a>Pass pointers</h1><p>在分布式的 OOP 中，我们需要传送 pointers，包括以下信息。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/object_reference.jpg" class="ful-image" alt="Web-service-middlewares/object_reference.jpg"></p>
+<h1 id="UDP-Based-Request-Reply-Protocol"><a href="#UDP-Based-Request-Reply-Protocol" class="headerlink" title="UDP Based Request-Reply Protocol"></a>UDP Based Request-Reply Protocol</h1><p>直接上图和代码。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/Web-service-middlewares/Web-service-middlewares/UDP.jpg" class="ful-image" alt="Web-service-middlewares/UDP.jpg"></p>
+<p>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Client side:</div><div class="line">public byte[] doOperation (RemoteObjectRef o, int methodId, byte[] arguments)</div><div class="line">sends a request message to the remote object and returns the reply.</div><div class="line">The arguments specify the remote object, the method to be invoked and the</div><div class="line">arguments of that method.</div><div class="line"></div><div class="line">Server side:</div><div class="line">public byte[] getRequest ();</div><div class="line">acquires a client request via the server port.</div><div class="line"></div><div class="line">coolOperation</div><div class="line">select object, execute, method</div><div class="line"></div><div class="line">public void sendReply (byte[] reply, InetAddress clientHost, int clientPort);</div><div class="line">sends the reply message reply to the client at its Internet address and port.</div></pre></td></tr></table></figure></p>
+<h2 id="Failure-model"><a href="#Failure-model" class="headerlink" title="Failure model"></a>Failure model</h2><p>doOperation 可能在 waiting 的时候 timeout，我们要做什么？</p>
+<ul>
+<li>返回给 caller 一个错误信息</li>
+<li>response 可能会丢失，所以我们告诉 client 让 client try and try 直到确认服务器挂了。这带来的结果是 client 可能会收到同样的信息。</li>
+</ul>
+<h3 id="Handle-duplicates"><a href="#Handle-duplicates" class="headerlink" title="Handle duplicates"></a>Handle duplicates</h3><p>根据 client 的 acknowledgement 来清空历史。</p>
+<h2 id="Request-Reply-Message-Structure"><a href="#Request-Reply-Message-Structure" class="headerlink" title="Request-Reply Message Structure"></a>Request-Reply Message Structure</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">messageType: int (0=Request, 1=Reply)</div><div class="line">requestId: int</div><div class="line">objectReference: RemoteObjectRef</div><div class="line">methodId: int or Method</div><div class="line">argument: array of bytes</div></pre></td></tr></table></figure>
 ]]></content>
       
         <categories>

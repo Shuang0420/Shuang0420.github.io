@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2018-09-18T06:11:47.000Z</updated>
+  <updated>2018-11-25T07:48:44.000Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -16,13 +16,247 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>知识抽取-事件抽取</title>
+    <link href="http://www.shuang0420.com/2018/09/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/"/>
+    <id>http://www.shuang0420.com/2018/09/15/知识抽取-事件抽取/</id>
+    <published>2018-09-15T11:02:27.000Z</published>
+    <updated>2018-11-25T07:48:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>接上一篇知识抽取-实体及关系抽取，前置知识在这一篇不多做解释啦。<br><a id="more"></a></p>
+<p>事件是促使事情状态和关系改变的条件[Dong et.al., 2010]。目前已存在的知识资源（如维基百科等） 所描述实体及实体间的关系大多是静态的，而事件能描述粒度更大的、动态的、 结构化的知识，是现有知识资源的重要补充。</p>
+<p>与[关系抽取]相比，事件抽取同样需要从文本中抽取 predicate 和对应的 arguments，但不同的是，关系抽取的问题是 binary 的，且两个 arguments 通常都会在同一个句子中出现，而事件抽取的难点在于，有多个 arguments 和 modifiers，且有些 arguments 不是必须的（some of which are omitted in any given instance of an event），这使得 bootstrapping/distant learning/coreference 都变得非常困难。</p>
+<p>事件抽取的任务可以分两大类：</p>
+<ul>
+<li><strong>事件识别和抽取</strong><br>从描述事件信息的文本中识别并抽取出事件信息并以结构化的形式呈现出来，包括发生的时间、地点、参与角色以及与之相关的动作或者状态的改变。</li>
+<li><strong>事件检测和追踪</strong><br>事件检测与追踪旨在将文本新闻流按照其报道的事件进行组织，为传统媒体多种来源的新闻监控提供核心技术，以便让用户了解新闻及其发展。具体而言，事件发现与跟踪包括三个主要任务：<strong>分割，发现和跟踪</strong>，将新闻文本分解为事件， 发现新的（不可预见的）事件，并跟踪以前报道事件的发展。<br>事件发现任务又可细分为<strong>历史事件发现</strong>和<strong>在线事件发现</strong>两种形式，前者目标是从按时间排序的新闻文档中发现以前没有识别的事件，后者则是从实时新闻流中实时发现新的事件。</li>
+</ul>
+<p>本文的重点在于事件识别与抽取。首先看一下相关的核心概念：</p>
+<ul>
+<li><strong>事件描述（Event Mention）</strong><br>描述事件的词组/句子/句群，包含一个 trigger 以及任意数量的 arguments</li>
+<li><strong>事件触发（Event Trigger）</strong><br>事件描述中最能代表事件发生的词汇，决定事件类别的重要特征，一般是动词或者名词</li>
+<li><strong>事件元素（Event Argument）</strong><br>事件的重要信息，或者说是实体描述（entity mention），主要由实体、属性值等表达完整语义的细粒度单位组成</li>
+<li><strong>元素角色（Argument Role）</strong><br>事件元素在事件中扮演的角色，事件元素与事件的语义关系，可以理解为 slot</li>
+<li><strong>事件类型（Event Type）</strong></li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/general.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/general.png">
+<p>其实也可以把事件抽取理解成从文本中找到特定类别的事件，然后进行填表的过程。</p>
+<h1 id="事件识别和抽取"><a href="#事件识别和抽取" class="headerlink" title="事件识别和抽取"></a>事件识别和抽取</h1><p>事件识别和抽取的任务定义：</p>
+<blockquote>
+<p>Given a text document, an event extraction system should <strong>predict event triggers</strong> with specific <strong>sub-types</strong> and <strong>their arguments for each sentence</strong>.</p>
+</blockquote>
+<p>也就是说，事件抽取任务最基础的部分包括：</p>
+<ul>
+<li>识别事件触发词及事件类型 </li>
+<li>抽取事件元素（Event Argument）同时判断其角色（Argument Role）</li>
+<li>抽出描述事件的词组或句子</li>
+</ul>
+<p>当然还有一些其他的子任务包括事件属性标注、事件共指消解等。</p>
+<p>事件抽取大多是分阶段进行，通常由 trigger classifier 开始，如果有 trigger，把 trigger 以及它的上下文作为特征进行分类判断事件类型，再进行下一步的 argument classifier，对句子中的每个 entity mention 进行分类，判断是否是 argument，如果是，判定它的角色。</p>
+<h2 id="基于模式匹配的方法"><a href="#基于模式匹配的方法" class="headerlink" title="基于模式匹配的方法"></a>基于模式匹配的方法</h2><p>MUCs 最开始，事件抽取的系统都是基于人工编写的规则，基于语法树或者正则表达式，如 CIRCUS (Lehnert 1991), RAPIER (Califf &amp; Mooney 1997), SRV (Freitag 1998), AutoSlog (Riloff 1993), LIEP (Huffman 1995), PALKA (Kim &amp; Moldovan 1995), CRYSTAL (Soderland et al. 1995), HASTEN (Krupka 1995) 等等，后来，慢慢的有了监督学习的模型，在 ACE 的阶段，大多数系统都是基于监督学习了，但由于标注一致性的问题，系统的效果普遍较差，ACE 事件抽取只举行了一次，在 2005 年。</p>
+<p>下面先来看一下基于模板的抽取方法，基本都是通过句法（syntactic）和语义约束（semantic constraints）来进行识别。</p>
+<h3 id="基于人工标注语料"><a href="#基于人工标注语料" class="headerlink" title="基于人工标注语料"></a>基于人工标注语料</h3><p>在早期，模板创建过程通常从一个大的标注集开始，模板的产生完全基于人工标注语料，学习效果高度依赖于人工标注质量。</p>
+<ul>
+<li><strong>AutoSlog</strong>（Riloff）<br>基本假设：<ol>
+<li>事件元素首次提及之处即可确定该元素与事件间的关系</li>
+<li>事件元素周围的语句中包含了事件元素在事件中的角色描述<br>通过监督学习和人工审查来建立抽取规则。通过训练数据中已经填充好的槽（filled slot），AutoSlog 解析 slot 附近的句法结构，来自动形成抽取规则，由于这个过程产生的模板 too-general，所以需要人工来审核。本质上形成的是一个字典。<br>举个例子<br><em>Ricardo Castellar, the mayor, was kidnapped yesterday by the FMLN.</em><br>假设 Ricardo Castellar 被标注成了 victim，AutoSlog 根据句法分析判断出 Ricardo Castellar 是主语，然后触发了主语的相关规则 \<subj\> passive-verb，将句子中相关的单词填充进去就得到了规则 \<victim\> was kidnapped，所以在之后的文本中，只要 kidnapped 在一个被动结构中出现，它对应的主语就会被标记为 victim。</victim\></subj\></li>
+</ol>
+</li>
+<li><strong>PALKA</strong><br>基本假设：特定领域中高频出现的语言表达方式是可数的<br>用语义框架和短语模式结构来表示特定领域中的抽取模式，通过融入 WordNet 的语义信息，PALKA 在特定领域可取得接近纯人工抽取的效果。</li>
+</ul>
+<h3 id="弱监督"><a href="#弱监督" class="headerlink" title="弱监督"></a>弱监督</h3><p>不需要对语料进行完全标注，只需人工对语料进行一定的预分类或者制定种子模板，由机器根据预分类语料或种子模板自动进行模式学习。</p>
+<p>一些系统：</p>
+<ul>
+<li><strong>AutoSlog-TS</strong><br>Riloff and Shoen, 1995<br>AutoSlog-TS 不需要进行文本的标注，只需要一个预先分类好的训练语料，类别是与该领域相关还是不相关。过程是先过一遍语料库，对每一个名词短语（根据句法分析识别）都产生对应的抽取规则，然后再整体过一遍语料库，产生每个规则的一些相关统计数据，基本的 idea 是与不相关文本相比，<strong>在相关文本中更常出现的抽取规则更有可能是好的抽取规则</strong>。假设训练语料中相关与不相关的文本比例是 1:1，对产生的每条抽取规则计算相关比率 relevance rate，相关文档中出现规则的实例数/整个语料库中出现规则的实例数，那么 relevance rate &lt; 50% 的抽取规则就被丢弃了，剩下的规则会按照 relevance_rate * log(frequency) 的形式从高到低进行排序，然后由人工进行审核。</li>
+<li><strong>TIMES</strong><br>Chai and Biermann, 1998<br>引入了领域无关的概念知识库 WordNet，提升模式学习的泛化能力，并通过人工或规则进行词义消歧，使最终的模式更加准确</li>
+<li><strong>NEXUS</strong><br>Piskorski et.al., 2001; Tanev et.al., 2008<br>用聚类对语料进行预处理</li>
+<li><strong>GenPAM</strong><br>Jiang, 2005<br>在由特例生成泛化模式的学习过程中，有效利用模式间的相似性实现词义消歧，最大限度地减少了人工的工作量和对系统的干预</li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>基于模式匹配的方法在特定领域中性能较好，知识表示简洁，便于理解和后续应用，但对于语言、领域和文档形式都有不同程度的依赖，覆盖度和可移植性较差。</p>
+<p>模式匹配的方法中，模板准确性是影响整个方法性能的重要因素。在实际应用中，模式匹配方法应用非常广泛，主要特点是高准确率低召回率，要提高召回率，一是要建立更完整的模板库，二是可以用半监督的方法来建 trigger 字典。</p>
+<h2 id="基于统计-传统机器学习"><a href="#基于统计-传统机器学习" class="headerlink" title="基于统计 - 传统机器学习"></a>基于统计 - 传统机器学习</h2><p>建立在统计模型基础上，分为 pipeline 和 joint model 两大类。</p>
+<h4 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h4><p>将事件抽取任务转化为多阶段的分类问题（管道抽取），需要顺序执行下面的分类器：</p>
+<ol>
+<li><strong>事件触发词分类器（Trigger Classifier）</strong><br>判断词汇是否是事件触发词，以及事件类别</li>
+<li><strong>元素分类器（Argument Classifier）</strong><br>词组是否是事件元素</li>
+<li><strong>元素角色分类器（Role Classifier）</strong><br>判定元素的角色类别</li>
+<li><strong>属性分类器（Attribute Classifier）</strong><br>判定事件属性</li>
+<li><strong>可报告性分类器（Reportable-Event Classifier）</strong><br>判定是否存在值得报告的事件实例</li>
+</ol>
+<p>分类器可以用 MaxEnt, SVM。重点还是在于提取和集成有区分性的特征，包括 <strong>句子级信息</strong> 和 <strong>篇章级信息</strong>。</p>
+<p><strong>句子级信息：</strong>与候选词相关的词法特征、上下文特征、实体特征、句法特征、语言学特征等，如：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/features.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/features.png"></p>
+<p><strong>篇章级特征：</strong><br>跨文档利用全局信息。对于一个句子级的抽取结果不仅要考虑当前的置信度，还要考虑与待抽取文本相关的文本对它的影响，以及全局信息如事件与话题的关系，事件与事件的共现信息等，主要工作有：</p>
+<ul>
+<li>Ji and Grishman, 2008</li>
+<li>Liao and Grishman, 2010</li>
+<li>Hong et.al., 2011</li>
+<li>Liu et.al., 2016a</li>
+</ul>
+<p>Pipeline 方法的问题也很明显：</p>
+<ul>
+<li>误差传递，导致性能衰减</li>
+<li>各环节预测任务独立，缺少互动，如忽略了事件触发词和事件元素之间的相互影响</li>
+<li>无法处理全局的依赖关系</li>
+</ul>
+<h4 id="Joint-Model"><a href="#Joint-Model" class="headerlink" title="Joint Model"></a>Joint Model</h4><p>又分为 Joint Inference 和 Joint Modeling 两种。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/joint_inference.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/joint_inference.png"></p>
+<p><strong>Joint Inference</strong> 使用集成学习的思路，将各模型通过整体优化目标整合起来，可以通过整数规划等方法进行优化。<br><strong>Joint Modeling (Structured)</strong> 又可以称为基于结构的方法，将事件结构看作依存树，抽取任务相应转化为依存树结构预测问题，触发词识别和元素抽取可以同时完成，共享隐层特征，使用搜索进行求解，避免了误差传播导致的性能下降，另外，全局特征也可以从整体的结构中学习得到，从而使用全局的信息来提升局部的预测。相关工作有：</p>
+<ul>
+<li>Li et.al., 2013a<br>Li 提出基于结构感知机的联合模型同时完成事件触发词识别和事件元素识别两个子任务，并通过 beam search 缩小搜索解空间</li>
+<li>Li et.al., 2014<br>为了利用更多的句子级信息，Li 等提出利用结构预测模型将实体、关系和事件进行联合抽取</li>
+</ul>
+<p>尽管 Li 等人的联合系统优势明显，但在未见词和特征上缺乏泛化，人工提取的特征集是离散表达，能力有限。</p>
+<p>几种方法的 trigger 和 argument 抽取结果，可以看出，实体之间协同消歧对效果提升非常明显<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/perf1.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/perf1.png"></p>
+<h3 id="基于统计-深度学习"><a href="#基于统计-深度学习" class="headerlink" title="基于统计 - 深度学习"></a>基于统计 - 深度学习</h3><p>上面的方法在特征提取过程中还是会依赖依存分析、句法分析、词性标注等传统的外部 NLP 工具，还是会造成误差积累，另外有些语言和领域并没有这类处理工具，加之特征也需要人工设定，2015 年起基于深度学习的事件抽取方法逐渐成为研究热点，相比于传统机器学习，深度学习方法优势明显：</p>
+<ol>
+<li>减少对外部 NLP 工具的依赖 ， 甚至不依赖 NLP 工具 ， 建立成端对端的系统</li>
+<li>使用词向量作为输入，蕴含更为丰富的语言特征</li>
+<li>自动提取句子特征， 避免了人工特征设计的繁琐工作</li>
+</ol>
+<h3 id="DMCNN-Pipeline"><a href="#DMCNN-Pipeline" class="headerlink" title="DMCNN - Pipeline"></a>DMCNN - Pipeline</h3><p><a href="https://pdfs.semanticscholar.org/ca70/480f908ec60438e91a914c1075b9954e7834.pdf" target="_blank" rel="external">Event Extraction via Dynamic Multi-Pooling Convolutional Neural Networks Yubo Chen et. al., ACL 2015</a></p>
+<p>自然语言处理中，传统 CNN 使用的最大池化对一个 feature map 只能得到一个最大值，这对事件抽取并不适用，因为事件抽取中一个句子中可能会包含多个事件，一个 argument candidate 在不同的 trigger 下也会扮演不同的角色，传统的最大池化只保留“最重要”的信息，而丢失的信息会导致 multiple-event sentence 下的事件漏分。DMCNN 使用动态多池化卷积能实现对一个句子中不同部分的最大值获取，以保留更多有价值的信息，逻辑和 PCNN 相似。</p>
+<p>DMCNN 作者把事件抽取看做两个阶段的多分类任务，第一步是<strong>触发词分类（trigger classification）</strong>，利用 DMCNN 对句子中每个词进行分类，判断是否是触发词，如果句子中存在触发词，执行第二步<strong>论元分类（argument classification）</strong>，同样使用 DMCNN，给 trigger 分配 arguments，同时匹配 arguments 到 role，以第二个任务为例介绍一下过程。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn.png">
+<p>主要包括四个部分，以 argument classification 为例：</p>
+<ol>
+<li><strong>词向量学习；</strong></li>
+<li><strong>Lexical-level   词汇级别特征提取；</strong><ul>
+<li>候选论元/触发词及其前后单词的词向量 </li>
+</ul>
+</li>
+<li><strong>Sentence-level  句子级别特征提取；</strong><ul>
+<li>输入特征：<ul>
+<li>Context-word feature(CWF)</li>
+<li>Position feature(PF)<ul>
+<li>当前词语和候选论元/触发词之间的相对距离，距离值用向量表示，随机初始化</li>
+</ul>
+</li>
+<li>Event-type feature(EF)<ul>
+<li>当前 trigger 对应的事件类型特征</li>
+</ul>
+</li>
+<li>CWF, PF, EF 拼接作为卷积的输入</li>
+</ul>
+</li>
+<li>卷积后，根据 candidate argument 和 predicted trigger 将 feature map 分成三部分，分别对各部分进行最大池化</li>
+</ul>
+</li>
+<li><strong>Output 分类输出</strong><ul>
+<li>拼接词汇级别和句子级别的特征 F=[L, P]</li>
+<li>O = WF+b 算分，进行 softmax，得到 argument role 的类别</li>
+</ul>
+</li>
+</ol>
+<p><strong>Trigger classification 阶段：</strong></p>
+<ul>
+<li><strong>Lexical-level</strong><ul>
+<li>只使用候选触发词和其左右token</li>
+</ul>
+</li>
+<li><strong>Sentence-level</strong><ul>
+<li>CWF + PF，PF 只使用候选触发词的位置作为嵌入位置特征</li>
+<li>句子由触发词分割成两部分</li>
+</ul>
+</li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn2.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn2.png">
+<p>损失函数依旧是 log likelihood。数据集用的 ACE2005 英文数据集，实验结果</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn3.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn3.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn4.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/dynamic_cnn4.png">
+<p>DMCNN 的效果是突破性的，但分两个阶段的预测仍有误差传递的问题，也没有利用好 trigger 和 argument 之间的依赖关系。</p>
+<h4 id="Joint-Model-BiRNN"><a href="#Joint-Model-BiRNN" class="headerlink" title="Joint Model(BiRNN)"></a>Joint Model(BiRNN)</h4><p><a href="http://www.aclweb.org/anthology/N16-1034" target="_blank" rel="external">JRNN: Joint Event Extraction via Recurrent Neural Networks, ACL 2016</a></p>
+<p>Nguyen et.al., 2016 通过 RNN 用联合方法解决时间抽取的问题，继承了 Li (2013) 和 Chen (2015) 的优点，并克服了它们的一些缺陷。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/JRNN1.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/JRNN1.png">
+<ul>
+<li><strong>Encoding phase</strong><ul>
+<li>word embedding + entity type embedding + dependency tree relation<br>dependency tree relation 是 binary 的，个人理解应该是维度对应依存树中单词间所有可能的关系（如 conj_and, advcl 等），只有在依存树 W 中存在与 w_i 连接的一条对应边（如 conj_and 连接了 w_i 与 w_j）时，该维度（conj_and 对应维度）的值才设为 1，这个向量在 Li et al., 2013 的研究中是有用的。<br>没有用到位置特征，因为同时预测 trigger 和 argument roles，没有固定的锚点。</li>
+<li>双向 GRU 进行编码</li>
+</ul>
+</li>
+<li><strong>Prediction phase</strong><ul>
+<li>对 W 对应的 trigger 和 argument role 分别维护了一个 binary memory vector $G^{trg}_i$ , binary memory matrices $G^{arg}_i$ 以及  $G^{arg/trg}_i$ </li>
+<li>每个时间点 i，或者说对 $w_i$<ul>
+<li>对 $w_i$ 进行 trigger 预测</li>
+<li>如果 trigger 预测结果 $t<em>i$ 是 other，那么 $a\</em>{ij}$  j 从 1-k 都设为 other，然后进行下一步，否则对所有的 entity mention e1, e2,…,ek 进行 argument role 预测</li>
+<li>利用上一步的记忆向量以及之前步骤的预测来计算 $G^{trg}_i$,  $G^{arg}_i$ and $G^{arg/trg}_i$ </li>
+</ul>
+</li>
+<li><strong>Output:</strong><ul>
+<li>trigger subtype $t_i$ for $w_i$</li>
+<li>predicted argument roles $a_{i1}$, $a_{i2}$,…$a_{ik}$</li>
+<li>memory vector/matrics  $G^{trg}_i$,  $G^{arg}_i$ and $G^{arg/trg}_i$ </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Memory 向量代表的是同一个句子中 trigger 和 argument role 的相互关系，$G^{trg}_i$  代表的是 trigger subtypes 之间的关系，表示在 i 之前已经识别出哪些子事件，比如说句子中检测到了 Die 事件，那么很有可能下面会同时会出现 Attack 事件；</p>
+<p>$G^{arg}_i$ 代表的是 argument role 之间的关系，总结了 entity mention 在过去扮演的 arugment roles 信息；$G^{arg/trg}_i$ 对应的是 arugment roles 和 trigger subtypes 之间的关系，表示 entity mention 在之前特定 event subtypes 扮演过 argument，$G^{arg/trg}_i[j][t]=1$ 代表 $e_j$ 在之前的 subtype t 中被认为是 argument。 实验表明，$G^{trg}$ 并没有帮助反而会导致整体性能下降，而 $G^{arg/trg}$ 还是很有效的。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/JRNN2.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/JRNN2.png">
+<p>当输入句子包含多个事件时（1/N），JRNN 明显优于其他方法。特别是，JRNN在触发标记方面比DMCNN好13.9％，而参数角色标记的相应改进为6.5％，从而进一步表明 JRNN 具有记忆功能的好处。在单事件句子（1/1）的表现上，JRNN在 trigger 分类上仍然是最好的系统，尽管在 argument role 上比 DMCNN 要差一些。</p>
+<h2 id="弱监督-语料扩充"><a href="#弱监督-语料扩充" class="headerlink" title="弱监督/语料扩充"></a>弱监督/语料扩充</h2><p>有监督的方法需要大量的标注样本，人工标注耗时耗力，一致性差，因此弱监督方法也是事件抽取的一个重要分支。Chen 等提出利用部分高质量的标注语料训练分类器，然后利用初步训练好的分类器判断未标注的数据，选取高置信度的分类样本作为训练样本，通过迭代自动扩充训练样本[Chen and Ji, 2009]。Liao 等在相关文档中使用自训练的（Self-Training）的半监督学习方法扩展标注语料，并利用全局推理的方法考虑样例的多样性进而完成事件抽取；进一步提出同时针对词汇和句子两个粒度训练最大熵分类器，并用协同训练（Co-training）的方法扩展标注数据，进而对分类器进行更充分的训练[Liao and Grishman, 2011a; 2011b]。</p>
+<p>而目前，弱监督/训练数据生成方面比较流行的方向有下面几类，利用外部资源，通过远程监督，以及跨语料迁移的方法。</p>
+<h4 id="外部资源"><a href="#外部资源" class="headerlink" title="外部资源"></a>外部资源</h4><p><a href="http://www.aclweb.org/anthology/P16-1201" target="_blank" rel="external">Leveraging FrameNet to Improve Automatic Event Detection</a></p>
+<p>FrameNet 是语言学家定义及标注的语义框架资源，采用层级的组织结构，有1000+框架、1000+词法单元、150000+标注例句。在结构上，FrameNet 和事件抽取有着很高的相似性，一个框架由一个词法单元和若干框架元素组成，一个事件有触发词和若干事件角色组成。另外，Framenet 中很多 frame 其实也能够表示某些事件，如<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/framenet.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/framenet.png"></p>
+<p>因此，Liu 等利用 ACE 语料训练的分类器去判定 FrameNet 中句子的事件类别，再利用全局推断将 FrameNet 的语义框架和 ACE 中的事件类别进行映射，进而利用 FrameNet 中人工标注的事件样例扩展训练数据以提升事件检测性能 [Liu et.al., 2016b]。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/framenet1.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/framenet1.png"></p>
+<h4 id="远程监督"><a href="#远程监督" class="headerlink" title="远程监督"></a>远程监督</h4><p><a href="http://www.nlpr.ia.ac.cn/cip/~liukang/liukangPageFile/ACL2017-Chen.pdf" target="_blank" rel="external">Automatically Labeled Data Generation for Large Scale Event Extraction</a></p>
+<p>Yubo Chen, ACL 2017 提出运用结构化的知识库来以及远程监督的方法来自动生成大规模事件语料。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/event_relation.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/event_relation.png">
+<p>当把关系抽取中常用的远程监督方法用到事件抽取中时，会发现有下面的两个问题，一是<strong>现有事件知识库（如 Freebase）中缺乏触发词信息</strong>，如上图，在关系抽取中，我们可以用两个元素 Barack Obama, Michelle Obama 进行回标，但是在事件抽取中，结婚这一事件类型在 Freebase 中被表示为 m.02nqglv，所以我们不能直接用事件类型和元素来进行回标，在用 DS 前，必须先检测触发词。</p>
+<p>根据 DS 在 RE 中的应用，可以假设如果一个句子中出现了所有的元素，那么这个句子就可以被作为是一个事件，句子中的动词就可以作为触发词。然而<strong>一个事件中的元素可能出现在多个句子中</strong>，如果用所有元素来进行句子的回标，那么能抽出的训练数据就非常少了，所以应该对元素进行排序，选择有代表性的元素进行回标。</p>
+<p>整个流程如下，首先对 Freebase 中的核心元素进行检测，考虑<strong>角色显著性（role saliency）、事件相关性（ event relevance）和核心率（key rate）</strong>，接着利用所有的核心元素去 Wikipeida 中回标，根据<strong>触发率（trigger rate）、触发词频率（ trigger candidate frequency）、触发词事件频率（trigger event type frequency）</strong>来进行触发词检测，这一阶段得到的触发词表中只有动词，缺少名词，也存在噪声，于是再利用 FrameNet 过滤动词性触发词中的噪声，同时扩展名词性触发词，最后利用 Soft Distant Supervision 来自动生成标注数据。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/Yubo.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/Yubo.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/marriage.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/marriage.png">
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/autodata.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/autodata.png">
+<p>还有方法如 Karthik Narasimhan et al., EMNLP 2016，从网络获取同一事件的不同报道，再使用强化学习方法，做信息融合的决策（互补信息的融合、冗余信息的选择）。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/karthik.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/karthik.png">
+<h4 id="跨语料迁移"><a href="#跨语料迁移" class="headerlink" title="跨语料迁移"></a>跨语料迁移</h4><p>由于目前中文事件抽取缺少公认语料，很多学者尝试利用现有大量的高质量英文标注语料辅助中文事件抽取。Chen 等首次提出该想法并利用跨语言协同训练的 Bootstrap 方法进行事件抽取[Chen and Ji, 2009]。Ji 提出基于中英文单语事件抽取系统和基于并行语料两种构建跨语言同义谓词集合的方法辅助进行中文事件抽取[Ji, 2009]，Zhu 等利用机器翻译同时扩大中文和英文训练语料，联合利用两种语料进行事件抽取[Zhu et.al., 2014]。Hsi 等联合利用符号特征和分布式特征的方法，利用英文事件语料提升中文事件抽取的性能[Hsi et.al., 2016]。</p>
+<p><a href="http://www.nlpr.ia.ac.cn/cip/~liukang/liukangPageFile/Liu_aaai2018.pdf" target="_blank" rel="external">Event Detection via Gated Multilingual Attention Mechanism, AAAI2018</a></p>
+<p>Motivation 是：</p>
+<ol>
+<li>多语言一致性，不同语言中表达了相同含义的句子往往包含相同的语义成分<br>如 MeiGuo TanKe 和 American tank 表达了相同含义，都是武器</li>
+<li>多语言互补，某个词在一种语言中有歧义，但在另一种语言中缺没有歧义<br>如英文 fire，因为有开火和解雇两种意思，所以对应事件可能是 Attack 也可能是 End-Position，然而在中文中开火，Attach 类型，解雇就是 End-Position 类型，两个词没有相同语义</li>
+</ol>
+<p>所以文章提出了两种 attention 机制，一是利用多语言一致性，分别对每种语言进行单语语境的关注，对每个候选触发词，对其上下文进行注意力机制，注意力权重表示句子中不同单词对预测事件类型的重要性，二是利用互补信息，用 gated cross-lingual attention 来模拟其他语言的可信度，gate 来控制目标语言流向源语言的信息，集成多语言的信息。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/GMLATT.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/GMLATT.png">
+<h3 id="中文事件抽取"><a href="#中文事件抽取" class="headerlink" title="中文事件抽取"></a>中文事件抽取</h3><p>目前事件抽取的相关研究大部分是面向英文文本，中文文本的工作才刚起步，一方面，中文的自身特点（需要分词、缺少时态和形态的变换）有一定挑战，另一方面，数据集上也缺乏统一、公认的语料资源和相关评测。尽管如此，近年来中文事件抽取在公开评测、领域扩展及上述的跨语料迁移方面也都取得了一些进展。</p>
+<p>公开评测方面，除了在模型方面的创新[Chen and Ng, 2012;Li et.al., 2012a;2013b]，在中文语言特性的利用方面，Li 等通过中文词语的形态结构、同义词等信息捕获更多的未知触发词，进而解决中文事件抽取面临的分词错误和训练数据稀疏等问题； 进一步细分中文事件触发词内部的组合语义（复合、附加和转化），进而提高系统的性能[Li et.al., 2012b]。Ding 等利用聚类的方法自动生成新事件类型的语料， 在抽取过程中特别地考虑了待抽取文本的 HowNet 相似度[Ding et.al., 2013]。</p>
+<p>特定领域方面，国内很多机构均面向实际应用展开特定领域的事件抽取研究， 覆盖突发灾难、金融、军事、体育、音乐等多个领域。例如，Zhou 等针对金融领域事件中的收购、分红和贷款三个典型事件，提出自动构建抽取规则集的方法进行中文金融领域事件抽取 [Zhou, 2003]；Liang 等利用事件框架的归纳和继承特性实现对灾难事件的抽取[Liang and Wu, 2006]。</p>
+<p>还有其他一些其他方向的 Paper:<br><strong>特征表示：</strong><br>– Argument Attention: Exploiting Argument Information to Improve Event Detection via Supervised Attention Mechanisms  (ACL2017)<br><strong>多事件抽取：</strong><br>– HBTNGMA: Collective Event Detection via a Hierarchical and Bias Tagging Networks with Gated<br> Multi-level Attention (EMNLP-2018)<br><strong>篇章级事件抽取：</strong><br>– DCFEE: A Document-level Chinese Financial Event Extraction System based on Automatically Labeled<br> Training Data (ACL 2018)<br><strong>事件关系抽取：</strong><br>– ATT-ERNN: Attention-based Event Relevance Model for Stock Price Movement Prediction (CCKS-2017 Best Paper Award)<br>– MLNN: Event Coreference Resolution via Multi-loss Neural Network without Arguments （CCKS-2018）</p>
+<h1 id="事件监测和追踪"><a href="#事件监测和追踪" class="headerlink" title="事件监测和追踪"></a>事件监测和追踪</h1><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/general2.png" class="ful-image" alt="%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/general2.png">
+<p>主流方法包括基于相似度聚类和基于概率统计两类。在这不多做介绍。</p>
+<p>参考文献：<br>知识图谱发展报告 2018<br>事件抽取与金融事件图谱构建</p>
+<p>关注公众号回复事件抽取获得下载地址</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;接上一篇知识抽取-实体及关系抽取，前置知识在这一篇不多做解释啦。&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+    
+      <category term="Knowledge Graph" scheme="http://www.shuang0420.com/categories/NLP/Knowledge-Graph/"/>
+    
+    
+      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+    
+      <category term="Relation Extraction" scheme="http://www.shuang0420.com/tags/Relation-Extraction/"/>
+    
+      <category term="Information Extraction" scheme="http://www.shuang0420.com/tags/Information-Extraction/"/>
+    
+      <category term="Event Extraction" scheme="http://www.shuang0420.com/tags/Event-Extraction/"/>
+    
+  </entry>
+  
+  <entry>
     <title>知识抽取-实体及关系抽取</title>
     <link href="http://www.shuang0420.com/2018/09/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/"/>
     <id>http://www.shuang0420.com/2018/09/15/知识抽取-实体及关系抽取/</id>
     <published>2018-09-15T11:02:27.000Z</published>
-    <updated>2018-09-18T06:11:47.000Z</updated>
+    <updated>2018-11-25T07:48:44.000Z</updated>
     
     <content type="html"><![CDATA[<p>这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 <a href="http://www.shuang0420.com/2017/03/18/NLP%20笔记%20-Information%20Extraction/">NLP笔记 - Information Extraction</a> 和 <a href="http://www.shuang0420.com/2017/04/10/NLP笔记%20-%20Relation%20Extraction/">NLP笔记 - Relation Extraction</a>，梳理了知识抽取的基本方法，包括传统机器学习及经典的深度学习方法。</p>
+<a id="more"></a>
 <p>知识抽取涉及的“知识”通常是 <strong>清楚的、事实性的信息</strong>，这些信息来自不同的来源和结构，而对不同数据源进行的知识抽取的方法各有不同，从结构化数据中获取知识用 D2R，其难点在于复杂表数据的处理，包括嵌套表、多列、外键关联等，从链接数据中获取知识用图映射，难点在于数据对齐，从半结构化数据中获取知识用包装器，难点在于 wrapper 的自动生成、更新和维护，这一篇主要讲从文本中获取知识，也就是我们广义上说的信息抽取。</p>
 <img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/general.png">
 <p>信息抽取三个最重要/最受关注的子任务：</p>
@@ -177,7 +411,7 @@
 <li>难以维护</li>
 <li>可移植性差</li>
 </ul>
-<h2 id="监督学习-机器学习"><a href="#监督学习-机器学习" class="headerlink" title="监督学习-机器学习"></a>监督学习-机器学习</h2><h3 id="研究综述"><a href="#研究综述" class="headerlink" title="研究综述"></a>研究综述</h3><p>漆桂林,高桓,吴天星.知识图谱研究进展[J].情报工程,2017,3(1):004-025</p>
+<h2 id="监督学习-传统机器学习"><a href="#监督学习-传统机器学习" class="headerlink" title="监督学习-传统机器学习"></a>监督学习-传统机器学习</h2><h3 id="研究综述"><a href="#研究综述" class="headerlink" title="研究综述"></a>研究综述</h3><p>漆桂林,高桓,吴天星.知识图谱研究进展[J].情报工程,2017,3(1):004-025</p>
 <blockquote>
 <p>Zhou[13] 在 Kambhatla 的基础上加入了基本词组块信息和 WordNet，使用 SVM 作为分类器，在实体关系识别的准确率达到了 55.5%，实验表明实体类别信息的特征有助于提高关系抽取性能； Zelenko[14] 等人使用浅层句法分析树上最小公共子树来表达关系实例，计算两颗子树之间的核函数，通过训练例如 SVM 模型的分类器来对实例进行分。但基于核函数的方法的问题是召回率普遍较低，这是由于相似度计算过程匹配约束比较严格，因此在后续研究对基于核函数改进中，大部分是围绕改进召回率。但随着时间的推移，语料的增多、深度学习在图像和语音领域获得成功，信息抽取逐渐转向了基于神经模型的研究，相关的语料被提出作为测试标准，如 SemEval-2010 task 8[15]。基于神经网络方法的研究有，Hashimoto[16] 等人利用 Word Embedding 方法从标注语料中学习特定的名词对的上下文特征，然后将该特征加入到神经网络分类器中，在 SemEval-2010 task 8 上取得了 F1 值 82.8% 的效果。基于神经网络模型显著的特点是不需要加入太多的特征，一般可用的特征有词向量、位置等，因此有人提出利用基于联合抽取模型，这种模型可以同时抽取实体和其之间的关系。联合抽取模型的优点是可以避免流水线模型存在的错误累积[17-22]。其中比较有代表性的工作是[20]，该方法通过提出全新的全局特征作为算法的软约束，进而同时提高关系抽取和实体抽取的准确率，该方法在 ACE 语料上比传统的流水线方法 F1 提高了 1.5%，；另一项工作是 [22]，利用双层的 LSTM-RNN 模型训练分类模型，第一层 LSTM 输入的是词向量、位置特征和词性来识别实体的类型。训练得到的 LSTM 中隐藏层的分布式表达和实体的分类标签信息作为第二层 RNN 模型的输入，第二层的输入实体之间的依存路径，第二层训练对关系的分类，通过神经网络同时优化 LSTM 和 RNN 的模型参数，实验与另一个采用神经网络的联合抽取模型[21]相比在关系分类上有一定的提升。但无论是流水线方法还是联合抽取方法，都属于有监督学习，因此需要大量的训练语料，尤其是对基于神经网络的方法，需要大量的语料进行模型训练，因此这些方法都不适用于构建大规模的 Knowledge Base。</p>
 </blockquote>
@@ -350,7 +584,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 &lt;a href=&quot;http://www.shuang0420.com/2017/03/18/NLP%20笔记%20-Information%20Extraction/&quot;&gt;NLP笔记 - Information Extrac
+      &lt;p&gt;这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 &lt;a href=&quot;http://www.shuang0420.com/2017/03/18/NLP%20笔记%20-Information%20Extraction/&quot;&gt;NLP笔记 - Information Extraction&lt;/a&gt; 和 &lt;a href=&quot;http://www.shuang0420.com/2017/04/10/NLP笔记%20-%20Relation%20Extraction/&quot;&gt;NLP笔记 - Relation Extraction&lt;/a&gt;，梳理了知识抽取的基本方法，包括传统机器学习及经典的深度学习方法。&lt;/p&gt;
     
     </summary>
     
@@ -1984,169 +2218,6 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
       <category term="CopyNet" scheme="http://www.shuang0420.com/tags/CopyNet/"/>
     
       <category term="Pre-Net" scheme="http://www.shuang0420.com/tags/Pre-Net/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>经典的端到端聊天模型</title>
-    <link href="http://www.shuang0420.com/2017/10/05/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/"/>
-    <id>http://www.shuang0420.com/2017/10/05/经典的端到端聊天模型/</id>
-    <published>2017-10-05T01:02:27.000Z</published>
-    <updated>2018-09-17T11:14:29.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>介绍一下经典的 End-to-end 聊天模型及应用，包括检索式模型、生成式模型，以及 Google 邮件自动回复的应用。<br><a id="more"></a></p>
-<p>主要涉及到下面几篇论文</p>
-<ul>
-<li><a href="https://arxiv.org/pdf/1506.08909.pdf" target="_blank" rel="external">The Ubuntu Dialogue Corpus: A Large Dataset for Research in Unstructured Multi-Turn Dialogue Systems</a></li>
-<li><a href="https://arxiv.org/abs/1506.05869" target="_blank" rel="external">A Neural Conversational Model</a></li>
-<li><a href="http://www.kdd.org/kdd2016/papers/files/Paper_1069.pdf" target="_blank" rel="external">Smart reply, automated response suggestion in email</a></li>
-<li><a href="https://arxiv.org/abs/1603.08023" target="_blank" rel="external">How NOT To Evaluate Your Dialogue System</a></li>
-<li><a href="https://papers.nips.cc/paper/5019-a-deep-architecture-for-matching-short-texts" target="_blank" rel="external">Zhengdong Lu &amp; Hang Li, 2013, A Deep Architecture for Matching Short Texts</a></li>
-<li><a href="https://arxiv.org/abs/1408.6988" target="_blank" rel="external">Zongcheng Ji, et al., 2014, An Information Retrieval Approach to Short Text Conversation</a></li>
-<li><a href="http://www.hangli-hl.com/uploads/3/1/6/8/3168008/hu-etal-nips2014.pdf" target="_blank" rel="external">Baotian Hu, et al., 2015, Convolutional Neural Network Architectures for Matching Natural Language Sentences</a></li>
-<li><a href="https://pdfs.semanticscholar.org/73d8/26d4c2363701b88e3e234fe3b8756c0f9671.pdf" target="_blank" rel="external">Aliaksei Severyn, et al., 2015, Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks</a></li>
-<li><a href="https://arxiv.org/abs/1507.04808" target="_blank" rel="external">Building end-to-end dialogue systems using generative hierarchical neural network models</a></li>
-</ul>
-<h1 id="Modular-system-vs-end-to-end-system"><a href="#Modular-system-vs-end-to-end-system" class="headerlink" title="Modular system vs end-to-end system"></a>Modular system vs end-to-end system</h1><p>第一部分先简单比较一下对话系统中 modular system 和 end-to-end 的不同。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/end-to-end.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/end-to-end.png">
-<p>如上图，传统的一个对话系统由 <strong>Speech Recognizer, Language Interpreter, State Tracker, Response Generator, Natural Language Generator, Speech Synthesizer</strong> 这么多个子模块拼接而成，这种系统称为 Modular system，在系统中每个组件单独训练，来优化一个单独的中间目标(如 slot-filling)。而 end-to-end system 相当于用一个系统替代了上图中框起来的四个组件，来比较一下</p>
-<p><strong>Modular system vs end-to-end system</strong></p>
-<ul>
-<li><strong>目标函数</strong><br>modular system 有两个及以上的目标函数<br>end-to-end 通常只有一个目标函数</li>
-<li><strong>所需数据</strong><br>modular system 更容易训练，需要的数据少<br>end-to-end 需要大量数据</li>
-<li><strong>人工标注</strong><br>modular system 需要大量的人工的特征工程，需要预先定义 state, action spaces 等等<br>end-to-end 不需要预先定义的 state/action spaces</li>
-<li><strong>效果</strong><br>modular system 在 highly structured tasks/narrow domain 上的效果更出色，但泛化能力有限<br>end-to-end 在 general purpose 的效果上比较好</li>
-</ul>
-<h1 id="Retrieval-based-models-vs-Generative-models"><a href="#Retrieval-based-models-vs-Generative-models" class="headerlink" title="Retrieval-based models vs Generative models"></a>Retrieval-based models vs Generative models</h1><p>对话模型分 <strong>检索式(Retrieval-based models )</strong> 和 <strong>生成式(Generative models)</strong> 两种，检索式的聊天模型有一个预先定义好的模板库，给定一个 query，来从模板库里选择最好的 response。回复的产生依赖于模板库，不可能产生模板库没有的句子。而生成式模型不依赖于模板库，而是直接产生的，生成式模型的方法大多依赖于机器翻译的技术，但不是从一个语言翻译到另一个语言，而是从一个输入映射到回复。</p>
-<p>两种方法都有利有弊，检索式模型得到的回复不会产生语法错误，但没法处理在模板库里不存在回复的用户输入，另外，检索式模型也很难结合上下文信息。而生成式模型更加的“聪明”，可以结合语境，然而更难训练，也更容易犯语法错误(尤其是长句)，需要的训练数据也很大。</p>
-<h1 id="Retrieval-Based-Models"><a href="#Retrieval-Based-Models" class="headerlink" title="Retrieval-Based Models"></a>Retrieval-Based Models</h1><p>可以看做是一个 <strong>检索/排序/匹配</strong> 问题，有一个预先定义好的模板库(看做是检索系统的文档集)，给定一个 query，来从模板库里选择最好的 response，这里需要计算一个 score(query, response) 来衡量 query 和 response 的匹配程度，score 越高，response 越可能是一个合适的回复。response 也可以替换成标准 query，这就把问题转换为用户 query 和标准 query 的一个相似度计算问题，这里的 score 就是相似度分数。</p>
-<p>需要学习的一个是语义表达，一个是 score 的计算。score 可以单独用传统方法做，也可以在神经网络的 MLP 层做，还可以在语义表达产生的过程中做。</p>
-<p>有下面一些经典的论文，(Q, Q’)，(Q, A) 或 (Q, D) 的匹配在这里统一表示为 (Q, D)，D 可以是标准 query，可以是 answer，也可以是标准 query + answer</p>
-<ol>
-<li><a href="https://papers.nips.cc/paper/5019-a-deep-architecture-for-matching-short-texts" target="_blank" rel="external">Zhengdong Lu &amp; Hang Li, 2013, A Deep Architecture for Matching Short Texts</a><br>DeepMatch，先用 (Q, D) 语料训练 LDA 主题模型，得到其 topic words，这些主题词被用来检测两个文本是否存在语义相关性(Localness)；每次指定不同的 topic 个数分别训练 LDA 模型，得到几个不同分辨率的主题模型(Hierarchy)，高分辨率的 topic words 更具体，低分辨率的更抽象，这可以避免短文本词稀疏带来的问题，并得到不同的抽象层级</li>
-<li><a href="https://arxiv.org/abs/1408.6988" target="_blank" rel="external">Zongcheng Ji, et al., 2014, An Information Retrieval Approach to Short Text Conversation</a><br>从不同角度构造匹配特征，作为 ranking 模型的特征输入，构造的特征包括：1）Query-ResponseSimilarity；2）Query-Post Similarity；3）Query-Response Matching in Latent Space；4）Translation-based Language Model；5）Deep MatchingModel；6）Topic-Word Model；7）其它匹配特征</li>
-<li><a href="http://www.hangli-hl.com/uploads/3/1/6/8/3168008/hu-etal-nips2014.pdf" target="_blank" rel="external">Baotian Hu, et al., 2015, Convolutional Neural Network Architectures for Matching Natural Language Sentences</a><br>基于 CNN，Q 和 D 分别经过多次一维卷积和池化，得到的固定维度的两个 sentence embedding，然后输入到 Siamese 结构的 MLP 层，得到文本的相似度分数。这种方法的监督信号在最后的输出层才出现，在这之前，Q 和 D 的 embedding 相互独立生成，可能会丢失语义相关信息，所以有第二种结构，在第 1 层卷积后就把 Q 和 D 做融合，融合方式是分别对 Q 和 D 做 1D 卷积，然后针对两者卷积得到的 feature map，构造其所有可能的组合(在两个方向上拼接对应的 feature map)，这样就构造出一个 2D 的 feature map，然后对其做 2D MAX POOLING，多次 2D 卷积和池化操作后，输出固定维度的向量，接着输入 MLP 层，最终得到文本相似度分数。实验表明优于 DeepMatch</li>
-<li><a href="https://pdfs.semanticscholar.org/73d8/26d4c2363701b88e3e234fe3b8756c0f9671.pdf" target="_blank" rel="external">Aliaksei Severyn, et al., 2015, Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks</a><br>分别对 Q 和 D 做 wide 1D 卷积和 MAX 池化，得到文本的语义向量，接着通过 M 矩阵变换得到语义向量的相似度，然后把 Q 语义向量、Q&amp;D 的语义相似度、D 语义向量、外部特征拼接成 n 维向量，输入一个非线性变换隐层，最终用 softmax 做概率归一化。用 softmax 的输出作为监督信号，采用 cross-entropy 作为损失函数进行模型训练</li>
-</ol>
-<p>这里介绍的是 <strong>Dual-Encoder</strong> 模型(Ryan Lowe, et al., 2016, The Ubuntu Dialogue Corpus: A Large Dataset for Research in Unstructured Multi-Turn Dialogue Systems)，通过对偶的 RNN 模型分别把 context 和 response 编码成语义向量，然后通过 M 矩阵变换计算语义相似度，相似度得分作为监督信号在标注数据集上训练模型。</p>
-<h2 id="句子表达"><a href="#句子表达" class="headerlink" title="句子表达"></a>句子表达</h2><p>先来看一下怎么表达 query 和 response。语义特征方面很容易想到 TFIDF，然而它忽略了词序，表达效果没那么强，所以考虑用 sentence embedding。sentence embedding 可以用 RNN/LSTM 来获取。还是 Encoder-decoder 的思想，不过这里把 decoder 给替换了成了另一个 encoder，也就成了 Dual-RNN 的结构。两个独立的 RNN 分别对 context/ query和 response 进行编码，每个 RNN 最后一个 hidden state 相当于是对整个 input(context/response) 的一个总结。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/dual_lstm.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/dual_lstm.png">
-<h2 id="分数计算"><a href="#分数计算" class="headerlink" title="分数计算"></a>分数计算</h2><p>模型的学习目标其实是一个 binary 分类器<br>$\sigma (score(Query, Response_true)) -&gt; 1$<br>$\sigma (score(Query, Response_false)) -&gt; 0$</p>
-<p>先来看下<strong>如何计算分数</strong>。<br>$$p(flag=1|c,r,M)=\sigma(c^TMr+b)$$</p>
-<p>这个过程可以看做是一个产生模型，给定 input response，用 $c’=Mr$ 产生一个 context (M 是 dxd 的参数矩阵)，然后利用点乘来及计算这个产生的 context 和真实 context 的相似度分数，再用 sigmoid 将这个分数转化为概率，最小化交叉熵损失函数来将进行训练。</p>
-<p>简单一个例子来理解这个过程，假设下图 5x5 的表格，i 行 j 列代表 $(query_i, response_j)$，我们希望对角线的 probability 最大，因为对角线对应着正确的 (query, response)，真实的 label 是一个 identity matrix，我们的 prediction 是 5x5 的 score，现在对每一行进行  softmax cross-entropy 损失函数的计算，其实就相当于直接优化 retrieval metrics (Recall@k)，即 (query, response) 在所有 pair 里的排名。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/matrix.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/matrix.png">
-<p>从代码角度理解一下，下面是训练阶段的一个 minibatch 过程，假设 minibatch 大小为 5</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">if self.is_training:</div><div class="line">    # 训练阶段, 使用 minibatch 内其他样本的 response 作为 negative response</div><div class="line">    # 用 LSTM 做 encoding，query/response 都是 5x128 的表达</div><div class="line">    # W: 128x128</div><div class="line">    response_final_state = tf.matmul(response_final_state[-1].h, W)</div><div class="line">    # 得到 5x5 的 score matrix</div><div class="line">    logits = tf.matmul(</div><div class="line">        a = query_final_state[-1].h, b = response_final_state,</div><div class="line">        transpose_b = True)</div><div class="line">    self.losses = tf.losses.softmax_cross_entropy(</div><div class="line">        onehot_labels = self.labels,</div><div class="line">        logits = logits)</div><div class="line">    self.mean_loss = tf.reduce_mean(self.losses, name=&quot;mean_loss&quot;)</div><div class="line">    train_loss_summary = tf.summary.scalar(&apos;loss&apos;, self.mean_loss)</div><div class="line">    self.training_summaries = tf.summary.merge(</div><div class="line">                             inputs = [train_loss_summary], name=&apos;train_monitor&apos;)</div><div class="line"></div><div class="line">    opt = tf.train.AdamOptimizer(</div><div class="line">        learning_rate=self.args.learningRate,</div><div class="line">        beta1=0.9,</div><div class="line">        beta2=0.999,</div><div class="line">        epsilon=1e-08</div><div class="line">    )</div><div class="line">    self.optOp = opt.minimize(self.mean_loss)</div></pre></td></tr></table></figure>
-<p><strong>测试阶段</strong>，计算的是 Recall@k (给定一个 query，选择 k 个最有可能的 response，看正确的 response 在不在这 k 个里)。举个例子，从整个 test data/validation data 随机抽取 19 个错误答案，对每一个样本，计算 20 个 response 的 score，看真实回复的 score 是否排名前 k。response 矩阵连续的 20 行对应一个 query，第 1 行、21行、41行…对应真实的 response，其他是错误 response。将 query 复制 20 次，就得到 100x128 的 query 和 100x128 的 response (假设 rnn_dim=128)，点乘得到每个 (query, response) 的 score，也就是 100x100 的矩阵，然后再 reshape 成 5x20 的矩阵，再计算 Recall@k</p>
-<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">else:</div><div class="line">   # 测试阶段，每一个样本的response是固定的</div><div class="line">   # query: [batch_size, rnn_dim]</div><div class="line"># respones: [batch_size x 20, rnn_dim]</div><div class="line">   # [batch_size x 20, rnn_dim]</div><div class="line">   response_final_state = tf.matmul(response_final_state[-1].h, W)</div><div class="line">   query_final_state = tf.reshape(</div><div class="line">           tf.tile(query_final_state[-1].h, [1, 20]),</div><div class="line">           [-1, self.args.hiddenSize])</div><div class="line">   # [batch_size, batch_size x 20]</div><div class="line">   logits = tf.reduce_sum(</div><div class="line">           tf.multiply(</div><div class="line">               x = query_final_state,</div><div class="line">               y = response_final_state),</div><div class="line">           axis = 1,</div><div class="line">           keep_dims = True)</div><div class="line">   logits = tf.reshape(logits, [-1, 20])</div><div class="line">   # top_k percentage</div><div class="line">   self.response_top_1 = tf.reduce_mean(</div><div class="line">           tf.cast(tf.nn.in_top_k(</div><div class="line">               predictions = logits,</div><div class="line">               targets = self.targets,</div><div class="line">               k = 1,</div><div class="line">               name = &apos;prediction_in_top_1&apos;),</div><div class="line">           dtype = tf.float32))</div><div class="line">   self.response_top_3 = tf.reduce_mean(</div><div class="line">           tf.cast(tf.nn.in_top_k(</div><div class="line">               predictions = logits,</div><div class="line">               targets = self.targets,</div><div class="line">               k = 3,</div><div class="line">               name = &apos;prediction_in_top_3&apos;),</div><div class="line">           dtype = tf.float32))</div><div class="line">   self.response_top_5 = tf.reduce_mean(</div><div class="line">           tf.cast(tf.nn.in_top_k(</div><div class="line">               predictions = logits,</div><div class="line">               targets = self.targets,</div><div class="line">               k = 5,</div><div class="line">               name = &apos;prediction_in_top_5&apos;),</div><div class="line">           dtype = tf.float32))</div></pre></td></tr></table></figure></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/recall_k.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/recall_k.png">
-<h1 id="Generative-Models"><a href="#Generative-Models" class="headerlink" title="Generative Models"></a>Generative Models</h1><p>产生模型并不是从模板库里选一个分数最高的 response 出来，而是去自动生成这样一个 response。<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/seq2seq.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/seq2seq.png"></p>
-<p>将 MT 问题中引入的 seq2seq 模型应用到对话任务上。给出 (query, response) 以后，seq2seq 对 query 进行编码，最后一个 hidden state 包含 query 的所有信息，结合开始标记 EOS 进行解码，得到 response。不过这种方法对上下文依赖考虑有限，<strong>HRED(Hierarchical Recurrent Encoder-Decoder)</strong> 为解决这个问题做了改进。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png">
-<p>HRED 在传统 encoder-decoder 模型上，额外增加了一个 encoder，相比于普通的 RNN-LM 来说，考虑了 turn-taking nature，能够对上下文进行建模，有助于信息/梯度的传播，从而实现多轮对话。有下面三个阶段：</p>
-<ol>
-<li><strong>encoder RNN</strong><br>第一个 encoder 和标准的 seq2seq 相同，将一句话编码到固定长度的 utterance vector，也就是 RNN 的 last hidden state</li>
-<li><strong>context RNN</strong><br>n 个句子的 utterance vector 作为第二个 encoder 也就是 <strong>context-level encoder</strong> 各个时间上的的输入，对应长度为 n 的 sequence，产生一个 context vector 实现对语境的编码，也就是 RNN 的 output (注意这里不是 last hidden state)</li>
-<li><strong>decoder RNN</strong><br>上一个句子的 utterance vector 作为 response 的初始状态，目前为止产生的 context vector 和上一个单词的 word embedding 拼接作为 decoder 的输入</li>
-</ol>
-<p>然而 HRED 相对于传统的 Seq2Seq 模型的提高并不明显，bootstrapping 的作用更加明显。一方面可以用 pre-trained word embedding，另一方面可以使用其他 NLP 任务的数据预训练我们的模型，使得模型的参数预先学到一些对自然语言的理解，再来学习聊天任务。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/seq2seq_eval.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/seq2seq_eval.png">
-<p>看上面的例子，可以发现 seq2seq 模型可以在一定程度上记住知识，理解语境，进行简单的推理(图左)，然而并不能保留记忆和性格，对相同语义的不同表达会返回不同的答复(图右)。另外要注意的是，这个场景下 seq2seq 的训练目标和真实目标实际是不一样的，尤其在闲聊场景中。训练阶段关注的是真实 response 出现的概率和怎么最大化这个概率，而测试阶段或者说真实场景下，对话侧重于交流信息，以及长时间的连贯性，考虑到回复的灵活性(如一个 query 可以有多种合适的回复)，以及经产生模型的自由度(并不需要在模板库里面选择回复，可以是全新的句子)，因此使用合适的 Metric 来衡量产生的句子实际是非常困难的问题。</p>
-<blockquote>
-<p><strong>objective function</strong> being optimized does not capture the <strong>actual objective achieved through human communication</strong>, which is typically <strong>longer term</strong> and based on <strong>exchange of information</strong> rather than <strong>next step prediction</strong></p>
-</blockquote>
-<h1 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</h1><p>Metrics 的设计目标是<strong>使得 metric 的判断和人为判断尽量相似</strong>。</p>
-<h2 id="Retrieval-Metrics-Recall-k"><a href="#Retrieval-Metrics-Recall-k" class="headerlink" title="Retrieval Metrics: Recall@k"></a>Retrieval Metrics: Recall@k</h2><p>Recall@k 是信息检索里的评估方法，给定一个 query，选择 k 个最有可能的 response，看正确的 response 在不在这 k 个里。</p>
-<h2 id="Generative-Metrics"><a href="#Generative-Metrics" class="headerlink" title="Generative Metrics"></a>Generative Metrics</h2><ol>
-<li>相对于机器翻译，对话中回复的选择空间大很多； 看起来完全无关的两句话都可以是合适的回复</li>
-<li>而这两个正确的回复如果不看context的话，无论是从词频 还是语义来看都是不相关不想似的句子</li>
-</ol>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/eva_eg1.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/eva_eg1.png">
-<h3 id="Word-Overlap-based-Metrics"><a href="#Word-Overlap-based-Metrics" class="headerlink" title="Word Overlap-based Metrics"></a>Word Overlap-based Metrics</h3><p>主要有 <strong>BLEU</strong>，<strong>ROUGE</strong> 和 <strong>METEOR</strong>，最初用于衡量机器翻译的效果。<strong>BLEU</strong> 主要看人为/测试的句子里的单词的 overlap (机器产生的待评测句子中的 ngram 正确匹配人工产生的参考句子中 ngram 与机器产生的句子中所有 ngram 出现次数的比值)，加入 BP(Brevity Penalty) 惩罚因子可以评价句子的完整性。然而 BLEU 不关心语法，只关心内容分布，适用于衡量数据集量级的表现，在句子级别的表现不佳。</p>
-<blockquote>
-<p>“BLEU is designed to approximate human judgement at a corpus level, and performs badly if used to evaluate the quality of individual sentences.”——wikipedia</p>
-</blockquote>
-<p><strong>ROUGE</strong> 是一种基于召回率的相似性度量方法，与 BLEU 类似，但计算的是 ngram 在参考句子和待评测句子的共现概率，包含 ROUGE-N, ROUGE-L(最长公共子句, Fmeasure), ROUGE-W(带权重的最长公共子句, Fmeasure), ROUGE-S(不连续二元组, Fmeasure) 四种，具体不多说。</p>
-<p><strong>METEOR</strong> 改进了 BLEU，考虑了参考句子和待评测句子的对齐关系，和人工判断的结果有更高的相关性。</p>
-<h3 id="Embedding-based-Metrics"><a href="#Embedding-based-Metrics" class="headerlink" title="Embedding-based Metrics"></a>Embedding-based Metrics</h3><p>侧重比较生成的句子和真实样本的语义相似度。</p>
-<ul>
-<li><strong>Embedding average score</strong><br>将句中每个单词的词向量作平均来作为句子的特征，计算生成的句子和真实句子的特征的 cosine similarity</li>
-<li><strong>Greedy matching score</strong><br>寻找生成的句子和真实句子中最相似的一对单词，把这对单词的相似度近似为句子的距离</li>
-<li><strong>Vector extrema score</strong><br>对句中单词词向量的每一个维度提取最大(小)值作为句子向量对应维度的数值，然后计算cosine similarity</li>
-</ul>
-<h2 id="Human-judgement"><a href="#Human-judgement" class="headerlink" title="Human judgement"></a>Human judgement</h2><blockquote>
-<p> “We ﬁnd that all metrics show either weak or no correlation with human judgements, despite the fact that word overlap metrics have been used extensively in the literature for evaluating dialogue response models”</p>
-</blockquote>
-<p>在 <a href="https://arxiv.org/abs/1603.08023" target="_blank" rel="external">How NOT To Evaluate Your Dialogue System</a> 这篇论文中，宣称和人工判断相比，上述的所有 metric 都是垃圾</p>
-<ul>
-<li>在闲聊性质的数据集上，上述 metric 和人工判断有一定微弱的关联 (only a small positive correlation on chitchat oriented Twitter dataset)</li>
-<li>在技术类的数据集上，上述 metric 和人工判断完全没有关联(no correlation at all on the technical UDC)</li>
-<li>当局限于一个特别具体的领域时，BLEU会有不错的表现</li>
-</ul>
-<h2 id="Learning-to-Evaluate-Dialogue-Responses"><a href="#Learning-to-Evaluate-Dialogue-Responses" class="headerlink" title="Learning to Evaluate Dialogue Responses"></a>Learning to Evaluate Dialogue Responses</h2><p>可以尝试使用机器学习的方法来学习一个好的 metric，用语境 c，真实回复 r，机器回复 $\hat r$，训练一个 regression 模型，使得 score 和人工打分的 score 接近。</p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/eva_formula.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/eva_formula.png">
-<h1 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h1><p>讲一个生成式模型的具体应用，然而用预先定义好的模板库对生成的 response 做了一个限制。具体任务是如何对邮件进行自动回复。来自 <a href="http://www.kdd.org/kdd2016/papers/files/Paper_1069.pdf" target="_blank" rel="external">Smart reply, automated response suggestion in email</a></p>
-<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/email.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/email.png">
-<p>达到的目标是收到一封邮件，系统发现这个邮件适合 Smart Reply，就会自动推荐 3 个回复语句给用户选择。</p>
-<p>框架面临的几个挑战是</p>
-<ul>
-<li><strong>Response quality</strong><br>怎么保证生成的回复的质量，如果质量不高，根本没有推荐的必要</li>
-<li><strong>Utility</strong><br>怎样选择推荐的回复，能最大化用户选中的概率</li>
-<li><strong>Scalability</strong><br>怎样提高效率，大规模处理</li>
-<li><strong>Privacy</strong><br>在开发系统的过程中怎么保护隐私，加密</li>
-</ul>
-<p>如何应对上面的挑战，也是文章的亮点</p>
-<ul>
-<li><strong>Response selection</strong><br>对应 Scalability 问题<br>将模板库里的句子组织成一个 trie，从左到右用 beam search 的方法进行每次遍历，只保留在 trie 中出现的 hypothese，这样对每个 response candidate 评分的复杂度就由 O(Rl) 降到了 O(bl)，R 是模板库的大小，l 是最长回复的长度，b 是 beam size</li>
-<li><strong>Response set generation</strong><br>对应 Response quality, Scalability, 以及 Utility 问题<br>生成一个带 intent 标记的模板库，回复只从这个模板库里产生</li>
-<li><strong>Diversity</strong><br>对应 Utility 问题<br>去掉 generic 的回复，兼顾正面、负面回复，在得分最高的回复中，每个 intent 只选择一个回复</li>
-<li><strong>Triggering model</strong><br>对应 Utility 问题<br>Binary 分类器判断是否要 trigger 自动回复，不需要回复的，不适合短回复的</li>
-</ul>
-<p>具体过程是，来一封邮件，首先看是否 trigger Smart Reply(采用一个 feedforward neural network)，如果是，就跑一遍 LSTM，生成候选的 n 个 response。</p>
-<p>特征方面，预处理后的邮件采取的特征有 unigram, bigram，发件方是否在收件方的地址簿里，是否在收件方的社交网络里，收件方是否在过去回复过发件方等等。稀疏特征类型(如 unigram, bigram)的 embedding 是单独训练的，然后每个稀疏类型特征下的 embedding 进行加总，再和 dense feature(如数值、布尔类型的特征)拼接作为输入。</p>
-<p>重点看一下模板库的生成。</p>
-<h2 id="Response-set-generation"><a href="#Response-set-generation" class="headerlink" title="Response set generation"></a>Response set generation</h2><p>模板库的存在可以限制产生的 response 的范围，提高 response 的质量以及选择回复的速度。另外，这里模板库里的句子都有一个 intent 标记，而标记了 intent 类别的回复模板库可以增加回复的 diversity。</p>
-<p>产生模板库用了 <strong>Expander graph learning approach</strong>，是一种半监督的方法。<br>搜集邮件数据后用传统 nlp 方法进行预处理，包括</p>
-<ul>
-<li>去掉非英语的样本</li>
-<li>Tokenization</li>
-<li>将内容分割成句子为单位</li>
-<li>使用特殊符号替换不常用的单词(e.g. 人名，url，邮件地址）</li>
-<li>去掉引用和转发的邮件部分</li>
-<li>去掉问候和致敬部分</li>
-</ul>
-<p>处理好的数据中只选择<strong>短的、最常出现的、匿名的</strong>回复。</p>
-<p>首先利用 dependency parser 将类似的句子如 “Thanks for your kind update”,“Thank you for updating!”, , “Thanks for the status update” 等转换为 canonical 形式，即 “Thanks for the update.”<br>然后进行做语义聚类，每个 cluster 对应一个意图（intent）.<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/graph.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/graph.png"></p>
-<p><strong>过程：</strong></p>
-<ol>
-<li><strong>初始化:</strong> 标记～100个类别(cluster)，每个类别～3个人工选择的样本</li>
-<li>使用 (original, response), (response1, response2, feature) 对模板库里的样本建立关系</li>
-<li>使用 Expander 算法给未标记的句子打标记</li>
-<li>对于新的类别的发现，<strong>Iteration：</strong><br><strong>Inference:</strong> 用 label propagation 算法迭代 5 次推测未标记样本的 cluster 类别<br><strong>Update:</strong> 从图中剩下的未标记的样本中随机 sample 100 个作为潜在的新类别，用 canonicalized representation 来标记<br>​ 重新运行 label propagation 直到收敛(不再发现新的类别，或者每个类的成员不再变化)</li>
-<li>最后进行 <strong>Validation:</strong> 提取每个 cluster 的 top-k 个回复样本，人工验证</li>
-</ol>
-<blockquote>
-<p>参考链接<br><a href="https://zhuanlan.zhihu.com/p/26879507" target="_blank" rel="external">PaperWeekly 第37期 | 论文盘点：检索式问答系统的语义匹配模型（神经网络篇）</a></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;介绍一下经典的 End-to-end 聊天模型及应用，包括检索式模型、生成式模型，以及 Google 邮件自动回复的应用。&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
-    
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
-    
-    
-      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
-    
-      <category term="Chatbot" scheme="http://www.shuang0420.com/tags/Chatbot/"/>
-    
-      <category term="多轮对话" scheme="http://www.shuang0420.com/tags/%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D/"/>
     
   </entry>
   
