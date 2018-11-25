@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2018-11-25T08:23:54.000Z</updated>
+  <updated>2018-11-25T08:25:08.000Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -14,228 +14,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>知识抽取-事件抽取</title>
-    <link href="http://www.shuang0420.com/2018/09/15/test/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/"/>
-    <id>http://www.shuang0420.com/2018/09/15/test/知识抽取-事件抽取/</id>
-    <published>2018-09-15T11:02:27.000Z</published>
-    <updated>2018-11-25T08:23:54.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>接上一篇知识抽取-实体及关系抽取，前置知识在这一篇不多做解释啦。<br><a id="more"></a></p>
-<p>事件是促使事情状态和关系改变的条件[Dong et.al., 2010]。目前已存在的知识资源（如维基百科等） 所描述实体及实体间的关系大多是静态的，而事件能描述粒度更大的、动态的、 结构化的知识，是现有知识资源的重要补充。</p>
-<p>与<a href="http://www.shuang0420.com/2018/09/15/知识抽取-实体及关系抽取/">关系抽取</a>相比，事件抽取同样需要从文本中抽取 predicate 和对应的 arguments，但不同的是，关系抽取的问题是 binary 的，且两个 arguments 通常都会在同一个句子中出现，而事件抽取的难点在于，有多个 arguments 和 modifiers，且有些 arguments 不是必须的（some of which are omitted in any given instance of an event），这使得 bootstrapping/distant learning/coreference 都变得非常困难。</p>
-<p>事件抽取的任务可以分两大类：</p>
-<ul>
-<li><strong>事件识别和抽取</strong><br>从描述事件信息的文本中识别并抽取出事件信息并以结构化的形式呈现出来，包括发生的时间、地点、参与角色以及与之相关的动作或者状态的改变。</li>
-<li><strong>事件检测和追踪</strong><br>事件检测与追踪旨在将文本新闻流按照其报道的事件进行组织，为传统媒体多种来源的新闻监控提供核心技术，以便让用户了解新闻及其发展。具体而言，事件发现与跟踪包括三个主要任务：<strong>分割，发现和跟踪</strong>，将新闻文本分解为事件， 发现新的（不可预见的）事件，并跟踪以前报道事件的发展。<br>事件发现任务又可细分为<strong>历史事件发现</strong>和<strong>在线事件发现</strong>两种形式，前者目标是从按时间排序的新闻文档中发现以前没有识别的事件，后者则是从实时新闻流中实时发现新的事件。</li>
-</ul>
-<p>本文的重点在于事件识别与抽取。首先看一下相关的核心概念：</p>
-<ul>
-<li><strong>事件描述（Event Mention）</strong><br>描述事件的词组/句子/句群，包含一个 trigger 以及任意数量的 arguments</li>
-<li><strong>事件触发（Event Trigger）</strong><br>事件描述中最能代表事件发生的词汇，决定事件类别的重要特征，一般是动词或者名词</li>
-<li><strong>事件元素（Event Argument）</strong><br>事件的重要信息，或者说是实体描述（entity mention），主要由实体、属性值等表达完整语义的细粒度单位组成</li>
-<li><strong>元素角色（Argument Role）</strong><br>事件元素在事件中扮演的角色，事件元素与事件的语义关系，可以理解为 slot</li>
-<li><strong>事件类型（Event Type）</strong></li>
-</ul>
-<p><img src="/2018/09/15/test/知识抽取-事件抽取/general.png" alt="知识抽取-事件抽取/general"></p>
-<p>其实也可以把事件抽取理解成从文本中找到特定类别的事件，然后进行填表的过程。</p>
-<h1 id="事件识别和抽取"><a href="#事件识别和抽取" class="headerlink" title="事件识别和抽取"></a>事件识别和抽取</h1><p>事件识别和抽取的任务定义：</p>
-<blockquote>
-<p>Given a text document, an event extraction system should <strong>predict event triggers</strong> with specific <strong>sub-types</strong> and <strong>their arguments for each sentence</strong>.</p>
-</blockquote>
-<p>也就是说，事件抽取任务最基础的部分包括：</p>
-<ul>
-<li>识别事件触发词及事件类型 </li>
-<li>抽取事件元素（Event Argument）同时判断其角色（Argument Role）</li>
-<li>抽出描述事件的词组或句子</li>
-</ul>
-<p>当然还有一些其他的子任务包括事件属性标注、事件共指消解等。</p>
-<p>事件抽取大多是分阶段进行，通常由 trigger classifier 开始，如果有 trigger，把 trigger 以及它的上下文作为特征进行分类判断事件类型，再进行下一步的 argument classifier，对句子中的每个 entity mention 进行分类，判断是否是 argument，如果是，判定它的角色。</p>
-<h2 id="基于模式匹配的方法"><a href="#基于模式匹配的方法" class="headerlink" title="基于模式匹配的方法"></a>基于模式匹配的方法</h2><p>MUCs 最开始，事件抽取的系统都是基于人工编写的规则，基于语法树或者正则表达式，如 CIRCUS (Lehnert 1991), RAPIER (Califf &amp; Mooney 1997), SRV (Freitag 1998), AutoSlog (Riloff 1993), LIEP (Huffman 1995), PALKA (Kim &amp; Moldovan 1995), CRYSTAL (Soderland et al. 1995), HASTEN (Krupka 1995) 等等，后来，慢慢的有了监督学习的模型，在 ACE 的阶段，大多数系统都是基于监督学习了，但由于标注一致性的问题，系统的效果普遍较差，ACE 事件抽取只举行了一次，在 2005 年。</p>
-<p>下面先来看一下基于模板的抽取方法，基本都是通过句法（syntactic）和语义约束（semantic constraints）来进行识别。</p>
-<h3 id="基于人工标注语料"><a href="#基于人工标注语料" class="headerlink" title="基于人工标注语料"></a>基于人工标注语料</h3><p>在早期，模板创建过程通常从一个大的标注集开始，模板的产生完全基于人工标注语料，学习效果高度依赖于人工标注质量。</p>
-<ul>
-<li><strong>AutoSlog</strong>（Riloff）<br>基本假设：<ol>
-<li>事件元素首次提及之处即可确定该元素与事件间的关系</li>
-<li>事件元素周围的语句中包含了事件元素在事件中的角色描述<br>通过监督学习和人工审查来建立抽取规则。通过训练数据中已经填充好的槽（filled slot），AutoSlog 解析 slot 附近的句法结构，来自动形成抽取规则，由于这个过程产生的模板 too-general，所以需要人工来审核。本质上形成的是一个字典。<br>举个例子<br><em>Ricardo Castellar, the mayor, was kidnapped yesterday by the FMLN.</em><br>假设 Ricardo Castellar 被标注成了 victim，AutoSlog 根据句法分析判断出 Ricardo Castellar 是主语，然后触发了主语的相关规则 \<subj\> passive-verb，将句子中相关的单词填充进去就得到了规则 \<victim\> was kidnapped，所以在之后的文本中，只要 kidnapped 在一个被动结构中出现，它对应的主语就会被标记为 victim。</victim\></subj\></li>
-</ol>
-</li>
-<li><strong>PALKA</strong><br>基本假设：特定领域中高频出现的语言表达方式是可数的<br>用语义框架和短语模式结构来表示特定领域中的抽取模式，通过融入 WordNet 的语义信息，PALKA 在特定领域可取得接近纯人工抽取的效果。</li>
-</ul>
-<h3 id="弱监督"><a href="#弱监督" class="headerlink" title="弱监督"></a>弱监督</h3><p>不需要对语料进行完全标注，只需人工对语料进行一定的预分类或者制定种子模板，由机器根据预分类语料或种子模板自动进行模式学习。</p>
-<p>一些系统：</p>
-<ul>
-<li><strong>AutoSlog-TS</strong><br>Riloff and Shoen, 1995<br>AutoSlog-TS 不需要进行文本的标注，只需要一个预先分类好的训练语料，类别是与该领域相关还是不相关。过程是先过一遍语料库，对每一个名词短语（根据句法分析识别）都产生对应的抽取规则，然后再整体过一遍语料库，产生每个规则的一些相关统计数据，基本的 idea 是与不相关文本相比，<strong>在相关文本中更常出现的抽取规则更有可能是好的抽取规则</strong>。假设训练语料中相关与不相关的文本比例是 1:1，对产生的每条抽取规则计算相关比率 relevance rate，相关文档中出现规则的实例数/整个语料库中出现规则的实例数，那么 relevance rate &lt; 50% 的抽取规则就被丢弃了，剩下的规则会按照 relevance_rate * log(frequency) 的形式从高到低进行排序，然后由人工进行审核。</li>
-<li><strong>TIMES</strong><br>Chai and Biermann, 1998<br>引入了领域无关的概念知识库 WordNet，提升模式学习的泛化能力，并通过人工或规则进行词义消歧，使最终的模式更加准确</li>
-<li><strong>NEXUS</strong><br>Piskorski et.al., 2001; Tanev et.al., 2008<br>用聚类对语料进行预处理</li>
-<li><strong>GenPAM</strong><br>Jiang, 2005<br>在由特例生成泛化模式的学习过程中，有效利用模式间的相似性实现词义消歧，最大限度地减少了人工的工作量和对系统的干预</li>
-</ul>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>基于模式匹配的方法在特定领域中性能较好，知识表示简洁，便于理解和后续应用，但对于语言、领域和文档形式都有不同程度的依赖，覆盖度和可移植性较差。</p>
-<p>模式匹配的方法中，模板准确性是影响整个方法性能的重要因素。在实际应用中，模式匹配方法应用非常广泛，主要特点是高准确率低召回率，要提高召回率，一是要建立更完整的模板库，二是可以用半监督的方法来建 trigger 字典。</p>
-<h2 id="基于统计-传统机器学习"><a href="#基于统计-传统机器学习" class="headerlink" title="基于统计 - 传统机器学习"></a>基于统计 - 传统机器学习</h2><p>建立在统计模型基础上，分为 pipeline 和 joint model 两大类。</p>
-<h4 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h4><p>将事件抽取任务转化为多阶段的分类问题（管道抽取），需要顺序执行下面的分类器：</p>
-<ol>
-<li><strong>事件触发词分类器（Trigger Classifier）</strong><br>判断词汇是否是事件触发词，以及事件类别</li>
-<li><strong>元素分类器（Argument Classifier）</strong><br>词组是否是事件元素</li>
-<li><strong>元素角色分类器（Role Classifier）</strong><br>判定元素的角色类别</li>
-<li><strong>属性分类器（Attribute Classifier）</strong><br>判定事件属性</li>
-<li><strong>可报告性分类器（Reportable-Event Classifier）</strong><br>判定是否存在值得报告的事件实例</li>
-</ol>
-<p>分类器可以用 MaxEnt, SVM。重点还是在于提取和集成有区分性的特征，包括 <strong>句子级信息</strong> 和 <strong>篇章级信息</strong>。</p>
-<p><strong>句子级信息：</strong>与候选词相关的词法特征、上下文特征、实体特征、句法特征、语言学特征等，如：<br><img src="/2018/09/15/test/知识抽取-事件抽取/features.png" alt="知识抽取-事件抽取/features"><br><strong>篇章级特征：</strong><br>跨文档利用全局信息。对于一个句子级的抽取结果不仅要考虑当前的置信度，还要考虑与待抽取文本相关的文本对它的影响，以及全局信息如事件与话题的关系，事件与事件的共现信息等，主要工作有：</p>
-<ul>
-<li>Ji and Grishman, 2008</li>
-<li>Liao and Grishman, 2010</li>
-<li>Hong et.al., 2011</li>
-<li>Liu et.al., 2016a</li>
-</ul>
-<p>Pipeline 方法的问题也很明显：</p>
-<ul>
-<li>误差传递，导致性能衰减</li>
-<li>各环节预测任务独立，缺少互动，如忽略了事件触发词和事件元素之间的相互影响</li>
-<li>无法处理全局的依赖关系</li>
-</ul>
-<h4 id="Joint-Model"><a href="#Joint-Model" class="headerlink" title="Joint Model"></a>Joint Model</h4><p>又分为 Joint Inference 和 Joint Modeling 两种。<br><img src="/2018/09/15/test/知识抽取-事件抽取/joint_inference.png" alt="知识抽取-事件抽取/joint_inference"><br><strong>Joint Inference</strong> 使用集成学习的思路，将各模型通过整体优化目标整合起来，可以通过整数规划等方法进行优化。<br><strong>Joint Modeling (Structured)</strong> 又可以称为基于结构的方法，将事件结构看作依存树，抽取任务相应转化为依存树结构预测问题，触发词识别和元素抽取可以同时完成，共享隐层特征，使用搜索进行求解，避免了误差传播导致的性能下降，另外，全局特征也可以从整体的结构中学习得到，从而使用全局的信息来提升局部的预测。相关工作有：</p>
-<ul>
-<li>Li et.al., 2013a<br>Li 提出基于结构感知机的联合模型同时完成事件触发词识别和事件元素识别两个子任务，并通过 beam search 缩小搜索解空间</li>
-<li>Li et.al., 2014<br>为了利用更多的句子级信息，Li 等提出利用结构预测模型将实体、关系和事件进行联合抽取</li>
-</ul>
-<p>尽管 Li 等人的联合系统优势明显，但在未见词和特征上缺乏泛化，人工提取的特征集是离散表达，能力有限。</p>
-<p>几种方法的 trigger 和 argument 抽取结果，可以看出，实体之间协同消歧对效果提升非常明显<br><img src="/2018/09/15/test/知识抽取-事件抽取/perf1.png" alt="知识抽取-事件抽取/perf1"></p>
-<h3 id="基于统计-深度学习"><a href="#基于统计-深度学习" class="headerlink" title="基于统计 - 深度学习"></a>基于统计 - 深度学习</h3><p>上面的方法在特征提取过程中还是会依赖依存分析、句法分析、词性标注等传统的外部 NLP 工具，还是会造成误差积累，另外有些语言和领域并没有这类处理工具，加之特征也需要人工设定，2015 年起基于深度学习的事件抽取方法逐渐成为研究热点，相比于传统机器学习，深度学习方法优势明显：</p>
-<ol>
-<li>减少对外部 NLP 工具的依赖 ， 甚至不依赖 NLP 工具 ， 建立成端对端的系统</li>
-<li>使用词向量作为输入，蕴含更为丰富的语言特征</li>
-<li>自动提取句子特征， 避免了人工特征设计的繁琐工作</li>
-</ol>
-<h3 id="DMCNN-Pipeline"><a href="#DMCNN-Pipeline" class="headerlink" title="DMCNN - Pipeline"></a>DMCNN - Pipeline</h3><p><a href="https://pdfs.semanticscholar.org/ca70/480f908ec60438e91a914c1075b9954e7834.pdf" target="_blank" rel="external">Event Extraction via Dynamic Multi-Pooling Convolutional Neural Networks Yubo Chen et. al., ACL 2015</a></p>
-<p>自然语言处理中，传统 CNN 使用的最大池化对一个 feature map 只能得到一个最大值，这对事件抽取并不适用，因为事件抽取中一个句子中可能会包含多个事件，一个 argument candidate 在不同的 trigger 下也会扮演不同的角色，传统的最大池化只保留“最重要”的信息，而丢失的信息会导致 multiple-event sentence 下的事件漏分。DMCNN 使用动态多池化卷积能实现对一个句子中不同部分的最大值获取，以保留更多有价值的信息，逻辑和 PCNN 相似。</p>
-<p>DMCNN 作者把事件抽取看做两个阶段的多分类任务，第一步是<strong>触发词分类（trigger classification）</strong>，利用 DMCNN 对句子中每个词进行分类，判断是否是触发词，如果句子中存在触发词，执行第二步<strong>论元分类（argument classification）</strong>，同样使用 DMCNN，给 trigger 分配 arguments，同时匹配 arguments 到 role，以第二个任务为例介绍一下过程。</p>
-<p><img src="/2018/09/15/test/知识抽取-事件抽取/dynamic_cnn.png" alt="知识抽取-事件抽取/dynamic_cnn"><br>主要包括四个部分，以 argument classification 为例：</p>
-<ol>
-<li><strong>词向量学习；</strong></li>
-<li><strong>Lexical-level   词汇级别特征提取；</strong><ul>
-<li>候选论元/触发词及其前后单词的词向量 </li>
-</ul>
-</li>
-<li><strong>Sentence-level  句子级别特征提取；</strong><ul>
-<li>输入特征：<ul>
-<li>Context-word feature(CWF)</li>
-<li>Position feature(PF)<ul>
-<li>当前词语和候选论元/触发词之间的相对距离，距离值用向量表示，随机初始化</li>
-</ul>
-</li>
-<li>Event-type feature(EF)<ul>
-<li>当前 trigger 对应的事件类型特征</li>
-</ul>
-</li>
-<li>CWF, PF, EF 拼接作为卷积的输入</li>
-</ul>
-</li>
-<li>卷积后，根据 candidate argument 和 predicted trigger 将 feature map 分成三部分，分别对各部分进行最大池化</li>
-</ul>
-</li>
-<li><strong>Output 分类输出</strong><ul>
-<li>拼接词汇级别和句子级别的特征 F=[L, P]</li>
-<li>O = WF+b 算分，进行 softmax，得到 argument role 的类别</li>
-</ul>
-</li>
-</ol>
-<p><strong>Trigger classification 阶段：</strong></p>
-<ul>
-<li><strong>Lexical-level</strong><ul>
-<li>只使用候选触发词和其左右token</li>
-</ul>
-</li>
-<li><strong>Sentence-level</strong><ul>
-<li>CWF + PF，PF 只使用候选触发词的位置作为嵌入位置特征</li>
-<li>句子由触发词分割成两部分</li>
-</ul>
-</li>
-</ul>
-<p><img src="/2018/09/15/test/知识抽取-事件抽取/dynamic_cnn2.png" alt="知识抽取-事件抽取/dynamic_cnn2">损失函数依旧是 log likelihood。数据集用的 ACE2005 英文数据集，实验结果</p>
-<p><img src="/2018/09/15/test/知识抽取-事件抽取/dynamic_cnn3.png" alt="知识抽取-事件抽取/dynamic_cnn3"><br><img src="/2018/09/15/test/知识抽取-事件抽取/dynamic_cnn4.png" alt="知识抽取-事件抽取/dynamic_cnn4"></p>
-<p>DMCNN 的效果是突破性的，但分两个阶段的预测仍有误差传递的问题，也没有利用好 trigger 和 argument 之间的依赖关系。</p>
-<h4 id="Joint-Model-BiRNN"><a href="#Joint-Model-BiRNN" class="headerlink" title="Joint Model(BiRNN)"></a>Joint Model(BiRNN)</h4><p><a href="http://www.aclweb.org/anthology/N16-1034" target="_blank" rel="external">JRNN: Joint Event Extraction via Recurrent Neural Networks, ACL 2016</a></p>
-<p>Nguyen et.al., 2016 通过 RNN 用联合方法解决时间抽取的问题，继承了 Li (2013) 和 Chen (2015) 的优点，并克服了它们的一些缺陷。</p>
-<p><img src="/2018/09/15/test/知识抽取-事件抽取/JRNN1.png" alt="知识抽取-事件抽取/JRNN1"></p>
-<ul>
-<li><strong>Encoding phase</strong><ul>
-<li>word embedding + entity type embedding + dependency tree relation<br>dependency tree relation 是 binary 的，个人理解应该是维度对应依存树中单词间所有可能的关系（如 conj_and, advcl 等），只有在依存树 W 中存在与 w_i 连接的一条对应边（如 conj_and 连接了 w_i 与 w_j）时，该维度（conj_and 对应维度）的值才设为 1，这个向量在 Li et al., 2013 的研究中是有用的。<br>没有用到位置特征，因为同时预测 trigger 和 argument roles，没有固定的锚点。</li>
-<li>双向 GRU 进行编码</li>
-</ul>
-</li>
-<li><strong>Prediction phase</strong><ul>
-<li>对 W 对应的 trigger 和 argument role 分别维护了一个 binary memory vector $G^{trg}_i$ , binary memory matrices $G^{arg}_i$ 以及  $G^{arg/trg}_i$ </li>
-<li>每个时间点 i，或者说对 $w_i$<ul>
-<li>对 $w_i$ 进行 trigger 预测</li>
-<li>如果 trigger 预测结果 $t<em>i$ 是 other，那么 $a\</em>{ij}$  j 从 1-k 都设为 other，然后进行下一步，否则对所有的 entity mention e1, e2,…,ek 进行 argument role 预测</li>
-<li>利用上一步的记忆向量以及之前步骤的预测来计算 $G^{trg}_i$,  $G^{arg}_i$ and $G^{arg/trg}_i$ </li>
-</ul>
-</li>
-<li><strong>Output:</strong><ul>
-<li>trigger subtype $t_i$ for $w_i$</li>
-<li>predicted argument roles $a_{i1}$, $a_{i2}$,…$a_{ik}$</li>
-<li>memory vector/matrics  $G^{trg}_i$,  $G^{arg}_i$ and $G^{arg/trg}_i$ </li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>Memory 向量代表的是同一个句子中 trigger 和 argument role 的相互关系，$G^{trg}_i$  代表的是 trigger subtypes 之间的关系，表示在 i 之前已经识别出哪些子事件，比如说句子中检测到了 Die 事件，那么很有可能下面会同时会出现 Attack 事件；</p>
-<p>$G^{arg}_i$ 代表的是 argument role 之间的关系，总结了 entity mention 在过去扮演的 arugment roles 信息；$G^{arg/trg}_i$ 对应的是 arugment roles 和 trigger subtypes 之间的关系，表示 entity mention 在之前特定 event subtypes 扮演过 argument，$G^{arg/trg}_i[j][t]=1$ 代表 $e_j$ 在之前的 subtype t 中被认为是 argument。 实验表明，$G^{trg}$ 并没有帮助反而会导致整体性能下降，而 $G^{arg/trg}$ 还是很有效的。</p>
-<p><img src="/2018/09/15/test/知识抽取-事件抽取/JRNN2.png" alt="知识抽取-事件抽取/JRNN2"><br>当输入句子包含多个事件时（1/N），JRNN 明显优于其他方法。特别是，JRNN在触发标记方面比DMCNN好13.9％，而参数角色标记的相应改进为6.5％，从而进一步表明 JRNN 具有记忆功能的好处。在单事件句子（1/1）的表现上，JRNN在 trigger 分类上仍然是最好的系统，尽管在 argument role 上比 DMCNN 要差一些。</p>
-<h2 id="弱监督-语料扩充"><a href="#弱监督-语料扩充" class="headerlink" title="弱监督/语料扩充"></a>弱监督/语料扩充</h2><p>有监督的方法需要大量的标注样本，人工标注耗时耗力，一致性差，因此弱监督方法也是事件抽取的一个重要分支。Chen 等提出利用部分高质量的标注语料训练分类器，然后利用初步训练好的分类器判断未标注的数据，选取高置信度的分类样本作为训练样本，通过迭代自动扩充训练样本[Chen and Ji, 2009]。Liao 等在相关文档中使用自训练的（Self-Training）的半监督学习方法扩展标注语料，并利用全局推理的方法考虑样例的多样性进而完成事件抽取；进一步提出同时针对词汇和句子两个粒度训练最大熵分类器，并用协同训练（Co-training）的方法扩展标注数据，进而对分类器进行更充分的训练[Liao and Grishman, 2011a; 2011b]。</p>
-<p>而目前，弱监督/训练数据生成方面比较流行的方向有下面几类，利用外部资源，通过远程监督，以及跨语料迁移的方法。</p>
-<h4 id="外部资源"><a href="#外部资源" class="headerlink" title="外部资源"></a>外部资源</h4><p><a href="http://www.aclweb.org/anthology/P16-1201" target="_blank" rel="external">Leveraging FrameNet to Improve Automatic Event Detection</a></p>
-<p>FrameNet 是语言学家定义及标注的语义框架资源，采用层级的组织结构，有1000+框架、1000+词法单元、150000+标注例句。在结构上，FrameNet 和事件抽取有着很高的相似性，一个框架由一个词法单元和若干框架元素组成，一个事件有触发词和若干事件角色组成。另外，Framenet 中很多 frame 其实也能够表示某些事件，如<br><img src="/2018/09/15/test/知识抽取-事件抽取/framenet.png" alt="知识抽取-事件抽取/framenet"><br>因此，Liu 等利用 ACE 语料训练的分类器去判定 FrameNet 中句子的事件类别，再利用全局推断将 FrameNet 的语义框架和 ACE 中的事件类别进行映射，进而利用 FrameNet 中人工标注的事件样例扩展训练数据以提升事件检测性能 [Liu et.al., 2016b]。<br><img src="/2018/09/15/test/知识抽取-事件抽取/framenet1.png" alt="知识抽取-事件抽取/framenet1"></p>
-<h4 id="远程监督"><a href="#远程监督" class="headerlink" title="远程监督"></a>远程监督</h4><p><a href="http://www.nlpr.ia.ac.cn/cip/~liukang/liukangPageFile/ACL2017-Chen.pdf" target="_blank" rel="external">Automatically Labeled Data Generation for Large Scale Event Extraction</a></p>
-<p>Yubo Chen, ACL 2017 提出运用结构化的知识库来以及远程监督的方法来自动生成大规模事件语料。</p>
-<p><img src="/2018/09/15/test/知识抽取-事件抽取/event_relation.png" alt="知识抽取-事件抽取/event_relation"><br>当把关系抽取中常用的远程监督方法用到事件抽取中时，会发现有下面的两个问题，一是<strong>现有事件知识库（如 Freebase）中缺乏触发词信息</strong>，如上图，在关系抽取中，我们可以用两个元素 Barack Obama, Michelle Obama 进行回标，但是在事件抽取中，结婚这一事件类型在 Freebase 中被表示为 m.02nqglv，所以我们不能直接用事件类型和元素来进行回标，在用 DS 前，必须先检测触发词。</p>
-<p>根据 DS 在 RE 中的应用，可以假设如果一个句子中出现了所有的元素，那么这个句子就可以被作为是一个事件，句子中的动词就可以作为触发词。然而<strong>一个事件中的元素可能出现在多个句子中</strong>，如果用所有元素来进行句子的回标，那么能抽出的训练数据就非常少了，所以应该对元素进行排序，选择有代表性的元素进行回标。</p>
-<p>整个流程如下，首先对 Freebase 中的核心元素进行检测，考虑<strong>角色显著性（role saliency）、事件相关性（ event relevance）和核心率（key rate）</strong>，接着利用所有的核心元素去 Wikipeida 中回标，根据<strong>触发率（trigger rate）、触发词频率（ trigger candidate frequency）、触发词事件频率（trigger event type frequency）</strong>来进行触发词检测，这一阶段得到的触发词表中只有动词，缺少名词，也存在噪声，于是再利用 FrameNet 过滤动词性触发词中的噪声，同时扩展名词性触发词，最后利用 Soft Distant Supervision 来自动生成标注数据。</p>
-<p><img src="/2018/09/15/test/知识抽取-事件抽取/Yubo.png" alt="知识抽取-事件抽取/Yubo"><img src="/2018/09/15/test/知识抽取-事件抽取/marriage.png" alt="知识抽取-事件抽取/marriage"><img src="/2018/09/15/test/知识抽取-事件抽取/autodata.png" alt="知识抽取-事件抽取/autodata"></p>
-<p>还有方法如 Karthik Narasimhan et al., EMNLP 2016，从网络获取同一事件的不同报道，再使用强化学习方法，做信息融合的决策（互补信息的融合、冗余信息的选择）。</p>
-<p><img src="/2018/09/15/test/知识抽取-事件抽取/karthik.png" alt="知识抽取-事件抽取/karthik"></p>
-<h4 id="跨语料迁移"><a href="#跨语料迁移" class="headerlink" title="跨语料迁移"></a>跨语料迁移</h4><p>由于目前中文事件抽取缺少公认语料，很多学者尝试利用现有大量的高质量英文标注语料辅助中文事件抽取。Chen 等首次提出该想法并利用跨语言协同训练的 Bootstrap 方法进行事件抽取[Chen and Ji, 2009]。Ji 提出基于中英文单语事件抽取系统和基于并行语料两种构建跨语言同义谓词集合的方法辅助进行中文事件抽取[Ji, 2009]，Zhu 等利用机器翻译同时扩大中文和英文训练语料，联合利用两种语料进行事件抽取[Zhu et.al., 2014]。Hsi 等联合利用符号特征和分布式特征的方法，利用英文事件语料提升中文事件抽取的性能[Hsi et.al., 2016]。</p>
-<p><a href="http://www.nlpr.ia.ac.cn/cip/~liukang/liukangPageFile/Liu_aaai2018.pdf" target="_blank" rel="external">Event Detection via Gated Multilingual Attention Mechanism, AAAI2018</a></p>
-<p>Motivation 是：</p>
-<ol>
-<li>多语言一致性，不同语言中表达了相同含义的句子往往包含相同的语义成分<br>如 MeiGuo TanKe 和 American tank 表达了相同含义，都是武器</li>
-<li>多语言互补，某个词在一种语言中有歧义，但在另一种语言中缺没有歧义<br>如英文 fire，因为有开火和解雇两种意思，所以对应事件可能是 Attack 也可能是 End-Position，然而在中文中开火，Attach 类型，解雇就是 End-Position 类型，两个词没有相同语义</li>
-</ol>
-<p>所以文章提出了两种 attention 机制，一是利用多语言一致性，分别对每种语言进行单语语境的关注，对每个候选触发词，对其上下文进行注意力机制，注意力权重表示句子中不同单词对预测事件类型的重要性，二是利用互补信息，用 gated cross-lingual attention 来模拟其他语言的可信度，gate 来控制目标语言流向源语言的信息，集成多语言的信息。</p>
-<p><img src="/2018/09/15/test/知识抽取-事件抽取/GMLATT.png" alt="知识抽取-事件抽取/GMLATT"></p>
-<h3 id="中文事件抽取"><a href="#中文事件抽取" class="headerlink" title="中文事件抽取"></a>中文事件抽取</h3><p>目前事件抽取的相关研究大部分是面向英文文本，中文文本的工作才刚起步，一方面，中文的自身特点（需要分词、缺少时态和形态的变换）有一定挑战，另一方面，数据集上也缺乏统一、公认的语料资源和相关评测。尽管如此，近年来中文事件抽取在公开评测、领域扩展及上述的跨语料迁移方面也都取得了一些进展。</p>
-<p>公开评测方面，除了在模型方面的创新[Chen and Ng, 2012;Li et.al., 2012a;2013b]，在中文语言特性的利用方面，Li 等通过中文词语的形态结构、同义词等信息捕获更多的未知触发词，进而解决中文事件抽取面临的分词错误和训练数据稀疏等问题； 进一步细分中文事件触发词内部的组合语义（复合、附加和转化），进而提高系统的性能[Li et.al., 2012b]。Ding 等利用聚类的方法自动生成新事件类型的语料， 在抽取过程中特别地考虑了待抽取文本的 HowNet 相似度[Ding et.al., 2013]。</p>
-<p>特定领域方面，国内很多机构均面向实际应用展开特定领域的事件抽取研究， 覆盖突发灾难、金融、军事、体育、音乐等多个领域。例如，Zhou 等针对金融领域事件中的收购、分红和贷款三个典型事件，提出自动构建抽取规则集的方法进行中文金融领域事件抽取 [Zhou, 2003]；Liang 等利用事件框架的归纳和继承特性实现对灾难事件的抽取[Liang and Wu, 2006]。</p>
-<p>还有其他一些其他方向的 Paper:<br><strong>特征表示：</strong><br>– Argument Attention: Exploiting Argument Information to Improve Event Detection via Supervised Attention Mechanisms  (ACL2017)<br><strong>多事件抽取：</strong><br>– HBTNGMA: Collective Event Detection via a Hierarchical and Bias Tagging Networks with Gated<br> Multi-level Attention (EMNLP-2018)<br><strong>篇章级事件抽取：</strong><br>– DCFEE: A Document-level Chinese Financial Event Extraction System based on Automatically Labeled<br> Training Data (ACL 2018)<br><strong>事件关系抽取：</strong><br>– ATT-ERNN: Attention-based Event Relevance Model for Stock Price Movement Prediction (CCKS-2017 Best Paper Award)<br>– MLNN: Event Coreference Resolution via Multi-loss Neural Network without Arguments （CCKS-2018）</p>
-<h1 id="事件监测和追踪"><a href="#事件监测和追踪" class="headerlink" title="事件监测和追踪"></a>事件监测和追踪</h1><p><img src="/2018/09/15/test/知识抽取-事件抽取/general2.png" alt="知识抽取-事件抽取/general2"><br>主流方法包括基于相似度聚类和基于概率统计两类。在这不多做介绍。</p>
-<p>参考文献：<br>知识图谱发展报告 2018<br>事件抽取与金融事件图谱构建</p>
-<p>关注公众号回复事件抽取获得下载地址</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;接上一篇知识抽取-实体及关系抽取，前置知识在这一篇不多做解释啦。&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
-    
-      <category term="Knowledge Graph" scheme="http://www.shuang0420.com/categories/NLP/Knowledge-Graph/"/>
-    
-    
-      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
-    
-      <category term="Relation Extraction" scheme="http://www.shuang0420.com/tags/Relation-Extraction/"/>
-    
-      <category term="Information Extraction" scheme="http://www.shuang0420.com/tags/Information-Extraction/"/>
-    
-      <category term="Event Extraction" scheme="http://www.shuang0420.com/tags/Event-Extraction/"/>
-    
-  </entry>
   
   <entry>
     <title>知识抽取-事件抽取</title>
@@ -2335,6 +2113,105 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
       <category term="知乎" scheme="http://www.shuang0420.com/tags/%E7%9F%A5%E4%B9%8E/"/>
     
       <category term="专栏" scheme="http://www.shuang0420.com/tags/%E4%B8%93%E6%A0%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论文笔记 - Copy or Generate</title>
+    <link href="http://www.shuang0420.com/2017/10/25/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20CopyNet%20or%20Generate/"/>
+    <id>http://www.shuang0420.com/2017/10/25/论文笔记 - CopyNet or Generate/</id>
+    <published>2017-10-25T05:02:27.000Z</published>
+    <updated>2018-09-17T11:14:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>关于 Point Network &amp; CopyNet 的几篇论文笔记。<br><a id="more"></a></p>
+<p>普通的 Seq2Seq 的 output dictionary 大小是固定的，对输出中包含有输入单词(尤其是 OOV 和 rare word) 的情况很不友好。一方面，训练中不常见的单词的 word embedding 质量也不高，很难在 decoder 时预测出来，另一方面，即使 word embedding 很好，对一些命名实体，像人名等，word embedding 都很相似，也很难准确的 reproduce 出输入提到的单词。Point Network 及 CopyNet 中的 copy mechanism 就可以很好的处理这种问题，decoder 在各 time step 下，会学习怎样直接 copy 出现在输入中的关键字。</p>
+<p><strong>涉及到的论文：</strong></p>
+<ul>
+<li><a href="https://arxiv.org/abs/1506.03134" target="_blank" rel="external">Pointer Networks. NIPS 2015</a></li>
+<li><a href="https://arxiv.org/abs/1603.06393" target="_blank" rel="external">Incorporating Copying Mechanism in Sequence-to-Sequence Learning. ACL 2016.</a></li>
+<li><a href="https://arxiv.org/abs/1704.04368" target="_blank" rel="external">Get To The Point: Summarization with Pointer-Generator Networks. ACL 2017</a></li>
+<li><a href="http://link.zhihu.com/?target=http%3A//www.nlpr.ia.ac.cn/cip/shizhuhe/articles/acl2017-coreqa.pdf" target="_blank" rel="external">Generating Natural Answers by Incorporating Copying and Retrieving Mechanisms in Sequence-to-Sequence Learning. ACL 2017</a></li>
+</ul>
+<h1 id="Pointer-Network-Ptr-Net"><a href="#Pointer-Network-Ptr-Net" class="headerlink" title="Pointer Network(Ptr-Net)"></a>Pointer Network(Ptr-Net)</h1><p>主要来解决传统 Seq2Seq 中 output dictionary 大小固定(fixed prior)的问题。思路非常简单，实际上就是 attention Seq2Seq 的一个简化版本，不过产生的不是输出序列，而是指向输入序列的一堆指针(或者从输入序列中挑选一个元素进行输出)。论文解释了这种结构可以用来解决 <strong>旅行商(Travelling Salesman Problem)、凸包(convex hulls)</strong> 等问题。</p>
+<p><strong>结构对比:</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/PtrNet.png" class="ful-image" alt="PtrNet.png"></p>
+<p>还是先来看一下经典的 attention-based seq2seq， 在每一个 decoder step，先计算 $e_{ij}$ 得到对齐概率(或者说 how well input position j matches output position i)，然后做一个 softmax 得到 $a_{ij}$，再对 $a_{ij}$ 做一个加权和作为 context vector $c_i$，得到这个 context vector 之后在固定大小的 output dictionary 上做 softmax 预测输出的下一个单词。</p>
+<p><strong>经典 Attention:</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Machine%20Translation-Neuron%20models/birnnattention.png" class="ful-image" alt="birnnattention.png"></p>
+<p>而 Ptr-Net 不过是简化了后面的步骤，有了 $e_{ij}$ 后直接做 sofmax，可以得到一系列指向输入元素的指针 $a_{ij}$，最直观的用法就是对输入元素进行排序输出了。</p>
+<h1 id="CopyNet"><a href="#CopyNet" class="headerlink" title="CopyNet"></a>CopyNet</h1><p><strong>CopyNet</strong> 实现的是能够把输入中的部分信息原封不动的保留到输出中，相当于一个 refer back。一个简单的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Q: 你好呀，我叫毛毛</div><div class="line">A: 毛毛，你好，很高兴认识你</div></pre></td></tr></table></figure>
+<p>这个”毛毛”，可能是 OOV，也可能是其他实体或者是日期等很难被 decoder “还原” 出来的信息，CopyNet 可以更好的处理这类的信息。</p>
+<p>那么问题主要有两个：</p>
+<ul>
+<li><strong>What to copy: 输入中的哪些部分应该被 copy?</strong> </li>
+<li><strong>Where to paste: 应该把这部分信息 paste 到输出的哪个位置？</strong></li>
+</ul>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/CopyNet1.png" class="ful-image" alt="CopyNet1.png">
+<p>框架还是基于 attention-based encoder-decoder，不过在 decoder 的时候，做了部分改进，总的来说，下一个单词的预测是由一个 generate-mode g 和 copy-mode c 的混合概率模型决定的。</p>
+<p>$$p(y_t|s_t, y_{t-1}, c_t, M) = p(y_t, g|s_t, y_{t-1}, c_t, M) + p(y_t, c|s_t, y_{t-1}, c_t, M) $$</p>
+<p>要实现 CopyNet 需要有两个词汇表，一个是通常意义的高频词词汇表 V={$v_1,…,v_N$} 加上 OOV，另一个是在输入中出现的所有 unique words X={$x_1, …, x_{T_S}$}，这部分可能会包含没有在 V 里出现的单词，也就是 OOV 单词，第二个词汇表用来支持 CopyNet，最终输入的词汇表是三者的并集 $V  ∪ UNK ∪ X$。</p>
+<p>对 encoder 部分(双向 RNN) 的输出 $h_1, …, h_{T_S}$，记做 M，M 其实同时包含了 <strong>语义</strong> 和 <strong>位置</strong> 信息。decoder 部分对 M 的读取有两种形式：</p>
+<ul>
+<li><strong>Content-base</strong><br>Attentive read from word-embedding</li>
+<li><strong>location-base</strong><br>Selective read from location-specific hidden units</li>
+</ul>
+<p><strong>两种模式对应的 score function</strong><br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/CopyNet_mode.png" class="ful-image" alt="CopyNet_mode.png"></p>
+<p>$$<br>  \begin{aligned}<br>  φ(y_t=v_i) &amp;= v_i^TW_os_t, \ \ \ \ v_i ∈ V ∪ UNK \\<br>  φ(y_t=x_j) &amp;= σ(h_j^TW_c)s_t, \ \ \ \ vi ∈ V ∪ UNK \\<br>  \end{aligned}<br>$$</p>
+<p>$φ(y_t=v_i)$ 和普通的 RNN encoder-decoder 计算相同，$φ(y_t=x_j)$ 将 $h_t$ 和 $s_t$ 映射到了同一个语义空间，$\sigma$ 发现用 tanh 比较好，注意 $p(y_t, c|・)$ 的计算加总了所有 $x_j=y_t$ 的情况。</p>
+<p><strong>$s_t$ 的更新：</strong><br>在用 $y_{t-1}$ 更新 t 时刻的状态 $s_t$ 时，CopyNet 不仅仅考虑了词向量，还使用了 M 矩阵中特定位置的 hidden state，或者说，$y_{t-1}$ 的表示中就包含了这两个部分的信息 $[e(y_{t-1}); ζ(y_{t-1})]$，$e(y_{t-1})$ 是词向量，$ζ(y_{t-1})$ 和 attention 的形式差不多，是 M 矩阵中 hidden state 的加权和</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/similar_attention.png" class="ful-image" alt="similar_attention.png">
+<p>K 是 normalization term，直观上，是去找输入中也出现 $y_{t-1}$ 的单词对应的 hidden state，考虑到 $y_{t-1}$ 可能在输入中出现多次，$ρ_{tT}$ 更关注这些多次出现的词。</p>
+<p><strong>整条路径：</strong></p>
+<p>$$ζ(y_{t-1}) \longrightarrow{update} \ s_t \longrightarrow predict \ y_t \longrightarrow sel. read \  ζ(y_t)$$</p>
+<p>一些结果：<br><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/res.png" class="ful-image" alt="res.png"></p>
+<h1 id="Get-To-The-Point-Summarization-with-Pointer-Generator-Networks"><a href="#Get-To-The-Point-Summarization-with-Pointer-Generator-Networks" class="headerlink" title="Get To The Point: Summarization with Pointer-Generator Networks"></a>Get To The Point: Summarization with Pointer-Generator Networks</h1><p>Copy 机制在文本摘要中的应用。传统 attention-based seq2seq 存在下面两个问题</p>
+<ol>
+<li><strong>无法正确产生文中的事实细节</strong><br>e.g. <em>Germany beat Argentina 3-2</em><br>尤其是对 OOV 或者 rare word。在训练中不常见的单词的 word embedding 质量也不高，很难 reproduce，而即使 word embedding 很好，对一些命名实体，像是人名之类的，含义都很相似，也很难准确的 reproduce 出来<br>所以作者引入了一个 <strong>pointer-generator network</strong>，在 generation 的基础上，加入了 copy 输入中的一些词的能力来提高摘要的准确性，相当于引入了部分 extractive summary 的能力</li>
+<li><strong>倾向重复一些词组</strong><br>e.g. <em>Germany beat Germany beat Germany beat…</em><br>主要是因为 decoder 过程太过依赖于上一个单词，而不是 longer-term 的信息，所以一个重复的单词会 trigger 出死循环，比如上面这个例子就陷入了 Germany beat Germany beat Germany beat… 的死循环，产生不出 Germany beat Germany 2-0 这样的句子<br>所以有了 <strong>coverage</strong>，来追踪哪些部分已经被 summarize 过了，之后的 attention 就不会注意这些部分</li>
+</ol>
+<h2 id="Pointer-generation-network"><a href="#Pointer-generation-network" class="headerlink" title="Pointer-generation network"></a>Pointer-generation network</h2><img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/pointer_generator.png" class="ful-image" alt="pointer_generator.png">
+<p>上图展示了 decoder 的第三个 step，预测 Germany beat 后面一个单词，像之前一样，我们会计算一个 attention distribution 和 vocabulary distribution，不过同时，也会计算一个产生概率 $p_{gen}$，是 0-1 间的一个值，表示从 vocabulary 中产生一个单词的概率，相应的 $1-p_{gen}$ 就是从输入中 copy 一个单词的概率</p>
+<p>$$<br>  \begin{aligned}<br>  P(w) &amp;= p_{gen}P_{vocab}(w) + (1-p_{gen})\sum_{i:w_i=w}a_i^t \\<br>  p_{gen} &amp;= \sigma(w^T_{h^*}h^*_t + w^T_ss_t+w^T_xx_t+b_{ptr}) \\<br>  \end{aligned}<br>$$</p>
+<p>其中 $h^*_t$ 是 context vector，在前面我们用的是 $c_i$ 来表示。如果 w 是 OOV， 那么 $P_{vocab}=0$，如果 w 没有在输入中出现，那么 $\sum_{i:w_i=w}a_i^t=0$。</p>
+<h2 id="Coverage"><a href="#Coverage" class="headerlink" title="Coverage"></a>Coverage</h2><p>用 attention distribution 来记录哪些部分已经总结过了，来惩罚再次加入计算的部分。decoder 的每个时刻，有一个 coverage vector $c_t$ 来将记录之前所有时刻 attention 的总和。</p>
+<p>$$c^t=\sum^{t-1}_{t’=0}a^{t’}$$</p>
+<p>这个 coverage 会作为 attention 计算的一个输入<br>$$e^t_i=v^Ttanh(W_hh_i+W_ss_t+w_cc^t_i+b_{attn})$$</p>
+<p>对应的，有一个 coverage loss<br>$$covloss_t=\sum_imin(a^t_i,c^t_i)$$</p>
+<p>整体的 loss 就是<br>$$loss_t=-logP(w^*_t)+\lambda \sum_i min(a^t_i, c^t_i)$$</p>
+<h1 id="Generating-Natural-Answers-by-Incorporating-Copying-and-Retrieving-Mechanisms-in-Sequence-to-Sequence-Learning"><a href="#Generating-Natural-Answers-by-Incorporating-Copying-and-Retrieving-Mechanisms-in-Sequence-to-Sequence-Learning" class="headerlink" title="Generating Natural Answers by Incorporating Copying and Retrieving Mechanisms in Sequence-to-Sequence Learning"></a>Generating Natural Answers by Incorporating Copying and Retrieving Mechanisms in Sequence-to-Sequence Learning</h1><p>Copy 机制在问答系统中的应用。论文的模型用三种不同模式获取词汇并进行选取：<strong>用拷贝方式取得问句中的实体、用预测方式产生让答案更自然的连接词、用检索方式获取相关事实</strong> 并结合多个相关事实产生复杂问句的自然形式的答案。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/COREQA1.png" class="ful-image" alt="COREQA1.png">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Q: Do you know where was Jet Li from ?</div><div class="line">A1: Beijing.</div><div class="line">A2: Jet Li was born in Beijing. He is now a Singaporean citizen.</div></pre></td></tr></table></figure>
+<p>传统的 QA 系统只会返回 A1，一个孤零零的实体，这对用户并不友好，A2 才是自然语言形式的答案。COREQA 利用 <strong>拷贝(copy)、检索(retrieval)和预测(prediction)</strong> 从不同来源获取不同类型的词汇，产生复杂问句的自然答案。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/COREQA2.png" class="ful-image" alt="COREQA2.png">
+<p>具体过程，以 <strong>Do you know where was Jet Li from</strong> 这个问题为例来说明：</p>
+<ol>
+<li><strong>知识检索:</strong> 首先识别问题中的包含的 topic entities。这里我们识别出的 topic entity 是  Jet Li 。然后根据 entity 从知识库中检索出相关的三元组(subject, property, object)。针对李连杰这个实体，我们可以检索出(Jet Li, gender, Male)，(Jet Li, birthplace, Beijing)，(Jet, nationality, Singapore) 等三元组。</li>
+<li><strong>编码(Encoder):</strong> 将问题和检索到的知识编码成向量<br><strong>问题编码:</strong> 双向 RNN(Bi-RNN)，把前向和后向对应的 hidden state 拼接起来形成每一时刻的 short-term memory $M_Q={h_t}$，两个方向 RNN 的最后一个向量拿出来拼在一起就得到向量 q 来表示整个问题<br><strong>知识编码:</strong> 使用了记忆网络(Memory Network)，对知识检索阶段得到的知识三元组 spo 分别进行编码得到 $e_s, e_p, e_o$，拼接成一个 $f_i$ 来表示这个三元组，所有这些三元组向量形成一个 list，用 $M_{KB}$ 表示<br><strong>分数计算: </strong> $S(q, s_t, f_j) = DNN_1(q, s_t, f_j)$</li>
+<li><strong>解码(Decoder):</strong> 根据 $M_Q$ 和 $M_{KB}$ 来生成自然答案。单词预测有三种模式，predict-mode, copy-mode 和 retrieve-mode，predict-mode 和普通 seq2seq 原理相同，生成词汇表中的单词，copy-mode 从问句中复制单词，retrieve-mode 从知识库中选取单词。过程和 CopyNet 差不多，也有两种读取方式，一种是读取语义，一种是读取位置。</li>
+</ol>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/COREQA_formula1.png" class="ful-image" alt="COREQA_formula1.png">
+<p>$p_{pr}, p_{co}, p_{re}$ 以及对应的 score function 和前面的 CopyNet 非常相似，包括之后的 state update 部分也和 CopyNet 差不多，不过是多了 $r_{kb}$ 而已。</p>
+<img src="http://ox5l2b8f4.bkt.clouddn.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/COREQA_formula2.png" class="ful-image" alt="COREQA_formula2.png">
+<blockquote>
+<p><strong>参考链接：</strong><br><a href="https://zhuanlan.zhihu.com/p/26826765" target="_blank" rel="external">让问答更自然 - 基于拷贝和检索机制的自然答案生成系统研究 | 论文访谈间 #02</a></p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;关于 Point Network &amp;amp; CopyNet 的几篇论文笔记。&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+    
+      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+    
+    
+      <category term="text summarization" scheme="http://www.shuang0420.com/tags/text-summarization/"/>
+    
+      <category term="CopyNet" scheme="http://www.shuang0420.com/tags/CopyNet/"/>
+    
+      <category term="Pre-Net" scheme="http://www.shuang0420.com/tags/Pre-Net/"/>
     
   </entry>
   
