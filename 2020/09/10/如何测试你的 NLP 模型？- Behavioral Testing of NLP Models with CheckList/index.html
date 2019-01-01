@@ -105,7 +105,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/coreference.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/srl.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/logic.png">
-<meta property="og:updated_time" content="2020-09-10T12:26:31.575Z">
+<meta property="og:updated_time" content="2020-09-10T13:00:43.316Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何测试你的 NLP 模型？- Behavioral Testing of NLP Models with CheckList">
 <meta name="twitter:description" content="Best Paper at ACL 2020">
@@ -391,7 +391,7 @@
         <p>Best Paper at ACL 2020<br><a id="more"></a></p>
 <p>这篇 paper 要解决的问题就一个 <strong>How do I know if my model really works</strong>，为此作者提出了一个 NLP 模型的评估体系 CHECKLIST，这不是什么 SOTA 模型，也不是啥先进的 theory，就只是一套指导我们像测试软件一样测试模型的 <strong>方法论</strong> 而已，这个方法可以让我们了解 NLP 模型的能力，也能够指导我们去理解问题、解决问题。</p>
 <p>可能很多人都有这样的困惑，训练完一个模型，离线评估准确率 90%+，然而一到线上各种问题，效果却大跌眼镜，这是为什么呢？比较显而易见的一个原因是离线测试集和线上数据集分布的一个 discrepancy。我们的离线测试集通常是 held-out datasets，和训练集同分布，是从同一个数据集 split 来的，而这个数据集可能是不全面的，有偏的，也就是说，测试集和训练集一样有着相同的 bias，而线上数据集的分布可能不一样（out-of-distribution），所以在测试集上表现的好不一定意味着在相关数据集上表现的好。</p>
-<p>这个现象其实也被称作 shortcut learning，简单解释一下就是<strong>模型没有学习我们想让它学习的特征，而去学习了其他东西</strong>，比如说图像分类，模型在测试集上能正确区分出现在草地上的奶牛，但是一旦把奶牛移到别的场景里，模型就会分错，这个“草地”就是奶牛的 shortcut。那么模型究竟该学习哪种特征呢？下面一张图可能比较直观，如果模型学到的是 uninformative features，那么模型在训练集的表现就不会好，如果模型学到的是 overfitting features，那么模型在训练集上表现很好但是在测试集上表现很差，而如果模型学到的是 shortcut features，那么模型在训练集和测试集上表现都很好，但在相关的 o.o.d. 的测试集上表现却很差，只有模型在学习 intended features 的时候，才是我们想要的，模型才能有我们想要的泛化能力。更多可以看 <a href="https://arxiv.org/pdf/2004.07780.pdf" target="_blank" rel="external">Shortcut Learning in Deep Neural Networks</a></p>
+<p>与之伴随的可能是 shortcut learning，简单解释一下就是<strong>模型没有学习我们想让它学习的特征，而去学习了其他东西</strong>，比如说图像分类，模型在测试集上能正确区分出现在草地上的奶牛，但是一旦把奶牛移到别的场景里，模型就会分错，这个“草地”就是奶牛的 shortcut。那么模型究竟该学习哪种特征呢？下面一张图可能比较直观，如果模型学到的是 uninformative features，那么模型在训练集的表现就不会好，如果模型学到的是 overfitting features，那么模型在训练集上表现很好但是在测试集上表现很差，而如果模型学到的是 shortcut features，那么模型在训练集和测试集上表现都很好，但在相关的 o.o.d. 的测试集上表现却很差，只有模型在学习 intended features 的时候，才是我们想要的，模型才能有我们想要的泛化能力。更多可以看 <a href="https://arxiv.org/pdf/2004.07780.pdf" target="_blank" rel="external">Shortcut Learning in Deep Neural Networks</a></p>
 <img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/shortcut.png" class="ful-image" alt="shortcut.png">
 <p>另一方面，现在的模型评估一般评估的都是整体表现，像是准确率、召回率等，这些能判断模型整体怎么样，但却无法简单的通过这个指标去找模型可能存在的 bug。要知道我们的模型肯定不是完美的，我们希望像软件测试一样，能有一个测试体系来指导我们分析问题原因、指导解决具体问题，便于我们进一步优化。尽管也有一些 paper 会针对单个任务或某几种特定能力提出一些分析的指标，但是并没有一个 comprehensive guidance。</p>
 <p>于是这么看来，作者凭借一个启发性的测试框架夺得 2020 ACL best paper，也就更加合理了。CEHCKLIST 借鉴了软件设计里面的黑盒测试，通过验证输入-输出的行为来测试一个系统的不同方面的能力，测试人员并不需要知道模型结构就可以去测试。而整个测试体系从<strong>语义</strong>上拆分成了各个更细的能力（linguistic capabilities），通过不同的表现方式（test types）来进行测试。除此之外，还提供了快速构建 test cases 的一系列方法和工具。在此基础上，作者用 CHECKLIST 对现在一些商用的 NLP 产品和 SOTA 模型进行了测试，结论是无论是大厂的付费接口还是知名的开源项目（BERT/RoBERTa），在这些能力上表现的都很糟糕，有些能力上错误率会到 80-90%，甚至 100%。</p>
@@ -720,7 +720,7 @@
 <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
