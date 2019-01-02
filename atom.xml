@@ -4,9 +4,9 @@
   <subtitle>Shuang</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://www.shuang0420.com/"/>
+  <link href="http://www.shuang0420.cn/"/>
   <updated>2020-09-10T13:00:43.316Z</updated>
-  <id>http://www.shuang0420.com/</id>
+  <id>http://www.shuang0420.cn/</id>
   
   <author>
     <name>徐阿衡</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>如何测试你的 NLP 模型？- Behavioral Testing of NLP Models with CheckList</title>
-    <link href="http://www.shuang0420.com/2020/09/10/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/"/>
-    <id>http://www.shuang0420.com/2020/09/10/如何测试你的 NLP 模型？- Behavioral Testing of NLP Models with CheckList/</id>
+    <link href="http://www.shuang0420.cn/2020/09/10/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/"/>
+    <id>http://www.shuang0420.cn/2020/09/10/如何测试你的 NLP 模型？- Behavioral Testing of NLP Models with CheckList/</id>
     <published>2020-09-10T02:02:27.000Z</published>
     <updated>2020-09-10T13:00:43.316Z</updated>
     
@@ -102,21 +102,21 @@
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/tags/NLP/"/>
     
   </entry>
   
   <entry>
     <title>Slice-based learning - 基于数据切片的学习</title>
-    <link href="http://www.shuang0420.com/2020/06/16/Slice-based%20learning%20-%20%E5%9F%BA%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%88%87%E7%89%87%E7%9A%84%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://www.shuang0420.com/2020/06/16/Slice-based learning - 基于数据切片的学习/</id>
+    <link href="http://www.shuang0420.cn/2020/06/16/Slice-based%20learning%20-%20%E5%9F%BA%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%88%87%E7%89%87%E7%9A%84%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://www.shuang0420.cn/2020/06/16/Slice-based learning - 基于数据切片的学习/</id>
     <published>2020-06-16T02:02:27.000Z</published>
-    <updated>2020-06-16T13:25:49.853Z</updated>
+    <updated>2020-09-10T12:26:31.674Z</updated>
     
     <content type="html"><![CDATA[<p>Slice-based learning 的目的是为了提高模型在特定的数据子集上的表现。<br><a id="more"></a></p>
 <p>正常模型的学习目标是优化模型在整个数据集上的指标，而有时候我们想在此基础上，提高模型在一些特定的重要数据子集上的指标。 因为在实际应用场景中，除了模型整体的表现，我们也关注甚至更关注模型在一些重要的子集上的表现，这些数据子集通常出现频率少但又格外的重要，比如自动驾驶模型中与安全相关的一些数据子集（如检测路上的骑自行车的人）。而 <a href="https://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1909.06349.pdf" target="_blank" rel="external">Slice-based learning</a> 的目的就是为了提高模型在这些特定的数据子集上的表现。</p>
@@ -156,21 +156,21 @@
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/tags/NLP/"/>
     
   </entry>
   
   <entry>
     <title>Sequential transfer learning in NLP</title>
-    <link href="http://www.shuang0420.com/2020/06/01/Sequential%20transfer%20learning%20in%20NLP/"/>
-    <id>http://www.shuang0420.com/2020/06/01/Sequential transfer learning in NLP/</id>
+    <link href="http://www.shuang0420.cn/2020/06/01/Sequential%20transfer%20learning%20in%20NLP/"/>
+    <id>http://www.shuang0420.cn/2020/06/01/Sequential transfer learning in NLP/</id>
     <published>2020-06-01T02:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.148Z</updated>
+    <updated>2020-09-10T12:55:04.553Z</updated>
     
     <content type="html"><![CDATA[<p>NAACL 2019 tutorial on “Transfer Learning in Natural Language Processing” 的部分笔记，资料链接见文末。<br><a id="more"></a></p>
 <img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/types.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/types.png">
@@ -361,23 +361,23 @@
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/tags/NLP/"/>
     
-      <category term="Transfer Learning" scheme="http://www.shuang0420.com/tags/Transfer-Learning/"/>
+      <category term="Transfer Learning" scheme="http://www.shuang0420.cn/tags/Transfer-Learning/"/>
     
   </entry>
   
   <entry>
     <title>论文笔记 - Pre-trained Models for Natural Language Processing</title>
-    <link href="http://www.shuang0420.com/2020/05/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/"/>
-    <id>http://www.shuang0420.com/2020/05/07/论文笔记 - Pre-trained Models for Natural Language Processing/</id>
+    <link href="http://www.shuang0420.cn/2020/05/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/"/>
+    <id>http://www.shuang0420.cn/2020/05/07/论文笔记 - Pre-trained Models for Natural Language Processing/</id>
     <published>2020-05-07T02:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.154Z</updated>
+    <updated>2020-09-10T12:26:31.662Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/2003.08271" target="_blank" rel="external">Pre-trained Models for Natural Language Processing: A Survey</a> 花了一上午看完的综述，强烈推荐每个 NLPer 都读一读，很长一段时间内都能当做工具书来用（下一个 break-through 来临前）。<br><a id="more"></a></p>
 <p>这篇作为笔记就记录下一些个人认为的重点，方便日后查阅。（不解释基础概念/模型，适合熟悉 PTMs 的人阅读）</p>
@@ -557,23 +557,23 @@
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/tags/NLP/"/>
     
-      <category term="PTM" scheme="http://www.shuang0420.com/tags/PTM/"/>
+      <category term="PTM" scheme="http://www.shuang0420.cn/tags/PTM/"/>
     
   </entry>
   
   <entry>
     <title>NLP 2018 Highlights</title>
-    <link href="http://www.shuang0420.com/2019/01/20/NLP%202018%20Highlights/"/>
-    <id>http://www.shuang0420.com/2019/01/20/NLP 2018 Highlights/</id>
+    <link href="http://www.shuang0420.cn/2019/01/20/NLP%202018%20Highlights/"/>
+    <id>http://www.shuang0420.cn/2019/01/20/NLP 2018 Highlights/</id>
     <published>2019-01-20T01:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.145Z</updated>
+    <updated>2020-09-10T12:26:31.647Z</updated>
     
     <content type="html"><![CDATA[<p>近来很多大拿做了 2018 年 NLP 的回顾，今天推荐一波 Elvis Saravia 的一篇报告，总结了上一年 NLP 学术界和工业界发生的大事，也包括 SOTA 的论文结果及有趣的研究方向，每个 NLPer 闲下来都可以读一读。<br><a id="more"></a></p>
 <img src="http://images.shuang0420.com/images/NLP%202018%20highlights/contents1.png" class="ful-image" alt="/Users/xushuang/blog/static/images/NLP%202018%20highlights/contents1.png">
@@ -619,27 +619,27 @@
     
     </summary>
     
-      <category term="Others" scheme="http://www.shuang0420.com/categories/Others/"/>
+      <category term="Others" scheme="http://www.shuang0420.cn/categories/Others/"/>
     
     
-      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+      <category term="AI" scheme="http://www.shuang0420.cn/tags/AI/"/>
     
-      <category term="AI" scheme="http://www.shuang0420.com/tags/AI/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/tags/NLP/"/>
     
-      <category term="chatbot" scheme="http://www.shuang0420.com/tags/chatbot/"/>
+      <category term="chatbot" scheme="http://www.shuang0420.cn/tags/chatbot/"/>
     
   </entry>
   
   <entry>
     <title>知识抽取-事件抽取</title>
-    <link href="http://www.shuang0420.com/2018/10/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/"/>
-    <id>http://www.shuang0420.com/2018/10/15/知识抽取-事件抽取/</id>
+    <link href="http://www.shuang0420.cn/2018/10/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/"/>
+    <id>http://www.shuang0420.cn/2018/10/15/知识抽取-事件抽取/</id>
     <published>2018-10-15T11:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.145Z</updated>
+    <updated>2020-09-10T12:26:31.646Z</updated>
     
     <content type="html"><![CDATA[<p>接上一篇知识抽取-实体及关系抽取，前置知识在这一篇不多做解释啦。<br><a id="more"></a></p>
 <p>事件是促使事情状态和关系改变的条件[Dong et.al., 2010]。目前已存在的知识资源（如维基百科等） 所描述实体及实体间的关系大多是静态的，而事件能描述粒度更大的、动态的、 结构化的知识，是现有知识资源的重要补充。</p>
-<p>与<a href="http://www.shuang0420.com/2018/09/15/知识抽取-实体及关系抽取/">关系抽取</a>相比，事件抽取同样需要从文本中抽取 predicate 和对应的 arguments，但不同的是，关系抽取的问题是 binary 的，且两个 arguments 通常都会在同一个句子中出现，而事件抽取的难点在于，有多个 arguments 和 modifiers，可能会分布在多个句子中，且有些 arguments 不是必须的（some of which are omitted in any given instance of an event），这使得 bootstrapping/distant learning/coreference 都变得非常困难。</p>
+<p>与<a href="http://www.shuang0420.com/2018/09/15/知识抽取-实体及关系抽取/" target="_blank" rel="external">关系抽取</a>相比，事件抽取同样需要从文本中抽取 predicate 和对应的 arguments，但不同的是，关系抽取的问题是 binary 的，且两个 arguments 通常都会在同一个句子中出现，而事件抽取的难点在于，有多个 arguments 和 modifiers，可能会分布在多个句子中，且有些 arguments 不是必须的（some of which are omitted in any given instance of an event），这使得 bootstrapping/distant learning/coreference 都变得非常困难。</p>
 <p>事件抽取的任务可以分两大类：</p>
 <ul>
 <li><strong>事件识别和抽取</strong><br>从描述事件信息的文本中识别并抽取出事件信息并以结构化的形式呈现出来，包括发生的时间、地点、参与角色以及与之相关的动作或者状态的改变。</li>
@@ -836,29 +836,29 @@
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Knowledge Graph" scheme="http://www.shuang0420.com/categories/NLP/Knowledge-Graph/"/>
+      <category term="Knowledge Graph" scheme="http://www.shuang0420.cn/categories/NLP/Knowledge-Graph/"/>
     
     
-      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/tags/NLP/"/>
     
-      <category term="Relation Extraction" scheme="http://www.shuang0420.com/tags/Relation-Extraction/"/>
+      <category term="Relation Extraction" scheme="http://www.shuang0420.cn/tags/Relation-Extraction/"/>
     
-      <category term="Information Extraction" scheme="http://www.shuang0420.com/tags/Information-Extraction/"/>
+      <category term="Information Extraction" scheme="http://www.shuang0420.cn/tags/Information-Extraction/"/>
     
-      <category term="Event Extraction" scheme="http://www.shuang0420.com/tags/Event-Extraction/"/>
+      <category term="Event Extraction" scheme="http://www.shuang0420.cn/tags/Event-Extraction/"/>
     
   </entry>
   
   <entry>
     <title>知识抽取-实体及关系抽取</title>
-    <link href="http://www.shuang0420.com/2018/09/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/"/>
-    <id>http://www.shuang0420.com/2018/09/15/知识抽取-实体及关系抽取/</id>
+    <link href="http://www.shuang0420.cn/2018/09/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/"/>
+    <id>http://www.shuang0420.cn/2018/09/15/知识抽取-实体及关系抽取/</id>
     <published>2018-09-15T11:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.116Z</updated>
+    <updated>2020-09-10T12:26:31.602Z</updated>
     
-    <content type="html"><![CDATA[<p>这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 <a href="http://www.shuang0420.com/2017/03/18/NLP%20笔记%20-Information%20Extraction/">NLP笔记 - Information Extraction</a> 和 <a href="http://www.shuang0420.com/2017/04/10/NLP笔记%20-%20Relation%20Extraction/">NLP笔记 - Relation Extraction</a>，梳理了知识抽取的基本方法，包括传统机器学习及经典的深度学习方法。</p>
+    <content type="html"><![CDATA[<p>这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 <a href="http://www.shuang0420.com/2017/03/18/NLP%20笔记%20-Information%20Extraction/" target="_blank" rel="external">NLP笔记 - Information Extraction</a> 和 <a href="http://www.shuang0420.com/2017/04/10/NLP笔记%20-%20Relation%20Extraction/" target="_blank" rel="external">NLP笔记 - Relation Extraction</a>，梳理了知识抽取的基本方法，包括传统机器学习及经典的深度学习方法。</p>
 <a id="more"></a>
 <p>知识抽取涉及的“知识”通常是 <strong>清楚的、事实性的信息</strong>，这些信息来自不同的来源和结构，而对不同数据源进行的知识抽取的方法各有不同，从结构化数据中获取知识用 D2R，其难点在于复杂表数据的处理，包括嵌套表、多列、外键关联等，从链接数据中获取知识用图映射，难点在于数据对齐，从半结构化数据中获取知识用包装器，难点在于 wrapper 的自动生成、更新和维护，这一篇主要讲从文本中获取知识，也就是我们广义上说的信息抽取。</p>
 <img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/general.png">
@@ -951,7 +951,7 @@
 </ol>
 <h2 id="深度学习方法"><a href="#深度学习方法" class="headerlink" title="深度学习方法"></a>深度学习方法</h2><h3 id="LSTM-CRF"><a href="#LSTM-CRF" class="headerlink" title="LSTM+CRF"></a>LSTM+CRF</h3><p>最经典的 <a href="hiheng Huang, Wei Xu, Kai Yu. Bidirectional LSTM-CRF Models for Sequence Tagging. CoRR. 2015">LSTM+CRF</a>，端到端的判别式模型，LSTM 利用过去的输入特征，CRF 利用句子级的标注信息，可以有效地使用过去和未来的标注来预测当前的标注。</p>
 <img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/LSTM%2BCRF.png">
-<h2 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h2><p>评估 IR 系统或者文本分类的任务，我们通常会用到 precision，recall，F1 这种 set-based metrics，见<a href="http://www.shuang0420.com/2016/09/20/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/">信息检索评价的 Unranked Boolean Retrieval Model 部分</a>，但是在这里对 NER 这种 sequence 类型任务的评估，如果用这些 metrics，可能出现 boundary error 之类的问题。因为 NER 的评估是按每个 entity 而不是每个 token 来计算的，我们需要看 entity 的 boundary。</p>
+<h2 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h2><p>评估 IR 系统或者文本分类的任务，我们通常会用到 precision，recall，F1 这种 set-based metrics，见<a href="http://www.shuang0420.com/2016/09/20/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/" target="_blank" rel="external">信息检索评价的 Unranked Boolean Retrieval Model 部分</a>，但是在这里对 NER 这种 sequence 类型任务的评估，如果用这些 metrics，可能出现 boundary error 之类的问题。因为 NER 的评估是按每个 entity 而不是每个 token 来计算的，我们需要看 entity 的 boundary。</p>
 <p>以下面一句话为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">First Bank of Chicago announced earnings...</div></pre></td></tr></table></figure></p>
 <p>正确的 NE 应该是 First Bank of Chicago，类别是 ORG，然而系统识别了 Bank of Chicago，类别 ORG，也就是说，右边界(right boundary)是对的，但是左边界(left boundary)是错误的，这其实是一个常见的错误。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">正确的标注：</div><div class="line">ORG - (1,4)</div><div class="line"></div><div class="line">系统：</div><div class="line">ORG - (2,4)</div></pre></td></tr></table></figure>
@@ -1191,27 +1191,27 @@
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Knowledge Graph" scheme="http://www.shuang0420.com/categories/NLP/Knowledge-Graph/"/>
+      <category term="Knowledge Graph" scheme="http://www.shuang0420.cn/categories/NLP/Knowledge-Graph/"/>
     
     
-      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/tags/NLP/"/>
     
-      <category term="Relation Extraction" scheme="http://www.shuang0420.com/tags/Relation-Extraction/"/>
+      <category term="Relation Extraction" scheme="http://www.shuang0420.cn/tags/Relation-Extraction/"/>
     
-      <category term="Information Extraction" scheme="http://www.shuang0420.com/tags/Information-Extraction/"/>
+      <category term="Information Extraction" scheme="http://www.shuang0420.cn/tags/Information-Extraction/"/>
     
   </entry>
   
   <entry>
     <title>99/100 天纪念日 - 第 1 期</title>
-    <link href="http://www.shuang0420.com/2018/08/06/love99/"/>
-    <id>http://www.shuang0420.com/2018/08/06/love99/</id>
+    <link href="http://www.shuang0420.cn/2018/08/06/love99/"/>
+    <id>http://www.shuang0420.cn/2018/08/06/love99/</id>
     <published>2018-08-06T13:10:03.000Z</published>
-    <updated>2020-06-16T13:21:44.101Z</updated>
+    <updated>2020-09-10T12:26:31.576Z</updated>
     
-    <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
+    <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
     
     <summary type="html">
     
@@ -1220,16 +1220,16 @@
     </summary>
     
     
-      <category term="小心情" scheme="http://www.shuang0420.com/tags/%E5%B0%8F%E5%BF%83%E6%83%85/"/>
+      <category term="小心情" scheme="http://www.shuang0420.cn/tags/%E5%B0%8F%E5%BF%83%E6%83%85/"/>
     
   </entry>
   
   <entry>
     <title>2018 CCF-GAIR 参会笔记 - NLP 专场</title>
-    <link href="http://www.shuang0420.com/2018/08/06/2018%20CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0%20-%20NLP%20%E4%B8%93%E5%9C%BA/"/>
-    <id>http://www.shuang0420.com/2018/08/06/2018 CCF-GAIR 参会笔记 - NLP 专场/</id>
+    <link href="http://www.shuang0420.cn/2018/08/06/2018%20CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0%20-%20NLP%20%E4%B8%93%E5%9C%BA/"/>
+    <id>http://www.shuang0420.cn/2018/08/06/2018 CCF-GAIR 参会笔记 - NLP 专场/</id>
     <published>2018-08-06T01:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.120Z</updated>
+    <updated>2020-09-10T12:26:31.608Z</updated>
     
     <content type="html"><![CDATA[<p>这篇居然忘了发了……<br><a id="more"></a></p>
 <h1 id="孙茂松-漫谈基于深度学习的中文计算"><a href="#孙茂松-漫谈基于深度学习的中文计算" class="headerlink" title="孙茂松 - 漫谈基于深度学习的中文计算"></a>孙茂松 - 漫谈基于深度学习的中文计算</h1><p>强调的一个概念是 <strong>中文自然语言处理需要加入专家知识</strong>。主要介绍的工作是 <strong>词表学习</strong>：</p>
@@ -1270,12 +1270,12 @@
 <p>重点讲的是第二类，具体讲了两个部分，一是<strong>快速召回</strong>，二是<strong>深度匹配</strong>。</p>
 <h2 id="无监督-快速检索"><a href="#无监督-快速检索" class="headerlink" title="无监督-快速检索"></a>无监督-快速检索</h2><p>提高快速召回（无监督的快速检索）的三种方案，<strong>基于词汇计数（Lexical term counting）</strong>、<strong>基于语言模型</strong>、<strong>基于向量化</strong>。</p>
 <p><img src="https://static.leiphone.com/uploads/new/article/740_740/201807/5b433cd974e8a.png?imageMogr2/format/jpg/quality/90" alt="腾讯知文团队负责人钟黎：从 0 到1  打造下一代智能对话引擎 | CCF-GAIR 2018"></p>
-<p>很多是信息检索的思路，在 <strong><a href="http://www.shuang0420.com/categories/NLP/Search-Engines/">信息检索专题类</a></strong> 的博客都有探讨过。</p>
+<p>很多是信息检索的思路，在 <strong><a href="http://www.shuang0420.com/categories/NLP/Search-Engines/" target="_blank" rel="external">信息检索专题类</a></strong> 的博客都有探讨过。</p>
 <h2 id="有监督-深度匹配"><a href="#有监督-深度匹配" class="headerlink" title="有监督-深度匹配"></a>有监督-深度匹配</h2><p>深度匹配的两类常用方法，<strong>Siamese 网络</strong> 和 <strong>基于交互矩阵的网络</strong>。</p>
 <p><strong>Siamese 网络</strong>的基本思路：两个输入用同一个编码器进行编码，然后做相似度的计算，特点是共享网络结构和参数；</p>
 <p><strong>基于交互矩阵的网络</strong>：除了最后的相关性度量，中间过程里两个输入的某些词也会有交互。</p>
 <p>问句较短时/短文档时两类网络一般能打成平手，但对长文档而言，基于交互矩阵的网络就会有更好的表现。</p>
-<p>再后面还讲了如何在非结构化文档里寻找信息和答案，具体应用是机器阅读理解（MRC），<strong><a href="http://www.shuang0420.com/tags/阅读理解/">系列博客</a></strong>也有提到。</p>
+<p>再后面还讲了如何在非结构化文档里寻找信息和答案，具体应用是机器阅读理解（MRC），<strong><a href="http://www.shuang0420.com/tags/阅读理解/" target="_blank" rel="external">系列博客</a></strong>也有提到。</p>
 <p>最后总结了下业界问答系统建设的一些心得：</p>
 <ol>
 <li>要重视 Baseline。</li>
@@ -1291,23 +1291,23 @@
     
     </summary>
     
-      <category term="Others" scheme="http://www.shuang0420.com/categories/Others/"/>
+      <category term="Others" scheme="http://www.shuang0420.cn/categories/Others/"/>
     
     
-      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+      <category term="AI" scheme="http://www.shuang0420.cn/tags/AI/"/>
     
-      <category term="AI" scheme="http://www.shuang0420.com/tags/AI/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/tags/NLP/"/>
     
-      <category term="chatbot" scheme="http://www.shuang0420.com/tags/chatbot/"/>
+      <category term="chatbot" scheme="http://www.shuang0420.cn/tags/chatbot/"/>
     
   </entry>
   
   <entry>
     <title>论文梳理：问题生成(QG)与答案生成(QA)的结合</title>
-    <link href="http://www.shuang0420.com/2018/07/08/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90(QG)%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90(QA)%E7%9A%84%E7%BB%93%E5%90%88/"/>
-    <id>http://www.shuang0420.com/2018/07/08/论文梳理：问题生成(QG)与答案生成(QA)的结合/</id>
+    <link href="http://www.shuang0420.cn/2018/07/08/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90(QG)%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90(QA)%E7%9A%84%E7%BB%93%E5%90%88/"/>
+    <id>http://www.shuang0420.cn/2018/07/08/论文梳理：问题生成(QG)与答案生成(QA)的结合/</id>
     <published>2018-07-08T05:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.172Z</updated>
+    <updated>2020-09-10T12:26:31.690Z</updated>
     
     <content type="html"><![CDATA[<p>继续 QG，梳理一下 MSRA 其他 3 篇关于 QG 的 paper：<br><a id="more"></a></p>
 <ul>
@@ -1317,8 +1317,8 @@
 </ul>
 <p>QG 系列其他的笔记：</p>
 <ul>
-<li><a href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/">论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</a></li>
-<li><a href="http://www.shuang0420.com/2018/04/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/">论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets</a></li>
+<li><a href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/" target="_blank" rel="external">论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</a></li>
+<li><a href="http://www.shuang0420.com/2018/04/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/" target="_blank" rel="external">论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets</a></li>
 </ul>
 <p>目前的 QA 大多是<strong>抽取式（extractive）</strong>的任务，答案是文本中的一个连续片段，通常是命名实体这类语义概念，而 QG 是<strong>生成式的（abstractive）</strong>，问句是完整句子，部分单词可能是文档中没出现过的，很多情况下，问句和答案的语言结构不同，因此甚至可以看做两种不同类型的数据。所以第 1 篇 <strong>SynNet 就把答案生成当作序列标注任务，把 QG 当作生成任务</strong>；第 3 篇 <strong>Joint Model 从另一个角度出发，把 QA 和 QG 都当作生成任务，放到同一个 encoder-decoder 框架下，用转变输入数据来实现联合训练</strong>，用 pointer-softmax 来处理抽取/生成问题。</p>
 <p>另外，QA 和 QG 任务在概率上是有联系的，可以通过 q、a 的联合概率分布联系起来，P(q|a) 就是 QG 模型，P(a|q) 类似 QA 模型，于是第 2 篇 <strong>dual tasks 就把这两个任务当做对偶任务，用一个正则项把两个任务联合在一起</strong>。<br>$$P(q,a)=P(a)P(q|a)=P(q)P(a|q)$$</p>
@@ -1356,10 +1356,10 @@
 <blockquote>
 <p>We ﬁrst report results on the MARCO and SQUAD datasets. As the dataset is splitted by ourselves, we do not have pre- viously reported results for comparison. </p>
 </blockquote>
-<h1 id="A-Joint-Model-for-Question-Answering-and-Question-Generation"><a href="#A-Joint-Model-for-Question-Answering-and-Question-Generation" class="headerlink" title="A Joint Model for Question Answering and Question Generation"></a>A Joint Model for Question Answering and Question Generation</h1><p>这篇和上篇都是讲怎么同时生成答案和问题，不同的是上篇通过一个 dual regularization term 将两者联合起来训练，这里把 QA 和 QG 任务都作为生成任务，模型基本结构还是 <strong>Seq2Seq + Attention + Pointer Softmax</strong>，和之前提到的一篇  <a href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/">论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</a> 差不多。输入是文档，以及一个 condition sequence，在 QA 任务里表现为 question word sequence，给定 question 生成 answer；QG 任务里表现为 answer word sequence，给定 answer 生成 qestion，condition 由一个0/1 变量来控制，表示收到的数据是给 a-gen 还是给 q-gen。Joint training 通过对输入数据的转换实现。</p>
+<h1 id="A-Joint-Model-for-Question-Answering-and-Question-Generation"><a href="#A-Joint-Model-for-Question-Answering-and-Question-Generation" class="headerlink" title="A Joint Model for Question Answering and Question Generation"></a>A Joint Model for Question Answering and Question Generation</h1><p>这篇和上篇都是讲怎么同时生成答案和问题，不同的是上篇通过一个 dual regularization term 将两者联合起来训练，这里把 QA 和 QG 任务都作为生成任务，模型基本结构还是 <strong>Seq2Seq + Attention + Pointer Softmax</strong>，和之前提到的一篇  <a href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/" target="_blank" rel="external">论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</a> 差不多。输入是文档，以及一个 condition sequence，在 QA 任务里表现为 question word sequence，给定 question 生成 answer；QG 任务里表现为 answer word sequence，给定 answer 生成 qestion，condition 由一个0/1 变量来控制，表示收到的数据是给 a-gen 还是给 q-gen。Joint training 通过对输入数据的转换实现。</p>
 <p>Pointer-softmax 一定程度上能解决 extractive/abstractive 的混合问题，通过选择 copy 文档的单词还是生成词汇表的单词来产生下一个单词，表达了 extractive/abstractive 的切换。这带来的一个额外好处是<strong>可以产生 abstractive answer</strong>。</p>
 <p>具体来讲，Encoder 里，词向量和字向量拼接得到 word embedding，其中字向量用 BiLSTM 产生，word embedding 经过另一个 BiLSTM 编码得到文档编码 $h^d_i$ 和条件序列的编码 $h^c_j$。</p>
-<p>条件序列的另一种编码是“抽取式的”，也就是从 document encoding 中直接抽取出出现在 condition sequence 中的单词的对应部分，这和 <a href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/">论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</a> 原理相同。然后抽取的向量经过 BiLSTM 产生对应编码 $h^e_k$。两种条件序列的编码 $h^c_j$ 和 $h^e_k$ 的 final state 分别为 $h^c_J$ 和 $h^e_K$。在 a-gen mode 也就是对问句进行编码是采用 $h^c_J$，在 q-gen mode 也就是对答案进行编码时采用 $h^e_K$，相当于模拟了 extractive 和 abstractive 的特性。</p>
+<p>条件序列的另一种编码是“抽取式的”，也就是从 document encoding 中直接抽取出出现在 condition sequence 中的单词的对应部分，这和 <a href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/" target="_blank" rel="external">论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</a> 原理相同。然后抽取的向量经过 BiLSTM 产生对应编码 $h^e_k$。两种条件序列的编码 $h^c_j$ 和 $h^e_k$ 的 final state 分别为 $h^c_J$ 和 $h^e_K$。在 a-gen mode 也就是对问句进行编码是采用 $h^c_J$，在 q-gen mode 也就是对答案进行编码时采用 $h^e_K$，相当于模拟了 extractive 和 abstractive 的特性。</p>
 <p>Decoder 用了 pointer-softmax mechanism，比之前的工作复杂一些。用了两个 LSTM cell $c_1$、$c_2$<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90%28QG%29%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90%28QA%29%E7%9A%84%E7%BB%93%E5%90%88/joint_model1.png" class="ful-image" alt="joint_model1.png"></p>
 <p>context vector:<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90%28QG%29%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90%28QA%29%E7%9A%84%E7%BB%93%E5%90%88/joint_model2.png" class="ful-image" alt="joint_model2.png"></p>
 <p>distribution over the document word position:<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90%28QG%29%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90%28QA%29%E7%9A%84%E7%BB%93%E5%90%88/joint_model3.png" class="ful-image" alt="joint_model3.png"></p>
@@ -1384,27 +1384,27 @@
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="Machine Comprehension" scheme="http://www.shuang0420.com/tags/Machine-Comprehension/"/>
+      <category term="Machine Comprehension" scheme="http://www.shuang0420.cn/tags/Machine-Comprehension/"/>
     
-      <category term="阅读理解" scheme="http://www.shuang0420.com/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/"/>
+      <category term="阅读理解" scheme="http://www.shuang0420.cn/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/"/>
     
-      <category term="Question Generation" scheme="http://www.shuang0420.com/tags/Question-Generation/"/>
+      <category term="Question Generation" scheme="http://www.shuang0420.cn/tags/Question-Generation/"/>
     
-      <category term="问题生成" scheme="http://www.shuang0420.com/tags/%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90/"/>
+      <category term="问题生成" scheme="http://www.shuang0420.cn/tags/%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90/"/>
     
   </entry>
   
   <entry>
     <title>论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</title>
-    <link href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/"/>
-    <id>http://www.shuang0420.com/2018/06/03/论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation/</id>
+    <link href="http://www.shuang0420.cn/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/"/>
+    <id>http://www.shuang0420.cn/2018/06/03/论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation/</id>
     <published>2018-06-03T05:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.155Z</updated>
+    <updated>2020-09-10T12:26:31.664Z</updated>
     
     <content type="html"><![CDATA[<p>继续来瞅瞅问题生成~<br><a id="more"></a></p>
 <p>QG 的应用还是挺广泛的，像是<strong>为 QA 任务产生训练数据、自动合成 FAQ 文档、自动辅导系统（automatic tutoring systems）</strong>等。</p>
@@ -1413,7 +1413,7 @@
 <ul>
 <li><a href="http://www.aclweb.org/anthology/P16-1056" target="_blank" rel="external">Generating factoid questions with recurrent neural networks: The 30m factoid question-answer corpus</a><br>将 KB 三元组转化为问句</li>
 <li><a href="https://www.aclweb.org/anthology/P16-1170" target="_blank" rel="external">Generating natural questions about an image</a><br>从图片生成问题</li>
-<li><a href="https://arxiv.org/abs/1702.02206" target="_blank" rel="external">Semi-supervised QA with generative domain-adaptive nets</a><br>用 domain-adaptive networks 的方法做 QA 的数据增强<br><a href="http://www.shuang0420.com/2018/04/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/">论文笔记</a></li>
+<li><a href="https://arxiv.org/abs/1702.02206" target="_blank" rel="external">Semi-supervised QA with generative domain-adaptive nets</a><br>用 domain-adaptive networks 的方法做 QA 的数据增强<br><a href="http://www.shuang0420.com/2018/04/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/" target="_blank" rel="external">论文笔记</a></li>
 </ul>
 <p>神经网络做 QG 基本套路还是 encoder-decoder 模型，对 P(q|d) 或者 P(q|d, a) 进行建模。像是 17年 ACL 的 paper  <a href="https://arxiv.org/abs/1705.00106" target="_blank" rel="external">Learning to Ask: Neural Question Generation for Reading Comprehension</a>，就是用一个基本的 attention-based seq2seq 模型对 P(q|d) 进行建模，并在 encoder 引入了句子和段落级的编码。</p>
 <p>这一篇 Microsoft Maluuba 出的 paper 把 answer 作为先验知识，对 P(q|d, a) 进行建模。同时用监督学习和强化学习结合的方法来训练 QG，先用最大似然预训练一波，然后用 policy gradient 方法进行 fine-tune ，最大化能反映问题质量的一些 rewards。</p>
@@ -1465,27 +1465,27 @@ $\hat a$ 表示在 answer 中出现但没有在 groud-truth question 中出现�
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="Machine Comprehension" scheme="http://www.shuang0420.com/tags/Machine-Comprehension/"/>
+      <category term="Machine Comprehension" scheme="http://www.shuang0420.cn/tags/Machine-Comprehension/"/>
     
-      <category term="阅读理解" scheme="http://www.shuang0420.com/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/"/>
+      <category term="阅读理解" scheme="http://www.shuang0420.cn/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/"/>
     
-      <category term="Question Generation" scheme="http://www.shuang0420.com/tags/Question-Generation/"/>
+      <category term="Question Generation" scheme="http://www.shuang0420.cn/tags/Question-Generation/"/>
     
-      <category term="问题生成" scheme="http://www.shuang0420.com/tags/%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90/"/>
+      <category term="问题生成" scheme="http://www.shuang0420.cn/tags/%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90/"/>
     
   </entry>
   
   <entry>
     <title>论文笔记 - Making Neural QA as Simple as Possible but not Simpler（FastQA）</title>
-    <link href="http://www.shuang0420.com/2018/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Making%20Neural%20QA%20as%20Simple%20as%20Possible%20but%20not%20Simpler/"/>
-    <id>http://www.shuang0420.com/2018/05/13/论文笔记 - Making Neural QA as Simple as Possible but not Simpler/</id>
+    <link href="http://www.shuang0420.cn/2018/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Making%20Neural%20QA%20as%20Simple%20as%20Possible%20but%20not%20Simpler/"/>
+    <id>http://www.shuang0420.cn/2018/05/13/论文笔记 - Making Neural QA as Simple as Possible but not Simpler/</id>
     <published>2018-05-13T05:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.139Z</updated>
+    <updated>2020-09-10T12:26:31.635Z</updated>
     
     <content type="html"><![CDATA[<p>阅读理解系列的框架很多大同小异，但这篇 paper 真心觉得精彩，虽然并不是最新最 state-of-art~<br><a id="more"></a></p>
 <p>现在大多数的阅读理解系统都是 top-down 的形式构建的，也就是说一开始就提出了一个很复杂的结构（一般经典的就是 <strong>emedding-, encoding-, interaction-, answer-layer</strong>），然后通过 ablation study，不断的减少一些模块配置来验证想法，大多数的创新点都在 interaction 层。而这篇 paper 提供了抽取式 QA 基于神经网络的两个 baseline，BoW- 和 RNN-based nerual QA (FastQA) ，创新的以 bottom-up 的方式分析了框架复杂性以及主流 interaction layer 的作用。</p>
@@ -1567,30 +1567,30 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="Machine Comprehension" scheme="http://www.shuang0420.com/tags/Machine-Comprehension/"/>
+      <category term="Machine Comprehension" scheme="http://www.shuang0420.cn/tags/Machine-Comprehension/"/>
     
-      <category term="阅读理解" scheme="http://www.shuang0420.com/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/"/>
+      <category term="阅读理解" scheme="http://www.shuang0420.cn/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/"/>
     
-      <category term="FastQA" scheme="http://www.shuang0420.com/tags/FastQA/"/>
+      <category term="FastQA" scheme="http://www.shuang0420.cn/tags/FastQA/"/>
     
   </entry>
   
   <entry>
     <title>论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets</title>
-    <link href="http://www.shuang0420.com/2018/04/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/"/>
-    <id>http://www.shuang0420.com/2018/04/07/论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets/</id>
+    <link href="http://www.shuang0420.cn/2018/04/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/"/>
+    <id>http://www.shuang0420.cn/2018/04/07/论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets/</id>
     <published>2018-04-07T05:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.106Z</updated>
+    <updated>2020-09-10T12:26:31.591Z</updated>
     
     <content type="html"><![CDATA[<p>GDAN，Question Generation 和 Question Answering 相结合，利用少量的有标注的 QA 对 + 大量的无标注的 QA 对来训练 QA 模型。<br><a id="more"></a></p>
 <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>看到这篇论文，看到来自 CMU，就忍不住推测作者估计是 LTI 的，估计还上过 411/611/711，毕竟 idea 和 final project 太像了。。</p>
 <p>回顾下 CMU 11411/611/711 的 final project，项目是阅读理解，分为 Asking System 和 Answering System 两个子系统。17年初的时候，Alan 鼓励用课上学到的东西 &amp; 隐晦的不鼓励用 DL，anyway 那时候也并没有看到用 DL 做 QG 的 paper，网上唯几和 QG 相关的 paper 都是 CMU 的，估计和这门课相辅相成。</p>
-<p>611 的 asking system 和 answering system 都没有标注，只是纯粹的 wiki 文本，asking system 基于 document 产生 question 以及 answer，answering system 根据 question 和 document 产生 answer。具体见之前的两篇博文：<br><a href="http://www.shuang0420.com/2017/03/02/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/">NLP 笔记 - Question Answering System</a><br><a href="http://www.shuang0420.com/2017/04/06/QA%20system%20-%20Question%20Generation/">QA system - Question Generation</a></p>
+<p>611 的 asking system 和 answering system 都没有标注，只是纯粹的 wiki 文本，asking system 基于 document 产生 question 以及 answer，answering system 根据 question 和 document 产生 answer。具体见之前的两篇博文：<br><a href="http://www.shuang0420.com/2017/03/02/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/" target="_blank" rel="external">NLP 笔记 - Question Answering System</a><br><a href="http://www.shuang0420.com/2017/04/06/QA%20system%20-%20Question%20Generation/" target="_blank" rel="external">QA system - Question Generation</a></p>
 <p>因为没有标注，所以两个系统其实是相互补充相互促进的。如果产生的 question 太简单，和原文太过相近，那么 answering system 的泛化能力有可能就很差，而如果 question 太难，answering system 也就学很难学习很难训练。</p>
 <p>评价产生的 question 的好坏的标准除了流畅、符合语法等基于 question 本身的特点外，我们还希望好的问题能找到答案，这些逻辑在这篇论文中都有所体现。</p>
 <p>回到 paper，主要思想其实就是用 <strong>少量的有标注的 QA 对 + 大量的无标注的 QA 对</strong> 来训练 QA 模型。主要做法是，给部分 unlabelled text，用 tagger 抽一些答案，训练 generative model 来生成对应的问题，然后补充训练集，再训练 QA model。实际是用改进的 GAN 方法来构建一个半监督问答模型。</p>
@@ -1629,25 +1629,25 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="Machine Comprehension" scheme="http://www.shuang0420.com/tags/Machine-Comprehension/"/>
+      <category term="Machine Comprehension" scheme="http://www.shuang0420.cn/tags/Machine-Comprehension/"/>
     
-      <category term="阅读理解" scheme="http://www.shuang0420.com/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/"/>
+      <category term="阅读理解" scheme="http://www.shuang0420.cn/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/"/>
     
-      <category term="Question Generation" scheme="http://www.shuang0420.com/tags/Question-Generation/"/>
+      <category term="Question Generation" scheme="http://www.shuang0420.cn/tags/Question-Generation/"/>
     
   </entry>
   
   <entry>
     <title>论文笔记 - Bi-Directional Attention Flow for Machine Comprehension</title>
-    <link href="http://www.shuang0420.com/2018/04/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Bi-Directional%20Attention%20Flow%20for%20Machine%20Comprehension/"/>
-    <id>http://www.shuang0420.com/2018/04/01/论文笔记 - Bi-Directional Attention Flow for Machine Comprehension/</id>
+    <link href="http://www.shuang0420.cn/2018/04/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Bi-Directional%20Attention%20Flow%20for%20Machine%20Comprehension/"/>
+    <id>http://www.shuang0420.cn/2018/04/01/论文笔记 - Bi-Directional Attention Flow for Machine Comprehension/</id>
     <published>2018-04-01T05:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.159Z</updated>
+    <updated>2020-09-10T12:26:31.670Z</updated>
     
     <content type="html"><![CDATA[<p>BiDAF，相对复杂 attention 机制。<br><a id="more"></a></p>
 <p><strong>论文：</strong> <a href="https://arxiv.org/abs/1611.01603" target="_blank" rel="external">Bidirectional Attention Flow for Machine Comprehension</a><br><strong>代码：</strong> <a href="https://github.com/allenai/bi-att-flow" target="_blank" rel="external">allenai/bi-att-flow</a></p>
@@ -1655,7 +1655,7 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
 <ol>
 <li><strong>Attention Reader。</strong>通过动态 attention 机制从文本中<strong>提取相关信息（context vector）</strong>，再依据该信息给出预测结果。<br>代表论文：Bahdanau et al. 2015, Hermann et al. 2015, Chen et al. 2016, Wang &amp; Jiang 2016</li>
 <li><strong>Attention-Sum Reader。</strong>只计算一次 attention weights，然后直接喂给输出层做最后的预测，也就是利用 attention 机制直接获取文本中各位置作为答案的概率，和 pointer network 类似的思想，效果很依赖对 query 的表示<br>代表论文：Kadlec et al. 2016, Cui et al. 2016</li>
-<li><strong>Multi-hop Attention</strong>。计算多次 attention<br>代表论文：<a href="http://www.shuang0420.com/2017/12/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/">Memory Network(Weston et al., 2015)</a>，Sordoni et al., 2016; Dhingra et al., 2016., Shen et al. 2016.</li>
+<li><strong>Multi-hop Attention</strong>。计算多次 attention<br>代表论文：<a href="http://www.shuang0420.com/2017/12/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/" target="_blank" rel="external">Memory Network(Weston et al., 2015)</a>，Sordoni et al., 2016; Dhingra et al., 2016., Shen et al. 2016.</li>
 </ol>
 <p>在此基础上，作者对注意力机制做出了改进，具体 BiDAF attention 的特点如下：</p>
 <ol>
@@ -1692,25 +1692,25 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="Machine Comprehension" scheme="http://www.shuang0420.com/tags/Machine-Comprehension/"/>
+      <category term="Machine Comprehension" scheme="http://www.shuang0420.cn/tags/Machine-Comprehension/"/>
     
-      <category term="阅读理解" scheme="http://www.shuang0420.com/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/"/>
+      <category term="阅读理解" scheme="http://www.shuang0420.cn/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/"/>
     
-      <category term="BiDAF" scheme="http://www.shuang0420.com/tags/BiDAF/"/>
+      <category term="BiDAF" scheme="http://www.shuang0420.cn/tags/BiDAF/"/>
     
   </entry>
   
   <entry>
     <title>论文笔记 - Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution</title>
-    <link href="http://www.shuang0420.com/2018/03/25/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Fast%20and%20Accurate%20Reading%20Comprehension%20by%20Combining%20Self-Attention%20and%20Convolution/"/>
-    <id>http://www.shuang0420.com/2018/03/25/论文笔记 - Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution/</id>
+    <link href="http://www.shuang0420.cn/2018/03/25/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Fast%20and%20Accurate%20Reading%20Comprehension%20by%20Combining%20Self-Attention%20and%20Convolution/"/>
+    <id>http://www.shuang0420.cn/2018/03/25/论文笔记 - Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution/</id>
     <published>2018-03-25T05:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.111Z</updated>
+    <updated>2020-09-10T12:26:31.597Z</updated>
     
     <content type="html"><![CDATA[<p>CMU &amp; Google 出品的 Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution，SQuAD 榜单上对应模型 QANet，这名字是不是太随意了TAT…<br><a id="more"></a></p>
 <h1 id="Fast-and-Accurate-Reading-Comprehension-by-Combining-Self-Attention-and-Convolution"><a href="#Fast-and-Accurate-Reading-Comprehension-by-Combining-Self-Attention-and-Convolution" class="headerlink" title="Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution"></a>Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution</h1><p>CMU 和 Google Brain 新出的文章，SQuAD 目前的并列第一，两大<strong>特点：</strong></p>
@@ -1741,25 +1741,25 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="Machine Comprehension" scheme="http://www.shuang0420.com/tags/Machine-Comprehension/"/>
+      <category term="Machine Comprehension" scheme="http://www.shuang0420.cn/tags/Machine-Comprehension/"/>
     
-      <category term="阅读理解" scheme="http://www.shuang0420.com/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/"/>
+      <category term="阅读理解" scheme="http://www.shuang0420.cn/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/"/>
     
-      <category term="BiDAF" scheme="http://www.shuang0420.com/tags/BiDAF/"/>
+      <category term="BiDAF" scheme="http://www.shuang0420.cn/tags/BiDAF/"/>
     
   </entry>
   
   <entry>
     <title>扯扯 Semi-hard Negative Samples</title>
-    <link href="http://www.shuang0420.com/2018/03/17/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/"/>
-    <id>http://www.shuang0420.com/2018/03/17/扯扯 Semi-hard Negative Samples/</id>
+    <link href="http://www.shuang0420.cn/2018/03/17/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/"/>
+    <id>http://www.shuang0420.cn/2018/03/17/扯扯 Semi-hard Negative Samples/</id>
     <published>2018-03-17T05:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.152Z</updated>
+    <updated>2020-09-10T12:26:31.660Z</updated>
     
     <content type="html"><![CDATA[<p>谈谈排序模型的 negative sampling 问题。取不好题目TAT…<br><a id="more"></a></p>
 <p>之前在用 Dual Encoder 这类 ranking model 时，发现在一些问题上尽管大方向上匹配的很好，比如人名问题答的都是人名，歌曲问题回答的都是歌曲名，但是具体到再细的粒度就完全匹配不上了。明明知道这显然是 negative sampling 的问题，却一直没找到好的解决方案，毕竟 google 一下 negative sampling 发现前 5 页都是在讲 word2vec……</p>
@@ -1791,23 +1791,23 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="negative sampling" scheme="http://www.shuang0420.com/tags/negative-sampling/"/>
+      <category term="negative sampling" scheme="http://www.shuang0420.cn/tags/negative-sampling/"/>
     
-      <category term="负采样" scheme="http://www.shuang0420.com/tags/%E8%B4%9F%E9%87%87%E6%A0%B7/"/>
+      <category term="负采样" scheme="http://www.shuang0420.cn/tags/%E8%B4%9F%E9%87%87%E6%A0%B7/"/>
     
   </entry>
   
   <entry>
     <title>论文笔记 - 基于神经网络的推理</title>
-    <link href="http://www.shuang0420.com/2018/03/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E5%9F%BA%E4%BA%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%8E%A8%E7%90%86/"/>
-    <id>http://www.shuang0420.com/2018/03/05/论文笔记 - 基于神经网络的推理/</id>
+    <link href="http://www.shuang0420.cn/2018/03/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E5%9F%BA%E4%BA%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%8E%A8%E7%90%86/"/>
+    <id>http://www.shuang0420.cn/2018/03/05/论文笔记 - 基于神经网络的推理/</id>
     <published>2018-03-05T05:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.122Z</updated>
+    <updated>2020-09-10T12:26:31.610Z</updated>
     
     <content type="html"><![CDATA[<p>DeepMind Relational Reasoning(RNs)<br><a id="more"></a></p>
 <h1 id="Relational-reasoning-RNs"><a href="#Relational-reasoning-RNs" class="headerlink" title="Relational reasoning(RNs)"></a>Relational reasoning(RNs)</h1><ul>
@@ -1847,21 +1847,21 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="Relational reasoning" scheme="http://www.shuang0420.com/tags/Relational-reasoning/"/>
+      <category term="Relational reasoning" scheme="http://www.shuang0420.cn/tags/Relational-reasoning/"/>
     
   </entry>
   
   <entry>
     <title>论文笔记 - 从神经图灵机 NTM 到可微分神经计算机 DNC</title>
-    <link href="http://www.shuang0420.com/2018/01/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E4%BB%8E%E7%A5%9E%E7%BB%8F%E5%9B%BE%E7%81%B5%E6%9C%BA%20NTM%20%E5%88%B0%E5%8F%AF%E5%BE%AE%E5%88%86%E7%A5%9E%E7%BB%8F%E8%AE%A1%E7%AE%97%E6%9C%BA%20DNC/"/>
-    <id>http://www.shuang0420.com/2018/01/20/论文笔记 - 从神经图灵机 NTM 到可微分神经计算机 DNC/</id>
+    <link href="http://www.shuang0420.cn/2018/01/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E4%BB%8E%E7%A5%9E%E7%BB%8F%E5%9B%BE%E7%81%B5%E6%9C%BA%20NTM%20%E5%88%B0%E5%8F%AF%E5%BE%AE%E5%88%86%E7%A5%9E%E7%BB%8F%E8%AE%A1%E7%AE%97%E6%9C%BA%20DNC/"/>
+    <id>http://www.shuang0420.cn/2018/01/20/论文笔记 - 从神经图灵机 NTM 到可微分神经计算机 DNC/</id>
     <published>2018-01-20T05:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.172Z</updated>
+    <updated>2020-09-10T12:26:31.692Z</updated>
     
     <content type="html"><![CDATA[<p>Neural Turing Machine(NTC) 和 Differentiable Neural Machine(DNC) 的相关笔记。<br><a id="more"></a></p>
 <p>涉及论文：</p>
@@ -2019,21 +2019,21 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="Memory Networks" scheme="http://www.shuang0420.com/tags/Memory-Networks/"/>
+      <category term="Memory Networks" scheme="http://www.shuang0420.cn/tags/Memory-Networks/"/>
     
   </entry>
   
   <entry>
     <title>NLP笔记 - 多轮对话之对话管理(Dialog Management)</title>
-    <link href="http://www.shuang0420.com/2018/01/03/NLP%E7%AC%94%E8%AE%B0%20-%20%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D%E4%B9%8B%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86(Dialog%20Management)/"/>
-    <id>http://www.shuang0420.com/2018/01/03/NLP笔记 - 多轮对话之对话管理(Dialog Management)/</id>
+    <link href="http://www.shuang0420.cn/2018/01/03/NLP%E7%AC%94%E8%AE%B0%20-%20%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D%E4%B9%8B%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86(Dialog%20Management)/"/>
+    <id>http://www.shuang0420.cn/2018/01/03/NLP笔记 - 多轮对话之对话管理(Dialog Management)/</id>
     <published>2018-01-03T02:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.109Z</updated>
+    <updated>2020-09-10T12:26:31.596Z</updated>
     
     <content type="html"><![CDATA[<p>开始涉猎多轮对话，这一篇想写一写对话管理（Dialog Management），感觉是个很庞大的工程，涉及的知识又多又杂，在这里只好挑重点做一个引导性的介绍，后续会逐个以单篇形式展开。–持续更新中–<br><a id="more"></a></p>
 <p>放一张多轮语音对话流程图，理解下 DM 在整个对话流程中处于什么地位。<br><img src="http://images.shuang0420.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D%E4%B9%8B%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86%28Dialog%20Management%29/%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92.png" class="ful-image" alt="%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92.png"></p>
@@ -2213,9 +2213,9 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
 <p><strong>计划构建（Plan construction）：</strong></p>
 <ul>
 <li>找到从当前状态（current state）达到目标状态（goal state）需要的行为序列（sequence of actions）</li>
-<li>Backward chaining，大抵是说，试图找到一个行为，如果这个行为实施了能够实现这个目标，且它的前提在初始状态已经得到满足，那么计划就完成了，但如果未得到满足，那么会把前提当做新的目标，试图满足前提，直到所有前提都得到满足。（find action with goal as effect then use preconditions of action as new goal, until no unsatisfied preconditions）<br>backward chaining 在 <a href="http://www.shuang0420.com/2017/04/07/NLP%20笔记%20-%20Meaning%20Representation%20Languages/">NLP 笔记 - Meaning Representation Languages</a> 中提到过。</li>
+<li>Backward chaining，大抵是说，试图找到一个行为，如果这个行为实施了能够实现这个目标，且它的前提在初始状态已经得到满足，那么计划就完成了，但如果未得到满足，那么会把前提当做新的目标，试图满足前提，直到所有前提都得到满足。（find action with goal as effect then use preconditions of action as new goal, until no unsatisfied preconditions）<br>backward chaining 在 <a href="http://www.shuang0420.com/2017/04/07/NLP%20笔记%20-%20Meaning%20Representation%20Languages/" target="_blank" rel="external">NLP 笔记 - Meaning Representation Languages</a> 中提到过。</li>
 </ul>
-<p>还有个重要的概念是 speech acts，在 <a href="http://www.shuang0420.com/2017/09/20/NLP%20笔记%20-%20Discourse%20Analysis/">NLP 笔记 - Discourse Analysis</a> 中提到过，之后会细讲。</p>
+<p>还有个重要的概念是 speech acts，在 <a href="http://www.shuang0420.com/2017/09/20/NLP%20笔记%20-%20Discourse%20Analysis/" target="_blank" rel="external">NLP 笔记 - Discourse Analysis</a> 中提到过，之后会细讲。</p>
 <p>更多见 <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.65.8451&amp;rep=rep1&amp;type=pdf" target="_blank" rel="external">Plan-based models of dialogue</a></p>
 <p>值得一提的是，<strong>基于 logic 和基于 plan</strong> 的方法虽然有更强大更完备的功能，但实际场景中并不常用，大概是因为大部分的系统都是相对简单的单个领域，任务小且具体，并不需要复杂的推理。</p>
 <h1 id="Statistical-Approaches"><a href="#Statistical-Approaches" class="headerlink" title="Statistical Approaches"></a>Statistical Approaches</h1><h2 id="RL-Based-Approaches"><a href="#RL-Based-Approaches" class="headerlink" title="RL-Based Approaches"></a>RL-Based Approaches</h2><p>前面提到的很多方法还是需要人工来定规则的（hand-crafted approaches），然而人很难预测所有可能的场景，这种方法也并不能重用，换个任务就需要从头再来。而一般的基于统计的方法又需要大量的数据。再者，对话系统的评估也需要花费很大的代价。这种情况下，强化学习的优势就凸显出来了。RL-Based DM 能够对系统理解用户输入的不确定性进行建模，让算法来自己学习最好的行为序列。首先利用 simulated user 模拟真实用户产生各种各样的行为（捕捉了真实用户行为的丰富性），然后由系统和 simulated user 进行交互，根据 reward function 奖励好的行为，惩罚坏的行为，优化行为序列。由于 simulated user 只用在少量的人机互动语料中训练，并没有大量数据的需求，不过 user simulation 也是个很难的任务就是了。</p>
@@ -2257,31 +2257,31 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/tags/NLP/"/>
     
-      <category term="NLU" scheme="http://www.shuang0420.com/tags/NLU/"/>
+      <category term="NLU" scheme="http://www.shuang0420.cn/tags/NLU/"/>
     
-      <category term="Dialog Management" scheme="http://www.shuang0420.com/tags/Dialog-Management/"/>
+      <category term="Dialog Management" scheme="http://www.shuang0420.cn/tags/Dialog-Management/"/>
     
-      <category term="DM" scheme="http://www.shuang0420.com/tags/DM/"/>
+      <category term="DM" scheme="http://www.shuang0420.cn/tags/DM/"/>
     
-      <category term="slot-filling" scheme="http://www.shuang0420.com/tags/slot-filling/"/>
+      <category term="slot-filling" scheme="http://www.shuang0420.cn/tags/slot-filling/"/>
     
-      <category term="FSM" scheme="http://www.shuang0420.com/tags/FSM/"/>
+      <category term="FSM" scheme="http://www.shuang0420.cn/tags/FSM/"/>
     
   </entry>
   
   <entry>
     <title>论文笔记 - Learning to Remember Translation History with a Continuous Cache</title>
-    <link href="http://www.shuang0420.com/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Remember%20Translation%20History%20with%20a%20Continuous%20Cache/"/>
-    <id>http://www.shuang0420.com/2017/12/20/论文笔记 - Learning to Remember Translation History with a Continuous Cache/</id>
+    <link href="http://www.shuang0420.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Remember%20Translation%20History%20with%20a%20Continuous%20Cache/"/>
+    <id>http://www.shuang0420.cn/2017/12/20/论文笔记 - Learning to Remember Translation History with a Continuous Cache/</id>
     <published>2017-12-20T05:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.115Z</updated>
+    <updated>2020-09-10T12:26:31.601Z</updated>
     
     <content type="html"><![CDATA[<p>介绍一种 cache-like memory network。<br><a id="more"></a></p>
 <p><strong>涉及论文：</strong></p>
@@ -2290,8 +2290,8 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
 </ul>
 <p><strong>相关博客：</strong></p>
 <ul>
-<li><a href="http://www.shuang0420.com/2017/07/10/-NLP%20笔记%20-%20Machine%20Translation-Neuron%20models/">NLP 笔记 - Neural Machine Translation</a></li>
-<li><a href="http://www.shuang0420.com/2017/12/04/论文笔记%20-%20Memory%20Networks/">论文笔记 - Memory Networks</a></li>
+<li><a href="http://www.shuang0420.com/2017/07/10/-NLP%20笔记%20-%20Machine%20Translation-Neuron%20models/" target="_blank" rel="external">NLP 笔记 - Neural Machine Translation</a></li>
+<li><a href="http://www.shuang0420.com/2017/12/04/论文笔记%20-%20Memory%20Networks/" target="_blank" rel="external">论文笔记 - Memory Networks</a></li>
 </ul>
 <p>比较传统的 NMT 把文档当做一系列独立的句子来进行翻译，忽略了句子之间的关系，或者说是忽略了篇章信息，这样会带来两个问题：</p>
 <ol>
@@ -2334,12 +2334,12 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     
     </summary>
     
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
     
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
     
     
-      <category term="Memory Networks" scheme="http://www.shuang0420.com/tags/Memory-Networks/"/>
+      <category term="Memory Networks" scheme="http://www.shuang0420.cn/tags/Memory-Networks/"/>
     
   </entry>
   

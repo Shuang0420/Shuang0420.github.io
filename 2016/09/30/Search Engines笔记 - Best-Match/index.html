@@ -90,7 +90,7 @@
 <meta name="description" content="CMU 11642 的课程笔记。Best match模型衡量的是一篇文档与 information need 的匹配程度，与 Exact match模型（匹配／不匹配）相比更注重用户体验，不管有没有匹配 Best match 都会返回文档结果。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Search Engines笔记 - Best-Match">
-<meta property="og:url" content="http://www.shuang0420.com/2016/09/30/Search Engines笔记 - Best-Match/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/09/30/Search Engines笔记 - Best-Match/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 11642 的课程笔记。Best match模型衡量的是一篇文档与 information need 的匹配程度，与 Exact match模型（匹配／不匹配）相比更注重用户体验，不管有没有匹配 Best match 都会返回文档结果。">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/cos.png">
@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/Indri_default.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/Indri_default2.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/priors.png">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.112Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Search Engines笔记 - Best-Match">
 <meta name="twitter:description" content="CMU 11642 的课程笔记。Best match模型衡量的是一篇文档与 information need 的匹配程度，与 Exact match模型（匹配／不匹配）相比更注重用户体验，不管有没有匹配 Best match 都会返回文档结果。">
@@ -141,7 +141,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2016/09/30/Search Engines笔记 - Best-Match/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/09/30/Search Engines笔记 - Best-Match/"/>
 
 
   <title> Search Engines笔记 - Best-Match | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -399,7 +399,7 @@
 <li>统计语言模型 Statistical language model(query likelihood)</li>
 <li>推理网络 Inference networks(Indri)</li>
 </ul>
-<p>它们的公式其实都和 <a href="http://www.shuang0420.com/2016/07/10/Tfidf%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0/">tf-idf</a> 的公式相似。每个单词－文档组合都有一个tf-idf值。tf 表示此文档中这个单词出现的次数；df 表示含有这个单词的文档的数量。通常如果一个单词在文档中出现次数越多说明这个文档与这个单词相关性越大。但是有的单词太常用了，比如英文里“the”，“a” 在任何一个文档中都会大量出现。idf 就表示一个文档含有此单词的概率的倒数，用来消除常用词干扰。如果某个词或短语在一篇文章中出现的频率 TF 高，并且在其他文章中很少出现，则认为此词或者短语具有很好的类别区分能力，适合用来分类。</p>
+<p>它们的公式其实都和 <a href="http://www.shuang0420.com/2016/07/10/Tfidf%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0/" target="_blank" rel="external">tf-idf</a> 的公式相似。每个单词－文档组合都有一个tf-idf值。tf 表示此文档中这个单词出现的次数；df 表示含有这个单词的文档的数量。通常如果一个单词在文档中出现次数越多说明这个文档与这个单词相关性越大。但是有的单词太常用了，比如英文里“the”，“a” 在任何一个文档中都会大量出现。idf 就表示一个文档含有此单词的概率的倒数，用来消除常用词干扰。如果某个词或短语在一篇文章中出现的频率 TF 高，并且在其他文章中很少出现，则认为此词或者短语具有很好的类别区分能力，适合用来分类。</p>
 <p>Document Priors 指与 query 无关的用来评估文档价值的 estimates(query independent)，主要的 document priors 有 spam score, PageRank, length of url 等，与上面的算法结合可以综合评估网页的分数。</p>
 <h1 id="VSM"><a href="#VSM" class="headerlink" title="VSM"></a>VSM</h1><p>假设文档 d 对应的向量用 $\overrightarrow {V}(d)$ 表示，每个维度对应一个 term，向量分量一般可以采用 tf-idf 权重计算方式。一组文档的集合看作向量空间的多个向量，每个 term 对应一个坐标轴，然后在向量空间下进行相似度计算。</p>
 <h2 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h2><p>文档与查询都是高维空间中的一个向量</p>
@@ -930,7 +930,7 @@ doc2: p(q|d)=(0.6* 3/50 + 0.4*0.01) * (0.6 * 2/50 + 0.4*0.001)=0.000976</pre>
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2016/09/30/Search Engines笔记 - Best-Match/';
       var disqus_title = "Search Engines笔记 - Best-Match";
-      var disqus_url = 'http://www.shuang0420.com/2016/09/30/Search Engines笔记 - Best-Match/';
+      var disqus_url = 'http://www.shuang0420.cn/2016/09/30/Search Engines笔记 - Best-Match/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

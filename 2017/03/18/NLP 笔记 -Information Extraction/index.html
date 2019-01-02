@@ -90,7 +90,7 @@
 <meta name="description" content="Stanford NLP 关于信息抽取的笔记，只是一个比较笼统的介绍，两块内容，命名实体识别(Named Entity Recognition)和序列模型(Sequence Model)。提到的具体算法，之后整理后再贴出~">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP笔记 - Information Extraction">
-<meta property="og:url" content="http://www.shuang0420.com/2017/03/18/NLP 笔记 -Information Extraction/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/03/18/NLP 笔记 -Information Extraction/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="Stanford NLP 关于信息抽取的笔记，只是一个比较笼统的介绍，两块内容，命名实体识别(Named Entity Recognition)和序列模型(Sequence Model)。提到的具体算法，之后整理后再贴出~">
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/1.jpg">
@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/9.jpg">
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/7.jpg">
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/8.jpg">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.166Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.682Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP笔记 - Information Extraction">
 <meta name="twitter:description" content="Stanford NLP 关于信息抽取的笔记，只是一个比较笼统的介绍，两块内容，命名实体识别(Named Entity Recognition)和序列模型(Sequence Model)。提到的具体算法，之后整理后再贴出~">
@@ -135,7 +135,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2017/03/18/NLP 笔记 -Information Extraction/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/03/18/NLP 笔记 -Information Extraction/"/>
 
 
   <title> NLP笔记 - Information Extraction | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -414,7 +414,7 @@
 <h3 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h3><p>Features for sequence labeling:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">• Words</div><div class="line">    Current word (essentially like a learned dictionary)</div><div class="line">    Previous/next word (context)</div><div class="line">• Other kinds of inferred linguistic classification</div><div class="line">    Part of speech tags</div><div class="line">• Label context</div><div class="line">    Previous (and perhaps next) label</div></pre></td></tr></table></figure></p>
 <p>再来看两个 feature<br><strong>Word substrings</strong><br>Word substrings 的作用是很大的，以下面的例子为例，NE 中间有 ‘oxa’ 的十有八九是 drug，NE 中间有 ‘:’ 的则大多都是 movie，而以 field 结尾的 NE 往往是 place。<br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/4.jpg" class="ful-image" alt="4.jpg"></p>
 <p><strong>Word shapes</strong><br>可以做一个 mapping，把单词长度(length)、大写(capitalization)、数字(numerals)、希腊字母(Greek eltters)、单词内部标点(internal punctuation)都作为特征。<br>如下面的表，把所有大写字母映射为 X，小写字母映射为 x，数字映射为 d…<br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/5.jpg" class="ful-image" alt="5.jpg"></p>
-<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>评估 IR 系统或者文本分类的任务，我们通常会用到 precision，recall，F1 这种 set-based metrics，见<a href="http://www.shuang0420.com/2016/09/20/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/">信息检索评价的 Unranked Boolean Retrieval Model 部分</a>，但是在这里对 NER 这种 sequence 类型任务的评估，如果用这些 metrics，可能会有一些问题，如 boundary error。因为 NER 的评估是按每个 entity 而不是每个 token 来计算的，我们需要看 entity 的 boundary。<br>以下面一句话为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">First Bank of Chicago announced earnings...</div></pre></td></tr></table></figure></p>
+<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>评估 IR 系统或者文本分类的任务，我们通常会用到 precision，recall，F1 这种 set-based metrics，见<a href="http://www.shuang0420.com/2016/09/20/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/" target="_blank" rel="external">信息检索评价的 Unranked Boolean Retrieval Model 部分</a>，但是在这里对 NER 这种 sequence 类型任务的评估，如果用这些 metrics，可能会有一些问题，如 boundary error。因为 NER 的评估是按每个 entity 而不是每个 token 来计算的，我们需要看 entity 的 boundary。<br>以下面一句话为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">First Bank of Chicago announced earnings...</div></pre></td></tr></table></figure></p>
 <p>正确的 NE 应该是 First Bank of Chicago，类别是 ORG，然而系统识别了 Bank of Chicago，类别 ORG，也就是说，右边界(right boundary)是对的，但是左边界(left boundary)是错误的，这其实是一个常见的错误。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">正确的标注：</div><div class="line">ORG - (1,4)</div><div class="line"></div><div class="line">系统：</div><div class="line">ORG - (2,4)</div></pre></td></tr></table></figure>
 <p>而计算 precision，recall 的时候，我们会发现，对 ORG - (1,4) 而言，系统产生了一个 false negative，对 ORG - (2,4) 而言，系统产生了一个 false positive！所以系统有了 2 个错误。<strong>F1 measure</strong> 对 precision，recall 进行加权平均，结果会更好一些，所以经常用来作为 NER 任务的评估手段。另外，专家提出了别的建议，比如说给出 partial credit，如 MUC scorer metric，然而，对哪种 case 给多少的 credit，也需要精心设计。</p>
@@ -868,7 +868,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2017/03/18/NLP 笔记 -Information Extraction/';
       var disqus_title = "NLP笔记 - Information Extraction";
-      var disqus_url = 'http://www.shuang0420.com/2017/03/18/NLP 笔记 -Information Extraction/';
+      var disqus_url = 'http://www.shuang0420.cn/2017/03/18/NLP 笔记 -Information Extraction/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

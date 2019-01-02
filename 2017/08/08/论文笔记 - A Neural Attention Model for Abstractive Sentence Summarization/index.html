@@ -90,7 +90,7 @@
 <meta name="description" content="接之前的NLP 笔记 - Text Summarization，介绍一种 abstractive summarization 方法 textsum。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization">
-<meta property="og:url" content="http://www.shuang0420.com/2017/08/08/论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/08/08/论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="接之前的NLP 笔记 - Text Summarization，介绍一种 abstractive summarization 方法 textsum。">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20A%20Neural%20Attention%20Model%20for%20Abstractive%20Sentence%20Summarization/elements.png">
@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20A%20Neural%20Attention%20Model%20for%20Abstractive%20Sentence%20Summarization/attention_decoder.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20A%20Neural%20Attention%20Model%20for%20Abstractive%20Sentence%20Summarization/beam%20search.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20A%20Neural%20Attention%20Model%20for%20Abstractive%20Sentence%20Summarization/tuning.png">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.152Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.660Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization">
 <meta name="twitter:description" content="接之前的NLP 笔记 - Text Summarization，介绍一种 abstractive summarization 方法 textsum。">
@@ -136,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2017/08/08/论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/08/08/论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization/"/>
 
 
   <title> 论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -386,7 +386,7 @@
       
 
       
-        <p>接之前的<a href="http://www.shuang0420.com/2017/05/10/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/">NLP 笔记 - Text Summarization</a>，介绍一种 abstractive summarization 方法 textsum。<br><a id="more"></a></p>
+        <p>接之前的<a href="http://www.shuang0420.com/2017/05/10/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/" target="_blank" rel="external">NLP 笔记 - Text Summarization</a>，介绍一种 abstractive summarization 方法 textsum。<br><a id="more"></a></p>
 <h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><h2 id="Summarization-Phenomena"><a href="#Summarization-Phenomena" class="headerlink" title="Summarization Phenomena"></a>Summarization Phenomena</h2><p>先来观察下文本摘要的一些现象，一般是通过对源文本进行<strong>泛化(generalization)、删除(deletion)、改写(paraphrase)</strong>等操作来产生目标文本，也就是文本摘要。看一下例子</p>
 <ul>
 <li><strong>Generalization</strong><br><strong>Source:</strong> <strong>Russian Defense Minister Ivanov</strong> called Sunday for the creation of a joint front for combating global terrorism.<br><strong>Target:</strong> <strong>Russia</strong> calls for joint front against terrorism.</li>
@@ -396,7 +396,7 @@
 <h2 id="Types-of-Sentence-Summary"><a href="#Types-of-Sentence-Summary" class="headerlink" title="Types of Sentence Summary"></a>Types of Sentence Summary</h2><p>对于上面等一些操作，产生了文本摘要的几类技术模型。</p>
 <ul>
 <li><strong>Compressive: deletion-only:</strong><br>压缩，通过对源文本的删除操作产生目标文本。</li>
-<li><strong>Extractive: deletion and reordering:</strong><br>抽取式，摘要句子完全从源文档中抽取形成，详细见 <a href="http://www.shuang0420.com/2017/05/10/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/">NLP 笔记 - Text Summarization</a></li>
+<li><strong>Extractive: deletion and reordering:</strong><br>抽取式，摘要句子完全从源文档中抽取形成，详细见 <a href="http://www.shuang0420.com/2017/05/10/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/" target="_blank" rel="external">NLP 笔记 - Text Summarization</a></li>
 <li><strong>Abstractive: arbitary transformation</strong><br>合成式，从源文档中抽取句子并进行改写形成摘要。</li>
 </ul>
 <p>看下几种方法的比较<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20A%20Neural%20Attention%20Model%20for%20Abstractive%20Sentence%20Summarization/elements.png" class="ful-image" alt="elements.png"></p>
@@ -416,7 +416,7 @@
 </ul>
 <p>下面逐个进行讨论。</p>
 <h2 id="Neural-language-model"><a href="#Neural-language-model" class="headerlink" title="Neural language model"></a>Neural language model</h2><p>借鉴了机器翻译的思想，在 <a href="http://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf" target="_blank" rel="external">A Neural Probabilistic Language Model</a> (Bengio et al. 2013)的基础上，加了一个 attention-based encoder(Bahdanau et al. 2014) 来学习输入文本的 latent soft alignment。</p>
-<p>先看一下整体逻辑，看图说话，下面左图圈出来的部分是一个<strong>feed-forward neural network language model(NNLM)</strong>，详情戳<a href="http://www.shuang0420.com/2017/07/10/NLP%20笔记%20-%20Machine%20Translation-Neuron%20models/">NLP 笔记 - Machine Translation(Neuron models)</a>，它的输入是当前 output 已经产生的上下文 $y_c$(注意这个 context 窗口的长度是固定的)，与词向量矩阵 E 做个映射，经过线性变化以及激活函数得到得分矩阵 U，再经过一个 softmax 层得到概率分布形式的输出，也就是下一个单词 $y_{i+1}$，现在我们要加上左边的 attention-based encoder，对输入 source text 和当前我们拥有的 context $y_c$ 做一个 encode，放大的话就是右图。对 context embedding 和 source 的每个单词做一个加权的点乘(weighted dot product)得到 attention distribution 也就是 P，对 source text 做一个局部的平滑(local smoothing)，然后对 source 的 smoothing 版本和 attention distribution 做一个点乘，就得到了我们要的 enc，最后把两边的东西一起扔到 softmax 里得到输出。</p>
+<p>先看一下整体逻辑，看图说话，下面左图圈出来的部分是一个<strong>feed-forward neural network language model(NNLM)</strong>，详情戳<a href="http://www.shuang0420.com/2017/07/10/NLP%20笔记%20-%20Machine%20Translation-Neuron%20models/" target="_blank" rel="external">NLP 笔记 - Machine Translation(Neuron models)</a>，它的输入是当前 output 已经产生的上下文 $y_c$(注意这个 context 窗口的长度是固定的)，与词向量矩阵 E 做个映射，经过线性变化以及激活函数得到得分矩阵 U，再经过一个 softmax 层得到概率分布形式的输出，也就是下一个单词 $y_{i+1}$，现在我们要加上左边的 attention-based encoder，对输入 source text 和当前我们拥有的 context $y_c$ 做一个 encode，放大的话就是右图。对 context embedding 和 source 的每个单词做一个加权的点乘(weighted dot product)得到 attention distribution 也就是 P，对 source text 做一个局部的平滑(local smoothing)，然后对 source 的 smoothing 版本和 attention distribution 做一个点乘，就得到了我们要的 enc，最后把两边的东西一起扔到 softmax 里得到输出。</p>
 <img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20A%20Neural%20Attention%20Model%20for%20Abstractive%20Sentence%20Summarization/abs_graph.png" class="ful-image" alt="abs_graph.png">
 <p>看个例子，如下图，行是 source text，列是 output text，假定我们已经产生了 “russia calls”，现在目标是产生下一个单词 for，我们的模型将利用 attention distribution of source 以及 embedding of context，来得到 for 这个 next word。因为我们用了 bag of words 的 smoothing 版本，也就是说我们对 called 周围的单词进行了加权，attention 很大程度上会指向 called，具体逻辑见下一部分 encoders。<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20A%20Neural%20Attention%20Model%20for%20Abstractive%20Sentence%20Summarization/abs_ex1.png" class="ful-image" alt="abs_ex1.png"></p>
 <p>上面说到了，这里选择的 encoder 是 attention-based encoder，下面来看一下为什么选这个 encoder。</p>
@@ -832,7 +832,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2017/08/08/论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization/';
       var disqus_title = "论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization";
-      var disqus_url = 'http://www.shuang0420.com/2017/08/08/论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization/';
+      var disqus_url = 'http://www.shuang0420.cn/2017/08/08/论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

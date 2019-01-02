@@ -90,7 +90,7 @@
 <meta name="description" content="开始涉猎多轮对话，这一篇想写一写对话管理（Dialog Management），感觉是个很庞大的工程，涉及的知识又多又杂，在这里只好挑重点做一个引导性的介绍，后续会逐个以单篇形式展开。–持续更新中–">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP笔记 - 多轮对话之对话管理(Dialog Management)">
-<meta property="og:url" content="http://www.shuang0420.com/2018/01/03/NLP笔记 - 多轮对话之对话管理(Dialog Management)/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2018/01/03/NLP笔记 - 多轮对话之对话管理(Dialog Management)/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="开始涉猎多轮对话，这一篇想写一写对话管理（Dialog Management），感觉是个很庞大的工程，涉及的知识又多又杂，在这里只好挑重点做一个引导性的介绍，后续会逐个以单篇形式展开。–持续更新中–">
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D%E4%B9%8B%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86%28Dialog%20Management%29/%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92.png">
@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D%E4%B9%8B%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86%28Dialog%20Management%29/cmu_ex.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D%E4%B9%8B%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86%28Dialog%20Management%29/IS_arch.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D%E4%B9%8B%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86%28Dialog%20Management%29/rl_arch.png">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.109Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.596Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP笔记 - 多轮对话之对话管理(Dialog Management)">
 <meta name="twitter:description" content="开始涉猎多轮对话，这一篇想写一写对话管理（Dialog Management），感觉是个很庞大的工程，涉及的知识又多又杂，在这里只好挑重点做一个引导性的介绍，后续会逐个以单篇形式展开。–持续更新中–">
@@ -136,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2018/01/03/NLP笔记 - 多轮对话之对话管理(Dialog Management)/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2018/01/03/NLP笔记 - 多轮对话之对话管理(Dialog Management)/"/>
 
 
   <title> NLP笔记 - 多轮对话之对话管理(Dialog Management) | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -564,9 +564,9 @@
 <p><strong>计划构建（Plan construction）：</strong></p>
 <ul>
 <li>找到从当前状态（current state）达到目标状态（goal state）需要的行为序列（sequence of actions）</li>
-<li>Backward chaining，大抵是说，试图找到一个行为，如果这个行为实施了能够实现这个目标，且它的前提在初始状态已经得到满足，那么计划就完成了，但如果未得到满足，那么会把前提当做新的目标，试图满足前提，直到所有前提都得到满足。（find action with goal as effect then use preconditions of action as new goal, until no unsatisfied preconditions）<br>backward chaining 在 <a href="http://www.shuang0420.com/2017/04/07/NLP%20笔记%20-%20Meaning%20Representation%20Languages/">NLP 笔记 - Meaning Representation Languages</a> 中提到过。</li>
+<li>Backward chaining，大抵是说，试图找到一个行为，如果这个行为实施了能够实现这个目标，且它的前提在初始状态已经得到满足，那么计划就完成了，但如果未得到满足，那么会把前提当做新的目标，试图满足前提，直到所有前提都得到满足。（find action with goal as effect then use preconditions of action as new goal, until no unsatisfied preconditions）<br>backward chaining 在 <a href="http://www.shuang0420.com/2017/04/07/NLP%20笔记%20-%20Meaning%20Representation%20Languages/" target="_blank" rel="external">NLP 笔记 - Meaning Representation Languages</a> 中提到过。</li>
 </ul>
-<p>还有个重要的概念是 speech acts，在 <a href="http://www.shuang0420.com/2017/09/20/NLP%20笔记%20-%20Discourse%20Analysis/">NLP 笔记 - Discourse Analysis</a> 中提到过，之后会细讲。</p>
+<p>还有个重要的概念是 speech acts，在 <a href="http://www.shuang0420.com/2017/09/20/NLP%20笔记%20-%20Discourse%20Analysis/" target="_blank" rel="external">NLP 笔记 - Discourse Analysis</a> 中提到过，之后会细讲。</p>
 <p>更多见 <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.65.8451&amp;rep=rep1&amp;type=pdf" target="_blank" rel="external">Plan-based models of dialogue</a></p>
 <p>值得一提的是，<strong>基于 logic 和基于 plan</strong> 的方法虽然有更强大更完备的功能，但实际场景中并不常用，大概是因为大部分的系统都是相对简单的单个领域，任务小且具体，并不需要复杂的推理。</p>
 <h1 id="Statistical-Approaches"><a href="#Statistical-Approaches" class="headerlink" title="Statistical Approaches"></a>Statistical Approaches</h1><h2 id="RL-Based-Approaches"><a href="#RL-Based-Approaches" class="headerlink" title="RL-Based Approaches"></a>RL-Based Approaches</h2><p>前面提到的很多方法还是需要人工来定规则的（hand-crafted approaches），然而人很难预测所有可能的场景，这种方法也并不能重用，换个任务就需要从头再来。而一般的基于统计的方法又需要大量的数据。再者，对话系统的评估也需要花费很大的代价。这种情况下，强化学习的优势就凸显出来了。RL-Based DM 能够对系统理解用户输入的不确定性进行建模，让算法来自己学习最好的行为序列。首先利用 simulated user 模拟真实用户产生各种各样的行为（捕捉了真实用户行为的丰富性），然后由系统和 simulated user 进行交互，根据 reward function 奖励好的行为，惩罚坏的行为，优化行为序列。由于 simulated user 只用在少量的人机互动语料中训练，并没有大量数据的需求，不过 user simulation 也是个很难的任务就是了。</p>
@@ -1011,7 +1011,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2018/01/03/NLP笔记 - 多轮对话之对话管理(Dialog Management)/';
       var disqus_title = "NLP笔记 - 多轮对话之对话管理(Dialog Management)";
-      var disqus_url = 'http://www.shuang0420.com/2018/01/03/NLP笔记 - 多轮对话之对话管理(Dialog Management)/';
+      var disqus_url = 'http://www.shuang0420.cn/2018/01/03/NLP笔记 - 多轮对话之对话管理(Dialog Management)/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

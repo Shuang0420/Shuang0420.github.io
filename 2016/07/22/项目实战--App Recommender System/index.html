@@ -90,7 +90,7 @@
 <meta name="description" content="该项目从华为应用市场爬取 app 数据，存到 MongoDB 中，再经过推荐算法更新数据，展示到前端。项目综合了之前讲到的所有爬虫技巧，来源自 BitTiger 的组织。项目共分为 爬虫模块、推荐模块、网站模块 三部分。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="项目实战--App Recommender System">
-<meta property="og:url" content="http://www.shuang0420.com/2016/07/22/项目实战--App Recommender System/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/07/22/项目实战--App Recommender System/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="该项目从华为应用市场爬取 app 数据，存到 MongoDB 中，再经过推荐算法更新数据，展示到前端。项目综合了之前讲到的所有爬虫技巧，来源自 BitTiger 的组织。项目共分为 爬虫模块、推荐模块、网站模块 三部分。">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-01%20%E4%B8%8B%E5%8D%887.31.02.png">
@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-06%20%E4%B8%8B%E5%8D%888.00.56.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-06%20%E4%B8%8B%E5%8D%888.05.07.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-06%20%E4%B8%8B%E5%8D%888.05.56.png">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.098Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.571Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目实战--App Recommender System">
 <meta name="twitter:description" content="该项目从华为应用市场爬取 app 数据，存到 MongoDB 中，再经过推荐算法更新数据，展示到前端。项目综合了之前讲到的所有爬虫技巧，来源自 BitTiger 的组织。项目共分为 爬虫模块、推荐模块、网站模块 三部分。">
@@ -131,7 +131,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2016/07/22/项目实战--App Recommender System/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/07/22/项目实战--App Recommender System/"/>
 
 
   <title> 项目实战--App Recommender System | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -427,9 +427,9 @@
 </ul>
 <h2 id="爬取"><a href="#爬取" class="headerlink" title="爬取"></a>爬取</h2><p>要点：</p>
 <ol>
-<li><p>利用 Proxy 更换 user-agent<br>srcapy 发出请求的 user agent 的默认值为Scrapy／version，和普通浏览器的不同，所以网站就会识别出这不是真的用户而是爬虫，就会屏蔽这些请求。所以我们就使用 proxy 随机模拟了不同的 user agent 来“欺骗”网站，才能成功地爬取页面。这一部分是使用 Scrapy middleware 实现的。<br><a href="http://www.shuang0420.com/2016/06/12/爬虫总结-二-scrapy/">博客</a></p>
+<li><p>利用 Proxy 更换 user-agent<br>srcapy 发出请求的 user agent 的默认值为Scrapy／version，和普通浏览器的不同，所以网站就会识别出这不是真的用户而是爬虫，就会屏蔽这些请求。所以我们就使用 proxy 随机模拟了不同的 user agent 来“欺骗”网站，才能成功地爬取页面。这一部分是使用 Scrapy middleware 实现的。<br><a href="http://www.shuang0420.com/2016/06/12/爬虫总结-二-scrapy/" target="_blank" rel="external">博客</a></p>
 </li>
-<li><p>利用 scrapy-redis 分布式架构加快爬取速度<br><a href="http://www.shuang0420.com/2016/06/17/爬虫总结-四-分布式爬虫/">博客</a></p>
+<li><p>利用 scrapy-redis 分布式架构加快爬取速度<br><a href="http://www.shuang0420.com/2016/06/17/爬虫总结-四-分布式爬虫/" target="_blank" rel="external">博客</a></p>
 </li>
 <li><p>怎样获取更多数据</p>
 <ul>
@@ -439,7 +439,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>涉及到 ‘下一页’ 的爬取，见<a href="http://www.shuang0420.com/2016/06/20/爬虫总结-五-其他技巧/">爬虫总结-五-其他技巧</a> 使用 scrapy-splash 部分的实例。</p>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>涉及到 ‘下一页’ 的爬取，见<a href="http://www.shuang0420.com/2016/06/20/爬虫总结-五-其他技巧/" target="_blank" rel="external">爬虫总结-五-其他技巧</a> 使用 scrapy-splash 部分的实例。</p>
 <h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><h3 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h3><p>appstore.dat 存储基本信息，格式</p>
 <pre>id \t title \t intro</pre>
 
@@ -532,7 +532,7 @@ $ mongoimport --db appstore --collection app_info --drop --file app_info.json
 <ul>
 <li>1k QPS (vs 10k QPS)</li>
 </ul>
-<p>具体实现见 <a href="http://www.shuang0420.com/2016/07/07/Meteor-App-Recommender-System/">Meteor – App Recommender System</a></p>
+<p>具体实现见 <a href="http://www.shuang0420.com/2016/07/07/Meteor-App-Recommender-System/" target="_blank" rel="external">Meteor – App Recommender System</a></p>
 
       
     </div>
@@ -934,7 +934,7 @@ $ mongoimport --db appstore --collection app_info --drop --file app_info.json
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2016/07/22/项目实战--App Recommender System/';
       var disqus_title = "项目实战--App Recommender System";
-      var disqus_url = 'http://www.shuang0420.com/2016/07/22/项目实战--App Recommender System/';
+      var disqus_url = 'http://www.shuang0420.cn/2016/07/22/项目实战--App Recommender System/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

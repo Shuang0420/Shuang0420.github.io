@@ -90,7 +90,7 @@
 <meta name="description" content="GDAN，Question Generation 和 Question Answering 相结合，利用少量的有标注的 QA 对 + 大量的无标注的 QA 对来训练 QA 模型。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets">
-<meta property="og:url" content="http://www.shuang0420.com/2018/04/07/论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2018/04/07/论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="GDAN，Question Generation 和 Question Answering 相结合，利用少量的有标注的 QA 对 + 大量的无标注的 QA 对来训练 QA 模型。">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/GA_reader.png">
@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/issue22.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/model.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/algo.png">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.106Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.591Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets">
 <meta name="twitter:description" content="GDAN，Question Generation 和 Question Answering 相结合，利用少量的有标注的 QA 对 + 大量的无标注的 QA 对来训练 QA 模型。">
@@ -132,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2018/04/07/论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2018/04/07/论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets/"/>
 
 
   <title> 论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -385,7 +385,7 @@
         <p>GDAN，Question Generation 和 Question Answering 相结合，利用少量的有标注的 QA 对 + 大量的无标注的 QA 对来训练 QA 模型。<br><a id="more"></a></p>
 <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>看到这篇论文，看到来自 CMU，就忍不住推测作者估计是 LTI 的，估计还上过 411/611/711，毕竟 idea 和 final project 太像了。。</p>
 <p>回顾下 CMU 11411/611/711 的 final project，项目是阅读理解，分为 Asking System 和 Answering System 两个子系统。17年初的时候，Alan 鼓励用课上学到的东西 &amp; 隐晦的不鼓励用 DL，anyway 那时候也并没有看到用 DL 做 QG 的 paper，网上唯几和 QG 相关的 paper 都是 CMU 的，估计和这门课相辅相成。</p>
-<p>611 的 asking system 和 answering system 都没有标注，只是纯粹的 wiki 文本，asking system 基于 document 产生 question 以及 answer，answering system 根据 question 和 document 产生 answer。具体见之前的两篇博文：<br><a href="http://www.shuang0420.com/2017/03/02/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/">NLP 笔记 - Question Answering System</a><br><a href="http://www.shuang0420.com/2017/04/06/QA%20system%20-%20Question%20Generation/">QA system - Question Generation</a></p>
+<p>611 的 asking system 和 answering system 都没有标注，只是纯粹的 wiki 文本，asking system 基于 document 产生 question 以及 answer，answering system 根据 question 和 document 产生 answer。具体见之前的两篇博文：<br><a href="http://www.shuang0420.com/2017/03/02/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/" target="_blank" rel="external">NLP 笔记 - Question Answering System</a><br><a href="http://www.shuang0420.com/2017/04/06/QA%20system%20-%20Question%20Generation/" target="_blank" rel="external">QA system - Question Generation</a></p>
 <p>因为没有标注，所以两个系统其实是相互补充相互促进的。如果产生的 question 太简单，和原文太过相近，那么 answering system 的泛化能力有可能就很差，而如果 question 太难，answering system 也就学很难学习很难训练。</p>
 <p>评价产生的 question 的好坏的标准除了流畅、符合语法等基于 question 本身的特点外，我们还希望好的问题能找到答案，这些逻辑在这篇论文中都有所体现。</p>
 <p>回到 paper，主要思想其实就是用 <strong>少量的有标注的 QA 对 + 大量的无标注的 QA 对</strong> 来训练 QA 模型。主要做法是，给部分 unlabelled text，用 tagger 抽一些答案，训练 generative model 来生成对应的问题，然后补充训练集，再训练 QA model。实际是用改进的 GAN 方法来构建一个半监督问答模型。</p>
@@ -821,7 +821,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2018/04/07/论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets/';
       var disqus_title = "论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets";
-      var disqus_url = 'http://www.shuang0420.com/2018/04/07/论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets/';
+      var disqus_url = 'http://www.shuang0420.cn/2018/04/07/论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

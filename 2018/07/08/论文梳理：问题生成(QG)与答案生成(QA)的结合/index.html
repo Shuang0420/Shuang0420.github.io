@@ -90,7 +90,7 @@
 <meta name="description" content="继续 QG，梳理一下 MSRA 其他 3 篇关于 QG 的 paper：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文梳理：问题生成(QG)与答案生成(QA)的结合">
-<meta property="og:url" content="http://www.shuang0420.com/2018/07/08/论文梳理：问题生成(QG)与答案生成(QA)的结合/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2018/07/08/论文梳理：问题生成(QG)与答案生成(QA)的结合/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="继续 QG，梳理一下 MSRA 其他 3 篇关于 QG 的 paper：">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90%28QG%29%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90%28QA%29%E7%9A%84%E7%BB%93%E5%90%88/SynNet1.png">
@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90%28QG%29%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90%28QA%29%E7%9A%84%E7%BB%93%E5%90%88/joint_model6.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90%28QG%29%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90%28QA%29%E7%9A%84%E7%BB%93%E5%90%88/joint_model7.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90%28QG%29%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90%28QA%29%E7%9A%84%E7%BB%93%E5%90%88/joint_model_res.png">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.172Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.690Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文梳理：问题生成(QG)与答案生成(QA)的结合">
 <meta name="twitter:description" content="继续 QG，梳理一下 MSRA 其他 3 篇关于 QG 的 paper：">
@@ -140,7 +140,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2018/07/08/论文梳理：问题生成(QG)与答案生成(QA)的结合/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2018/07/08/论文梳理：问题生成(QG)与答案生成(QA)的结合/"/>
 
 
   <title> 论文梳理：问题生成(QG)与答案生成(QA)的结合 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -398,8 +398,8 @@
 </ul>
 <p>QG 系列其他的笔记：</p>
 <ul>
-<li><a href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/">论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</a></li>
-<li><a href="http://www.shuang0420.com/2018/04/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/">论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets</a></li>
+<li><a href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/" target="_blank" rel="external">论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</a></li>
+<li><a href="http://www.shuang0420.com/2018/04/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/" target="_blank" rel="external">论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets</a></li>
 </ul>
 <p>目前的 QA 大多是<strong>抽取式（extractive）</strong>的任务，答案是文本中的一个连续片段，通常是命名实体这类语义概念，而 QG 是<strong>生成式的（abstractive）</strong>，问句是完整句子，部分单词可能是文档中没出现过的，很多情况下，问句和答案的语言结构不同，因此甚至可以看做两种不同类型的数据。所以第 1 篇 <strong>SynNet 就把答案生成当作序列标注任务，把 QG 当作生成任务</strong>；第 3 篇 <strong>Joint Model 从另一个角度出发，把 QA 和 QG 都当作生成任务，放到同一个 encoder-decoder 框架下，用转变输入数据来实现联合训练</strong>，用 pointer-softmax 来处理抽取/生成问题。</p>
 <p>另外，QA 和 QG 任务在概率上是有联系的，可以通过 q、a 的联合概率分布联系起来，P(q|a) 就是 QG 模型，P(a|q) 类似 QA 模型，于是第 2 篇 <strong>dual tasks 就把这两个任务当做对偶任务，用一个正则项把两个任务联合在一起</strong>。<br>$$P(q,a)=P(a)P(q|a)=P(q)P(a|q)$$</p>
@@ -437,10 +437,10 @@
 <blockquote>
 <p>We ﬁrst report results on the MARCO and SQUAD datasets. As the dataset is splitted by ourselves, we do not have pre- viously reported results for comparison. </p>
 </blockquote>
-<h1 id="A-Joint-Model-for-Question-Answering-and-Question-Generation"><a href="#A-Joint-Model-for-Question-Answering-and-Question-Generation" class="headerlink" title="A Joint Model for Question Answering and Question Generation"></a>A Joint Model for Question Answering and Question Generation</h1><p>这篇和上篇都是讲怎么同时生成答案和问题，不同的是上篇通过一个 dual regularization term 将两者联合起来训练，这里把 QA 和 QG 任务都作为生成任务，模型基本结构还是 <strong>Seq2Seq + Attention + Pointer Softmax</strong>，和之前提到的一篇  <a href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/">论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</a> 差不多。输入是文档，以及一个 condition sequence，在 QA 任务里表现为 question word sequence，给定 question 生成 answer；QG 任务里表现为 answer word sequence，给定 answer 生成 qestion，condition 由一个0/1 变量来控制，表示收到的数据是给 a-gen 还是给 q-gen。Joint training 通过对输入数据的转换实现。</p>
+<h1 id="A-Joint-Model-for-Question-Answering-and-Question-Generation"><a href="#A-Joint-Model-for-Question-Answering-and-Question-Generation" class="headerlink" title="A Joint Model for Question Answering and Question Generation"></a>A Joint Model for Question Answering and Question Generation</h1><p>这篇和上篇都是讲怎么同时生成答案和问题，不同的是上篇通过一个 dual regularization term 将两者联合起来训练，这里把 QA 和 QG 任务都作为生成任务，模型基本结构还是 <strong>Seq2Seq + Attention + Pointer Softmax</strong>，和之前提到的一篇  <a href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/" target="_blank" rel="external">论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</a> 差不多。输入是文档，以及一个 condition sequence，在 QA 任务里表现为 question word sequence，给定 question 生成 answer；QG 任务里表现为 answer word sequence，给定 answer 生成 qestion，condition 由一个0/1 变量来控制，表示收到的数据是给 a-gen 还是给 q-gen。Joint training 通过对输入数据的转换实现。</p>
 <p>Pointer-softmax 一定程度上能解决 extractive/abstractive 的混合问题，通过选择 copy 文档的单词还是生成词汇表的单词来产生下一个单词，表达了 extractive/abstractive 的切换。这带来的一个额外好处是<strong>可以产生 abstractive answer</strong>。</p>
 <p>具体来讲，Encoder 里，词向量和字向量拼接得到 word embedding，其中字向量用 BiLSTM 产生，word embedding 经过另一个 BiLSTM 编码得到文档编码 $h^d_i$ 和条件序列的编码 $h^c_j$。</p>
-<p>条件序列的另一种编码是“抽取式的”，也就是从 document encoding 中直接抽取出出现在 condition sequence 中的单词的对应部分，这和 <a href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/">论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</a> 原理相同。然后抽取的向量经过 BiLSTM 产生对应编码 $h^e_k$。两种条件序列的编码 $h^c_j$ 和 $h^e_k$ 的 final state 分别为 $h^c_J$ 和 $h^e_K$。在 a-gen mode 也就是对问句进行编码是采用 $h^c_J$，在 q-gen mode 也就是对答案进行编码时采用 $h^e_K$，相当于模拟了 extractive 和 abstractive 的特性。</p>
+<p>条件序列的另一种编码是“抽取式的”，也就是从 document encoding 中直接抽取出出现在 condition sequence 中的单词的对应部分，这和 <a href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/" target="_blank" rel="external">论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation</a> 原理相同。然后抽取的向量经过 BiLSTM 产生对应编码 $h^e_k$。两种条件序列的编码 $h^c_j$ 和 $h^e_k$ 的 final state 分别为 $h^c_J$ 和 $h^e_K$。在 a-gen mode 也就是对问句进行编码是采用 $h^c_J$，在 q-gen mode 也就是对答案进行编码时采用 $h^e_K$，相当于模拟了 extractive 和 abstractive 的特性。</p>
 <p>Decoder 用了 pointer-softmax mechanism，比之前的工作复杂一些。用了两个 LSTM cell $c_1$、$c_2$<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90%28QG%29%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90%28QA%29%E7%9A%84%E7%BB%93%E5%90%88/joint_model1.png" class="ful-image" alt="joint_model1.png"></p>
 <p>context vector:<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90%28QG%29%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90%28QA%29%E7%9A%84%E7%BB%93%E5%90%88/joint_model2.png" class="ful-image" alt="joint_model2.png"></p>
 <p>distribution over the document word position:<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90%28QG%29%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90%28QA%29%E7%9A%84%E7%BB%93%E5%90%88/joint_model3.png" class="ful-image" alt="joint_model3.png"></p>
@@ -864,7 +864,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2018/07/08/论文梳理：问题生成(QG)与答案生成(QA)的结合/';
       var disqus_title = "论文梳理：问题生成(QG)与答案生成(QA)的结合";
-      var disqus_url = 'http://www.shuang0420.com/2018/07/08/论文梳理：问题生成(QG)与答案生成(QA)的结合/';
+      var disqus_url = 'http://www.shuang0420.cn/2018/07/08/论文梳理：问题生成(QG)与答案生成(QA)的结合/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

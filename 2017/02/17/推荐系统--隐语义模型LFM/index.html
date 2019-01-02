@@ -90,7 +90,7 @@
 <meta name="description" content="主要介绍 隐语义模型 LFM(latent factor model)。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="推荐系统--隐语义模型LFM">
-<meta property="og:url" content="http://www.shuang0420.com/2017/02/17/推荐系统--隐语义模型LFM/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/02/17/推荐系统--隐语义模型LFM/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="主要介绍 隐语义模型 LFM(latent factor model)。">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/loss_func.jpg">
@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/exp1.jpg">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/exp2.jpg">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/summary.jpg">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.150Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="推荐系统--隐语义模型LFM">
 <meta name="twitter:description" content="主要介绍 隐语义模型 LFM(latent factor model)。">
@@ -131,7 +131,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2017/02/17/推荐系统--隐语义模型LFM/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/02/17/推荐系统--隐语义模型LFM/"/>
 
 
   <title> 推荐系统--隐语义模型LFM | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -382,7 +382,7 @@
 
       
         <p>主要介绍 <strong>隐语义模型 LFM(latent factor model)</strong>。<br><a id="more"></a></p>
-<p>隐语义模型最早在文本挖掘领域被提出，用于找到文本的隐含语义，相关名词有 LSI、pLSA、LDA 等。在推荐领域，隐语义模型也有着举足轻重的地位。下述的实验设计见 <a href="http://www.shuang0420.com/2017/02/08/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/">推荐系统–用户行为和实验设计</a></p>
+<p>隐语义模型最早在文本挖掘领域被提出，用于找到文本的隐含语义，相关名词有 LSI、pLSA、LDA 等。在推荐领域，隐语义模型也有着举足轻重的地位。下述的实验设计见 <a href="http://www.shuang0420.com/2017/02/08/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/" target="_blank" rel="external">推荐系统–用户行为和实验设计</a></p>
 <h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p><strong>核心思想:</strong> 通过隐含特征(latent factor)联系用户兴趣和物品。具体来说，就是对于某个用户，首先得到他的兴趣分类，然后从分类中挑选他可能喜欢的物品。<br>基于兴趣分类的方法需要解决3个问题：</p>
 <ul>
 <li>如何对物品进行分类？</li>
@@ -446,7 +446,7 @@
 <p>$$r_{ui}=x^T_uy_i+p^T_uq_i$$</p>
 <p>$y_i$: 根据物品的内容属性直接生成<br>$x_{uk}$: 用户 u 对内容特征 k 的兴趣程度，用户向量 $x_u$ 可以根据历史行为记录获得，每天计算一次<br>$p_u$,$q_i$: 实时拿到的用户最近几小时的行为训练 LFM 模型获得</p>
 <p>对于一个新加入的物品 i，可以通过 $x^T_uy_i$估计用户 u 对物品 i 的兴趣，然后经过几个小时后，通过 $p^T_uq_i$得到更准确的预测值。</p>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>与<a href="http://www.shuang0420.com/2017/02/10/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%9F%BA%E4%BA%8E%E9%82%BB%E5%9F%9F%E7%9A%84%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4%E7%AE%97%E6%B3%95/">基于邻域的方法</a>相比的优缺点：<br><img src="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/summary.jpg" class="ful-image" alt="summary.jpg"></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>与<a href="http://www.shuang0420.com/2017/02/10/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%9F%BA%E4%BA%8E%E9%82%BB%E5%9F%9F%E7%9A%84%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4%E7%AE%97%E6%B3%95/" target="_blank" rel="external">基于邻域的方法</a>相比的优缺点：<br><img src="http://images.shuang0420.com/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E9%9A%90%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8BLFM/summary.jpg" class="ful-image" alt="summary.jpg"></p>
 
       
     </div>
@@ -842,7 +842,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2017/02/17/推荐系统--隐语义模型LFM/';
       var disqus_title = "推荐系统--隐语义模型LFM";
-      var disqus_url = 'http://www.shuang0420.com/2017/02/17/推荐系统--隐语义模型LFM/';
+      var disqus_url = 'http://www.shuang0420.cn/2017/02/17/推荐系统--隐语义模型LFM/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

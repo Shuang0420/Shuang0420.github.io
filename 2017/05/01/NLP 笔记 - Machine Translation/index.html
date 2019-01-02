@@ -90,7 +90,7 @@
 <meta name="description" content="CMU 11611 的 guest lecture 笔记。重点讲机器翻译传统 Noise Channel 模型以及目前流行的几个神经网络模型。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP 笔记 - Machine Translation">
-<meta property="og:url" content="http://www.shuang0420.com/2017/05/01/NLP 笔记 - Machine Translation/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/05/01/NLP 笔记 - Machine Translation/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 11611 的 guest lecture 笔记。重点讲机器翻译传统 Noise Channel 模型以及目前流行的几个神经网络模型。">
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Machine%20Translation/history.jpg">
@@ -116,7 +116,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Machine%20Translation/phrase%20model2.jpg">
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Machine%20Translation/alignment%20priors.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Machine%20Translation/syntactic%20structure.png">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.170Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.688Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 笔记 - Machine Translation">
 <meta name="twitter:description" content="CMU 11611 的 guest lecture 笔记。重点讲机器翻译传统 Noise Channel 模型以及目前流行的几个神经网络模型。">
@@ -149,7 +149,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2017/05/01/NLP 笔记 - Machine Translation/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/05/01/NLP 笔记 - Machine Translation/"/>
 
 
   <title> NLP 笔记 - Machine Translation | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -408,7 +408,7 @@
 <li>p(e): language model<br>判断产生的句子是否通顺，是否符合语法，是否地道(fluent, grammatical, idiomatic)<br>一般会用 ngram 模型</li>
 <li>p(f|e): translation model/channel model<br>其实是一个翻转的翻译概率(reverse translation probability)，看把目标语言(English sentence)翻译成源语言(foreign sentence)的概率，通常用 MLE 估计，需要注意泛化问题<br>保证足够多的翻译可能</li>
 </ul>
-<p>p(e) language model 的问题很好解决，见<a href="http://www.shuang0420.com/2017/02/24/NLP%20笔记%20-%20Language%20models%20and%20smoothing/">NLP 笔记 - Language models and smoothing</a>，难点是怎样确定 p(f|e)，第一个想法自然是直接用 MLE，然而问题是句子实在太多，这种方法很难泛化。</p>
+<p>p(e) language model 的问题很好解决，见<a href="http://www.shuang0420.com/2017/02/24/NLP%20笔记%20-%20Language%20models%20and%20smoothing/" target="_blank" rel="external">NLP 笔记 - Language models and smoothing</a>，难点是怎样确定 p(f|e)，第一个想法自然是直接用 MLE，然而问题是句子实在太多，这种方法很难泛化。</p>
 <p>$$P(f|e)={count(f,e) \over count(e)}$$</p>
 <p>所以想到的是能不能从 lexical 层面着手，先进行词对词的翻译，然后再进行词的排序，也就是下面要讲的 Lexical Translation Model。</p>
 <h2 id="Lexical-Translation"><a href="#Lexical-Translation" class="headerlink" title="Lexical Translation"></a>Lexical Translation</h2><p>我们怎样翻译一个单词？最简单粗暴的方法当然是从字典(dictionary)里找它！然而一个单词可能有不同的 sense/registers/inflections，也就会有不同的翻译，怎么办？用单词频率来计算 MLE p(e|f,m)<br>其中，</p>
@@ -469,7 +469,7 @@
 <li><strong>How to represent inputs and outputs?</strong><br>input 的表示可以用 one-hot vector 或者 distributed representations(通常 word vector)</li>
 <li><strong>Neural architecture?</strong><br>How many layers? (Requires non-linearities to improve capacity!)<br>How many neurons?<br>Recurrent or not?<br>What kind of non-linearities?</li>
 </ul>
-<p>详细戳 <a href="http://www.shuang0420.com/2017/07/10/NLP%20笔记%20-%20Machine%20Translation-Neuron%20models/">NLP 笔记 - Neural Machine Translation</a></p>
+<p>详细戳 <a href="http://www.shuang0420.com/2017/07/10/NLP%20笔记%20-%20Machine%20Translation-Neuron%20models/" target="_blank" rel="external">NLP 笔记 - Neural Machine Translation</a></p>
 
       
     </div>
@@ -875,7 +875,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2017/05/01/NLP 笔记 - Machine Translation/';
       var disqus_title = "NLP 笔记 - Machine Translation";
-      var disqus_url = 'http://www.shuang0420.com/2017/05/01/NLP 笔记 - Machine Translation/';
+      var disqus_url = 'http://www.shuang0420.cn/2017/05/01/NLP 笔记 - Machine Translation/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

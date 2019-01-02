@@ -90,7 +90,7 @@
 <meta name="description" content="Andrew Ng. Deep Learning Course 3 Structuring Machine Learning Projects 的重点笔记。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习策略(Andrew Ng. DL 笔记)">
-<meta property="og:url" content="http://www.shuang0420.com/2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="Andrew Ng. Deep Learning Course 3 Structuring Machine Learning Projects 的重点笔记。">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_metric0.png">
@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_analysis.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_analysis2.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/mismatch.png">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.102Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习策略(Andrew Ng. DL 笔记)">
 <meta name="twitter:description" content="Andrew Ng. Deep Learning Course 3 Structuring Machine Learning Projects 的重点笔记。">
@@ -133,7 +133,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/"/>
 
 
   <title> 机器学习策略(Andrew Ng. DL 笔记) | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -415,7 +415,7 @@
 <p>开发集和测试集的选择通常是现实中希望去处理的数据，很重要的一点是 <strong>开发集和测试集必须服从同一分布</strong>。举个例子，复习考试，训练集是复习资料，开发集像是考试前的模拟试卷，测试集则是真实考卷，我们最终目标是在真实考卷（测试集）中取得好成绩，准备过程中优化的是模拟试题（开发集）上的成绩，而复习资料（训练集）的选择会影响我们逼近这个目标有多快。而如果开发集和测试集来自不同分布，比如说在英语模拟试卷上考了 99 分，但最后你去参加了语文考试，这不是白复习白训练了么~</p>
 <p><strong>训练/开发/测试集的大小</strong><br>之前传统 ML 时代数据集比较小， 一般 &lt; 10,000，所以 train/dev/test 的划分通常是 60%/20%/20%，而现在的数据量很大，动辄百万级，划分 40% 的数据处理做开发/测试集显然是浪费，所以比例可以是 98%/1%/1%。</p>
 <p>可避免偏差 <strong>available bias</strong> 和<strong>Human-level performance</strong><br><img src="http://images.shuang0420.com/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/bayes_bias.png" class="ful-image" alt="bayes_bias.png"></p>
-<p>Humans error 与 Training Error之间的差距是 <strong>Avoidable bias</strong>，Training Error 与 Dev Error之间的差距是  <strong>Variance</strong>，提到过好多次啦，具体见 <a href="http://www.shuang0420.com/2017/03/17/会议笔记%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/">会议笔记 - Nuts and Bolts of Applying Deep Learning</a>，这里简单附个图吧。<br><img src="http://images.shuang0420.com/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/improve_model.png" class="ful-image" alt="improve_model.png"></p>
+<p>Humans error 与 Training Error之间的差距是 <strong>Avoidable bias</strong>，Training Error 与 Dev Error之间的差距是  <strong>Variance</strong>，提到过好多次啦，具体见 <a href="http://www.shuang0420.com/2017/03/17/会议笔记%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/" target="_blank" rel="external">会议笔记 - Nuts and Bolts of Applying Deep Learning</a>，这里简单附个图吧。<br><img src="http://images.shuang0420.com/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/improve_model.png" class="ful-image" alt="improve_model.png"></p>
 <h1 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h1><p><strong>误差分析</strong> 的作用在于弄清楚误差最主要来自哪个部分，然后给未来的工作指明优化方向，便于解决主要矛盾，节省时间。</p>
 <p>还是猫分类器的例子，假设我们分析模型的预测结果后发现，预测错误的数据中有一部分狗的图片被错误标成了猫。这时可能会想着设计一些处理狗的特征/分类的算法功能来提高猫分类器。然而，假如 100 个错误标记的开发集样本中，只有 5 个是狗，那么这意味着你针对狗的算法提高最终也只能优化误差的 5%，比如原来误差是 10%，最好的情况也只是优化到 9.5%，这是优化上限。</p>
 <p>把误差的来源以及在总误差的占比列个表统计，就能清楚的发现解决哪类误差对模型优化帮助最大。这个过程中可能会发现新的错误类型，比如滤镜导致的误差。<br><img src="http://images.shuang0420.com/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_analysis.png" class="ful-image" alt="error_analysis.png"></p>
@@ -874,7 +874,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/';
       var disqus_title = "机器学习策略(Andrew Ng. DL 笔记)";
-      var disqus_url = 'http://www.shuang0420.com/2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/';
+      var disqus_url = 'http://www.shuang0420.cn/2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

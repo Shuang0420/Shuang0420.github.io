@@ -90,7 +90,7 @@
 <meta name="description" content="Memory Networks 相关笔记。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文笔记 - Memory Networks">
-<meta property="og:url" content="http://www.shuang0420.com/2017/12/04/论文笔记 - Memory Networks/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/12/04/论文笔记 - Memory Networks/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="Memory Networks 相关笔记。">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks1.png">
@@ -110,7 +110,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/AttnGRU.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/AttnGRU2.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/final_performance.png">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.099Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.572Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记 - Memory Networks">
 <meta name="twitter:description" content="Memory Networks 相关笔记。">
@@ -143,7 +143,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2017/12/04/论文笔记 - Memory Networks/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/12/04/论文笔记 - Memory Networks/"/>
 
 
   <title> 论文笔记 - Memory Networks | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -514,7 +514,7 @@
 <li>只用 word level 的 GRU，很难记忆远距离 supporting sentences 之间的信息</li>
 </ol>
 <p>这一部分重点讲与 DMN 不同的地方。</p>
-<h2 id="Input-Module-1"><a href="#Input-Module-1" class="headerlink" title="Input Module"></a>Input Module</h2><p>DMN+ 把 single GRU 替换成了类似 hierarchical RNN 结构，一个 sentence reader 得到每个句子的 embedding，一个 input infusion layer 把每个句子的 embedding 放入另一个 GRU 中，得到 context 信息，来解决句子远距离依赖的问题。HRED 相关思路见 <a href="http://www.shuang0420.com/2017/11/17/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20HRED%20%E4%B8%8E%20VHRED/">论文笔记 - HRED 与 VHRED</a>。这里还做了一些微调，sentence reader 用的是 positional encoding，input fusion layer 用了双向 GRU，兼顾了过去和未来的信息。</p>
+<h2 id="Input-Module-1"><a href="#Input-Module-1" class="headerlink" title="Input Module"></a>Input Module</h2><p>DMN+ 把 single GRU 替换成了类似 hierarchical RNN 结构，一个 sentence reader 得到每个句子的 embedding，一个 input infusion layer 把每个句子的 embedding 放入另一个 GRU 中，得到 context 信息，来解决句子远距离依赖的问题。HRED 相关思路见 <a href="http://www.shuang0420.com/2017/11/17/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20HRED%20%E4%B8%8E%20VHRED/" target="_blank" rel="external">论文笔记 - HRED 与 VHRED</a>。这里还做了一些微调，sentence reader 用的是 positional encoding，input fusion layer 用了双向 GRU，兼顾了过去和未来的信息。</p>
 <p>用 positional encoding 的原因是在这里用 GRU/LSTM 编码句子计算量大而且容易过拟合（毕竟 bAbI 的单词量很小就几十个单词。。），这种方法反而更好。<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_textual_input.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_textual_input.png"></p>
 <p>除了处理文本信息，作者也提出了图像信息的方案，CNN+RNN，把局部位置的图像信息当做 sentence 处理，在这不多介绍。<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_image_input.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_image_input.png"></p>
 <h2 id="Episodic-Memory-Module-1"><a href="#Episodic-Memory-Module-1" class="headerlink" title="Episodic Memory Module"></a>Episodic Memory Module</h2><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2BMemoryUpdate.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2BMemoryUpdate.png">
@@ -932,7 +932,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2017/12/04/论文笔记 - Memory Networks/';
       var disqus_title = "论文笔记 - Memory Networks";
-      var disqus_url = 'http://www.shuang0420.com/2017/12/04/论文笔记 - Memory Networks/';
+      var disqus_url = 'http://www.shuang0420.cn/2017/12/04/论文笔记 - Memory Networks/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

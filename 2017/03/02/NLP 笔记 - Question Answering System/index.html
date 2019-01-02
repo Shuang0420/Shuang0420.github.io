@@ -90,7 +90,7 @@
 <meta name="description" content="关于如何建立一个 QA 系统。整理自 Stanford NLP 公开课及 Jurafsky &amp;amp; Chris Manning 的 NLP book draft。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP 笔记 - Question Answering System">
-<meta property="og:url" content="http://www.shuang0420.com/2017/03/02/NLP 笔记 - Question Answering System/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/03/02/NLP 笔记 - Question Answering System/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="关于如何建立一个 QA 系统。整理自 Stanford NLP 公开课及 Jurafsky &amp;amp; Chris Manning 的 NLP book draft。">
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/1.jpg">
@@ -110,7 +110,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/14.jpg">
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/15.jpg">
 <meta property="og:image" content="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/16.jpg">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.143Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.643Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 笔记 - Question Answering System">
 <meta name="twitter:description" content="关于如何建立一个 QA 系统。整理自 Stanford NLP 公开课及 Jurafsky &amp;amp; Chris Manning 的 NLP book draft。">
@@ -143,7 +143,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2017/03/02/NLP 笔记 - Question Answering System/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/03/02/NLP 笔记 - Question Answering System/"/>
 
 
   <title> NLP 笔记 - Question Answering System | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -437,7 +437,7 @@
 <li>Other rules use the question headword<br>  = headword of first noun phrase after wh‐word:<br>  Which city in China has the largest number of foreign financial companies?<br>  What is the state flower of California?</li>
 </ul>
 <p>当然也可以把上述某些分类方法当作特征一起进行训练。就分类效果而言，PERSON, LOCATION, TIME 这类的问题类型有更高的准确率，REASON，DESCRIPTION 这类的问题更难识别。</p>
-<h3 id="Query-Formulation"><a href="#Query-Formulation" class="headerlink" title="Query Formulation"></a>Query Formulation</h3><p>根据 question 产生一个 keyword list，作为 IR 系统的输入 query。可能的流程是去除 stopwords，丢掉 question word(where, when, etc.)，找 noun phrases，根据 tfidf 判断 keywords 的去留等等。<br>如果 keywords 太少，还可以通过 <a href="http://www.shuang0420.com/2016/10/10/Search%20Engines笔记%20-%20Pseudo%20Relevance%20Feedback/">query expansion</a> 来增加 query terms。</p>
+<h3 id="Query-Formulation"><a href="#Query-Formulation" class="headerlink" title="Query Formulation"></a>Query Formulation</h3><p>根据 question 产生一个 keyword list，作为 IR 系统的输入 query。可能的流程是去除 stopwords，丢掉 question word(where, when, etc.)，找 noun phrases，根据 tfidf 判断 keywords 的去留等等。<br>如果 keywords 太少，还可以通过 <a href="http://www.shuang0420.com/2016/10/10/Search%20Engines笔记%20-%20Pseudo%20Relevance%20Feedback/" target="_blank" rel="external">query expansion</a> 来增加 query terms。</p>
 <p>Keyword selection algorithm：<br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/18.jpg" class="ful-image" alt="18.jpg"></p>
 <p>Results:<br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/5.jpg" class="ful-image" alt="5.jpg"></p>
 <p><a href="https://www.youtube.com/watch?v=K7VwMBRArgw" target="_blank" rel="external">21 - 2 - Answer Types and Query Formulation-NLP-Dan Jurafsky &amp; Chris Manning</a></p>
@@ -512,7 +512,7 @@
 </blockquote>
 <p>IBM 的 Watson 系统架构：<br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/16.jpg" class="ful-image" alt="16.jpg"></p>
 <p>后面补充。</p>
-<h1 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h1><p>如果只返回一个 answer，就用 Accuracy，如果有多个，就用 <a href="http://www.shuang0420.com/2016/09/20/Search%20Engines笔记%20-%20Evaluating%20Search%20Effectiveness/">MRR</a>，MRR 对所有的 RR 值求平均，RR(Reciprocal rank) 指的是 1/rank of first right answer。</p>
+<h1 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h1><p>如果只返回一个 answer，就用 Accuracy，如果有多个，就用 <a href="http://www.shuang0420.com/2016/09/20/Search%20Engines笔记%20-%20Evaluating%20Search%20Effectiveness/" target="_blank" rel="external">MRR</a>，MRR 对所有的 RR 值求平均，RR(Reciprocal rank) 指的是 1/rank of first right answer。</p>
 <blockquote>
 <p>参考链接：<br><a href="https://web.stanford.edu/~jurafsky/slp3/28.pdf" target="_blank" rel="external">Chapter 28: Question Answering</a><br><a href="http://people.cs.pitt.edu/~litman/courses/cs2731/lec/slp23-handout.pdf" target="_blank" rel="external">Chapter23.2: Question Answering</a></p>
 </blockquote>
@@ -917,7 +917,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2017/03/02/NLP 笔记 - Question Answering System/';
       var disqus_title = "NLP 笔记 - Question Answering System";
-      var disqus_url = 'http://www.shuang0420.com/2017/03/02/NLP 笔记 - Question Answering System/';
+      var disqus_url = 'http://www.shuang0420.cn/2017/03/02/NLP 笔记 - Question Answering System/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

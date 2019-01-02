@@ -90,7 +90,7 @@
 <meta name="description" content="Andrew Ng. Deep Learning Course 2 Improving Deep Neural Networks 过拟合部分的笔记。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深度学习-过拟合(Andrew Ng. DL 笔记)">
-<meta property="og:url" content="http://www.shuang0420.com/2017/08/29/神经网络-过拟合(Andrew Ng. DL 笔记)/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/08/29/神经网络-过拟合(Andrew Ng. DL 笔记)/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="Andrew Ng. Deep Learning Course 2 Improving Deep Neural Networks 过拟合部分的笔记。">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E8%BF%87%E6%8B%9F%E5%90%88%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/overfit.jpg">
@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E8%BF%87%E6%8B%9F%E5%90%88%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/why%20reg2.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E8%BF%87%E6%8B%9F%E5%90%88%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/why_dropout1.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E8%BF%87%E6%8B%9F%E5%90%88%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/early_stop.jpg">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.149Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.655Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习-过拟合(Andrew Ng. DL 笔记)">
 <meta name="twitter:description" content="Andrew Ng. Deep Learning Course 2 Improving Deep Neural Networks 过拟合部分的笔记。">
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2017/08/29/神经网络-过拟合(Andrew Ng. DL 笔记)/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/08/29/神经网络-过拟合(Andrew Ng. DL 笔记)/"/>
 
 
   <title> 深度学习-过拟合(Andrew Ng. DL 笔记) | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -373,7 +373,7 @@
 
       
         <p>Andrew Ng. Deep Learning Course 2 Improving Deep Neural Networks 过拟合部分的笔记。<br><a id="more"></a></p>
-<p><strong>高方差(high variance)</strong> 对应的问题就是 <strong>过拟合(overfitting)</strong>，模型在训练集上表现的非常完美，然而开发集和测试集却有很高的错误率。这时需要引入正则或者多加些数据来调优。这一篇就来讲过拟合的处理方法。方差/偏差的解释戳<a href="http://www.shuang0420.com/2017/03/17/会议笔记%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/">会议笔记 - Nuts and Bolts of Applying Deep Learning</a></p>
+<p><strong>高方差(high variance)</strong> 对应的问题就是 <strong>过拟合(overfitting)</strong>，模型在训练集上表现的非常完美，然而开发集和测试集却有很高的错误率。这时需要引入正则或者多加些数据来调优。这一篇就来讲过拟合的处理方法。方差/偏差的解释戳<a href="http://www.shuang0420.com/2017/03/17/会议笔记%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/" target="_blank" rel="external">会议笔记 - Nuts and Bolts of Applying Deep Learning</a></p>
 <img src="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E8%BF%87%E6%8B%9F%E5%90%88%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/overfit.jpg" class="ful-image" alt="overfit.jpg">
 <h1 id="Regularization"><a href="#Regularization" class="headerlink" title="Regularization"></a>Regularization</h1><p><strong>正则化(Regularization)</strong> 是最常见的方法之一。在深度学习中的正则化中，我们保留所有的 unit，但是会压缩其权重。</p>
 <h2 id="Loss-function"><a href="#Loss-function" class="headerlink" title="Loss function"></a>Loss function</h2><p>对损失函数加上一个正则化参数，一般形式<br><img src="http://images.shuang0420.com/images/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E8%BF%87%E6%8B%9F%E5%90%88%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/regu1.png" class="ful-image" alt="regu1.png"></p>
@@ -812,7 +812,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2017/08/29/神经网络-过拟合(Andrew Ng. DL 笔记)/';
       var disqus_title = "深度学习-过拟合(Andrew Ng. DL 笔记)";
-      var disqus_url = 'http://www.shuang0420.com/2017/08/29/神经网络-过拟合(Andrew Ng. DL 笔记)/';
+      var disqus_url = 'http://www.shuang0420.cn/2017/08/29/神经网络-过拟合(Andrew Ng. DL 笔记)/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

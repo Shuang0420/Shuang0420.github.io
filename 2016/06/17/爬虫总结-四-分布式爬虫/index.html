@@ -90,11 +90,11 @@
 <meta name="description" content="分布式爬虫的演习。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="爬虫总结(四)-- 分布式爬虫">
-<meta property="og:url" content="http://www.shuang0420.com/2016/06/17/爬虫总结-四-分布式爬虫/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/06/17/爬虫总结-四-分布式爬虫/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="分布式爬虫的演习。">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/scheduler.png">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.133Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.626Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬虫总结(四)-- 分布式爬虫">
 <meta name="twitter:description" content="分布式爬虫的演习。">
@@ -127,7 +127,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2016/06/17/爬虫总结-四-分布式爬虫/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/06/17/爬虫总结-四-分布式爬虫/"/>
 
 
   <title> 爬虫总结(四)-- 分布式爬虫 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -396,7 +396,7 @@ curl http://scrapy3.mycompany.com:6800/schedule.json -d project=myproject -d spi
 <h1 id="Crawlera"><a href="#Crawlera" class="headerlink" title="Crawlera"></a>Crawlera</h1><p>这个，花钱就可以轻易解决～ <a href="http://doc.scrapinghub.com/crawlera.html" target="_blank" rel="external">直达</a></p>
 <h1 id="Scrapy-redis"><a href="#Scrapy-redis" class="headerlink" title="Scrapy-redis"></a>Scrapy-redis</h1><p>Redis 是高性能的 key-value 数据库。我们知道 MongoDB 将数据保存在了硬盘里，而 Redis 的神奇之处在于它将数据保存在了内存中，因此带来了更高的性能。</p>
 <h2 id="分布式原理"><a href="#分布式原理" class="headerlink" title="分布式原理"></a>分布式原理</h2><p>scrapy-redis实现分布式，其实从原理上来说很简单，这里为描述方便，我们把自己的核心服务器称为 master，而把用于跑爬虫程序的机器称为 slave。</p>
-<p>回顾 <a href="http://www.shuang0420.com/2016/06/12/爬虫总结-二-scrapy/">scrapy 框架</a>，我们首先给定一些start_urls，spider 最先访问 start_urls 里面的 url，再根据我们的 parse 函数，对里面的元素、或者是其他的二级、三级页面进行抓取。而要实现分布式，只需要在这个starts_urls里面做文章就行了。进一步描述如下：</p>
+<p>回顾 <a href="http://www.shuang0420.com/2016/06/12/爬虫总结-二-scrapy/" target="_blank" rel="external">scrapy 框架</a>，我们首先给定一些start_urls，spider 最先访问 start_urls 里面的 url，再根据我们的 parse 函数，对里面的元素、或者是其他的二级、三级页面进行抓取。而要实现分布式，只需要在这个starts_urls里面做文章就行了。进一步描述如下：</p>
 <ol>
 <li><p>master 产生 starts_urls，url 会被封装成 request 放到 redis 中的 spider:requests，总的 scheduler 会从这里分配 request，当这里的 request 分配完后，会继续分配 start_urls 里的 url。</p>
 </li>
@@ -992,7 +992,7 @@ r = redis.Redis(host='106.75.136.128', port=6379)</pre>
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2016/06/17/爬虫总结-四-分布式爬虫/';
       var disqus_title = "爬虫总结(四)-- 分布式爬虫";
-      var disqus_url = 'http://www.shuang0420.com/2016/06/17/爬虫总结-四-分布式爬虫/';
+      var disqus_url = 'http://www.shuang0420.cn/2016/06/17/爬虫总结-四-分布式爬虫/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

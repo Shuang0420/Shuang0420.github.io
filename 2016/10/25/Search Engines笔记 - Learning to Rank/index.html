@@ -90,7 +90,7 @@
 <meta name="description" content="CMU 11642 的课程笔记。我们已经学习了很多检索方法，如果把这些方法结合起来，效果会不会更好呢？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Search Engines笔记 - Learning to Rank">
-<meta property="og:url" content="http://www.shuang0420.com/2016/10/25/Search Engines笔记 - Learning to Rank/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/10/25/Search Engines笔记 - Learning to Rank/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="CMU 11642 的课程笔记。我们已经学习了很多检索方法，如果把这些方法结合起来，效果会不会更好呢？">
 <meta property="og:image" content="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Rank/l2rs.jpg">
@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Rank/likewise.jpg">
 <meta property="og:image" content="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Rank/listMLE1.jpg">
 <meta property="og:image" content="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Rank/listMLE2.jpg">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.158Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.668Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Search Engines笔记 - Learning to Rank">
 <meta name="twitter:description" content="CMU 11642 的课程笔记。我们已经学习了很多检索方法，如果把这些方法结合起来，效果会不会更好呢？">
@@ -135,7 +135,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2016/10/25/Search Engines笔记 - Learning to Rank/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/10/25/Search Engines笔记 - Learning to Rank/"/>
 
 
   <title> Search Engines笔记 - Learning to Rank | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -386,8 +386,8 @@
 
       
         <p>CMU 11642 的课程笔记。我们已经学习了很多检索方法，如果把这些方法结合起来，效果会不会更好呢？<br><a id="more"></a></p>
-<h1 id="传统的排序模型"><a href="#传统的排序模型" class="headerlink" title="传统的排序模型"></a>传统的排序模型</h1><h2 id="相关度排序模型-Relevance-Ranking-Model"><a href="#相关度排序模型-Relevance-Ranking-Model" class="headerlink" title="相关度排序模型(Relevance Ranking Model)"></a>相关度排序模型(Relevance Ranking Model)</h2><p>相关度排序模型根据查询和文档之间的相似度来对文档进行排序。常用的模型包括：<a href="http://www.shuang0420.com/2016/09/06/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Exact-match%20retrieval/">布尔模型(Boolean Model)</a>，<a href="http://www.shuang0420.com/2016/09/30/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Best-Match/">向量空间模型(Vector Space Model)</a>，隐语义分析(Latent Semantic Analysis)，<a href="http://www.shuang0420.com/2016/09/30/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Best-Match/">BM25</a>，LMIR 模型等等。</p>
-<h2 id="重要性排序模型-Importance-Ranking-Model"><a href="#重要性排序模型-Importance-Ranking-Model" class="headerlink" title="重要性排序模型(Importance Ranking Model)"></a>重要性排序模型(Importance Ranking Model)</h2><p>重要性排序模型考虑的是 query-independent 的因素，根据网页(亦即文档)之间的图结构来判断文档的<a href="http://www.shuang0420.com/2016/11/04/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/">权威程度(Authority Score)</a>，典型的权威网站包括 Google，Yahoo! 等。常用的模型包括 PageRank，HITS，HillTop，TrustRank 等等。</p>
+<h1 id="传统的排序模型"><a href="#传统的排序模型" class="headerlink" title="传统的排序模型"></a>传统的排序模型</h1><h2 id="相关度排序模型-Relevance-Ranking-Model"><a href="#相关度排序模型-Relevance-Ranking-Model" class="headerlink" title="相关度排序模型(Relevance Ranking Model)"></a>相关度排序模型(Relevance Ranking Model)</h2><p>相关度排序模型根据查询和文档之间的相似度来对文档进行排序。常用的模型包括：<a href="http://www.shuang0420.com/2016/09/06/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Exact-match%20retrieval/" target="_blank" rel="external">布尔模型(Boolean Model)</a>，<a href="http://www.shuang0420.com/2016/09/30/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Best-Match/" target="_blank" rel="external">向量空间模型(Vector Space Model)</a>，隐语义分析(Latent Semantic Analysis)，<a href="http://www.shuang0420.com/2016/09/30/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Best-Match/" target="_blank" rel="external">BM25</a>，LMIR 模型等等。</p>
+<h2 id="重要性排序模型-Importance-Ranking-Model"><a href="#重要性排序模型-Importance-Ranking-Model" class="headerlink" title="重要性排序模型(Importance Ranking Model)"></a>重要性排序模型(Importance Ranking Model)</h2><p>重要性排序模型考虑的是 query-independent 的因素，根据网页(亦即文档)之间的图结构来判断文档的<a href="http://www.shuang0420.com/2016/11/04/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/" target="_blank" rel="external">权威程度(Authority Score)</a>，典型的权威网站包括 Google，Yahoo! 等。常用的模型包括 PageRank，HITS，HillTop，TrustRank 等等。</p>
 <h1 id="Learning-to-Rank"><a href="#Learning-to-Rank" class="headerlink" title="Learning to Rank"></a>Learning to Rank</h1><h2 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h2><p>对于传统的排序模型，单个模型往往只能考虑某一个方面(相关度或者重要性)，所以只是用单个模型达不到要求。搜索引擎通常会组合多种排序模型来进行排序，但是，如何组合多个排序模型来形成一个新的排序模型，以及如何调节这些参数，都是一个很大的问题。使用机器学习的方法，我们可以把各个现有排序模型的输出作为特征，然后训练一个新的模型，并自动学得这个新的模型的参数，从而很方便的可以组合多个现有的排序模型来生成新的排序模型。</p>
 <p>先来看看我们现在已经拥有的东西，这些都可以作为 feature</p>
 <ul>
@@ -908,7 +908,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2016/10/25/Search Engines笔记 - Learning to Rank/';
       var disqus_title = "Search Engines笔记 - Learning to Rank";
-      var disqus_url = 'http://www.shuang0420.com/2016/10/25/Search Engines笔记 - Learning to Rank/';
+      var disqus_url = 'http://www.shuang0420.cn/2016/10/25/Search Engines笔记 - Learning to Rank/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

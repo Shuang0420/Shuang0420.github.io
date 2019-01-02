@@ -90,7 +90,7 @@
 <meta name="description" content="这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 NLP笔记 - Information Extraction 和 NLP笔记 - Relation Extraction，梳理了知识抽取的基本方法，包括传统机器学习及经典的深度学习方法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="知识抽取-实体及关系抽取">
-<meta property="og:url" content="http://www.shuang0420.com/2018/09/15/知识抽取-实体及关系抽取/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2018/09/15/知识抽取-实体及关系抽取/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 NLP笔记 - Information Extraction 和 NLP笔记 - Relation Extraction，梳理了知识抽取的基本方法，包括传统机器学习及经典的深度学习方法。">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/general.png">
@@ -132,7 +132,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/ed.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/errors.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/final_loss.png">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.116Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="知识抽取-实体及关系抽取">
 <meta name="twitter:description" content="这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 NLP笔记 - Information Extraction 和 NLP笔记 - Relation Extraction，梳理了知识抽取的基本方法，包括传统机器学习及经典的深度学习方法。">
@@ -165,7 +165,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2018/09/15/知识抽取-实体及关系抽取/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2018/09/15/知识抽取-实体及关系抽取/"/>
 
 
   <title> 知识抽取-实体及关系抽取 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -415,7 +415,7 @@
       
 
       
-        <p>这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 <a href="http://www.shuang0420.com/2017/03/18/NLP%20笔记%20-Information%20Extraction/">NLP笔记 - Information Extraction</a> 和 <a href="http://www.shuang0420.com/2017/04/10/NLP笔记%20-%20Relation%20Extraction/">NLP笔记 - Relation Extraction</a>，梳理了知识抽取的基本方法，包括传统机器学习及经典的深度学习方法。</p>
+        <p>这一篇是关于知识抽取，整理并补充了上学时的两篇笔记 <a href="http://www.shuang0420.com/2017/03/18/NLP%20笔记%20-Information%20Extraction/" target="_blank" rel="external">NLP笔记 - Information Extraction</a> 和 <a href="http://www.shuang0420.com/2017/04/10/NLP笔记%20-%20Relation%20Extraction/" target="_blank" rel="external">NLP笔记 - Relation Extraction</a>，梳理了知识抽取的基本方法，包括传统机器学习及经典的深度学习方法。</p>
 <a id="more"></a>
 <p>知识抽取涉及的“知识”通常是 <strong>清楚的、事实性的信息</strong>，这些信息来自不同的来源和结构，而对不同数据源进行的知识抽取的方法各有不同，从结构化数据中获取知识用 D2R，其难点在于复杂表数据的处理，包括嵌套表、多列、外键关联等，从链接数据中获取知识用图映射，难点在于数据对齐，从半结构化数据中获取知识用包装器，难点在于 wrapper 的自动生成、更新和维护，这一篇主要讲从文本中获取知识，也就是我们广义上说的信息抽取。</p>
 <img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/general.png">
@@ -508,7 +508,7 @@
 </ol>
 <h2 id="深度学习方法"><a href="#深度学习方法" class="headerlink" title="深度学习方法"></a>深度学习方法</h2><h3 id="LSTM-CRF"><a href="#LSTM-CRF" class="headerlink" title="LSTM+CRF"></a>LSTM+CRF</h3><p>最经典的 <a href="hiheng Huang, Wei Xu, Kai Yu. Bidirectional LSTM-CRF Models for Sequence Tagging. CoRR. 2015">LSTM+CRF</a>，端到端的判别式模型，LSTM 利用过去的输入特征，CRF 利用句子级的标注信息，可以有效地使用过去和未来的标注来预测当前的标注。</p>
 <img src="http://images.shuang0420.com/images/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E5%AE%9E%E4%BD%93%E5%8F%8A%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/LSTM%2BCRF.png">
-<h2 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h2><p>评估 IR 系统或者文本分类的任务，我们通常会用到 precision，recall，F1 这种 set-based metrics，见<a href="http://www.shuang0420.com/2016/09/20/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/">信息检索评价的 Unranked Boolean Retrieval Model 部分</a>，但是在这里对 NER 这种 sequence 类型任务的评估，如果用这些 metrics，可能出现 boundary error 之类的问题。因为 NER 的评估是按每个 entity 而不是每个 token 来计算的，我们需要看 entity 的 boundary。</p>
+<h2 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h2><p>评估 IR 系统或者文本分类的任务，我们通常会用到 precision，recall，F1 这种 set-based metrics，见<a href="http://www.shuang0420.com/2016/09/20/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Evaluating%20Search%20Effectiveness/" target="_blank" rel="external">信息检索评价的 Unranked Boolean Retrieval Model 部分</a>，但是在这里对 NER 这种 sequence 类型任务的评估，如果用这些 metrics，可能出现 boundary error 之类的问题。因为 NER 的评估是按每个 entity 而不是每个 token 来计算的，我们需要看 entity 的 boundary。</p>
 <p>以下面一句话为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">First Bank of Chicago announced earnings...</div></pre></td></tr></table></figure></p>
 <p>正确的 NE 应该是 First Bank of Chicago，类别是 ORG，然而系统识别了 Bank of Chicago，类别 ORG，也就是说，右边界(right boundary)是对的，但是左边界(left boundary)是错误的，这其实是一个常见的错误。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">正确的标注：</div><div class="line">ORG - (1,4)</div><div class="line"></div><div class="line">系统：</div><div class="line">ORG - (2,4)</div></pre></td></tr></table></figure>
@@ -1145,7 +1145,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2018/09/15/知识抽取-实体及关系抽取/';
       var disqus_title = "知识抽取-实体及关系抽取";
-      var disqus_url = 'http://www.shuang0420.com/2018/09/15/知识抽取-实体及关系抽取/';
+      var disqus_url = 'http://www.shuang0420.cn/2018/09/15/知识抽取-实体及关系抽取/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

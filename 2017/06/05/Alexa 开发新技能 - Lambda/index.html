@@ -90,7 +90,7 @@
 <meta name="description" content="非常简单的教程，讲怎么给 Alexa 添加新的 skill，让你的 Echo 更个性化。本篇添加的 skill 是让 Alexa 从 reddit 上读前 10 条热点。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Alexa 开发新技能 - Lambda">
-<meta property="og:url" content="http://www.shuang0420.com/2017/06/05/Alexa 开发新技能 - Lambda/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/06/05/Alexa 开发新技能 - Lambda/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="非常简单的教程，讲怎么给 Alexa 添加新的 skill，让你的 Echo 更个性化。本篇添加的 skill 是让 Alexa 从 reddit 上读前 10 条热点。">
 <meta property="og:image" content="http://images.shuang0420.com/images/Alexa%20%E5%BC%80%E5%8F%91%E6%96%B0%E6%8A%80%E8%83%BD%20-%20Lambda/LAMBDA1.png">
@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/Alexa%20%E5%BC%80%E5%8F%91%E6%96%B0%E6%8A%80%E8%83%BD%20-%20Lambda/4.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/Alexa%20%E5%BC%80%E5%8F%91%E6%96%B0%E6%8A%80%E8%83%BD%20-%20Lambda/7.jpg">
 <meta property="og:image" content="http://images.shuang0420.com/images/Alexa%20%E5%BC%80%E5%8F%91%E6%96%B0%E6%8A%80%E8%83%BD%20-%20Lambda/8.jpg">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.143Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.642Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Alexa 开发新技能 - Lambda">
 <meta name="twitter:description" content="非常简单的教程，讲怎么给 Alexa 添加新的 skill，让你的 Echo 更个性化。本篇添加的 skill 是让 Alexa 从 reddit 上读前 10 条热点。">
@@ -142,7 +142,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2017/06/05/Alexa 开发新技能 - Lambda/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/06/05/Alexa 开发新技能 - Lambda/"/>
 
 
   <title> Alexa 开发新技能 - Lambda | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -381,8 +381,8 @@
 
       
         <p>非常简单的教程，讲怎么给 Alexa 添加新的 skill，让你的 Echo 更个性化。本篇添加的 skill 是让 Alexa 从 reddit 上读前 10 条热点。<br><a id="more"></a></p>
-<p>代码戳<a href="https://github.com/Shuang0420/Alexa-Starter-RedditReader/tree/master/reddit_reader_lambda" target="_blank" rel="external">Alexa-Starter-RedditReader</a>，其他版本如用 python flask 实现，见<a href="http://www.shuang0420.com/2017/05/02/Alexa%20开发新技能/">Alexa 开发新技能 - python flask</a>。这一篇截图比较细，一方面是因为 AWS 版本迭代太快，网上之前的教程可能会过时，另一方面实在是因为一步步做下来踩了很多坑，争取这篇教程可以让大家少走一些弯路。</p>
-<p>这一篇会用到 AWS Lambda，Lambda 的优势官方说明描述的很清楚，简单来说最显著的优点就是，与 <a href="http://www.shuang0420.com/2017/05/02/Alexa%20开发新技能/">Alexa 开发新技能 - python flask</a> 相比，我们不再需要后端运行代码并通过 ngrok 等工具将代码部署到公开网络。</p>
+<p>代码戳<a href="https://github.com/Shuang0420/Alexa-Starter-RedditReader/tree/master/reddit_reader_lambda" target="_blank" rel="external">Alexa-Starter-RedditReader</a>，其他版本如用 python flask 实现，见<a href="http://www.shuang0420.com/2017/05/02/Alexa%20开发新技能/" target="_blank" rel="external">Alexa 开发新技能 - python flask</a>。这一篇截图比较细，一方面是因为 AWS 版本迭代太快，网上之前的教程可能会过时，另一方面实在是因为一步步做下来踩了很多坑，争取这篇教程可以让大家少走一些弯路。</p>
+<p>这一篇会用到 AWS Lambda，Lambda 的优势官方说明描述的很清楚，简单来说最显著的优点就是，与 <a href="http://www.shuang0420.com/2017/05/02/Alexa%20开发新技能/" target="_blank" rel="external">Alexa 开发新技能 - python flask</a> 相比，我们不再需要后端运行代码并通过 ngrok 等工具将代码部署到公开网络。</p>
 <blockquote>
 <p>通过 AWS Lambda，无需配置或管理服务器即可运行代码。您只需按消耗的计算时间付费 – 代码未运行时不产生费用。借助 Lambda，您几乎可以为任何类型的应用程序或后端服务运行代码，而且全部无需管理。只需上传您的代码，Lambda 会处理运行和扩展高可用性代码所需的一切工作。您可以将您的代码设置为自动从其他 AWS 服务触发，或者直接从任何 Web 或移动应用程序调用。</p>
 </blockquote>
@@ -840,7 +840,7 @@
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2017/06/05/Alexa 开发新技能 - Lambda/';
       var disqus_title = "Alexa 开发新技能 - Lambda";
-      var disqus_url = 'http://www.shuang0420.com/2017/06/05/Alexa 开发新技能 - Lambda/';
+      var disqus_url = 'http://www.shuang0420.cn/2017/06/05/Alexa 开发新技能 - Lambda/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

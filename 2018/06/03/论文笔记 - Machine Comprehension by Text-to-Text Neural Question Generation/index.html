@@ -90,7 +90,7 @@
 <meta name="description" content="继续来瞅瞅问题生成~">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation">
-<meta property="og:url" content="http://www.shuang0420.com/2018/06/03/论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation/index.html">
+<meta property="og:url" content="http://www.shuang0420.cn/2018/06/03/论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation/index.html">
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="继续来瞅瞅问题生成~">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/decoder_s0.png">
@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/reinforce_gradient.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/evaluation.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/examples.png">
-<meta property="og:updated_time" content="2020-06-16T13:21:44.155Z">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation">
 <meta name="twitter:description" content="继续来瞅瞅问题生成~">
@@ -141,7 +141,7 @@
 
 
 
-  <link rel="canonical" href="http://www.shuang0420.com/2018/06/03/论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation/"/>
+  <link rel="canonical" href="http://www.shuang0420.cn/2018/06/03/论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation/"/>
 
 
   <title> 论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -398,7 +398,7 @@
 <ul>
 <li><a href="http://www.aclweb.org/anthology/P16-1056" target="_blank" rel="external">Generating factoid questions with recurrent neural networks: The 30m factoid question-answer corpus</a><br>将 KB 三元组转化为问句</li>
 <li><a href="https://www.aclweb.org/anthology/P16-1170" target="_blank" rel="external">Generating natural questions about an image</a><br>从图片生成问题</li>
-<li><a href="https://arxiv.org/abs/1702.02206" target="_blank" rel="external">Semi-supervised QA with generative domain-adaptive nets</a><br>用 domain-adaptive networks 的方法做 QA 的数据增强<br><a href="http://www.shuang0420.com/2018/04/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/">论文笔记</a></li>
+<li><a href="https://arxiv.org/abs/1702.02206" target="_blank" rel="external">Semi-supervised QA with generative domain-adaptive nets</a><br>用 domain-adaptive networks 的方法做 QA 的数据增强<br><a href="http://www.shuang0420.com/2018/04/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/" target="_blank" rel="external">论文笔记</a></li>
 </ul>
 <p>神经网络做 QG 基本套路还是 encoder-decoder 模型，对 P(q|d) 或者 P(q|d, a) 进行建模。像是 17年 ACL 的 paper  <a href="https://arxiv.org/abs/1705.00106" target="_blank" rel="external">Learning to Ask: Neural Question Generation for Reading Comprehension</a>，就是用一个基本的 attention-based seq2seq 模型对 P(q|d) 进行建模，并在 encoder 引入了句子和段落级的编码。</p>
 <p>这一篇 Microsoft Maluuba 出的 paper 把 answer 作为先验知识，对 P(q|d, a) 进行建模。同时用监督学习和强化学习结合的方法来训练 QG，先用最大似然预训练一波，然后用 policy gradient 方法进行 fine-tune ，最大化能反映问题质量的一些 rewards。</p>
@@ -849,7 +849,7 @@ $\hat a$ 表示在 answer 中出现但没有在 groud-truth question 中出现�
       var disqus_shortname = 'httpshuang0420githubio';
       var disqus_identifier = '2018/06/03/论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation/';
       var disqus_title = "论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation";
-      var disqus_url = 'http://www.shuang0420.com/2018/06/03/论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation/';
+      var disqus_url = 'http://www.shuang0420.cn/2018/06/03/论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
