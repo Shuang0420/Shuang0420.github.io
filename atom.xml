@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2018-11-25T13:29:04.000Z</updated>
+  <updated>2019-01-20T09:55:53.084Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -16,15 +16,77 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>NLP 2018 Highlights</title>
+    <link href="http://www.shuang0420.com/2019/01/20/NLP%2020018%20Highlights/"/>
+    <id>http://www.shuang0420.com/2019/01/20/NLP 20018 Highlights/</id>
+    <published>2019-01-20T01:02:27.000Z</published>
+    <updated>2019-01-20T09:55:53.084Z</updated>
+    
+    <content type="html"><![CDATA[<p>近来很多大拿做了 2018 年 NLP 的回顾，今天推荐一波 Elvis Saravia 的一篇报告，总结了上一年 NLP 学术界和工业界发生的大事，也包括 SOTA 的论文结果及有趣的研究方向，每个 NLPer 闲下来都可以读一读。<br><a id="more"></a></p>
+<img src="http://images.shuang0420.com/images/NLP%2020018%20Highlights//Users/xushuang/blog/static/images/NLP%202018%20highlights/contents1.png" class="ful-image" alt="/Users/xushuang/blog/static/images/NLP%202018%20highlights/contents1.png">
+<img src="http://images.shuang0420.com/images/NLP%2020018%20Highlights//Users/xushuang/blog/static/images/NLP%202018%20highlights/contents2.png" class="ful-image" alt="/Users/xushuang/blog/static/images/NLP%202018%20highlights/contents2.png">
+<p>18 年 1 月在知乎上的回答 <a href="https://www.zhihu.com/question/265118704/answer/292191686" target="_blank" rel="external">在NLP领域，现阶段最有希望突破深度学习牢笼的研究/思路有哪些？ - 徐阿衡的回答 - 知乎</a>，部分方向在这一年都有了可喜的突破。</p>
+<img src="http://images.shuang0420.com/images/NLP%2020018%20Highlights//Users/xushuang/blog/static/images/NLP%202018%20highlights/zhihu1.png" class="ful-image" alt="/Users/xushuang/blog/static/images/NLP%202018%20highlights/zhihu1.png">
+<img src="http://images.shuang0420.com/images/NLP%2020018%20Highlights//Users/xushuang/blog/static/images/NLP%202018%20highlights/zhihu2.png" class="ful-image" alt="/Users/xushuang/blog/static/images/NLP%202018%20highlights/zhihu2.png">
+<p>不容辩驳，18 年最大的亮点还是在 <strong>transfer learning</strong>，从 <a href="https://arxiv.org/abs/1802.05365" target="_blank" rel="external">ELMo</a> 到 <a href="https://arxiv.org/abs/1801.06146" target="_blank" rel="external">ULMFit</a> 到 <a href="https://blog.openai.com/language-unsupervised/" target="_blank" rel="external">GPT</a> 到 <a href="https://arxiv.org/pdf/1810.04805.pdf" target="_blank" rel="external">BERT</a>，性能横扫各大 NLP 测试任务。然而除了 BERT，迁移学习在其他方向上也有新的进展，如</p>
+<ul>
+<li>任务型对话中，利用迁移学习将已经学好大语种的 <a href="https://github.com/wenhuchen/Cross-Lingual-NBT" target="_blank" rel="external">dialog state tracking</a> 迁移至小语种 </li>
+<li><a href="https://arxiv.org/pdf/1804.08328.pdf" target="_blank" rel="external">测量并利用视觉任务之间的关联性</a>来避免重复学习，用更少的数据学习“一组”任务</li>
+<li><a href="https://arxiv.org/pdf/1806.05662.pdf" target="_blank" rel="external">GLoMo</a> 学习图表示，从大规模无标注数据中学习数据单元之间的依赖关系，输出隐关系图，将图迁移到下游任务提高任务性能</li>
+<li>…</li>
+</ul>
+<p>个人比较关心的是 <strong>对话机器人（Conversational AI）</strong> 和 <strong>医疗健康（Health and Lifestyle）</strong> 方向，重点关注，和各位分享一下。</p>
+<p>一方面，对话机器人在车载（<a href="https://www.slashgear.com/mercedes-benz-mbux-infotainment-system-a-revolution-with-ai-natural-language-and-more-09514619/" target="_blank" rel="external">奔驰MBUX</a>）、电商（<a href="https://www.pymnts.com/facebook/2018/patent-ecommerce-messenger-chatbot-social-media-ai/" target="_blank" rel="external">Facebook e-Commerce messager bot</a>）、银行（<a href="https://bankinnovation.net/2018/01/conversational-banking-may-already-be-mainstream-mastercard-says/" target="_blank" rel="external">Mastercard</a>）、保险（<a href="https://www.financialexpress.com/industry/askarvi-this-startup-sells-insurance-over-mobile-chat-and-plans-to-make-agents-redundant-in-a-few-years-time/1270418/" target="_blank" rel="external">AskArvi</a> ）等各领域都有广泛的应用，另一方面 <strong>情感识别</strong> 成为 <strong>对话机器人</strong> 一个重要方向，<a href="https://www.wired.co.uk/article/google-home-amazon-alexa-apple-homepod-voice-recognition" target="_blank" rel="external"> Wired.com</a> 解释了语音情感识别如何帮助机器与人建立健康的关系，初创公司 Hugging Face 获得 <a href="http://www.alleywatch.com/2018/05/hugging-face-raises-4m-to-create-emotionally-intelligent-chatbots/" target="_blank" rel="external">400万美元融资</a>，来打造情感智能聊天机器人。另外在情感分析领域，学术界也涌现了大量有趣的 paper</p>
+<ul>
+<li><a href="https://arxiv.org/abs/1801.07883" target="_blank" rel="external">Deep Learning for Sentiment Analysis : A Survey</a></li>
+<li><a href="https://arxiv.org/pdf/1704.01074.pdf" target="_blank" rel="external">Emotional Chatting Machine</a></li>
+<li>情感领域的 <a href="https://nlp.stanford.edu/pubs/li2018transfer.pdf" target="_blank" rel="external">style transfer</a></li>
+<li>利用 <a href="https://nlp.stanford.edu/seminar/details/pbhattacharyya.pdf" target="_blank" rel="external">multimodal learning</a> 做的 sarcasm detection</li>
+<li><a href="https://arxiv.org/abs/1805.09746" target="_blank" rel="external">flow of emotions over a book</a></li>
+<li>…</li>
+</ul>
+<p>之前预测的很难有突破的 <strong>常识（common sense）</strong>，Allen AI 斥巨资（125 million 美元）在 <a href="https://www.paulallen.com/ai-common-sense-project-alexandria/" target="_blank" rel="external">Alexandria 项目</a> 上，来支持开发具有常识的 AI，可以期待一下。</p>
+<p>当然对话机器人的发展也不是一帆风顺只有鲜花与赞好，Wired 发了一篇文章来讨论 <a href="https://yq.aliyun.com/articles/%5Blink%5D" target="_blank" rel="external">Facebook 虚拟助理 M 的现状</a> ，以及公司为何计划将其关闭。</p>
+<p>在 <strong>医疗健康</strong> 领域，通过 NLP 技术，初创公司 <a href="http://searchcio.techtarget.com/news/252435577/Deep-learning-algorithms-power-startups-beauty-database" target="_blank" rel="external">Proven Beauty</a> 向消费者提供定制化的护肤产品线；<a href="https://hbr.org/2018/05/stitch-fixs-ceo-on-selling-personal-style-to-the-mass-market" target="_blank" rel="external">Stitch</a> 销售具有个人风格的时尚；<a href="https://healthitanalytics.com/news/ehr-natural-language-processing-identifies-care-guideline-adherence" target="_blank" rel="external">Jessica Kent </a> 将 NLP 应用于电子医疗记录，精确分析数据来提高心脏衰竭病人的护理工作；<a href="https://www.forbes.com/sites/brucejapsen/2018/08/01/anthem-taps-artificial-intelligence-space-with-allergy-research-trial/#66dcc0e96ccc" target="_blank" rel="external">Anthem 与 doc.ai</a> 合作分析并预测过敏模式；<a href="https://venturebeat.com/2018/03/01/woebot-raises-8-million-for-its-ai-therapist/" target="_blank" rel="external">Woebot</a> 作为自动心理治疗机器人获得 A 轮 800 万美元融资；<a href="https://www.linguamatics.com/blog/ai-siblings-nlp-and-machine-learning-better-drug-discovery?platform=hootsuite" target="_blank" rel="external">Linguamatics</a> 提供新药研发的工具；机器在 CT 扫描中的疾病检测比人类肿瘤学家的诊断速度<a href="https://healthitanalytics.com/news/deep-learning-ids-neurological-scans-150-times-faster-than-humans" target="_blank" rel="external">快150倍</a>；<a href="https://www.healthdatamanagement.com/news/nlp-finds-links-between-genomic-anomalies-cancer-drug-responses" target="_blank" rel="external">文本挖掘技术</a> 能根据病人的生物标记制定癌症治疗方案……2018 年 AI 在医疗健康领域焕发着勃勃生机，而在学术界的 <strong>clinical NLP</strong> 方向，也有一些不错的 paper：</p>
+<ul>
+<li><a href="https://ieeexplore.ieee.org/document/8411813/" target="_blank" rel="external">数据整合</a></li>
+<li>最火的 CT 扫描等医疗影像相关任务</li>
+<li>NLP 在 <a href="https://www.sciencedirect.com/science/article/pii/S1532046418302016?dgcid=raven_sd_aip_email" target="_blank" rel="external">clinical informatics research</a> 的应用和挑战</li>
+<li><a href="https://arxiv.org/pdf/1811.08592.pdf" target="_blank" rel="external">CV、语音、NLP 相结合来预测抑郁程度</a></li>
+<li><a href="https://arxiv.org/pdf/1804.01486.pdf" target="_blank" rel="external">用多模态医疗数据训练词向量</a>，学习医学概念</li>
+<li>…</li>
+</ul>
+<p>除了在对话机器人和医疗健康领域，NLP 在金融、法律和广告等行业中也有崭新的表现，如 ASIC（Australian Securities and Investments Commission）希望利用 NLP 加强管理<a href="http://idm.net.au/article/0011865-asic-wants-talk-new-language-nlp" target="_blank" rel="external">公司和金融服务法律</a>；Tumi 使用 NLP 技术进行<a href="https://digiday.com/marketing/tumi-using-ai-marketing-campaigns-online-stores/" target="_blank" rel="external">目标营销</a>；华尔街的各大金融公司也在 NLP 和 ML 上下了血本，希望能实现 <a href="https://www.cnbc.com/2018/10/19/-artificial-intelligence-is-changing-how-investors-money-is-managed.html" target="_blank" rel="external">自动化投资管理</a>；律所也在用 AI 技术对战……</p>
+<p>报告自然是不止这些，还介绍了许多有趣的工作像 <a href="https://arxiv.org/pdf/1803.09473.pdf" target="_blank" rel="external">Code2vec</a>、<a href="https://magenta.tensorflow.org/music-transformer" target="_blank" rel="external">长篇音乐生成</a>、<a href="https://thenextweb.com/artificial-intelligence/2018/08/10/microsofts-ai-can-convert-images-into-chinese-poetry/" target="_blank" rel="external">看图写诗</a>、<a href="https://medium.com/@animeshsk3/t2f-text-to-face-generation-using-deep-learning-b3b6ba5a5a93" target="_blank" rel="external">通过文字描述生成人脸</a>等等等等，阿衡都觉得颇为之有趣~~ 大家公众号回复 <strong>2018 NLP</strong> 就可以获取原文 PDF 啦~</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近来很多大拿做了 2018 年 NLP 的回顾，今天推荐一波 Elvis Saravia 的一篇报告，总结了上一年 NLP 学术界和工业界发生的大事，也包括 SOTA 的论文结果及有趣的研究方向，每个 NLPer 闲下来都可以读一读。&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Others" scheme="http://www.shuang0420.com/categories/Others/"/>
+    
+    
+      <category term="AI" scheme="http://www.shuang0420.com/tags/AI/"/>
+    
+      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+    
+      <category term="chatbot" scheme="http://www.shuang0420.com/tags/chatbot/"/>
+    
+  </entry>
+  
+  <entry>
     <title>知识抽取-事件抽取</title>
     <link href="http://www.shuang0420.com/2018/10/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/"/>
     <id>http://www.shuang0420.com/2018/10/15/知识抽取-事件抽取/</id>
     <published>2018-10-15T11:02:27.000Z</published>
-    <updated>2018-11-25T13:29:04.000Z</updated>
+    <updated>2019-01-20T09:55:53.080Z</updated>
     
     <content type="html"><![CDATA[<p>接上一篇知识抽取-实体及关系抽取，前置知识在这一篇不多做解释啦。<br><a id="more"></a></p>
 <p>事件是促使事情状态和关系改变的条件[Dong et.al., 2010]。目前已存在的知识资源（如维基百科等） 所描述实体及实体间的关系大多是静态的，而事件能描述粒度更大的、动态的、 结构化的知识，是现有知识资源的重要补充。</p>
-<p>与<a href="http://www.shuang0420.com/2018/09/15/知识抽取-实体及关系抽取/">关系抽取</a>相比，事件抽取同样需要从文本中抽取 predicate 和对应的 arguments，但不同的是，关系抽取的问题是 binary 的，且两个 arguments 通常都会在同一个句子中出现，而事件抽取的难点在于，有多个 arguments 和 modifiers，且有些 arguments 不是必须的（some of which are omitted in any given instance of an event），这使得 bootstrapping/distant learning/coreference 都变得非常困难。</p>
+<p>与<a href="http://www.shuang0420.com/2018/09/15/知识抽取-实体及关系抽取/">关系抽取</a>相比，事件抽取同样需要从文本中抽取 predicate 和对应的 arguments，但不同的是，关系抽取的问题是 binary 的，且两个 arguments 通常都会在同一个句子中出现，而事件抽取的难点在于，有多个 arguments 和 modifiers，可能会分布在多个句子中，且有些 arguments 不是必须的（some of which are omitted in any given instance of an event），这使得 bootstrapping/distant learning/coreference 都变得非常困难。</p>
 <p>事件抽取的任务可以分两大类：</p>
 <ul>
 <li><strong>事件识别和抽取</strong><br>从描述事件信息的文本中识别并抽取出事件信息并以结构化的形式呈现出来，包括发生的时间、地点、参与角色以及与之相关的动作或者状态的改变。</li>
@@ -2107,105 +2169,6 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
       <category term="知乎" scheme="http://www.shuang0420.com/tags/%E7%9F%A5%E4%B9%8E/"/>
     
       <category term="专栏" scheme="http://www.shuang0420.com/tags/%E4%B8%93%E6%A0%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论文笔记 - Copy or Generate</title>
-    <link href="http://www.shuang0420.com/2017/10/25/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20CopyNet%20or%20Generate/"/>
-    <id>http://www.shuang0420.com/2017/10/25/论文笔记 - CopyNet or Generate/</id>
-    <published>2017-10-25T05:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>关于 Point Network &amp; CopyNet 的几篇论文笔记。<br><a id="more"></a></p>
-<p>普通的 Seq2Seq 的 output dictionary 大小是固定的，对输出中包含有输入单词(尤其是 OOV 和 rare word) 的情况很不友好。一方面，训练中不常见的单词的 word embedding 质量也不高，很难在 decoder 时预测出来，另一方面，即使 word embedding 很好，对一些命名实体，像人名等，word embedding 都很相似，也很难准确的 reproduce 出输入提到的单词。Point Network 及 CopyNet 中的 copy mechanism 就可以很好的处理这种问题，decoder 在各 time step 下，会学习怎样直接 copy 出现在输入中的关键字。</p>
-<p><strong>涉及到的论文：</strong></p>
-<ul>
-<li><a href="https://arxiv.org/abs/1506.03134" target="_blank" rel="external">Pointer Networks. NIPS 2015</a></li>
-<li><a href="https://arxiv.org/abs/1603.06393" target="_blank" rel="external">Incorporating Copying Mechanism in Sequence-to-Sequence Learning. ACL 2016.</a></li>
-<li><a href="https://arxiv.org/abs/1704.04368" target="_blank" rel="external">Get To The Point: Summarization with Pointer-Generator Networks. ACL 2017</a></li>
-<li><a href="http://link.zhihu.com/?target=http%3A//www.nlpr.ia.ac.cn/cip/shizhuhe/articles/acl2017-coreqa.pdf" target="_blank" rel="external">Generating Natural Answers by Incorporating Copying and Retrieving Mechanisms in Sequence-to-Sequence Learning. ACL 2017</a></li>
-</ul>
-<h1 id="Pointer-Network-Ptr-Net"><a href="#Pointer-Network-Ptr-Net" class="headerlink" title="Pointer Network(Ptr-Net)"></a>Pointer Network(Ptr-Net)</h1><p>主要来解决传统 Seq2Seq 中 output dictionary 大小固定(fixed prior)的问题。思路非常简单，实际上就是 attention Seq2Seq 的一个简化版本，不过产生的不是输出序列，而是指向输入序列的一堆指针(或者从输入序列中挑选一个元素进行输出)。论文解释了这种结构可以用来解决 <strong>旅行商(Travelling Salesman Problem)、凸包(convex hulls)</strong> 等问题。</p>
-<p><strong>结构对比:</strong><br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/PtrNet.png" class="ful-image" alt="PtrNet.png"></p>
-<p>还是先来看一下经典的 attention-based seq2seq， 在每一个 decoder step，先计算 $e_{ij}$ 得到对齐概率(或者说 how well input position j matches output position i)，然后做一个 softmax 得到 $a_{ij}$，再对 $a_{ij}$ 做一个加权和作为 context vector $c_i$，得到这个 context vector 之后在固定大小的 output dictionary 上做 softmax 预测输出的下一个单词。</p>
-<p><strong>经典 Attention:</strong><br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Machine%20Translation-Neuron%20models/birnnattention.png" class="ful-image" alt="birnnattention.png"></p>
-<p>而 Ptr-Net 不过是简化了后面的步骤，有了 $e_{ij}$ 后直接做 sofmax，可以得到一系列指向输入元素的指针 $a_{ij}$，最直观的用法就是对输入元素进行排序输出了。</p>
-<h1 id="CopyNet"><a href="#CopyNet" class="headerlink" title="CopyNet"></a>CopyNet</h1><p><strong>CopyNet</strong> 实现的是能够把输入中的部分信息原封不动的保留到输出中，相当于一个 refer back。一个简单的例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Q: 你好呀，我叫毛毛</div><div class="line">A: 毛毛，你好，很高兴认识你</div></pre></td></tr></table></figure>
-<p>这个”毛毛”，可能是 OOV，也可能是其他实体或者是日期等很难被 decoder “还原” 出来的信息，CopyNet 可以更好的处理这类的信息。</p>
-<p>那么问题主要有两个：</p>
-<ul>
-<li><strong>What to copy: 输入中的哪些部分应该被 copy?</strong> </li>
-<li><strong>Where to paste: 应该把这部分信息 paste 到输出的哪个位置？</strong></li>
-</ul>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/CopyNet1.png" class="ful-image" alt="CopyNet1.png">
-<p>框架还是基于 attention-based encoder-decoder，不过在 decoder 的时候，做了部分改进，总的来说，下一个单词的预测是由一个 generate-mode g 和 copy-mode c 的混合概率模型决定的。</p>
-<p>$$p(y_t|s_t, y_{t-1}, c_t, M) = p(y_t, g|s_t, y_{t-1}, c_t, M) + p(y_t, c|s_t, y_{t-1}, c_t, M) $$</p>
-<p>要实现 CopyNet 需要有两个词汇表，一个是通常意义的高频词词汇表 V={$v_1,…,v_N$} 加上 OOV，另一个是在输入中出现的所有 unique words X={$x_1, …, x_{T_S}$}，这部分可能会包含没有在 V 里出现的单词，也就是 OOV 单词，第二个词汇表用来支持 CopyNet，最终输入的词汇表是三者的并集 $V  ∪ UNK ∪ X$。</p>
-<p>对 encoder 部分(双向 RNN) 的输出 $h_1, …, h_{T_S}$，记做 M，M 其实同时包含了 <strong>语义</strong> 和 <strong>位置</strong> 信息。decoder 部分对 M 的读取有两种形式：</p>
-<ul>
-<li><strong>Content-base</strong><br>Attentive read from word-embedding</li>
-<li><strong>location-base</strong><br>Selective read from location-specific hidden units</li>
-</ul>
-<p><strong>两种模式对应的 score function</strong><br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/CopyNet_mode.png" class="ful-image" alt="CopyNet_mode.png"></p>
-<p>$$<br>  \begin{aligned}<br>  φ(y_t=v_i) &amp;= v_i^TW_os_t, \ \ \ \ v_i ∈ V ∪ UNK \\<br>  φ(y_t=x_j) &amp;= σ(h_j^TW_c)s_t, \ \ \ \ vi ∈ V ∪ UNK \\<br>  \end{aligned}<br>$$</p>
-<p>$φ(y_t=v_i)$ 和普通的 RNN encoder-decoder 计算相同，$φ(y_t=x_j)$ 将 $h_t$ 和 $s_t$ 映射到了同一个语义空间，$\sigma$ 发现用 tanh 比较好，注意 $p(y_t, c|・)$ 的计算加总了所有 $x_j=y_t$ 的情况。</p>
-<p><strong>$s_t$ 的更新：</strong><br>在用 $y_{t-1}$ 更新 t 时刻的状态 $s_t$ 时，CopyNet 不仅仅考虑了词向量，还使用了 M 矩阵中特定位置的 hidden state，或者说，$y_{t-1}$ 的表示中就包含了这两个部分的信息 $[e(y_{t-1}); ζ(y_{t-1})]$，$e(y_{t-1})$ 是词向量，$ζ(y_{t-1})$ 和 attention 的形式差不多，是 M 矩阵中 hidden state 的加权和</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/similar_attention.png" class="ful-image" alt="similar_attention.png">
-<p>K 是 normalization term，直观上，是去找输入中也出现 $y_{t-1}$ 的单词对应的 hidden state，考虑到 $y_{t-1}$ 可能在输入中出现多次，$ρ_{tT}$ 更关注这些多次出现的词。</p>
-<p><strong>整条路径：</strong></p>
-<p>$$ζ(y_{t-1}) \longrightarrow{update} \ s_t \longrightarrow predict \ y_t \longrightarrow sel. read \  ζ(y_t)$$</p>
-<p>一些结果：<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/res.png" class="ful-image" alt="res.png"></p>
-<h1 id="Get-To-The-Point-Summarization-with-Pointer-Generator-Networks"><a href="#Get-To-The-Point-Summarization-with-Pointer-Generator-Networks" class="headerlink" title="Get To The Point: Summarization with Pointer-Generator Networks"></a>Get To The Point: Summarization with Pointer-Generator Networks</h1><p>Copy 机制在文本摘要中的应用。传统 attention-based seq2seq 存在下面两个问题</p>
-<ol>
-<li><strong>无法正确产生文中的事实细节</strong><br>e.g. <em>Germany beat Argentina 3-2</em><br>尤其是对 OOV 或者 rare word。在训练中不常见的单词的 word embedding 质量也不高，很难 reproduce，而即使 word embedding 很好，对一些命名实体，像是人名之类的，含义都很相似，也很难准确的 reproduce 出来<br>所以作者引入了一个 <strong>pointer-generator network</strong>，在 generation 的基础上，加入了 copy 输入中的一些词的能力来提高摘要的准确性，相当于引入了部分 extractive summary 的能力</li>
-<li><strong>倾向重复一些词组</strong><br>e.g. <em>Germany beat Germany beat Germany beat…</em><br>主要是因为 decoder 过程太过依赖于上一个单词，而不是 longer-term 的信息，所以一个重复的单词会 trigger 出死循环，比如上面这个例子就陷入了 Germany beat Germany beat Germany beat… 的死循环，产生不出 Germany beat Germany 2-0 这样的句子<br>所以有了 <strong>coverage</strong>，来追踪哪些部分已经被 summarize 过了，之后的 attention 就不会注意这些部分</li>
-</ol>
-<h2 id="Pointer-generation-network"><a href="#Pointer-generation-network" class="headerlink" title="Pointer-generation network"></a>Pointer-generation network</h2><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/pointer_generator.png" class="ful-image" alt="pointer_generator.png">
-<p>上图展示了 decoder 的第三个 step，预测 Germany beat 后面一个单词，像之前一样，我们会计算一个 attention distribution 和 vocabulary distribution，不过同时，也会计算一个产生概率 $p_{gen}$，是 0-1 间的一个值，表示从 vocabulary 中产生一个单词的概率，相应的 $1-p_{gen}$ 就是从输入中 copy 一个单词的概率</p>
-<p>$$<br>  \begin{aligned}<br>  P(w) &amp;= p_{gen}P_{vocab}(w) + (1-p_{gen})\sum_{i:w_i=w}a_i^t \\<br>  p_{gen} &amp;= \sigma(w^T_{h^*}h^*_t + w^T_ss_t+w^T_xx_t+b_{ptr}) \\<br>  \end{aligned}<br>$$</p>
-<p>其中 $h^*_t$ 是 context vector，在前面我们用的是 $c_i$ 来表示。如果 w 是 OOV， 那么 $P_{vocab}=0$，如果 w 没有在输入中出现，那么 $\sum_{i:w_i=w}a_i^t=0$。</p>
-<h2 id="Coverage"><a href="#Coverage" class="headerlink" title="Coverage"></a>Coverage</h2><p>用 attention distribution 来记录哪些部分已经总结过了，来惩罚再次加入计算的部分。decoder 的每个时刻，有一个 coverage vector $c_t$ 来将记录之前所有时刻 attention 的总和。</p>
-<p>$$c^t=\sum^{t-1}_{t’=0}a^{t’}$$</p>
-<p>这个 coverage 会作为 attention 计算的一个输入<br>$$e^t_i=v^Ttanh(W_hh_i+W_ss_t+w_cc^t_i+b_{attn})$$</p>
-<p>对应的，有一个 coverage loss<br>$$covloss_t=\sum_imin(a^t_i,c^t_i)$$</p>
-<p>整体的 loss 就是<br>$$loss_t=-logP(w^*_t)+\lambda \sum_i min(a^t_i, c^t_i)$$</p>
-<h1 id="Generating-Natural-Answers-by-Incorporating-Copying-and-Retrieving-Mechanisms-in-Sequence-to-Sequence-Learning"><a href="#Generating-Natural-Answers-by-Incorporating-Copying-and-Retrieving-Mechanisms-in-Sequence-to-Sequence-Learning" class="headerlink" title="Generating Natural Answers by Incorporating Copying and Retrieving Mechanisms in Sequence-to-Sequence Learning"></a>Generating Natural Answers by Incorporating Copying and Retrieving Mechanisms in Sequence-to-Sequence Learning</h1><p>Copy 机制在问答系统中的应用。论文的模型用三种不同模式获取词汇并进行选取：<strong>用拷贝方式取得问句中的实体、用预测方式产生让答案更自然的连接词、用检索方式获取相关事实</strong> 并结合多个相关事实产生复杂问句的自然形式的答案。</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/COREQA1.png" class="ful-image" alt="COREQA1.png">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Q: Do you know where was Jet Li from ?</div><div class="line">A1: Beijing.</div><div class="line">A2: Jet Li was born in Beijing. He is now a Singaporean citizen.</div></pre></td></tr></table></figure>
-<p>传统的 QA 系统只会返回 A1，一个孤零零的实体，这对用户并不友好，A2 才是自然语言形式的答案。COREQA 利用 <strong>拷贝(copy)、检索(retrieval)和预测(prediction)</strong> 从不同来源获取不同类型的词汇，产生复杂问句的自然答案。</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/COREQA2.png" class="ful-image" alt="COREQA2.png">
-<p>具体过程，以 <strong>Do you know where was Jet Li from</strong> 这个问题为例来说明：</p>
-<ol>
-<li><strong>知识检索:</strong> 首先识别问题中的包含的 topic entities。这里我们识别出的 topic entity 是  Jet Li 。然后根据 entity 从知识库中检索出相关的三元组(subject, property, object)。针对李连杰这个实体，我们可以检索出(Jet Li, gender, Male)，(Jet Li, birthplace, Beijing)，(Jet, nationality, Singapore) 等三元组。</li>
-<li><strong>编码(Encoder):</strong> 将问题和检索到的知识编码成向量<br><strong>问题编码:</strong> 双向 RNN(Bi-RNN)，把前向和后向对应的 hidden state 拼接起来形成每一时刻的 short-term memory $M_Q={h_t}$，两个方向 RNN 的最后一个向量拿出来拼在一起就得到向量 q 来表示整个问题<br><strong>知识编码:</strong> 使用了记忆网络(Memory Network)，对知识检索阶段得到的知识三元组 spo 分别进行编码得到 $e_s, e_p, e_o$，拼接成一个 $f_i$ 来表示这个三元组，所有这些三元组向量形成一个 list，用 $M_{KB}$ 表示<br><strong>分数计算: </strong> $S(q, s_t, f_j) = DNN_1(q, s_t, f_j)$</li>
-<li><strong>解码(Decoder):</strong> 根据 $M_Q$ 和 $M_{KB}$ 来生成自然答案。单词预测有三种模式，predict-mode, copy-mode 和 retrieve-mode，predict-mode 和普通 seq2seq 原理相同，生成词汇表中的单词，copy-mode 从问句中复制单词，retrieve-mode 从知识库中选取单词。过程和 CopyNet 差不多，也有两种读取方式，一种是读取语义，一种是读取位置。</li>
-</ol>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/COREQA_formula1.png" class="ful-image" alt="COREQA_formula1.png">
-<p>$p_{pr}, p_{co}, p_{re}$ 以及对应的 score function 和前面的 CopyNet 非常相似，包括之后的 state update 部分也和 CopyNet 差不多，不过是多了 $r_{kb}$ 而已。</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Copy%20or%20Generate/COREQA_formula2.png" class="ful-image" alt="COREQA_formula2.png">
-<blockquote>
-<p><strong>参考链接：</strong><br><a href="https://zhuanlan.zhihu.com/p/26826765" target="_blank" rel="external">让问答更自然 - 基于拷贝和检索机制的自然答案生成系统研究 | 论文访谈间 #02</a></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;关于 Point Network &amp;amp; CopyNet 的几篇论文笔记。&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
-    
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
-    
-    
-      <category term="text summarization" scheme="http://www.shuang0420.com/tags/text-summarization/"/>
-    
-      <category term="CopyNet" scheme="http://www.shuang0420.com/tags/CopyNet/"/>
-    
-      <category term="Pre-Net" scheme="http://www.shuang0420.com/tags/Pre-Net/"/>
     
   </entry>
   
