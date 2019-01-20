@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2019-01-20T09:59:55.895Z</updated>
+  <updated>2019-01-20T10:01:57.279Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.shuang0420.com/2019/01/20/NLP%2020018%20Highlights/"/>
     <id>http://www.shuang0420.com/2019/01/20/NLP 20018 Highlights/</id>
     <published>2019-01-20T01:02:27.000Z</published>
-    <updated>2019-01-20T09:59:55.895Z</updated>
+    <updated>2019-01-20T10:01:57.279Z</updated>
     
     <content type="html"><![CDATA[<p>近来很多大拿做了 2018 年 NLP 的回顾，今天推荐一波 Elvis Saravia 的一篇报告，总结了上一年 NLP 学术界和工业界发生的大事，也包括 SOTA 的论文结果及有趣的研究方向，每个 NLPer 闲下来都可以读一读。<br><a id="more"></a></p>
 <img src="http://images.shuang0420.com/images/NLP%202018%20highlights/contents1.png" class="ful-image" alt="/Users/xushuang/blog/static/images/NLP%202018%20highlights/contents1.png">
@@ -57,7 +57,7 @@
 <li>…</li>
 </ul>
 <p>除了在对话机器人和医疗健康领域，NLP 在金融、法律和广告等行业中也有崭新的表现，如 ASIC（Australian Securities and Investments Commission）希望利用 NLP 加强管理<a href="http://idm.net.au/article/0011865-asic-wants-talk-new-language-nlp" target="_blank" rel="external">公司和金融服务法律</a>；Tumi 使用 NLP 技术进行<a href="https://digiday.com/marketing/tumi-using-ai-marketing-campaigns-online-stores/" target="_blank" rel="external">目标营销</a>；华尔街的各大金融公司也在 NLP 和 ML 上下了血本，希望能实现 <a href="https://www.cnbc.com/2018/10/19/-artificial-intelligence-is-changing-how-investors-money-is-managed.html" target="_blank" rel="external">自动化投资管理</a>；律所也在用 AI 技术对战……</p>
-<p>报告自然是不止这些，还介绍了许多有趣的工作像 <a href="https://arxiv.org/pdf/1803.09473.pdf" target="_blank" rel="external">Code2vec</a>、<a href="https://magenta.tensorflow.org/music-transformer" target="_blank" rel="external">长篇音乐生成</a>、<a href="https://thenextweb.com/artificial-intelligence/2018/08/10/microsofts-ai-can-convert-images-into-chinese-poetry/" target="_blank" rel="external">看图写诗</a>、<a href="https://medium.com/@animeshsk3/t2f-text-to-face-generation-using-deep-learning-b3b6ba5a5a93" target="_blank" rel="external">通过文字描述生成人脸</a>等等等等，阿衡都觉得颇为之有趣~~ 大家公众号回复 <strong>2018 NLP</strong> 就可以获取原文 PDF 啦~</p>
+<p>报告自然是不止这些，还介绍了许多有趣的工作像 <a href="https://arxiv.org/pdf/1803.09473.pdf" target="_blank" rel="external">Code2vec</a>、<a href="https://magenta.tensorflow.org/music-transformer" target="_blank" rel="external">长篇音乐生成</a>、<a href="https://thenextweb.com/artificial-intelligence/2018/08/10/microsofts-ai-can-convert-images-into-chinese-poetry/" target="_blank" rel="external">看图写诗</a>、<a href="https://medium.com/@animeshsk3/t2f-text-to-face-generation-using-deep-learning-b3b6ba5a5a93" target="_blank" rel="external">通过文字描述生成人脸</a>等等等等，阿衡都觉得颇为之有趣~~ 公众号回复 <strong>2018 NLP</strong> 就可以获取原文 PDF 啦~</p>
 ]]></content>
     
     <summary type="html">
