@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2019-01-20T10:01:57.279Z</updated>
+  <updated>2019-01-20T10:26:27.609Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.shuang0420.com/2019/01/20/NLP%202018%20Highlights/"/>
     <id>http://www.shuang0420.com/2019/01/20/NLP 2018 Highlights/</id>
     <published>2019-01-20T01:02:27.000Z</published>
-    <updated>2019-01-20T10:01:57.279Z</updated>
+    <updated>2019-01-20T10:26:27.609Z</updated>
     
     <content type="html"><![CDATA[<p>近来很多大拿做了 2018 年 NLP 的回顾，今天推荐一波 Elvis Saravia 的一篇报告，总结了上一年 NLP 学术界和工业界发生的大事，也包括 SOTA 的论文结果及有趣的研究方向，每个 NLPer 闲下来都可以读一读。<br><a id="more"></a></p>
 <img src="http://images.shuang0420.com/images/NLP%202018%20highlights/contents1.png" class="ful-image" alt="/Users/xushuang/blog/static/images/NLP%202018%20highlights/contents1.png">
@@ -35,7 +35,7 @@
 <li><a href="https://arxiv.org/pdf/1806.05662.pdf" target="_blank" rel="external">GLoMo</a> 学习图表示，从大规模无标注数据中学习数据单元之间的依赖关系，输出隐关系图，将图迁移到下游任务提高任务性能</li>
 <li>…</li>
 </ul>
-<p>个人比较关心的是 <strong>对话机器人（Conversational AI）</strong> 和 <strong>医疗健康（Health and Lifestyle）</strong> 方向，重点关注，和各位分享一下。</p>
+<p>个人比较关心的是 <strong>对话机器人（Conversational AI）</strong> 和 <strong>医疗健康（Health and Lifestyle）</strong> 方向，重点关注，和各位分享一下~</p>
 <p>一方面，对话机器人在车载（<a href="https://www.slashgear.com/mercedes-benz-mbux-infotainment-system-a-revolution-with-ai-natural-language-and-more-09514619/" target="_blank" rel="external">奔驰MBUX</a>）、电商（<a href="https://www.pymnts.com/facebook/2018/patent-ecommerce-messenger-chatbot-social-media-ai/" target="_blank" rel="external">Facebook e-Commerce messager bot</a>）、银行（<a href="https://bankinnovation.net/2018/01/conversational-banking-may-already-be-mainstream-mastercard-says/" target="_blank" rel="external">Mastercard</a>）、保险（<a href="https://www.financialexpress.com/industry/askarvi-this-startup-sells-insurance-over-mobile-chat-and-plans-to-make-agents-redundant-in-a-few-years-time/1270418/" target="_blank" rel="external">AskArvi</a> ）等各领域都有广泛的应用，另一方面 <strong>情感识别</strong> 成为 <strong>对话机器人</strong> 一个重要方向，<a href="https://www.wired.co.uk/article/google-home-amazon-alexa-apple-homepod-voice-recognition" target="_blank" rel="external"> Wired.com</a> 解释了语音情感识别如何帮助机器与人建立健康的关系，初创公司 Hugging Face 获得 <a href="http://www.alleywatch.com/2018/05/hugging-face-raises-4m-to-create-emotionally-intelligent-chatbots/" target="_blank" rel="external">400万美元融资</a>，来打造情感智能聊天机器人。另外在情感分析领域，学术界也涌现了大量有趣的 paper</p>
 <ul>
 <li><a href="https://arxiv.org/abs/1801.07883" target="_blank" rel="external">Deep Learning for Sentiment Analysis : A Survey</a></li>
@@ -45,9 +45,9 @@
 <li><a href="https://arxiv.org/abs/1805.09746" target="_blank" rel="external">flow of emotions over a book</a></li>
 <li>…</li>
 </ul>
-<p>之前预测的很难有突破的 <strong>常识（common sense）</strong>，Allen AI 斥巨资（125 million 美元）在 <a href="https://www.paulallen.com/ai-common-sense-project-alexandria/" target="_blank" rel="external">Alexandria 项目</a> 上，来支持开发具有常识的 AI，可以期待一下。</p>
+<p>之前预测的很难有突破的 <strong>常识（common sense）</strong>，Allen AI 斥巨资（125 million 美元）在 <a href="https://www.paulallen.com/ai-common-sense-project-alexandria/" target="_blank" rel="external">Alexandria 项目</a> 上，来支持开发具有常识的 AI，可以期待一下~</p>
 <p>当然对话机器人的发展也不是一帆风顺只有鲜花与赞好，Wired 发了一篇文章来讨论 <a href="https://yq.aliyun.com/articles/%5Blink%5D" target="_blank" rel="external">Facebook 虚拟助理 M 的现状</a> ，以及公司为何计划将其关闭。</p>
-<p>在 <strong>医疗健康</strong> 领域，通过 NLP 技术，初创公司 <a href="http://searchcio.techtarget.com/news/252435577/Deep-learning-algorithms-power-startups-beauty-database" target="_blank" rel="external">Proven Beauty</a> 向消费者提供定制化的护肤产品线；<a href="https://hbr.org/2018/05/stitch-fixs-ceo-on-selling-personal-style-to-the-mass-market" target="_blank" rel="external">Stitch</a> 销售具有个人风格的时尚；<a href="https://healthitanalytics.com/news/ehr-natural-language-processing-identifies-care-guideline-adherence" target="_blank" rel="external">Jessica Kent </a> 将 NLP 应用于电子医疗记录，精确分析数据来提高心脏衰竭病人的护理工作；<a href="https://www.forbes.com/sites/brucejapsen/2018/08/01/anthem-taps-artificial-intelligence-space-with-allergy-research-trial/#66dcc0e96ccc" target="_blank" rel="external">Anthem 与 doc.ai</a> 合作分析并预测过敏模式；<a href="https://venturebeat.com/2018/03/01/woebot-raises-8-million-for-its-ai-therapist/" target="_blank" rel="external">Woebot</a> 作为自动心理治疗机器人获得 A 轮 800 万美元融资；<a href="https://www.linguamatics.com/blog/ai-siblings-nlp-and-machine-learning-better-drug-discovery?platform=hootsuite" target="_blank" rel="external">Linguamatics</a> 提供新药研发的工具；机器在 CT 扫描中的疾病检测比人类肿瘤学家的诊断速度<a href="https://healthitanalytics.com/news/deep-learning-ids-neurological-scans-150-times-faster-than-humans" target="_blank" rel="external">快150倍</a>；<a href="https://www.healthdatamanagement.com/news/nlp-finds-links-between-genomic-anomalies-cancer-drug-responses" target="_blank" rel="external">文本挖掘技术</a> 能根据病人的生物标记制定癌症治疗方案……2018 年 AI 在医疗健康领域焕发着勃勃生机，而在学术界的 <strong>clinical NLP</strong> 方向，也有一些不错的 paper：</p>
+<p>而在 <strong>医疗健康</strong> 领域，通过 NLP 技术，初创公司 <a href="http://searchcio.techtarget.com/news/252435577/Deep-learning-algorithms-power-startups-beauty-database" target="_blank" rel="external">Proven Beauty</a> 向消费者提供定制化的护肤产品线；<a href="https://hbr.org/2018/05/stitch-fixs-ceo-on-selling-personal-style-to-the-mass-market" target="_blank" rel="external">Stitch</a> 销售具有个人风格的时尚；<a href="https://healthitanalytics.com/news/ehr-natural-language-processing-identifies-care-guideline-adherence" target="_blank" rel="external">Jessica Kent </a> 将 NLP 应用于电子医疗记录，精确分析数据来提高心脏衰竭病人的护理工作；<a href="https://www.forbes.com/sites/brucejapsen/2018/08/01/anthem-taps-artificial-intelligence-space-with-allergy-research-trial/#66dcc0e96ccc" target="_blank" rel="external">Anthem 与 doc.ai</a> 合作分析并预测过敏模式；<a href="https://venturebeat.com/2018/03/01/woebot-raises-8-million-for-its-ai-therapist/" target="_blank" rel="external">Woebot</a> 作为自动心理治疗机器人获得 A 轮 800 万美元融资；<a href="https://www.linguamatics.com/blog/ai-siblings-nlp-and-machine-learning-better-drug-discovery?platform=hootsuite" target="_blank" rel="external">Linguamatics</a> 提供新药研发的工具；机器在 CT 扫描中的疾病检测比人类肿瘤学家的诊断速度<a href="https://healthitanalytics.com/news/deep-learning-ids-neurological-scans-150-times-faster-than-humans" target="_blank" rel="external">快150倍</a>；<a href="https://www.healthdatamanagement.com/news/nlp-finds-links-between-genomic-anomalies-cancer-drug-responses" target="_blank" rel="external">文本挖掘技术</a> 能根据病人的生物标记制定癌症治疗方案……可以说 2018 年 AI 在医疗健康领域焕发着勃勃生机，而在学术界的 <strong>clinical NLP</strong> 方向，也有一些不错的 paper：</p>
 <ul>
 <li><a href="https://ieeexplore.ieee.org/document/8411813/" target="_blank" rel="external">数据整合</a></li>
 <li>最火的 CT 扫描等医疗影像相关任务</li>
