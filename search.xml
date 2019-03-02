@@ -11128,7 +11128,7 @@ python nb.py split.train split.test</pre>
 </li>
 <li>不断重复以上过程。</li>
 </ol>
-<p>随机游走中访问越频繁的网页越重要。<br>计算方法<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg"></p>
+<p>随机游走中访问越频繁的网页越重要。<br>计算方法<br><img src="http://images.shuang0420.com/images/PageRank.jpg" class="ful-image" alt="PageRank.jpg"></p>
 <h2 id="Voting-Algorithm"><a href="#Voting-Algorithm" class="headerlink" title="Voting Algorithm"></a>Voting Algorithm</h2><p>PageRank 也可以被看作是一个 Voting algorithm。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    p votes for each page that it links to</div></pre></td></tr></table></figure></p>
 <p>再具体些<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">For each page p</div><div class="line">  current PR = 1 / |C|    C: Number of nodes in the graph next PR = 0</div><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    use p’s current PR to update the next PR of each outlink page</div><div class="line">  For each page p</div><div class="line">    current PR = next PR</div><div class="line">    next PR = 0</div></pre></td></tr></table></figure></p>
 <ul>
@@ -11137,10 +11137,10 @@ python nb.py split.train split.test</pre>
 <li>如果两个网页在第 i 次循环中有相同的 PageRank:<br>PR(p1)=0.4, p1 有 2 个 outlinks, 那么 p1 的每一个 vote 是 0.4/2=0.2<br>PR(p2)=0.4, p2 有 4 个 outlinks, 那么 p2 的每一个 vote 是 0.4/4=0.1</li>
 </ul>
 <p>在每一个循环中, PR 的计算方法都如之前的图示。</p>
-<h2 id="d-的选择"><a href="#d-的选择" class="headerlink" title="d 的选择"></a>d 的选择</h2><p>假定 A 有两条出链，指向 B 和 C，B 和 C 各自有一条出链，都指向 A。<br>如果 d=0.5，那么经历 14 次循环 PR 会 converge<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg"></p>
-<p>如果 d=0.85，那么经历 58 次循环 PR 会 converge<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg"></p>
+<h2 id="d-的选择"><a href="#d-的选择" class="headerlink" title="d 的选择"></a>d 的选择</h2><p>假定 A 有两条出链，指向 B 和 C，B 和 C 各自有一条出链，都指向 A。<br>如果 d=0.5，那么经历 14 次循环 PR 会 converge<br><img src="http://images.shuang0420.com/images/0.5.jpg" class="ful-image" alt="0.5.jpg"></p>
+<p>如果 d=0.85，那么经历 58 次循环 PR 会 converge<br><img src="http://images.shuang0420.com/images/0.85.jpg" class="ful-image" alt="0.85.jpg"></p>
 <h2 id="Transformation-of-PageRank"><a href="#Transformation-of-PageRank" class="headerlink" title="Transformation of PageRank"></a>Transformation of PageRank</h2><p>有些 PageRank varies over a wide range，我们可以把这个 range 进行压缩和转化。如<br>$$PR_T = log_{10}(PR)+11$$</p>
-<p>效果是<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg"></p>
+<p>效果是<br><img src="http://images.shuang0420.com/images/PR_trans.jpg" class="ful-image" alt="PR_trans.jpg"></p>
 <p>Google 的 PageRank 范围是 1-10，我们通常说的 PageRank 都是经过这种转化的 PageRank。</p>
 <h2 id="怎样产生-high-PageRank"><a href="#怎样产生-high-PageRank" class="headerlink" title="怎样产生 high PageRank"></a>怎样产生 high PageRank</h2><ul>
 <li>有很多入链</li>
@@ -11171,7 +11171,7 @@ python nb.py split.train split.test</pre>
 </ul>
 <p>follow a link 的概率取决于网页的新鲜度。<br>有 fresh inlinks 的 fresh page 有更高的 authority score。</p>
 <p><strong>BM2500+T-Fresh vs BM2500+PageRank</strong><br>Relevance: +8% in P@10，+11-30% in NDCG@k<br>Freshness: +8% in P@10，+10-12% in NDCG@k</p>
-<img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg">
+<img src="http://images.shuang0420.com/images/BM2500.jpg" class="ful-image" alt="BM2500.jpg">
 <p>其它相同作用的 model 如 TimedPageRank, T-Rank, BuzzRank, TemporalPageRank。</p>
 <h1 id="Hyperlink-Induced-Topic-Search-HITS"><a href="#Hyperlink-Induced-Topic-Search-HITS" class="headerlink" title="Hyperlink-Induced Topic Search(HITS)"></a>Hyperlink-Induced Topic Search(HITS)</h1><p>在泛主题搜索（broad-topic search），也就是 informational needs 时，主要有两种非常有用的网页结果。</p>
 <ul>
@@ -11179,13 +11179,13 @@ python nb.py split.train split.test</pre>
 <li>Hub 网页：导航型网页，本身不是权威型网页，而是对某个主题感兴趣的人花时间编辑整理出的权威型网页列表。可以通过这种导航型网页来帮我们找到权威型网页。</li>
 </ul>
 <p>一个好的 hub 网页会同时指向多个好的 authority 网页，而一个好的 authority 网页同时会被多个好的 hub 网页所指向。给定某个查询，我们对每个网页给出两个得分，一个是 hub 值，一个是 authority 值，所以对任何一个查询，我们都能得到两个排序结果列表。所以，我们其实可以给出一个 hub 值和 authority 值的循环定义，然后通过迭代计算求解。</p>
-<img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg">
+<img src="http://images.shuang0420.com/images/HITS.jpg" class="ful-image" alt="HITS.jpg">
 <p>并不是对整个 web 计算 Hubs 和 Authority 分数。而是对一个小的 set 来进行计算，set 的创建方法如下：</p>
 <ul>
 <li>收集 query q 的 top n 网页构成 the root set</li>
 <li>用 root set 的入链和出链扩充这个 set。</li>
 </ul>
-<p>之后在这个网页子集上来计算 hub 和 authority 值。这个 set 的好处是有一个 strong, query-specific focus，而且 set 规模相对较小，大概只有 200 个网页。然而这些 score 必须在 query time 时进行计算。<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg"></p>
+<p>之后在这个网页子集上来计算 hub 和 authority 值。这个 set 的好处是有一个 strong, query-specific focus，而且 set 规模相对较小，大概只有 200 个网页。然而这些 score 必须在 query time 时进行计算。<br><img src="http://images.shuang0420.com/images/rootset.jpg" class="ful-image" alt="rootset.jpg"></p>
 <p><strong>HITS 在大规模的搜索引擎中不会被使用</strong></p>
 <ul>
 <li>计算 spam 要比计算 PageRank 简单</li>
