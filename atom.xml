@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2020-05-08T07:15:04.232Z</updated>
+  <updated>2020-05-08T07:29:07.304Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -20,24 +20,25 @@
     <link href="http://www.shuang0420.com/2020/05/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/"/>
     <id>http://www.shuang0420.com/2020/05/07/论文笔记 - Pre-trained Models for Natural Language Processing/</id>
     <published>2020-05-07T02:02:27.000Z</published>
-    <updated>2020-05-08T07:15:04.232Z</updated>
+    <updated>2020-05-08T07:29:07.304Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/2003.08271" target="_blank" rel="external">Pre-trained Models for Natural Language Processing: A Survey</a> 花了一上午看完的综述，强烈推荐每个 NLPer 都读一读，很长一段时间内都能当做工具书来用（下一个 break-through 来临前）。<br><a id="more"></a></p>
-<p>这篇作为笔记就记录下一些我认为的重点，方便日后查阅。</p>
+<p>这篇作为笔记就记录下一些个人认为的重点，方便日后查阅。（不解释基础概念/模型，适合熟悉 PTMs 的人阅读）</p>
 <p>先来说说为啥要用预训练模型：</p>
 <ol>
 <li>在大语料下预训练的模型可以学习到 universal language representations，来帮助下游任务</li>
-<li>PTM 提供了一个更好的初始化模型，可以提高目标任务的效果和加速收敛 </li>
-<li>PTM 可以看做是一种正则，防止模型在小数据集上的过拟合</li>
+<li>PTMs 提供了一个更好的初始化模型，可以提高目标任务的效果和加速收敛 </li>
+<li>PTMs 可以看做是一种正则，防止模型在小数据集上的过拟合</li>
 </ol>
 <p>既然 PTMs 有这么大优势，那当然是，用它！用它！用它！</p>
 <p>这篇综述从四个方面（<strong>Representation Types、Architectures、Pre-training Task Types、Extensions</strong>）对现有 PTMs (Pre-trained Models) 进行了系统分类，一幅图来概括全文精华：</p>
 <img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/taxonomy.png" class="ful-image" alt="taxonomy.png">
 <img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/resources.png" class="ful-image" alt="resources.png">
-<h1 id="Representation-Types"><a href="#Representation-Types" class="headerlink" title="Representation Types"></a>Representation Types</h1><p>第一代的 PTMs 是预训练的 word embeddings，像 skip-gram, glove，可以捕捉一定的语义信息，但是它是 context-free（上下文无关）的，不能捕捉上下文 higher-level 的一些特征，像概念、多义性、句法特征、语义角色、指代等。</p>
+<h1 id="Representation-Types-and-Architectures"><a href="#Representation-Types-and-Architectures" class="headerlink" title="Representation Types and Architectures"></a>Representation Types and Architectures</h1><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/neural_contextual_encoders.png" class="ful-image" alt="contextual_architectures.png">
+<p>第一代的 PTMs 是预训练的 word embeddings，像 skip-gram, glove，可以捕捉一定的语义信息，但是它是 context-free（上下文无关）的，不能捕捉上下文 higher-level 的一些特征，像概念、多义性、句法特征、语义角色、指代等。</p>
 <p>二代的 PTMs 则是预训练的 contextual encoders，融入了上下文信息，像 CoVe, ELMo, GPT, BERT。现代的 PTMs 通常在更大的语料库上训练，采用更加强大/深的网络结构（如 Transformer），以及新的预训练任务。</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/neural_contextual_encoders.png" class="ful-image" alt="neural_contextual_encoders.png">
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/reprentative_ptms.png" class="ful-image" alt="reprentative_ptms.png">
+<p>论文把 contextual encoders 分为了 Sequence Models 和 Graph-based models 两大类：<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/neural_contextual_encoders.png" class="ful-image" alt="neural_contextual_encoders.png"></p>
+<p>有代表性的 PTMs 及其架构：<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/reprentative_ptms.png" class="ful-image" alt="reprentative_ptms.png"></p>
 <h1 id="Pre-training-Task-Types"><a href="#Pre-training-Task-Types" class="headerlink" title="Pre-training Task Types"></a>Pre-training Task Types</h1><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/task_types.png" class="ful-image" alt="task_types.png">
 <p>预训练任务分为三类：</p>
 <ol>
