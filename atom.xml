@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2020-05-08T06:43:39.974Z</updated>
+  <updated>2020-05-08T07:15:04.232Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -16,13 +16,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>论文笔记 - Pre-trained Models for Natural Language Processing</title>
     <link href="http://www.shuang0420.com/2020/05/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/"/>
     <id>http://www.shuang0420.com/2020/05/07/论文笔记 - Pre-trained Models for Natural Language Processing/</id>
-    <published>2020-05-07T03:03:33.278Z</published>
-    <updated>2020-05-08T06:43:39.974Z</updated>
+    <published>2020-05-07T02:02:27.000Z</published>
+    <updated>2020-05-08T07:15:04.232Z</updated>
     
-    <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/2003.08271" target="_blank" rel="external">Pre-trained Models for Natural Language Processing: A Survey</a> 花了一上午看完，强烈推荐，这是个很好的综述，每个 NLPer 都应该读一读，很长一段时间内应该都能当做工具书来用（下一个 break-through 来临前）。</p>
+    <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/2003.08271" target="_blank" rel="external">Pre-trained Models for Natural Language Processing: A Survey</a> 花了一上午看完的综述，强烈推荐每个 NLPer 都读一读，很长一段时间内都能当做工具书来用（下一个 break-through 来临前）。<br><a id="more"></a></p>
 <p>这篇作为笔记就记录下一些我认为的重点，方便日后查阅。</p>
 <p>先来说说为啥要用预训练模型：</p>
 <ol>
@@ -32,13 +32,13 @@
 </ol>
 <p>既然 PTMs 有这么大优势，那当然是，用它！用它！用它！</p>
 <p>这篇综述从四个方面（<strong>Representation Types、Architectures、Pre-training Task Types、Extensions</strong>）对现有 PTMs (Pre-trained Models) 进行了系统分类，一幅图来概括全文精华：</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/taxonomy.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/taxonomy.png">
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/resources.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/resources.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/taxonomy.png" class="ful-image" alt="taxonomy.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/resources.png" class="ful-image" alt="resources.png">
 <h1 id="Representation-Types"><a href="#Representation-Types" class="headerlink" title="Representation Types"></a>Representation Types</h1><p>第一代的 PTMs 是预训练的 word embeddings，像 skip-gram, glove，可以捕捉一定的语义信息，但是它是 context-free（上下文无关）的，不能捕捉上下文 higher-level 的一些特征，像概念、多义性、句法特征、语义角色、指代等。</p>
 <p>二代的 PTMs 则是预训练的 contextual encoders，融入了上下文信息，像 CoVe, ELMo, GPT, BERT。现代的 PTMs 通常在更大的语料库上训练，采用更加强大/深的网络结构（如 Transformer），以及新的预训练任务。</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/neural_contextual_encoders.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/neural_contextual_encoders.png">
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/reprentative_ptms.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/reprentative_ptms.png">
-<h1 id="Pre-training-Task-Types"><a href="#Pre-training-Task-Types" class="headerlink" title="Pre-training Task Types"></a>Pre-training Task Types</h1><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/task_types.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/task_types.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/neural_contextual_encoders.png" class="ful-image" alt="neural_contextual_encoders.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/reprentative_ptms.png" class="ful-image" alt="reprentative_ptms.png">
+<h1 id="Pre-training-Task-Types"><a href="#Pre-training-Task-Types" class="headerlink" title="Pre-training Task Types"></a>Pre-training Task Types</h1><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/task_types.png" class="ful-image" alt="task_types.png">
 <p>预训练任务分为三类：</p>
 <ol>
 <li><strong>Supervised learning (SL)</strong></li>
@@ -46,7 +46,7 @@
 <li><strong>Self-Supervised learning (SSL)</strong> 这一类在传统意义上也是 UL 的一种，不过这里把它们区分了开来，UL 指不用人类标注的有监督的标签，而 SSL 指标签可以自动从训练数据中产生，如 MLM 任务，SSL 的学习过程其实和 SL 一样</li>
 </ol>
 <p>一张表总结预训练任务及其对应的损失函数：</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/loss_function.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/loss_function.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/loss_function.png" class="ful-image" alt="loss_function.png">
 <p><strong>LM（Language Modeling）</strong>是 NLP 中最常见的无监督任务，通常特指自回归或单向语言建模，BiLM 虽然结合了两个方向的语言模型，但只是两个方向的简单拼接，并不是真正意义上的双向语言模型。<strong>MLM（Masked Language Modeling）</strong>可以克服传统单向语言模型的缺陷，结合双向的信息，但是 [MASK]  的引入使得预训练和 fine-tune 之间出现 gap，<strong>PLM（Permuted Language Modeling）</strong>则克服了这个问题，实现了双向语言模型和自回归模型的统一。</p>
 <p><strong>DAE（Denoising Autoencoder）</strong>接受部分损坏的输入，并以恢复原始输入为目标。与 MLM 不同，DAE 会给输入额外加一些噪声。</p>
 <p><strong>CTL（Contrastive Learning）</strong> 的原理是在对比中学习，其假设是一些 observed pairs of text 在语义上比随机采样的文本更为接近。CTL 比 LM 计算复杂度更低。</p>
@@ -72,16 +72,13 @@
 <ul>
 <li><strong>Deep InfoMax (DIM)</strong>：比较难解释，上图</li>
 </ul>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/DIM.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/DIM.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/DIM.png" class="ful-image" alt="DIM.png">
 <ul>
-<li><p><strong>Replaced Token Detection (RTD)</strong>：e.g., CBOW-NS 中的负样本选择可以看做是简单的 RTD, ELECTRA 利用生成器来选择替代序列中的某些 token, WKLM 替换某些实体为同一实体类型下的其他实体</p>
-</li>
-<li><p><strong>Next Sentence Prediction (NSP)</strong>：两个输入句子是否为训练数据中的连续片段</p>
-</li>
-<li><p><strong>Sentence Order Prediction (SOP)</strong>：两个连续片段作为正样本，而相同的两个连续片段互换顺序作为负样本。ALBERT 首次提出，NSP 同时做了 topic prediction 和 coherence prediction，而 topic prediction 太简单了模型会倾向用主题信息来做最后预测，而 SOP 更加聚焦在 coherence prediction 上</p>
-</li>
+<li><strong>Replaced Token Detection (RTD)</strong>：e.g., CBOW-NS 中的负样本选择可以看做是简单的 RTD, ELECTRA 利用生成器来选择替代序列中的某些 token, WKLM 替换某些实体为同一实体类型下的其他实体</li>
+<li><strong>Next Sentence Prediction (NSP)</strong>：两个输入句子是否为训练数据中的连续片段</li>
+<li><strong>Sentence Order Prediction (SOP)</strong>：两个连续片段作为正样本，而相同的两个连续片段互换顺序作为负样本。ALBERT 首次提出，NSP 同时做了 topic prediction 和 coherence prediction，而 topic prediction 太简单了模型会倾向用主题信息来做最后预测，而 SOP 更加聚焦在 coherence prediction 上</li>
 </ul>
-<h1 id="Extentions-of-PTMs"><a href="#Extentions-of-PTMs" class="headerlink" title="Extentions of PTMs"></a>Extentions of PTMs</h1><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/extensions.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/extensions.png">
+<h1 id="Extentions-of-PTMs"><a href="#Extentions-of-PTMs" class="headerlink" title="Extentions of PTMs"></a>Extentions of PTMs</h1><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/extensions.png" class="ful-image" alt="extensions.png">
 <p>一些补充：</p>
 <p>Knowledge-Enriched，外部知识的融入具体来说大概有下面几类：</p>
 <ul>
@@ -132,20 +129,14 @@
 </ul>
 </li>
 </ul>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/compression.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/compression.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/compression.png" class="ful-image" alt="compression.png">
 <h1 id="Adapting-PTMs-to-Downstream-Tasks"><a href="#Adapting-PTMs-to-Downstream-Tasks" class="headerlink" title="Adapting PTMs to Downstream Tasks"></a>Adapting PTMs to Downstream Tasks</h1><p>迁移学习需要考虑的问题：</p>
 <ol>
-<li><p><strong>选择合适的预训练任务、模型框架和语料</strong></p>
-</li>
-<li><p><strong>选择合适的 layer</strong></p>
-<p>Embedding only; Top layer; All layers (更灵活的方式是像  ELMo 一样自动选择最好的层)</p>
-</li>
-<li><p><strong>选择迁移方式（to tune or not to tune）</strong></p>
-<p><strong>Feature extraction</strong>: pre-trained parameters are frozen</p>
-<p><strong>Fine-tuning</strong>: pre-trained parameters are unfrozen and fine-tuned</p>
-</li>
+<li><strong>选择合适的预训练任务、模型框架和语料</strong></li>
+<li><strong>选择合适的 layer</strong><br>Embedding only; Top layer; All layers (更灵活的方式是像  ELMo 一样自动选择最好的层)</li>
+<li><strong>选择迁移方式（to tune or not to tune）</strong><br><strong>Feature extraction</strong>: pre-trained parameters are frozen<br><strong>Fine-tuning</strong>: pre-trained parameters are unfrozen and fine-tuned</li>
 </ol>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/adapting.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/adapting.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/adapting.png" class="ful-image" alt="adapting.png">
 <p><strong>Fine-tuning strategies：</strong></p>
 <ul>
 <li><strong>Two-stage fine-tuning</strong><ul>
@@ -204,10 +195,18 @@
     
     <summary type="html">
     
-      &lt;p&gt;&lt;a href=&quot;https://arxiv.org/abs/2003.08271&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Pre-trained Models for Natural Language Processing: A Survey&lt;/a
+      &lt;p&gt;&lt;a href=&quot;https://arxiv.org/abs/2003.08271&quot;&gt;Pre-trained Models for Natural Language Processing: A Survey&lt;/a&gt; 花了一上午看完的综述，强烈推荐每个 NLPer 都读一读，很长一段时间内都能当做工具书来用（下一个 break-through 来临前）。&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
+      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+    
+      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+    
+    
+      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+    
+      <category term="PTM" scheme="http://www.shuang0420.com/tags/PTM/"/>
     
   </entry>
   
@@ -216,7 +215,7 @@
     <link href="http://www.shuang0420.com/2019/01/20/NLP%202018%20Highlights/"/>
     <id>http://www.shuang0420.com/2019/01/20/NLP 2018 Highlights/</id>
     <published>2019-01-20T01:02:27.000Z</published>
-    <updated>2019-01-20T10:26:27.609Z</updated>
+    <updated>2020-05-08T06:43:39.957Z</updated>
     
     <content type="html"><![CDATA[<p>近来很多大拿做了 2018 年 NLP 的回顾，今天推荐一波 Elvis Saravia 的一篇报告，总结了上一年 NLP 学术界和工业界发生的大事，也包括 SOTA 的论文结果及有趣的研究方向，每个 NLPer 闲下来都可以读一读。<br><a id="more"></a></p>
 <img src="http://images.shuang0420.com/images/NLP%202018%20highlights/contents1.png" class="ful-image" alt="/Users/xushuang/blog/static/images/NLP%202018%20highlights/contents1.png">
@@ -278,7 +277,7 @@
     <link href="http://www.shuang0420.com/2018/10/15/%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96-%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96/"/>
     <id>http://www.shuang0420.com/2018/10/15/知识抽取-事件抽取/</id>
     <published>2018-10-15T11:02:27.000Z</published>
-    <updated>2019-01-20T09:55:53.080Z</updated>
+    <updated>2020-05-08T06:43:39.954Z</updated>
     
     <content type="html"><![CDATA[<p>接上一篇知识抽取-实体及关系抽取，前置知识在这一篇不多做解释啦。<br><a id="more"></a></p>
 <p>事件是促使事情状态和关系改变的条件[Dong et.al., 2010]。目前已存在的知识资源（如维基百科等） 所描述实体及实体间的关系大多是静态的，而事件能描述粒度更大的、动态的、 结构化的知识，是现有知识资源的重要补充。</p>
@@ -852,9 +851,9 @@
     <link href="http://www.shuang0420.com/2018/08/06/love99/"/>
     <id>http://www.shuang0420.com/2018/08/06/love99/</id>
     <published>2018-08-06T13:10:03.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.879Z</updated>
     
-    <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
+    <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
     
     <summary type="html">
     
@@ -872,7 +871,7 @@
     <link href="http://www.shuang0420.com/2018/08/06/2018%20CCF-GAIR%20%E5%8F%82%E4%BC%9A%E7%AC%94%E8%AE%B0%20-%20NLP%20%E4%B8%93%E5%9C%BA/"/>
     <id>http://www.shuang0420.com/2018/08/06/2018 CCF-GAIR 参会笔记 - NLP 专场/</id>
     <published>2018-08-06T01:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.913Z</updated>
     
     <content type="html"><![CDATA[<p>这篇居然忘了发了……<br><a id="more"></a></p>
 <h1 id="孙茂松-漫谈基于深度学习的中文计算"><a href="#孙茂松-漫谈基于深度学习的中文计算" class="headerlink" title="孙茂松 - 漫谈基于深度学习的中文计算"></a>孙茂松 - 漫谈基于深度学习的中文计算</h1><p>强调的一个概念是 <strong>中文自然语言处理需要加入专家知识</strong>。主要介绍的工作是 <strong>词表学习</strong>：</p>
@@ -950,7 +949,7 @@
     <link href="http://www.shuang0420.com/2018/07/08/%E8%AE%BA%E6%96%87%E6%A2%B3%E7%90%86%EF%BC%9A%E9%97%AE%E9%A2%98%E7%94%9F%E6%88%90(QG)%E4%B8%8E%E7%AD%94%E6%A1%88%E7%94%9F%E6%88%90(QA)%E7%9A%84%E7%BB%93%E5%90%88/"/>
     <id>http://www.shuang0420.com/2018/07/08/论文梳理：问题生成(QG)与答案生成(QA)的结合/</id>
     <published>2018-07-08T05:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:40.003Z</updated>
     
     <content type="html"><![CDATA[<p>继续 QG，梳理一下 MSRA 其他 3 篇关于 QG 的 paper：<br><a id="more"></a></p>
 <ul>
@@ -1047,7 +1046,7 @@
     <link href="http://www.shuang0420.com/2018/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Machine%20Comprehension%20by%20Text-to-Text%20Neural%20Question%20Generation/"/>
     <id>http://www.shuang0420.com/2018/06/03/论文笔记 - Machine Comprehension by Text-to-Text Neural Question Generation/</id>
     <published>2018-06-03T05:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.977Z</updated>
     
     <content type="html"><![CDATA[<p>继续来瞅瞅问题生成~<br><a id="more"></a></p>
 <p>QG 的应用还是挺广泛的，像是<strong>为 QA 任务产生训练数据、自动合成 FAQ 文档、自动辅导系统（automatic tutoring systems）</strong>等。</p>
@@ -1128,7 +1127,7 @@ $\hat a$ 表示在 answer 中出现但没有在 groud-truth question 中出现�
     <link href="http://www.shuang0420.com/2018/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Making%20Neural%20QA%20as%20Simple%20as%20Possible%20but%20not%20Simpler/"/>
     <id>http://www.shuang0420.com/2018/05/13/论文笔记 - Making Neural QA as Simple as Possible but not Simpler/</id>
     <published>2018-05-13T05:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.942Z</updated>
     
     <content type="html"><![CDATA[<p>阅读理解系列的框架很多大同小异，但这篇 paper 真心觉得精彩，虽然并不是最新最 state-of-art~<br><a id="more"></a></p>
 <p>现在大多数的阅读理解系统都是 top-down 的形式构建的，也就是说一开始就提出了一个很复杂的结构（一般经典的就是 <strong>emedding-, encoding-, interaction-, answer-layer</strong>），然后通过 ablation study，不断的减少一些模块配置来验证想法，大多数的创新点都在 interaction 层。而这篇 paper 提供了抽取式 QA 基于神经网络的两个 baseline，BoW- 和 RNN-based nerual QA (FastQA) ，创新的以 bottom-up 的方式分析了框架复杂性以及主流 interaction layer 的作用。</p>
@@ -1228,7 +1227,7 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     <link href="http://www.shuang0420.com/2018/04/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Semi-Supervised%20QA%20with%20Generative%20Domain-Adaptive%20Nets/"/>
     <id>http://www.shuang0420.com/2018/04/07/论文笔记 - Semi-Supervised QA with Generative Domain-Adaptive Nets/</id>
     <published>2018-04-07T05:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.893Z</updated>
     
     <content type="html"><![CDATA[<p>GDAN，Question Generation 和 Question Answering 相结合，利用少量的有标注的 QA 对 + 大量的无标注的 QA 对来训练 QA 模型。<br><a id="more"></a></p>
 <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>看到这篇论文，看到来自 CMU，就忍不住推测作者估计是 LTI 的，估计还上过 411/611/711，毕竟 idea 和 final project 太像了。。</p>
@@ -1290,7 +1289,7 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     <link href="http://www.shuang0420.com/2018/04/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Bi-Directional%20Attention%20Flow%20for%20Machine%20Comprehension/"/>
     <id>http://www.shuang0420.com/2018/04/01/论文笔记 - Bi-Directional Attention Flow for Machine Comprehension/</id>
     <published>2018-04-01T05:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.984Z</updated>
     
     <content type="html"><![CDATA[<p>BiDAF，相对复杂 attention 机制。<br><a id="more"></a></p>
 <p><strong>论文：</strong> <a href="https://arxiv.org/abs/1611.01603" target="_blank" rel="external">Bidirectional Attention Flow for Machine Comprehension</a><br><strong>代码：</strong> <a href="https://github.com/allenai/bi-att-flow" target="_blank" rel="external">allenai/bi-att-flow</a></p>
@@ -1353,7 +1352,7 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     <link href="http://www.shuang0420.com/2018/03/25/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Fast%20and%20Accurate%20Reading%20Comprehension%20by%20Combining%20Self-Attention%20and%20Convolution/"/>
     <id>http://www.shuang0420.com/2018/03/25/论文笔记 - Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution/</id>
     <published>2018-03-25T05:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.899Z</updated>
     
     <content type="html"><![CDATA[<p>CMU &amp; Google 出品的 Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution，SQuAD 榜单上对应模型 QANet，这名字是不是太随意了TAT…<br><a id="more"></a></p>
 <h1 id="Fast-and-Accurate-Reading-Comprehension-by-Combining-Self-Attention-and-Convolution"><a href="#Fast-and-Accurate-Reading-Comprehension-by-Combining-Self-Attention-and-Convolution" class="headerlink" title="Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution"></a>Fast and Accurate Reading Comprehension by Combining Self-Attention and Convolution</h1><p>CMU 和 Google Brain 新出的文章，SQuAD 目前的并列第一，两大<strong>特点：</strong></p>
@@ -1402,7 +1401,7 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     <link href="http://www.shuang0420.com/2018/03/17/%E6%89%AF%E6%89%AF%20Semi-hard%20Negative%20Samples/"/>
     <id>http://www.shuang0420.com/2018/03/17/扯扯 Semi-hard Negative Samples/</id>
     <published>2018-03-17T05:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.971Z</updated>
     
     <content type="html"><![CDATA[<p>谈谈排序模型的 negative sampling 问题。取不好题目TAT…<br><a id="more"></a></p>
 <p>之前在用 Dual Encoder 这类 ranking model 时，发现在一些问题上尽管大方向上匹配的很好，比如人名问题答的都是人名，歌曲问题回答的都是歌曲名，但是具体到再细的粒度就完全匹配不上了。明明知道这显然是 negative sampling 的问题，却一直没找到好的解决方案，毕竟 google 一下 negative sampling 发现前 5 页都是在讲 word2vec……</p>
@@ -1450,7 +1449,7 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     <link href="http://www.shuang0420.com/2018/03/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E5%9F%BA%E4%BA%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%8E%A8%E7%90%86/"/>
     <id>http://www.shuang0420.com/2018/03/05/论文笔记 - 基于神经网络的推理/</id>
     <published>2018-03-05T05:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.916Z</updated>
     
     <content type="html"><![CDATA[<p>DeepMind Relational Reasoning(RNs)<br><a id="more"></a></p>
 <h1 id="Relational-reasoning-RNs"><a href="#Relational-reasoning-RNs" class="headerlink" title="Relational reasoning(RNs)"></a>Relational reasoning(RNs)</h1><ul>
@@ -1504,7 +1503,7 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     <link href="http://www.shuang0420.com/2018/01/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E4%BB%8E%E7%A5%9E%E7%BB%8F%E5%9B%BE%E7%81%B5%E6%9C%BA%20NTM%20%E5%88%B0%E5%8F%AF%E5%BE%AE%E5%88%86%E7%A5%9E%E7%BB%8F%E8%AE%A1%E7%AE%97%E6%9C%BA%20DNC/"/>
     <id>http://www.shuang0420.com/2018/01/20/论文笔记 - 从神经图灵机 NTM 到可微分神经计算机 DNC/</id>
     <published>2018-01-20T05:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:40.005Z</updated>
     
     <content type="html"><![CDATA[<p>Neural Turing Machine(NTC) 和 Differentiable Neural Machine(DNC) 的相关笔记。<br><a id="more"></a></p>
 <p>涉及论文：</p>
@@ -1676,7 +1675,7 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     <link href="http://www.shuang0420.com/2018/01/03/NLP%E7%AC%94%E8%AE%B0%20-%20%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D%E4%B9%8B%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86(Dialog%20Management)/"/>
     <id>http://www.shuang0420.com/2018/01/03/NLP笔记 - 多轮对话之对话管理(Dialog Management)/</id>
     <published>2018-01-03T02:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.897Z</updated>
     
     <content type="html"><![CDATA[<p>开始涉猎多轮对话，这一篇想写一写对话管理（Dialog Management），感觉是个很庞大的工程，涉及的知识又多又杂，在这里只好挑重点做一个引导性的介绍，后续会逐个以单篇形式展开。–持续更新中–<br><a id="more"></a></p>
 <p>放一张多轮语音对话流程图，理解下 DM 在整个对话流程中处于什么地位。<br><img src="http://images.shuang0420.com/images/NLP%E7%AC%94%E8%AE%B0%20-%20%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D%E4%B9%8B%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86%28Dialog%20Management%29/%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92.png" class="ful-image" alt="%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92.png"></p>
@@ -1924,7 +1923,7 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     <link href="http://www.shuang0420.com/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Remember%20Translation%20History%20with%20a%20Continuous%20Cache/"/>
     <id>http://www.shuang0420.com/2017/12/20/论文笔记 - Learning to Remember Translation History with a Continuous Cache/</id>
     <published>2017-12-20T05:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.905Z</updated>
     
     <content type="html"><![CDATA[<p>介绍一种 cache-like memory network。<br><a id="more"></a></p>
 <p><strong>涉及论文：</strong></p>
@@ -1991,7 +1990,7 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     <link href="http://www.shuang0420.com/2017/12/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/"/>
     <id>http://www.shuang0420.com/2017/12/04/论文笔记 - Memory Networks/</id>
     <published>2017-12-04T05:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.872Z</updated>
     
     <content type="html"><![CDATA[<p>Memory Networks 相关笔记。<br><a id="more"></a></p>
 <p>这一篇会覆盖下面三个版本的 Memory Networks</p>
@@ -2153,7 +2152,7 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     <link href="http://www.shuang0420.com/2017/11/26/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5(Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0)/"/>
     <id>http://www.shuang0420.com/2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/</id>
     <published>2017-11-26T04:20:02.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.882Z</updated>
     
     <content type="html"><![CDATA[<p>Andrew Ng. Deep Learning Course 3 Structuring Machine Learning Projects 的重点笔记。<br><a id="more"></a></p>
 <h1 id="常用策略及考虑问题"><a href="#常用策略及考虑问题" class="headerlink" title="常用策略及考虑问题"></a>常用策略及考虑问题</h1><p><strong>常用的 ML 策略：</strong></p>
@@ -2277,7 +2276,7 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     <link href="http://www.shuang0420.com/2017/11/17/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20HRED%20%E4%B8%8E%20VHRED/"/>
     <id>http://www.shuang0420.com/2017/11/17/论文笔记 - HRED 与 VHRED/</id>
     <published>2017-11-17T01:02:27.000Z</published>
-    <updated>2018-11-25T08:24:15.000Z</updated>
+    <updated>2020-05-08T06:43:39.947Z</updated>
     
     <content type="html"><![CDATA[<p>介绍一下经典的 HRED 和 VHRED。<br><a id="more"></a></p>
 <p>主要涉及到下面几篇论文</p>
