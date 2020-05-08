@@ -4,6 +4,192 @@
   
     
     <entry>
+      <title></title>
+      <url>http://www.shuang0420.com/2020/05/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/2003.08271" target="_blank" rel="external">Pre-trained Models for Natural Language Processing: A Survey</a> 花了一上午看完，强烈推荐，这是个很好的综述，每个 NLPer 都应该读一读，很长一段时间内应该都能当做工具书来用（下一个 break-through 来临前）。</p>
+<p>这篇作为笔记就记录下一些我认为的重点，方便日后查阅。</p>
+<p>先来说说为啥要用预训练模型：</p>
+<ol>
+<li>在大语料下预训练的模型可以学习到 universal language representations，来帮助下游任务</li>
+<li>PTM 提供了一个更好的初始化模型，可以提高目标任务的效果和加速收敛 </li>
+<li>PTM 可以看做是一种正则，防止模型在小数据集上的过拟合</li>
+</ol>
+<p>既然 PTMs 有这么大优势，那当然是，用它！用它！用它！</p>
+<p>这篇综述从四个方面（<strong>Representation Types、Architectures、Pre-training Task Types、Extensions</strong>）对现有 PTMs (Pre-trained Models) 进行了系统分类，一幅图来概括全文精华：</p>
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/taxonomy.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/taxonomy.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/resources.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/resources.png">
+<h1 id="Representation-Types"><a href="#Representation-Types" class="headerlink" title="Representation Types"></a>Representation Types</h1><p>第一代的 PTMs 是预训练的 word embeddings，像 skip-gram, glove，可以捕捉一定的语义信息，但是它是 context-free（上下文无关）的，不能捕捉上下文 higher-level 的一些特征，像概念、多义性、句法特征、语义角色、指代等。</p>
+<p>二代的 PTMs 则是预训练的 contextual encoders，融入了上下文信息，像 CoVe, ELMo, GPT, BERT。现代的 PTMs 通常在更大的语料库上训练，采用更加强大/深的网络结构（如 Transformer），以及新的预训练任务。</p>
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/neural_contextual_encoders.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/neural_contextual_encoders.png">
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/reprentative_ptms.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/reprentative_ptms.png">
+<h1 id="Pre-training-Task-Types"><a href="#Pre-training-Task-Types" class="headerlink" title="Pre-training Task Types"></a>Pre-training Task Types</h1><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/task_types.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/task_types.png">
+<p>预训练任务分为三类：</p>
+<ol>
+<li><strong>Supervised learning (SL)</strong></li>
+<li><strong>Unsupervised learning (UL)</strong></li>
+<li><strong>Self-Supervised learning (SSL)</strong> 这一类在传统意义上也是 UL 的一种，不过这里把它们区分了开来，UL 指不用人类标注的有监督的标签，而 SSL 指标签可以自动从训练数据中产生，如 MLM 任务，SSL 的学习过程其实和 SL 一样</li>
+</ol>
+<p>一张表总结预训练任务及其对应的损失函数：</p>
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/loss_function.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/loss_function.png">
+<p><strong>LM（Language Modeling）</strong>是 NLP 中最常见的无监督任务，通常特指自回归或单向语言建模，BiLM 虽然结合了两个方向的语言模型，但只是两个方向的简单拼接，并不是真正意义上的双向语言模型。<strong>MLM（Masked Language Modeling）</strong>可以克服传统单向语言模型的缺陷，结合双向的信息，但是 [MASK]  的引入使得预训练和 fine-tune 之间出现 gap，<strong>PLM（Permuted Language Modeling）</strong>则克服了这个问题，实现了双向语言模型和自回归模型的统一。</p>
+<p><strong>DAE（Denoising Autoencoder）</strong>接受部分损坏的输入，并以恢复原始输入为目标。与 MLM 不同，DAE 会给输入额外加一些噪声。</p>
+<p><strong>CTL（Contrastive Learning）</strong> 的原理是在对比中学习，其假设是一些 observed pairs of text 在语义上比随机采样的文本更为接近。CTL 比 LM 计算复杂度更低。</p>
+<p>一些补充：</p>
+<p>文中 MLM 部分除了普通的 Seq2Seq MLM，还总结了一些 Enhanced MLM (E-MLM):</p>
+<ul>
+<li><strong>RoBERTa</strong>: dynamic masking</li>
+<li><strong>UniLM</strong>: unidirectional, bidirectional, seq2seq prediction</li>
+<li><strong>XLM</strong>: translation language modeling (TLM)</li>
+<li><strong>Span-BERT</strong>: random contiguous words masking, span boundary objective</li>
+<li><strong>StructBERT</strong>: span order recovery task</li>
+<li>External knowledge….</li>
+</ul>
+<p>DAE 中一些破坏文本的方法：</p>
+<ul>
+<li><strong>Token Masking</strong></li>
+<li><strong>Token Deletion</strong>: 模型需要预测删除的位置</li>
+<li><strong>Text Infilling</strong>：像 SpanBERT，模型预测 mask 的 span 有几个单词</li>
+<li><strong>Sentence Permutation</strong>：把文档分为句子然后随机打乱</li>
+<li><strong>Document Rotation</strong>：选择一个单词然后 rotate 文档，模型预测文档的真实起始位置</li>
+</ul>
+<p>CTL 的一些任务：</p>
+<ul>
+<li><strong>Deep InfoMax (DIM)</strong>：比较难解释，上图</li>
+</ul>
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/DIM.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/DIM.png">
+<ul>
+<li><p><strong>Replaced Token Detection (RTD)</strong>：e.g., CBOW-NS 中的负样本选择可以看做是简单的 RTD, ELECTRA 利用生成器来选择替代序列中的某些 token, WKLM 替换某些实体为同一实体类型下的其他实体</p>
+</li>
+<li><p><strong>Next Sentence Prediction (NSP)</strong>：两个输入句子是否为训练数据中的连续片段</p>
+</li>
+<li><p><strong>Sentence Order Prediction (SOP)</strong>：两个连续片段作为正样本，而相同的两个连续片段互换顺序作为负样本。ALBERT 首次提出，NSP 同时做了 topic prediction 和 coherence prediction，而 topic prediction 太简单了模型会倾向用主题信息来做最后预测，而 SOP 更加聚焦在 coherence prediction 上</p>
+</li>
+</ul>
+<h1 id="Extentions-of-PTMs"><a href="#Extentions-of-PTMs" class="headerlink" title="Extentions of PTMs"></a>Extentions of PTMs</h1><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/extensions.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/extensions.png">
+<p>一些补充：</p>
+<p>Knowledge-Enriched，外部知识的融入具体来说大概有下面几类：</p>
+<ul>
+<li><strong>Linguistic</strong> <ul>
+<li>LIBERT 通过额外的 linguistic constraint task 来融入语言学知识</li>
+<li>SentiLR 引入 token 级别的情感极性，改造 MLM 为 label-aware MLM</li>
+<li>KnowBERT</li>
+</ul>
+</li>
+<li><strong>Semantic</strong><ul>
+<li>SenseBERT 不仅预测 masked token，还预测 token 在 WordNet 对应的 supersenses</li>
+</ul>
+</li>
+<li><strong>Commonsense</strong><ul>
+<li>ConceptNet, ATOMIC， 用来提高 GPT-2 在故事生成上的效果</li>
+</ul>
+</li>
+<li><strong>Factual</strong><ul>
+<li>ERNIE(THU), KnowBERT, K-BERT, KEPLER</li>
+</ul>
+</li>
+<li><strong>Domain-specific</strong><ul>
+<li>K-BERT</li>
+</ul>
+</li>
+<li><strong>KG-conditioned language models</strong><ul>
+<li>KGLM, LRLM</li>
+</ul>
+</li>
+</ul>
+<p>模型压缩的几种方法，很好理解</p>
+<ul>
+<li><strong>Model Pruning</strong>：CompressingBERT</li>
+<li><strong>Weight Quantization</strong>: Q-BERT, Q8BERT</li>
+<li><strong>Parameter Sharing</strong>: ALBERT</li>
+<li><strong>Knowledge Distillation</strong><ul>
+<li><strong>Distillation from soft target probablilites</strong>: DistilBERT</li>
+<li><strong>Distillation from other knowledge</strong>: TinyBERT, MobileBERT, MiniLM</li>
+<li><strong>Distillation to other structures</strong>: from transformer to RNN / CNN</li>
+</ul>
+</li>
+<li><strong>Model Replacing</strong><ul>
+<li>BERT-of-Theseus</li>
+</ul>
+</li>
+<li><strong>Others</strong><ul>
+<li>FastBERT，动态减少计算步骤</li>
+</ul>
+</li>
+</ul>
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/compression.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/compression.png">
+<h1 id="Adapting-PTMs-to-Downstream-Tasks"><a href="#Adapting-PTMs-to-Downstream-Tasks" class="headerlink" title="Adapting PTMs to Downstream Tasks"></a>Adapting PTMs to Downstream Tasks</h1><p>迁移学习需要考虑的问题：</p>
+<ol>
+<li><p><strong>选择合适的预训练任务、模型框架和语料</strong></p>
+</li>
+<li><p><strong>选择合适的 layer</strong></p>
+<p>Embedding only; Top layer; All layers (更灵活的方式是像  ELMo 一样自动选择最好的层)</p>
+</li>
+<li><p><strong>选择迁移方式（to tune or not to tune）</strong></p>
+<p><strong>Feature extraction</strong>: pre-trained parameters are frozen</p>
+<p><strong>Fine-tuning</strong>: pre-trained parameters are unfrozen and fine-tuned</p>
+</li>
+</ol>
+<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing//Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/adapting.png" class="ful-image" alt="/Users/xushuang/blog/static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Pre-trained%20Models%20for%20Natural%20Language%20Processing/adapting.png">
+<p><strong>Fine-tuning strategies：</strong></p>
+<ul>
+<li><strong>Two-stage fine-tuning</strong><ul>
+<li>第一阶段，在一个<strong>中间任务/语料</strong>上进行迁移，第二阶段，迁移到目标任务</li>
+<li><a href="https://www.ijcai.org/Proceedings/2019/0249.pdf" target="_blank" rel="external">Story ending predic- tion by transferable bert</a>: TransBERT</li>
+<li><a href="https://arxiv.org/abs/1905.05583" target="_blank" rel="external">How to ﬁne-tune BERT for text classiﬁcation?</a></li>
+<li><a href="https://arxiv.org/abs/1811.01088" target="_blank" rel="external">Sentence encoders on STILTs: Supplementary training on intermediate labeled-data tasks</a></li>
+<li><a href="https://arxiv.org/abs/1705.03122" target="_blank" rel="external">Convolutional sequence to sequence learning</a></li>
+</ul>
+</li>
+<li><strong>Multi-task fine-tuning</strong><ul>
+<li>多任务和预训练互为补充</li>
+<li><a href="https://arxiv.org/abs/1901.11504" target="_blank" rel="external">Multi-task deep neural networks for natural language understanding</a></li>
+</ul>
+</li>
+<li><strong>Fine-tuning with extra adaptation modules</strong><ul>
+<li>原始参数固定，在 PTMs 里接入一些 fine-tunable adaptation modules</li>
+<li><a href="https://arxiv.org/abs/1902.02671" target="_blank" rel="external">BERT and PALs: Projected attention layers for eﬃcient adaptation in multi-task learning</a></li>
+<li><a href="https://arxiv.org/abs/1902.00751" target="_blank" rel="external">Parameter-eﬃcient transfer learning for NLP</a></li>
+</ul>
+</li>
+<li><strong>Others</strong><ul>
+<li><a href="https://arxiv.org/abs/2002.10345" target="_blank" rel="external">Improving BERT ﬁne-tuning via self-ensemble and self-distillation</a></li>
+<li><a href="https://arxiv.org/abs/1801.06146" target="_blank" rel="external">Universal language model ﬁne-tuning for text classiﬁcation</a>: gradual unfreezing</li>
+<li><a href="https://arxiv.org/abs/1902.10547" target="_blank" rel="external">An embarrassingly simple approach for transfer learning from pretrained language models</a>: sequential unfreezing </li>
+</ul>
+</li>
+</ul>
+<h1 id="Future-Direction"><a href="#Future-Direction" class="headerlink" title="Future Direction"></a>Future Direction</h1><ul>
+<li><strong>Upper Bound of PTMs</strong><ul>
+<li>PTMs 并没有发展到其上限。目前大多数的 PTMs 都可以通过使用更多的步长以及更大的数据集来提升性能，因此一个实际的方向是在现有的软/硬件基础上，去设计更高效的模型结构、自监督预训练任务、优化器和训练技巧，如 ELECTRA</li>
+</ul>
+</li>
+<li><strong>Architecture of PTMs</strong><ul>
+<li>Transformer 的主要局限在于其计算复杂度（输入长度的平方）。GPU 显存大小的限制使得多数 PTMs 无法处理超过 512 个 token 的序列长度。打破这一限制需要改进 Transformer 的结构设计，如 Transformer-XL。设计深层神经网络结构是很有挑战性的任务，或许使用如神经结构搜索 (NAS) 这类自动化的方案</li>
+</ul>
+</li>
+<li><strong>Task-oriented Pre-training and Model Compression</strong><ul>
+<li>在实践中，不同的目标任务需要 PTMs 的不同功能。PTMs 和下游任务的差异通常在于<strong>模型架构与数据分发</strong>。更大的差异可能会使得 PTMs 的使用收益更小，比如 text generation 和 text matching 的任务就有很大差异</li>
+<li>大型 PTMs 应用到实际场景时面临的<strong>低容量设备和低延迟应用</strong>的要求：为下游任务精心设计特定的模型结构与预训练任务，或者直接从现有的 PTMs 中提取部分与任务有关的知识</li>
+<li>使用模型蒸馏技术对现有的 PTMs 进行教育，来完成目标任务</li>
+</ul>
+</li>
+<li><strong>Knowledge Transfer Beyond Fine-tuning</strong><ul>
+<li>提高 Fine-tuning 的参数利用效率。之前 fine-tune 中的参数效率很低，要为每个下游任务 fine-tune 各自的参数。一个改进方案是之前提到过的固定 PTMs 的原始参数，并为特定任务添加小的  fine-tunable adaptation modules，这样就可以使用共享的 PTM 来支持多个下游任务</li>
+<li>更灵活的从 PTMs 中挖掘知识，如 feature extraction, knowledge distillation, data augmentation, using PTMs as external knowledge</li>
+</ul>
+</li>
+<li><strong>Interpretability and Reliability of PTMs</strong><ul>
+<li>可解释性：PTMs 的深层非线性结构/Transformer 类结构/语言的复杂性使得解释 PTM 变得更加困难</li>
+<li>可靠性：PTMs 在对抗性样本中显得非常脆弱。Adversarial defenses 也是一个非常有前景的方向</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[NLP 2018 Highlights]]></title>
       <url>http://www.shuang0420.com/2019/01/20/NLP%202018%20Highlights/</url>
       <content type="html"><![CDATA[<p>近来很多大拿做了 2018 年 NLP 的回顾，今天推荐一波 Elvis Saravia 的一篇报告，总结了上一年 NLP 学术界和工业界发生的大事，也包括 SOTA 的论文结果及有趣的研究方向，每个 NLPer 闲下来都可以读一读。<br><a id="more"></a></p>
@@ -337,7 +523,7 @@
 <p><strong>Word substrings</strong><br>Word substrings (包括前后缀)的作用是很大的，以下面的例子为例，NE 中间有 ‘oxa’ 的十有八九是 drug，NE 中间有 ‘:’ 的则大多都是 movie，而以 field 结尾的 NE 往往是 place。<br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/4.jpg" class="ful-image" alt="4.jpg"></p>
 <p><strong>Word shapes</strong><br>可以做一个 mapping，把 <strong>单词长度(length)、大写(capitalization)、数字(numerals)、希腊字母(Greek eltters)、单词内部标点(internal punctuation)</strong> 这些字本身的特征都考虑进去。<br>如下表，把所有大写字母映射为 X，小写字母映射为 x，数字映射为 d…<br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/5.jpg" class="ful-image" alt="5.jpg"></p>
 <h3 id="序列模型"><a href="#序列模型" class="headerlink" title="序列模型"></a>序列模型</h3><p>NLP 的很多数据都是序列类型，像 sequence of characters, words, phrases, lines, sentences，我们可以把这些任务当做是给每一个 item 打标签，如下图：<br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/6.jpg" class="ful-image" alt="6.jpg"></p>
-<p>常见的序列模型有 <strong>有向图模型</strong> 如 HMM，假设特征之间相互独立，找到使得 P(X,Y) 最大的参数，生成式模型；<strong>无向图模型</strong> 如 CRF，没有特征独立的假设，找到使得 P(Y|X) 最大的参数，判别式模型。相对而言，CRF 优化的是联合概率（整个序列，实际就是最终目标），而不是每个时刻最优点的拼接，一般而言性能比 CRF 要好，在小数据上拟合也会更好。</p>
+<p>常见的序列模型有 <strong>有向图模型</strong> 如 HMM，假设特征之间相互独立，找到使得 P(X,Y) 最大的参数，生成式模型；<strong>无向图模型</strong> 如 CRF，没有特征独立的假设，找到使得 P(Y|X) 最大的参数，判别式模型。相对而言，CRF 优化的是联合概率（整个序列，实际就是最终目标），而不是每个时刻最优点的拼接，一般而言性能比 HMM 要好，在小数据上拟合也会更好。</p>
 <p>整个流程如图所示：<br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/7.jpg" class="ful-image" alt="7.jpg"></p>
 <p>讨论下最后的 inference<br><img src="http://images.shuang0420.com/images/NLP%20%E7%AC%94%E8%AE%B0%20-Information%20Extraction/8.jpg" class="ful-image" alt="8.jpg"></p>
 <p>最基础的是 “decide one sequence at a time and move on”，也就是一个 <strong>greedy inference</strong>，比如在词性标注中，可能模型在位置 2 的时候挑了当前最好的 PoS tag，但是到了位置 4 的时候，其实发现位置 2 应该有更好的选择，然而，greedy inference 并不会 care 这些。因为它是贪婪的，只要当前最好就行了。除了 greedy inference，比较常见的还有 beam inference 和 viterbi inference。</p>
@@ -10864,97 +11050,94 @@ python nb.py split.train split.test</pre>
     </entry>
     
     <entry>
-      <title><![CDATA[Search Engines笔记 - Document Structure]]></title>
-      <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。文档的表示形式不只词袋一种，它可以有 fields，有 hierarchical structure(XML)，multiple representations of meaning, priors 等形式，这一章讲的就是检索模型怎么来处理这些复杂的文档表达。<br><a id="more"></a></p>
-<h1 id="Multiple-representations-of-meaning"><a href="#Multiple-representations-of-meaning" class="headerlink" title="Multiple representations of meaning"></a>Multiple representations of meaning</h1><blockquote>
-<p>Fields can be used to provide different representations of the same information</p>
-</blockquote>
-<p>三种表达方法。</p>
-<ul>
-<li><strong>Vector space</strong><br>– 每个 representation 提供独立的 ranking score<br>– 对每个分数求平均来得到一个最终的 ranking</li>
-<li><strong>Okapi</strong><br>– Representations 以不同的方式来表达相同含义<br>– 合并 representations 来得到一个更好的 representation</li>
-<li><strong>Indri</strong><br>– 每个 representation 提供一个 p(t|d) 的估计<br>– 有多种方法来合并这些估计</li>
-</ul>
-<h2 id="Vector-space"><a href="#Vector-space" class="headerlink" title="Vector space"></a>Vector space</h2><p><strong>Option 1:</strong> 一个词袋模型，包含了各种 filed 词汇<br>E.g., iPad::inlink, iPad::title, iPad::body, …</p>
-<p>这让 length normalization 变得更为复杂，比如说 inlink text 可能会和 title 或者 body text 混在一起。一般不用这种方法。</p>
-<p><strong>Option 2:</strong> Several vector spaces<br>$w_{title} *sim(query,title_i) +$<br>$w_{body} *sim(query,body_i) +$<br>$w_{inlink} *sim(query,inlink_i) +$<br>$w_{url} *sim(query,url_i) $</p>
-<p>这种方法易于管理，也易于扩展，Lucene 也采用了这种方法，然而关于怎么设置 weights，并没有什么 guidance。</p>
-<h2 id="Okapi"><a href="#Okapi" class="headerlink" title="Okapi"></a>Okapi</h2><blockquote>
-<p>Evidence from each field should be weighted differently</p>
-</blockquote>
-<p>一些 field 可能有更好的表达能力，如 inlink text，一些 field 可能更为冗长，如 body，所以不同的 fields 我们应该区别对待。</p>
-<p><strong>One solution</strong><br>• 把 query 看作 |F| 个词袋<br>• 对 query 匹配每个 field，然后 add the score</p>
-<p>然而 … 这打破了 BM25’s saturation assumption。在 |F| 个 field 里中出现了一次的字段，比在一个 field 里出现了|F|次的字段，有更大的影响，这并不是我们想要的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">5 fields × 1 occurrence = 5 × 0.4</div><div class="line">1 field × 5 occurrences = 0.77</div></pre></td></tr></table></figure></p>
-<p><strong>Solution:</strong> 用一个复合加权的 representation，一篇文档就用一个词袋</p>
-<p>$$tf_t=\sum_fw_ftf_{t,f}$$<br>$$doclen=\sum_fw_fdoclen_f$$</p>
-<p>F: the set of fields</p>
-<p>-&gt; 然后用标准的 BM25<br>但是 … BM25 有常量，可能我们需要 tune them on a per-field basis，可以用 BM25F。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg" class="ful-image" alt="BM25F.jpg"><br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/exampleW.jpg" class="ful-image" alt="exampleW.jpg"></p>
-<p><strong>特性：</strong></p>
-<ul>
-<li>一个 vocabulary 涵盖了所有的 fields<br>– 所以一个 term 有一个 global idf, 而不是一个 field-specific idf<br>– 对各种文档都有适用么?<pre><code>» E.g., 专利，医疗记录等
-</code></pre></li>
-<li>Field-specific tuning</li>
-<li>constants 的影响很难理解</li>
-</ul>
-<h2 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h2><p>Indri 模型。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/indri.jpg" class="ful-image" alt="indri.jpg"></p>
-<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/andSum.jpg" class="ful-image" alt="andSum.jpg">
-<p>#AND 和 #WAND 用来合并独立的概率<br>#SUM 和 #WSUM 用不同方法来估计同一个概率</p>
-<h1 id="Hierarchical-structure-XML"><a href="#Hierarchical-structure-XML" class="headerlink" title="Hierarchical structure(XML)"></a>Hierarchical structure(XML)</h1><p>Hierarchical structure 的文档通常用 Bayesian inference networks 来解决，如 indri。<br>首先对 flat 和 hierarchical structure 做一个区分。<br><strong>Flat</strong><br>元素之间是相互独立的，一个 term 只在包含了它的那个元素（通常是一个）里出现。<br>检索目的通常是一篇文档。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/1.jpg" class="ful-image" alt="1.jpg"><br><strong>Hierarchical</strong><br>元素之间是相互关联的，通常是包含的关系，一个 term 在所有包含了它的元素里出现。<br>检索目的可以是文档，也可以是元素。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/2.jpg" class="ful-image" alt="2.jpg"></p>
-<h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><p><strong>检索什么样的 element?</strong><br>• Document? Encounter? Diagnosis?</p>
-<p><strong>用怎样的 corpus statistics</strong><br>• Document vs. element</p>
-<p><strong>怎样组合来自不同 elements 的 evidence</strong><br>• Can we prefer patients that have several matching encounters?</p>
-<p><strong>Exact-match vs. best-match document structure</strong><br>• 可能 query 并不能完全匹配文档结构</p>
-<h2 id="Ranking-elements"><a href="#Ranking-elements" class="headerlink" title="Ranking elements"></a>Ranking elements</h2><p><strong>One option: Use Jelinek-Mercer smoothing</strong><br>$$P(q_i|e)=(1-\lambda)P_{MLE}P(q_i|e)+ \lambda P_{MLE}P(q_i|C)$$</p>
-<p>这种方法可能带来的问题是：</p>
-<ol>
-<li>文档结构不规范，这种情况经常在 web 文档中出现，如果文档里本来包含了 query term 然而因为文档不规范而找不到相应的 element，那么 score 可能为 0。</li>
-<li>query 可能太严格。<br>– #AND[title](iphone)：不匹配 “Apple Cuts Phone Price”<br>– #AND[paragraph](solutions to poverty)： “poverty” 和 “solutions” 可能出现在不同的段落里</li>
+      <title><![CDATA[Search Engines笔记 - Authority Metrics]]></title>
+      <url>http://www.shuang0420.com/2016/11/04/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章 Authority Metrics（权威指数），用来判断哪些来源的信息更值得信任。介绍 PageRank、Topic-Sensitive PageRank(TSPR)、T-Fresh、Hyperlink-Induced Topic Search(HITS) 四种指数计算方式。<br><a id="more"></a></p>
+<h1 id="链接分析"><a href="#链接分析" class="headerlink" title="链接分析"></a>链接分析</h1><p>链接分析思想最早起源于引文分析领域，通过分析文献之间的引用模式来量化学术论文的影响力。文献引用代表某篇学术论文对所引用论文的权威度的认可。类似的，对于 Web 网页，我们把超链接看成是一个网页对另一个网页的权威度的认可。当然，并不是所有引用都代表权威度认可，因为某个人可以建立多个 web 网页来指向同一个目标网页，人工来提高目标网页入链数。这种链接通常叫垃圾链接或链接作弊（link spam）。尽管如此，引用现象的普遍性和可靠性足以使搜索引擎通过精妙的链接分析方法推导出有用的排序因子。链接分析也被证明是在 web 采集中选择下一个采集网页的非常好的方法之一。给定查询下，链接分析结果已经成为 Web 搜索引擎在计算某个网页的组合得分中的一个因子。PageRank 和 HITS 就是常用的两种链接分析方法。</p>
+<h2 id="基本假设"><a href="#基本假设" class="headerlink" title="基本假设"></a>基本假设</h2><ol>
+<li>指向页面 B 的锚文本是对 B 的一个很好的描述。</li>
+<li>A 到 B 的超链接表示 A 的作者对 B 的认可。</li>
 </ol>
-<p>解决方案是，多加一个 smoothing。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/formula.jpg" class="ful-image" alt="formula.jpg"></p>
-<h2 id="Multiple-elements"><a href="#Multiple-elements" class="headerlink" title="Multiple elements"></a>Multiple elements</h2><p>这里我们探讨右图的情况。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/multiple.jpg" class="ful-image" alt="multiple.jpg"></p>
-<p>两种方法 Aggregation OR Combination。</p>
-<ul>
-<li>Aggregation: Combine inverted lists</li>
-<li>Combination: Combine scores</li>
-</ul>
-<h3 id="Aggregation"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</h3><p>Indri 允许在 query 里指定 aggregation type</p>
-<ul>
-<li>term.element<br>– 如果没有指定 element, 那么默认 element 为 Document<br>– Example: apple.inlink</li>
-<li>结果: 一个 inverted list 包含了一个 element 的所有 instance</li>
-</ul>
-<p><strong>Example</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#wand( #wsum (0.3 apple.title 0.2 apple.inlink 0.5 apple.body ) #wsum (0.3 ipad.title 0.2 ipad.inlink 0.5 ipad.body ) )</div></pre></td></tr></table></figure></p>
-<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ainlink.jpg" class="ful-image" alt="ainlink.jpg">
-<p><strong>问题：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#AND( breast.paragraph cancer.paragraph treatment.paragraph )</div></pre></td></tr></table></figure></p>
-<p>对这一个查询，用 Aggregation 的话以下两篇文档会得到一样的分数，然而其实 D2 要比 D1 更相关。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ap.jpg" class="ful-image" alt="ap.jpg"></p>
-<h3 id="Combination"><a href="#Combination" class="headerlink" title="Combination"></a>Combination</h3><p>用 #MAX, #SUM, #OR 等 query operators 来合并 element scores。<br>首先我们来认识一下 query。<br>E.g.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[document] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
-<p>最外面的 element 是 document, 所以对 documents 进行排序</p>
+<h2 id="锚文本"><a href="#锚文本" class="headerlink" title="锚文本"></a>锚文本</h2><h3 id="什么是锚文本"><a href="#什么是锚文本" class="headerlink" title="什么是锚文本"></a>什么是锚文本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;http://www.acm.org/jacm/&quot;&gt;Journal of the ACM.&lt;/a&gt;</div></pre></td></tr></table></figure>
+<p>这个 HTML 代码片段给出了一个指向 Journal of the ACM 的链接。链接指向 <a href="http://www.acm.org/jacm/，锚文本是" target="_blank" rel="external">http://www.acm.org/jacm/，锚文本是</a> Journal of the ACM。</p>
+<h3 id="锚文本的作用"><a href="#锚文本的作用" class="headerlink" title="锚文本的作用"></a>锚文本的作用</h3><p>Web 上随处可见的现象是，很多网页的内容并不包含对自身的精确描述，尤其是公司网页，因为它们往往是用作商业宣传而不是介绍公司内容。如 IBM 是计算机制造商，但公司主页 (www.ibm.com) 的 HTML 代码的任何地方都不包含词项 computer。这时候，锚文本的作用就体现出来了。锚文本的词项可以作为索引目标网页的词项，也就是说 computer 的 inverted list 包含了 www.ibm.com，这时再用一个特别的指示器表示这些词项在锚文本而不是网页内部，网页评分时也基于 term frequency 计算锚文本的 term weight，在多个锚文本中高频出现的词项(如 Click 和 here)会收到惩罚。<br>除了锚文本，锚文本周围窗口的文本(extended anchor text)，通常也可以当成锚文本来使用。</p>
+<h3 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h3><p>网站可以通过构造具有误导性的锚文本来指向自己，以此提高在某些 query term 的排名。</p>
+<h1 id="PageRank"><a href="#PageRank" class="headerlink" title="PageRank"></a>PageRank</h1><p>PageRank 是 query-independent 的，也就是说与用户输入的查询无关。PageRank 高的网页并不代表一定适合某个特定的 query。如 kanye west wikipedia 网页有很高的 PageRank，但并不适合 “obama family tree” 这个特定的 query。</p>
+<h2 id="Random-Walk-Algorithm"><a href="#Random-Walk-Algorithm" class="headerlink" title="Random Walk Algorithm"></a>Random Walk Algorithm</h2><p>PageRank 可以被看作是一个随机游走的算法。基本思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指向的链接，这样无所事事、漫无目的地在网页上跳来跳去，PageRank 就是估计这个悠闲的上网者分布在各个网页上的概率。</p>
 <ol>
-<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
-<li>对上一步产生的结果 #SUM 运算，结果是一个 (document, score) 列表</li>
+<li>随机选一个网页 A 。</li>
+<li>网页 A 有 n 条出链（outlinks），这时候有两种方法进行下一步。<ul>
+<li>随机在出链中选一个到下一个网页。</li>
+<li>随机从所有 web 网页里选一个其它网页(teleport)。（因为网页 A 可能没有出链）</li>
+</ul>
+</li>
+<li>不断重复以上过程。</li>
 </ol>
-<p>E.g.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[paragraph] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
-<p>最外面的 element 是 paragraph, 所以对 paragraphs 进行排序</p>
-<ol>
-<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
-<li>对上一步产生的结果 #SUM 运算，结果是一个 (paragraph, score) 列表</li>
-</ol>
-<p>来考虑下不同的 combine query operator 产生的影响。</p>
-<p><strong>#MAX[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 只考虑 best sentence<br><strong>#SUM[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– poorly matching sentences 会让分数变低<br><strong>#OR[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 偏好有更多匹配的 sentences 的文档</p>
-<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/c4.jpg" class="ful-image" alt="c4.jpg">
-<p>• #MAX considers them equal<br>• #AND prefers C4<br>• #OR prefers C1<br>• #AVERAGE prefers C4</p>
-<h3 id="Comparsion"><a href="#Comparsion" class="headerlink" title="Comparsion"></a>Comparsion</h3><p>假定目标是检索有 paragraphs 讨论 breast cancer treatment 的文档<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/compare.jpg" class="ful-image" alt="compare.jpg"><br><strong>Combination:</strong> Partial credit for sections that partially match<br><strong>Aggregation:</strong> The terms might not all be in the same section</p>
-<h2 id="Extents"><a href="#Extents" class="headerlink" title="Extents"></a>Extents</h2><p>Using extents as evidence<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND(</div><div class="line">  #OR[document](</div><div class="line">      #AND[sentence](iraq war))</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
-<p>• 检索的是 document<br>• <strong>偏好</strong> ‘iraq’ and ‘war’ 在同一句话里的文档<br>– 出现在 title 里会让分数有稍稍的提高，因为有 smoothing</p>
-<p>Using extents as a constraint<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND (</div><div class="line">  iraq.sentence</div><div class="line">  war.sentence</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
-<p>• 检索的是 document<br>• <strong>要求</strong> ‘iraq’ and ‘war’ 必须出现在同一句话的文档<br>  – 出现在文档的其它部分并不会有任何帮助</p>
-<h2 id="HLT-Applications"><a href="#HLT-Applications" class="headerlink" title="HLT Applications"></a>HLT Applications</h2><p>文档结构可以由 annotation processes 产生<br>• E.g., named entity annotators, semantic role labelers, …</p>
-<p>Retrieval of elements, using semantic role annotations<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#and[sentence](</div><div class="line">  #and[target_verb]( Loves</div><div class="line">      #and[./agent]( John )</div><div class="line">      #and[./patient]( Mary ) ) )</div></pre></td></tr></table></figure></p>
-<p>• ./element specifies that element is a child of the parent field</p>
-<h1 id="Table-retrieval"><a href="#Table-retrieval" class="headerlink" title="Table retrieval"></a>Table retrieval</h1><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table.jpg" class="ful-image" alt="table.jpg">
-<p>实际就是一个把 table 转化为 structure document 的问题。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table2.jpg" class="ful-image" alt="table2.jpg"></p>
-<h1 id="Summaries"><a href="#Summaries" class="headerlink" title="Summaries"></a>Summaries</h1><p><strong>Fields</strong><br>• 用于 independent evidence (author, title, journal, …)<br>• 用于 multiple representations (url, title, body, …)<br>• 了解差异<br>• 了解各个检索模型如何支持这些 fields<br>• 了解在 query 中如何使用这些 fields</p>
-<p><strong>Hierarchical structure</strong><br>• 怎样在多个 elements 都有匹配时 combine evidence<br>• Exact-match vs. best-match document structure<br>• 了解 Indri 怎样支持这些 elements<br>• 了解在 query 中如何使用这些 elements</p>
+<p>随机游走中访问越频繁的网页越重要。<br>计算方法<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg"></p>
+<h2 id="Voting-Algorithm"><a href="#Voting-Algorithm" class="headerlink" title="Voting Algorithm"></a>Voting Algorithm</h2><p>PageRank 也可以被看作是一个 Voting algorithm。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    p votes for each page that it links to</div></pre></td></tr></table></figure></p>
+<p>再具体些<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">For each page p</div><div class="line">  current PR = 1 / |C|    C: Number of nodes in the graph next PR = 0</div><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    use p’s current PR to update the next PR of each outlink page</div><div class="line">  For each page p</div><div class="line">    current PR = next PR</div><div class="line">    next PR = 0</div></pre></td></tr></table></figure></p>
+<ul>
+<li>每次循环，网页 Pi 可以左 PR(Pi) 次投票。</li>
+<li>把投票平均分发给每一个它指向的网页。</li>
+<li>如果两个网页在第 i 次循环中有相同的 PageRank:<br>PR(p1)=0.4, p1 有 2 个 outlinks, 那么 p1 的每一个 vote 是 0.4/2=0.2<br>PR(p2)=0.4, p2 有 4 个 outlinks, 那么 p2 的每一个 vote 是 0.4/4=0.1</li>
+</ul>
+<p>在每一个循环中, PR 的计算方法都如之前的图示。</p>
+<h2 id="d-的选择"><a href="#d-的选择" class="headerlink" title="d 的选择"></a>d 的选择</h2><p>假定 A 有两条出链，指向 B 和 C，B 和 C 各自有一条出链，都指向 A。<br>如果 d=0.5，那么经历 14 次循环 PR 会 converge<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg"></p>
+<p>如果 d=0.85，那么经历 58 次循环 PR 会 converge<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg"></p>
+<h2 id="Transformation-of-PageRank"><a href="#Transformation-of-PageRank" class="headerlink" title="Transformation of PageRank"></a>Transformation of PageRank</h2><p>有些 PageRank varies over a wide range，我们可以把这个 range 进行压缩和转化。如<br>$$PR_T = log_{10}(PR)+11$$</p>
+<p>效果是<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg"></p>
+<p>Google 的 PageRank 范围是 1-10，我们通常说的 PageRank 都是经过这种转化的 PageRank。</p>
+<h2 id="怎样产生-high-PageRank"><a href="#怎样产生-high-PageRank" class="headerlink" title="怎样产生 high PageRank"></a>怎样产生 high PageRank</h2><ul>
+<li>有很多入链</li>
+<li>有很多来自具有高 PageRank 网页的入链</li>
+<li>入链有很少的出链<br>因为在每一次 propagation 时，一个网页的 PR 会被它的出链平分，所以一个有很多出链的入链网页并不是非常有帮助。</li>
+</ul>
+<h2 id="PageRank-的其它问题"><a href="#PageRank-的其它问题" class="headerlink" title="PageRank 的其它问题"></a>PageRank 的其它问题</h2><ul>
+<li>同一个站点的网页链接算不算？</li>
+<li>新的网页的 PR 怎么算？</li>
+<li>怎么处理 sinks（没有出链的网页）?</li>
+<li>怎么处理 link farms 和链接交换？</li>
+</ul>
+<p>还有一个问题就是 PR 是 topic-independent 的，一个网页可能有很高的 PR 但是对某个 query 来说却是一个很坏的选择。Topic-Sensitive PageRank(TSPR) 可以解决这个问题。</p>
+<h1 id="Topic-Sensitive-PageRank-TSPR"><a href="#Topic-Sensitive-PageRank-TSPR" class="headerlink" title="Topic-Sensitive PageRank(TSPR)"></a>Topic-Sensitive PageRank(TSPR)</h1><p>之前考虑的 PageRank 是等概率跳到一个随机网页的情况，关于 topic PageRank，我们考虑的是非等概率跳到一个随机网页的情况，计算的是基于特定兴趣/主题的 PageRank。如一个体育迷希望有关体育主题的网页的排名高于非体育主题的网页，假定这些有关体育的网页在 web 图中彼此相近，那么随机游走过程中，一个喜欢体育网页的人就可能在这类网页上停留大量的时间，因此，体育类网页的稳态分布概率被提升。</p>
+<p>主要逻辑是</p>
+<ul>
+<li>在索引过程中，每一个网页都被自动分配一个 topic (用文本分类的方法)。</li>
+<li>为每一个网页计算一个 topic-specific 的 PageRank。</li>
+<li>每一个 query 都被分配一个 topic，根据用户在这个 search session 中浏览的网页来确定 topic。</li>
+<li>对每一个页面，只考虑 topic-related PageRank，如 $PR_{sports}(d)$</li>
+</ul>
+<p><strong>注：</strong> DMOZ 是一个著名的开放式分类目录，有很多可以用来做 training data 的网页。可以从 top-level 中定义 topics。</p>
+<h1 id="T-Fresh"><a href="#T-Fresh" class="headerlink" title="T-Fresh"></a>T-Fresh</h1><p>PageRank rewards older web pages。old web 网页有更多的时间来积累 inlinks，有些 link 可能是来自已经废弃不用的网页，然而用户可能更偏好新的网页。<br>网页快照提供了 freshness 的线索。</p>
+<ul>
+<li>Page freshness：网页最近什么时候被更新过。Page text(↑)，url(↑)，anchor text(↑↑)，new link(↑↑↑)</li>
+<li>Link freshness：有多少 inlinks 来自 fresh page。</li>
+<li>Decay freshness measures exponentially.</li>
+</ul>
+<p>follow a link 的概率取决于网页的新鲜度。<br>有 fresh inlinks 的 fresh page 有更高的 authority score。</p>
+<p><strong>BM2500+T-Fresh vs BM2500+PageRank</strong><br>Relevance: +8% in P@10，+11-30% in NDCG@k<br>Freshness: +8% in P@10，+10-12% in NDCG@k</p>
+<img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg">
+<p>其它相同作用的 model 如 TimedPageRank, T-Rank, BuzzRank, TemporalPageRank。</p>
+<h1 id="Hyperlink-Induced-Topic-Search-HITS"><a href="#Hyperlink-Induced-Topic-Search-HITS" class="headerlink" title="Hyperlink-Induced Topic Search(HITS)"></a>Hyperlink-Induced Topic Search(HITS)</h1><p>在泛主题搜索（broad-topic search），也就是 informational needs 时，主要有两种非常有用的网页结果。</p>
+<ul>
+<li>Authority 网页：一些权威性的网页。</li>
+<li>Hub 网页：导航型网页，本身不是权威型网页，而是对某个主题感兴趣的人花时间编辑整理出的权威型网页列表。可以通过这种导航型网页来帮我们找到权威型网页。</li>
+</ul>
+<p>一个好的 hub 网页会同时指向多个好的 authority 网页，而一个好的 authority 网页同时会被多个好的 hub 网页所指向。给定某个查询，我们对每个网页给出两个得分，一个是 hub 值，一个是 authority 值，所以对任何一个查询，我们都能得到两个排序结果列表。所以，我们其实可以给出一个 hub 值和 authority 值的循环定义，然后通过迭代计算求解。</p>
+<img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg">
+<p>并不是对整个 web 计算 Hubs 和 Authority 分数。而是对一个小的 set 来进行计算，set 的创建方法如下：</p>
+<ul>
+<li>收集 query q 的 top n 网页构成 the root set</li>
+<li>用 root set 的入链和出链扩充这个 set。</li>
+</ul>
+<p>之后在这个网页子集上来计算 hub 和 authority 值。这个 set 的好处是有一个 strong, query-specific focus，而且 set 规模相对较小，大概只有 200 个网页。然而这些 score 必须在 query time 时进行计算。<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg"></p>
+<p><strong>HITS 在大规模的搜索引擎中不会被使用</strong></p>
+<ul>
+<li>计算 spam 要比计算 PageRank 简单</li>
+<li>创建一个有 high hub score 的网页很简单</li>
+<li>运行成本比 PageRank 高。</li>
+</ul>
+<p>HITS 通常用于别的目标。如找 communities 或是找一个 community 里的专家，因为它们会有 tightly-bound hubs 和 authorities。</p>
 ]]></content>
       
         <categories>
@@ -11105,94 +11288,97 @@ python nb.py split.train split.test</pre>
     </entry>
     
     <entry>
-      <title><![CDATA[Search Engines笔记 - Authority Metrics]]></title>
-      <url>http://www.shuang0420.com/2016/11/04/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章 Authority Metrics（权威指数），用来判断哪些来源的信息更值得信任。介绍 PageRank、Topic-Sensitive PageRank(TSPR)、T-Fresh、Hyperlink-Induced Topic Search(HITS) 四种指数计算方式。<br><a id="more"></a></p>
-<h1 id="链接分析"><a href="#链接分析" class="headerlink" title="链接分析"></a>链接分析</h1><p>链接分析思想最早起源于引文分析领域，通过分析文献之间的引用模式来量化学术论文的影响力。文献引用代表某篇学术论文对所引用论文的权威度的认可。类似的，对于 Web 网页，我们把超链接看成是一个网页对另一个网页的权威度的认可。当然，并不是所有引用都代表权威度认可，因为某个人可以建立多个 web 网页来指向同一个目标网页，人工来提高目标网页入链数。这种链接通常叫垃圾链接或链接作弊（link spam）。尽管如此，引用现象的普遍性和可靠性足以使搜索引擎通过精妙的链接分析方法推导出有用的排序因子。链接分析也被证明是在 web 采集中选择下一个采集网页的非常好的方法之一。给定查询下，链接分析结果已经成为 Web 搜索引擎在计算某个网页的组合得分中的一个因子。PageRank 和 HITS 就是常用的两种链接分析方法。</p>
-<h2 id="基本假设"><a href="#基本假设" class="headerlink" title="基本假设"></a>基本假设</h2><ol>
-<li>指向页面 B 的锚文本是对 B 的一个很好的描述。</li>
-<li>A 到 B 的超链接表示 A 的作者对 B 的认可。</li>
-</ol>
-<h2 id="锚文本"><a href="#锚文本" class="headerlink" title="锚文本"></a>锚文本</h2><h3 id="什么是锚文本"><a href="#什么是锚文本" class="headerlink" title="什么是锚文本"></a>什么是锚文本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;http://www.acm.org/jacm/&quot;&gt;Journal of the ACM.&lt;/a&gt;</div></pre></td></tr></table></figure>
-<p>这个 HTML 代码片段给出了一个指向 Journal of the ACM 的链接。链接指向 <a href="http://www.acm.org/jacm/，锚文本是" target="_blank" rel="external">http://www.acm.org/jacm/，锚文本是</a> Journal of the ACM。</p>
-<h3 id="锚文本的作用"><a href="#锚文本的作用" class="headerlink" title="锚文本的作用"></a>锚文本的作用</h3><p>Web 上随处可见的现象是，很多网页的内容并不包含对自身的精确描述，尤其是公司网页，因为它们往往是用作商业宣传而不是介绍公司内容。如 IBM 是计算机制造商，但公司主页 (www.ibm.com) 的 HTML 代码的任何地方都不包含词项 computer。这时候，锚文本的作用就体现出来了。锚文本的词项可以作为索引目标网页的词项，也就是说 computer 的 inverted list 包含了 www.ibm.com，这时再用一个特别的指示器表示这些词项在锚文本而不是网页内部，网页评分时也基于 term frequency 计算锚文本的 term weight，在多个锚文本中高频出现的词项(如 Click 和 here)会收到惩罚。<br>除了锚文本，锚文本周围窗口的文本(extended anchor text)，通常也可以当成锚文本来使用。</p>
-<h3 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h3><p>网站可以通过构造具有误导性的锚文本来指向自己，以此提高在某些 query term 的排名。</p>
-<h1 id="PageRank"><a href="#PageRank" class="headerlink" title="PageRank"></a>PageRank</h1><p>PageRank 是 query-independent 的，也就是说与用户输入的查询无关。PageRank 高的网页并不代表一定适合某个特定的 query。如 kanye west wikipedia 网页有很高的 PageRank，但并不适合 “obama family tree” 这个特定的 query。</p>
-<h2 id="Random-Walk-Algorithm"><a href="#Random-Walk-Algorithm" class="headerlink" title="Random Walk Algorithm"></a>Random Walk Algorithm</h2><p>PageRank 可以被看作是一个随机游走的算法。基本思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指向的链接，这样无所事事、漫无目的地在网页上跳来跳去，PageRank 就是估计这个悠闲的上网者分布在各个网页上的概率。</p>
+      <title><![CDATA[Search Engines笔记 - Document Structure]]></title>
+      <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。文档的表示形式不只词袋一种，它可以有 fields，有 hierarchical structure(XML)，multiple representations of meaning, priors 等形式，这一章讲的就是检索模型怎么来处理这些复杂的文档表达。<br><a id="more"></a></p>
+<h1 id="Multiple-representations-of-meaning"><a href="#Multiple-representations-of-meaning" class="headerlink" title="Multiple representations of meaning"></a>Multiple representations of meaning</h1><blockquote>
+<p>Fields can be used to provide different representations of the same information</p>
+</blockquote>
+<p>三种表达方法。</p>
+<ul>
+<li><strong>Vector space</strong><br>– 每个 representation 提供独立的 ranking score<br>– 对每个分数求平均来得到一个最终的 ranking</li>
+<li><strong>Okapi</strong><br>– Representations 以不同的方式来表达相同含义<br>– 合并 representations 来得到一个更好的 representation</li>
+<li><strong>Indri</strong><br>– 每个 representation 提供一个 p(t|d) 的估计<br>– 有多种方法来合并这些估计</li>
+</ul>
+<h2 id="Vector-space"><a href="#Vector-space" class="headerlink" title="Vector space"></a>Vector space</h2><p><strong>Option 1:</strong> 一个词袋模型，包含了各种 filed 词汇<br>E.g., iPad::inlink, iPad::title, iPad::body, …</p>
+<p>这让 length normalization 变得更为复杂，比如说 inlink text 可能会和 title 或者 body text 混在一起。一般不用这种方法。</p>
+<p><strong>Option 2:</strong> Several vector spaces<br>$w_{title} *sim(query,title_i) +$<br>$w_{body} *sim(query,body_i) +$<br>$w_{inlink} *sim(query,inlink_i) +$<br>$w_{url} *sim(query,url_i) $</p>
+<p>这种方法易于管理，也易于扩展，Lucene 也采用了这种方法，然而关于怎么设置 weights，并没有什么 guidance。</p>
+<h2 id="Okapi"><a href="#Okapi" class="headerlink" title="Okapi"></a>Okapi</h2><blockquote>
+<p>Evidence from each field should be weighted differently</p>
+</blockquote>
+<p>一些 field 可能有更好的表达能力，如 inlink text，一些 field 可能更为冗长，如 body，所以不同的 fields 我们应该区别对待。</p>
+<p><strong>One solution</strong><br>• 把 query 看作 |F| 个词袋<br>• 对 query 匹配每个 field，然后 add the score</p>
+<p>然而 … 这打破了 BM25’s saturation assumption。在 |F| 个 field 里中出现了一次的字段，比在一个 field 里出现了|F|次的字段，有更大的影响，这并不是我们想要的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">5 fields × 1 occurrence = 5 × 0.4</div><div class="line">1 field × 5 occurrences = 0.77</div></pre></td></tr></table></figure></p>
+<p><strong>Solution:</strong> 用一个复合加权的 representation，一篇文档就用一个词袋</p>
+<p>$$tf_t=\sum_fw_ftf_{t,f}$$<br>$$doclen=\sum_fw_fdoclen_f$$</p>
+<p>F: the set of fields</p>
+<p>-&gt; 然后用标准的 BM25<br>但是 … BM25 有常量，可能我们需要 tune them on a per-field basis，可以用 BM25F。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg" class="ful-image" alt="BM25F.jpg"><br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/exampleW.jpg" class="ful-image" alt="exampleW.jpg"></p>
+<p><strong>特性：</strong></p>
+<ul>
+<li>一个 vocabulary 涵盖了所有的 fields<br>– 所以一个 term 有一个 global idf, 而不是一个 field-specific idf<br>– 对各种文档都有适用么?<pre><code>» E.g., 专利，医疗记录等
+</code></pre></li>
+<li>Field-specific tuning</li>
+<li>constants 的影响很难理解</li>
+</ul>
+<h2 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h2><p>Indri 模型。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/indri.jpg" class="ful-image" alt="indri.jpg"></p>
+<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/andSum.jpg" class="ful-image" alt="andSum.jpg">
+<p>#AND 和 #WAND 用来合并独立的概率<br>#SUM 和 #WSUM 用不同方法来估计同一个概率</p>
+<h1 id="Hierarchical-structure-XML"><a href="#Hierarchical-structure-XML" class="headerlink" title="Hierarchical structure(XML)"></a>Hierarchical structure(XML)</h1><p>Hierarchical structure 的文档通常用 Bayesian inference networks 来解决，如 indri。<br>首先对 flat 和 hierarchical structure 做一个区分。<br><strong>Flat</strong><br>元素之间是相互独立的，一个 term 只在包含了它的那个元素（通常是一个）里出现。<br>检索目的通常是一篇文档。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/1.jpg" class="ful-image" alt="1.jpg"><br><strong>Hierarchical</strong><br>元素之间是相互关联的，通常是包含的关系，一个 term 在所有包含了它的元素里出现。<br>检索目的可以是文档，也可以是元素。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/2.jpg" class="ful-image" alt="2.jpg"></p>
+<h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><p><strong>检索什么样的 element?</strong><br>• Document? Encounter? Diagnosis?</p>
+<p><strong>用怎样的 corpus statistics</strong><br>• Document vs. element</p>
+<p><strong>怎样组合来自不同 elements 的 evidence</strong><br>• Can we prefer patients that have several matching encounters?</p>
+<p><strong>Exact-match vs. best-match document structure</strong><br>• 可能 query 并不能完全匹配文档结构</p>
+<h2 id="Ranking-elements"><a href="#Ranking-elements" class="headerlink" title="Ranking elements"></a>Ranking elements</h2><p><strong>One option: Use Jelinek-Mercer smoothing</strong><br>$$P(q_i|e)=(1-\lambda)P_{MLE}P(q_i|e)+ \lambda P_{MLE}P(q_i|C)$$</p>
+<p>这种方法可能带来的问题是：</p>
 <ol>
-<li>随机选一个网页 A 。</li>
-<li>网页 A 有 n 条出链（outlinks），这时候有两种方法进行下一步。<ul>
-<li>随机在出链中选一个到下一个网页。</li>
-<li>随机从所有 web 网页里选一个其它网页(teleport)。（因为网页 A 可能没有出链）</li>
-</ul>
-</li>
-<li>不断重复以上过程。</li>
+<li>文档结构不规范，这种情况经常在 web 文档中出现，如果文档里本来包含了 query term 然而因为文档不规范而找不到相应的 element，那么 score 可能为 0。</li>
+<li>query 可能太严格。<br>– #AND[title](iphone)：不匹配 “Apple Cuts Phone Price”<br>– #AND[paragraph](solutions to poverty)： “poverty” 和 “solutions” 可能出现在不同的段落里</li>
 </ol>
-<p>随机游走中访问越频繁的网页越重要。<br>计算方法<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg"></p>
-<h2 id="Voting-Algorithm"><a href="#Voting-Algorithm" class="headerlink" title="Voting Algorithm"></a>Voting Algorithm</h2><p>PageRank 也可以被看作是一个 Voting algorithm。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    p votes for each page that it links to</div></pre></td></tr></table></figure></p>
-<p>再具体些<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">For each page p</div><div class="line">  current PR = 1 / |C|    C: Number of nodes in the graph next PR = 0</div><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    use p’s current PR to update the next PR of each outlink page</div><div class="line">  For each page p</div><div class="line">    current PR = next PR</div><div class="line">    next PR = 0</div></pre></td></tr></table></figure></p>
+<p>解决方案是，多加一个 smoothing。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/formula.jpg" class="ful-image" alt="formula.jpg"></p>
+<h2 id="Multiple-elements"><a href="#Multiple-elements" class="headerlink" title="Multiple elements"></a>Multiple elements</h2><p>这里我们探讨右图的情况。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/multiple.jpg" class="ful-image" alt="multiple.jpg"></p>
+<p>两种方法 Aggregation OR Combination。</p>
 <ul>
-<li>每次循环，网页 Pi 可以左 PR(Pi) 次投票。</li>
-<li>把投票平均分发给每一个它指向的网页。</li>
-<li>如果两个网页在第 i 次循环中有相同的 PageRank:<br>PR(p1)=0.4, p1 有 2 个 outlinks, 那么 p1 的每一个 vote 是 0.4/2=0.2<br>PR(p2)=0.4, p2 有 4 个 outlinks, 那么 p2 的每一个 vote 是 0.4/4=0.1</li>
+<li>Aggregation: Combine inverted lists</li>
+<li>Combination: Combine scores</li>
 </ul>
-<p>在每一个循环中, PR 的计算方法都如之前的图示。</p>
-<h2 id="d-的选择"><a href="#d-的选择" class="headerlink" title="d 的选择"></a>d 的选择</h2><p>假定 A 有两条出链，指向 B 和 C，B 和 C 各自有一条出链，都指向 A。<br>如果 d=0.5，那么经历 14 次循环 PR 会 converge<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg"></p>
-<p>如果 d=0.85，那么经历 58 次循环 PR 会 converge<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg"></p>
-<h2 id="Transformation-of-PageRank"><a href="#Transformation-of-PageRank" class="headerlink" title="Transformation of PageRank"></a>Transformation of PageRank</h2><p>有些 PageRank varies over a wide range，我们可以把这个 range 进行压缩和转化。如<br>$$PR_T = log_{10}(PR)+11$$</p>
-<p>效果是<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg"></p>
-<p>Google 的 PageRank 范围是 1-10，我们通常说的 PageRank 都是经过这种转化的 PageRank。</p>
-<h2 id="怎样产生-high-PageRank"><a href="#怎样产生-high-PageRank" class="headerlink" title="怎样产生 high PageRank"></a>怎样产生 high PageRank</h2><ul>
-<li>有很多入链</li>
-<li>有很多来自具有高 PageRank 网页的入链</li>
-<li>入链有很少的出链<br>因为在每一次 propagation 时，一个网页的 PR 会被它的出链平分，所以一个有很多出链的入链网页并不是非常有帮助。</li>
-</ul>
-<h2 id="PageRank-的其它问题"><a href="#PageRank-的其它问题" class="headerlink" title="PageRank 的其它问题"></a>PageRank 的其它问题</h2><ul>
-<li>同一个站点的网页链接算不算？</li>
-<li>新的网页的 PR 怎么算？</li>
-<li>怎么处理 sinks（没有出链的网页）?</li>
-<li>怎么处理 link farms 和链接交换？</li>
-</ul>
-<p>还有一个问题就是 PR 是 topic-independent 的，一个网页可能有很高的 PR 但是对某个 query 来说却是一个很坏的选择。Topic-Sensitive PageRank(TSPR) 可以解决这个问题。</p>
-<h1 id="Topic-Sensitive-PageRank-TSPR"><a href="#Topic-Sensitive-PageRank-TSPR" class="headerlink" title="Topic-Sensitive PageRank(TSPR)"></a>Topic-Sensitive PageRank(TSPR)</h1><p>之前考虑的 PageRank 是等概率跳到一个随机网页的情况，关于 topic PageRank，我们考虑的是非等概率跳到一个随机网页的情况，计算的是基于特定兴趣/主题的 PageRank。如一个体育迷希望有关体育主题的网页的排名高于非体育主题的网页，假定这些有关体育的网页在 web 图中彼此相近，那么随机游走过程中，一个喜欢体育网页的人就可能在这类网页上停留大量的时间，因此，体育类网页的稳态分布概率被提升。</p>
-<p>主要逻辑是</p>
+<h3 id="Aggregation"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</h3><p>Indri 允许在 query 里指定 aggregation type</p>
 <ul>
-<li>在索引过程中，每一个网页都被自动分配一个 topic (用文本分类的方法)。</li>
-<li>为每一个网页计算一个 topic-specific 的 PageRank。</li>
-<li>每一个 query 都被分配一个 topic，根据用户在这个 search session 中浏览的网页来确定 topic。</li>
-<li>对每一个页面，只考虑 topic-related PageRank，如 $PR_{sports}(d)$</li>
+<li>term.element<br>– 如果没有指定 element, 那么默认 element 为 Document<br>– Example: apple.inlink</li>
+<li>结果: 一个 inverted list 包含了一个 element 的所有 instance</li>
 </ul>
-<p><strong>注：</strong> DMOZ 是一个著名的开放式分类目录，有很多可以用来做 training data 的网页。可以从 top-level 中定义 topics。</p>
-<h1 id="T-Fresh"><a href="#T-Fresh" class="headerlink" title="T-Fresh"></a>T-Fresh</h1><p>PageRank rewards older web pages。old web 网页有更多的时间来积累 inlinks，有些 link 可能是来自已经废弃不用的网页，然而用户可能更偏好新的网页。<br>网页快照提供了 freshness 的线索。</p>
-<ul>
-<li>Page freshness：网页最近什么时候被更新过。Page text(↑)，url(↑)，anchor text(↑↑)，new link(↑↑↑)</li>
-<li>Link freshness：有多少 inlinks 来自 fresh page。</li>
-<li>Decay freshness measures exponentially.</li>
-</ul>
-<p>follow a link 的概率取决于网页的新鲜度。<br>有 fresh inlinks 的 fresh page 有更高的 authority score。</p>
-<p><strong>BM2500+T-Fresh vs BM2500+PageRank</strong><br>Relevance: +8% in P@10，+11-30% in NDCG@k<br>Freshness: +8% in P@10，+10-12% in NDCG@k</p>
-<img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg">
-<p>其它相同作用的 model 如 TimedPageRank, T-Rank, BuzzRank, TemporalPageRank。</p>
-<h1 id="Hyperlink-Induced-Topic-Search-HITS"><a href="#Hyperlink-Induced-Topic-Search-HITS" class="headerlink" title="Hyperlink-Induced Topic Search(HITS)"></a>Hyperlink-Induced Topic Search(HITS)</h1><p>在泛主题搜索（broad-topic search），也就是 informational needs 时，主要有两种非常有用的网页结果。</p>
-<ul>
-<li>Authority 网页：一些权威性的网页。</li>
-<li>Hub 网页：导航型网页，本身不是权威型网页，而是对某个主题感兴趣的人花时间编辑整理出的权威型网页列表。可以通过这种导航型网页来帮我们找到权威型网页。</li>
-</ul>
-<p>一个好的 hub 网页会同时指向多个好的 authority 网页，而一个好的 authority 网页同时会被多个好的 hub 网页所指向。给定某个查询，我们对每个网页给出两个得分，一个是 hub 值，一个是 authority 值，所以对任何一个查询，我们都能得到两个排序结果列表。所以，我们其实可以给出一个 hub 值和 authority 值的循环定义，然后通过迭代计算求解。</p>
-<img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg">
-<p>并不是对整个 web 计算 Hubs 和 Authority 分数。而是对一个小的 set 来进行计算，set 的创建方法如下：</p>
-<ul>
-<li>收集 query q 的 top n 网页构成 the root set</li>
-<li>用 root set 的入链和出链扩充这个 set。</li>
-</ul>
-<p>之后在这个网页子集上来计算 hub 和 authority 值。这个 set 的好处是有一个 strong, query-specific focus，而且 set 规模相对较小，大概只有 200 个网页。然而这些 score 必须在 query time 时进行计算。<br><img src="http://images.shuang0420.com/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg"></p>
-<p><strong>HITS 在大规模的搜索引擎中不会被使用</strong></p>
-<ul>
-<li>计算 spam 要比计算 PageRank 简单</li>
-<li>创建一个有 high hub score 的网页很简单</li>
-<li>运行成本比 PageRank 高。</li>
-</ul>
-<p>HITS 通常用于别的目标。如找 communities 或是找一个 community 里的专家，因为它们会有 tightly-bound hubs 和 authorities。</p>
+<p><strong>Example</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#wand( #wsum (0.3 apple.title 0.2 apple.inlink 0.5 apple.body ) #wsum (0.3 ipad.title 0.2 ipad.inlink 0.5 ipad.body ) )</div></pre></td></tr></table></figure></p>
+<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ainlink.jpg" class="ful-image" alt="ainlink.jpg">
+<p><strong>问题：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#AND( breast.paragraph cancer.paragraph treatment.paragraph )</div></pre></td></tr></table></figure></p>
+<p>对这一个查询，用 Aggregation 的话以下两篇文档会得到一样的分数，然而其实 D2 要比 D1 更相关。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ap.jpg" class="ful-image" alt="ap.jpg"></p>
+<h3 id="Combination"><a href="#Combination" class="headerlink" title="Combination"></a>Combination</h3><p>用 #MAX, #SUM, #OR 等 query operators 来合并 element scores。<br>首先我们来认识一下 query。<br>E.g.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[document] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
+<p>最外面的 element 是 document, 所以对 documents 进行排序</p>
+<ol>
+<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
+<li>对上一步产生的结果 #SUM 运算，结果是一个 (document, score) 列表</li>
+</ol>
+<p>E.g.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[paragraph] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
+<p>最外面的 element 是 paragraph, 所以对 paragraphs 进行排序</p>
+<ol>
+<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
+<li>对上一步产生的结果 #SUM 运算，结果是一个 (paragraph, score) 列表</li>
+</ol>
+<p>来考虑下不同的 combine query operator 产生的影响。</p>
+<p><strong>#MAX[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 只考虑 best sentence<br><strong>#SUM[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– poorly matching sentences 会让分数变低<br><strong>#OR[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 偏好有更多匹配的 sentences 的文档</p>
+<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/c4.jpg" class="ful-image" alt="c4.jpg">
+<p>• #MAX considers them equal<br>• #AND prefers C4<br>• #OR prefers C1<br>• #AVERAGE prefers C4</p>
+<h3 id="Comparsion"><a href="#Comparsion" class="headerlink" title="Comparsion"></a>Comparsion</h3><p>假定目标是检索有 paragraphs 讨论 breast cancer treatment 的文档<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/compare.jpg" class="ful-image" alt="compare.jpg"><br><strong>Combination:</strong> Partial credit for sections that partially match<br><strong>Aggregation:</strong> The terms might not all be in the same section</p>
+<h2 id="Extents"><a href="#Extents" class="headerlink" title="Extents"></a>Extents</h2><p>Using extents as evidence<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND(</div><div class="line">  #OR[document](</div><div class="line">      #AND[sentence](iraq war))</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
+<p>• 检索的是 document<br>• <strong>偏好</strong> ‘iraq’ and ‘war’ 在同一句话里的文档<br>– 出现在 title 里会让分数有稍稍的提高，因为有 smoothing</p>
+<p>Using extents as a constraint<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND (</div><div class="line">  iraq.sentence</div><div class="line">  war.sentence</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
+<p>• 检索的是 document<br>• <strong>要求</strong> ‘iraq’ and ‘war’ 必须出现在同一句话的文档<br>  – 出现在文档的其它部分并不会有任何帮助</p>
+<h2 id="HLT-Applications"><a href="#HLT-Applications" class="headerlink" title="HLT Applications"></a>HLT Applications</h2><p>文档结构可以由 annotation processes 产生<br>• E.g., named entity annotators, semantic role labelers, …</p>
+<p>Retrieval of elements, using semantic role annotations<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#and[sentence](</div><div class="line">  #and[target_verb]( Loves</div><div class="line">      #and[./agent]( John )</div><div class="line">      #and[./patient]( Mary ) ) )</div></pre></td></tr></table></figure></p>
+<p>• ./element specifies that element is a child of the parent field</p>
+<h1 id="Table-retrieval"><a href="#Table-retrieval" class="headerlink" title="Table retrieval"></a>Table retrieval</h1><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table.jpg" class="ful-image" alt="table.jpg">
+<p>实际就是一个把 table 转化为 structure document 的问题。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table2.jpg" class="ful-image" alt="table2.jpg"></p>
+<h1 id="Summaries"><a href="#Summaries" class="headerlink" title="Summaries"></a>Summaries</h1><p><strong>Fields</strong><br>• 用于 independent evidence (author, title, journal, …)<br>• 用于 multiple representations (url, title, body, …)<br>• 了解差异<br>• 了解各个检索模型如何支持这些 fields<br>• 了解在 query 中如何使用这些 fields</p>
+<p><strong>Hierarchical structure</strong><br>• 怎样在多个 elements 都有匹配时 combine evidence<br>• Exact-match vs. best-match document structure<br>• 了解 Indri 怎样支持这些 elements<br>• 了解在 query 中如何使用这些 elements</p>
 ]]></content>
       
         <categories>
@@ -11211,6 +11397,74 @@ python nb.py split.train split.test</pre>
             <tag> Search Engines </tag>
             
             <tag> 信息检索 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Distributed Systems笔记－Cryptographic Protocols]]></title>
+      <url>http://www.shuang0420.com/2016/11/02/Cryptographic-Protocols/</url>
+      <content type="html"><![CDATA[<p>CMU 95702 Distributed Systems 笔记。简单介绍几种加密、签名方式。<br><a id="more"></a></p>
+<p><a href="http://www.shuang0420.com/2016/10/02/AES%20%E5%92%8C%20RSA%E7%AC%94%E8%AE%B0/">AES 和 RSA 笔记</a> 的续章。</p>
+<h1 id="Scenario-1-Like-WWII-和-TEA"><a href="#Scenario-1-Like-WWII-和-TEA" class="headerlink" title="Scenario 1 (Like WWII 和 TEA)"></a>Scenario 1 (Like WWII 和 TEA)</h1><ol>
+<li>双方共享一把密钥。</li>
+<li>A 用密钥对信息加密。$E(K_AB,M_i)$，发送给 B</li>
+<li>B 用 $D(K_AB,{M_i}K_AB)$ 解密读取信息。</li>
+</ol>
+<p><strong>问题是：</strong><br>双方如何同步密钥？<br>怎么确定 B 收到的 ${M_i}K_AB$ 不是 replay of an old message?</p>
+<h1 id="Scenario-2-Like-Kerberos"><a href="#Scenario-2-Like-Kerberos" class="headerlink" title="Scenario 2 (Like Kerberos)"></a>Scenario 2 (Like Kerberos)</h1><ol>
+<li>A 向第三方 S 索要一张和 B 通话的 ticket。</li>
+<li>S 知道 A 的 password 所以他可以计算 $K_A$</li>
+<li>S 发送给 A $\{\{Ticket\}K_B,K_{AB}\}, K_A$</li>
+<li>A 知道自己的 password 所以可以计算 $K_A$，注意 A 的 password 不会在网络中传输。</li>
+<li>A 可以计算出 $K_{AB}$ 和 $\{Ticket\}K_B$</li>
+<li>A 向 B 发送一个读的请求，发送的信息是 $\{Ticket\}K_B$,Alice,Read</li>
+<li>B 用 $K_B$ 来读取 Ticket 的内容，Ticket 的内容是 $K_{AB}$，Alice</li>
+<li>A、B 可以用 session key 来交流了。</li>
+</ol>
+<img src="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg" class="ful-image" alt="Cryptographic-Protocols/scenario2.jpg">
+<p>可以防止 replay，但 <strong>问题是:</strong></p>
+<ul>
+<li>难以 scale,S 必须知道 $K_A$, $K_B$,…</li>
+<li>S 是唯一可能导致失败的因素。</li>
+</ul>
+<p>Kerberos 这一名词来源于希腊神话“三个头的狗——地狱之门守护者”系统设计上采用客户端/服务器结构与DES加密技术，并且能够进行相互认证，即客户端和服务器端均可对对方进行身份认证。可以用于防止窃听、防止 repla y攻击、保护数据完整性等场合，是一种应用对称密钥体制进行密钥管理的系统。</p>
+<h2 id="Needham-Schroeder-protocol"><a href="#Needham-Schroeder-protocol" class="headerlink" title="Needham-Schroeder protocol"></a>Needham-Schroeder protocol</h2><p>这层协议是 Kerberos 的基础，在这之后，Alice and Bob share a secret (KAB)</p>
+<h1 id="Scenario-3-Authentication"><a href="#Scenario-3-Authentication" class="headerlink" title="Scenario 3 (Authentication)"></a>Scenario 3 (Authentication)</h1><p>数字签名，用私钥签名，公钥解密。注意公钥加密比私钥慢 100-1000倍。<br>很难找到 digest(M1) == digest(M2)</p>
+<ol>
+<li>A 发送 Message＋用密钥加密的 Message 的 digest。{Digest(M)}$K_Apriv$</li>
+<li>B 收到签名的文件，取出 Message，计算 Message 的 digest。</li>
+<li>B 用 A 的公钥 $K_Apub$ 解密 {Digest(M)}$K_Apriv$ 然后和自己算的 digest 比较，如果匹配，签名验证。</li>
+</ol>
+<p><strong>问题：</strong><br>如果 A 说他没有签名？说自己的私钥泄漏了？只要 A、B 互相信任，还是有用的。</p>
+<h1 id="Scenario-4-Like-SSL"><a href="#Scenario-4-Like-SSL" class="headerlink" title="Scenario 4 (Like SSL)"></a>Scenario 4 (Like SSL)</h1><ol>
+<li>A 和 B 想要建立一个共享的密钥</li>
+<li>A 拿到 B 的公钥，这个公钥被可信任的第三方 T 签名认证了，所以这个公钥确实是 B 的。</li>
+<li>A 确认第三方 T 对 $K_Bpub$ 签名了。怎么确认？A 和 T 都有 B 的 public key，T 把 $K_Bpub$ 加密后给 A，A 对其进行解密然后比对自己手上的 B 的 public key 看是不是一致。</li>
+<li>A 生成了 $K_{AB}$ 并用 $K_Bpub$ 加密。</li>
+<li>B 有很多公钥所以 A 发送公钥的名字。</li>
+<li>A 发送了 key name $\{K_{AB}\}K_Bpub$</li>
+<li>B 用这个 key name 选择了对应的私钥并计算 $\{\{K_{AB}\}K_Bpub\}K_Bpriv == K_{AB}$</li>
+</ol>
+<p>最后 A 和 B 共享了对称的钥匙 $K_{AB}$</p>
+<p><strong>问题：</strong><br>在 A 第一次得到 B 的公钥时（A 认为这是 B 的公钥，然而这并不是，这是 C 也经过第三方 T 签名认证的公钥。</p>
+<p>TLS 和这个相似<br><img src="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/TLS_config.jpg" class="ful-image" alt="Cryptographic-Protocols/TLS_config.jpg"></p>
+<h1 id="Message-Authentication-Codes-MACs"><a href="#Message-Authentication-Codes-MACs" class="headerlink" title="Message Authentication Codes(MACs)"></a>Message Authentication Codes(MACs)</h1><p>对称加密生成的数字签名。<br>双方都有 Key(K)，sender 把 Key(K) 通过 MAC 算法加密后连同 message 一起给 receiver，receiver 比对收到的 MAC 和自己用 MAC 算法对自己这里的 Key(K) 加密后的 MAC 是否一致，如果一致，那么信息真实性和完整性就得到了证实。</p>
+<p>用于数字签名，双方都算了一遍 MAC</p>
+<h1 id="JAVA-里的-keystore-和-truststore"><a href="#JAVA-里的-keystore-和-truststore" class="headerlink" title="JAVA 里的 keystore 和 truststore"></a>JAVA 里的 keystore 和 truststore</h1><p>keystore: 存了公钥、私钥、证书<br>truststore：存了公钥，只能存 server 发过来的东西</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Distributed Systems </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Web Service </tag>
             
         </tags>
         
@@ -11272,74 +11526,6 @@ python nb.py split.train split.test</pre>
 </ul>
 <h3 id="Handle-duplicates"><a href="#Handle-duplicates" class="headerlink" title="Handle duplicates"></a>Handle duplicates</h3><p>根据 client 的 acknowledgement 来清空历史。</p>
 <h2 id="Request-Reply-Message-Structure"><a href="#Request-Reply-Message-Structure" class="headerlink" title="Request-Reply Message Structure"></a>Request-Reply Message Structure</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">messageType: int (0=Request, 1=Reply)</div><div class="line">requestId: int</div><div class="line">objectReference: RemoteObjectRef</div><div class="line">methodId: int or Method</div><div class="line">argument: array of bytes</div></pre></td></tr></table></figure>
-]]></content>
-      
-        <categories>
-            
-            <category> Distributed Systems </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Web Service </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Distributed Systems笔记－Cryptographic Protocols]]></title>
-      <url>http://www.shuang0420.com/2016/11/02/Cryptographic-Protocols/</url>
-      <content type="html"><![CDATA[<p>CMU 95702 Distributed Systems 笔记。简单介绍几种加密、签名方式。<br><a id="more"></a></p>
-<p><a href="http://www.shuang0420.com/2016/10/02/AES%20%E5%92%8C%20RSA%E7%AC%94%E8%AE%B0/">AES 和 RSA 笔记</a> 的续章。</p>
-<h1 id="Scenario-1-Like-WWII-和-TEA"><a href="#Scenario-1-Like-WWII-和-TEA" class="headerlink" title="Scenario 1 (Like WWII 和 TEA)"></a>Scenario 1 (Like WWII 和 TEA)</h1><ol>
-<li>双方共享一把密钥。</li>
-<li>A 用密钥对信息加密。$E(K_AB,M_i)$，发送给 B</li>
-<li>B 用 $D(K_AB,{M_i}K_AB)$ 解密读取信息。</li>
-</ol>
-<p><strong>问题是：</strong><br>双方如何同步密钥？<br>怎么确定 B 收到的 ${M_i}K_AB$ 不是 replay of an old message?</p>
-<h1 id="Scenario-2-Like-Kerberos"><a href="#Scenario-2-Like-Kerberos" class="headerlink" title="Scenario 2 (Like Kerberos)"></a>Scenario 2 (Like Kerberos)</h1><ol>
-<li>A 向第三方 S 索要一张和 B 通话的 ticket。</li>
-<li>S 知道 A 的 password 所以他可以计算 $K_A$</li>
-<li>S 发送给 A $\{\{Ticket\}K_B,K_{AB}\}, K_A$</li>
-<li>A 知道自己的 password 所以可以计算 $K_A$，注意 A 的 password 不会在网络中传输。</li>
-<li>A 可以计算出 $K_{AB}$ 和 $\{Ticket\}K_B$</li>
-<li>A 向 B 发送一个读的请求，发送的信息是 $\{Ticket\}K_B$,Alice,Read</li>
-<li>B 用 $K_B$ 来读取 Ticket 的内容，Ticket 的内容是 $K_{AB}$，Alice</li>
-<li>A、B 可以用 session key 来交流了。</li>
-</ol>
-<img src="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg" class="ful-image" alt="Cryptographic-Protocols/scenario2.jpg">
-<p>可以防止 replay，但 <strong>问题是:</strong></p>
-<ul>
-<li>难以 scale,S 必须知道 $K_A$, $K_B$,…</li>
-<li>S 是唯一可能导致失败的因素。</li>
-</ul>
-<p>Kerberos 这一名词来源于希腊神话“三个头的狗——地狱之门守护者”系统设计上采用客户端/服务器结构与DES加密技术，并且能够进行相互认证，即客户端和服务器端均可对对方进行身份认证。可以用于防止窃听、防止 repla y攻击、保护数据完整性等场合，是一种应用对称密钥体制进行密钥管理的系统。</p>
-<h2 id="Needham-Schroeder-protocol"><a href="#Needham-Schroeder-protocol" class="headerlink" title="Needham-Schroeder protocol"></a>Needham-Schroeder protocol</h2><p>这层协议是 Kerberos 的基础，在这之后，Alice and Bob share a secret (KAB)</p>
-<h1 id="Scenario-3-Authentication"><a href="#Scenario-3-Authentication" class="headerlink" title="Scenario 3 (Authentication)"></a>Scenario 3 (Authentication)</h1><p>数字签名，用私钥签名，公钥解密。注意公钥加密比私钥慢 100-1000倍。<br>很难找到 digest(M1) == digest(M2)</p>
-<ol>
-<li>A 发送 Message＋用密钥加密的 Message 的 digest。{Digest(M)}$K_Apriv$</li>
-<li>B 收到签名的文件，取出 Message，计算 Message 的 digest。</li>
-<li>B 用 A 的公钥 $K_Apub$ 解密 {Digest(M)}$K_Apriv$ 然后和自己算的 digest 比较，如果匹配，签名验证。</li>
-</ol>
-<p><strong>问题：</strong><br>如果 A 说他没有签名？说自己的私钥泄漏了？只要 A、B 互相信任，还是有用的。</p>
-<h1 id="Scenario-4-Like-SSL"><a href="#Scenario-4-Like-SSL" class="headerlink" title="Scenario 4 (Like SSL)"></a>Scenario 4 (Like SSL)</h1><ol>
-<li>A 和 B 想要建立一个共享的密钥</li>
-<li>A 拿到 B 的公钥，这个公钥被可信任的第三方 T 签名认证了，所以这个公钥确实是 B 的。</li>
-<li>A 确认第三方 T 对 $K_Bpub$ 签名了。怎么确认？A 和 T 都有 B 的 public key，T 把 $K_Bpub$ 加密后给 A，A 对其进行解密然后比对自己手上的 B 的 public key 看是不是一致。</li>
-<li>A 生成了 $K_{AB}$ 并用 $K_Bpub$ 加密。</li>
-<li>B 有很多公钥所以 A 发送公钥的名字。</li>
-<li>A 发送了 key name $\{K_{AB}\}K_Bpub$</li>
-<li>B 用这个 key name 选择了对应的私钥并计算 $\{\{K_{AB}\}K_Bpub\}K_Bpriv == K_{AB}$</li>
-</ol>
-<p>最后 A 和 B 共享了对称的钥匙 $K_{AB}$</p>
-<p><strong>问题：</strong><br>在 A 第一次得到 B 的公钥时（A 认为这是 B 的公钥，然而这并不是，这是 C 也经过第三方 T 签名认证的公钥。</p>
-<p>TLS 和这个相似<br><img src="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/TLS_config.jpg" class="ful-image" alt="Cryptographic-Protocols/TLS_config.jpg"></p>
-<h1 id="Message-Authentication-Codes-MACs"><a href="#Message-Authentication-Codes-MACs" class="headerlink" title="Message Authentication Codes(MACs)"></a>Message Authentication Codes(MACs)</h1><p>对称加密生成的数字签名。<br>双方都有 Key(K)，sender 把 Key(K) 通过 MAC 算法加密后连同 message 一起给 receiver，receiver 比对收到的 MAC 和自己用 MAC 算法对自己这里的 Key(K) 加密后的 MAC 是否一致，如果一致，那么信息真实性和完整性就得到了证实。</p>
-<p>用于数字签名，双方都算了一遍 MAC</p>
-<h1 id="JAVA-里的-keystore-和-truststore"><a href="#JAVA-里的-keystore-和-truststore" class="headerlink" title="JAVA 里的 keystore 和 truststore"></a>JAVA 里的 keystore 和 truststore</h1><p>keystore: 存了公钥、私钥、证书<br>truststore：存了公钥，只能存 server 发过来的东西</p>
 ]]></content>
       
         <categories>
