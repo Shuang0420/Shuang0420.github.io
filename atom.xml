@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2020-05-08T07:30:21.635Z</updated>
+  <updated>2020-06-04T12:59:22.688Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -14,6 +14,216 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Sequential transfer learning in NLP</title>
+    <link href="http://www.shuang0420.com/2020/06/01/Sequential%20transfer%20learning%20in%20NLP/"/>
+    <id>http://www.shuang0420.com/2020/06/01/Sequential transfer learning in NLP/</id>
+    <published>2020-06-01T02:02:27.000Z</published>
+    <updated>2020-06-04T12:59:22.688Z</updated>
+    
+    <content type="html"><![CDATA[<p>NAACL 2019 tutorial on “Transfer Learning in Natural Language Processing” 的部分笔记，资料链接见文末。<br><a id="more"></a></p>
+<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/types.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/types.png">
+<p>迁移学习的概念就不多描述了，可以参考<a href="https://github.com/jindongwang/transferlearning-tutorial" target="_blank" rel="external">迁移学习小册子</a>，讲的非常好。总的来说迁移学习有两大类（应该是 Sebastian Ruder 提出的分类？）：</p>
+<ul>
+<li><strong>Inductive transfer learning</strong><ul>
+<li>任务不同，但在目标领域有标注数据</li>
+<li>同时学习不同任务就是 multi-task learning，顺序学习不同任务就是 sequential transfer learning</li>
+<li>具体方法有<strong>基于样本（instance based transfer）</strong>、<strong>基于特征（feature representation transfer）</strong>、<strong>基于参数（parameter transfer）</strong>、<strong>基于关系（ralational knowledge transfer）</strong>的迁移，其中最为常见的就是基于特征的迁移，如把预训练模型当做特征提取器，后加分类层等应用，以及基于参数的迁移，如我们常用的 fine-tuning </li>
+</ul>
+</li>
+<li><strong>Transductive transfer learning</strong><ul>
+<li>任务相同但是领域不同，源领域有标注数据，但是目标领域没有标注数据</li>
+<li>不同领域就是<strong>领域适应（domain adaptation）</strong>，不同语言就是<strong>跨语言学习（cross-lingual learning）</strong>。领域适应问题一般假设源领域和目标领域有相同的样本空间，但数据分布不一致，迁移学习小册子重点介绍了这一热门研究方向</li>
+<li>通常是<strong>基于样本</strong>和<strong>基于特征</strong>的学习</li>
+</ul>
+</li>
+</ul>
+<p>这一篇关注的是 <strong>Sequential inductive transfer learning</strong>，通常来说第一阶段在源领域上预训练，学习 general 的一些表征，然后做 adaption，迁移到新的任务。由于源领域的训练数据非常大，预训练模型通常有很好的泛化能力（参考大力出奇迹的 GPT3）。预训练之前讨论的比较多，而这次要解决的问题是 <strong>How to adapt the pretrained model in NLP</strong>，主要从下面三个方面进行讨论：</p>
+<ol>
+<li><strong>Architectural modifications?</strong><br> 怎么改模型结构</li>
+<li><strong>Optimization schemes</strong><br> 去训练哪些权重，以什么顺序来训练</li>
+<li><strong>More signal: Weak supervision, Multi-tasking &amp; Ensembling</strong><br> 获取更多监督信号</li>
+</ol>
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p>有两种选择，大多数情况下第一种选择就可以解决问题：</p>
+<ul>
+<li><p><strong>模型内部结构不变</strong>，可以在最上层加分类器，在最下层补充 embdding，也可以把模型输出当做特征</p>
+<ul>
+<li><p>一方面，删除一些对目标任务无效的 pretraining task head，像是预训练 LM 的 softmax 分类器，当然也可以留着做 multi-task</p>
+</li>
+<li><p>另一方面，在顶层或者底层加上目标任务需要的层，简单来讲可以加个 linear 层，复杂一点也可以把模型输出当做目标模型的输入</p>
+</li>
+</ul>
+</li>
+<li><p><strong>修改模型内部结构</strong>，如改成 encoder-decoder 模式，或者为目标任务加一些 adapters（像加在 transformer 上的 multi-head attention，layer norm）等</p>
+<ul>
+<li><a href="https://arxiv.org/pdf/1902.02671.pdf" target="_blank" rel="external">BERT and PALs: Projected Attention Layers for Efficient Adaptation in Multi-Task Learning</a></li>
+<li><a href="https://arxiv.org/abs/1902.00751" target="_blank" rel="external">Parameter-Efficient Transfer Learning for NLP</a></li>
+<li>Adaptation layer 在 CV 领域有更广泛的研究，这里提到的 adapters 是为了优化目标任务，而 CV 领域提到的自适应模块是为了 domain adaption 提出的，通常用来完成 source 和 target 数据的自适应，拉近两者的数据分布，使得网络效果更好，常见的有在分类器的前一层/几层加入适配层（如 MK-MMD），用来计算 source 和 target 的距离，加入损失进行训练</li>
+</ul>
+</li>
+</ul>
+<h1 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h1><p>几个需要考虑的方向：</p>
+<ul>
+<li><strong>选择更新哪些权重</strong><ul>
+<li>不更新权重：feature extraction</li>
+<li>更新权重：fine-tuning</li>
+<li>adapters</li>
+<li><strong>feature extraction 还是 fine-tuning 取决于目标任务和预训练任务的相似性</strong></li>
+</ul>
+</li>
+<li><strong>选择什么时候更新，以及怎样更新</strong><br>  top-bottom, gradual unfreezing, discriminative fine-tuning</li>
+<li><strong>考虑一些 trade-offs</strong><br>  时间/空间复杂度，性能要求</li>
+</ul>
+<h2 id="Which-weights"><a href="#Which-weights" class="headerlink" title="Which weights"></a>Which weights</h2><h3 id="Freeze-pretrained-weights"><a href="#Freeze-pretrained-weights" class="headerlink" title="Freeze pretrained weights"></a>Freeze pretrained weights</h3><ol>
+<li>不更新预训练的权重，只训练目标任务相关的权重（比如新加的分类层）</li>
+</ol>
+<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/feature_extraction.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/feature_extraction.png">
+<ol>
+<li>特征提取要注意的是不要傻傻的只用 top layer 的特征，可以学习各层特征的线性组合<br><a href="https://arxiv.org/pdf/1802.05365.pdf" target="_blank" rel="external">Deep contextualized word representations 2018</a><br><a href="https://arxiv.org/abs/1705.08142" target="_blank" rel="external">Latent Multi-task Architecture Learning 2019</a></li>
+</ol>
+<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/elmo.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/elmo.png">
+<ol>
+<li>预训练特征当做下游任务的特征</li>
+</ol>
+<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/downstream.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/downstream.png">
+<ol>
+<li>Adapters，在预训练模型结构已有的 layers 之间加入目标任务的适配器，如下图，只训练红色部分的权重</li>
+</ol>
+<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/adapters.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/adapters.png">
+<h3 id="Change-pretrained-weights"><a href="#Change-pretrained-weights" class="headerlink" title="Change pretrained weights"></a>Change pretrained weights</h3><p>还有一种是 fine-tuning，用预训练的权重来初始化下游模型的参数，在迁移阶段训练所有参数</p>
+<h2 id="What-schedule"><a href="#What-schedule" class="headerlink" title="What schedule"></a>What schedule</h2><p>决定好更新什么权重，下一步就要看用什么顺序，以及怎样的方式来更新了，记住我们的目标：</p>
+<p><strong><em>We want to avoid overwriting useful pretrained information and maximize positive transfer.</em></strong></p>
+<p>一个重要的知道原则是<strong>自顶向下（top-to-bottom）</strong>的顺序更新，要考虑的是 time 和 intensity，每一层更新的时间可以通过 freeze 其他层来控制，更新的强度可以通过学习率的变化来控制。另外，可以通过正则化来平衡更新与保留之间的关系。</p>
+<p>layer-wise training<br><a href="https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf" target="_blank" rel="external">Hinton et al., 2006</a><br><a href="https://papers.nips.cc/paper/3048-greedy-layer-wise-training-of-deep-networks.pdf" target="_blank" rel="external">Bengio et al., 2007</a></p>
+<h3 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h3><p>自底向上各层，从 embedding 到中间层到 top layer 再到 target layer 各层表示为：E -&gt; L1 -&gt; … Ln -&gt; T。</p>
+<ul>
+<li>Freezing all but the top layer 只训练 top layer Ln<br>  <a href="https://arxiv.org/abs/1502.02791" target="_blank" rel="external">Long et al.,ICML 2015</a></li>
+<li>Chain-thaw<br>  <a href="https://www.aclweb.org/anthology/D17-1169" target="_blank" rel="external">Felbo et al., EMNLP 2017</a><ol>
+<li>只训练 T 层参数</li>
+<li>自底向上，每次只训练一层的参数，E -&gt; L1 -&gt; … -&gt; Ln</li>
+<li>训练所有层</li>
+</ol>
+</li>
+<li>Gradually unfreezing<br>  <a href="https://arxiv.org/abs/1801.06146" target="_blank" rel="external">Howard &amp; Ruder, ACL 2018</a><br>  逐层解冻，先训练 T，训练 T + Ln，训练 T + Ln + Ln-1，直到全部放开训练所有层</li>
+<li>Sequential unfreezing<br>  <a href="https://arxiv.org/abs/1902.10547" target="_blank" rel="external">Chronopoulou et al., NAACL 2019</a><br>  用超参来决定 fine-tuning 的过程<ol>
+<li>先训练新增参数，训练 n epochs</li>
+<li>训练除 embedding 层外的所有层，训练 k epochs</li>
+<li>训练所有层直到收敛</li>
+</ol>
+</li>
+</ul>
+<p>这里多数的方法到最后都会一起训练所有的参数</p>
+<h3 id="Intensity"><a href="#Intensity" class="headerlink" title="Intensity"></a>Intensity</h3><p>降低学习率来防止重写有用信息，问题是什么时候降低学习率？</p>
+<ul>
+<li>Lower layers，捕捉底层信息的时候 </li>
+<li>Early in training，模型还需要去适应目标分布</li>
+<li>Late in training，模型快收敛的时候</li>
+</ul>
+<p>如 <a href="https://arxiv.org/abs/1801.06146" target="_blank" rel="external">ULMFiT</a> 一文提到了一些技巧，一个是 <strong>discriminative fine-tuning</strong>，每层设置一个学习率，越底层学习率越小，另一个是 <strong>slanted triangular learning rates</strong>，学习率先逐渐增加后逐渐下降，相当于 warm up。</p>
+<h3 id="Regularization"><a href="#Regularization" class="headerlink" title="Regularization"></a>Regularization</h3><p>用来减小灾难性遗忘，通过一个正则项来让目标模型参数接近预训练参数，让模型不要忘记预训练时学到的东西。</p>
+<ul>
+<li>最简单的方法 <a href="https://www.aclweb.org/anthology/K17-1029/" target="_blank" rel="external">Wiese et al., CoNLL 2017</a><img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/regularization.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/regularization.png"></li>
+<li>高级一点的方法（elastic weight consolidation; EWC）<a href="https://arxiv.org/abs/1612.00796" target="_blank" rel="external">Overcoming catastrophic forgetting in neural networks</a><img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/EWC.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/EWC.png"></li>
+<li>如果任务之间很相似，可以用交叉熵来鼓励 source 和 target 的预测相近，类似蒸馏的做法<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/distill.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/distill.png">
+</li>
+</ul>
+<h3 id="Trade-offs"><a href="#Trade-offs" class="headerlink" title="Trade-offs"></a>Trade-offs</h3><p>选择权重更新时，不可避免的要考虑空间、时间复杂度、性能等问题。在时间、空间复杂度的要求上，都是 feature extraction &gt; adapters &gt; fine-tuning。</p>
+<p>考虑 performance 的话，有一条经验法则：</p>
+<p><strong><em>If task source and target tasks are dissimilar, use feature extraction</em></strong>  – <a href="https://arxiv.org/abs/1903.05987" target="_blank" rel="external">To Tune or Not to Tune? Adapting Pretrained Representations to Diverse Tasks</a></p>
+<p>事实上，大部分情况下 feature extraction 和 fine-tuning 的效果都差不多，除非任务非常相似，那么 fine-tune 强，或者非常不相似，那么 feature extraction 更胜一筹。一个例子是，在文本相似度任务上，BERT 上进行 fine-tune 的效果比 feature extraction 显著要好很多，这大概是因为 BERT 的 NSP 任务和 STS 任务非常相似；同样的，skip-thoughts 和 quick-thoughts 同样也用了 NSP 任务，在 STS 这类相似度任务上表现的也很好；而相反，ELMo 这种纯 LM 预训练目标的模型在 sentence pair tasks 上 fine-tune 的表现就不如人意了。另外，对于文本相似度这类 sentence pair 的任务，通过实验也可以发现，它依赖的并不是顶层的预训练特征（如下图，用 4-5 层之后的特征效果提升就显得非常平缓了），这也解释了为什么 fine-tune 的方法会更好一些。</p>
+<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/sts.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/sts.png">
+<p>另外，Adapters 的效果和 fine-tuning 有的一拼，Transformers 结构相比于 LSTMs 要更容易 fine-tune，对超参更不敏感。</p>
+<h1 id="More-signal"><a href="#More-signal" class="headerlink" title="More signal"></a>More signal</h1><p>目标任务的数据量/标签一般都比较少，所以我们通常会通过组合一些信号来提高效果，从最基础的在单目标任务上 fine-tune 单模型，可以延伸到从其他数据集/相关任务中收集信号（Weak Supervision, Multi-tasking and Sequential Adaptation），再到集成模型，结合多个 fine-tune 模型的预测。</p>
+<h2 id="Basic-fine-tuning"><a href="#Basic-fine-tuning" class="headerlink" title="Basic fine-tuning"></a>Basic fine-tuning</h2><p>以一个分类任务为例，简单来说就是下面几步：</p>
+<ul>
+<li>从模型提取一个 fixed-length vector，可以是 CLS 的 hidden state，也可以是所有 hidden-states 的平均/最大池化</li>
+<li>额外的分类层投射到分类空间</li>
+<li>训练分类目标</li>
+</ul>
+<h2 id="Related-datasets-tasks"><a href="#Related-datasets-tasks" class="headerlink" title="Related datasets/tasks"></a>Related datasets/tasks</h2><ul>
+<li><p><strong>Sequential adaptation</strong></p>
+<ul>
+<li>intermediate fine-tuning on related datasets and tasks</li>
+<li>适用于数据有限但有一些相似任务的情景，先在有更多数据的相关任务上进行 fine-tune，然后再在目标任务上 fine-tune</li>
+<li><a href="https://arxiv.org/abs/1811.01088v2" target="_blank" rel="external">2018 Sentence Encoders on STILTs: Supplementary Training on Intermediate Labeled-data Tasks</a></li>
+<li><a href="https://arxiv.org/abs/1901.11373" target="_blank" rel="external">2019 Learning and Evaluating General Linguistic Intelligence</a> 在目标任务上提高样本的复杂度</li>
+</ul>
+</li>
+<li><p><strong>Multi-task fine-tuning with related tasks</strong></p>
+<ul>
+<li>如 NLI tasks in GLUE</li>
+<li>每个 step 采样一个任务和一个 batch 来训练，多任务训练的方式训练几个 epochs，最后在目标任务上 fine-tune 几个 epochs</li>
+<li>LM 很有用<ul>
+<li>即使没有预训练也有用 <a href="https://arxiv.org/abs/1704.07156" target="_blank" rel="external">Semi-supervised Multitask Learning for Sequence Labeling</a></li>
+<li>引入 lambda 比率 <a href="https://arxiv.org/abs/1902.10547" target="_blank" rel="external">An Embarrassingly Simple Approach for Transfer Learning from Pretrained Language Models</a>  $L = L1 + \lambda L2$</li>
+<li>在 ULMFiT 里作为一个单独的步骤</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Dataset Slicing</strong></p>
+<ul>
+<li>when the model consistently underperforms on particular slices of the data<ul>
+<li>用 error analysis 挑选子集</li>
+<li>用经验自动选择一些挑战性的数据子集</li>
+<li>auxiliary head 和 main head 一起训练</li>
+</ul>
+</li>
+<li>只在特定的数据子集上训练额外的 head</li>
+<li><a href="https://dawn.cs.stanford.edu/2019/03/22/glue/" target="_blank" rel="external">Massive Multi-Task Learning with Snorkel MeTaL</a></li>
+</ul>
+</li>
+<li><p><strong>Semi-supervised learning</strong></p>
+<ul>
+<li>可以使模型预测结果和未标注的数据更加一致</li>
+<li>基本思路是最小化在原始输入 x 上的预测与引入扰动后的输入 x’ 的预测之间的距离<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/perturbed.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/perturbed.png"></li>
+<li>扰动可以是<ul>
+<li>noise, masking <a href="https://arxiv.org/abs/1809.08370" target="_blank" rel="external">2018 Semi-Supervised Sequence Modeling with Cross-View Training</a></li>
+<li>data sugmentation, e.g. back-translation <a href="https://arxiv.org/abs/1904.12848" target="_blank" rel="external">2019 Unsupervised Data Augmentation for Consistency Training</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Ensembling"><a href="#Ensembling" class="headerlink" title="Ensembling"></a>Ensembling</h3><ul>
+<li><strong>Ensembling models</strong><ul>
+<li>on different tasks</li>
+<li>on different dataset-splits</li>
+<li>with different parameters (dropout, initializations…)</li>
+<li>from variant of pre-trained models (e.g. cased/uncased)<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/ensemble.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/ensemble.png"></li>
+</ul>
+</li>
+<li><strong>Knowledge distillation</strong><ul>
+<li>把集成的大模型蒸馏到一个小模型 </li>
+<li>利用 teacher (the ensemble) 模型的 soft targets 来训练一个 student model<ul>
+<li>$-\sum_c Q(c|X)log(P_r(c|X))$</li>
+</ul>
+</li>
+<li>teacher label 的相对概率包含了 teacher 模型怎样泛化的信息<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/distillation.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/distillation.png">
+</li>
+</ul>
+</li>
+</ul>
+<p>相关资料：<br>Video: <a href="https://vimeo.com/359399507" target="_blank" rel="external">https://vimeo.com/359399507</a><br>Slides: <a href="https://tinyurl.com/NAACLTransfer" target="_blank" rel="external">https://tinyurl.com/NAACLTransfer</a><br>Colab: <a href="https://tinyurl.com/NAACLTransferColab" target="_blank" rel="external">https://tinyurl.com/NAACLTransferColab</a><br>Code: <a href="https://tinyurl.com/NAACLTransferCode" target="_blank" rel="external">https://tinyurl.com/NAACLTransferCode</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;NAACL 2019 tutorial on “Transfer Learning in Natural Language Processing” 的部分笔记，资料链接见文末。&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+    
+      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+    
+    
+      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+    
+      <category term="Transfer Learning" scheme="http://www.shuang0420.com/tags/Transfer-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>论文笔记 - Pre-trained Models for Natural Language Processing</title>
@@ -2269,65 +2479,6 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
       <category term="过拟合" scheme="http://www.shuang0420.com/tags/%E8%BF%87%E6%8B%9F%E5%90%88/"/>
     
       <category term="overfitting" scheme="http://www.shuang0420.com/tags/overfitting/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论文笔记 - HRED 与 VHRED</title>
-    <link href="http://www.shuang0420.com/2017/11/17/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20HRED%20%E4%B8%8E%20VHRED/"/>
-    <id>http://www.shuang0420.com/2017/11/17/论文笔记 - HRED 与 VHRED/</id>
-    <published>2017-11-17T01:02:27.000Z</published>
-    <updated>2020-05-08T06:43:39.947Z</updated>
-    
-    <content type="html"><![CDATA[<p>介绍一下经典的 HRED 和 VHRED。<br><a id="more"></a></p>
-<p>主要涉及到下面几篇论文</p>
-<ul>
-<li><a href="https://arxiv.org/abs/1507.04808" target="_blank" rel="external">Building end-to-end dialogue systems using generative hierarchical neural network models</a></li>
-<li><a href="https://arxiv.org/abs/1605.06069" target="_blank" rel="external">A Hierarchical Latent Variable Encoder-Decoder Model for Generating Dialogues</a></li>
-<li><a href="https://arxiv.org/abs/1511.06349" target="_blank" rel="external">Generating Sentences From a Continuous Spaces motivation</a></li>
-</ul>
-<h1 id="HRED"><a href="#HRED" class="headerlink" title="HRED"></a>HRED</h1><p>HRED 在之前<a href="http://www.shuang0420.com/2017/10/05/经典的端到端聊天模型/">经典的端到端聊天模型</a> 提到过，这里拎出来再具体分析一下。</p>
-<p>传统 Seq2Seq 在对话任务上对上下文依赖考虑有限，<a href="https://arxiv.org/abs/1507.04808" target="_blank" rel="external">Building end-to-end dialogue systems using generative hierarchical neural network models</a> 论文提出了一种 <strong>分层 RNN 结构 -  HRED（Hierarchical Recurrent Encoder-Decoder）</strong>，能同时对句子和对话语境（上下文）进行建模，来实现多轮对话。</p>
-<p>先来看一下如果不使用分层 RNN，在传统 Seq2Seq 模型基础上，如果我们想得到 context 信息应该怎么做。 </p>
-<p>第一个想法是将上一个句子的 final state 作为下一个句子的 initial state，然后将句子信息不断传递下去，这样的话 context vector 里的信息会在 propagation 的过程中会被新句子的词语逐步稀释，对信息/梯度的传播极不友好。</p>
-<p>因此为了让信息更好的传递，我们可能会考虑把 final state 传递到下一个句子的 last state，而不是 initial state，然后用拼接或者非线性的方法来表达之前的和当前的句子信息。</p>
-<p>更干脆的，直接将语境中的多个 utterance vector 提取出来再用一个 RNN 来处理，捕捉 context 信息，这就有了分层 RNN。</p>
-<img src="http://images.shuang0420.com/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png">
-<p>简单来说，HRED 在传统 encoder-decoder 模型上，额外增加了一个 encoder，相比于普通的 RNN-LM 来说，考虑了 turn-taking nature，能够对上下文进行建模，减少了相邻句子间的计算步骤，有助于信息/梯度的传播，从而实现多轮对话。整个过程有下面三个阶段：</p>
-<ol>
-<li><strong>encoder RNN</strong><br>第一个 encoder 和标准的 seq2seq 相同，将一句话编码到固定长度的 utterance vector，也就是 RNN 的 last hidden state<br>encoder RNN 或者说 utterance RNN 记忆的是对话的细节</li>
-<li><strong>context RNN</strong><br>n 个句子的 utterance vector 作为第二个 encoder 也就是 <strong>context-level encoder</strong> 各个时间上的的输入，对应长度为 n 的 sequence，产生一个 context vector 实现对语境的编码，也就是 RNN 的 output (注意这里不是 last hidden state)<br>context RNN 记忆的是更为全局的语义信息</li>
-<li><strong>decoder RNN</strong><br>上一个句子的 utterance vector 作为 response 的初始状态，目前为止产生的 context vector 和上一个单词的 word embedding 拼接作为 decoder 的输入</li>
-</ol>
-<p>然而 HRED 相对于传统的 Seq2Seq 模型的提高并不明显，bootstrapping 的作用更加明显。一方面可以用 pre-trained word embedding，另一方面可以使用其他 NLP 任务的数据预训练我们的模型，使得模型的参数预先学到一些对自然语言的理解，然后再来学习聊天任务。</p>
-<h1 id="VHRED"><a href="#VHRED" class="headerlink" title="VHRED"></a>VHRED</h1><p>先简单看一下 auto-encoder 的两个变体 dAE 和 VAE。</p>
-<p><strong>Denoising auto-encoder(dAE)</strong> 在输入数据引入一些随机噪声，要求 auto-encoder 去重构加噪声之前的原始观测值，来增加模型鲁棒性，避免过拟合。</p>
-<p>而 <strong>Variational Autoencoder(VAE)</strong> 则是在中间层（hidden layer）引入噪音，来重构输入数据，因此 auto-encoder 出来的样本具有更高的全局性。</p>
-<p><strong>VHRED(Latent Variable Hierarchical Recurrent Encoder-Decoder Model)</strong>，就是在 HRED 基础上引入了 VAE 的思想，不同的是在 reconstruction 时生成的是下一个 utterance 而不是原来的 input。</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20HRED%20%E4%B8%8E%20VHRED/VHRED.png" class="ful-image" alt="VHRED.png">
-<p>VHRED 是为了解决 RNNLM 和 HRED 很难产生有意义的、高质量的回复而提出的。传统 Seq2Seq 倾向于产生短的安全回答（safe response），因为它有确定性的编码和解码过程，着重拟合具体、有限的回复样本，缺少对 response 语义信息的理解。另外 decoder 时两个目标，一是生成下一个 token，二是占据控制真实输出路径的 embedding space 的一个位置，来影响之后 token 的生成，而由于梯度衰减的影响，模型会更聚焦第一个目标，response 的产生更容易限于 token level，尤其对于 high-entropy 的句子，模型更偏好短期预测而不是长期预测，所以模型很难产生长的、高质量的回复。</p>
-<p>VHRED 针对这个问题引入了全局（语义层面）的随机因素，一是能增强模型的 robustness，二是能捕捉 high level concepts。Latent variable 使得 response 不再和一个/几个固定的句子绑定，鼓励了回复的多样性。</p>
-<p>和 HRED 不同的是，VHRED 在第二个 context RNN 产生 context vector c 后，由 c sample 了一些高斯随机变量 z（latent variable），期望值和标准差由 c 决定（前向网络+矩阵乘法得到 $\mu$，+矩阵乘法和 softplus 得到 $\Sigma$），高斯变量和 context vector 拼接就得到了包含全局噪声的 vector，作为每个时间的观测值，和 query vector 一起放到 decoder 里产生 response。</p>
-<p>训练时，z 从后验采样，测试时由于 KL 已经把分布拉近，z 可以从先验采样。模型的训练技巧如 KL annealing 等借鉴了 <a href="https://arxiv.org/abs/1511.06349" target="_blank" rel="external">Generating Sentences From a Continuous Spaces motivation</a> 这篇论文的思想。</p>
-<p>因为 z 是从 context state 计算出来的，latent variable 的期望值和标准差包含一些 high-level 的语义信息，更鼓励模型抽取抽象的语义概念。实验表明，HRED 能产生更长的回复，更好的 diversity。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;介绍一下经典的 HRED 和 VHRED。&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
-    
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
-    
-    
-      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
-    
-      <category term="Chatbot" scheme="http://www.shuang0420.com/tags/Chatbot/"/>
-    
-      <category term="多轮对话" scheme="http://www.shuang0420.com/tags/%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D/"/>
     
   </entry>
   
