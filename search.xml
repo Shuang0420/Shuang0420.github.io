@@ -13,7 +13,7 @@
 <li><strong>Inductive transfer learning</strong><ul>
 <li>任务不同，但在目标领域有标注数据</li>
 <li>同时学习不同任务就是 multi-task learning，顺序学习不同任务就是 sequential transfer learning</li>
-<li>具体方法有<strong>基于样本（instance based transfer）</strong>、<strong>基于特征（feature representation transfer）</strong>、<strong>基于参数（parameter transfer）</strong>、<strong>基于关系（ralational knowledge transfer）</strong>的迁移，其中最为常见的就是基于特征的迁移，如把预训练模型当做特征提取器，后加分类层等应用，以及基于参数的迁移，如我们常用的 fine-tuning </li>
+<li>具体方法有<strong>基于样本（instance based transfer）</strong>、<strong>基于特征（feature representation transfer）</strong>、<strong>基于参数（parameter transfer）</strong>、<strong>基于关系（relational knowledge transfer）</strong>的迁移，其中最为常见的就是基于特征的迁移，如把预训练模型当做特征提取器，后加分类层等应用，以及基于参数的迁移，如我们常用的 fine-tuning </li>
 </ul>
 </li>
 <li><strong>Transductive transfer learning</strong><ul>

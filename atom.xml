@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2020-06-04T13:43:01.853Z</updated>
+  <updated>2020-06-04T13:50:01.428Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.shuang0420.com/2020/06/01/Sequential%20transfer%20learning%20in%20NLP/"/>
     <id>http://www.shuang0420.com/2020/06/01/Sequential transfer learning in NLP/</id>
     <published>2020-06-01T02:02:27.000Z</published>
-    <updated>2020-06-04T13:43:01.853Z</updated>
+    <updated>2020-06-04T13:50:01.428Z</updated>
     
     <content type="html"><![CDATA[<p>NAACL 2019 tutorial on “Transfer Learning in Natural Language Processing” 的部分笔记，资料链接见文末。<br><a id="more"></a></p>
 <img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/types.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/types.png">
@@ -29,7 +29,7 @@
 <li><strong>Inductive transfer learning</strong><ul>
 <li>任务不同，但在目标领域有标注数据</li>
 <li>同时学习不同任务就是 multi-task learning，顺序学习不同任务就是 sequential transfer learning</li>
-<li>具体方法有<strong>基于样本（instance based transfer）</strong>、<strong>基于特征（feature representation transfer）</strong>、<strong>基于参数（parameter transfer）</strong>、<strong>基于关系（ralational knowledge transfer）</strong>的迁移，其中最为常见的就是基于特征的迁移，如把预训练模型当做特征提取器，后加分类层等应用，以及基于参数的迁移，如我们常用的 fine-tuning </li>
+<li>具体方法有<strong>基于样本（instance based transfer）</strong>、<strong>基于特征（feature representation transfer）</strong>、<strong>基于参数（parameter transfer）</strong>、<strong>基于关系（relational knowledge transfer）</strong>的迁移，其中最为常见的就是基于特征的迁移，如把预训练模型当做特征提取器，后加分类层等应用，以及基于参数的迁移，如我们常用的 fine-tuning </li>
 </ul>
 </li>
 <li><strong>Transductive transfer learning</strong><ul>
