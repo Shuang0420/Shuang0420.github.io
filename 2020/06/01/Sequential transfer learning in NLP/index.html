@@ -105,7 +105,7 @@
 <meta property="og:image" content="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/perturbed.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/ensemble.png">
 <meta property="og:image" content="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/distillation.png">
-<meta property="og:updated_time" content="2020-06-04T13:35:21.068Z">
+<meta property="og:updated_time" content="2020-06-04T13:43:01.853Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sequential transfer learning in NLP">
 <meta name="twitter:description" content="NAACL 2019 tutorial on “Transfer Learning in Natural Language Processing” 的部分笔记，资料链接见文末。">
@@ -500,7 +500,8 @@
 <li>额外的分类层投射到分类空间</li>
 <li>训练分类目标</li>
 </ul>
-<h2 id="Related-datasets-tasks"><a href="#Related-datasets-tasks" class="headerlink" title="Related datasets/tasks"></a>Related datasets/tasks</h2><ul>
+<h2 id="Related-datasets-tasks"><a href="#Related-datasets-tasks" class="headerlink" title="Related datasets/tasks"></a>Related datasets/tasks</h2><p>从其他数据集和相关任务中收集更多监督信号。</p>
+<ul>
 <li><strong>Sequential adaptation</strong><ul>
 <li>在相关数据集/任务上先做一次微调</li>
 <li>适用于数据有限但有一些相似任务的情景，先在有更多数据的相关任务上进行 fine-tune，然后再在目标任务上 fine-tune</li>
@@ -548,7 +549,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="Ensembling"><a href="#Ensembling" class="headerlink" title="Ensembling"></a>Ensembling</h3><ul>
+<h2 id="Ensembling"><a href="#Ensembling" class="headerlink" title="Ensembling"></a>Ensembling</h2><ul>
 <li><strong>Ensembling models</strong><ul>
 <li>on different tasks</li>
 <li>on different dataset-splits</li>
@@ -567,7 +568,7 @@
 </ul>
 </li>
 </ul>
-<p><strong>相关资料：</strong><br>Video: <a href="https://vimeo.com/359399507" target="_blank" rel="external">https://vimeo.com/359399507</a><br>Slides: <a href="https://tinyurl.com/NAACLTransfer" target="_blank" rel="external">https://tinyurl.com/NAACLTransfer</a><br>Colab: <a href="https://tinyurl.com/NAACLTransferColab" target="_blank" rel="external">https://tinyurl.com/NAACLTransferColab</a><br>Code: <a href="https://tinyurl.com/NAACLTransferCode" target="_blank" rel="external">https://tinyurl.com/NAACLTransferCode</a></p>
+<p><strong>相关资料：</strong><br>Video: <a href="https://vimeo.com/359399507" target="_blank" rel="external">https://vimeo.com/359399507</a><br>Slides: <a href="https://tinyurl.com/NAACLTransfer" target="_blank" rel="external">https://tinyurl.com/NAACLTransfer</a><br>Colab: <a href="https://tinyurl.com/NAACLTransferColab" target="_blank" rel="external">https://tinyurl.com/NAACLTransferColab</a><br>Code: <a href="https://tinyurl.com/NAACLTransferCode" target="_blank" rel="external">https://tinyurl.com/NAACLTransferCode</a><br><a href="https://ruder.io/thesis/neural_transfer_learning_for_nlp.pdf" target="_blank" rel="external">Neural Transfer Learning for Natural Language Processing</a></p>
 
       
     </div>
@@ -810,7 +811,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Architecture"><span class="nav-number">1.</span> <span class="nav-text">Architecture</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Optimization"><span class="nav-number">2.</span> <span class="nav-text">Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Which-weights"><span class="nav-number">2.1.</span> <span class="nav-text">Which weights</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Freeze-pretrained-weights"><span class="nav-number">2.1.1.</span> <span class="nav-text">Freeze pretrained weights</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Change-pretrained-weights"><span class="nav-number">2.1.2.</span> <span class="nav-text">Change pretrained weights</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-schedule"><span class="nav-number">2.2.</span> <span class="nav-text">What schedule</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Time"><span class="nav-number">2.2.1.</span> <span class="nav-text">Time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intensity"><span class="nav-number">2.2.2.</span> <span class="nav-text">Intensity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Regularization"><span class="nav-number">2.2.3.</span> <span class="nav-text">Regularization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trade-offs"><span class="nav-number">2.2.4.</span> <span class="nav-text">Trade-offs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#More-signal"><span class="nav-number">3.</span> <span class="nav-text">More signal</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-fine-tuning"><span class="nav-number">3.1.</span> <span class="nav-text">Basic fine-tuning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Related-datasets-tasks"><span class="nav-number">3.2.</span> <span class="nav-text">Related datasets/tasks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ensembling"><span class="nav-number">3.2.1.</span> <span class="nav-text">Ensembling</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Architecture"><span class="nav-number">1.</span> <span class="nav-text">Architecture</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Optimization"><span class="nav-number">2.</span> <span class="nav-text">Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Which-weights"><span class="nav-number">2.1.</span> <span class="nav-text">Which weights</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Freeze-pretrained-weights"><span class="nav-number">2.1.1.</span> <span class="nav-text">Freeze pretrained weights</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Change-pretrained-weights"><span class="nav-number">2.1.2.</span> <span class="nav-text">Change pretrained weights</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-schedule"><span class="nav-number">2.2.</span> <span class="nav-text">What schedule</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Time"><span class="nav-number">2.2.1.</span> <span class="nav-text">Time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intensity"><span class="nav-number">2.2.2.</span> <span class="nav-text">Intensity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Regularization"><span class="nav-number">2.2.3.</span> <span class="nav-text">Regularization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trade-offs"><span class="nav-number">2.2.4.</span> <span class="nav-text">Trade-offs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#More-signal"><span class="nav-number">3.</span> <span class="nav-text">More signal</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-fine-tuning"><span class="nav-number">3.1.</span> <span class="nav-text">Basic fine-tuning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Related-datasets-tasks"><span class="nav-number">3.2.</span> <span class="nav-text">Related datasets/tasks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ensembling"><span class="nav-number">3.3.</span> <span class="nav-text">Ensembling</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
