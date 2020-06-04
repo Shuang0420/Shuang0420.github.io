@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2020-06-04T13:50:01.428Z</updated>
+  <updated>2020-06-04T14:04:54.919Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.shuang0420.com/2020/06/01/Sequential%20transfer%20learning%20in%20NLP/"/>
     <id>http://www.shuang0420.com/2020/06/01/Sequential transfer learning in NLP/</id>
     <published>2020-06-01T02:02:27.000Z</published>
-    <updated>2020-06-04T13:50:01.428Z</updated>
+    <updated>2020-06-04T14:04:54.919Z</updated>
     
     <content type="html"><![CDATA[<p>NAACL 2019 tutorial on “Transfer Learning in Natural Language Processing” 的部分笔记，资料链接见文末。<br><a id="more"></a></p>
 <img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/types.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/types.png">
@@ -174,7 +174,7 @@
 <li><a href="https://arxiv.org/abs/1809.08370" target="_blank" rel="external">2018 Semi-Supervised Sequence Modeling with Cross-View Training</a></li>
 </ul>
 </li>
-<li>data sugmentation, e.g. back-translation <ul>
+<li>data augmentation, e.g. back-translation <ul>
 <li><a href="https://arxiv.org/abs/1904.12848" target="_blank" rel="external">2019 Unsupervised Data Augmentation for Consistency Training</a></li>
 </ul>
 </li>
