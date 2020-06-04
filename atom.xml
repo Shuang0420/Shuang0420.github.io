@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2020-06-04T12:59:22.688Z</updated>
+  <updated>2020-06-04T13:35:21.068Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -20,11 +20,11 @@
     <link href="http://www.shuang0420.com/2020/06/01/Sequential%20transfer%20learning%20in%20NLP/"/>
     <id>http://www.shuang0420.com/2020/06/01/Sequential transfer learning in NLP/</id>
     <published>2020-06-01T02:02:27.000Z</published>
-    <updated>2020-06-04T12:59:22.688Z</updated>
+    <updated>2020-06-04T13:35:21.068Z</updated>
     
     <content type="html"><![CDATA[<p>NAACL 2019 tutorial on “Transfer Learning in Natural Language Processing” 的部分笔记，资料链接见文末。<br><a id="more"></a></p>
 <img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/types.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/types.png">
-<p>迁移学习的概念就不多描述了，可以参考<a href="https://github.com/jindongwang/transferlearning-tutorial" target="_blank" rel="external">迁移学习小册子</a>，讲的非常好。总的来说迁移学习有两大类（应该是 Sebastian Ruder 提出的分类？）：</p>
+<p>迁移学习的概念就不多描述了，可以参考<a href="https://github.com/jindongwang/transferlearning-tutorial" target="_blank" rel="external">迁移学习小册子</a>，讲的非常好。总的来说迁移学习有两大类（应该是 Sebastian Ruder 博士论文提出的分类？）：</p>
 <ul>
 <li><strong>Inductive transfer learning</strong><ul>
 <li>任务不同，但在目标领域有标注数据</li>
@@ -47,66 +47,59 @@
 </ol>
 <h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p>有两种选择，大多数情况下第一种选择就可以解决问题：</p>
 <ul>
-<li><p><strong>模型内部结构不变</strong>，可以在最上层加分类器，在最下层补充 embdding，也可以把模型输出当做特征</p>
-<ul>
-<li><p>一方面，删除一些对目标任务无效的 pretraining task head，像是预训练 LM 的 softmax 分类器，当然也可以留着做 multi-task</p>
-</li>
-<li><p>另一方面，在顶层或者底层加上目标任务需要的层，简单来讲可以加个 linear 层，复杂一点也可以把模型输出当做目标模型的输入</p>
-</li>
+<li><strong>模型内部结构不变</strong>，可以在最上层加分类器，在最下层补充 embdding，也可以把模型输出当做特征<ul>
+<li>一方面，删除一些对目标任务无效的 pretraining task head，像是预训练 LM 的 softmax 分类器，当然也可以留着做 multi-task</li>
+<li>另一方面，在顶层或者底层加上目标任务需要的层，简单来讲可以加个 linear 层，复杂一点也可以把模型输出当做目标模型的输入</li>
 </ul>
 </li>
-<li><p><strong>修改模型内部结构</strong>，如改成 encoder-decoder 模式，或者为目标任务加一些 adapters（像加在 transformer 上的 multi-head attention，layer norm）等</p>
-<ul>
+<li><strong>修改模型内部结构</strong>，如改成 encoder-decoder 模式，或者为目标任务加一些 adapters（像加在 transformer 上的 multi-head attention，layer norm）等<ul>
 <li><a href="https://arxiv.org/pdf/1902.02671.pdf" target="_blank" rel="external">BERT and PALs: Projected Attention Layers for Efficient Adaptation in Multi-Task Learning</a></li>
 <li><a href="https://arxiv.org/abs/1902.00751" target="_blank" rel="external">Parameter-Efficient Transfer Learning for NLP</a></li>
 <li>Adaptation layer 在 CV 领域有更广泛的研究，这里提到的 adapters 是为了优化目标任务，而 CV 领域提到的自适应模块是为了 domain adaption 提出的，通常用来完成 source 和 target 数据的自适应，拉近两者的数据分布，使得网络效果更好，常见的有在分类器的前一层/几层加入适配层（如 MK-MMD），用来计算 source 和 target 的距离，加入损失进行训练</li>
 </ul>
 </li>
 </ul>
-<h1 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h1><p>几个需要考虑的方向：</p>
+<h1 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h1><p>几个需要考虑的问题：</p>
 <ul>
-<li><strong>选择更新哪些权重</strong><ul>
+<li><strong>选择更新哪些权重（Which weights）</strong><ul>
 <li>不更新权重：feature extraction</li>
 <li>更新权重：fine-tuning</li>
-<li>adapters</li>
-<li><strong>feature extraction 还是 fine-tuning 取决于目标任务和预训练任务的相似性</strong></li>
+<li>Adapters</li>
+<li><strong>feature extraction 还是 fine-tuning 取决于目标任务和预训练任务之间的相似性</strong></li>
 </ul>
 </li>
-<li><strong>选择什么时候更新，以及怎样更新</strong><br>  top-bottom, gradual unfreezing, discriminative fine-tuning</li>
+<li><strong>选择什么时候更新，以及怎样更新（What schedule）</strong><ul>
+<li>top-bottom</li>
+<li>gradual unfreezing</li>
+<li>discriminative fine-tuning</li>
+</ul>
+</li>
 <li><strong>考虑一些 trade-offs</strong><br>  时间/空间复杂度，性能要求</li>
 </ul>
-<h2 id="Which-weights"><a href="#Which-weights" class="headerlink" title="Which weights"></a>Which weights</h2><h3 id="Freeze-pretrained-weights"><a href="#Freeze-pretrained-weights" class="headerlink" title="Freeze pretrained weights"></a>Freeze pretrained weights</h3><ol>
-<li>不更新预训练的权重，只训练目标任务相关的权重（比如新加的分类层）</li>
-</ol>
-<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/feature_extraction.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/feature_extraction.png">
+<h2 id="Which-weights"><a href="#Which-weights" class="headerlink" title="Which weights"></a>Which weights</h2><h3 id="Freeze-pretrained-weights"><a href="#Freeze-pretrained-weights" class="headerlink" title="Freeze pretrained weights"></a>Freeze pretrained weights</h3><p>来看图说话：</p>
 <ol>
-<li>特征提取要注意的是不要傻傻的只用 top layer 的特征，可以学习各层特征的线性组合<br><a href="https://arxiv.org/pdf/1802.05365.pdf" target="_blank" rel="external">Deep contextualized word representations 2018</a><br><a href="https://arxiv.org/abs/1705.08142" target="_blank" rel="external">Latent Multi-task Architecture Learning 2019</a></li>
+<li><strong>不更新预训练的权重，只训练目标任务相关的权重（比如新加的分类层）</strong><img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/feature_extraction.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/feature_extraction.png"></li>
+<li><strong>特征提取要注意的是不要傻傻的只用 top layer 的特征，可以学习各层特征的线性组合</strong><br><a href="https://arxiv.org/pdf/1802.05365.pdf" target="_blank" rel="external">Deep contextualized word representations 2018</a><br><a href="https://arxiv.org/abs/1705.08142" target="_blank" rel="external">Latent Multi-task Architecture Learning 2019</a><img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/elmo.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/elmo.png"></li>
+<li><strong>预训练特征当做下游任务的特征</strong><img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/downstream.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/downstream.png"></li>
+<li><strong>Adapters，在预训练模型结构已有的 layers 之间加入目标任务的适配器</strong>，如下图，只训练红色部分的权重<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/adapters.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/adapters.png">
+</li>
 </ol>
-<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/elmo.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/elmo.png">
-<ol>
-<li>预训练特征当做下游任务的特征</li>
-</ol>
-<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/downstream.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/downstream.png">
-<ol>
-<li>Adapters，在预训练模型结构已有的 layers 之间加入目标任务的适配器，如下图，只训练红色部分的权重</li>
-</ol>
-<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/adapters.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/adapters.png">
-<h3 id="Change-pretrained-weights"><a href="#Change-pretrained-weights" class="headerlink" title="Change pretrained weights"></a>Change pretrained weights</h3><p>还有一种是 fine-tuning，用预训练的权重来初始化下游模型的参数，在迁移阶段训练所有参数</p>
+<h3 id="Change-pretrained-weights"><a href="#Change-pretrained-weights" class="headerlink" title="Change pretrained weights"></a>Change pretrained weights</h3><p>另外一种就是 fine-tuning 啦，用预训练的权重来初始化下游模型的参数，在迁移阶段训练所有参数</p>
 <h2 id="What-schedule"><a href="#What-schedule" class="headerlink" title="What schedule"></a>What schedule</h2><p>决定好更新什么权重，下一步就要看用什么顺序，以及怎样的方式来更新了，记住我们的目标：</p>
 <p><strong><em>We want to avoid overwriting useful pretrained information and maximize positive transfer.</em></strong></p>
-<p>一个重要的知道原则是<strong>自顶向下（top-to-bottom）</strong>的顺序更新，要考虑的是 time 和 intensity，每一层更新的时间可以通过 freeze 其他层来控制，更新的强度可以通过学习率的变化来控制。另外，可以通过正则化来平衡更新与保留之间的关系。</p>
-<p>layer-wise training<br><a href="https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf" target="_blank" rel="external">Hinton et al., 2006</a><br><a href="https://papers.nips.cc/paper/3048-greedy-layer-wise-training-of-deep-networks.pdf" target="_blank" rel="external">Bengio et al., 2007</a></p>
-<h3 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h3><p>自底向上各层，从 embedding 到中间层到 top layer 再到 target layer 各层表示为：E -&gt; L1 -&gt; … Ln -&gt; T。</p>
+<p>在一个完全不同的领域/任务上直接对所有层进行更新可能会带来不稳定的结果，所以更明智的选择是分层训练，给不同的 layer 一点时间来适应新的任务和数据，这感觉就像是回到了 DL 初期的 layer-wise 训练方法（<a href="https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf" target="_blank" rel="external">Hinton et al., 2006</a>，<a href="https://papers.nips.cc/paper/3048-greedy-layer-wise-training-of-deep-networks.pdf" target="_blank" rel="external">Bengio et al., 2007</a>）。</p>
+<p>Anyway，一个重要的指导原则是<strong>自顶向下（top-to-bottom）</strong>的更新，也就是先 freeze 住低层的参数，去更新高层的参数，因为高层的参数更加的 task-specific。这里要考虑的是 time 和 intensity，每一层更新的时间可以通过 freeze 其他层来控制，更新的强度可以通过学习率的变化来控制。另外，可以通过正则化来平衡更新与保留之间的关系。</p>
+<h3 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h3><p>自底向上，从 embedding 到中间层到 top layer 再到 target layer 各层表示为：E -&gt; L1 -&gt; … Ln -&gt; T。</p>
 <ul>
-<li>Freezing all but the top layer 只训练 top layer Ln<br>  <a href="https://arxiv.org/abs/1502.02791" target="_blank" rel="external">Long et al.,ICML 2015</a></li>
-<li>Chain-thaw<br>  <a href="https://www.aclweb.org/anthology/D17-1169" target="_blank" rel="external">Felbo et al., EMNLP 2017</a><ol>
+<li><strong>Freezing all but the top layer</strong> 只训练 top layer Ln<br>  <a href="https://arxiv.org/abs/1502.02791" target="_blank" rel="external">Long et al.,ICML 2015</a></li>
+<li><strong>Chain-thaw</strong><br>  <a href="https://www.aclweb.org/anthology/D17-1169" target="_blank" rel="external">Felbo et al., EMNLP 2017</a><ol>
 <li>只训练 T 层参数</li>
 <li>自底向上，每次只训练一层的参数，E -&gt; L1 -&gt; … -&gt; Ln</li>
 <li>训练所有层</li>
 </ol>
 </li>
-<li>Gradually unfreezing<br>  <a href="https://arxiv.org/abs/1801.06146" target="_blank" rel="external">Howard &amp; Ruder, ACL 2018</a><br>  逐层解冻，先训练 T，训练 T + Ln，训练 T + Ln + Ln-1，直到全部放开训练所有层</li>
-<li>Sequential unfreezing<br>  <a href="https://arxiv.org/abs/1902.10547" target="_blank" rel="external">Chronopoulou et al., NAACL 2019</a><br>  用超参来决定 fine-tuning 的过程<ol>
+<li><strong>Gradually unfreezing</strong><br>  <a href="https://arxiv.org/abs/1801.06146" target="_blank" rel="external">Howard &amp; Ruder, ACL 2018</a><br>  逐层解冻，先训练 T，训练 T + Ln，训练 T + Ln + Ln-1，直到全部放开训练所有层</li>
+<li><strong>Sequential unfreezing</strong><br>  <a href="https://arxiv.org/abs/1902.10547" target="_blank" rel="external">Chronopoulou et al., NAACL 2019</a><br>  用超参来决定 fine-tuning 的过程<ol>
 <li>先训练新增参数，训练 n epochs</li>
 <li>训练除 embedding 层外的所有层，训练 k epochs</li>
 <li>训练所有层直到收敛</li>
@@ -142,28 +135,26 @@
 <li>训练分类目标</li>
 </ul>
 <h2 id="Related-datasets-tasks"><a href="#Related-datasets-tasks" class="headerlink" title="Related datasets/tasks"></a>Related datasets/tasks</h2><ul>
-<li><p><strong>Sequential adaptation</strong></p>
-<ul>
-<li>intermediate fine-tuning on related datasets and tasks</li>
+<li><strong>Sequential adaptation</strong><ul>
+<li>在相关数据集/任务上先做一次微调</li>
 <li>适用于数据有限但有一些相似任务的情景，先在有更多数据的相关任务上进行 fine-tune，然后再在目标任务上 fine-tune</li>
+<li>也可以在没有标注数据的领域数据上用 LM 等任务进行 fine-tune，然后在目标任务上 fine-tune</li>
 <li><a href="https://arxiv.org/abs/1811.01088v2" target="_blank" rel="external">2018 Sentence Encoders on STILTs: Supplementary Training on Intermediate Labeled-data Tasks</a></li>
 <li><a href="https://arxiv.org/abs/1901.11373" target="_blank" rel="external">2019 Learning and Evaluating General Linguistic Intelligence</a> 在目标任务上提高样本的复杂度</li>
 </ul>
 </li>
-<li><p><strong>Multi-task fine-tuning with related tasks</strong></p>
-<ul>
+<li><strong>Multi-task fine-tuning with related tasks</strong><ul>
 <li>如 NLI tasks in GLUE</li>
 <li>每个 step 采样一个任务和一个 batch 来训练，多任务训练的方式训练几个 epochs，最后在目标任务上 fine-tune 几个 epochs</li>
 <li>LM 很有用<ul>
 <li>即使没有预训练也有用 <a href="https://arxiv.org/abs/1704.07156" target="_blank" rel="external">Semi-supervised Multitask Learning for Sequence Labeling</a></li>
 <li>引入 lambda 比率 <a href="https://arxiv.org/abs/1902.10547" target="_blank" rel="external">An Embarrassingly Simple Approach for Transfer Learning from Pretrained Language Models</a>  $L = L1 + \lambda L2$</li>
-<li>在 ULMFiT 里作为一个单独的步骤</li>
+<li>这在 ULMFiT 里作为一个单独的步骤</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><strong>Dataset Slicing</strong></p>
-<ul>
+<li><strong>Dataset Slicing</strong><ul>
 <li>when the model consistently underperforms on particular slices of the data<ul>
 <li>用 error analysis 挑选子集</li>
 <li>用经验自动选择一些挑战性的数据子集</li>
@@ -174,13 +165,18 @@
 <li><a href="https://dawn.cs.stanford.edu/2019/03/22/glue/" target="_blank" rel="external">Massive Multi-Task Learning with Snorkel MeTaL</a></li>
 </ul>
 </li>
-<li><p><strong>Semi-supervised learning</strong></p>
-<ul>
+<li><strong>Semi-supervised learning</strong><ul>
 <li>可以使模型预测结果和未标注的数据更加一致</li>
 <li>基本思路是最小化在原始输入 x 上的预测与引入扰动后的输入 x’ 的预测之间的距离<img src="http://images.shuang0420.com/images/Sequential%20transfer%20learning%20in%20NLP/perturbed.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/perturbed.png"></li>
 <li>扰动可以是<ul>
-<li>noise, masking <a href="https://arxiv.org/abs/1809.08370" target="_blank" rel="external">2018 Semi-Supervised Sequence Modeling with Cross-View Training</a></li>
-<li>data sugmentation, e.g. back-translation <a href="https://arxiv.org/abs/1904.12848" target="_blank" rel="external">2019 Unsupervised Data Augmentation for Consistency Training</a></li>
+<li>noise, masking <ul>
+<li><a href="https://arxiv.org/abs/1809.08370" target="_blank" rel="external">2018 Semi-Supervised Sequence Modeling with Cross-View Training</a></li>
+</ul>
+</li>
+<li>data sugmentation, e.g. back-translation <ul>
+<li><a href="https://arxiv.org/abs/1904.12848" target="_blank" rel="external">2019 Unsupervised Data Augmentation for Consistency Training</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -205,7 +201,7 @@
 </ul>
 </li>
 </ul>
-<p>相关资料：<br>Video: <a href="https://vimeo.com/359399507" target="_blank" rel="external">https://vimeo.com/359399507</a><br>Slides: <a href="https://tinyurl.com/NAACLTransfer" target="_blank" rel="external">https://tinyurl.com/NAACLTransfer</a><br>Colab: <a href="https://tinyurl.com/NAACLTransferColab" target="_blank" rel="external">https://tinyurl.com/NAACLTransferColab</a><br>Code: <a href="https://tinyurl.com/NAACLTransferCode" target="_blank" rel="external">https://tinyurl.com/NAACLTransferCode</a></p>
+<p><strong>相关资料：</strong><br>Video: <a href="https://vimeo.com/359399507" target="_blank" rel="external">https://vimeo.com/359399507</a><br>Slides: <a href="https://tinyurl.com/NAACLTransfer" target="_blank" rel="external">https://tinyurl.com/NAACLTransfer</a><br>Colab: <a href="https://tinyurl.com/NAACLTransferColab" target="_blank" rel="external">https://tinyurl.com/NAACLTransferColab</a><br>Code: <a href="https://tinyurl.com/NAACLTransferCode" target="_blank" rel="external">https://tinyurl.com/NAACLTransferCode</a></p>
 ]]></content>
     
     <summary type="html">
