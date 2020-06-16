@@ -4,6 +4,58 @@
   
     
     <entry>
+      <title><![CDATA[Slice-based learning - 基于数据切片的学习]]></title>
+      <url>http://www.shuang0420.com/2020/06/16/Slice-based%20learning%20-%20%E5%9F%BA%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%88%87%E7%89%87%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
+      <content type="html"><![CDATA[<p>Slice-based learning 的目的是为了提高模型在特定的数据子集上的表现。<br><a id="more"></a></p>
+<p>正常模型的学习目标是优化模型在整个数据集上的指标，而有时候我们想在此基础上，提高模型在一些特定的重要数据子集上的指标。 因为在实际应用场景中，除了模型整体的表现，我们也关注甚至更关注模型在一些重要的子集上的表现，这些数据子集通常出现频率少但又格外的重要，比如自动驾驶模型中与安全相关的一些数据子集（如检测路上的骑自行车的人）。而 Slice-based learning 的目的就是为了提高模型在这些特定的数据子集上的表现。</p>
+<img src="http://images.shuang0420.com/images/Slice-based%20learning%20-%20%E5%9F%BA%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%88%87%E7%89%87%E7%9A%84%E5%AD%A6%E4%B9%A0/intro.png" class="ful-image" alt="intro.png">
+<p>要提高模型在特定数据子集上的表现首先一个问题是<strong>如何划分数据子集</strong>，划分标准可以是基于经验，通过写一些规则，通过简单的分类器，也可以通过 error analysis 得到，我们定义 k 个 <strong>Slice Function (SF)</strong>， 相当于 k 个 binary classifer，表示数据是否属于当前 slice。这个 SFs 不一定要很完美，事实上也很难完美。</p>
+<p>划分了数据子集接下来的问题就是<strong>如何提高模型在特定数据子集上的模型表现</strong>，有以下挑战：</p>
+<ul>
+<li><strong>Copying with noise</strong>：SFs 以弱监督的方式定义，模型需要对这些存在噪音的数据有足够的鲁棒性</li>
+<li><strong>Scalability</strong>：当增加 slices 的时候，不能增加太多的参数</li>
+<li><strong>Stable improvement of the model</strong>：slices 增多的时候，不能伤害现有的 slice 以及整体的 performance</li>
+</ul>
+<p>这篇 paper 的思路是 <strong>专家组合（Mixtuer-of-Experts, MoE)</strong> + <strong>multi-task（MTE）</strong>，在每一个 slice 训练单独的模型（即专家模型），然后用 gated function 融合各个模型输出，相当于 ensemble 的做法，麻烦的是参数利用率低，scalability 差，有多少 slice 就需要训练多少个单独的模型。而相应的，MTE 可以通过参数共享，对每个 data slice 训练单独的 task head，计算效率高，但是这样一来并不能跨 slice 共享数据，另外 MTL 中多个任务各不相同，而在 slice-based learning 中，基本任务是由相关的 slice task 来补充完善的。</p>
+<p>于是就有了下面这个框架：</p>
+<img src="http://images.shuang0420.com/images/Slice-based%20learning%20-%20%E5%9F%BA%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%88%87%E7%89%87%E7%9A%84%E5%AD%A6%E4%B9%A0/arch.png" class="ful-image" alt="arch.png">
+<p>我们想训练一个标准的预测模型，称为 base task，对每个 slice，我们学习 expert representation，然后用 gated function 来组合这些 expert representation 得到一个 slice-aware representation，做出 final prediction。</p>
+<ul>
+<li><p><strong>(a) Backbone</strong>: 用来提取特征的模型，比如说 BERT，把输入数据 x 映射到 z</p>
+</li>
+<li><p><strong>(b) Slice indicator heads</strong>: 每个 slice 对应一个 indicator head，作用是预测输入数据是否属于这个 slice，输入是 z，输出是 logits q，监督信号是 SF 的输出</p>
+</li>
+<li><p><strong>(c) Slice-specific representations</strong>: 对每个 slice，学习一个 expert feature，输入是 z，输出是 r</p>
+</li>
+<li><p><strong>(d) Shared slice prediction head</strong>: 共享的 slice prediction head，把各个 slice expert feature r 映射到 logit pi，只在属于这个 slice 的数据上训练，监督信号就是 base task 的真实标签 y。用共享的 head 可以保证 expert head 的输出具有一致性，便于后面的加权组合</p>
+</li>
+<li><p><strong>(e) Slice-aware representation</strong>: 把 <em>(b) slice indicator output Q</em> 和 <em>(d) prediction head confidence P</em> 做 element-wise，作为 attention 权重来 re-weight 各个 slice 的特征 (c) ，得到 slice-aware representation z’，这一步也体现了对噪声 slice 的 robustness，如果某个 slice indicator 或者 prediction task 做出了置信度低的预测，那就下调它对应表示的权重</p>
+<p>注意这一步的时候初始化了一个 base slice，base slice 包含了所有的输入数据，并且有对应的 indicator qbase，和 predictor pbase，目的是显性的来建模从 slice representation 到 base representation 的残差，所以 Q 和 P 其实包含了 k+1 个 vector</p>
+</li>
+<li><p><strong>(f) Prediction head</strong>: 输入是 z’，得到最后的输出，监督信号就是 base task 的真实标签 y</p>
+</li>
+</ul>
+<p>loss 是 (b)(d)(f) 三部分 loss 的相加。实验结果就不贴了，读 paper 吧~</p>
+]]></content>
+      
+        <categories>
+            
+            <category> NLP </category>
+            
+            <category> Chatbot </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> NLP </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Sequential transfer learning in NLP]]></title>
       <url>http://www.shuang0420.com/2020/06/01/Sequential%20transfer%20learning%20in%20NLP/</url>
       <content type="html"><![CDATA[<p>NAACL 2019 tutorial on “Transfer Learning in Natural Language Processing” 的部分笔记，资料链接见文末。<br><a id="more"></a></p>
@@ -452,9 +504,9 @@
         
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> NLP </tag>
+            
+            <tag> AI </tag>
             
             <tag> chatbot </tag>
             
@@ -1035,7 +1087,7 @@
     <entry>
       <title><![CDATA[99/100 天纪念日 - 第 1 期]]></title>
       <url>http://www.shuang0420.com/2018/08/06/love99/</url>
-      <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
+      <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
       
         
         <tags>
@@ -1112,9 +1164,9 @@
         
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> NLP </tag>
+            
+            <tag> AI </tag>
             
             <tag> chatbot </tag>
             
@@ -3369,9 +3421,9 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
         
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> NLP </tag>
+            
+            <tag> AI </tag>
             
             <tag> Machine Translation </tag>
             
@@ -9914,6 +9966,284 @@ Weights for each of 10*10*5 neurons: 5*5*3=75
     </entry>
     
     <entry>
+      <title><![CDATA[Search Engines笔记 - Federated Search]]></title>
+      <url>http://www.shuang0420.com/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。垂直数据库能获得更准确的搜索结果。那么对一个 query，我们可以放到合适的多个垂直数据库里检索，然后合并结果呈现给用户。<br><a id="more"></a><br>简单解释就是结果来自多个数据库。用图片表示<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs1.jpg" class="ful-image" alt="fs1.jpg"></p>
+<p>当然，大多数数据库与我们的需求并不相关，所以可以略过。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs2.jpg" class="ful-image" alt="fs2.jpg"></p>
+<p>Search portals 可以有不同的策略来处理不同类型的请求</p>
+<ul>
+<li>搜索非结构化数据<ul>
+<li>将初始查询映射为对应的结构化查询</li>
+<li>将查询定向到特定的搜索引擎<br>» 汽车，音乐，图片，视频…</li>
+</ul>
+</li>
+<li>搜索结构化数据（数据库） - 例如，邮政编码，股票代码…<ul>
+<li>调用服务或进程<ul>
+<li>如，计算器，股票价格，航班跟踪…</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs3.jpg" class="ful-image" alt="fs3.jpg">
+<h1 id="Constrains"><a href="#Constrains" class="headerlink" title="Constrains"></a>Constrains</h1><p><strong>不合作环境</strong></p>
+<ul>
+<li>没有特别的 federated search 的支持</li>
+<li>资源不受信任</li>
+</ul>
+<p><strong>合作环境</strong></p>
+<ul>
+<li>资源支持公共协议/ API</li>
+<li>资源是受信任的，能够提供准确的信息</li>
+</ul>
+<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
+<li>Resource representation(资源表达)。即获取每个数据库的信息</li>
+<li>Resource selection(资源选择)。即对 resource/databases 进行排序，对每个查询选择少量资源进行检索。</li>
+<li>Result-merging(结果合并)。即对来自不同搜索引擎／数据库对结果进行 merge，产生最终展现给用户的 ranking list。</li>
+</ol>
+<p>其中 1 是在线下完成的(offline)，2、3 是在查询时完成的。</p>
+<h1 id="Resource-representation"><a href="#Resource-representation" class="headerlink" title="Resource representation"></a>Resource representation</h1><p><strong>如何表达资源的内容？</strong></p>
+<ol>
+<li>Bag of words: terms and frequencies</li>
+<li>Sample queries: Queries that this resource is good for</li>
+<li>Sample documents: Typical documents from this resource</li>
+</ol>
+<p>一个例子解释<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/rr1.jpg" class="ful-image" alt="rr1.jpg"></p>
+<p><strong>资源的内容信息如何获取</strong></p>
+<ul>
+<li>通过 protocol 向资源发出请求</li>
+<li>对 query log 请求相关性评价 (relevance assessments)</li>
+<li>Query-based sampling: 提交查询，查看返回的内容</li>
+</ul>
+<p>下面主要介绍第三种 <strong>query-based sampling</strong></p>
+<h2 id="Query-based-sampling"><a href="#Query-based-sampling" class="headerlink" title="Query-based sampling"></a>Query-based sampling</h2><p>过程</p>
+<ol>
+<li>选择一个初始查询</li>
+<li>重复 N 次（例如，N = 100）<ul>
+<li>向搜索引擎提交查询</li>
+<li>下载一些结果（例如，2-4 条）</li>
+<li>得到并更新 representation (words and frequencies)</li>
+<li>从新的 representation 中随机选择 query term(s)形成新的查询</li>
+</ul>
+</li>
+</ol>
+<p><strong>为什么可行?</strong><br>因为词汇分布服从 Heaps’ Law</p>
+<p><strong>如果第一条查询非常糟糕怎么办？</strong><br>如在一个医学领域的语料库里找 car，可能并没有结果(如果是 boolean ranking 的话)，那么就重新选择一个查询？</p>
+<p><strong>抽样的大小有什么影响</strong><br>一条 query 取多少文档呢？实验决定吧，2-4 篇应该就够了</p>
+<p><strong>在合作环境下随机采样</strong><br>只比 query-based sampling 好一点点</p>
+<h1 id="Resource-selection"><a href="#Resource-selection" class="headerlink" title="Resource selection"></a>Resource selection</h1><p>两大类方法，无监督学习通常是通过对 P(ri|q) 排序来解决，监督算法通常通过分类解决。</p>
+<h2 id="Unsupervised-Resource-Selection"><a href="#Unsupervised-Resource-Selection" class="headerlink" title="Unsupervised Resource Selection"></a>Unsupervised Resource Selection</h2><p><strong>Task:</strong> 给定查询 q，决定要搜索的资源(resources)</p>
+<p>无监督方法将这个问题看作 resource ranking 的问题。</p>
+<ol>
+<li>估计 p(ri|q)</li>
+<li>选择前 k 个资源<br>– 通常 k 是给出的<br>– 动态设置 k 是一个开放的研究问题</li>
+</ol>
+<p>两种具体方法，content-based methods 和 query-based methods</p>
+<ul>
+<li>Content-based methods(基于内容的方法)<br>– 对各个资源下 query 和 content 的相似度 $S(q,c)$ 来对资源进行排序<br>– 有不同的方法来实现，区分点在于：<br>» Representation type: bag of words vs. sampled documents<br>» Ranking algorithm: e.g., CORI</li>
+<li>Query-based methods(基于查询的方法)<br>– 对 query，搜索各个资源下的 query log，找出 match 的 query，然后求当前 query 和历史 query 的相似度 $S(q,q_{past})$，对资源进行排序<br>– 之前用的并不多，因为缺少好的 query log</li>
+</ul>
+<h3 id="Content-based-methods"><a href="#Content-based-methods" class="headerlink" title="Content-based methods"></a>Content-based methods</h3><h4 id="Bag-of-words-method"><a href="#Bag-of-words-method" class="headerlink" title="Bag-of-words method"></a>Bag-of-words method</h4><p>基本思想是 <strong>将每个资源视为一个（非常大的）词袋(bag of words)</strong>，排序算法可以用 KL divergence 或者 query likelihood 等方法。<br>eg. CORI<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/cori.jpg" class="ful-image" alt="cori.jpg"></p>
+<p>然而，Bag of words methods (e.g., CORI)是根据 resources 和 query 的相似度进行的排序，这并不是我们的初衷。这种方法 <strong>偏好具有较高 p(qi|Rj) 的资源</strong>，通常意义上也就是 homogeneous (通常很小)的资源。这并不是我们需要的，我们想要的是，选择能够返回更多相关文档的资源，sampled document method 更能达到这个目标。</p>
+<p><strong>Bag of words (“large documents”) 方法的特点</strong></p>
+<ul>
+<li>大文档更好的代表了 resource representation</li>
+<li>偏好具有较大比例相关内容的资源<br>– i.e., small or homogeneous resources</li>
+<li>非常有效，很有竞争力</li>
+</ul>
+<h4 id="Sample-documents-method"><a href="#Sample-documents-method" class="headerlink" title="Sample documents method"></a>Sample documents method</h4><p><strong>基本思想：</strong> 对每个资源采样然后合并得到一个 centralized index，记录每个文档来自哪个 resource。<br>eg. ReDDE<br>给定一个查询</p>
+<ol>
+<li>搜索 centralized sample index 得到相关文档</li>
+<li>取前 T 的文档</li>
+<li>检查哪些资源提供了这些相关文档</li>
+<li>估计每个资源中相关文档的数量<br>• 计算资源 i 中高于阈值 T 的文档数量 n<br>• n * resource_size / sample_size</li>
+</ol>
+<p>ReDDE 可以看作是 sample-based voting method，每个 top-ranked document 可以看作是对它属于的那个资源的一个投票。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>高召回率: 选择包含更多相关文档的资源</li>
+<li>高准确率: 选择能够返回更多的出现在合并结果集 top T 的文档的资源</li>
+<li>有很多算法的变种<br>– 来自更可靠/权威的资源的 sample 获得更多的投票<br>– 更相关的 sample 获得更多的投票</li>
+</ul>
+<h4 id="CORI-vs-ReDDE"><a href="#CORI-vs-ReDDE" class="headerlink" title="CORI vs ReDDE"></a>CORI vs ReDDE</h4><ul>
+<li>ReDDE 相对而言更加准确<br>– 通常效果更好，几乎不会有更糟的情况</li>
+<li>当各个 collection size 的分布是 skewed 时，ReDDE 的性能优于 CORI<br>– CORI 偏向小集合。他们更可能是同质的，它错过了大型，异质的 collections<br>– ReDDE 对大型 collection 的偏见没那么强</li>
+<li>CORI 比 ReDDE 更有效<br>– 一个资源一个文档 vs. 一个资源多个文档</li>
+</ul>
+<h2 id="Supervised-Resource-Selection"><a href="#Supervised-Resource-Selection" class="headerlink" title="Supervised Resource Selection"></a>Supervised Resource Selection</h2><p>当我们有可用的训练数据时，就可以进行有监督的资源选择</p>
+<ul>
+<li>利用广泛的特征</li>
+<li>将任务框架化为分类问题</li>
+<li>让机器学习算法学习如何给不同的特征分配权重</li>
+</ul>
+<p><strong>Main issues</strong></p>
+<ul>
+<li>特征工程</li>
+<li>获取训练数据</li>
+<li>确定要选择的资源数</li>
+</ul>
+<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p><strong>Task:</strong> 给定一个查询，选择一个或更多的 verticals</p>
+<p>将问题定义为一个 “one-vs-all” 的分类任务</p>
+<ul>
+<li>对每个 vertical 都训练一个分类器</li>
+<li>对 “no vertical” (web only) 也训练一个分类器</li>
+<li>E.g., Arguello, et al (2009) 用了逻辑回归模型</li>
+</ul>
+<p><strong>典型的选择策略</strong></p>
+<ul>
+<li>选择一个具有最高置信度(confidence score)的分类器</li>
+<li>选择 n 个最好的分类器</li>
+<li>选择所有置信度分数高于 threshold 的分类器</li>
+</ul>
+<h3 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h3><p><strong>Query features</strong></p>
+<ul>
+<li>Boolean: keywords and regular expressions<br>– E.g., “weather”, “news”, “videos”, …</li>
+<li>Geographic: Probabilities associated with geographic entities<br>– E.g., “Pittsburgh pizza”</li>
+<li>Category: query’s affinity to a set of topic categories<pre><code>– E.g., “Cancun vacations”
+</code></pre></li>
+</ul>
+<p><strong>Corpus Features</strong><br>ReDDE 是非常流行的资源排序算法</p>
+<p><strong>Clarity (Cronen-Townsend, et al., 2002)</strong><br>Clarity 用来预测给定语料库上的查询的有效性，本质上是 top-ranked 文档和完整集合之间的 KL divergence，如果排名靠前的文档看起来像是 collection 的 random sample，搜索结果将会很差</p>
+<p><strong>Query Log Features</strong></p>
+<ul>
+<li>人工评估/点击率</li>
+</ul>
+<p><strong>qlog feature</strong></p>
+<ul>
+<li>用查询日志中的 query 来构建语言模型 v</li>
+<li>用 query likelihood 来建模 $P(q|v)=\prod_t^q P(t|v)$</li>
+<li>p(t | v) is a smoothed MLE</li>
+</ul>
+<p><strong>Soft.ReDDE feature:</strong></p>
+<ul>
+<li>用查询日志中的 query 来构建语言模型 v</li>
+<li>用 query 对外部的 collection 检索<br>– E.g., wikipedia</li>
+<li>选择前 n 个文档</li>
+<li>文档 di 的投票是 KLD (di || v)<br>– 与查询日志相似的文档具有更高的投票</li>
+</ul>
+<h1 id="Result-merging"><a href="#Result-merging" class="headerlink" title="Result merging"></a>Result merging</h1><p><strong>主要问题：</strong><br><strong>idf</strong><br>同一个 term，在不同数据库的 idf 不同怎么办？</p>
+<p><strong>scores</strong><br>不同数据库的 doc score 不是可比的怎么办？</p>
+<p><strong>＝&gt; Map resource-specific scores to resource-neutral scores</strong></p>
+<p><strong>Result merging</strong></p>
+<ul>
+<li>用所有的 sampled documents 创建一个 index (offline)</li>
+<li>从选定的资源里检索文档<br>– 因为资源并不提供文档分数，所以对每个文档计算 sim (q, d)<br>– 利用 index 的 corpus statistics 来计算每个文档的 authority score</li>
+<li>score(d) = f ( sim (q, d), authority (d) )</li>
+</ul>
+<h2 id="Semi-Supervised-Learning"><a href="#Semi-Supervised-Learning" class="headerlink" title="Semi-Supervised Learning"></a>Semi-Supervised Learning</h2><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss.jpg" class="ful-image" alt="ss.jpg">
+<p>由资源 i 返回的一些文档可能同时出现在 sample index 里<br>对这些文档我们有两个分数</p>
+<ul>
+<li>Sample index (resource neutral) score</li>
+<li>Resource i (resource-specific) score<br>这就是我们用来学习 f (resource-specific) = resource-neutral 的训练数据</li>
+</ul>
+<p>对这个所需的 “normalization” 用线性函数进行建模，因为线性模型可以利用少量的数据进行训练，而且 Ad-hoc CORI 的合并就是线性的<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss2.jpg" class="ful-image" alt="ss2.jpg"></p>
+<p>使用线性回归(linear regression)推导出权重</p>
+<ul>
+<li>f（resource-specific score）= a×dRi，j + b = resource-neutral score</li>
+<li>每个(query, resource) pair 对应不同的函数</li>
+</ul>
+<p><strong>它有效么?</strong><br>目前为止是最好的选择，因为 mapping 是 query-specific 和 resource-specific 的。</p>
+<p><strong>有没有足够的训练数据?</strong><br>通常有，因为 resource selection 和 sample index 可以用相同的文档。如果没有，下载 1-3 篇文档来产生训练数据。</p>
+<h1 id="Large-Scale-Search-Architecture"><a href="#Large-Scale-Search-Architecture" class="headerlink" title="Large-Scale Search Architecture"></a>Large-Scale Search Architecture</h1><p>之前讲过 large-scale search architecture 的相关内容。我们可以把数据集分为两层 <strong>高价值</strong> 和 <strong>低价值</strong>，然后将每一层进行分区(shards)，再将分区分配给计算机。</p>
+<p>事实上我们并不需要对每个查询都检索每一个分区，这样做成本很高，为什么不直接搜索最好/最合适的分区呢？</p>
+<p>通常带来的结果是：</p>
+<ul>
+<li>高准确率 (尤其是 top ranks)</li>
+<li>低召回率 (可能会错过许多有用的文档)<br>– 只搜索了少量资源，这也是广泛应用的障碍</li>
+</ul>
+<p><strong>所以分为两步:</strong></p>
+<ol>
+<li>资源定义(Resource definition)<ul>
+<li>对文档分区</li>
+</ul>
+</li>
+<li>资源选择(Resource selection)<ul>
+<li>对特定 query 选择要搜索的分区</li>
+</ul>
+</li>
+</ol>
+<p>下面进行详细的介绍。</p>
+<h2 id="Resource-definition"><a href="#Resource-definition" class="headerlink" title="Resource definition"></a>Resource definition</h2><p><strong>Goal:</strong> 搜索更少的分区得到更高的 recall</p>
+<p><strong>Requirement:</strong><br>对于可能提交的任何 query，大多数的相关文档必须出现在同一个分区中</p>
+<p><strong>How:</strong><br>把 closely-associated documents 也就是相似（相同主题）的文档归到同一个分区。</p>
+<p><strong>Hypothesis:</strong> Closely-associated ≈ topically-related &amp; Each shard covers one topic/subject</p>
+<p><strong>对给定的语料库，应该使用哪些 topics/subjects?</strong></p>
+<ul>
+<li>人工开发类别? – LCSH, DMOZ, Reuters, …</li>
+<li>自动学习 corpus-specific topics? – Clustering, LDA, PLSA, …</li>
+</ul>
+<p>我们想要一个可以应用于任何语料库的解决方案，因此，需要能自动学习基于语料库的特定的主题。许多算法能产生语料库特定的“主题”：</p>
+<ul>
+<li>聚类: E.g., k-means clustering</li>
+<li>主题模型: E.g., Latent Dirichlet Allocation (LDA)</li>
+</ul>
+<p>当然我们也要保证解决方案必须对 large collections 是有效的：</p>
+<ul>
+<li>从 collection 的一个随机样本里创建主题</li>
+<li>将其余文档分配给最相似的主题</li>
+</ul>
+<h2 id="Resource-selection-1"><a href="#Resource-selection-1" class="headerlink" title="Resource selection"></a>Resource selection</h2><p><strong>Goal:</strong> 给定查询，选择最好的分区</p>
+<p><strong>两类重要的资源选择算法:</strong></p>
+<ul>
+<li>Model-based: CORI, CRCS, Taily, …</li>
+<li>Sample-based: ReDDE, SUSHI, Rank-S, …</li>
+</ul>
+<p>有很多好的算法</p>
+<ul>
+<li>Sample-based 的算法被认为是最有效的</li>
+<li>在初始工作中常常使用 ReDDE 变种</li>
+<li>Taily 和 Rank-S 也经常被研究/考虑</li>
+</ul>
+<p><strong>对每个分区采样:</strong><br>将样本存储到 sample index 里 =&gt; offline</p>
+<p><strong>给定查询</strong></p>
+<ul>
+<li>搜索 sample index，得到 top documents</li>
+<li>Top documents 对它们所在的分区投票</li>
+<li>将 query 发送到得到最多投票的分区<br>=&gt; online</li>
+</ul>
+<h2 id="Cost"><a href="#Cost" class="headerlink" title="Cost"></a>Cost</h2><p>$C_{Total}$:</p>
+<ul>
+<li>处理 inverted list 的数量</li>
+<li>用于资源选择</li>
+<li>用于分区选择</li>
+<li>I/O 和计算成本</li>
+</ul>
+<p>Selective search 分为两步：</p>
+<ul>
+<li>选择要搜索的分区（resource selection）</li>
+<li>搜索所选的分区</li>
+</ul>
+<p>ReDDE 具有更高的计算成本</p>
+<p><strong>Key techniques</strong></p>
+<ol>
+<li>Resource definition for selective search<br>– How to partition a large corpus effectively</li>
+<li>Resource representation<br>– How to represent the contents of each resource<br>– Vocabulary-based, sample-documents-based, feature-based</li>
+<li>Resource selection<br>– How to select the right resources for a particular query</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> NLP </category>
+            
+            <category> Search Engines </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> NLP </tag>
+            
+            <tag> Search Engines </tag>
+            
+            <tag> 信息检索 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Search Engines笔记 - Diversity]]></title>
       <url>http://www.shuang0420.com/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/</url>
       <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。一个 query 可能表现了不同的信息需求，之前的相关性模型可能带来的结果是大多文档只能满足同一个信息需求，所以有些用户满意了，有些 user 抓狂了。我们希望检索到的 document 是能够 diverse 的，这样的话可以尽可能的满足不同用户的需求。这一章就讲了怎么实现 diversity。<br><a id="more"></a></p>
@@ -10209,363 +10539,6 @@ Weights for each of 10*10*5 neurons: 5*5*3=75
     </entry>
     
     <entry>
-      <title><![CDATA[Search Engines笔记 - Federated Search]]></title>
-      <url>http://www.shuang0420.com/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。垂直数据库能获得更准确的搜索结果。那么对一个 query，我们可以放到合适的多个垂直数据库里检索，然后合并结果呈现给用户。<br><a id="more"></a><br>简单解释就是结果来自多个数据库。用图片表示<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs1.jpg" class="ful-image" alt="fs1.jpg"></p>
-<p>当然，大多数数据库与我们的需求并不相关，所以可以略过。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs2.jpg" class="ful-image" alt="fs2.jpg"></p>
-<p>Search portals 可以有不同的策略来处理不同类型的请求</p>
-<ul>
-<li>搜索非结构化数据<ul>
-<li>将初始查询映射为对应的结构化查询</li>
-<li>将查询定向到特定的搜索引擎<br>» 汽车，音乐，图片，视频…</li>
-</ul>
-</li>
-<li>搜索结构化数据（数据库） - 例如，邮政编码，股票代码…<ul>
-<li>调用服务或进程<ul>
-<li>如，计算器，股票价格，航班跟踪…</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs3.jpg" class="ful-image" alt="fs3.jpg">
-<h1 id="Constrains"><a href="#Constrains" class="headerlink" title="Constrains"></a>Constrains</h1><p><strong>不合作环境</strong></p>
-<ul>
-<li>没有特别的 federated search 的支持</li>
-<li>资源不受信任</li>
-</ul>
-<p><strong>合作环境</strong></p>
-<ul>
-<li>资源支持公共协议/ API</li>
-<li>资源是受信任的，能够提供准确的信息</li>
-</ul>
-<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
-<li>Resource representation(资源表达)。即获取每个数据库的信息</li>
-<li>Resource selection(资源选择)。即对 resource/databases 进行排序，对每个查询选择少量资源进行检索。</li>
-<li>Result-merging(结果合并)。即对来自不同搜索引擎／数据库对结果进行 merge，产生最终展现给用户的 ranking list。</li>
-</ol>
-<p>其中 1 是在线下完成的(offline)，2、3 是在查询时完成的。</p>
-<h1 id="Resource-representation"><a href="#Resource-representation" class="headerlink" title="Resource representation"></a>Resource representation</h1><p><strong>如何表达资源的内容？</strong></p>
-<ol>
-<li>Bag of words: terms and frequencies</li>
-<li>Sample queries: Queries that this resource is good for</li>
-<li>Sample documents: Typical documents from this resource</li>
-</ol>
-<p>一个例子解释<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/rr1.jpg" class="ful-image" alt="rr1.jpg"></p>
-<p><strong>资源的内容信息如何获取</strong></p>
-<ul>
-<li>通过 protocol 向资源发出请求</li>
-<li>对 query log 请求相关性评价 (relevance assessments)</li>
-<li>Query-based sampling: 提交查询，查看返回的内容</li>
-</ul>
-<p>下面主要介绍第三种 <strong>query-based sampling</strong></p>
-<h2 id="Query-based-sampling"><a href="#Query-based-sampling" class="headerlink" title="Query-based sampling"></a>Query-based sampling</h2><p>过程</p>
-<ol>
-<li>选择一个初始查询</li>
-<li>重复 N 次（例如，N = 100）<ul>
-<li>向搜索引擎提交查询</li>
-<li>下载一些结果（例如，2-4 条）</li>
-<li>得到并更新 representation (words and frequencies)</li>
-<li>从新的 representation 中随机选择 query term(s)形成新的查询</li>
-</ul>
-</li>
-</ol>
-<p><strong>为什么可行?</strong><br>因为词汇分布服从 Heaps’ Law</p>
-<p><strong>如果第一条查询非常糟糕怎么办？</strong><br>如在一个医学领域的语料库里找 car，可能并没有结果(如果是 boolean ranking 的话)，那么就重新选择一个查询？</p>
-<p><strong>抽样的大小有什么影响</strong><br>一条 query 取多少文档呢？实验决定吧，2-4 篇应该就够了</p>
-<p><strong>在合作环境下随机采样</strong><br>只比 query-based sampling 好一点点</p>
-<h1 id="Resource-selection"><a href="#Resource-selection" class="headerlink" title="Resource selection"></a>Resource selection</h1><p>两大类方法，无监督学习通常是通过对 P(ri|q) 排序来解决，监督算法通常通过分类解决。</p>
-<h2 id="Unsupervised-Resource-Selection"><a href="#Unsupervised-Resource-Selection" class="headerlink" title="Unsupervised Resource Selection"></a>Unsupervised Resource Selection</h2><p><strong>Task:</strong> 给定查询 q，决定要搜索的资源(resources)</p>
-<p>无监督方法将这个问题看作 resource ranking 的问题。</p>
-<ol>
-<li>估计 p(ri|q)</li>
-<li>选择前 k 个资源<br>– 通常 k 是给出的<br>– 动态设置 k 是一个开放的研究问题</li>
-</ol>
-<p>两种具体方法，content-based methods 和 query-based methods</p>
-<ul>
-<li>Content-based methods(基于内容的方法)<br>– 对各个资源下 query 和 content 的相似度 $S(q,c)$ 来对资源进行排序<br>– 有不同的方法来实现，区分点在于：<br>» Representation type: bag of words vs. sampled documents<br>» Ranking algorithm: e.g., CORI</li>
-<li>Query-based methods(基于查询的方法)<br>– 对 query，搜索各个资源下的 query log，找出 match 的 query，然后求当前 query 和历史 query 的相似度 $S(q,q_{past})$，对资源进行排序<br>– 之前用的并不多，因为缺少好的 query log</li>
-</ul>
-<h3 id="Content-based-methods"><a href="#Content-based-methods" class="headerlink" title="Content-based methods"></a>Content-based methods</h3><h4 id="Bag-of-words-method"><a href="#Bag-of-words-method" class="headerlink" title="Bag-of-words method"></a>Bag-of-words method</h4><p>基本思想是 <strong>将每个资源视为一个（非常大的）词袋(bag of words)</strong>，排序算法可以用 KL divergence 或者 query likelihood 等方法。<br>eg. CORI<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/cori.jpg" class="ful-image" alt="cori.jpg"></p>
-<p>然而，Bag of words methods (e.g., CORI)是根据 resources 和 query 的相似度进行的排序，这并不是我们的初衷。这种方法 <strong>偏好具有较高 p(qi|Rj) 的资源</strong>，通常意义上也就是 homogeneous (通常很小)的资源。这并不是我们需要的，我们想要的是，选择能够返回更多相关文档的资源，sampled document method 更能达到这个目标。</p>
-<p><strong>Bag of words (“large documents”) 方法的特点</strong></p>
-<ul>
-<li>大文档更好的代表了 resource representation</li>
-<li>偏好具有较大比例相关内容的资源<br>– i.e., small or homogeneous resources</li>
-<li>非常有效，很有竞争力</li>
-</ul>
-<h4 id="Sample-documents-method"><a href="#Sample-documents-method" class="headerlink" title="Sample documents method"></a>Sample documents method</h4><p><strong>基本思想：</strong> 对每个资源采样然后合并得到一个 centralized index，记录每个文档来自哪个 resource。<br>eg. ReDDE<br>给定一个查询</p>
-<ol>
-<li>搜索 centralized sample index 得到相关文档</li>
-<li>取前 T 的文档</li>
-<li>检查哪些资源提供了这些相关文档</li>
-<li>估计每个资源中相关文档的数量<br>• 计算资源 i 中高于阈值 T 的文档数量 n<br>• n * resource_size / sample_size</li>
-</ol>
-<p>ReDDE 可以看作是 sample-based voting method，每个 top-ranked document 可以看作是对它属于的那个资源的一个投票。</p>
-<p><strong>特点：</strong></p>
-<ul>
-<li>高召回率: 选择包含更多相关文档的资源</li>
-<li>高准确率: 选择能够返回更多的出现在合并结果集 top T 的文档的资源</li>
-<li>有很多算法的变种<br>– 来自更可靠/权威的资源的 sample 获得更多的投票<br>– 更相关的 sample 获得更多的投票</li>
-</ul>
-<h4 id="CORI-vs-ReDDE"><a href="#CORI-vs-ReDDE" class="headerlink" title="CORI vs ReDDE"></a>CORI vs ReDDE</h4><ul>
-<li>ReDDE 相对而言更加准确<br>– 通常效果更好，几乎不会有更糟的情况</li>
-<li>当各个 collection size 的分布是 skewed 时，ReDDE 的性能优于 CORI<br>– CORI 偏向小集合。他们更可能是同质的，它错过了大型，异质的 collections<br>– ReDDE 对大型 collection 的偏见没那么强</li>
-<li>CORI 比 ReDDE 更有效<br>– 一个资源一个文档 vs. 一个资源多个文档</li>
-</ul>
-<h2 id="Supervised-Resource-Selection"><a href="#Supervised-Resource-Selection" class="headerlink" title="Supervised Resource Selection"></a>Supervised Resource Selection</h2><p>当我们有可用的训练数据时，就可以进行有监督的资源选择</p>
-<ul>
-<li>利用广泛的特征</li>
-<li>将任务框架化为分类问题</li>
-<li>让机器学习算法学习如何给不同的特征分配权重</li>
-</ul>
-<p><strong>Main issues</strong></p>
-<ul>
-<li>特征工程</li>
-<li>获取训练数据</li>
-<li>确定要选择的资源数</li>
-</ul>
-<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p><strong>Task:</strong> 给定一个查询，选择一个或更多的 verticals</p>
-<p>将问题定义为一个 “one-vs-all” 的分类任务</p>
-<ul>
-<li>对每个 vertical 都训练一个分类器</li>
-<li>对 “no vertical” (web only) 也训练一个分类器</li>
-<li>E.g., Arguello, et al (2009) 用了逻辑回归模型</li>
-</ul>
-<p><strong>典型的选择策略</strong></p>
-<ul>
-<li>选择一个具有最高置信度(confidence score)的分类器</li>
-<li>选择 n 个最好的分类器</li>
-<li>选择所有置信度分数高于 threshold 的分类器</li>
-</ul>
-<h3 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h3><p><strong>Query features</strong></p>
-<ul>
-<li>Boolean: keywords and regular expressions<br>– E.g., “weather”, “news”, “videos”, …</li>
-<li>Geographic: Probabilities associated with geographic entities<br>– E.g., “Pittsburgh pizza”</li>
-<li>Category: query’s affinity to a set of topic categories<pre><code>– E.g., “Cancun vacations”
-</code></pre></li>
-</ul>
-<p><strong>Corpus Features</strong><br>ReDDE 是非常流行的资源排序算法</p>
-<p><strong>Clarity (Cronen-Townsend, et al., 2002)</strong><br>Clarity 用来预测给定语料库上的查询的有效性，本质上是 top-ranked 文档和完整集合之间的 KL divergence，如果排名靠前的文档看起来像是 collection 的 random sample，搜索结果将会很差</p>
-<p><strong>Query Log Features</strong></p>
-<ul>
-<li>人工评估/点击率</li>
-</ul>
-<p><strong>qlog feature</strong></p>
-<ul>
-<li>用查询日志中的 query 来构建语言模型 v</li>
-<li>用 query likelihood 来建模 $P(q|v)=\prod_t^q P(t|v)$</li>
-<li>p(t | v) is a smoothed MLE</li>
-</ul>
-<p><strong>Soft.ReDDE feature:</strong></p>
-<ul>
-<li>用查询日志中的 query 来构建语言模型 v</li>
-<li>用 query 对外部的 collection 检索<br>– E.g., wikipedia</li>
-<li>选择前 n 个文档</li>
-<li>文档 di 的投票是 KLD (di || v)<br>– 与查询日志相似的文档具有更高的投票</li>
-</ul>
-<h1 id="Result-merging"><a href="#Result-merging" class="headerlink" title="Result merging"></a>Result merging</h1><p><strong>主要问题：</strong><br><strong>idf</strong><br>同一个 term，在不同数据库的 idf 不同怎么办？</p>
-<p><strong>scores</strong><br>不同数据库的 doc score 不是可比的怎么办？</p>
-<p><strong>＝&gt; Map resource-specific scores to resource-neutral scores</strong></p>
-<p><strong>Result merging</strong></p>
-<ul>
-<li>用所有的 sampled documents 创建一个 index (offline)</li>
-<li>从选定的资源里检索文档<br>– 因为资源并不提供文档分数，所以对每个文档计算 sim (q, d)<br>– 利用 index 的 corpus statistics 来计算每个文档的 authority score</li>
-<li>score(d) = f ( sim (q, d), authority (d) )</li>
-</ul>
-<h2 id="Semi-Supervised-Learning"><a href="#Semi-Supervised-Learning" class="headerlink" title="Semi-Supervised Learning"></a>Semi-Supervised Learning</h2><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss.jpg" class="ful-image" alt="ss.jpg">
-<p>由资源 i 返回的一些文档可能同时出现在 sample index 里<br>对这些文档我们有两个分数</p>
-<ul>
-<li>Sample index (resource neutral) score</li>
-<li>Resource i (resource-specific) score<br>这就是我们用来学习 f (resource-specific) = resource-neutral 的训练数据</li>
-</ul>
-<p>对这个所需的 “normalization” 用线性函数进行建模，因为线性模型可以利用少量的数据进行训练，而且 Ad-hoc CORI 的合并就是线性的<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss2.jpg" class="ful-image" alt="ss2.jpg"></p>
-<p>使用线性回归(linear regression)推导出权重</p>
-<ul>
-<li>f（resource-specific score）= a×dRi，j + b = resource-neutral score</li>
-<li>每个(query, resource) pair 对应不同的函数</li>
-</ul>
-<p><strong>它有效么?</strong><br>目前为止是最好的选择，因为 mapping 是 query-specific 和 resource-specific 的。</p>
-<p><strong>有没有足够的训练数据?</strong><br>通常有，因为 resource selection 和 sample index 可以用相同的文档。如果没有，下载 1-3 篇文档来产生训练数据。</p>
-<h1 id="Large-Scale-Search-Architecture"><a href="#Large-Scale-Search-Architecture" class="headerlink" title="Large-Scale Search Architecture"></a>Large-Scale Search Architecture</h1><p>之前讲过 large-scale search architecture 的相关内容。我们可以把数据集分为两层 <strong>高价值</strong> 和 <strong>低价值</strong>，然后将每一层进行分区(shards)，再将分区分配给计算机。</p>
-<p>事实上我们并不需要对每个查询都检索每一个分区，这样做成本很高，为什么不直接搜索最好/最合适的分区呢？</p>
-<p>通常带来的结果是：</p>
-<ul>
-<li>高准确率 (尤其是 top ranks)</li>
-<li>低召回率 (可能会错过许多有用的文档)<br>– 只搜索了少量资源，这也是广泛应用的障碍</li>
-</ul>
-<p><strong>所以分为两步:</strong></p>
-<ol>
-<li>资源定义(Resource definition)<ul>
-<li>对文档分区</li>
-</ul>
-</li>
-<li>资源选择(Resource selection)<ul>
-<li>对特定 query 选择要搜索的分区</li>
-</ul>
-</li>
-</ol>
-<p>下面进行详细的介绍。</p>
-<h2 id="Resource-definition"><a href="#Resource-definition" class="headerlink" title="Resource definition"></a>Resource definition</h2><p><strong>Goal:</strong> 搜索更少的分区得到更高的 recall</p>
-<p><strong>Requirement:</strong><br>对于可能提交的任何 query，大多数的相关文档必须出现在同一个分区中</p>
-<p><strong>How:</strong><br>把 closely-associated documents 也就是相似（相同主题）的文档归到同一个分区。</p>
-<p><strong>Hypothesis:</strong> Closely-associated ≈ topically-related &amp; Each shard covers one topic/subject</p>
-<p><strong>对给定的语料库，应该使用哪些 topics/subjects?</strong></p>
-<ul>
-<li>人工开发类别? – LCSH, DMOZ, Reuters, …</li>
-<li>自动学习 corpus-specific topics? – Clustering, LDA, PLSA, …</li>
-</ul>
-<p>我们想要一个可以应用于任何语料库的解决方案，因此，需要能自动学习基于语料库的特定的主题。许多算法能产生语料库特定的“主题”：</p>
-<ul>
-<li>聚类: E.g., k-means clustering</li>
-<li>主题模型: E.g., Latent Dirichlet Allocation (LDA)</li>
-</ul>
-<p>当然我们也要保证解决方案必须对 large collections 是有效的：</p>
-<ul>
-<li>从 collection 的一个随机样本里创建主题</li>
-<li>将其余文档分配给最相似的主题</li>
-</ul>
-<h2 id="Resource-selection-1"><a href="#Resource-selection-1" class="headerlink" title="Resource selection"></a>Resource selection</h2><p><strong>Goal:</strong> 给定查询，选择最好的分区</p>
-<p><strong>两类重要的资源选择算法:</strong></p>
-<ul>
-<li>Model-based: CORI, CRCS, Taily, …</li>
-<li>Sample-based: ReDDE, SUSHI, Rank-S, …</li>
-</ul>
-<p>有很多好的算法</p>
-<ul>
-<li>Sample-based 的算法被认为是最有效的</li>
-<li>在初始工作中常常使用 ReDDE 变种</li>
-<li>Taily 和 Rank-S 也经常被研究/考虑</li>
-</ul>
-<p><strong>对每个分区采样:</strong><br>将样本存储到 sample index 里 =&gt; offline</p>
-<p><strong>给定查询</strong></p>
-<ul>
-<li>搜索 sample index，得到 top documents</li>
-<li>Top documents 对它们所在的分区投票</li>
-<li>将 query 发送到得到最多投票的分区<br>=&gt; online</li>
-</ul>
-<h2 id="Cost"><a href="#Cost" class="headerlink" title="Cost"></a>Cost</h2><p>$C_{Total}$:</p>
-<ul>
-<li>处理 inverted list 的数量</li>
-<li>用于资源选择</li>
-<li>用于分区选择</li>
-<li>I/O 和计算成本</li>
-</ul>
-<p>Selective search 分为两步：</p>
-<ul>
-<li>选择要搜索的分区（resource selection）</li>
-<li>搜索所选的分区</li>
-</ul>
-<p>ReDDE 具有更高的计算成本</p>
-<p><strong>Key techniques</strong></p>
-<ol>
-<li>Resource definition for selective search<br>– How to partition a large corpus effectively</li>
-<li>Resource representation<br>– How to represent the contents of each resource<br>– Vocabulary-based, sample-documents-based, feature-based</li>
-<li>Resource selection<br>– How to select the right resources for a particular query</li>
-</ol>
-]]></content>
-      
-        <categories>
-            
-            <category> NLP </category>
-            
-            <category> Search Engines </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> NLP </tag>
-            
-            <tag> Search Engines </tag>
-            
-            <tag> 信息检索 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[EM算法]]></title>
-      <url>http://www.shuang0420.com/2016/12/04/EM%E7%AE%97%E6%B3%95/</url>
-      <content type="html"><![CDATA[<p>CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。<br><a id="more"></a></p>
-<h1 id="Mixtures-of-Gaussians"><a href="#Mixtures-of-Gaussians" class="headerlink" title="Mixtures of Gaussians"></a>Mixtures of Gaussians</h1><p>MLE 的通用步骤：<br>Steps:</p>
-<ol>
-<li>写出似然函数；</li>
-<li>对似然函数取对数，并整理；</li>
-<li>求导数，令导数为0，得到似然方程；</li>
-<li>解似然方程，得到的参数即为所求；</li>
-</ol>
-<p>然而有的时候我们会陷入困境，因为似然方程没法求解，比如 Mixtures of Gaussians。</p>
-<h2 id="One-Gaussian"><a href="#One-Gaussian" class="headerlink" title="One Gaussian"></a>One Gaussian</h2><p><strong>Given data:</strong> X1,…Xn<br><strong>Modeling assumption:</strong> Xi(independently) ~ Gaussian, $\sigma^2$=1/2<br><strong>LE</strong><br>$$P(x_1,..,x_n|\mu)={1 \over \sqrt{2 \pi \sigma^2}} e^{-(x_i-\mu)^2 \over 2 \sigma^2} $$</p>
-<p><strong>MLE:</strong> $\hat \mu_{ML}= argmax \ L(x_1,..,x_n|\mu)$<br>$\mu_{ML} = {\sum_{i=1}^n \ x_i \over n} = \overline x_i$</p>
-<h2 id="K-Gaussians"><a href="#K-Gaussians" class="headerlink" title="K Gaussians"></a>K Gaussians</h2><p><strong>Given data:</strong> X1,…Xn<br><strong>Modeling assumption:</strong> Xi(independently) ~ Mixture of K Gaussians    $\sigma^2$=1/2, $\mu_1,…\mu_k$<br><strong>Prior probability over Gaussians:</strong> $\lambda_1,…,\lambda_k \ 0 \le \lambda_j \le 1 \ \sum \lambda_j=1$, distribution of j is unknown, $\lambda_j, \mu_j$ is unknown<br><strong>LE</strong><br>$$<br>\begin{aligned}<br>P(x_1,..,x_n|\hat \lambda,\hat \mu,\sigma^2=0.5) &amp; = \prod_i^n[\sum_j^k P(Gaussian \ j \ was \ chosen)P(xi|Gaussian \ j \ was \ chosen)] \\<br> &amp; = \prod_i^n[\sum_j^k \lambda_j{1 \over \sqrt{2 \pi \sigma^2}} e^{-(x_i-\mu_j)^2 \over 2 \sigma_j^2}]<br>\end{aligned}<br>$$</p>
-<p><strong>MLE:</strong> $(\hat \mu, \hat \lambda)_{ML}= argmax \ L(x1,..,xn|\hat \lambda,\hat \mu,\sigma^2=0.5)$</p>
-<p><strong>How to find MLE?</strong></p>
-<h2 id="“SOFT”-K-MEANS"><a href="#“SOFT”-K-MEANS" class="headerlink" title="“SOFT” K-MEANS"></a>“SOFT” K-MEANS</h2><p><strong>soft:</strong> our guesses are probabilities and taking values in [0,1]<br><strong>hard:</strong> represents a single best guess (taking values in {0,1} or {1,…k})</p>
-<p>Special case of the EM Algorithm<br>$\sigma^2$=1/2</p>
-<p><strong>初始化</strong><br>初始化分布参数θ, $\mu^{(0)}$,$\lambda^{(0)}$</p>
-<p><strong>重复 EM 步骤直到收敛</strong><br><strong>1.E-step</strong><br>Fill in    the    missing    variables    with the expected values<br>根据参数初始值或上一次迭代的模型参数来计算出隐性变量的后验概率，其实就是隐性变量的期望。作为隐藏变量的现估计值：<br>$$w_j^{(i)}=P(z^{(i)}=j|x^{(i)};\mu,\lambda,\sigma^2=0.5) $$</p>
-<p><strong>2.M-Step</strong><br>Regular    maximum    likelihood estimation    (MLE)    using    the    values computed    in the E step    and    the    values of    the    other    variables<br>将似然函数最大化以获得新的参数值 $\mu^{(l+1)}$,$\lambda^{(l+1)}$</p>
-<ul>
-<li>l: index over EM iterations</li>
-<li>j: index of Gaussians</li>
-<li>i: index of datapoints<br>$$\hat \lambda_j={\# j \ was \ chosen \over n}={\sum_{i=1}^n w_j^{(i)} \over n}$$<br>$$\hat \mu_j={\sum_{i=1}^n w_j^{(i)} x^{(i)} \over \sum_{i=1}^n w_j^{(i)}}$$</li>
-</ul>
-<p><strong>EM Algorithm guarantees:</strong><br>$$L(D|\theta^{[0]}) \le L(D|\theta^{[1]}) \le L(D|\theta^{[2]})…$$<br>This is a Non-decreasing function. And if the likelihood function is bounded, the sequence will converge. Here the example is bounded, because $\sigma$ is fixed.<br>It might end up with local optimal.</p>
-<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><img src="http://images.shuang0420.com/images/EM%E7%AE%97%E6%B3%95/draft.jpg" class="ful-image" alt="draft.jpg">
-<p>第一次 iteration 的表格表示<br><img src="http://images.shuang0420.com/images/EM%E7%AE%97%E6%B3%95/table.jpg" class="ful-image" alt="table.jpg"></p>
-<h1 id="General-EM-algorithm"><a href="#General-EM-algorithm" class="headerlink" title="General EM algorithm"></a>General EM algorithm</h1><p><strong>X</strong> observed data<br><strong>Z</strong> unobserved ‘data’<br><strong>Complete data</strong> Y=(X,Z)<br><strong>Likelihood function</strong> $L(X,Z|\theta)$ known</p>
-<p><strong>Problem:</strong> find MLE<br>$$<br>  \begin{aligned}<br>  \hat \theta_{ML} &amp; = argmax \ L(X|\theta)= argmax \sum_Z P(X,Z|\theta) \\<br>   &amp; = argmax \sum_Z P(Z|\theta)P(X|Z,\theta) \\<br>   &amp; = argmax \sum_Z P(X|\theta)P(Z|X,\theta)P(X|Z,\theta)<br>  \end{aligned}<br>$$</p>
-<p><strong>Chicken-egg Problem</strong> with regard to P(Z),$\theta$<br>先有鸡还是先有蛋的问题。当我们知道了哪些 datapoints 属于同一个高斯分布的时候，我们才能够对这个分布的参数作出靠谱的预测，然而现在 datapoints 混在了一起，我们不知道哪个属于哪个，也就没办法估计参数。反过来，只有当我们对 K 个分布的参数作了准确的估计的时候，才知道哪些 datapoints 属于同一个高斯分布。<br>所以陷入了僵局，怎么办？不如就先随便整一个值出来，看你怎么变，然后我再根据你的变化调整我的变化，然后如此迭代着不断互相推导，最终就会收敛到一个解。这就是EM算法的基本思想。 -&gt; chicken stay, egg change</p>
-<p><strong>EM solution</strong></p>
-<ol>
-<li>Initialize $\theta$ to some value</li>
-<li>EM 方程<br>$$\theta^{[l+1]}=argmax \ E_{Z|\theta^l}[logP(Z,X|\theta)]$$<br>E 就是 expectation 的 E, write expression for E as function of $\theta$, expression: auxiliary function $Q(\theta^{[l]}|\theta)$<br>M 就是 argmax 的 M, find the MAX over $\theta$<br>=&gt;<br><strong>Simple EM solution:</strong><ul>
-<li><strong>E-step:</strong> express MLE as function of X’s and Z’s<br>know the value of Z, what would the ML solution</li>
-<li><strong>M-step:</strong> replace each Z with $E[Z|\theta]$</li>
-</ul>
-</li>
-</ol>
-<p><strong>EM guarantees</strong><br>$$L(X|\theta^{[l]}) \le L(X|\theta^{l+1})$$</p>
-<p>If likelihood is bounded, the sequence will converge.</p>
-<p><strong>Special but most commonly use:</strong><br>$L(X,Z|\theta)$ is a member of the exponential family</p>
-<h1 id="适用情景"><a href="#适用情景" class="headerlink" title="适用情景"></a>适用情景</h1><p>When to use:</p>
-<ul>
-<li>Data is only partially observable</li>
-<li>Unsupervised clustering(target value unobservable)</li>
-<li>Supervised learning(some instance attributes unobservable)</li>
-</ul>
-<p>Some uses:</p>
-<ul>
-<li>Train Bayesian Belief Networks</li>
-<li>Unsupervised clustering(AUTOCLASS)</li>
-<li>Learning Hidden Markov Models</li>
-</ul>
-<blockquote>
-<p>参考链接：<br><a href="http://blog.csdn.net/zouxy09/article/details/8537620" target="_blank" rel="external">从最大似然到EM算法浅解</a><br><a href="http://www.cnblogs.com/jerrylead/archive/2011/04/06/2006936.html" target="_blank" rel="external">（EM算法）The EM Algorithm</a><br><a href="http://blog.csdn.net/livecoldsun/article/details/40833829" target="_blank" rel="external"> EM（Expectation-Maximization）算法 </a></p>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> Machine Learning </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> NLP </tag>
-            
-            <tag> machine learning </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Graphical Models]]></title>
       <url>http://www.shuang0420.com/2016/12/04/Graphical%20Models/</url>
       <content type="html"><![CDATA[<p>CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。<br><a id="more"></a></p>
@@ -10636,6 +10609,85 @@ Weights for each of 10*10*5 neurons: 5*5*3=75
 <h1 id="Conditional-Random-Fields"><a href="#Conditional-Random-Fields" class="headerlink" title="Conditional Random Fields"></a>Conditional Random Fields</h1><p>CRF = UGM Trained Discriminatively<br>$argmax \ L(labels|inputs,\theta)$</p>
 <p><strong>generative modeling</strong><br>$\theta=argmax \ L(D|\theta)$<br>MAP=argmax P(|x)</p>
 <p><strong>discriminative method</strong><br>$argmin \ ERR(classifier|D,\theta)$<br>better when training data is small</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Machine Learning </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> NLP </tag>
+            
+            <tag> machine learning </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[EM算法]]></title>
+      <url>http://www.shuang0420.com/2016/12/04/EM%E7%AE%97%E6%B3%95/</url>
+      <content type="html"><![CDATA[<p>CMU 10601 的课程笔记。EM 算法计算含有隐含变量的概率模型参数估计，能使用在一些无监督的聚类方法上。在 EM 算法总结提出以前就有该算法思想的方法提出，例如 HMM 中用的 Baum-Welch 算法。<br><a id="more"></a></p>
+<h1 id="Mixtures-of-Gaussians"><a href="#Mixtures-of-Gaussians" class="headerlink" title="Mixtures of Gaussians"></a>Mixtures of Gaussians</h1><p>MLE 的通用步骤：<br>Steps:</p>
+<ol>
+<li>写出似然函数；</li>
+<li>对似然函数取对数，并整理；</li>
+<li>求导数，令导数为0，得到似然方程；</li>
+<li>解似然方程，得到的参数即为所求；</li>
+</ol>
+<p>然而有的时候我们会陷入困境，因为似然方程没法求解，比如 Mixtures of Gaussians。</p>
+<h2 id="One-Gaussian"><a href="#One-Gaussian" class="headerlink" title="One Gaussian"></a>One Gaussian</h2><p><strong>Given data:</strong> X1,…Xn<br><strong>Modeling assumption:</strong> Xi(independently) ~ Gaussian, $\sigma^2$=1/2<br><strong>LE</strong><br>$$P(x_1,..,x_n|\mu)={1 \over \sqrt{2 \pi \sigma^2}} e^{-(x_i-\mu)^2 \over 2 \sigma^2} $$</p>
+<p><strong>MLE:</strong> $\hat \mu_{ML}= argmax \ L(x_1,..,x_n|\mu)$<br>$\mu_{ML} = {\sum_{i=1}^n \ x_i \over n} = \overline x_i$</p>
+<h2 id="K-Gaussians"><a href="#K-Gaussians" class="headerlink" title="K Gaussians"></a>K Gaussians</h2><p><strong>Given data:</strong> X1,…Xn<br><strong>Modeling assumption:</strong> Xi(independently) ~ Mixture of K Gaussians    $\sigma^2$=1/2, $\mu_1,…\mu_k$<br><strong>Prior probability over Gaussians:</strong> $\lambda_1,…,\lambda_k \ 0 \le \lambda_j \le 1 \ \sum \lambda_j=1$, distribution of j is unknown, $\lambda_j, \mu_j$ is unknown<br><strong>LE</strong><br>$$<br>\begin{aligned}<br>P(x_1,..,x_n|\hat \lambda,\hat \mu,\sigma^2=0.5) &amp; = \prod_i^n[\sum_j^k P(Gaussian \ j \ was \ chosen)P(xi|Gaussian \ j \ was \ chosen)] \\<br> &amp; = \prod_i^n[\sum_j^k \lambda_j{1 \over \sqrt{2 \pi \sigma^2}} e^{-(x_i-\mu_j)^2 \over 2 \sigma_j^2}]<br>\end{aligned}<br>$$</p>
+<p><strong>MLE:</strong> $(\hat \mu, \hat \lambda)_{ML}= argmax \ L(x1,..,xn|\hat \lambda,\hat \mu,\sigma^2=0.5)$</p>
+<p><strong>How to find MLE?</strong></p>
+<h2 id="“SOFT”-K-MEANS"><a href="#“SOFT”-K-MEANS" class="headerlink" title="“SOFT” K-MEANS"></a>“SOFT” K-MEANS</h2><p><strong>soft:</strong> our guesses are probabilities and taking values in [0,1]<br><strong>hard:</strong> represents a single best guess (taking values in {0,1} or {1,…k})</p>
+<p>Special case of the EM Algorithm<br>$\sigma^2$=1/2</p>
+<p><strong>初始化</strong><br>初始化分布参数θ, $\mu^{(0)}$,$\lambda^{(0)}$</p>
+<p><strong>重复 EM 步骤直到收敛</strong><br><strong>1.E-step</strong><br>Fill in    the    missing    variables    with the expected values<br>根据参数初始值或上一次迭代的模型参数来计算出隐性变量的后验概率，其实就是隐性变量的期望。作为隐藏变量的现估计值：<br>$$w_j^{(i)}=P(z^{(i)}=j|x^{(i)};\mu,\lambda,\sigma^2=0.5) $$</p>
+<p><strong>2.M-Step</strong><br>Regular    maximum    likelihood estimation    (MLE)    using    the    values computed    in the E step    and    the    values of    the    other    variables<br>将似然函数最大化以获得新的参数值 $\mu^{(l+1)}$,$\lambda^{(l+1)}$</p>
+<ul>
+<li>l: index over EM iterations</li>
+<li>j: index of Gaussians</li>
+<li>i: index of datapoints<br>$$\hat \lambda_j={\# j \ was \ chosen \over n}={\sum_{i=1}^n w_j^{(i)} \over n}$$<br>$$\hat \mu_j={\sum_{i=1}^n w_j^{(i)} x^{(i)} \over \sum_{i=1}^n w_j^{(i)}}$$</li>
+</ul>
+<p><strong>EM Algorithm guarantees:</strong><br>$$L(D|\theta^{[0]}) \le L(D|\theta^{[1]}) \le L(D|\theta^{[2]})…$$<br>This is a Non-decreasing function. And if the likelihood function is bounded, the sequence will converge. Here the example is bounded, because $\sigma$ is fixed.<br>It might end up with local optimal.</p>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><img src="http://images.shuang0420.com/images/EM%E7%AE%97%E6%B3%95/draft.jpg" class="ful-image" alt="draft.jpg">
+<p>第一次 iteration 的表格表示<br><img src="http://images.shuang0420.com/images/EM%E7%AE%97%E6%B3%95/table.jpg" class="ful-image" alt="table.jpg"></p>
+<h1 id="General-EM-algorithm"><a href="#General-EM-algorithm" class="headerlink" title="General EM algorithm"></a>General EM algorithm</h1><p><strong>X</strong> observed data<br><strong>Z</strong> unobserved ‘data’<br><strong>Complete data</strong> Y=(X,Z)<br><strong>Likelihood function</strong> $L(X,Z|\theta)$ known</p>
+<p><strong>Problem:</strong> find MLE<br>$$<br>  \begin{aligned}<br>  \hat \theta_{ML} &amp; = argmax \ L(X|\theta)= argmax \sum_Z P(X,Z|\theta) \\<br>   &amp; = argmax \sum_Z P(Z|\theta)P(X|Z,\theta) \\<br>   &amp; = argmax \sum_Z P(X|\theta)P(Z|X,\theta)P(X|Z,\theta)<br>  \end{aligned}<br>$$</p>
+<p><strong>Chicken-egg Problem</strong> with regard to P(Z),$\theta$<br>先有鸡还是先有蛋的问题。当我们知道了哪些 datapoints 属于同一个高斯分布的时候，我们才能够对这个分布的参数作出靠谱的预测，然而现在 datapoints 混在了一起，我们不知道哪个属于哪个，也就没办法估计参数。反过来，只有当我们对 K 个分布的参数作了准确的估计的时候，才知道哪些 datapoints 属于同一个高斯分布。<br>所以陷入了僵局，怎么办？不如就先随便整一个值出来，看你怎么变，然后我再根据你的变化调整我的变化，然后如此迭代着不断互相推导，最终就会收敛到一个解。这就是EM算法的基本思想。 -&gt; chicken stay, egg change</p>
+<p><strong>EM solution</strong></p>
+<ol>
+<li>Initialize $\theta$ to some value</li>
+<li>EM 方程<br>$$\theta^{[l+1]}=argmax \ E_{Z|\theta^l}[logP(Z,X|\theta)]$$<br>E 就是 expectation 的 E, write expression for E as function of $\theta$, expression: auxiliary function $Q(\theta^{[l]}|\theta)$<br>M 就是 argmax 的 M, find the MAX over $\theta$<br>=&gt;<br><strong>Simple EM solution:</strong><ul>
+<li><strong>E-step:</strong> express MLE as function of X’s and Z’s<br>know the value of Z, what would the ML solution</li>
+<li><strong>M-step:</strong> replace each Z with $E[Z|\theta]$</li>
+</ul>
+</li>
+</ol>
+<p><strong>EM guarantees</strong><br>$$L(X|\theta^{[l]}) \le L(X|\theta^{l+1})$$</p>
+<p>If likelihood is bounded, the sequence will converge.</p>
+<p><strong>Special but most commonly use:</strong><br>$L(X,Z|\theta)$ is a member of the exponential family</p>
+<h1 id="适用情景"><a href="#适用情景" class="headerlink" title="适用情景"></a>适用情景</h1><p>When to use:</p>
+<ul>
+<li>Data is only partially observable</li>
+<li>Unsupervised clustering(target value unobservable)</li>
+<li>Supervised learning(some instance attributes unobservable)</li>
+</ul>
+<p>Some uses:</p>
+<ul>
+<li>Train Bayesian Belief Networks</li>
+<li>Unsupervised clustering(AUTOCLASS)</li>
+<li>Learning Hidden Markov Models</li>
+</ul>
+<blockquote>
+<p>参考链接：<br><a href="http://blog.csdn.net/zouxy09/article/details/8537620" target="_blank" rel="external">从最大似然到EM算法浅解</a><br><a href="http://www.cnblogs.com/jerrylead/archive/2011/04/06/2006936.html" target="_blank" rel="external">（EM算法）The EM Algorithm</a><br><a href="http://blog.csdn.net/livecoldsun/article/details/40833829" target="_blank" rel="external"> EM（Expectation-Maximization）算法 </a></p>
+</blockquote>
 ]]></content>
       
         <categories>
@@ -11263,108 +11315,97 @@ python nb.py split.train split.test</pre>
     </entry>
     
     <entry>
-      <title><![CDATA[Search Engines笔记 - Search logs]]></title>
-      <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章开始的很多内容都是从论文的研究报告而来。重点是第四部分，怎样对 search log 划分 session，有哪些 feature 可以作为划分 session 的依据。<br><a id="more"></a></p>
-<h1 id="User-information-collection"><a href="#User-information-collection" class="headerlink" title="User information collection"></a>User information collection</h1><p>大多数搜索引擎会保存每一次搜索的信息，主要有下面的内容：</p>
+      <title><![CDATA[Search Engines笔记 - Document Structure]]></title>
+      <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。文档的表示形式不只词袋一种，它可以有 fields，有 hierarchical structure(XML)，multiple representations of meaning, priors 等形式，这一章讲的就是检索模型怎么来处理这些复杂的文档表达。<br><a id="more"></a></p>
+<h1 id="Multiple-representations-of-meaning"><a href="#Multiple-representations-of-meaning" class="headerlink" title="Multiple representations of meaning"></a>Multiple representations of meaning</h1><blockquote>
+<p>Fields can be used to provide different representations of the same information</p>
+</blockquote>
+<p>三种表达方法。</p>
 <ul>
-<li>query</li>
-<li>timestamp</li>
-<li>IP address of the search client</li>
-<li>possibly an id recorded in a cookie or obtained another way</li>
-<li>information about the operating system and browser</li>
-<li>clickthrough information</li>
+<li><strong>Vector space</strong><br>– 每个 representation 提供独立的 ranking score<br>– 对每个分数求平均来得到一个最终的 ranking</li>
+<li><strong>Okapi</strong><br>– Representations 以不同的方式来表达相同含义<br>– 合并 representations 来得到一个更好的 representation</li>
+<li><strong>Indri</strong><br>– 每个 representation 提供一个 p(t|d) 的估计<br>– 有多种方法来合并这些估计</li>
 </ul>
-<p>目前公开的 web search logs</p>
+<h2 id="Vector-space"><a href="#Vector-space" class="headerlink" title="Vector space"></a>Vector space</h2><p><strong>Option 1:</strong> 一个词袋模型，包含了各种 filed 词汇<br>E.g., iPad::inlink, iPad::title, iPad::body, …</p>
+<p>这让 length normalization 变得更为复杂，比如说 inlink text 可能会和 title 或者 body text 混在一起。一般不用这种方法。</p>
+<p><strong>Option 2:</strong> Several vector spaces<br>$w_{title} *sim(query,title_i) +$<br>$w_{body} *sim(query,body_i) +$<br>$w_{inlink} *sim(query,inlink_i) +$<br>$w_{url} *sim(query,url_i) $</p>
+<p>这种方法易于管理，也易于扩展，Lucene 也采用了这种方法，然而关于怎么设置 weights，并没有什么 guidance。</p>
+<h2 id="Okapi"><a href="#Okapi" class="headerlink" title="Okapi"></a>Okapi</h2><blockquote>
+<p>Evidence from each field should be weighted differently</p>
+</blockquote>
+<p>一些 field 可能有更好的表达能力，如 inlink text，一些 field 可能更为冗长，如 body，所以不同的 fields 我们应该区别对待。</p>
+<p><strong>One solution</strong><br>• 把 query 看作 |F| 个词袋<br>• 对 query 匹配每个 field，然后 add the score</p>
+<p>然而 … 这打破了 BM25’s saturation assumption。在 |F| 个 field 里中出现了一次的字段，比在一个 field 里出现了|F|次的字段，有更大的影响，这并不是我们想要的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">5 fields × 1 occurrence = 5 × 0.4</div><div class="line">1 field × 5 occurrences = 0.77</div></pre></td></tr></table></figure></p>
+<p><strong>Solution:</strong> 用一个复合加权的 representation，一篇文档就用一个词袋</p>
+<p>$$tf_t=\sum_fw_ftf_{t,f}$$<br>$$doclen=\sum_fw_fdoclen_f$$</p>
+<p>F: the set of fields</p>
+<p>-&gt; 然后用标准的 BM25<br>但是 … BM25 有常量，可能我们需要 tune them on a per-field basis，可以用 BM25F。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg" class="ful-image" alt="BM25F.jpg"><br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/exampleW.jpg" class="ful-image" alt="exampleW.jpg"></p>
+<p><strong>特性：</strong></p>
 <ul>
-<li>The Excite log(1997)<br>18,113 users, 51,473 queries</li>
-<li>The AOL Log(2006)<br>$&gt;$ 650,000 users, $&gt;$ 20 million queries</li>
-<li>Alta Vista(1999)<br>285 million users, 1 billion queries</li>
-<li>Alta Vista(2001)<br>$&gt;$ 7 million queries</li>
+<li>一个 vocabulary 涵盖了所有的 fields<br>– 所以一个 term 有一个 global idf, 而不是一个 field-specific idf<br>– 对各种文档都有适用么?<pre><code>» E.g., 专利，医疗记录等
+</code></pre></li>
+<li>Field-specific tuning</li>
+<li>constants 的影响很难理解</li>
 </ul>
-<h2 id="Query-characteristics"><a href="#Query-characteristics" class="headerlink" title="Query characteristics"></a>Query characteristics</h2><h3 id="Query-Length-Average-terms-per-query-3-5-terms"><a href="#Query-Length-Average-terms-per-query-3-5-terms" class="headerlink" title="Query Length: Average terms per query: 3.5 terms"></a>Query Length: Average terms per query: 3.5 terms</h3><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/queryLen.jpg" class="ful-image" alt="queryLen.jpg">
-<h3 id="Who-queries"><a href="#Who-queries" class="headerlink" title="Who queries"></a>Who queries</h3><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/whoQueries.jpg" class="ful-image" alt="whoQueries.jpg">
-<h3 id="Query-Frequency-Query-Frequency-Follows-a-Power-Law"><a href="#Query-Frequency-Query-Frequency-Follows-a-Power-Law" class="headerlink" title="Query Frequency: Query Frequency Follows a Power Law"></a>Query Frequency: Query Frequency Follows a Power Law</h3><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/queryFreq.jpg" class="ful-image" alt="queryFreq.jpg">
-<p><strong>Power Law</strong><br>$$Frequency(q) = K*Rank(q)^{- \alpha}$$</p>
-<ul>
-<li>K: positive constant</li>
-<li>Rank(q): popularity rank(r=1 is the most popular)</li>
-<li>$\alpha$: constant, about 2.4 for the Excite query log</li>
-</ul>
-<p>和 Zipf’s law 一样的 shape，但不一样的斜率。</p>
-<p>一小部分的 query 非常常见，而大部分的 query 非常少见。 =&gt; 通过 <strong>缓存</strong> 来提高搜索效率。</p>
-<h3 id="Vary-over-time"><a href="#Vary-over-time" class="headerlink" title="Vary over time"></a>Vary over time</h3><p>最常见的 query 总是在不断变化<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/queryFreqVary.jpg" class="ful-image" alt="queryFreqVary.jpg"></p>
-<p>来自 google 的统计数据</p>
-<ul>
-<li>每天的 query 中有 20% 在之前从未出现过。(占每天所有 unique query 的 50%)</li>
-<li>8% 的 query 是名字(names)</li>
-</ul>
-<h1 id="Model-query"><a href="#Model-query" class="headerlink" title="Model query"></a>Model query</h1><ul>
-<li>Query topics: What<br>比如说在雅虎目录下的分类。</li>
-<li>User demographics: Who<br>如用户的年龄、性别（用户提供）、收入、教育程度（从邮编等信息推断）等。</li>
-<li>Session characteristics: How<br>eg. session length, number of queries/session, % of queries with low/high click entropy</li>
-</ul>
-<h1 id="Represent-users"><a href="#Represent-users" class="headerlink" title="Represent users"></a>Represent users</h1><p>需要用到的工具: Pseudo documents, clustering, control vocabulary<br><strong>How to represent users？</strong></p>
-<ul>
-<li>在 “what” 维度上对用户进行聚类</li>
-<li>在 (“who”,”how”) 维度上进一步 investigate groups</li>
-<li>根据 group 的显著特征对其打上标签</li>
-</ul>
-<p>根据用户的 query type 来对用户进行聚类：</p>
+<h2 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h2><p>Indri 模型。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/indri.jpg" class="ful-image" alt="indri.jpg"></p>
+<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/andSum.jpg" class="ful-image" alt="andSum.jpg">
+<p>#AND 和 #WAND 用来合并独立的概率<br>#SUM 和 #WSUM 用不同方法来估计同一个概率</p>
+<h1 id="Hierarchical-structure-XML"><a href="#Hierarchical-structure-XML" class="headerlink" title="Hierarchical structure(XML)"></a>Hierarchical structure(XML)</h1><p>Hierarchical structure 的文档通常用 Bayesian inference networks 来解决，如 indri。<br>首先对 flat 和 hierarchical structure 做一个区分。<br><strong>Flat</strong><br>元素之间是相互独立的，一个 term 只在包含了它的那个元素（通常是一个）里出现。<br>检索目的通常是一篇文档。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/1.jpg" class="ful-image" alt="1.jpg"><br><strong>Hierarchical</strong><br>元素之间是相互关联的，通常是包含的关系，一个 term 在所有包含了它的元素里出现。<br>检索目的可以是文档，也可以是元素。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/2.jpg" class="ful-image" alt="2.jpg"></p>
+<h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><p><strong>检索什么样的 element?</strong><br>• Document? Encounter? Diagnosis?</p>
+<p><strong>用怎样的 corpus statistics</strong><br>• Document vs. element</p>
+<p><strong>怎样组合来自不同 elements 的 evidence</strong><br>• Can we prefer patients that have several matching encounters?</p>
+<p><strong>Exact-match vs. best-match document structure</strong><br>• 可能 query 并不能完全匹配文档结构</p>
+<h2 id="Ranking-elements"><a href="#Ranking-elements" class="headerlink" title="Ranking elements"></a>Ranking elements</h2><p><strong>One option: Use Jelinek-Mercer smoothing</strong><br>$$P(q_i|e)=(1-\lambda)P_{MLE}P(q_i|e)+ \lambda P_{MLE}P(q_i|C)$$</p>
+<p>这种方法可能带来的问题是：</p>
 <ol>
-<li>从日志中得到 (user,query) pairs</li>
-<li>为用户创建 pseudo documents<br>标题: user id<br>内容: 每条 query 的前 10 篇文档对应的 Yahoo! 分类目录</li>
-<li>计算相似度<br>e.g. JS divergence, cosine</li>
+<li>文档结构不规范，这种情况经常在 web 文档中出现，如果文档里本来包含了 query term 然而因为文档不规范而找不到相应的 element，那么 score 可能为 0。</li>
+<li>query 可能太严格。<br>– #AND[title](iphone)：不匹配 “Apple Cuts Phone Price”<br>– #AND[paragraph](solutions to poverty)： “poverty” 和 “solutions” 可能出现在不同的段落里</li>
 </ol>
-<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/pseudo.jpg" class="ful-image" alt="pseudo.jpg">
-<h2 id="Types-of-users"><a href="#Types-of-users" class="headerlink" title="Types of users"></a>Types of users</h2><p>这一部分主要是介绍不同类型的用户特征，这些聚类结果有什么用？=&gt; 为下一步的个性化搜索引擎做准备。</p>
-<h3 id="Informational-Users"><a href="#Informational-Users" class="headerlink" title="Informational Users"></a>Informational Users</h3><p><strong>How:</strong><br>• More likely to issue non-navigational queries<br>• Less likely to have single-click sessions<br>• More likely to use query suggestions</p>
-<p><strong>What:</strong><br>• Wide range of topics<br>• Little interest in adult content</p>
-<p><strong>Who:</strong><br>• More likely to be well-educated<br>• More likely to have above-average income</p>
-<h3 id="Navigational-Users"><a href="#Navigational-Users" class="headerlink" title="Navigational Users"></a>Navigational Users</h3><p><strong>How:</strong><br>• More likely to issue navigational queries<br>• More likely to have single-click sessions<br>• Less likely to use query suggestions</p>
-<p><strong>What:</strong><br>• Dominated by popular websites (Facebook, YouTube, Craigslist) Who<br>• Mostly representative of the entire population</p>
-<h3 id="Transactional-Users"><a href="#Transactional-Users" class="headerlink" title="Transactional Users"></a>Transactional Users</h3><p><strong>How:</strong><br>• Somewhat similar to navigational users. But, multiple sites can perform the transaction<br>• Diverse clicks<br>• Short interaction with search engine What<br>• Shopping, adult content, gaming</p>
-<p><strong>Who:</strong><br>• Depends heavily on the type of transaction<br>• Topic “recreation/games” associated with low income &amp; education</p>
-<h2 id="聚类结果-Selected-groups"><a href="#聚类结果-Selected-groups" class="headerlink" title="聚类结果 - Selected groups"></a>聚类结果 - Selected groups</h2><p><strong>Baby boomers:</strong><br>• 50 years old<br>• Interested in finance<br>• Simple navigational queries related to online banking</p>
-<p><strong>Challenged youth:</strong><br>• Average age of 34<br>• Low-income neighborhoods with low-level of education<br>• Interested in music<br>• Navigational sessions</p>
-<p><strong>Liberal females:</strong><br>• Mostly female from areas that voted Democratic<br>• Shopping queries<br>• Long sessions (browsing and comparison)</p>
-<p><strong>White conservatives:</strong><br>• Mostly male from areas that voted Republican<br>• Interested in automotive, business, home &amp; garden</p>
-<p><strong>Older users:</strong> Health / diseases &amp; conditions, gambling, travel<br><strong>People in their late 20s:</strong> Health / fitness, reproductive health<br><strong>Younger people:</strong> Games, education<br><strong>Low income:</strong> Music, comics &amp; animation, military<br><strong>Asian descent:</strong> Computers &amp; internet, programming &amp; development</p>
-<p><strong>Some topics typically receive few clicks:</strong><br>• News &amp; media, society &amp; culture, computers &amp; internet People are more likely to click on suggestions for some topics<br>• Health, science, arts</p>
-<p><strong>People with higher educational levels:</strong><br>• Tend to have shorter sessions<br>• Click on query suggestions less often<br>• Are more likely to submit tail queries</p>
-<h1 id="Segmenting-search-logs-into-sessions"><a href="#Segmenting-search-logs-into-sessions" class="headerlink" title="Segmenting search logs into sessions"></a>Segmenting search logs into sessions</h1><p>通常，我们会把 search log 划分为一个个基于 information need 的 dialogue<br>dialogue 形式，实际就是用户发出初始查询，搜索引擎给出结果，用户不满意，重新修改查询语句再次搜索，然后得到新的结果，不断循环的过程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Person: query</div><div class="line">Engine: search results</div><div class="line">Person: reformulated query</div><div class="line">Engine: new search results ...</div></pre></td></tr></table></figure></p>
-<p>那么问题来了，怎么来区分这些不同的 dialogues 呢？<br>我们定义 information need = a search session(dialogue)，最简单粗暴划分 session 的方法就是通过时间，比如说三十分钟内一系列的用户行为就算作一个 session。</p>
-<p>划分 session 可以考虑的因素：</p>
+<p>解决方案是，多加一个 smoothing。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/formula.jpg" class="ful-image" alt="formula.jpg"></p>
+<h2 id="Multiple-elements"><a href="#Multiple-elements" class="headerlink" title="Multiple elements"></a>Multiple elements</h2><p>这里我们探讨右图的情况。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/multiple.jpg" class="ful-image" alt="multiple.jpg"></p>
+<p>两种方法 Aggregation OR Combination。</p>
 <ul>
-<li>Time: Same session iff |timestamp (q2) – timestamp| (q1) &lt; ∆<br>often ∆ = 30 minutes</li>
-<li>Common term: Same session iff q1 ∩ q2 ≠ Ø<br>Probably high Precision, low Recall</li>
-<li>Rewrite classes: Common reformulation patterns<br>E.g., term added, deleted, or replaced<br>Probably high Precision, low Recall</li>
-<li>Edit distance</li>
-<li>Co-occurrence<br>e.g., PMI, Chi-square of queries in a query log</li>
-<li>Same clicks<br>queries have co-occurring clicks in a query log</li>
-<li>Document categories<br>ODP or Yahoo page category overlap of top 10 results</li>
-<li>Same/overlap retrieved documents<br>JSD similarity of top 10 results<br>cosine distance among results</li>
-<li>Classifiers<br>…</li>
+<li>Aggregation: Combine inverted lists</li>
+<li>Combination: Combine scores</li>
 </ul>
-<p>训练一个分类器是最好的方法，对任意一对 queries 大概有 95-97% 的准确率。然而 heuristics 也不差，尤其是 edit distance 和 cosine distance among results 都非常有效，时间尺度通常会和其他 heuristic 合用，效果更佳。</p>
-<p>各种 heuristic 都可以作为分类器的 Features</p>
+<h3 id="Aggregation"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</h3><p>Indri 允许在 query 里指定 aggregation type</p>
 <ul>
-<li>Temporal<br>– ≤ {5, 30, 60, 120} minutes, ∆ time, are_sequential</li>
-<li>Edit distance<br>– Several character and token-based metrics</li>
-<li>Query log<br>– Various types of (q1, q2) co-occurrence in a larger query log</li>
-<li>Web search<br>– Cosine distance of top 50 search results for each query<br>(“prisma”)</li>
+<li>term.element<br>– 如果没有指定 element, 那么默认 element 为 Document<br>– Example: apple.inlink</li>
+<li>结果: 一个 inverted list 包含了一个 element 的所有 instance</li>
 </ul>
-<p>我们训练分类器一般需要完成两个任务</p>
-<ul>
-<li>Boundary task: Given a pair of sequential queries</li>
-<li>Same task: Given a pair of queries</li>
-</ul>
-<h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><p>用户的信息需求可能是跨越了几天甚至是几周的，比如用户写论文、找学校信息等，可能出现的情况是：</p>
-<ul>
-<li>用户有交叉的任务<br>如查 paper 的时候顺便查下中午吃什么</li>
-<li>用户把一个任务分成若干个子任务分阶段完成<br>比如今天查为什么，明天查怎么做</li>
-<li>子任务可能看起来是独立的实际确实相关的</li>
-</ul>
+<p><strong>Example</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#wand( #wsum (0.3 apple.title 0.2 apple.inlink 0.5 apple.body ) #wsum (0.3 ipad.title 0.2 ipad.inlink 0.5 ipad.body ) )</div></pre></td></tr></table></figure></p>
+<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ainlink.jpg" class="ful-image" alt="ainlink.jpg">
+<p><strong>问题：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#AND( breast.paragraph cancer.paragraph treatment.paragraph )</div></pre></td></tr></table></figure></p>
+<p>对这一个查询，用 Aggregation 的话以下两篇文档会得到一样的分数，然而其实 D2 要比 D1 更相关。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ap.jpg" class="ful-image" alt="ap.jpg"></p>
+<h3 id="Combination"><a href="#Combination" class="headerlink" title="Combination"></a>Combination</h3><p>用 #MAX, #SUM, #OR 等 query operators 来合并 element scores。<br>首先我们来认识一下 query。<br>E.g.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[document] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
+<p>最外面的 element 是 document, 所以对 documents 进行排序</p>
+<ol>
+<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
+<li>对上一步产生的结果 #SUM 运算，结果是一个 (document, score) 列表</li>
+</ol>
+<p>E.g.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[paragraph] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
+<p>最外面的 element 是 paragraph, 所以对 paragraphs 进行排序</p>
+<ol>
+<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
+<li>对上一步产生的结果 #SUM 运算，结果是一个 (paragraph, score) 列表</li>
+</ol>
+<p>来考虑下不同的 combine query operator 产生的影响。</p>
+<p><strong>#MAX[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 只考虑 best sentence<br><strong>#SUM[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– poorly matching sentences 会让分数变低<br><strong>#OR[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 偏好有更多匹配的 sentences 的文档</p>
+<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/c4.jpg" class="ful-image" alt="c4.jpg">
+<p>• #MAX considers them equal<br>• #AND prefers C4<br>• #OR prefers C1<br>• #AVERAGE prefers C4</p>
+<h3 id="Comparsion"><a href="#Comparsion" class="headerlink" title="Comparsion"></a>Comparsion</h3><p>假定目标是检索有 paragraphs 讨论 breast cancer treatment 的文档<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/compare.jpg" class="ful-image" alt="compare.jpg"><br><strong>Combination:</strong> Partial credit for sections that partially match<br><strong>Aggregation:</strong> The terms might not all be in the same section</p>
+<h2 id="Extents"><a href="#Extents" class="headerlink" title="Extents"></a>Extents</h2><p>Using extents as evidence<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND(</div><div class="line">  #OR[document](</div><div class="line">      #AND[sentence](iraq war))</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
+<p>• 检索的是 document<br>• <strong>偏好</strong> ‘iraq’ and ‘war’ 在同一句话里的文档<br>– 出现在 title 里会让分数有稍稍的提高，因为有 smoothing</p>
+<p>Using extents as a constraint<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND (</div><div class="line">  iraq.sentence</div><div class="line">  war.sentence</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
+<p>• 检索的是 document<br>• <strong>要求</strong> ‘iraq’ and ‘war’ 必须出现在同一句话的文档<br>  – 出现在文档的其它部分并不会有任何帮助</p>
+<h2 id="HLT-Applications"><a href="#HLT-Applications" class="headerlink" title="HLT Applications"></a>HLT Applications</h2><p>文档结构可以由 annotation processes 产生<br>• E.g., named entity annotators, semantic role labelers, …</p>
+<p>Retrieval of elements, using semantic role annotations<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#and[sentence](</div><div class="line">  #and[target_verb]( Loves</div><div class="line">      #and[./agent]( John )</div><div class="line">      #and[./patient]( Mary ) ) )</div></pre></td></tr></table></figure></p>
+<p>• ./element specifies that element is a child of the parent field</p>
+<h1 id="Table-retrieval"><a href="#Table-retrieval" class="headerlink" title="Table retrieval"></a>Table retrieval</h1><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table.jpg" class="ful-image" alt="table.jpg">
+<p>实际就是一个把 table 转化为 structure document 的问题。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table2.jpg" class="ful-image" alt="table2.jpg"></p>
+<h1 id="Summaries"><a href="#Summaries" class="headerlink" title="Summaries"></a>Summaries</h1><p><strong>Fields</strong><br>• 用于 independent evidence (author, title, journal, …)<br>• 用于 multiple representations (url, title, body, …)<br>• 了解差异<br>• 了解各个检索模型如何支持这些 fields<br>• 了解在 query 中如何使用这些 fields</p>
+<p><strong>Hierarchical structure</strong><br>• 怎样在多个 elements 都有匹配时 combine evidence<br>• Exact-match vs. best-match document structure<br>• 了解 Indri 怎样支持这些 elements<br>• 了解在 query 中如何使用这些 elements</p>
 ]]></content>
       
         <categories>
@@ -11501,97 +11542,108 @@ python nb.py split.train split.test</pre>
     </entry>
     
     <entry>
-      <title><![CDATA[Search Engines笔记 - Document Structure]]></title>
-      <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。文档的表示形式不只词袋一种，它可以有 fields，有 hierarchical structure(XML)，multiple representations of meaning, priors 等形式，这一章讲的就是检索模型怎么来处理这些复杂的文档表达。<br><a id="more"></a></p>
-<h1 id="Multiple-representations-of-meaning"><a href="#Multiple-representations-of-meaning" class="headerlink" title="Multiple representations of meaning"></a>Multiple representations of meaning</h1><blockquote>
-<p>Fields can be used to provide different representations of the same information</p>
-</blockquote>
-<p>三种表达方法。</p>
+      <title><![CDATA[Search Engines笔记 - Search logs]]></title>
+      <url>http://www.shuang0420.com/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章开始的很多内容都是从论文的研究报告而来。重点是第四部分，怎样对 search log 划分 session，有哪些 feature 可以作为划分 session 的依据。<br><a id="more"></a></p>
+<h1 id="User-information-collection"><a href="#User-information-collection" class="headerlink" title="User information collection"></a>User information collection</h1><p>大多数搜索引擎会保存每一次搜索的信息，主要有下面的内容：</p>
 <ul>
-<li><strong>Vector space</strong><br>– 每个 representation 提供独立的 ranking score<br>– 对每个分数求平均来得到一个最终的 ranking</li>
-<li><strong>Okapi</strong><br>– Representations 以不同的方式来表达相同含义<br>– 合并 representations 来得到一个更好的 representation</li>
-<li><strong>Indri</strong><br>– 每个 representation 提供一个 p(t|d) 的估计<br>– 有多种方法来合并这些估计</li>
+<li>query</li>
+<li>timestamp</li>
+<li>IP address of the search client</li>
+<li>possibly an id recorded in a cookie or obtained another way</li>
+<li>information about the operating system and browser</li>
+<li>clickthrough information</li>
 </ul>
-<h2 id="Vector-space"><a href="#Vector-space" class="headerlink" title="Vector space"></a>Vector space</h2><p><strong>Option 1:</strong> 一个词袋模型，包含了各种 filed 词汇<br>E.g., iPad::inlink, iPad::title, iPad::body, …</p>
-<p>这让 length normalization 变得更为复杂，比如说 inlink text 可能会和 title 或者 body text 混在一起。一般不用这种方法。</p>
-<p><strong>Option 2:</strong> Several vector spaces<br>$w_{title} *sim(query,title_i) +$<br>$w_{body} *sim(query,body_i) +$<br>$w_{inlink} *sim(query,inlink_i) +$<br>$w_{url} *sim(query,url_i) $</p>
-<p>这种方法易于管理，也易于扩展，Lucene 也采用了这种方法，然而关于怎么设置 weights，并没有什么 guidance。</p>
-<h2 id="Okapi"><a href="#Okapi" class="headerlink" title="Okapi"></a>Okapi</h2><blockquote>
-<p>Evidence from each field should be weighted differently</p>
-</blockquote>
-<p>一些 field 可能有更好的表达能力，如 inlink text，一些 field 可能更为冗长，如 body，所以不同的 fields 我们应该区别对待。</p>
-<p><strong>One solution</strong><br>• 把 query 看作 |F| 个词袋<br>• 对 query 匹配每个 field，然后 add the score</p>
-<p>然而 … 这打破了 BM25’s saturation assumption。在 |F| 个 field 里中出现了一次的字段，比在一个 field 里出现了|F|次的字段，有更大的影响，这并不是我们想要的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">5 fields × 1 occurrence = 5 × 0.4</div><div class="line">1 field × 5 occurrences = 0.77</div></pre></td></tr></table></figure></p>
-<p><strong>Solution:</strong> 用一个复合加权的 representation，一篇文档就用一个词袋</p>
-<p>$$tf_t=\sum_fw_ftf_{t,f}$$<br>$$doclen=\sum_fw_fdoclen_f$$</p>
-<p>F: the set of fields</p>
-<p>-&gt; 然后用标准的 BM25<br>但是 … BM25 有常量，可能我们需要 tune them on a per-field basis，可以用 BM25F。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/BM25F.jpg" class="ful-image" alt="BM25F.jpg"><br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/exampleW.jpg" class="ful-image" alt="exampleW.jpg"></p>
-<p><strong>特性：</strong></p>
+<p>目前公开的 web search logs</p>
 <ul>
-<li>一个 vocabulary 涵盖了所有的 fields<br>– 所以一个 term 有一个 global idf, 而不是一个 field-specific idf<br>– 对各种文档都有适用么?<pre><code>» E.g., 专利，医疗记录等
-</code></pre></li>
-<li>Field-specific tuning</li>
-<li>constants 的影响很难理解</li>
+<li>The Excite log(1997)<br>18,113 users, 51,473 queries</li>
+<li>The AOL Log(2006)<br>$&gt;$ 650,000 users, $&gt;$ 20 million queries</li>
+<li>Alta Vista(1999)<br>285 million users, 1 billion queries</li>
+<li>Alta Vista(2001)<br>$&gt;$ 7 million queries</li>
 </ul>
-<h2 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h2><p>Indri 模型。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/indri.jpg" class="ful-image" alt="indri.jpg"></p>
-<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/andSum.jpg" class="ful-image" alt="andSum.jpg">
-<p>#AND 和 #WAND 用来合并独立的概率<br>#SUM 和 #WSUM 用不同方法来估计同一个概率</p>
-<h1 id="Hierarchical-structure-XML"><a href="#Hierarchical-structure-XML" class="headerlink" title="Hierarchical structure(XML)"></a>Hierarchical structure(XML)</h1><p>Hierarchical structure 的文档通常用 Bayesian inference networks 来解决，如 indri。<br>首先对 flat 和 hierarchical structure 做一个区分。<br><strong>Flat</strong><br>元素之间是相互独立的，一个 term 只在包含了它的那个元素（通常是一个）里出现。<br>检索目的通常是一篇文档。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/1.jpg" class="ful-image" alt="1.jpg"><br><strong>Hierarchical</strong><br>元素之间是相互关联的，通常是包含的关系，一个 term 在所有包含了它的元素里出现。<br>检索目的可以是文档，也可以是元素。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/2.jpg" class="ful-image" alt="2.jpg"></p>
-<h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><p><strong>检索什么样的 element?</strong><br>• Document? Encounter? Diagnosis?</p>
-<p><strong>用怎样的 corpus statistics</strong><br>• Document vs. element</p>
-<p><strong>怎样组合来自不同 elements 的 evidence</strong><br>• Can we prefer patients that have several matching encounters?</p>
-<p><strong>Exact-match vs. best-match document structure</strong><br>• 可能 query 并不能完全匹配文档结构</p>
-<h2 id="Ranking-elements"><a href="#Ranking-elements" class="headerlink" title="Ranking elements"></a>Ranking elements</h2><p><strong>One option: Use Jelinek-Mercer smoothing</strong><br>$$P(q_i|e)=(1-\lambda)P_{MLE}P(q_i|e)+ \lambda P_{MLE}P(q_i|C)$$</p>
-<p>这种方法可能带来的问题是：</p>
+<h2 id="Query-characteristics"><a href="#Query-characteristics" class="headerlink" title="Query characteristics"></a>Query characteristics</h2><h3 id="Query-Length-Average-terms-per-query-3-5-terms"><a href="#Query-Length-Average-terms-per-query-3-5-terms" class="headerlink" title="Query Length: Average terms per query: 3.5 terms"></a>Query Length: Average terms per query: 3.5 terms</h3><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/queryLen.jpg" class="ful-image" alt="queryLen.jpg">
+<h3 id="Who-queries"><a href="#Who-queries" class="headerlink" title="Who queries"></a>Who queries</h3><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/whoQueries.jpg" class="ful-image" alt="whoQueries.jpg">
+<h3 id="Query-Frequency-Query-Frequency-Follows-a-Power-Law"><a href="#Query-Frequency-Query-Frequency-Follows-a-Power-Law" class="headerlink" title="Query Frequency: Query Frequency Follows a Power Law"></a>Query Frequency: Query Frequency Follows a Power Law</h3><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/queryFreq.jpg" class="ful-image" alt="queryFreq.jpg">
+<p><strong>Power Law</strong><br>$$Frequency(q) = K*Rank(q)^{- \alpha}$$</p>
+<ul>
+<li>K: positive constant</li>
+<li>Rank(q): popularity rank(r=1 is the most popular)</li>
+<li>$\alpha$: constant, about 2.4 for the Excite query log</li>
+</ul>
+<p>和 Zipf’s law 一样的 shape，但不一样的斜率。</p>
+<p>一小部分的 query 非常常见，而大部分的 query 非常少见。 =&gt; 通过 <strong>缓存</strong> 来提高搜索效率。</p>
+<h3 id="Vary-over-time"><a href="#Vary-over-time" class="headerlink" title="Vary over time"></a>Vary over time</h3><p>最常见的 query 总是在不断变化<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/queryFreqVary.jpg" class="ful-image" alt="queryFreqVary.jpg"></p>
+<p>来自 google 的统计数据</p>
+<ul>
+<li>每天的 query 中有 20% 在之前从未出现过。(占每天所有 unique query 的 50%)</li>
+<li>8% 的 query 是名字(names)</li>
+</ul>
+<h1 id="Model-query"><a href="#Model-query" class="headerlink" title="Model query"></a>Model query</h1><ul>
+<li>Query topics: What<br>比如说在雅虎目录下的分类。</li>
+<li>User demographics: Who<br>如用户的年龄、性别（用户提供）、收入、教育程度（从邮编等信息推断）等。</li>
+<li>Session characteristics: How<br>eg. session length, number of queries/session, % of queries with low/high click entropy</li>
+</ul>
+<h1 id="Represent-users"><a href="#Represent-users" class="headerlink" title="Represent users"></a>Represent users</h1><p>需要用到的工具: Pseudo documents, clustering, control vocabulary<br><strong>How to represent users？</strong></p>
+<ul>
+<li>在 “what” 维度上对用户进行聚类</li>
+<li>在 (“who”,”how”) 维度上进一步 investigate groups</li>
+<li>根据 group 的显著特征对其打上标签</li>
+</ul>
+<p>根据用户的 query type 来对用户进行聚类：</p>
 <ol>
-<li>文档结构不规范，这种情况经常在 web 文档中出现，如果文档里本来包含了 query term 然而因为文档不规范而找不到相应的 element，那么 score 可能为 0。</li>
-<li>query 可能太严格。<br>– #AND[title](iphone)：不匹配 “Apple Cuts Phone Price”<br>– #AND[paragraph](solutions to poverty)： “poverty” 和 “solutions” 可能出现在不同的段落里</li>
+<li>从日志中得到 (user,query) pairs</li>
+<li>为用户创建 pseudo documents<br>标题: user id<br>内容: 每条 query 的前 10 篇文档对应的 Yahoo! 分类目录</li>
+<li>计算相似度<br>e.g. JS divergence, cosine</li>
 </ol>
-<p>解决方案是，多加一个 smoothing。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/formula.jpg" class="ful-image" alt="formula.jpg"></p>
-<h2 id="Multiple-elements"><a href="#Multiple-elements" class="headerlink" title="Multiple elements"></a>Multiple elements</h2><p>这里我们探讨右图的情况。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/multiple.jpg" class="ful-image" alt="multiple.jpg"></p>
-<p>两种方法 Aggregation OR Combination。</p>
+<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/pseudo.jpg" class="ful-image" alt="pseudo.jpg">
+<h2 id="Types-of-users"><a href="#Types-of-users" class="headerlink" title="Types of users"></a>Types of users</h2><p>这一部分主要是介绍不同类型的用户特征，这些聚类结果有什么用？=&gt; 为下一步的个性化搜索引擎做准备。</p>
+<h3 id="Informational-Users"><a href="#Informational-Users" class="headerlink" title="Informational Users"></a>Informational Users</h3><p><strong>How:</strong><br>• More likely to issue non-navigational queries<br>• Less likely to have single-click sessions<br>• More likely to use query suggestions</p>
+<p><strong>What:</strong><br>• Wide range of topics<br>• Little interest in adult content</p>
+<p><strong>Who:</strong><br>• More likely to be well-educated<br>• More likely to have above-average income</p>
+<h3 id="Navigational-Users"><a href="#Navigational-Users" class="headerlink" title="Navigational Users"></a>Navigational Users</h3><p><strong>How:</strong><br>• More likely to issue navigational queries<br>• More likely to have single-click sessions<br>• Less likely to use query suggestions</p>
+<p><strong>What:</strong><br>• Dominated by popular websites (Facebook, YouTube, Craigslist) Who<br>• Mostly representative of the entire population</p>
+<h3 id="Transactional-Users"><a href="#Transactional-Users" class="headerlink" title="Transactional Users"></a>Transactional Users</h3><p><strong>How:</strong><br>• Somewhat similar to navigational users. But, multiple sites can perform the transaction<br>• Diverse clicks<br>• Short interaction with search engine What<br>• Shopping, adult content, gaming</p>
+<p><strong>Who:</strong><br>• Depends heavily on the type of transaction<br>• Topic “recreation/games” associated with low income &amp; education</p>
+<h2 id="聚类结果-Selected-groups"><a href="#聚类结果-Selected-groups" class="headerlink" title="聚类结果 - Selected groups"></a>聚类结果 - Selected groups</h2><p><strong>Baby boomers:</strong><br>• 50 years old<br>• Interested in finance<br>• Simple navigational queries related to online banking</p>
+<p><strong>Challenged youth:</strong><br>• Average age of 34<br>• Low-income neighborhoods with low-level of education<br>• Interested in music<br>• Navigational sessions</p>
+<p><strong>Liberal females:</strong><br>• Mostly female from areas that voted Democratic<br>• Shopping queries<br>• Long sessions (browsing and comparison)</p>
+<p><strong>White conservatives:</strong><br>• Mostly male from areas that voted Republican<br>• Interested in automotive, business, home &amp; garden</p>
+<p><strong>Older users:</strong> Health / diseases &amp; conditions, gambling, travel<br><strong>People in their late 20s:</strong> Health / fitness, reproductive health<br><strong>Younger people:</strong> Games, education<br><strong>Low income:</strong> Music, comics &amp; animation, military<br><strong>Asian descent:</strong> Computers &amp; internet, programming &amp; development</p>
+<p><strong>Some topics typically receive few clicks:</strong><br>• News &amp; media, society &amp; culture, computers &amp; internet People are more likely to click on suggestions for some topics<br>• Health, science, arts</p>
+<p><strong>People with higher educational levels:</strong><br>• Tend to have shorter sessions<br>• Click on query suggestions less often<br>• Are more likely to submit tail queries</p>
+<h1 id="Segmenting-search-logs-into-sessions"><a href="#Segmenting-search-logs-into-sessions" class="headerlink" title="Segmenting search logs into sessions"></a>Segmenting search logs into sessions</h1><p>通常，我们会把 search log 划分为一个个基于 information need 的 dialogue<br>dialogue 形式，实际就是用户发出初始查询，搜索引擎给出结果，用户不满意，重新修改查询语句再次搜索，然后得到新的结果，不断循环的过程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Person: query</div><div class="line">Engine: search results</div><div class="line">Person: reformulated query</div><div class="line">Engine: new search results ...</div></pre></td></tr></table></figure></p>
+<p>那么问题来了，怎么来区分这些不同的 dialogues 呢？<br>我们定义 information need = a search session(dialogue)，最简单粗暴划分 session 的方法就是通过时间，比如说三十分钟内一系列的用户行为就算作一个 session。</p>
+<p>划分 session 可以考虑的因素：</p>
 <ul>
-<li>Aggregation: Combine inverted lists</li>
-<li>Combination: Combine scores</li>
+<li>Time: Same session iff |timestamp (q2) – timestamp| (q1) &lt; ∆<br>often ∆ = 30 minutes</li>
+<li>Common term: Same session iff q1 ∩ q2 ≠ Ø<br>Probably high Precision, low Recall</li>
+<li>Rewrite classes: Common reformulation patterns<br>E.g., term added, deleted, or replaced<br>Probably high Precision, low Recall</li>
+<li>Edit distance</li>
+<li>Co-occurrence<br>e.g., PMI, Chi-square of queries in a query log</li>
+<li>Same clicks<br>queries have co-occurring clicks in a query log</li>
+<li>Document categories<br>ODP or Yahoo page category overlap of top 10 results</li>
+<li>Same/overlap retrieved documents<br>JSD similarity of top 10 results<br>cosine distance among results</li>
+<li>Classifiers<br>…</li>
 </ul>
-<h3 id="Aggregation"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</h3><p>Indri 允许在 query 里指定 aggregation type</p>
+<p>训练一个分类器是最好的方法，对任意一对 queries 大概有 95-97% 的准确率。然而 heuristics 也不差，尤其是 edit distance 和 cosine distance among results 都非常有效，时间尺度通常会和其他 heuristic 合用，效果更佳。</p>
+<p>各种 heuristic 都可以作为分类器的 Features</p>
 <ul>
-<li>term.element<br>– 如果没有指定 element, 那么默认 element 为 Document<br>– Example: apple.inlink</li>
-<li>结果: 一个 inverted list 包含了一个 element 的所有 instance</li>
+<li>Temporal<br>– ≤ {5, 30, 60, 120} minutes, ∆ time, are_sequential</li>
+<li>Edit distance<br>– Several character and token-based metrics</li>
+<li>Query log<br>– Various types of (q1, q2) co-occurrence in a larger query log</li>
+<li>Web search<br>– Cosine distance of top 50 search results for each query<br>(“prisma”)</li>
 </ul>
-<p><strong>Example</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#wand( #wsum (0.3 apple.title 0.2 apple.inlink 0.5 apple.body ) #wsum (0.3 ipad.title 0.2 ipad.inlink 0.5 ipad.body ) )</div></pre></td></tr></table></figure></p>
-<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ainlink.jpg" class="ful-image" alt="ainlink.jpg">
-<p><strong>问题：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#AND( breast.paragraph cancer.paragraph treatment.paragraph )</div></pre></td></tr></table></figure></p>
-<p>对这一个查询，用 Aggregation 的话以下两篇文档会得到一样的分数，然而其实 D2 要比 D1 更相关。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/ap.jpg" class="ful-image" alt="ap.jpg"></p>
-<h3 id="Combination"><a href="#Combination" class="headerlink" title="Combination"></a>Combination</h3><p>用 #MAX, #SUM, #OR 等 query operators 来合并 element scores。<br>首先我们来认识一下 query。<br>E.g.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[document] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
-<p>最外面的 element 是 document, 所以对 documents 进行排序</p>
-<ol>
-<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
-<li>对上一步产生的结果 #SUM 运算，结果是一个 (document, score) 列表</li>
-</ol>
-<p>E.g.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#SUM[paragraph] (#AND[sentence] (breast cancer treatment) )</div></pre></td></tr></table></figure></p>
-<p>最外面的 element 是 paragraph, 所以对 paragraphs 进行排序</p>
-<ol>
-<li>对每个 sentence 进行 #AND (breast cancer treatment) 运算，结果是一个 (sentence, score) 列表</li>
-<li>对上一步产生的结果 #SUM 运算，结果是一个 (paragraph, score) 列表</li>
-</ol>
-<p>来考虑下不同的 combine query operator 产生的影响。</p>
-<p><strong>#MAX[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 只考虑 best sentence<br><strong>#SUM[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– poorly matching sentences 会让分数变低<br><strong>#OR[document]</strong> (#AND[sentence](breast cancer treatment) )<br>– 偏好有更多匹配的 sentences 的文档</p>
-<img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/c4.jpg" class="ful-image" alt="c4.jpg">
-<p>• #MAX considers them equal<br>• #AND prefers C4<br>• #OR prefers C1<br>• #AVERAGE prefers C4</p>
-<h3 id="Comparsion"><a href="#Comparsion" class="headerlink" title="Comparsion"></a>Comparsion</h3><p>假定目标是检索有 paragraphs 讨论 breast cancer treatment 的文档<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/compare.jpg" class="ful-image" alt="compare.jpg"><br><strong>Combination:</strong> Partial credit for sections that partially match<br><strong>Aggregation:</strong> The terms might not all be in the same section</p>
-<h2 id="Extents"><a href="#Extents" class="headerlink" title="Extents"></a>Extents</h2><p>Using extents as evidence<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND(</div><div class="line">  #OR[document](</div><div class="line">      #AND[sentence](iraq war))</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
-<p>• 检索的是 document<br>• <strong>偏好</strong> ‘iraq’ and ‘war’ 在同一句话里的文档<br>– 出现在 title 里会让分数有稍稍的提高，因为有 smoothing</p>
-<p>Using extents as a constraint<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#AND (</div><div class="line">  iraq.sentence</div><div class="line">  war.sentence</div><div class="line">  bush</div><div class="line">  #NEAR/1(exit strategy) )</div></pre></td></tr></table></figure></p>
-<p>• 检索的是 document<br>• <strong>要求</strong> ‘iraq’ and ‘war’ 必须出现在同一句话的文档<br>  – 出现在文档的其它部分并不会有任何帮助</p>
-<h2 id="HLT-Applications"><a href="#HLT-Applications" class="headerlink" title="HLT Applications"></a>HLT Applications</h2><p>文档结构可以由 annotation processes 产生<br>• E.g., named entity annotators, semantic role labelers, …</p>
-<p>Retrieval of elements, using semantic role annotations<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#and[sentence](</div><div class="line">  #and[target_verb]( Loves</div><div class="line">      #and[./agent]( John )</div><div class="line">      #and[./patient]( Mary ) ) )</div></pre></td></tr></table></figure></p>
-<p>• ./element specifies that element is a child of the parent field</p>
-<h1 id="Table-retrieval"><a href="#Table-retrieval" class="headerlink" title="Table retrieval"></a>Table retrieval</h1><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table.jpg" class="ful-image" alt="table.jpg">
-<p>实际就是一个把 table 转化为 structure document 的问题。<br><img src="http://images.shuang0420.com/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Document%20Structure/table2.jpg" class="ful-image" alt="table2.jpg"></p>
-<h1 id="Summaries"><a href="#Summaries" class="headerlink" title="Summaries"></a>Summaries</h1><p><strong>Fields</strong><br>• 用于 independent evidence (author, title, journal, …)<br>• 用于 multiple representations (url, title, body, …)<br>• 了解差异<br>• 了解各个检索模型如何支持这些 fields<br>• 了解在 query 中如何使用这些 fields</p>
-<p><strong>Hierarchical structure</strong><br>• 怎样在多个 elements 都有匹配时 combine evidence<br>• Exact-match vs. best-match document structure<br>• 了解 Indri 怎样支持这些 elements<br>• 了解在 query 中如何使用这些 elements</p>
+<p>我们训练分类器一般需要完成两个任务</p>
+<ul>
+<li>Boundary task: Given a pair of sequential queries</li>
+<li>Same task: Given a pair of queries</li>
+</ul>
+<h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><p>用户的信息需求可能是跨越了几天甚至是几周的，比如用户写论文、找学校信息等，可能出现的情况是：</p>
+<ul>
+<li>用户有交叉的任务<br>如查 paper 的时候顺便查下中午吃什么</li>
+<li>用户把一个任务分成若干个子任务分阶段完成<br>比如今天查为什么，明天查怎么做</li>
+<li>子任务可能看起来是独立的实际确实相关的</li>
+</ul>
 ]]></content>
       
         <categories>
@@ -11610,6 +11662,74 @@ python nb.py split.train split.test</pre>
             <tag> Search Engines </tag>
             
             <tag> 信息检索 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Distributed Systems笔记－Cryptographic Protocols]]></title>
+      <url>http://www.shuang0420.com/2016/11/02/Cryptographic-Protocols/</url>
+      <content type="html"><![CDATA[<p>CMU 95702 Distributed Systems 笔记。简单介绍几种加密、签名方式。<br><a id="more"></a></p>
+<p><a href="http://www.shuang0420.com/2016/10/02/AES%20%E5%92%8C%20RSA%E7%AC%94%E8%AE%B0/">AES 和 RSA 笔记</a> 的续章。</p>
+<h1 id="Scenario-1-Like-WWII-和-TEA"><a href="#Scenario-1-Like-WWII-和-TEA" class="headerlink" title="Scenario 1 (Like WWII 和 TEA)"></a>Scenario 1 (Like WWII 和 TEA)</h1><ol>
+<li>双方共享一把密钥。</li>
+<li>A 用密钥对信息加密。$E(K_AB,M_i)$，发送给 B</li>
+<li>B 用 $D(K_AB,{M_i}K_AB)$ 解密读取信息。</li>
+</ol>
+<p><strong>问题是：</strong><br>双方如何同步密钥？<br>怎么确定 B 收到的 ${M_i}K_AB$ 不是 replay of an old message?</p>
+<h1 id="Scenario-2-Like-Kerberos"><a href="#Scenario-2-Like-Kerberos" class="headerlink" title="Scenario 2 (Like Kerberos)"></a>Scenario 2 (Like Kerberos)</h1><ol>
+<li>A 向第三方 S 索要一张和 B 通话的 ticket。</li>
+<li>S 知道 A 的 password 所以他可以计算 $K_A$</li>
+<li>S 发送给 A $\{\{Ticket\}K_B,K_{AB}\}, K_A$</li>
+<li>A 知道自己的 password 所以可以计算 $K_A$，注意 A 的 password 不会在网络中传输。</li>
+<li>A 可以计算出 $K_{AB}$ 和 $\{Ticket\}K_B$</li>
+<li>A 向 B 发送一个读的请求，发送的信息是 $\{Ticket\}K_B$,Alice,Read</li>
+<li>B 用 $K_B$ 来读取 Ticket 的内容，Ticket 的内容是 $K_{AB}$，Alice</li>
+<li>A、B 可以用 session key 来交流了。</li>
+</ol>
+<img src="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg" class="ful-image" alt="Cryptographic-Protocols/scenario2.jpg">
+<p>可以防止 replay，但 <strong>问题是:</strong></p>
+<ul>
+<li>难以 scale,S 必须知道 $K_A$, $K_B$,…</li>
+<li>S 是唯一可能导致失败的因素。</li>
+</ul>
+<p>Kerberos 这一名词来源于希腊神话“三个头的狗——地狱之门守护者”系统设计上采用客户端/服务器结构与DES加密技术，并且能够进行相互认证，即客户端和服务器端均可对对方进行身份认证。可以用于防止窃听、防止 repla y攻击、保护数据完整性等场合，是一种应用对称密钥体制进行密钥管理的系统。</p>
+<h2 id="Needham-Schroeder-protocol"><a href="#Needham-Schroeder-protocol" class="headerlink" title="Needham-Schroeder protocol"></a>Needham-Schroeder protocol</h2><p>这层协议是 Kerberos 的基础，在这之后，Alice and Bob share a secret (KAB)</p>
+<h1 id="Scenario-3-Authentication"><a href="#Scenario-3-Authentication" class="headerlink" title="Scenario 3 (Authentication)"></a>Scenario 3 (Authentication)</h1><p>数字签名，用私钥签名，公钥解密。注意公钥加密比私钥慢 100-1000倍。<br>很难找到 digest(M1) == digest(M2)</p>
+<ol>
+<li>A 发送 Message＋用密钥加密的 Message 的 digest。{Digest(M)}$K_Apriv$</li>
+<li>B 收到签名的文件，取出 Message，计算 Message 的 digest。</li>
+<li>B 用 A 的公钥 $K_Apub$ 解密 {Digest(M)}$K_Apriv$ 然后和自己算的 digest 比较，如果匹配，签名验证。</li>
+</ol>
+<p><strong>问题：</strong><br>如果 A 说他没有签名？说自己的私钥泄漏了？只要 A、B 互相信任，还是有用的。</p>
+<h1 id="Scenario-4-Like-SSL"><a href="#Scenario-4-Like-SSL" class="headerlink" title="Scenario 4 (Like SSL)"></a>Scenario 4 (Like SSL)</h1><ol>
+<li>A 和 B 想要建立一个共享的密钥</li>
+<li>A 拿到 B 的公钥，这个公钥被可信任的第三方 T 签名认证了，所以这个公钥确实是 B 的。</li>
+<li>A 确认第三方 T 对 $K_Bpub$ 签名了。怎么确认？A 和 T 都有 B 的 public key，T 把 $K_Bpub$ 加密后给 A，A 对其进行解密然后比对自己手上的 B 的 public key 看是不是一致。</li>
+<li>A 生成了 $K_{AB}$ 并用 $K_Bpub$ 加密。</li>
+<li>B 有很多公钥所以 A 发送公钥的名字。</li>
+<li>A 发送了 key name $\{K_{AB}\}K_Bpub$</li>
+<li>B 用这个 key name 选择了对应的私钥并计算 $\{\{K_{AB}\}K_Bpub\}K_Bpriv == K_{AB}$</li>
+</ol>
+<p>最后 A 和 B 共享了对称的钥匙 $K_{AB}$</p>
+<p><strong>问题：</strong><br>在 A 第一次得到 B 的公钥时（A 认为这是 B 的公钥，然而这并不是，这是 C 也经过第三方 T 签名认证的公钥。</p>
+<p>TLS 和这个相似<br><img src="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/TLS_config.jpg" class="ful-image" alt="Cryptographic-Protocols/TLS_config.jpg"></p>
+<h1 id="Message-Authentication-Codes-MACs"><a href="#Message-Authentication-Codes-MACs" class="headerlink" title="Message Authentication Codes(MACs)"></a>Message Authentication Codes(MACs)</h1><p>对称加密生成的数字签名。<br>双方都有 Key(K)，sender 把 Key(K) 通过 MAC 算法加密后连同 message 一起给 receiver，receiver 比对收到的 MAC 和自己用 MAC 算法对自己这里的 Key(K) 加密后的 MAC 是否一致，如果一致，那么信息真实性和完整性就得到了证实。</p>
+<p>用于数字签名，双方都算了一遍 MAC</p>
+<h1 id="JAVA-里的-keystore-和-truststore"><a href="#JAVA-里的-keystore-和-truststore" class="headerlink" title="JAVA 里的 keystore 和 truststore"></a>JAVA 里的 keystore 和 truststore</h1><p>keystore: 存了公钥、私钥、证书<br>truststore：存了公钥，只能存 server 发过来的东西</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Distributed Systems </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Web Service </tag>
             
         </tags>
         
@@ -11671,74 +11791,6 @@ python nb.py split.train split.test</pre>
 </ul>
 <h3 id="Handle-duplicates"><a href="#Handle-duplicates" class="headerlink" title="Handle duplicates"></a>Handle duplicates</h3><p>根据 client 的 acknowledgement 来清空历史。</p>
 <h2 id="Request-Reply-Message-Structure"><a href="#Request-Reply-Message-Structure" class="headerlink" title="Request-Reply Message Structure"></a>Request-Reply Message Structure</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">messageType: int (0=Request, 1=Reply)</div><div class="line">requestId: int</div><div class="line">objectReference: RemoteObjectRef</div><div class="line">methodId: int or Method</div><div class="line">argument: array of bytes</div></pre></td></tr></table></figure>
-]]></content>
-      
-        <categories>
-            
-            <category> Distributed Systems </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Web Service </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Distributed Systems笔记－Cryptographic Protocols]]></title>
-      <url>http://www.shuang0420.com/2016/11/02/Cryptographic-Protocols/</url>
-      <content type="html"><![CDATA[<p>CMU 95702 Distributed Systems 笔记。简单介绍几种加密、签名方式。<br><a id="more"></a></p>
-<p><a href="http://www.shuang0420.com/2016/10/02/AES%20%E5%92%8C%20RSA%E7%AC%94%E8%AE%B0/">AES 和 RSA 笔记</a> 的续章。</p>
-<h1 id="Scenario-1-Like-WWII-和-TEA"><a href="#Scenario-1-Like-WWII-和-TEA" class="headerlink" title="Scenario 1 (Like WWII 和 TEA)"></a>Scenario 1 (Like WWII 和 TEA)</h1><ol>
-<li>双方共享一把密钥。</li>
-<li>A 用密钥对信息加密。$E(K_AB,M_i)$，发送给 B</li>
-<li>B 用 $D(K_AB,{M_i}K_AB)$ 解密读取信息。</li>
-</ol>
-<p><strong>问题是：</strong><br>双方如何同步密钥？<br>怎么确定 B 收到的 ${M_i}K_AB$ 不是 replay of an old message?</p>
-<h1 id="Scenario-2-Like-Kerberos"><a href="#Scenario-2-Like-Kerberos" class="headerlink" title="Scenario 2 (Like Kerberos)"></a>Scenario 2 (Like Kerberos)</h1><ol>
-<li>A 向第三方 S 索要一张和 B 通话的 ticket。</li>
-<li>S 知道 A 的 password 所以他可以计算 $K_A$</li>
-<li>S 发送给 A $\{\{Ticket\}K_B,K_{AB}\}, K_A$</li>
-<li>A 知道自己的 password 所以可以计算 $K_A$，注意 A 的 password 不会在网络中传输。</li>
-<li>A 可以计算出 $K_{AB}$ 和 $\{Ticket\}K_B$</li>
-<li>A 向 B 发送一个读的请求，发送的信息是 $\{Ticket\}K_B$,Alice,Read</li>
-<li>B 用 $K_B$ 来读取 Ticket 的内容，Ticket 的内容是 $K_{AB}$，Alice</li>
-<li>A、B 可以用 session key 来交流了。</li>
-</ol>
-<img src="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/scenario2.jpg" class="ful-image" alt="Cryptographic-Protocols/scenario2.jpg">
-<p>可以防止 replay，但 <strong>问题是:</strong></p>
-<ul>
-<li>难以 scale,S 必须知道 $K_A$, $K_B$,…</li>
-<li>S 是唯一可能导致失败的因素。</li>
-</ul>
-<p>Kerberos 这一名词来源于希腊神话“三个头的狗——地狱之门守护者”系统设计上采用客户端/服务器结构与DES加密技术，并且能够进行相互认证，即客户端和服务器端均可对对方进行身份认证。可以用于防止窃听、防止 repla y攻击、保护数据完整性等场合，是一种应用对称密钥体制进行密钥管理的系统。</p>
-<h2 id="Needham-Schroeder-protocol"><a href="#Needham-Schroeder-protocol" class="headerlink" title="Needham-Schroeder protocol"></a>Needham-Schroeder protocol</h2><p>这层协议是 Kerberos 的基础，在这之后，Alice and Bob share a secret (KAB)</p>
-<h1 id="Scenario-3-Authentication"><a href="#Scenario-3-Authentication" class="headerlink" title="Scenario 3 (Authentication)"></a>Scenario 3 (Authentication)</h1><p>数字签名，用私钥签名，公钥解密。注意公钥加密比私钥慢 100-1000倍。<br>很难找到 digest(M1) == digest(M2)</p>
-<ol>
-<li>A 发送 Message＋用密钥加密的 Message 的 digest。{Digest(M)}$K_Apriv$</li>
-<li>B 收到签名的文件，取出 Message，计算 Message 的 digest。</li>
-<li>B 用 A 的公钥 $K_Apub$ 解密 {Digest(M)}$K_Apriv$ 然后和自己算的 digest 比较，如果匹配，签名验证。</li>
-</ol>
-<p><strong>问题：</strong><br>如果 A 说他没有签名？说自己的私钥泄漏了？只要 A、B 互相信任，还是有用的。</p>
-<h1 id="Scenario-4-Like-SSL"><a href="#Scenario-4-Like-SSL" class="headerlink" title="Scenario 4 (Like SSL)"></a>Scenario 4 (Like SSL)</h1><ol>
-<li>A 和 B 想要建立一个共享的密钥</li>
-<li>A 拿到 B 的公钥，这个公钥被可信任的第三方 T 签名认证了，所以这个公钥确实是 B 的。</li>
-<li>A 确认第三方 T 对 $K_Bpub$ 签名了。怎么确认？A 和 T 都有 B 的 public key，T 把 $K_Bpub$ 加密后给 A，A 对其进行解密然后比对自己手上的 B 的 public key 看是不是一致。</li>
-<li>A 生成了 $K_{AB}$ 并用 $K_Bpub$ 加密。</li>
-<li>B 有很多公钥所以 A 发送公钥的名字。</li>
-<li>A 发送了 key name $\{K_{AB}\}K_Bpub$</li>
-<li>B 用这个 key name 选择了对应的私钥并计算 $\{\{K_{AB}\}K_Bpub\}K_Bpriv == K_{AB}$</li>
-</ol>
-<p>最后 A 和 B 共享了对称的钥匙 $K_{AB}$</p>
-<p><strong>问题：</strong><br>在 A 第一次得到 B 的公钥时（A 认为这是 B 的公钥，然而这并不是，这是 C 也经过第三方 T 签名认证的公钥。</p>
-<p>TLS 和这个相似<br><img src="http://images.shuang0420.com/images/Cryptographic-Protocols/Cryptographic-Protocols/TLS_config.jpg" class="ful-image" alt="Cryptographic-Protocols/TLS_config.jpg"></p>
-<h1 id="Message-Authentication-Codes-MACs"><a href="#Message-Authentication-Codes-MACs" class="headerlink" title="Message Authentication Codes(MACs)"></a>Message Authentication Codes(MACs)</h1><p>对称加密生成的数字签名。<br>双方都有 Key(K)，sender 把 Key(K) 通过 MAC 算法加密后连同 message 一起给 receiver，receiver 比对收到的 MAC 和自己用 MAC 算法对自己这里的 Key(K) 加密后的 MAC 是否一致，如果一致，那么信息真实性和完整性就得到了证实。</p>
-<p>用于数字签名，双方都算了一遍 MAC</p>
-<h1 id="JAVA-里的-keystore-和-truststore"><a href="#JAVA-里的-keystore-和-truststore" class="headerlink" title="JAVA 里的 keystore 和 truststore"></a>JAVA 里的 keystore 和 truststore</h1><p>keystore: 存了公钥、私钥、证书<br>truststore：存了公钥，只能存 server 发过来的东西</p>
 ]]></content>
       
         <categories>
