@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.com/"/>
-  <updated>2020-06-16T13:25:49.853Z</updated>
+  <updated>2020-09-10T12:26:31.575Z</updated>
   <id>http://www.shuang0420.com/</id>
   
   <author>
@@ -14,6 +14,102 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何测试你的 NLP 模型？- Behavioral Testing of NLP Models with CheckList</title>
+    <link href="http://www.shuang0420.com/2020/09/10/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/"/>
+    <id>http://www.shuang0420.com/2020/09/10/如何测试你的 NLP 模型？- Behavioral Testing of NLP Models with CheckList/</id>
+    <published>2020-09-10T02:02:27.000Z</published>
+    <updated>2020-09-10T12:26:31.575Z</updated>
+    
+    <content type="html"><![CDATA[<p>Best Paper at ACL 2020<br><a id="more"></a></p>
+<p>这篇 paper 要解决的问题就一个 <strong>How do I know if my model really works</strong>，为此作者提出了一个 NLP 模型的评估体系 CHECKLIST，这不是什么 SOTA 模型，也不是啥先进的 theory，就只是一套指导我们像测试软件一样测试模型的 <strong>方法论</strong> 而已，这个方法可以让我们了解 NLP 模型的能力，也能够指导我们去理解问题、解决问题。</p>
+<p>可能很多人都有这样的困惑，训练完一个模型，离线评估准确率 90%+，然而一到线上各种问题，效果却大跌眼镜，这是为什么呢？比较显而易见的一个原因是离线测试集和线上数据集分布的一个 discrepancy。我们的离线测试集通常是 held-out datasets，和训练集同分布，是从同一个数据集 split 来的，而这个数据集可能是不全面的，有偏的，也就是说，测试集和训练集一样有着相同的 bias，而线上数据集的分布可能不一样（out-of-distribution），所以在测试集上表现的好不一定意味着在相关数据集上表现的好。</p>
+<p>这个现象其实也被称作 shortcut learning，简单解释一下就是<strong>模型没有学习我们想让它学习的特征，而去学习了其他东西</strong>，比如说图像分类，模型在测试集上能正确区分出现在草地上的奶牛，但是一旦把奶牛移到别的场景里，模型就会分错，这个“草地”就是奶牛的 shortcut。那么模型究竟该学习哪种特征呢？下面一张图可能比较直观，如果模型学到的是 uninformative features，那么模型在训练集的表现就不会好，如果模型学到的是 overfitting features，那么模型在训练集上表现很好但是在测试集上表现很差，而如果模型学到的是 shortcut features，那么模型在训练集和测试集上表现都很好，但在相关的 o.o.d. 的测试集上表现却很差，只有模型在学习 intended features 的时候，才是我们想要的，模型才能有我们想要的泛化能力。更多可以看 <a href="https://arxiv.org/pdf/2004.07780.pdf" target="_blank" rel="external">Shortcut Learning in Deep Neural Networks</a></p>
+<img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/shortcut.png" class="ful-image" alt="shortcut.png">
+<p>另一方面，现在的模型评估一般评估的都是整体表现，像是准确率、召回率等，这些能判断模型整体怎么样，但却无法简单的通过这个指标去找模型可能存在的 bug。要知道我们的模型肯定不是完美的，我们希望像软件测试一样，能有一个测试体系来指导我们分析问题原因、指导解决具体问题，便于我们进一步优化。尽管也有一些 paper 会针对单个任务或某几种特定能力提出一些分析的指标，但是并没有一个 comprehensive guidance。</p>
+<p>于是这么看来，作者凭借一个启发性的测试框架夺得 2020 ACL best paper，也就更加合理了。CEHCKLIST 借鉴了软件设计里面的黑盒测试，通过验证输入-输出的行为来测试一个系统的不同方面的能力，测试人员并不需要知道模型结构就可以去测试。而整个测试体系从<strong>语义</strong>上拆分成了各个更细的能力（linguistic capabilities），通过不同的表现方式（test types）来进行测试。除此之外，还提供了快速构建 test cases 的一系列方法和工具。在此基础上，作者用 CHECKLIST 对现在一些商用的 NLP 产品和 SOTA 模型进行了测试，结论是无论是大厂的付费接口还是知名的开源项目（BERT/RoBERTa），在这些能力上表现的都很糟糕，有些能力上错误率会到 80-90%，甚至 100%。</p>
+<p><strong>CHECKLIST</strong></p>
+<ul>
+<li><p>what to test: <strong>linguistic capabilities</strong> </p>
+<p>10 种通用的语言能力，后面逐个看例子</p>
+<ul>
+<li><p><strong>Vocabulary + POS</strong>: important words or word types for the task</p>
+</li>
+<li><p><strong>Taxonomy</strong>: synonyms, antonyms, etc</p>
+</li>
+<li><p><strong>Robustness</strong>: typos, irrelevant changes, etc</p>
+</li>
+<li><p><strong>NER</strong>: appropriately understanding named entities</p>
+</li>
+<li><p><strong>Fairness</strong></p>
+</li>
+<li><p><strong>Temporal</strong>: understanding order of events</p>
+</li>
+<li><p><strong>Negation</strong></p>
+</li>
+<li><p><strong>Coreference</strong></p>
+</li>
+<li><p><strong>Semantic Role Labeling</strong>: understanding roles such as agent, object, etc</p>
+</li>
+<li><p><strong>Logic</strong>: ability to handle symmetry, consistency, and conjunctions</p>
+</li>
+</ul>
+</li>
+<li><p>how to test: <strong>test behaviors with different test types</strong> </p>
+<p>一种能力进行多个方面的分析，3 种测试类型：</p>
+<ul>
+<li><p>Minimum Functionality Test, <strong>MFT</strong></p>
+</li>
+<li><p>Invariance Test, <strong>INV</strong></p>
+</li>
+<li><p>Directional Expectation Test, <strong>DIR</strong></p>
+</li>
+</ul>
+<p>MFT 其实就是单元测试，和通常的模型评估一样，需要带标签的测试集，一个能力对应一个测试集，INV 和 DIR 属于 perturbation test，对输入加入扰动，我们期望结果不变/结果有一定程度的改变。INV 比如说我们对输入引入一些拼写错误，希望模型预测结果不变。DIR 比如在情感分析的例子里，我们在输入后面加一个负向表述，那么无论原来标签是啥，我们都期望预测结果至少不应该变得更加正向，这个变化指的是置信度的变化。</p>
+</li>
+<li><p>writing tests at scale: <strong>templating + RoBERTa,</strong> lexicons, perturbation library, visualizations… </p>
+<p>评估体系下生成测试用例的方法，主要通过模板，填充模板槽位的时候可以用字典词表，也可以用 masked language model 来做词的推荐。</p>
+</li>
+</ul>
+<p>Capability 和 test type 制成表格，构建 test case 测试并计算 failure rate，填表汇总就好啦~</p>
+<img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/checklist.png" class="ful-image" alt="checklist.png">
+<p>对于词汇而言，我们希望模型能够理解重要词汇的含义，比如在情感分析中，模型要能识别带有情感色彩的词语，在重复问题检测任务中，模型要能识别能够区别两个句子的修饰词，在阅读理解任务中，模型要能理解比较级和最高级。</p>
+<img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/vocab.png" class="ful-image" alt="vocab.png">
+<p>Taxonomy，很明显， BERT/RoBERTa 并不能很好的理解同义词/反义词，BERT 对属性和类别也不具备理解能力，不能区分颜色/尺寸，动物/机械等类别。</p>
+<img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/taxonomy.png" class="ful-image" alt="taxonomy.png">
+<p>鲁棒性，加了点短链接、@用户等无关信息各产品/模型就不行了，typo /同义改写处理的也不是很好，然而这些问题在实际应用中还是挺常见的，比如在一些问答场景里，首尾加上你好/谢谢等其他信息，中间加上一些吐槽口吻，模型处理的就没有预期那么好。</p>
+<img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/robustness.png" class="ful-image" alt="robustness.png">
+<p>命名实体，情感分析任务里替换实体名/人名对预测不应该有影响，重复问题检测中，模型明显不能正确的理解命名实体的含义。这里文章解释说是因为 shortcut learning，模型过于依赖一些线索词如命名实体，而不是去理解命名实体和命名实体在这个任务中的作用。事实上，仔细看例子我们可以发现，不仅在 NER 这个能力上，QQP 对应的所有能力，都显著的有着 shortcut learning 的现象。</p>
+<img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/ner.png" class="ful-image" alt="ner.png">
+<p>Fairness，情感分析任务里，商业模型在判断 “I am a black woman” 这类句子时总能判断成中性，然而这并不意味着模型就没有性别和种族等偏见了。BERT 在判断 black, atheist, gay, lesbian + 名词的句子时，总会判断成负向的，而 asian, straight 则会判断成积极的。另一方面，在阅读理解任务中，也能看到对性别的偏见，在 John is not a doctor, Mary is 这类 context 里，如果问 who is a doctor，那么错误预测男性（John）是医生的概率有 89.1%，而如果把职位改成 secretary，那么错误预测女性为秘书的概率有 60.5%，显然带上了“医生大多是男性，秘书大多是女性”的偏见，没有忠于真实 context。</p>
+<img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/fairness.png" class="ful-image" alt="fairness.png">
+<p>模型也不能识别 temporal 相关的概念，比如过去式现在时、before, after, first, last，模型不能正确的理解这些时间顺序。</p>
+<img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/temporal.png" class="ful-image" alt="temporal.png">
+<p>否定就更难了，简单的否定还行，双重否定太难了，否定放在句尾或者在否定和情感成分中间加个中立成分，商业产品的错误率几乎是 100%，简直不忍直视。</p>
+<img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/negation.png" class="ful-image" alt="negation.png">
+<p>指代消解，本来发展的也不成熟，也是惨不忍睹。</p>
+<img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/coreference.png" class="ful-image" alt="coreference.png">
+<p>SRL，就更不用说了。这其实还挺重要的，比如在搜索场景的“人民币兑换美元”和“美元兑换人民币”就需要模型有语义角色标注的能力。</p>
+<img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/srl.png" class="ful-image" alt="srl.png">
+<p>逻辑方面，文中举例不多，主要是满足对称性、传递性等特质，比如说在文本相似性，或者说距离度量上，起码要满足对称性吧，AB距离和BA距离应该是相等的吧，还有三角不等式也该满足吧，AB距离+BC距离&gt;AC距离这种。</p>
+<img src="http://images.shuang0420.com/images/%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20NLP%20%E6%A8%A1%E5%9E%8B%EF%BC%9F-%20Behavioral%20Testing%20of%20NLP%20Models%20with%20CheckList/logic.png" class="ful-image" alt="logic.png">
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Best Paper at ACL 2020&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
+    
+      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
+    
+    
+      <category term="NLP" scheme="http://www.shuang0420.com/tags/NLP/"/>
+    
+  </entry>
   
   <entry>
     <title>Slice-based learning - 基于数据切片的学习</title>
@@ -2235,168 +2331,6 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
     <summary type="html">
     
       &lt;p&gt;介绍一种 cache-like memory network。&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="NLP" scheme="http://www.shuang0420.com/categories/NLP/"/>
-    
-      <category term="Chatbot" scheme="http://www.shuang0420.com/categories/NLP/Chatbot/"/>
-    
-    
-      <category term="Memory Networks" scheme="http://www.shuang0420.com/tags/Memory-Networks/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论文笔记 - Memory Networks</title>
-    <link href="http://www.shuang0420.com/2017/12/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/"/>
-    <id>http://www.shuang0420.com/2017/12/04/论文笔记 - Memory Networks/</id>
-    <published>2017-12-04T05:02:27.000Z</published>
-    <updated>2020-06-16T13:21:44.099Z</updated>
-    
-    <content type="html"><![CDATA[<p>Memory Networks 相关笔记。<br><a id="more"></a></p>
-<p>这一篇会覆盖下面三个版本的 Memory Networks</p>
-<ul>
-<li>Memory Network with strong supervision</li>
-<li>End-to-End Memory Network</li>
-<li>Dynamic Memory Network</li>
-</ul>
-<p>涉及下面一些论文：</p>
-<ul>
-<li>Memory Networks (2015)</li>
-<li>End-To-End Memory Networks (2015)   </li>
-<li>Ask Me Anything: Dynamic Memory Networks for Natural Language Processing (2016)</li>
-<li>Dynamic Memory Networks for Visual and Textual Question Answering (2016)</li>
-</ul>
-<p>首先要明确的是，Memory Networks 只是一种思想或者说一个框架，像一个 base class，里面的各个 module 都可以自己定制。其中基本的一些思路：</p>
-<ul>
-<li><strong>分层 RNN 的 context RNN</strong><br>与 context RNN 类似，Memory Network 同样以句子为单位来提取、保存语境信息</li>
-<li><strong>Attention 原理</strong><br>使用多个 state vector 来保存信息，并从中寻找有用的记忆，而不是寄希望于 final state 存储的信息</li>
-<li><strong>Incorporate reasoning with attention over memory(RAM): Memory Network</strong><br>使用记忆以及记忆上的 attention 来做推理</li>
-</ul>
-<h1 id="Memory-Networks-2015"><a href="#Memory-Networks-2015" class="headerlink" title="Memory Networks (2015)"></a>Memory Networks (2015)</h1><p>对应论文：Memory Networks (2015)</p>
-<p>Memory Networks 提出的基本动机是我们需要 <strong>长期记忆（long-term memory）</strong>来保存问答的知识或者聊天的语境信息，而现有的 RNN 在长期记忆中表现并没有那么好。</p>
-<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><p>4 个重要组件：</p>
-<ul>
-<li><strong>I: input feature map</strong><br>把输入映射为特征向量（input -&gt; feature representation）<br>通常以句子为单位，一个句子对应一个向量</li>
-<li><strong>G: generalization</strong><br>使用新的输入数据更新 memories</li>
-<li><strong>O: output</strong><br>给定新的输入和现有的 memory state，在特征空间里产生输出<br>类比 attention RNN decoder 产生 outputs/logits</li>
-<li><strong>R: response</strong><br>将输出转化为自然语言</li>
-</ul>
-<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks1.png" class="ful-image" alt="Memory%20Networks/memory_networks1.png">
-<p>上面的 4 个 component 就对应了整个工作流程：</p>
-<ol>
-<li><strong>把输入 x 映射为特征向量 I(x)</strong><br>可以选择多种特征，如 bag of words, RNN encoder states, etc.<br>如果用 embedding model 来表达文本的话，一个郁闷的地方是 embdding 的参数在不断变化，所以训练时保存的 vector 也要变化……当然这在测试时就成了优势，因为测试时 embedding 参数就固定啦</li>
-<li><strong>更新 memory mi</strong>，$m_i = G(m_i, I(x), m), \forall i.$<br>将输入句子的特征 x 保存到下一个合适的地址 $m_n$，可以简单的寻找下一个空闲地址，也可以使用新的信息更新之前的记忆<br>简单的函数如 $m_{H(x)}=I(x)$，H(x) 是一个寻址函数（slot choosing function），G 更新的是 m 的 index，可以直接把新的输入 I(x) 保存到下一个空闲的地址 $m_n$，并不更新原有的 memory，当然更复杂的 G 函数可以去更新更早的 memory 甚至是所有的 memory</li>
-<li><strong>给定新的输入和 memory，计算 output feature o: o=O(I(x),m)</strong><br>Addressing，寻址，给定 query Q，在 memory 里寻找相关的包含答案的记忆<br>$qUU^Tm$： 问题 q 和事实 m 的相关程度，当然这里的 q，m 都是特征向量，可以用同一套参数也可以用不同的参数<br>U：bilinear regression 参数，相关事实的 $qUU^Tm_{true}$ 分数高于不相关事实的分数 $qUU^Tm_{random}$<br>n 条记忆就有 n 条 bilinear regression score<br>回答一个问题可能需要寻找多个相关事实，先根据 query 定位到第一条最相关的记忆，再用第一条 fact 和 query 通过加总或拼接等方式得到 u1 然后一起定位第二条<br>$o_1 = O_1(q,m) = argmax_{i=1,…N} \ s_o(q, m_i)$<br>$o_2 = O_2(q,m) = argmax_{i=1,…N} \ s_o([q, o_1], m_i)$</li>
-<li><strong>对 output feature o 进行解码，得到最后的 response: r=R(o)</strong><br>将 output 转化为自然语言的 response<br>$r = argmax_{w \in W} \ s_R([q, o_1, o_2], w)$<br>$s_R(x,y)=xUU^Ty$<br>可以挑选并返回一个单词比如说 playground<br>在词汇表上做一个 softmax 然后选最有可能出现的单词做 response，也可以使用 RNNLM 产生一个包含回复信息的句子，不过要求训练数据的答案就是完整的句子，比如说 football is on the playground</li>
-</ol>
-<h2 id="Huge-Memory-问题"><a href="#Huge-Memory-问题" class="headerlink" title="Huge Memory 问题"></a>Huge Memory 问题</h2><p><strong>如果 memory 太大怎么办？</strong></p>
-<ol>
-<li>可以按 entity 或者 topic 来存储 memory，这样 G 就不用在整个 memories 上操作了</li>
-<li>如果 memory 满了，可以引入 forgetting 机制，替换掉没那么有用的 memory，H 函数可以计算每个 memory 的分数，然后重写</li>
-<li>还可以对单词进行 hashing，或者对 word embedding 进行聚类，总之是把输入 I(x) 放到一个或多个 bucket 里面，然后只对相同 bucket 里的 memory 计算分数</li>
-</ol>
-<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>损失函数如下，选定 2 条 supporting fact (k=2)，response 是单词的情况：<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks_loss.png" class="ful-image" alt="Memory%20Networks/memory_networks_loss.png"></p>
-<p>(6) 有没有挑选出正确的第一句话<br>(7) 正确挑选出了第一句话后能不能正确挑出第二句话<br>(6)+(7) 合起来就是能不能挑选出正确的语境，用来训练 attention 参数<br>(8) 把正确的 supporting fact 作为输入，能不能挑选出正确的答案，来训练 response 参数</p>
-<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>在 bAbI QA 部分数据集上的结果<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks_performance.png" class="ful-image" alt="memory_networks_performance.png"></p>
-<p>部分 QA 实例：<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks_performance1.png" class="ful-image" alt="memory_networks_performance1.png"></p>
-<h2 id="局限"><a href="#局限" class="headerlink" title="局限"></a>局限</h2><ol>
-<li><strong>需要很强的标记信息</strong><br>bAbI 提供了 supporting fact 的 ID，但对大多数 QA 数据而言，并不存在明确的 supporting fact 标记</li>
-<li><strong>Loss2 无法 backpropagate 到模型的左边部分，BP 过程到 m 就停了，并不能 end-to-end 进行训练</strong><br>这相当于一个链状的贝叶斯网络，考虑 A-&gt;B-&gt;C 的有向图，B 对应 m，B 不确定的时候，C 依赖于 A，但是当 B 确定的时候，C 就不依赖于 A 了。 也就是说，在给定 m 的情况下，loss2 和前面的参数是独立的，所以优化 loss2 并不能优化左边的参数</li>
-</ol>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks_drawback.png" class="ful-image" alt="Memory%20Networks/memory_networks_drawback.png">
-<h1 id="End-to-End-learning"><a href="#End-to-End-learning" class="headerlink" title="End-to-End learning"></a>End-to-End learning</h1><p>对应论文：End-To-End Memory Networks (2015)   </p>
-<p>End-to-End learning 用了 soft attention 来估计每一个 supporting fact 的相关程度，实现了端到端的 BP 过程。</p>
-<h2 id="Single-Layer"><a href="#Single-Layer" class="headerlink" title="Single Layer"></a>Single Layer</h2><p>一张图就解决了：<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_struc.png" class="ful-image" alt="%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_struc.png"></p>
-<p>模型输入:</p>
-<ul>
-<li><strong>Input:</strong> $x_1, …, x_n$，会被存储到 memory 中</li>
-<li><strong>Query:</strong> q</li>
-<li><strong>Answer:</strong> a</li>
-</ul>
-<p>具体过程（以单层为例）：</p>
-<ol>
-<li><strong>映射到特征空间</strong><br>{$x_i$} $\xrightarrow{A}$ {$m_i$}<br>$q \xrightarrow{B} u$</li>
-<li><strong>计算 attention，得到 query 和 memory 的匹配度，有多少个 memory 就有多少个 $p_i$</strong><br>$p_i = Softmax(u^Tm_i)$</li>
-<li><strong>得到 context vector</strong><br>$o = \sum_ip_ic_i$<br>和 Memory Networks with Strong Supervision 版本不同，这里的 output 是加权平均而不是一个 argmax</li>
-<li><strong>context vector 和 query 一起，预测最后答案，通常是一个单词</strong><br>$\hat a=Softmax(W(o+u))$</li>
-<li><strong>对 $\hat a$ 进行解码，得到自然语言的 response</strong><br>$\hat a \xrightarrow{C} a$</li>
-</ol>
-<p>其中，<br>A: intput embedding matrix<br>C: output embedding matrix<br>W: answer prediction matrix<br>B: question embedding matrix</p>
-<p>损失函数是交叉熵，用 SGD 训练。<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_struc2.png" class="ful-image" alt="%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_struc2.png"></p>
-<h2 id="Multi-hop-Architecture"><a href="#Multi-hop-Architecture" class="headerlink" title="Multi-hop Architecture"></a>Multi-hop Architecture</h2><p>多层结构（K hops）也很简单，相当于做多次 addressing/多次 attention，每次 focus 在不同的 memory 上，不过在第 k+1 次 attention 时 query 的表示需要把之前的 context vector 和 query 拼起来，其他过程几乎不变。<br>$u^{k+1}=u^k + o^k$</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_multi_hop.png" class="ful-image" alt="%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_multi_hop.png">
-<h3 id="一些技术细节"><a href="#一些技术细节" class="headerlink" title="一些技术细节"></a>一些技术细节</h3><p>通常来说 encoding 和 decoding 的词向量参数是不一样的，因为一个是单词-词向量，一个是 隐状态-词向量。</p>
-<ul>
-<li><strong>Adjacent</strong><br>前一层的输出是这一层的输入<br>$A^{k+1}=C^k$<br>$W^T=C^L$<br>$B=A^1$</li>
-<li><strong>Layer-wise(RNN-like)</strong><br>不同层之间用同样的 embedding<br>$A^1=A^2=…=A^K$<br>$C^1=C^2=…=C^K$<br>可以在 hop 之间加一层线性变换 H 来更新 $\mu$<br>$u^{k+1}=Hu^k+o^k$</li>
-</ul>
-<h1 id="Dynamic-Memory-Networks"><a href="#Dynamic-Memory-Networks" class="headerlink" title="Dynamic Memory Networks"></a>Dynamic Memory Networks</h1><p>对应论文：Ask Me Anything: Dynamic Memory Networks for Natural Language Processing (2016)</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN_struc1.png" class="ful-image" alt="DMN_struc1.png">
-<h2 id="Input-Module"><a href="#Input-Module" class="headerlink" title="Input Module"></a>Input Module</h2><p>这一部分像是一个 semantic memory。<strong>输入</strong>可以是一个/多个句子，一篇/几篇文章，包含语境信息和知识库等，使用 RNN 进行 encoding，每一个句子编码成固定维度的 state vector。<br>具体做法是把句子拼到一起（每个句子结尾加标记符 EOS），用 GRU-RNN 进行编码，如果是单个句子，就<strong>输出</strong>每个词的 hidden state；如果是多个句子，就<strong>输出</strong>每个句子 EOS 标记对应的 hidden state，其实相当于分层 RNN 的下面一层。</p>
-<p>$$h_t=GRU(L[w_t], h_{t-1})$$</p>
-<p>$L[w_t] $ 是 word embedding。</p>
-<h2 id="Question-Module"><a href="#Question-Module" class="headerlink" title="Question Module"></a>Question Module</h2><p><strong>输入</strong>是 question 对应的词序列，同样用 GRU-RNN 进行编码。</p>
-<p>$$q_t=GRU([L[w_t^Q], q_{t-1})$$</p>
-<p>同样的，L 是词向量参数，和 input module 的 L 相同。<strong>输出</strong>是 final hidden state</p>
-<h2 id="Episodic-Memory-Module"><a href="#Episodic-Memory-Module" class="headerlink" title="Episodic Memory Module"></a>Episodic Memory Module</h2><p>由 internal memory, attention mechansim, memory update mechanism 组成。 <strong>输入</strong>是 input module 和 question module 的输出。</p>
-<p>把 input module 中每个句子的表达（fact representation c）放到 episodic memory module 里做推理，使用 attention 原理从 input module 中提取相关信息，同样有 multi-hop architecture。</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN_process.png" class="ful-image" alt="DMN_process.png">
-<h3 id="Attention-Mechanism"><a href="#Attention-Mechanism" class="headerlink" title="Attention Mechanism"></a>Attention Mechanism</h3><p>觉得论文里的 attention mechanism 和 memory update mechanism 描述的有点问题，个人以为 attention mechanism 的目的还是生成 context vector，memory update mechanism 的目的是更新 memory，所以把部分公式按自己的理解移动了下，便于理解。</p>
-<p>计算 query 和 fact 的分数，query 和上一个 memory $m^{i-1}$ 作为<strong>输入</strong>产生<strong>输出</strong> episode $e^i$。要注意的是，End-to-End MemNN 的 attention 用的是 linear regression，DMN 用的是  gating function，一个两层的前向神经网络。</p>
-<p>在每一轮迭代中，都有<strong>输入</strong>：</p>
-<ol>
-<li>$c_t$（input module 中第 t 个位置的 fact vector)</li>
-<li>上一轮迭代得到的 memory $m_{i-1}$</li>
-<li>question q  </li>
-</ol>
-<p>利用 gating function 计算第 t 个位置的得分  $g^i_t=G(c_t, m_{i-1}, q)$。G 是一个两层的前向神经网络的 score function，不过描述 input, memory, question 相似度的 feature vector z(c,m,p) 是人工定义的，这也成为了之后 DMN+ 的一个优化点。</p>
-<p>计算完每一次迭代每一个位置的分数后，来更新 episode $e^i$，或者说产生 context vector。<strong>输入</strong>是 $c_1, …, c_{T_C}$，和它们的 gate score $g^i_t$。</p>
-<p>$$ h^i_t=g^i_tGRU(c_t, h^i_{t-1})+(1-g^i_t)h^i_{t-1}$$</p>
-<p>$$e^i=h^i_{T_C}$$</p>
-<p>总结一下，这部分 attention mechanism 的目的是生成 episode $e^i$，$e^i$ 是第 t 轮迭代的所有相关 input 信息的 summary。与 End-to-End MemNN 不同的是，End-to-End 用了 soft attention，也就是加权和来计算 context，而这里用了 GRU。</p>
-<h3 id="Memory-Update-Mechanism"><a href="#Memory-Update-Mechanism" class="headerlink" title="Memory Update Mechanism"></a>Memory Update Mechanism</h3><p>上一步算的 episode $e^i$ 以及上一轮迭代的 memory $m^{i-1}$ 作为<strong>输入</strong> 来更新 episodic memory $m^i$。</p>
-<p>$$m^i=GRU(e^i, m^{i-1})$$</p>
-<p><strong>输出</strong>是最后一次迭代的 $m=m^{T_M}$</p>
-<p>End-to-End MemNN 的 memory update 过程里，第 k+1 次 query vector 直接是上一个 context vector 和 query 的拼接，$u^{k+1}=u^k + o^k$。而 DMN 里，采用了 RNN 做非线性映射，用 episode $e^i$ 和上一个 memory $m^{i-1}$ 来更新 episodic memory，其 GRU 的初始状态包含了 question 信息，$m^0=q$。</p>
-<p>Episodic Memory Module 需要一个停止迭代的信号。一般可以在输入中加入一个特殊的 end-of-passes 的信号，如果 gate 选中了该特殊信号，就停止迭代。对于没有显性监督的数据集，可以设一个迭代的最大值。</p>
-<p>总结一下，这部分 memory update mechanism 的目的是生成 t 时刻的 episode memory $m^t$，最后一个 pass 的$m^T$ 将包含用于回答问题 q 的所有信息。</p>
-<h3 id="Example-Understanding"><a href="#Example-Understanding" class="headerlink" title="Example Understanding"></a>Example Understanding</h3><p>来用例子解释下 Episodic Memory Module 上面那张图，question 是 where is the football? 第一次迭代找到的是第 7 个句子，John put down the football，第二次找到第 6 个句子 John went to the hallway，第三次找到第 2 个句子 John moved to the bedroom。</p>
-<p>多次迭代第一次找到的是字面上最相关的 context，然后一步步迭代会逐渐定位到真正语义相关的 context，这感觉上就是一个推理的过程。</p>
-<h3 id="Answer-Module"><a href="#Answer-Module" class="headerlink" title="Answer Module"></a>Answer Module</h3><p>使用了 GRU-RNN 作为 decoder。<strong>输入</strong>是 question module 的输出 q 和上一时刻的 hidden state $a_{t-1}$，初始状态是episode memory module 的输出 $a_0=m^{T_M}$</p>
-<p>$$<br>  \begin{aligned}<br>  y_t=Softmax(W^{(a)}a_t) \\<br>  a_t=GRU([y_{t-1}, q], a_{t-1}) \\<br>  \end{aligned}<br>$$</p>
-<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><p>使用 cross-entroy 作为目标函数。如果数据集有 gate 的监督数据，还可以将 gate 的 cross-entroy 加到总的 cost上去，一起训练。训练直接使用 backpropagation 和 gradient descent 就可以。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>总的来说，DMN 在 addressing，memory 提取，query/memory update 部分都用了 DL 手段，相比于 End-to-End MemNN 更为复杂。</p>
-<h1 id="DMN"><a href="#DMN" class="headerlink" title="DMN+"></a>DMN+</h1><p>对应论文：Dynamic Memory Networks for Visual and Textual Question Answering (2016)</p>
-<p>DMN 存在的两个问题：</p>
-<ol>
-<li>输入模块只考虑了过去信息，没考虑到将来信息</li>
-<li>只用 word level 的 GRU，很难记忆远距离 supporting sentences 之间的信息</li>
-</ol>
-<p>这一部分重点讲与 DMN 不同的地方。</p>
-<h2 id="Input-Module-1"><a href="#Input-Module-1" class="headerlink" title="Input Module"></a>Input Module</h2><p>DMN+ 把 single GRU 替换成了类似 hierarchical RNN 结构，一个 sentence reader 得到每个句子的 embedding，一个 input infusion layer 把每个句子的 embedding 放入另一个 GRU 中，得到 context 信息，来解决句子远距离依赖的问题。HRED 相关思路见 <a href="http://www.shuang0420.com/2017/11/17/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20HRED%20%E4%B8%8E%20VHRED/">论文笔记 - HRED 与 VHRED</a>。这里还做了一些微调，sentence reader 用的是 positional encoding，input fusion layer 用了双向 GRU，兼顾了过去和未来的信息。</p>
-<p>用 positional encoding 的原因是在这里用 GRU/LSTM 编码句子计算量大而且容易过拟合（毕竟 bAbI 的单词量很小就几十个单词。。），这种方法反而更好。<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_textual_input.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_textual_input.png"></p>
-<p>除了处理文本信息，作者也提出了图像信息的方案，CNN+RNN，把局部位置的图像信息当做 sentence 处理，在这不多介绍。<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_image_input.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_image_input.png"></p>
-<h2 id="Episodic-Memory-Module-1"><a href="#Episodic-Memory-Module-1" class="headerlink" title="Episodic Memory Module"></a>Episodic Memory Module</h2><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2BMemoryUpdate.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2BMemoryUpdate.png">
-<h3 id="Attention-Mechanism-1"><a href="#Attention-Mechanism-1" class="headerlink" title="Attention Mechanism"></a>Attention Mechanism</h3><p>仍然是人工构造特征向量来计算 attention，但与之前版本的 DMN 相比更为简化，省去了两项含有参数的部分，减少了计算量。另外与 DMN 不同的是，gate 值不是简单的二层前馈网络的结果，而是接着计算了一个 sofmax 评分向量。</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_gate.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_gate.png">
-<p>也就是说，从公式上看，相对于 DMN，式 8 更为简洁，式 9 不变（结果就是 DMN 的 gate 值），增加了式 10。 </p>
-<p>进行到下一步关于 context vector 的计算，两种方案，一种是 soft attention，简单的加权求和，另一种是 attention based GRU。</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/AttnGRU.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/AttnGRU.png">
-<p>AttnGRU 考虑了输入 facts 的位置和顺序信息（position and ordering），或者说是时序信息。在得到 attenion 后，把 attention 作为 gate，如上图，把传统 GRU 中的 update gate $u_i$ 替换成了 attention 的输出 $g^t_i$，这样 gate 就包含了 question 和前一个 episode memory 的知识，更好的决定了把多少 state 信息传递给下一个 RNN cell。同时这也大大简化了 DMN 版本的 context 计算。</p>
-<img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/AttnGRU2.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/AttnGRU2.png">
-<p>$\hat h$ 是更新的 state，$h_{i-1}$ 是传入的上一时刻的 state，$g^t_i$ 是 attention value，是一个由 softmax 产生的标量（scalar）而不是 sigmoid 激活产生的 vector $u_i \in R^{n_H}$，context vector 是 GRU 的 final hidden state。</p>
-<p>AttnGRU 要优于 weighted sum，因为使用了一些时间上的关系，比如小明在操场，小明回了家，小明进了卧室，这些事实实际上有先后关系，而 weighted sum 不一定能反映这种时序关系。</p>
-<h3 id="Memory-Update-Mechanism-1"><a href="#Memory-Update-Mechanism-1" class="headerlink" title="Memory Update Mechanism"></a>Memory Update Mechanism</h3><p>DMN 中 memory 更新采用以 q 向量为初始隐层状态的 GRU 进行更新，用同一套权重，这里替换成了一层 ReLU 层，实际上简化了模型。</p>
-<p>$$m^t = ReLU(W^t[m^{t-1};c^t;q]+b)$$</p>
-<p>其中 ; 表示拼接，这能进一步提高近 0.5% 的准确率。</p>
-<h2 id="Performance-1"><a href="#Performance-1" class="headerlink" title="Performance"></a>Performance</h2><p>最后上一个不同模型的 performance 比较图。<br><img src="http://images.shuang0420.com/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/final_performance.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/final_performance.png"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Memory Networks 相关笔记。&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
