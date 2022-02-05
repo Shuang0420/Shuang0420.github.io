@@ -1181,7 +1181,7 @@
     <entry>
       <title><![CDATA[99/100 天纪念日 - 第 1 期]]></title>
       <url>http://www.shuang0420.cn/2018/08/06/love99/</url>
-      <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
+      <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
       
         
         <tags>
@@ -10060,6 +10060,284 @@ Weights for each of 10*10*5 neurons: 5*5*3=75
     </entry>
     
     <entry>
+      <title><![CDATA[Search Engines笔记 - Federated Search]]></title>
+      <url>http://www.shuang0420.cn/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。垂直数据库能获得更准确的搜索结果。那么对一个 query，我们可以放到合适的多个垂直数据库里检索，然后合并结果呈现给用户。<br><a id="more"></a><br>简单解释就是结果来自多个数据库。用图片表示<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs1.jpg" class="ful-image" alt="fs1.jpg"></p>
+<p>当然，大多数数据库与我们的需求并不相关，所以可以略过。<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs2.jpg" class="ful-image" alt="fs2.jpg"></p>
+<p>Search portals 可以有不同的策略来处理不同类型的请求</p>
+<ul>
+<li>搜索非结构化数据<ul>
+<li>将初始查询映射为对应的结构化查询</li>
+<li>将查询定向到特定的搜索引擎<br>» 汽车，音乐，图片，视频…</li>
+</ul>
+</li>
+<li>搜索结构化数据（数据库） - 例如，邮政编码，股票代码…<ul>
+<li>调用服务或进程<ul>
+<li>如，计算器，股票价格，航班跟踪…</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs3.jpg" class="ful-image" alt="fs3.jpg">
+<h1 id="Constrains"><a href="#Constrains" class="headerlink" title="Constrains"></a>Constrains</h1><p><strong>不合作环境</strong></p>
+<ul>
+<li>没有特别的 federated search 的支持</li>
+<li>资源不受信任</li>
+</ul>
+<p><strong>合作环境</strong></p>
+<ul>
+<li>资源支持公共协议/ API</li>
+<li>资源是受信任的，能够提供准确的信息</li>
+</ul>
+<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
+<li>Resource representation(资源表达)。即获取每个数据库的信息</li>
+<li>Resource selection(资源选择)。即对 resource/databases 进行排序，对每个查询选择少量资源进行检索。</li>
+<li>Result-merging(结果合并)。即对来自不同搜索引擎／数据库对结果进行 merge，产生最终展现给用户的 ranking list。</li>
+</ol>
+<p>其中 1 是在线下完成的(offline)，2、3 是在查询时完成的。</p>
+<h1 id="Resource-representation"><a href="#Resource-representation" class="headerlink" title="Resource representation"></a>Resource representation</h1><p><strong>如何表达资源的内容？</strong></p>
+<ol>
+<li>Bag of words: terms and frequencies</li>
+<li>Sample queries: Queries that this resource is good for</li>
+<li>Sample documents: Typical documents from this resource</li>
+</ol>
+<p>一个例子解释<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/rr1.jpg" class="ful-image" alt="rr1.jpg"></p>
+<p><strong>资源的内容信息如何获取</strong></p>
+<ul>
+<li>通过 protocol 向资源发出请求</li>
+<li>对 query log 请求相关性评价 (relevance assessments)</li>
+<li>Query-based sampling: 提交查询，查看返回的内容</li>
+</ul>
+<p>下面主要介绍第三种 <strong>query-based sampling</strong></p>
+<h2 id="Query-based-sampling"><a href="#Query-based-sampling" class="headerlink" title="Query-based sampling"></a>Query-based sampling</h2><p>过程</p>
+<ol>
+<li>选择一个初始查询</li>
+<li>重复 N 次（例如，N = 100）<ul>
+<li>向搜索引擎提交查询</li>
+<li>下载一些结果（例如，2-4 条）</li>
+<li>得到并更新 representation (words and frequencies)</li>
+<li>从新的 representation 中随机选择 query term(s)形成新的查询</li>
+</ul>
+</li>
+</ol>
+<p><strong>为什么可行?</strong><br>因为词汇分布服从 Heaps’ Law</p>
+<p><strong>如果第一条查询非常糟糕怎么办？</strong><br>如在一个医学领域的语料库里找 car，可能并没有结果(如果是 boolean ranking 的话)，那么就重新选择一个查询？</p>
+<p><strong>抽样的大小有什么影响</strong><br>一条 query 取多少文档呢？实验决定吧，2-4 篇应该就够了</p>
+<p><strong>在合作环境下随机采样</strong><br>只比 query-based sampling 好一点点</p>
+<h1 id="Resource-selection"><a href="#Resource-selection" class="headerlink" title="Resource selection"></a>Resource selection</h1><p>两大类方法，无监督学习通常是通过对 P(ri|q) 排序来解决，监督算法通常通过分类解决。</p>
+<h2 id="Unsupervised-Resource-Selection"><a href="#Unsupervised-Resource-Selection" class="headerlink" title="Unsupervised Resource Selection"></a>Unsupervised Resource Selection</h2><p><strong>Task:</strong> 给定查询 q，决定要搜索的资源(resources)</p>
+<p>无监督方法将这个问题看作 resource ranking 的问题。</p>
+<ol>
+<li>估计 p(ri|q)</li>
+<li>选择前 k 个资源<br>– 通常 k 是给出的<br>– 动态设置 k 是一个开放的研究问题</li>
+</ol>
+<p>两种具体方法，content-based methods 和 query-based methods</p>
+<ul>
+<li>Content-based methods(基于内容的方法)<br>– 对各个资源下 query 和 content 的相似度 $S(q,c)$ 来对资源进行排序<br>– 有不同的方法来实现，区分点在于：<br>» Representation type: bag of words vs. sampled documents<br>» Ranking algorithm: e.g., CORI</li>
+<li>Query-based methods(基于查询的方法)<br>– 对 query，搜索各个资源下的 query log，找出 match 的 query，然后求当前 query 和历史 query 的相似度 $S(q,q_{past})$，对资源进行排序<br>– 之前用的并不多，因为缺少好的 query log</li>
+</ul>
+<h3 id="Content-based-methods"><a href="#Content-based-methods" class="headerlink" title="Content-based methods"></a>Content-based methods</h3><h4 id="Bag-of-words-method"><a href="#Bag-of-words-method" class="headerlink" title="Bag-of-words method"></a>Bag-of-words method</h4><p>基本思想是 <strong>将每个资源视为一个（非常大的）词袋(bag of words)</strong>，排序算法可以用 KL divergence 或者 query likelihood 等方法。<br>eg. CORI<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/cori.jpg" class="ful-image" alt="cori.jpg"></p>
+<p>然而，Bag of words methods (e.g., CORI)是根据 resources 和 query 的相似度进行的排序，这并不是我们的初衷。这种方法 <strong>偏好具有较高 p(qi|Rj) 的资源</strong>，通常意义上也就是 homogeneous (通常很小)的资源。这并不是我们需要的，我们想要的是，选择能够返回更多相关文档的资源，sampled document method 更能达到这个目标。</p>
+<p><strong>Bag of words (“large documents”) 方法的特点</strong></p>
+<ul>
+<li>大文档更好的代表了 resource representation</li>
+<li>偏好具有较大比例相关内容的资源<br>– i.e., small or homogeneous resources</li>
+<li>非常有效，很有竞争力</li>
+</ul>
+<h4 id="Sample-documents-method"><a href="#Sample-documents-method" class="headerlink" title="Sample documents method"></a>Sample documents method</h4><p><strong>基本思想：</strong> 对每个资源采样然后合并得到一个 centralized index，记录每个文档来自哪个 resource。<br>eg. ReDDE<br>给定一个查询</p>
+<ol>
+<li>搜索 centralized sample index 得到相关文档</li>
+<li>取前 T 的文档</li>
+<li>检查哪些资源提供了这些相关文档</li>
+<li>估计每个资源中相关文档的数量<br>• 计算资源 i 中高于阈值 T 的文档数量 n<br>• n * resource_size / sample_size</li>
+</ol>
+<p>ReDDE 可以看作是 sample-based voting method，每个 top-ranked document 可以看作是对它属于的那个资源的一个投票。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>高召回率: 选择包含更多相关文档的资源</li>
+<li>高准确率: 选择能够返回更多的出现在合并结果集 top T 的文档的资源</li>
+<li>有很多算法的变种<br>– 来自更可靠/权威的资源的 sample 获得更多的投票<br>– 更相关的 sample 获得更多的投票</li>
+</ul>
+<h4 id="CORI-vs-ReDDE"><a href="#CORI-vs-ReDDE" class="headerlink" title="CORI vs ReDDE"></a>CORI vs ReDDE</h4><ul>
+<li>ReDDE 相对而言更加准确<br>– 通常效果更好，几乎不会有更糟的情况</li>
+<li>当各个 collection size 的分布是 skewed 时，ReDDE 的性能优于 CORI<br>– CORI 偏向小集合。他们更可能是同质的，它错过了大型，异质的 collections<br>– ReDDE 对大型 collection 的偏见没那么强</li>
+<li>CORI 比 ReDDE 更有效<br>– 一个资源一个文档 vs. 一个资源多个文档</li>
+</ul>
+<h2 id="Supervised-Resource-Selection"><a href="#Supervised-Resource-Selection" class="headerlink" title="Supervised Resource Selection"></a>Supervised Resource Selection</h2><p>当我们有可用的训练数据时，就可以进行有监督的资源选择</p>
+<ul>
+<li>利用广泛的特征</li>
+<li>将任务框架化为分类问题</li>
+<li>让机器学习算法学习如何给不同的特征分配权重</li>
+</ul>
+<p><strong>Main issues</strong></p>
+<ul>
+<li>特征工程</li>
+<li>获取训练数据</li>
+<li>确定要选择的资源数</li>
+</ul>
+<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p><strong>Task:</strong> 给定一个查询，选择一个或更多的 verticals</p>
+<p>将问题定义为一个 “one-vs-all” 的分类任务</p>
+<ul>
+<li>对每个 vertical 都训练一个分类器</li>
+<li>对 “no vertical” (web only) 也训练一个分类器</li>
+<li>E.g., Arguello, et al (2009) 用了逻辑回归模型</li>
+</ul>
+<p><strong>典型的选择策略</strong></p>
+<ul>
+<li>选择一个具有最高置信度(confidence score)的分类器</li>
+<li>选择 n 个最好的分类器</li>
+<li>选择所有置信度分数高于 threshold 的分类器</li>
+</ul>
+<h3 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h3><p><strong>Query features</strong></p>
+<ul>
+<li>Boolean: keywords and regular expressions<br>– E.g., “weather”, “news”, “videos”, …</li>
+<li>Geographic: Probabilities associated with geographic entities<br>– E.g., “Pittsburgh pizza”</li>
+<li>Category: query’s affinity to a set of topic categories<pre><code>– E.g., “Cancun vacations”
+</code></pre></li>
+</ul>
+<p><strong>Corpus Features</strong><br>ReDDE 是非常流行的资源排序算法</p>
+<p><strong>Clarity (Cronen-Townsend, et al., 2002)</strong><br>Clarity 用来预测给定语料库上的查询的有效性，本质上是 top-ranked 文档和完整集合之间的 KL divergence，如果排名靠前的文档看起来像是 collection 的 random sample，搜索结果将会很差</p>
+<p><strong>Query Log Features</strong></p>
+<ul>
+<li>人工评估/点击率</li>
+</ul>
+<p><strong>qlog feature</strong></p>
+<ul>
+<li>用查询日志中的 query 来构建语言模型 v</li>
+<li>用 query likelihood 来建模 $P(q|v)=\prod_t^q P(t|v)$</li>
+<li>p(t | v) is a smoothed MLE</li>
+</ul>
+<p><strong>Soft.ReDDE feature:</strong></p>
+<ul>
+<li>用查询日志中的 query 来构建语言模型 v</li>
+<li>用 query 对外部的 collection 检索<br>– E.g., wikipedia</li>
+<li>选择前 n 个文档</li>
+<li>文档 di 的投票是 KLD (di || v)<br>– 与查询日志相似的文档具有更高的投票</li>
+</ul>
+<h1 id="Result-merging"><a href="#Result-merging" class="headerlink" title="Result merging"></a>Result merging</h1><p><strong>主要问题：</strong><br><strong>idf</strong><br>同一个 term，在不同数据库的 idf 不同怎么办？</p>
+<p><strong>scores</strong><br>不同数据库的 doc score 不是可比的怎么办？</p>
+<p><strong>＝&gt; Map resource-specific scores to resource-neutral scores</strong></p>
+<p><strong>Result merging</strong></p>
+<ul>
+<li>用所有的 sampled documents 创建一个 index (offline)</li>
+<li>从选定的资源里检索文档<br>– 因为资源并不提供文档分数，所以对每个文档计算 sim (q, d)<br>– 利用 index 的 corpus statistics 来计算每个文档的 authority score</li>
+<li>score(d) = f ( sim (q, d), authority (d) )</li>
+</ul>
+<h2 id="Semi-Supervised-Learning"><a href="#Semi-Supervised-Learning" class="headerlink" title="Semi-Supervised Learning"></a>Semi-Supervised Learning</h2><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss.jpg" class="ful-image" alt="ss.jpg">
+<p>由资源 i 返回的一些文档可能同时出现在 sample index 里<br>对这些文档我们有两个分数</p>
+<ul>
+<li>Sample index (resource neutral) score</li>
+<li>Resource i (resource-specific) score<br>这就是我们用来学习 f (resource-specific) = resource-neutral 的训练数据</li>
+</ul>
+<p>对这个所需的 “normalization” 用线性函数进行建模，因为线性模型可以利用少量的数据进行训练，而且 Ad-hoc CORI 的合并就是线性的<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss2.jpg" class="ful-image" alt="ss2.jpg"></p>
+<p>使用线性回归(linear regression)推导出权重</p>
+<ul>
+<li>f（resource-specific score）= a×dRi，j + b = resource-neutral score</li>
+<li>每个(query, resource) pair 对应不同的函数</li>
+</ul>
+<p><strong>它有效么?</strong><br>目前为止是最好的选择，因为 mapping 是 query-specific 和 resource-specific 的。</p>
+<p><strong>有没有足够的训练数据?</strong><br>通常有，因为 resource selection 和 sample index 可以用相同的文档。如果没有，下载 1-3 篇文档来产生训练数据。</p>
+<h1 id="Large-Scale-Search-Architecture"><a href="#Large-Scale-Search-Architecture" class="headerlink" title="Large-Scale Search Architecture"></a>Large-Scale Search Architecture</h1><p>之前讲过 large-scale search architecture 的相关内容。我们可以把数据集分为两层 <strong>高价值</strong> 和 <strong>低价值</strong>，然后将每一层进行分区(shards)，再将分区分配给计算机。</p>
+<p>事实上我们并不需要对每个查询都检索每一个分区，这样做成本很高，为什么不直接搜索最好/最合适的分区呢？</p>
+<p>通常带来的结果是：</p>
+<ul>
+<li>高准确率 (尤其是 top ranks)</li>
+<li>低召回率 (可能会错过许多有用的文档)<br>– 只搜索了少量资源，这也是广泛应用的障碍</li>
+</ul>
+<p><strong>所以分为两步:</strong></p>
+<ol>
+<li>资源定义(Resource definition)<ul>
+<li>对文档分区</li>
+</ul>
+</li>
+<li>资源选择(Resource selection)<ul>
+<li>对特定 query 选择要搜索的分区</li>
+</ul>
+</li>
+</ol>
+<p>下面进行详细的介绍。</p>
+<h2 id="Resource-definition"><a href="#Resource-definition" class="headerlink" title="Resource definition"></a>Resource definition</h2><p><strong>Goal:</strong> 搜索更少的分区得到更高的 recall</p>
+<p><strong>Requirement:</strong><br>对于可能提交的任何 query，大多数的相关文档必须出现在同一个分区中</p>
+<p><strong>How:</strong><br>把 closely-associated documents 也就是相似（相同主题）的文档归到同一个分区。</p>
+<p><strong>Hypothesis:</strong> Closely-associated ≈ topically-related &amp; Each shard covers one topic/subject</p>
+<p><strong>对给定的语料库，应该使用哪些 topics/subjects?</strong></p>
+<ul>
+<li>人工开发类别? – LCSH, DMOZ, Reuters, …</li>
+<li>自动学习 corpus-specific topics? – Clustering, LDA, PLSA, …</li>
+</ul>
+<p>我们想要一个可以应用于任何语料库的解决方案，因此，需要能自动学习基于语料库的特定的主题。许多算法能产生语料库特定的“主题”：</p>
+<ul>
+<li>聚类: E.g., k-means clustering</li>
+<li>主题模型: E.g., Latent Dirichlet Allocation (LDA)</li>
+</ul>
+<p>当然我们也要保证解决方案必须对 large collections 是有效的：</p>
+<ul>
+<li>从 collection 的一个随机样本里创建主题</li>
+<li>将其余文档分配给最相似的主题</li>
+</ul>
+<h2 id="Resource-selection-1"><a href="#Resource-selection-1" class="headerlink" title="Resource selection"></a>Resource selection</h2><p><strong>Goal:</strong> 给定查询，选择最好的分区</p>
+<p><strong>两类重要的资源选择算法:</strong></p>
+<ul>
+<li>Model-based: CORI, CRCS, Taily, …</li>
+<li>Sample-based: ReDDE, SUSHI, Rank-S, …</li>
+</ul>
+<p>有很多好的算法</p>
+<ul>
+<li>Sample-based 的算法被认为是最有效的</li>
+<li>在初始工作中常常使用 ReDDE 变种</li>
+<li>Taily 和 Rank-S 也经常被研究/考虑</li>
+</ul>
+<p><strong>对每个分区采样:</strong><br>将样本存储到 sample index 里 =&gt; offline</p>
+<p><strong>给定查询</strong></p>
+<ul>
+<li>搜索 sample index，得到 top documents</li>
+<li>Top documents 对它们所在的分区投票</li>
+<li>将 query 发送到得到最多投票的分区<br>=&gt; online</li>
+</ul>
+<h2 id="Cost"><a href="#Cost" class="headerlink" title="Cost"></a>Cost</h2><p>$C_{Total}$:</p>
+<ul>
+<li>处理 inverted list 的数量</li>
+<li>用于资源选择</li>
+<li>用于分区选择</li>
+<li>I/O 和计算成本</li>
+</ul>
+<p>Selective search 分为两步：</p>
+<ul>
+<li>选择要搜索的分区（resource selection）</li>
+<li>搜索所选的分区</li>
+</ul>
+<p>ReDDE 具有更高的计算成本</p>
+<p><strong>Key techniques</strong></p>
+<ol>
+<li>Resource definition for selective search<br>– How to partition a large corpus effectively</li>
+<li>Resource representation<br>– How to represent the contents of each resource<br>– Vocabulary-based, sample-documents-based, feature-based</li>
+<li>Resource selection<br>– How to select the right resources for a particular query</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> NLP </category>
+            
+            <category> Search Engines </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> NLP </tag>
+            
+            <tag> Search Engines </tag>
+            
+            <tag> 信息检索 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Search Engines笔记 - Diversity]]></title>
       <url>http://www.shuang0420.cn/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/</url>
       <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。一个 query 可能表现了不同的信息需求，之前的相关性模型可能带来的结果是大多文档只能满足同一个信息需求，所以有些用户满意了，有些 user 抓狂了。我们希望检索到的 document 是能够 diverse 的，这样的话可以尽可能的满足不同用户的需求。这一章就讲了怎么实现 diversity。<br><a id="more"></a></p>
@@ -10349,284 +10627,6 @@ Weights for each of 10*10*5 neurons: 5*5*3=75
             <tag> 信息检索 </tag>
             
             <tag> 多样化 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Search Engines笔记 - Federated Search]]></title>
-      <url>http://www.shuang0420.cn/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。垂直数据库能获得更准确的搜索结果。那么对一个 query，我们可以放到合适的多个垂直数据库里检索，然后合并结果呈现给用户。<br><a id="more"></a><br>简单解释就是结果来自多个数据库。用图片表示<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs1.jpg" class="ful-image" alt="fs1.jpg"></p>
-<p>当然，大多数数据库与我们的需求并不相关，所以可以略过。<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs2.jpg" class="ful-image" alt="fs2.jpg"></p>
-<p>Search portals 可以有不同的策略来处理不同类型的请求</p>
-<ul>
-<li>搜索非结构化数据<ul>
-<li>将初始查询映射为对应的结构化查询</li>
-<li>将查询定向到特定的搜索引擎<br>» 汽车，音乐，图片，视频…</li>
-</ul>
-</li>
-<li>搜索结构化数据（数据库） - 例如，邮政编码，股票代码…<ul>
-<li>调用服务或进程<ul>
-<li>如，计算器，股票价格，航班跟踪…</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs3.jpg" class="ful-image" alt="fs3.jpg">
-<h1 id="Constrains"><a href="#Constrains" class="headerlink" title="Constrains"></a>Constrains</h1><p><strong>不合作环境</strong></p>
-<ul>
-<li>没有特别的 federated search 的支持</li>
-<li>资源不受信任</li>
-</ul>
-<p><strong>合作环境</strong></p>
-<ul>
-<li>资源支持公共协议/ API</li>
-<li>资源是受信任的，能够提供准确的信息</li>
-</ul>
-<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
-<li>Resource representation(资源表达)。即获取每个数据库的信息</li>
-<li>Resource selection(资源选择)。即对 resource/databases 进行排序，对每个查询选择少量资源进行检索。</li>
-<li>Result-merging(结果合并)。即对来自不同搜索引擎／数据库对结果进行 merge，产生最终展现给用户的 ranking list。</li>
-</ol>
-<p>其中 1 是在线下完成的(offline)，2、3 是在查询时完成的。</p>
-<h1 id="Resource-representation"><a href="#Resource-representation" class="headerlink" title="Resource representation"></a>Resource representation</h1><p><strong>如何表达资源的内容？</strong></p>
-<ol>
-<li>Bag of words: terms and frequencies</li>
-<li>Sample queries: Queries that this resource is good for</li>
-<li>Sample documents: Typical documents from this resource</li>
-</ol>
-<p>一个例子解释<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/rr1.jpg" class="ful-image" alt="rr1.jpg"></p>
-<p><strong>资源的内容信息如何获取</strong></p>
-<ul>
-<li>通过 protocol 向资源发出请求</li>
-<li>对 query log 请求相关性评价 (relevance assessments)</li>
-<li>Query-based sampling: 提交查询，查看返回的内容</li>
-</ul>
-<p>下面主要介绍第三种 <strong>query-based sampling</strong></p>
-<h2 id="Query-based-sampling"><a href="#Query-based-sampling" class="headerlink" title="Query-based sampling"></a>Query-based sampling</h2><p>过程</p>
-<ol>
-<li>选择一个初始查询</li>
-<li>重复 N 次（例如，N = 100）<ul>
-<li>向搜索引擎提交查询</li>
-<li>下载一些结果（例如，2-4 条）</li>
-<li>得到并更新 representation (words and frequencies)</li>
-<li>从新的 representation 中随机选择 query term(s)形成新的查询</li>
-</ul>
-</li>
-</ol>
-<p><strong>为什么可行?</strong><br>因为词汇分布服从 Heaps’ Law</p>
-<p><strong>如果第一条查询非常糟糕怎么办？</strong><br>如在一个医学领域的语料库里找 car，可能并没有结果(如果是 boolean ranking 的话)，那么就重新选择一个查询？</p>
-<p><strong>抽样的大小有什么影响</strong><br>一条 query 取多少文档呢？实验决定吧，2-4 篇应该就够了</p>
-<p><strong>在合作环境下随机采样</strong><br>只比 query-based sampling 好一点点</p>
-<h1 id="Resource-selection"><a href="#Resource-selection" class="headerlink" title="Resource selection"></a>Resource selection</h1><p>两大类方法，无监督学习通常是通过对 P(ri|q) 排序来解决，监督算法通常通过分类解决。</p>
-<h2 id="Unsupervised-Resource-Selection"><a href="#Unsupervised-Resource-Selection" class="headerlink" title="Unsupervised Resource Selection"></a>Unsupervised Resource Selection</h2><p><strong>Task:</strong> 给定查询 q，决定要搜索的资源(resources)</p>
-<p>无监督方法将这个问题看作 resource ranking 的问题。</p>
-<ol>
-<li>估计 p(ri|q)</li>
-<li>选择前 k 个资源<br>– 通常 k 是给出的<br>– 动态设置 k 是一个开放的研究问题</li>
-</ol>
-<p>两种具体方法，content-based methods 和 query-based methods</p>
-<ul>
-<li>Content-based methods(基于内容的方法)<br>– 对各个资源下 query 和 content 的相似度 $S(q,c)$ 来对资源进行排序<br>– 有不同的方法来实现，区分点在于：<br>» Representation type: bag of words vs. sampled documents<br>» Ranking algorithm: e.g., CORI</li>
-<li>Query-based methods(基于查询的方法)<br>– 对 query，搜索各个资源下的 query log，找出 match 的 query，然后求当前 query 和历史 query 的相似度 $S(q,q_{past})$，对资源进行排序<br>– 之前用的并不多，因为缺少好的 query log</li>
-</ul>
-<h3 id="Content-based-methods"><a href="#Content-based-methods" class="headerlink" title="Content-based methods"></a>Content-based methods</h3><h4 id="Bag-of-words-method"><a href="#Bag-of-words-method" class="headerlink" title="Bag-of-words method"></a>Bag-of-words method</h4><p>基本思想是 <strong>将每个资源视为一个（非常大的）词袋(bag of words)</strong>，排序算法可以用 KL divergence 或者 query likelihood 等方法。<br>eg. CORI<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/cori.jpg" class="ful-image" alt="cori.jpg"></p>
-<p>然而，Bag of words methods (e.g., CORI)是根据 resources 和 query 的相似度进行的排序，这并不是我们的初衷。这种方法 <strong>偏好具有较高 p(qi|Rj) 的资源</strong>，通常意义上也就是 homogeneous (通常很小)的资源。这并不是我们需要的，我们想要的是，选择能够返回更多相关文档的资源，sampled document method 更能达到这个目标。</p>
-<p><strong>Bag of words (“large documents”) 方法的特点</strong></p>
-<ul>
-<li>大文档更好的代表了 resource representation</li>
-<li>偏好具有较大比例相关内容的资源<br>– i.e., small or homogeneous resources</li>
-<li>非常有效，很有竞争力</li>
-</ul>
-<h4 id="Sample-documents-method"><a href="#Sample-documents-method" class="headerlink" title="Sample documents method"></a>Sample documents method</h4><p><strong>基本思想：</strong> 对每个资源采样然后合并得到一个 centralized index，记录每个文档来自哪个 resource。<br>eg. ReDDE<br>给定一个查询</p>
-<ol>
-<li>搜索 centralized sample index 得到相关文档</li>
-<li>取前 T 的文档</li>
-<li>检查哪些资源提供了这些相关文档</li>
-<li>估计每个资源中相关文档的数量<br>• 计算资源 i 中高于阈值 T 的文档数量 n<br>• n * resource_size / sample_size</li>
-</ol>
-<p>ReDDE 可以看作是 sample-based voting method，每个 top-ranked document 可以看作是对它属于的那个资源的一个投票。</p>
-<p><strong>特点：</strong></p>
-<ul>
-<li>高召回率: 选择包含更多相关文档的资源</li>
-<li>高准确率: 选择能够返回更多的出现在合并结果集 top T 的文档的资源</li>
-<li>有很多算法的变种<br>– 来自更可靠/权威的资源的 sample 获得更多的投票<br>– 更相关的 sample 获得更多的投票</li>
-</ul>
-<h4 id="CORI-vs-ReDDE"><a href="#CORI-vs-ReDDE" class="headerlink" title="CORI vs ReDDE"></a>CORI vs ReDDE</h4><ul>
-<li>ReDDE 相对而言更加准确<br>– 通常效果更好，几乎不会有更糟的情况</li>
-<li>当各个 collection size 的分布是 skewed 时，ReDDE 的性能优于 CORI<br>– CORI 偏向小集合。他们更可能是同质的，它错过了大型，异质的 collections<br>– ReDDE 对大型 collection 的偏见没那么强</li>
-<li>CORI 比 ReDDE 更有效<br>– 一个资源一个文档 vs. 一个资源多个文档</li>
-</ul>
-<h2 id="Supervised-Resource-Selection"><a href="#Supervised-Resource-Selection" class="headerlink" title="Supervised Resource Selection"></a>Supervised Resource Selection</h2><p>当我们有可用的训练数据时，就可以进行有监督的资源选择</p>
-<ul>
-<li>利用广泛的特征</li>
-<li>将任务框架化为分类问题</li>
-<li>让机器学习算法学习如何给不同的特征分配权重</li>
-</ul>
-<p><strong>Main issues</strong></p>
-<ul>
-<li>特征工程</li>
-<li>获取训练数据</li>
-<li>确定要选择的资源数</li>
-</ul>
-<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p><strong>Task:</strong> 给定一个查询，选择一个或更多的 verticals</p>
-<p>将问题定义为一个 “one-vs-all” 的分类任务</p>
-<ul>
-<li>对每个 vertical 都训练一个分类器</li>
-<li>对 “no vertical” (web only) 也训练一个分类器</li>
-<li>E.g., Arguello, et al (2009) 用了逻辑回归模型</li>
-</ul>
-<p><strong>典型的选择策略</strong></p>
-<ul>
-<li>选择一个具有最高置信度(confidence score)的分类器</li>
-<li>选择 n 个最好的分类器</li>
-<li>选择所有置信度分数高于 threshold 的分类器</li>
-</ul>
-<h3 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h3><p><strong>Query features</strong></p>
-<ul>
-<li>Boolean: keywords and regular expressions<br>– E.g., “weather”, “news”, “videos”, …</li>
-<li>Geographic: Probabilities associated with geographic entities<br>– E.g., “Pittsburgh pizza”</li>
-<li>Category: query’s affinity to a set of topic categories<pre><code>– E.g., “Cancun vacations”
-</code></pre></li>
-</ul>
-<p><strong>Corpus Features</strong><br>ReDDE 是非常流行的资源排序算法</p>
-<p><strong>Clarity (Cronen-Townsend, et al., 2002)</strong><br>Clarity 用来预测给定语料库上的查询的有效性，本质上是 top-ranked 文档和完整集合之间的 KL divergence，如果排名靠前的文档看起来像是 collection 的 random sample，搜索结果将会很差</p>
-<p><strong>Query Log Features</strong></p>
-<ul>
-<li>人工评估/点击率</li>
-</ul>
-<p><strong>qlog feature</strong></p>
-<ul>
-<li>用查询日志中的 query 来构建语言模型 v</li>
-<li>用 query likelihood 来建模 $P(q|v)=\prod_t^q P(t|v)$</li>
-<li>p(t | v) is a smoothed MLE</li>
-</ul>
-<p><strong>Soft.ReDDE feature:</strong></p>
-<ul>
-<li>用查询日志中的 query 来构建语言模型 v</li>
-<li>用 query 对外部的 collection 检索<br>– E.g., wikipedia</li>
-<li>选择前 n 个文档</li>
-<li>文档 di 的投票是 KLD (di || v)<br>– 与查询日志相似的文档具有更高的投票</li>
-</ul>
-<h1 id="Result-merging"><a href="#Result-merging" class="headerlink" title="Result merging"></a>Result merging</h1><p><strong>主要问题：</strong><br><strong>idf</strong><br>同一个 term，在不同数据库的 idf 不同怎么办？</p>
-<p><strong>scores</strong><br>不同数据库的 doc score 不是可比的怎么办？</p>
-<p><strong>＝&gt; Map resource-specific scores to resource-neutral scores</strong></p>
-<p><strong>Result merging</strong></p>
-<ul>
-<li>用所有的 sampled documents 创建一个 index (offline)</li>
-<li>从选定的资源里检索文档<br>– 因为资源并不提供文档分数，所以对每个文档计算 sim (q, d)<br>– 利用 index 的 corpus statistics 来计算每个文档的 authority score</li>
-<li>score(d) = f ( sim (q, d), authority (d) )</li>
-</ul>
-<h2 id="Semi-Supervised-Learning"><a href="#Semi-Supervised-Learning" class="headerlink" title="Semi-Supervised Learning"></a>Semi-Supervised Learning</h2><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss.jpg" class="ful-image" alt="ss.jpg">
-<p>由资源 i 返回的一些文档可能同时出现在 sample index 里<br>对这些文档我们有两个分数</p>
-<ul>
-<li>Sample index (resource neutral) score</li>
-<li>Resource i (resource-specific) score<br>这就是我们用来学习 f (resource-specific) = resource-neutral 的训练数据</li>
-</ul>
-<p>对这个所需的 “normalization” 用线性函数进行建模，因为线性模型可以利用少量的数据进行训练，而且 Ad-hoc CORI 的合并就是线性的<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss2.jpg" class="ful-image" alt="ss2.jpg"></p>
-<p>使用线性回归(linear regression)推导出权重</p>
-<ul>
-<li>f（resource-specific score）= a×dRi，j + b = resource-neutral score</li>
-<li>每个(query, resource) pair 对应不同的函数</li>
-</ul>
-<p><strong>它有效么?</strong><br>目前为止是最好的选择，因为 mapping 是 query-specific 和 resource-specific 的。</p>
-<p><strong>有没有足够的训练数据?</strong><br>通常有，因为 resource selection 和 sample index 可以用相同的文档。如果没有，下载 1-3 篇文档来产生训练数据。</p>
-<h1 id="Large-Scale-Search-Architecture"><a href="#Large-Scale-Search-Architecture" class="headerlink" title="Large-Scale Search Architecture"></a>Large-Scale Search Architecture</h1><p>之前讲过 large-scale search architecture 的相关内容。我们可以把数据集分为两层 <strong>高价值</strong> 和 <strong>低价值</strong>，然后将每一层进行分区(shards)，再将分区分配给计算机。</p>
-<p>事实上我们并不需要对每个查询都检索每一个分区，这样做成本很高，为什么不直接搜索最好/最合适的分区呢？</p>
-<p>通常带来的结果是：</p>
-<ul>
-<li>高准确率 (尤其是 top ranks)</li>
-<li>低召回率 (可能会错过许多有用的文档)<br>– 只搜索了少量资源，这也是广泛应用的障碍</li>
-</ul>
-<p><strong>所以分为两步:</strong></p>
-<ol>
-<li>资源定义(Resource definition)<ul>
-<li>对文档分区</li>
-</ul>
-</li>
-<li>资源选择(Resource selection)<ul>
-<li>对特定 query 选择要搜索的分区</li>
-</ul>
-</li>
-</ol>
-<p>下面进行详细的介绍。</p>
-<h2 id="Resource-definition"><a href="#Resource-definition" class="headerlink" title="Resource definition"></a>Resource definition</h2><p><strong>Goal:</strong> 搜索更少的分区得到更高的 recall</p>
-<p><strong>Requirement:</strong><br>对于可能提交的任何 query，大多数的相关文档必须出现在同一个分区中</p>
-<p><strong>How:</strong><br>把 closely-associated documents 也就是相似（相同主题）的文档归到同一个分区。</p>
-<p><strong>Hypothesis:</strong> Closely-associated ≈ topically-related &amp; Each shard covers one topic/subject</p>
-<p><strong>对给定的语料库，应该使用哪些 topics/subjects?</strong></p>
-<ul>
-<li>人工开发类别? – LCSH, DMOZ, Reuters, …</li>
-<li>自动学习 corpus-specific topics? – Clustering, LDA, PLSA, …</li>
-</ul>
-<p>我们想要一个可以应用于任何语料库的解决方案，因此，需要能自动学习基于语料库的特定的主题。许多算法能产生语料库特定的“主题”：</p>
-<ul>
-<li>聚类: E.g., k-means clustering</li>
-<li>主题模型: E.g., Latent Dirichlet Allocation (LDA)</li>
-</ul>
-<p>当然我们也要保证解决方案必须对 large collections 是有效的：</p>
-<ul>
-<li>从 collection 的一个随机样本里创建主题</li>
-<li>将其余文档分配给最相似的主题</li>
-</ul>
-<h2 id="Resource-selection-1"><a href="#Resource-selection-1" class="headerlink" title="Resource selection"></a>Resource selection</h2><p><strong>Goal:</strong> 给定查询，选择最好的分区</p>
-<p><strong>两类重要的资源选择算法:</strong></p>
-<ul>
-<li>Model-based: CORI, CRCS, Taily, …</li>
-<li>Sample-based: ReDDE, SUSHI, Rank-S, …</li>
-</ul>
-<p>有很多好的算法</p>
-<ul>
-<li>Sample-based 的算法被认为是最有效的</li>
-<li>在初始工作中常常使用 ReDDE 变种</li>
-<li>Taily 和 Rank-S 也经常被研究/考虑</li>
-</ul>
-<p><strong>对每个分区采样:</strong><br>将样本存储到 sample index 里 =&gt; offline</p>
-<p><strong>给定查询</strong></p>
-<ul>
-<li>搜索 sample index，得到 top documents</li>
-<li>Top documents 对它们所在的分区投票</li>
-<li>将 query 发送到得到最多投票的分区<br>=&gt; online</li>
-</ul>
-<h2 id="Cost"><a href="#Cost" class="headerlink" title="Cost"></a>Cost</h2><p>$C_{Total}$:</p>
-<ul>
-<li>处理 inverted list 的数量</li>
-<li>用于资源选择</li>
-<li>用于分区选择</li>
-<li>I/O 和计算成本</li>
-</ul>
-<p>Selective search 分为两步：</p>
-<ul>
-<li>选择要搜索的分区（resource selection）</li>
-<li>搜索所选的分区</li>
-</ul>
-<p>ReDDE 具有更高的计算成本</p>
-<p><strong>Key techniques</strong></p>
-<ol>
-<li>Resource definition for selective search<br>– How to partition a large corpus effectively</li>
-<li>Resource representation<br>– How to represent the contents of each resource<br>– Vocabulary-based, sample-documents-based, feature-based</li>
-<li>Resource selection<br>– How to select the right resources for a particular query</li>
-</ol>
-]]></content>
-      
-        <categories>
-            
-            <category> NLP </category>
-            
-            <category> Search Engines </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> NLP </tag>
-            
-            <tag> Search Engines </tag>
-            
-            <tag> 信息检索 </tag>
             
         </tags>
         
@@ -11524,6 +11524,118 @@ python nb.py split.train split.test</pre>
     </entry>
     
     <entry>
+      <title><![CDATA[Search Engines笔记 - Authority Metrics]]></title>
+      <url>http://www.shuang0420.cn/2016/11/04/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章 Authority Metrics（权威指数），用来判断哪些来源的信息更值得信任。介绍 PageRank、Topic-Sensitive PageRank(TSPR)、T-Fresh、Hyperlink-Induced Topic Search(HITS) 四种指数计算方式。<br><a id="more"></a></p>
+<h1 id="链接分析"><a href="#链接分析" class="headerlink" title="链接分析"></a>链接分析</h1><p>链接分析思想最早起源于引文分析领域，通过分析文献之间的引用模式来量化学术论文的影响力。文献引用代表某篇学术论文对所引用论文的权威度的认可。类似的，对于 Web 网页，我们把超链接看成是一个网页对另一个网页的权威度的认可。当然，并不是所有引用都代表权威度认可，因为某个人可以建立多个 web 网页来指向同一个目标网页，人工来提高目标网页入链数。这种链接通常叫垃圾链接或链接作弊（link spam）。尽管如此，引用现象的普遍性和可靠性足以使搜索引擎通过精妙的链接分析方法推导出有用的排序因子。链接分析也被证明是在 web 采集中选择下一个采集网页的非常好的方法之一。给定查询下，链接分析结果已经成为 Web 搜索引擎在计算某个网页的组合得分中的一个因子。PageRank 和 HITS 就是常用的两种链接分析方法。</p>
+<h2 id="基本假设"><a href="#基本假设" class="headerlink" title="基本假设"></a>基本假设</h2><ol>
+<li>指向页面 B 的锚文本是对 B 的一个很好的描述。</li>
+<li>A 到 B 的超链接表示 A 的作者对 B 的认可。</li>
+</ol>
+<h2 id="锚文本"><a href="#锚文本" class="headerlink" title="锚文本"></a>锚文本</h2><h3 id="什么是锚文本"><a href="#什么是锚文本" class="headerlink" title="什么是锚文本"></a>什么是锚文本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;http://www.acm.org/jacm/&quot;&gt;Journal of the ACM.&lt;/a&gt;</div></pre></td></tr></table></figure>
+<p>这个 HTML 代码片段给出了一个指向 Journal of the ACM 的链接。链接指向 <a href="http://www.acm.org/jacm/，锚文本是" target="_blank" rel="external">http://www.acm.org/jacm/，锚文本是</a> Journal of the ACM。</p>
+<h3 id="锚文本的作用"><a href="#锚文本的作用" class="headerlink" title="锚文本的作用"></a>锚文本的作用</h3><p>Web 上随处可见的现象是，很多网页的内容并不包含对自身的精确描述，尤其是公司网页，因为它们往往是用作商业宣传而不是介绍公司内容。如 IBM 是计算机制造商，但公司主页 (www.ibm.com) 的 HTML 代码的任何地方都不包含词项 computer。这时候，锚文本的作用就体现出来了。锚文本的词项可以作为索引目标网页的词项，也就是说 computer 的 inverted list 包含了 www.ibm.com，这时再用一个特别的指示器表示这些词项在锚文本而不是网页内部，网页评分时也基于 term frequency 计算锚文本的 term weight，在多个锚文本中高频出现的词项(如 Click 和 here)会收到惩罚。<br>除了锚文本，锚文本周围窗口的文本(extended anchor text)，通常也可以当成锚文本来使用。</p>
+<h3 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h3><p>网站可以通过构造具有误导性的锚文本来指向自己，以此提高在某些 query term 的排名。</p>
+<h1 id="PageRank"><a href="#PageRank" class="headerlink" title="PageRank"></a>PageRank</h1><p>PageRank 是 query-independent 的，也就是说与用户输入的查询无关。PageRank 高的网页并不代表一定适合某个特定的 query。如 kanye west wikipedia 网页有很高的 PageRank，但并不适合 “obama family tree” 这个特定的 query。</p>
+<h2 id="Random-Walk-Algorithm"><a href="#Random-Walk-Algorithm" class="headerlink" title="Random Walk Algorithm"></a>Random Walk Algorithm</h2><p>PageRank 可以被看作是一个随机游走的算法。基本思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指向的链接，这样无所事事、漫无目的地在网页上跳来跳去，PageRank 就是估计这个悠闲的上网者分布在各个网页上的概率。</p>
+<ol>
+<li>随机选一个网页 A 。</li>
+<li>网页 A 有 n 条出链（outlinks），这时候有两种方法进行下一步。<ul>
+<li>随机在出链中选一个到下一个网页。</li>
+<li>随机从所有 web 网页里选一个其它网页(teleport)。（因为网页 A 可能没有出链）</li>
+</ul>
+</li>
+<li>不断重复以上过程。</li>
+</ol>
+<p>随机游走中访问越频繁的网页越重要。<br>计算方法<br><img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg"></p>
+<h2 id="Voting-Algorithm"><a href="#Voting-Algorithm" class="headerlink" title="Voting Algorithm"></a>Voting Algorithm</h2><p>PageRank 也可以被看作是一个 Voting algorithm。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    p votes for each page that it links to</div></pre></td></tr></table></figure></p>
+<p>再具体些<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">For each page p</div><div class="line">  current PR = 1 / |C|    C: Number of nodes in the graph next PR = 0</div><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    use p’s current PR to update the next PR of each outlink page</div><div class="line">  For each page p</div><div class="line">    current PR = next PR</div><div class="line">    next PR = 0</div></pre></td></tr></table></figure></p>
+<ul>
+<li>每次循环，网页 Pi 可以左 PR(Pi) 次投票。</li>
+<li>把投票平均分发给每一个它指向的网页。</li>
+<li>如果两个网页在第 i 次循环中有相同的 PageRank:<br>PR(p1)=0.4, p1 有 2 个 outlinks, 那么 p1 的每一个 vote 是 0.4/2=0.2<br>PR(p2)=0.4, p2 有 4 个 outlinks, 那么 p2 的每一个 vote 是 0.4/4=0.1</li>
+</ul>
+<p>在每一个循环中, PR 的计算方法都如之前的图示。</p>
+<h2 id="d-的选择"><a href="#d-的选择" class="headerlink" title="d 的选择"></a>d 的选择</h2><p>假定 A 有两条出链，指向 B 和 C，B 和 C 各自有一条出链，都指向 A。<br>如果 d=0.5，那么经历 14 次循环 PR 会 converge<br><img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg"></p>
+<p>如果 d=0.85，那么经历 58 次循环 PR 会 converge<br><img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg"></p>
+<h2 id="Transformation-of-PageRank"><a href="#Transformation-of-PageRank" class="headerlink" title="Transformation of PageRank"></a>Transformation of PageRank</h2><p>有些 PageRank varies over a wide range，我们可以把这个 range 进行压缩和转化。如<br>$$PR_T = log_{10}(PR)+11$$</p>
+<p>效果是<br><img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg"></p>
+<p>Google 的 PageRank 范围是 1-10，我们通常说的 PageRank 都是经过这种转化的 PageRank。</p>
+<h2 id="怎样产生-high-PageRank"><a href="#怎样产生-high-PageRank" class="headerlink" title="怎样产生 high PageRank"></a>怎样产生 high PageRank</h2><ul>
+<li>有很多入链</li>
+<li>有很多来自具有高 PageRank 网页的入链</li>
+<li>入链有很少的出链<br>因为在每一次 propagation 时，一个网页的 PR 会被它的出链平分，所以一个有很多出链的入链网页并不是非常有帮助。</li>
+</ul>
+<h2 id="PageRank-的其它问题"><a href="#PageRank-的其它问题" class="headerlink" title="PageRank 的其它问题"></a>PageRank 的其它问题</h2><ul>
+<li>同一个站点的网页链接算不算？</li>
+<li>新的网页的 PR 怎么算？</li>
+<li>怎么处理 sinks（没有出链的网页）?</li>
+<li>怎么处理 link farms 和链接交换？</li>
+</ul>
+<p>还有一个问题就是 PR 是 topic-independent 的，一个网页可能有很高的 PR 但是对某个 query 来说却是一个很坏的选择。Topic-Sensitive PageRank(TSPR) 可以解决这个问题。</p>
+<h1 id="Topic-Sensitive-PageRank-TSPR"><a href="#Topic-Sensitive-PageRank-TSPR" class="headerlink" title="Topic-Sensitive PageRank(TSPR)"></a>Topic-Sensitive PageRank(TSPR)</h1><p>之前考虑的 PageRank 是等概率跳到一个随机网页的情况，关于 topic PageRank，我们考虑的是非等概率跳到一个随机网页的情况，计算的是基于特定兴趣/主题的 PageRank。如一个体育迷希望有关体育主题的网页的排名高于非体育主题的网页，假定这些有关体育的网页在 web 图中彼此相近，那么随机游走过程中，一个喜欢体育网页的人就可能在这类网页上停留大量的时间，因此，体育类网页的稳态分布概率被提升。</p>
+<p>主要逻辑是</p>
+<ul>
+<li>在索引过程中，每一个网页都被自动分配一个 topic (用文本分类的方法)。</li>
+<li>为每一个网页计算一个 topic-specific 的 PageRank。</li>
+<li>每一个 query 都被分配一个 topic，根据用户在这个 search session 中浏览的网页来确定 topic。</li>
+<li>对每一个页面，只考虑 topic-related PageRank，如 $PR_{sports}(d)$</li>
+</ul>
+<p><strong>注：</strong> DMOZ 是一个著名的开放式分类目录，有很多可以用来做 training data 的网页。可以从 top-level 中定义 topics。</p>
+<h1 id="T-Fresh"><a href="#T-Fresh" class="headerlink" title="T-Fresh"></a>T-Fresh</h1><p>PageRank rewards older web pages。old web 网页有更多的时间来积累 inlinks，有些 link 可能是来自已经废弃不用的网页，然而用户可能更偏好新的网页。<br>网页快照提供了 freshness 的线索。</p>
+<ul>
+<li>Page freshness：网页最近什么时候被更新过。Page text(↑)，url(↑)，anchor text(↑↑)，new link(↑↑↑)</li>
+<li>Link freshness：有多少 inlinks 来自 fresh page。</li>
+<li>Decay freshness measures exponentially.</li>
+</ul>
+<p>follow a link 的概率取决于网页的新鲜度。<br>有 fresh inlinks 的 fresh page 有更高的 authority score。</p>
+<p><strong>BM2500+T-Fresh vs BM2500+PageRank</strong><br>Relevance: +8% in P@10，+11-30% in NDCG@k<br>Freshness: +8% in P@10，+10-12% in NDCG@k</p>
+<img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg">
+<p>其它相同作用的 model 如 TimedPageRank, T-Rank, BuzzRank, TemporalPageRank。</p>
+<h1 id="Hyperlink-Induced-Topic-Search-HITS"><a href="#Hyperlink-Induced-Topic-Search-HITS" class="headerlink" title="Hyperlink-Induced Topic Search(HITS)"></a>Hyperlink-Induced Topic Search(HITS)</h1><p>在泛主题搜索（broad-topic search），也就是 informational needs 时，主要有两种非常有用的网页结果。</p>
+<ul>
+<li>Authority 网页：一些权威性的网页。</li>
+<li>Hub 网页：导航型网页，本身不是权威型网页，而是对某个主题感兴趣的人花时间编辑整理出的权威型网页列表。可以通过这种导航型网页来帮我们找到权威型网页。</li>
+</ul>
+<p>一个好的 hub 网页会同时指向多个好的 authority 网页，而一个好的 authority 网页同时会被多个好的 hub 网页所指向。给定某个查询，我们对每个网页给出两个得分，一个是 hub 值，一个是 authority 值，所以对任何一个查询，我们都能得到两个排序结果列表。所以，我们其实可以给出一个 hub 值和 authority 值的循环定义，然后通过迭代计算求解。</p>
+<img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg">
+<p>并不是对整个 web 计算 Hubs 和 Authority 分数。而是对一个小的 set 来进行计算，set 的创建方法如下：</p>
+<ul>
+<li>收集 query q 的 top n 网页构成 the root set</li>
+<li>用 root set 的入链和出链扩充这个 set。</li>
+</ul>
+<p>之后在这个网页子集上来计算 hub 和 authority 值。这个 set 的好处是有一个 strong, query-specific focus，而且 set 规模相对较小，大概只有 200 个网页。然而这些 score 必须在 query time 时进行计算。<br><img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg"></p>
+<p><strong>HITS 在大规模的搜索引擎中不会被使用</strong></p>
+<ul>
+<li>计算 spam 要比计算 PageRank 简单</li>
+<li>创建一个有 high hub score 的网页很简单</li>
+<li>运行成本比 PageRank 高。</li>
+</ul>
+<p>HITS 通常用于别的目标。如找 communities 或是找一个 community 里的专家，因为它们会有 tightly-bound hubs 和 authorities。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> NLP </category>
+            
+            <category> Search Engines </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> NLP </tag>
+            
+            <tag> Search Engines </tag>
+            
+            <tag> 信息检索 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Search Engines笔记 - Search logs]]></title>
       <url>http://www.shuang0420.cn/2016/11/04/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Search%20logs/</url>
       <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章开始的很多内容都是从论文的研究报告而来。重点是第四部分，怎样对 search log 划分 session，有哪些 feature 可以作为划分 session 的依据。<br><a id="more"></a></p>
@@ -11626,118 +11738,6 @@ python nb.py split.train split.test</pre>
 <li>用户把一个任务分成若干个子任务分阶段完成<br>比如今天查为什么，明天查怎么做</li>
 <li>子任务可能看起来是独立的实际确实相关的</li>
 </ul>
-]]></content>
-      
-        <categories>
-            
-            <category> NLP </category>
-            
-            <category> Search Engines </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> NLP </tag>
-            
-            <tag> Search Engines </tag>
-            
-            <tag> 信息检索 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Search Engines笔记 - Authority Metrics]]></title>
-      <url>http://www.shuang0420.cn/2016/11/04/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。这一章 Authority Metrics（权威指数），用来判断哪些来源的信息更值得信任。介绍 PageRank、Topic-Sensitive PageRank(TSPR)、T-Fresh、Hyperlink-Induced Topic Search(HITS) 四种指数计算方式。<br><a id="more"></a></p>
-<h1 id="链接分析"><a href="#链接分析" class="headerlink" title="链接分析"></a>链接分析</h1><p>链接分析思想最早起源于引文分析领域，通过分析文献之间的引用模式来量化学术论文的影响力。文献引用代表某篇学术论文对所引用论文的权威度的认可。类似的，对于 Web 网页，我们把超链接看成是一个网页对另一个网页的权威度的认可。当然，并不是所有引用都代表权威度认可，因为某个人可以建立多个 web 网页来指向同一个目标网页，人工来提高目标网页入链数。这种链接通常叫垃圾链接或链接作弊（link spam）。尽管如此，引用现象的普遍性和可靠性足以使搜索引擎通过精妙的链接分析方法推导出有用的排序因子。链接分析也被证明是在 web 采集中选择下一个采集网页的非常好的方法之一。给定查询下，链接分析结果已经成为 Web 搜索引擎在计算某个网页的组合得分中的一个因子。PageRank 和 HITS 就是常用的两种链接分析方法。</p>
-<h2 id="基本假设"><a href="#基本假设" class="headerlink" title="基本假设"></a>基本假设</h2><ol>
-<li>指向页面 B 的锚文本是对 B 的一个很好的描述。</li>
-<li>A 到 B 的超链接表示 A 的作者对 B 的认可。</li>
-</ol>
-<h2 id="锚文本"><a href="#锚文本" class="headerlink" title="锚文本"></a>锚文本</h2><h3 id="什么是锚文本"><a href="#什么是锚文本" class="headerlink" title="什么是锚文本"></a>什么是锚文本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;http://www.acm.org/jacm/&quot;&gt;Journal of the ACM.&lt;/a&gt;</div></pre></td></tr></table></figure>
-<p>这个 HTML 代码片段给出了一个指向 Journal of the ACM 的链接。链接指向 <a href="http://www.acm.org/jacm/，锚文本是" target="_blank" rel="external">http://www.acm.org/jacm/，锚文本是</a> Journal of the ACM。</p>
-<h3 id="锚文本的作用"><a href="#锚文本的作用" class="headerlink" title="锚文本的作用"></a>锚文本的作用</h3><p>Web 上随处可见的现象是，很多网页的内容并不包含对自身的精确描述，尤其是公司网页，因为它们往往是用作商业宣传而不是介绍公司内容。如 IBM 是计算机制造商，但公司主页 (www.ibm.com) 的 HTML 代码的任何地方都不包含词项 computer。这时候，锚文本的作用就体现出来了。锚文本的词项可以作为索引目标网页的词项，也就是说 computer 的 inverted list 包含了 www.ibm.com，这时再用一个特别的指示器表示这些词项在锚文本而不是网页内部，网页评分时也基于 term frequency 计算锚文本的 term weight，在多个锚文本中高频出现的词项(如 Click 和 here)会收到惩罚。<br>除了锚文本，锚文本周围窗口的文本(extended anchor text)，通常也可以当成锚文本来使用。</p>
-<h3 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h3><p>网站可以通过构造具有误导性的锚文本来指向自己，以此提高在某些 query term 的排名。</p>
-<h1 id="PageRank"><a href="#PageRank" class="headerlink" title="PageRank"></a>PageRank</h1><p>PageRank 是 query-independent 的，也就是说与用户输入的查询无关。PageRank 高的网页并不代表一定适合某个特定的 query。如 kanye west wikipedia 网页有很高的 PageRank，但并不适合 “obama family tree” 这个特定的 query。</p>
-<h2 id="Random-Walk-Algorithm"><a href="#Random-Walk-Algorithm" class="headerlink" title="Random Walk Algorithm"></a>Random Walk Algorithm</h2><p>PageRank 可以被看作是一个随机游走的算法。基本思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指向的链接，这样无所事事、漫无目的地在网页上跳来跳去，PageRank 就是估计这个悠闲的上网者分布在各个网页上的概率。</p>
-<ol>
-<li>随机选一个网页 A 。</li>
-<li>网页 A 有 n 条出链（outlinks），这时候有两种方法进行下一步。<ul>
-<li>随机在出链中选一个到下一个网页。</li>
-<li>随机从所有 web 网页里选一个其它网页(teleport)。（因为网页 A 可能没有出链）</li>
-</ul>
-</li>
-<li>不断重复以上过程。</li>
-</ol>
-<p>随机游走中访问越频繁的网页越重要。<br>计算方法<br><img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PageRank.jpg"></p>
-<h2 id="Voting-Algorithm"><a href="#Voting-Algorithm" class="headerlink" title="Voting Algorithm"></a>Voting Algorithm</h2><p>PageRank 也可以被看作是一个 Voting algorithm。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    p votes for each page that it links to</div></pre></td></tr></table></figure></p>
-<p>再具体些<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">For each page p</div><div class="line">  current PR = 1 / |C|    C: Number of nodes in the graph next PR = 0</div><div class="line">While (Not done)</div><div class="line">  For each page p</div><div class="line">    use p’s current PR to update the next PR of each outlink page</div><div class="line">  For each page p</div><div class="line">    current PR = next PR</div><div class="line">    next PR = 0</div></pre></td></tr></table></figure></p>
-<ul>
-<li>每次循环，网页 Pi 可以左 PR(Pi) 次投票。</li>
-<li>把投票平均分发给每一个它指向的网页。</li>
-<li>如果两个网页在第 i 次循环中有相同的 PageRank:<br>PR(p1)=0.4, p1 有 2 个 outlinks, 那么 p1 的每一个 vote 是 0.4/2=0.2<br>PR(p2)=0.4, p2 有 4 个 outlinks, 那么 p2 的每一个 vote 是 0.4/4=0.1</li>
-</ul>
-<p>在每一个循环中, PR 的计算方法都如之前的图示。</p>
-<h2 id="d-的选择"><a href="#d-的选择" class="headerlink" title="d 的选择"></a>d 的选择</h2><p>假定 A 有两条出链，指向 B 和 C，B 和 C 各自有一条出链，都指向 A。<br>如果 d=0.5，那么经历 14 次循环 PR 会 converge<br><img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.5.jpg"></p>
-<p>如果 d=0.85，那么经历 58 次循环 PR 会 converge<br><img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/0.85.jpg"></p>
-<h2 id="Transformation-of-PageRank"><a href="#Transformation-of-PageRank" class="headerlink" title="Transformation of PageRank"></a>Transformation of PageRank</h2><p>有些 PageRank varies over a wide range，我们可以把这个 range 进行压缩和转化。如<br>$$PR_T = log_{10}(PR)+11$$</p>
-<p>效果是<br><img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/PR_trans.jpg"></p>
-<p>Google 的 PageRank 范围是 1-10，我们通常说的 PageRank 都是经过这种转化的 PageRank。</p>
-<h2 id="怎样产生-high-PageRank"><a href="#怎样产生-high-PageRank" class="headerlink" title="怎样产生 high PageRank"></a>怎样产生 high PageRank</h2><ul>
-<li>有很多入链</li>
-<li>有很多来自具有高 PageRank 网页的入链</li>
-<li>入链有很少的出链<br>因为在每一次 propagation 时，一个网页的 PR 会被它的出链平分，所以一个有很多出链的入链网页并不是非常有帮助。</li>
-</ul>
-<h2 id="PageRank-的其它问题"><a href="#PageRank-的其它问题" class="headerlink" title="PageRank 的其它问题"></a>PageRank 的其它问题</h2><ul>
-<li>同一个站点的网页链接算不算？</li>
-<li>新的网页的 PR 怎么算？</li>
-<li>怎么处理 sinks（没有出链的网页）?</li>
-<li>怎么处理 link farms 和链接交换？</li>
-</ul>
-<p>还有一个问题就是 PR 是 topic-independent 的，一个网页可能有很高的 PR 但是对某个 query 来说却是一个很坏的选择。Topic-Sensitive PageRank(TSPR) 可以解决这个问题。</p>
-<h1 id="Topic-Sensitive-PageRank-TSPR"><a href="#Topic-Sensitive-PageRank-TSPR" class="headerlink" title="Topic-Sensitive PageRank(TSPR)"></a>Topic-Sensitive PageRank(TSPR)</h1><p>之前考虑的 PageRank 是等概率跳到一个随机网页的情况，关于 topic PageRank，我们考虑的是非等概率跳到一个随机网页的情况，计算的是基于特定兴趣/主题的 PageRank。如一个体育迷希望有关体育主题的网页的排名高于非体育主题的网页，假定这些有关体育的网页在 web 图中彼此相近，那么随机游走过程中，一个喜欢体育网页的人就可能在这类网页上停留大量的时间，因此，体育类网页的稳态分布概率被提升。</p>
-<p>主要逻辑是</p>
-<ul>
-<li>在索引过程中，每一个网页都被自动分配一个 topic (用文本分类的方法)。</li>
-<li>为每一个网页计算一个 topic-specific 的 PageRank。</li>
-<li>每一个 query 都被分配一个 topic，根据用户在这个 search session 中浏览的网页来确定 topic。</li>
-<li>对每一个页面，只考虑 topic-related PageRank，如 $PR_{sports}(d)$</li>
-</ul>
-<p><strong>注：</strong> DMOZ 是一个著名的开放式分类目录，有很多可以用来做 training data 的网页。可以从 top-level 中定义 topics。</p>
-<h1 id="T-Fresh"><a href="#T-Fresh" class="headerlink" title="T-Fresh"></a>T-Fresh</h1><p>PageRank rewards older web pages。old web 网页有更多的时间来积累 inlinks，有些 link 可能是来自已经废弃不用的网页，然而用户可能更偏好新的网页。<br>网页快照提供了 freshness 的线索。</p>
-<ul>
-<li>Page freshness：网页最近什么时候被更新过。Page text(↑)，url(↑)，anchor text(↑↑)，new link(↑↑↑)</li>
-<li>Link freshness：有多少 inlinks 来自 fresh page。</li>
-<li>Decay freshness measures exponentially.</li>
-</ul>
-<p>follow a link 的概率取决于网页的新鲜度。<br>有 fresh inlinks 的 fresh page 有更高的 authority score。</p>
-<p><strong>BM2500+T-Fresh vs BM2500+PageRank</strong><br>Relevance: +8% in P@10，+11-30% in NDCG@k<br>Freshness: +8% in P@10，+10-12% in NDCG@k</p>
-<img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/BM2500.jpg">
-<p>其它相同作用的 model 如 TimedPageRank, T-Rank, BuzzRank, TemporalPageRank。</p>
-<h1 id="Hyperlink-Induced-Topic-Search-HITS"><a href="#Hyperlink-Induced-Topic-Search-HITS" class="headerlink" title="Hyperlink-Induced Topic Search(HITS)"></a>Hyperlink-Induced Topic Search(HITS)</h1><p>在泛主题搜索（broad-topic search），也就是 informational needs 时，主要有两种非常有用的网页结果。</p>
-<ul>
-<li>Authority 网页：一些权威性的网页。</li>
-<li>Hub 网页：导航型网页，本身不是权威型网页，而是对某个主题感兴趣的人花时间编辑整理出的权威型网页列表。可以通过这种导航型网页来帮我们找到权威型网页。</li>
-</ul>
-<p>一个好的 hub 网页会同时指向多个好的 authority 网页，而一个好的 authority 网页同时会被多个好的 hub 网页所指向。给定某个查询，我们对每个网页给出两个得分，一个是 hub 值，一个是 authority 值，所以对任何一个查询，我们都能得到两个排序结果列表。所以，我们其实可以给出一个 hub 值和 authority 值的循环定义，然后通过迭代计算求解。</p>
-<img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/HITS.jpg">
-<p>并不是对整个 web 计算 Hubs 和 Authority 分数。而是对一个小的 set 来进行计算，set 的创建方法如下：</p>
-<ul>
-<li>收集 query q 的 top n 网页构成 the root set</li>
-<li>用 root set 的入链和出链扩充这个 set。</li>
-</ul>
-<p>之后在这个网页子集上来计算 hub 和 authority 值。这个 set 的好处是有一个 strong, query-specific focus，而且 set 规模相对较小，大概只有 200 个网页。然而这些 score 必须在 query time 时进行计算。<br><img src="http://images.shuang0420.cn/images/Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg" class="ful-image" alt="Search-Engines%E7%AC%94%E8%AE%B0-Authority-Metrics/rootset.jpg"></p>
-<p><strong>HITS 在大规模的搜索引擎中不会被使用</strong></p>
-<ul>
-<li>计算 spam 要比计算 PageRank 简单</li>
-<li>创建一个有 high hub score 的网页很简单</li>
-<li>运行成本比 PageRank 高。</li>
-</ul>
-<p>HITS 通常用于别的目标。如找 communities 或是找一个 community 里的专家，因为它们会有 tightly-bound hubs 和 authorities。</p>
 ]]></content>
       
         <categories>
