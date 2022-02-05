@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shuang0420.cn/"/>
-  <updated>2020-09-10T13:00:43.000Z</updated>
+  <updated>2022-02-05T14:35:45.199Z</updated>
   <id>http://www.shuang0420.cn/</id>
   
   <author>
@@ -14,6 +14,115 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>论文笔记 - 对话系统中的 OOD 问题</title>
+    <link href="http://www.shuang0420.cn/2021/11/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20%E5%AF%B9%E8%AF%9D%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%20OOD%20%E9%97%AE%E9%A2%98/"/>
+    <id>http://www.shuang0420.cn/2021/11/21/论文笔记 - 对话系统中的 OOD 问题/</id>
+    <published>2021-11-21T02:02:27.000Z</published>
+    <updated>2022-02-05T14:35:45.199Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近看了下 2021年关于 OOD 的几篇 paper，记录一下~<br><a id="more"></a></p>
+<p>对话系统中的 domain 都是预先定义好的，而在实际应用场景中，会有很多现有系统回答不了的问题（out of the design scope），我们把系统支持的意图称为 <strong>in-domain (IND)</strong>，系统不支持的意图称为 <strong>out-of-domain (OOD)</strong>，OOD 是需要被拒识的。</p>
+<p>处理 OOD 问题一般分为有监督和无监督两类方法。有监督方法相对更直接，收集好 OOD 数据，在 IND 和 OOD 上训练一个二分类器，或者直接学习一个 K+1 的分类器。然而 OOD 数据直接获取比较困难，所以有些研究是讨论怎么生成 pseudo outlier。另外，从直觉上看，IND 和 OOD 数据分布是不一致的，IND/OOD 数据极不平衡，在选择 OOD 数据时存在一定的 selection bias，很难选择到高质量有代表性的数据，所以学习的模型对没见过的 OOD 数据很难泛化。</p>
+<p>而无监督方法往往在训练阶段只利用 IND 数据来学习 IND 的 decision boundaries（如 LMCL，SEG），在测试阶段使用额外的检测算法来检测 OOD。这类方法致力于更好的对 IND 数据建模，以及探索更好的检测方法。但由于训练和测试阶段的目标并不一致，容易对 OOD 数据产生 overconfident 的后验分数。下面是三类常见的检测方法：</p>
+<ul>
+<li><strong>Probability Threshold:</strong> 利用 IND 模型的输出概率分布来决定 OOD，如 Maximum Softmax Probability (MSP)，或者对输出的分数进行若干操作转化如 ODIN, Entropy，也有一些是在 reconstruction loss 或者 likelihood ratios 上设定阈值</li>
+<li><strong>Outlier Distance：</strong> 异常检测的方法，看 outlier 到 in-scope 集合的距离是否足够远。通常是在 embedding function 或者距离函数上做文章，如 Local Outlier Factor (LOF)、马氏距离等</li>
+<li><strong>Bayesian Ensembles：</strong> 在 16-18 年的工作比较多，近两年没怎么看到，通过 IND 模型输出的方差来决定是否是 OOD，如通过  ensemble / dropout 等方式看模型输出的方差如果够大，就认为是 OOD。 </li>
+</ul>
+<p>总的来说，各类方法各有优缺点，并没有突破性的进展，依旧是道阻且长。</p>
+<h1 id="ACL-2021-Enhancing-the-generalization-for-Intent-Classification-and-Out-of-Domain-Detection-in-SLU"><a href="#ACL-2021-Enhancing-the-generalization-for-Intent-Classification-and-Out-of-Domain-Detection-in-SLU" class="headerlink" title="ACL 2021: Enhancing the generalization for Intent Classification and Out-of-Domain Detection in SLU"></a>ACL 2021: <a href="https://aclanthology.org/2021.acl-long.190.pdf" target="_blank" rel="external">Enhancing the generalization for Intent Classification and Out-of-Domain Detection in SLU</a></h1><p>无监督方法。不需要额外收集数据，通过在最后一层线性层加上 DRM 模块就能实现。</p>
+<h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2><p>依据：</p>
+<p><img src="http://images.shuang0420.cn/img/oFKMtyZGxHrl7Dm-20211121200815568.png" alt="image-20211117111344510"></p>
+<p><img src="http://images.shuang0420.cn/img/QsbovwFpXLW4naK.png" alt="image-20211117111037802"></p>
+<p>编码器对 query 进行编码得到 hidden state h，两个线性层得到(1)中的分母 domain_logits $f_d$ 和分子 classification logits $f<em>c$，相除得到新的 logits $f$，用 $f$ 计算 IND 分类的损失 $L</em>{classification}$，用 $f_d$ 计算另一个损失 L_domain，作用是使得 $f_d$ 接近 1（训练集里只有 IND），sigmoid 之前先对 $f_d$ 进行裁剪，避免 $f_d$ 的值过大，影响训练。两个损失相加得到最终损失。</p>
+<p>参数可以从 2.2-4 之间调，sigmoid(2.2) =&gt; 0.9，sigmoid(4) =&gt; 0.982</p>
+<p><img src="http://images.shuang0420.cn/img/efX9qplGDAydIRY.png" alt="image-20211117111414292"></p>
+<h2 id="预测"><a href="#预测" class="headerlink" title="预测"></a>预测</h2><p>OOD 的预测有 confidence-based 和 feature-based 两类方法</p>
+<h3 id="Confidence-based-Methods"><a href="#Confidence-based-Methods" class="headerlink" title="Confidence-based Methods"></a>Confidence-based Methods</h3><p>基于 softmax output 来输出 OOD 的预测分数</p>
+<p><img src="http://images.shuang0420.cn/img/7e1vhCBixyJmGgQ.png" alt="image-20211117111937778"></p>
+<h2 id="Feature-based-Methods"><a href="#Feature-based-Methods" class="headerlink" title="Feature-based Methods"></a>Feature-based Methods</h2><p>这里提到了马氏距离，马氏距离修正了欧式距离中各个维度尺度不一致且相关的问题。马氏距离计算点与聚类（分布）之间的距离，在多维数据集异常检测，高维数据集分类应用中表现出色。</p>
+<p>可以用下面两张图来理解欧式距离与马氏距离，如果 X, Y 两个维度不相关，欧氏距离可以很好的判别Point1和Point2距离聚类中心黑点的远近，而如果各维度不满足独立同分布的条件时，如右图，欧氏距离就无法很好的表征Point1和Point2谁是异常点了。因为两个点与中心的欧氏距离相等。但实际上只有蓝色点更接近该聚类。下图来自这篇博客：<a href="https://blog.csdn.net/wokaowokaowokao12345/article/details/115765116" target="_blank" rel="external">https://blog.csdn.net/wokaowokaowokao12345/article/details/115765116</a></p>
+<p><img src="https://img-blog.csdnimg.cn/2021041616255653.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dva2Fvd29rYW93b2thbzEyMzQ1,size_16,color_FFFFFF,t_70#pic_center" alt="img"></p>
+<p>简而言之，马氏距离将变量按主成分进行旋转，让维度间相互独立，然后进行标准化，让维度同分布。最后基本公式如下，x - μ 是样本到样本均值间的距离，Σ 是多维随机变量的协方差矩阵，如果协方差矩阵是单位向量，也就是各维度独立同分布，马氏距离就变成了欧氏距离。</p>
+<p><img src="http://images.shuang0420.cn/img/TGUNZzpDu9IR1iB.png" alt="image-20211117113152944"></p>
+<p>对应到这篇 paper，</p>
+<p><img src="http://images.shuang0420.cn/img/1BQckqwvSULPgh8.png" alt="image-20211117150547135"></p>
+<p>仅用最后一层 $S^{last}_{Maha}(x)$ 就有不错的效果了，具体的看 paper 吧。</p>
+<p><img src="http://images.shuang0420.cn/img/AW9GoUDM2EbVYQP.png" alt="image-20211117150733690"></p>
+<p>作者额外提出了 <strong>L- Mahalanobis:</strong></p>
+<p><img src="http://images.shuang0420.cn/img/CGYh42f5FTsIbSp.png" alt="image-20211117124359202"></p>
+<p>对 BERT 最后输出的每一层结果进行计算，$f^l$ 是第 l 层，$f^n$ 是最后一层</p>
+<p>不同 detection score 的效果：</p>
+<p><img src="http://images.shuang0420.cn/img/Jo39irCgXPITWYp.png" alt="image-20211120213415737"></p>
+<h1 id="ACL-2021-Out-of-Scope-Intent-Detection-with-Self-Supervision-and-Discriminative-Training"><a href="#ACL-2021-Out-of-Scope-Intent-Detection-with-Self-Supervision-and-Discriminative-Training" class="headerlink" title="ACL 2021: Out-of-Scope Intent Detection with Self-Supervision and Discriminative Training"></a>ACL 2021: <a href="https://aclanthology.org/2021.acl-long.273.pdf" target="_blank" rel="external">Out-of-Scope Intent Detection with Self-Supervision and Discriminative Training</a></h1><p>这一篇通过构建一系列的 pseudo outliers，然后把 intent classification 和 OOD 两个任务抽象为一个 K+1 的分类任务来做</p>
+<p>Outliers 分为两种：</p>
+<ul>
+<li><p><strong>hard outliers</strong>：和 inlier 很近，难以区分。可以通过不同各类别 inlier 的 feature 的 convex combination 来自监督的生成。如下，$h_\beta$ 和 $h_alpha$ 是从不同类别采样的两个输入的表征，$\theta$ 从均匀分布 U(0,1) 中采样。在 ablation study 里显示这部分带来的收益更大。</p>
+<p><img src="http://images.shuang0420.cn/img/TdZicVtgfIDkuQF.png" alt="image-20211117161501994"></p>
+</li>
+<li><p><strong>easy outliers</strong>：和 inlier 较远，与 kown intent 很不相关，可以从 open_domain 数据集中抽取</p>
+</li>
+</ul>
+<p>训练和正常的预训练模型做分类任务一样。</p>
+<p>要注意的是 outlier 的数量对最终效果有较大影响。实验里的数据比例 <strong># of inliers : # of open-domain outliers: # of self-supervised outliers = 1: 1: 4</strong>。</p>
+<p><img src="http://images.shuang0420.cn/img/KhefGm2L7Hvslu5.png" alt="image-20211117163135879"></p>
+<p>这篇的实验设置是用 k% 个 intents 作为 known intents 来训练，剩下的作为 unknown intents 作为测试集。</p>
+<p><img src="http://images.shuang0420.cn/img/SUOzWyeQp6x8FLI.png" alt="image-20211120213521703"></p>
+<h1 id="EMNLP-2021-GOLD-Improving-Out-of-Scope-Detection-in-Dialogues-using-Data-Augmentation"><a href="#EMNLP-2021-GOLD-Improving-Out-of-Scope-Detection-in-Dialogues-using-Data-Augmentation" class="headerlink" title="EMNLP 2021: GOLD: Improving Out-of-Scope Detection in Dialogues using Data Augmentation"></a>EMNLP 2021: <a href="https://aclanthology.org/2021.emnlp-main.35.pdf" target="_blank" rel="external">GOLD: Improving Out-of-Scope Detection in Dialogues using Data Augmentation</a></h1><p>弱监督方式，在少量有标签的 OOD 数据（seed data）以及一个辅助的外部数据集 (source data)上进行数据增强，产生 pseudo-OOD data。任务是 in-domain/out-of-domain 二分类。</p>
+<p><img src="http://images.shuang0420.cn/img/image-20211121160641258.png" alt="image-20211121160641258"></p>
+<p>两种增强的方法：</p>
+<ol>
+<li><p>在 OOD seed data 和 source data 的 embedding 空间里，对每个 seed 数据，通过 cosine 距离，从 source data 中找到 d 条与 seed 相似的数据，文中讨论 <strong>d= 24</strong> 对各个 source data 都是最优解</p>
+</li>
+<li><p>对话增强方法：seed data 是多轮对话数据，通过把 dialogue 里任意一条 utterance 替换为 source data 的 matched utterance 来构建新的 dialogue</p>
+</li>
+</ol>
+<p>上面构建的增强数据有较大的噪声，一些数据与 IND 数据可能有 overlap，所以有个<strong>过滤机制</strong>来保证 candidates 是最有可能的 OOD。通过 baseline detector 的 ensemble 方法来进行投票选出最优的 OOD。</p>
+<p>这篇的两个前提条件是很重要的，一是要有合适的 seed data，如果 seed data 数量减低一半效果会大打折扣（论文里限制 OOD 数量为 IND 样本的 1%），还有一个source data 的选取，需要和 target data 不同，但又不能完全不相关。构建的最理想的 pseudo-label 当然是在 IND 和 OOD 的 decision boundary 上了。</p>
+<p><img src="http://images.shuang0420.cn/img/image-20211121161732016.png" alt="image-20211121161732016"></p>
+<h1 id="ACL-2021-Modeling-Discriminative-Representations-for-Out-of-Domain-Detection-with-Supervised-Contrastive-Learning"><a href="#ACL-2021-Modeling-Discriminative-Representations-for-Out-of-Domain-Detection-with-Supervised-Contrastive-Learning" class="headerlink" title="ACL 2021: Modeling Discriminative Representations for Out-of-Domain Detection with Supervised Contrastive Learning"></a>ACL 2021: <a href="https://aclanthology.org/2021.acl-short.110.pdf" target="_blank" rel="external">Modeling Discriminative Representations for Out-of-Domain Detection with Supervised Contrastive Learning</a></h1><p><img src="http://images.shuang0420.cn/img/SQGsAm6RF2JiYDj.png" alt="image-20211120195553973"></p>
+<p>idea很简单，有监督对比学习（SCL） + 交叉熵（CE）的方法，使用对抗攻击的方法实现正样本的增强。希望同一个意图下的样本互相接近，不同意图下的样本互相远离。有监督对比学习的表示学习方法可以通过最大化类间距离和最小化类内方差来提升特征的区分度。</p>
+<p>属于无监督的OOD检测方法，训练阶段用IND数据，测试阶段用 MSP/LOF/GDA 来检测 OOD。</p>
+<p>对比学习损失：</p>
+<p><img src="http://images.shuang0420.cn/img/HiBageCP7491Ux2-20211121200713731.png" alt="image-20211118140530559"></p>
+<p>对抗攻击的样本增强，用 FGV 方式计算扰动</p>
+<p><img src="http://images.shuang0420.cn/img/image-20211123153643862.png" alt="image-20211123153643862"></p>
+<p><img src="http://images.shuang0420.cn/img/zEaeMO7hVZxukQs.png" alt="image-20211120213209519"></p>
+<h1 id="NACCL-2021-Adversarial-Self-Supervised-Learning-for-Out-of-Domain-Detection"><a href="#NACCL-2021-Adversarial-Self-Supervised-Learning-for-Out-of-Domain-Detection" class="headerlink" title="NACCL 2021: Adversarial Self-Supervised Learning for Out-of-Domain Detection"></a>NACCL 2021: <a href="https://aclanthology.org/2021.naacl-main.447.pdf" target="_blank" rel="external">Adversarial Self-Supervised Learning for Out-of-Domain Detection</a></h1><p>这篇和上面一篇都是美团发的文，模型上一篇更简单，实验指标也是上一篇更好看。</p>
+<p><img src="http://images.shuang0420.cn/img/abUjNfJyPZYQBeA.png" alt="image-20211120200016981"></p>
+<p>用 IND 数据和 CL loss 训练一个分类器，对 unlabeled data 进行对比学习，用 back translate 做正样本数据增强，</p>
+<p>Back-translation 方法得到正样本对 ($x_i$, $x_j$)，对抗攻击得到 ($x_i^{adv}$, $x_j^{adv}$)，实验了四种对比学习的设置</p>
+<ul>
+<li><p>Standard- to-Standard (S2S)，正样本对是 ($x_i$, $x_j$) </p>
+</li>
+<li><p>Adversarial-to-Adversarial (A2A)，正样本对是 ($x_i^{adv}$, $x_j^{adv}$) </p>
+</li>
+<li><p>Standard- to-Adversarial (S2A)，正样本对是 ($x_i$, $x_i^{adv}$) / ($x_j$, $x_j^{adv}$) </p>
+</li>
+<li><p>Dual Stream (DS)，正样本对是 S2S 和 A2A 相结合</p>
+</li>
+</ul>
+<p>最后是 DS 效果最好，也就是上图的方法，对比损失如下：</p>
+<p><img src="http://images.shuang0420.cn/img/XeqaTZoSvLx3inF.png" alt="image-20211120201549809"></p>
+<p><img src="http://images.shuang0420.cn/img/ftz3lVXj69AiCeT.png" alt="image-20211120213150082"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近看了下 2021年关于 OOD 的几篇 paper，记录一下~&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
+    
+      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
+    
+    
+      <category term="NLP" scheme="http://www.shuang0420.cn/tags/NLP/"/>
+    
+  </entry>
   
   <entry>
     <title>如何测试你的 NLP 模型？- Behavioral Testing of NLP Models with CheckList</title>
@@ -2273,73 +2382,6 @@ $$p(s,e)=p_s(s)•p_e(e|s)$$</li>
       <category term="slot-filling" scheme="http://www.shuang0420.cn/tags/slot-filling/"/>
     
       <category term="FSM" scheme="http://www.shuang0420.cn/tags/FSM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论文笔记 - Learning to Remember Translation History with a Continuous Cache</title>
-    <link href="http://www.shuang0420.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Remember%20Translation%20History%20with%20a%20Continuous%20Cache/"/>
-    <id>http://www.shuang0420.cn/2017/12/20/论文笔记 - Learning to Remember Translation History with a Continuous Cache/</id>
-    <published>2017-12-20T05:02:27.000Z</published>
-    <updated>2020-09-10T12:26:31.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>介绍一种 cache-like memory network。<br><a id="more"></a></p>
-<p><strong>涉及论文：</strong></p>
-<ul>
-<li>Learning to Remember Translation History with a Continuous Cache</li>
-</ul>
-<p><strong>相关博客：</strong></p>
-<ul>
-<li><a href="http://www.shuang0420.com/2017/07/10/-NLP%20笔记%20-%20Machine%20Translation-Neuron%20models/" target="_blank" rel="external">NLP 笔记 - Neural Machine Translation</a></li>
-<li><a href="http://www.shuang0420.com/2017/12/04/论文笔记%20-%20Memory%20Networks/" target="_blank" rel="external">论文笔记 - Memory Networks</a></li>
-</ul>
-<p>比较传统的 NMT 把文档当做一系列独立的句子来进行翻译，忽略了句子之间的关系，或者说是忽略了篇章信息，这样会带来两个问题：</p>
-<ol>
-<li><strong>一致性问题（inconsistency）</strong><br>如时态一致性问题，以及术语选择的一致性问题，这些通常都需要联系上下文/篇章信息</li>
-<li><strong>歧义问题（ambiguity）</strong><br>NMT 基本的翻译单位是词向量，也是通过 word-by-word 的方式产生翻译的。向量表示的泛化问题会导致歧义进一步放大，如机遇/挑战，教师/培训这些词在空间里比较靠近，很容易导致翻译错误</li>
-</ol>
-<img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Remember%20Translation%20History%20with%20a%20Continuous%20Cache/nmt_drawback.png" class="ful-image" alt="nmt_drawback.png">
-<p>在 SMT 中，引入 cross-sentence 的作用对解决上面两个问题非常有效，因此 NMT 方面也有人做了一些尝试，比如说用分层 RNN 来总结前 K 个 source sentences 的语境信息（Wang et al. 2017a），或者用额外的 encoder 和 attention model 来动态选择聚焦前一个 source sentence 的某个部分 （Jean et al. 2017），这些方法有一定效果，但是都只考虑了单语的信息，没有用到目标端的信息，并且仍然是从 discrete lexicon 中产生 context，词级别的错误会继续传递下去，这在口语字幕的语料上表现的更为明显（不能得到多大改善）。另外，这两个模型计算量也很大，不利于 scale。</p>
-<img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Remember%20Translation%20History%20with%20a%20Continuous%20Cache/performance.png" class="ful-image" alt="performance.png">
-<p>这篇论文用到了 cache-like memory networks 的思想，用一个额外的 cache model  把源端表示作为 KEY，目标端表示作为 VALUE，从 memory 里定位相关的信息，然后把相关信息也作为输入，翻译时能得到更多方面比如说时态的信息。这样的好处 <strong>一是可以规模化，通过 cache 获得更长的历史信息，二是因为用的是 internal representation （并且是 attention 后的片段信息）而不是单词，能缓解错误传播的问题，也考虑进了目标端的信息。</strong></p>
-<p>与 Standard NMT 的对比如下：</p>
-<img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Remember%20Translation%20History%20with%20a%20Continuous%20Cache/architecture.png" class="ful-image" alt="architecture.png">
-<p>主要还是读取/写入 cache 的过程。</p>
-<h1 id="Reading-from-Cache"><a href="#Reading-from-Cache" class="headerlink" title="Reading from Cache"></a>Reading from Cache</h1><h2 id="Key-Matching"><a href="#Key-Matching" class="headerlink" title="Key Matching"></a>Key Matching</h2><p>cache lookup 最简单用点积来做，也可以加中间转换矩阵或者用 attention 方法，不过点积最简单高效，不用学新的参数也能学到相似度</p>
-<p>$$P_m(c_i|c_t)={exp(c^T_tc_i)\over \sum^I_{i’=1}exp(c^T_tc_i’)}$$</p>
-<p>$c_t$ 是 t step 的 attention context，$c_i$ 是 cache 里第 i 个位置的 representation，I 是 cache slots 的总量</p>
-<h2 id="Value-Reading"><a href="#Value-Reading" class="headerlink" title="Value Reading"></a>Value Reading</h2><p>得到概率分布后对每个 value 进行加权</p>
-<p>$$m_t=\sum_{(c_i, s_i) \in cache} P_m(c_i|c_t)s_i$$</p>
-<p>$P_m(c_i|c_t)$ 可以解释为给定 source side context $c_t$，从 cache 里检索得到相似的 target-side info $m_t$，答案是和过去产生的相似的 target words 相关的语境</p>
-<h2 id="Representation-Combining"><a href="#Representation-Combining" class="headerlink" title="Representation Combining"></a>Representation Combining</h2><p>用原始的 decoder state $s_t$ 和当前的 output vector $m_t$ 进行线性组合，相当于 GRU 里的 update gate</p>
-<img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Remember%20Translation%20History%20with%20a%20Continuous%20Cache/repres_combing.png" class="ful-image" alt="repres_combing.png">
-<p>其中 lambda 是一个动态调节的 weight vector，在每个 decoding step 都要重新计算</p>
-<p>$$\lambda_t = \sigma (Us_t + Vc_t+Wm_t)$$</p>
-<p>U(dxd), V(dxl), W(dxd) 是参数矩阵</p>
-<h1 id="Writing-to-Cache"><a href="#Writing-to-Cache" class="headerlink" title="Writing to Cache"></a>Writing to Cache</h1><p>在整个句子翻译完后，再写入 cache，写入 cache 的内容包括</p>
-<ul>
-<li><strong>generated translation sentence</strong><br>  {$y_1,…,y_t…,y_T$}</li>
-<li><strong>attention vector sequence</strong><br>  {$c_1,…,c_t,…c_T$}</li>
-<li><strong>decoder state sequence</strong><br>  {$s_1,…,s_t,…,s_T$}</li>
-</ul>
-<p>如果 $y_t$ 在 cache 里不存在，那么会选择一个空的 slot 或者覆盖一个 LRU(least recently used) slot，key 是 $c_t$，value 是 $s_t$，indicator 是 $y_t$</p>
-<p>如果 $y_t$ 已经存在，那么更新 key, value，$k_i=(k_i+c_t)/2, \ v_i=(v_i+s_t)/2$，像是一个 exponential decay，每一次更新之前的 key, value 都会减半，基本逻辑是最近的历史会有更高的重要性。通过可视化图可以看一下效果：</p>
-<img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Learning%20to%20Remember%20Translation%20History%20with%20a%20Continuous%20Cache/vis.png" class="ful-image" alt="vis.png">
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>理解下来还是非常简单的。亮点还是 cache 的设计，一方面用到了历史信息，另一方面用到了源端和目标端的信息，并且是单词粒度之上的信息（attention context vector）。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;介绍一种 cache-like memory network。&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="NLP" scheme="http://www.shuang0420.cn/categories/NLP/"/>
-    
-      <category term="Chatbot" scheme="http://www.shuang0420.cn/categories/NLP/Chatbot/"/>
-    
-    
-      <category term="Memory Networks" scheme="http://www.shuang0420.cn/tags/Memory-Networks/"/>
     
   </entry>
   

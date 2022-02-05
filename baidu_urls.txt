@@ -1,5 +1,5 @@
+http://www.shuang0420.cn/2021/11/21/论文笔记 - 对话系统中的 OOD 问题/
 http://www.shuang0420.cn/2020/09/10/如何测试你的 NLP 模型？- Behavioral Testing of NLP Models with CheckList/
 http://www.shuang0420.cn/2020/06/16/Slice-based learning - 基于数据切片的学习/
 http://www.shuang0420.cn/2020/06/01/Sequential transfer learning in NLP/
 http://www.shuang0420.cn/2020/05/07/论文笔记 - Pre-trained Models for Natural Language Processing/
-http://www.shuang0420.cn/2019/01/20/NLP 2018 Highlights/
