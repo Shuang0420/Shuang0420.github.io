@@ -1,0 +1,1141 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,word2vec,Deep learning,词向量," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="综合各家博客整理的词向量总结笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="词向量总结笔记（简洁版）">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/06/21/词向量总结笔记（简洁版）/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="综合各家博客整理的词向量总结笔记。">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%A5%87%E5%BC%82%E5%80%BC.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/2.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/cnn%E4%BC%98%E5%8C%96%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/1.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/skipgram.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/3.jpg">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E4%BB%BB%E5%8A%A1%E8%AF%84%E4%BB%B7.png">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="词向量总结笔记（简洁版）">
+<meta name="twitter:description" content="综合各家博客整理的词向量总结笔记。">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%A5%87%E5%BC%82%E5%80%BC.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/06/21/词向量总结笔记（简洁版）/"/>
+
+
+  <title> 词向量总结笔记（简洁版） | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                词向量总结笔记（简洁版）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-06-21T12:21:21+08:00" content="2016-06-21">
+              2016-06-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Meaning-Representation/" itemprop="url" rel="index">
+                    <span itemprop="name">Meaning Representation</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/21/词向量总结笔记（简洁版）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/06/21/词向量总结笔记（简洁版）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>综合各家博客整理的词向量总结笔记。<br><a id="more"></a></p>
+<h1 id="词向量模型"><a href="#词向量模型" class="headerlink" title="词向量模型"></a>词向量模型</h1><h2 id="one-hot-Vector"><a href="#one-hot-Vector" class="headerlink" title="one-hot Vector"></a>one-hot Vector</h2><h3 id="one-hot-vector"><a href="#one-hot-vector" class="headerlink" title="one-hot vector"></a>one-hot vector</h3><p>最简单的编码方式：假设我们的词库总共有n个词，那我们开一个1*n的高维向量，而每个词都会在某个索引index下取到1，其余位置全部都取值为0。</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>这种词向量编码方式简单粗暴，我们将每一个词作为一个完全独立的个体来表达。遗憾的是，这种方式下，我们的词向量没办法给我们任何形式的词组相似性权衡。因为你开了一个极高维度的空间，然后每个词语都会占据一个维度，因此没有办法在空间中关联起来。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>可以把词向量的维度降低一些，在这样一个子空间中，可能原本没有关联的词就关联起来了。</p>
+<h2 id="基于-SVD-的方法"><a href="#基于-SVD-的方法" class="headerlink" title="基于 SVD 的方法"></a>基于 SVD 的方法</h2><h3 id="SVD"><a href="#SVD" class="headerlink" title="SVD"></a>SVD</h3><p>这是一种构造词嵌入（即词向量）的方法，我们首先会遍历所有的文本数据集，然后统计词出现的次数，接着用一个矩阵 X 来表示所有的次数情况，紧接着对X进行奇异值分解得到一个 USVT 的分解。然后用 U 的行（rows）作为所有词表中词的词向量。对于矩阵 X ，有2种选择：全文或者窗口长度。</p>
+<ul>
+<li><p>词-文档矩阵<br>建立一个词组文档矩阵 X，具体是这么做的：遍历海量的文件，每次词组 i 出现在文件 j 中时，将 Xij 的值加1。不过大家可想而知，这会是个很大的矩阵R|V|×M，而且矩阵大小还和文档个数M有关系。所以咱们最好想办法处理和优化一下。word-document的共现矩阵最终会得到泛化的主题（例如体育类词汇会有相似的标记），这就是浅层语义分析(LSA, Latent Semantic Analysis)</p>
+</li>
+<li><p>基于窗口的共现矩阵 X<br>把矩阵X记录的词频变成一个相关性矩阵，对 X 做奇异值分解，观察奇异值（矩阵的对角元素），并根据我们期待保留的百分比来进行截断（只保留前k个维度），把子矩阵 U1:|V|,1:k 视作我们的词嵌入矩阵。也就是说，对于词表中的每一个词，我们都用一个 k 维的向量来表达了。窗口长度容易捕获语法（POS）和语义信息</p>
+</li>
+</ul>
+<h3 id="对共现矩阵X进行奇异值分解"><a href="#对共现矩阵X进行奇异值分解" class="headerlink" title="对共现矩阵X进行奇异值分解"></a>对共现矩阵X进行奇异值分解</h3><p><a href="http://www.flickering.cn/%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E/2015/01/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%EF%BC%88we-recommend-a-singular-value-decomposition%EF%BC%89/" target="_blank" rel="external">特征值分解与奇异值分解</a><br>特征值分解只适用于方阵。当矩阵是高维的情况下，那么这个矩阵就是高维空间下的一个线性变换，一个矩阵乘以一个向量后得到的向量，其实就相当于将这个向量进行了线性变换。我们通过特征值分解得到的前N个特征向量，对应了这个矩阵最主要的N个变化方向。利用这前N个变化方向，可以近似这个矩阵（变换）。也就是 – 提取这个矩阵最重要的特征。总结一下，特征值分解可以得到特征值与特征向量，特征值表示的是这个特征到底有多重要，而特征向量表示这个特征是什么，可以将每一个特征向量理解为一个线性的子空间，我们可以利用这些线性的子空间干很多的事情。<br>奇异值分解是一个能适用于任意的矩阵的一种分解的方法，可以通过求特征值得到。<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%A5%87%E5%BC%82%E5%80%BC.png" alt=""></p>
+<p><a href="http://www.52nlp.cn/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E7%AC%AC%E4%BA%8C%E8%AE%B2%E8%AF%8D%E5%90%91%E9%87%8F" target="_blank" rel="external">Python中简单的词向量SVD分解</a></p>
+<h3 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h3><ul>
+<li>矩阵的维度会经常变化（新的词语经常会增加，语料库的大小也会随时变化）。</li>
+<li>矩阵是非常稀疏的，因为大多数词并不同时出现。</li>
+<li>矩阵的维度通常非常高（≈106×106），需要大量的存储</li>
+<li>训练需要O(n2)的复杂度</li>
+<li>对于新词或者新的文档很难及时更新</li>
+<li>需要专门对矩阵X进行特殊处理，以应对词组频率的极度不平衡的状况</li>
+</ul>
+<h3 id="解决方案：直接学习低维度的词向量"><a href="#解决方案：直接学习低维度的词向量" class="headerlink" title="解决方案：直接学习低维度的词向量"></a>解决方案：直接学习低维度的词向量</h3><p>idea: 将最重要的信息存储在固定的，低维度的向量里：密集向量（dense vector)，维数通常是25-1000<br>然而，如何降维？</p>
+<h2 id="基于迭代的方法"><a href="#基于迭代的方法" class="headerlink" title="基于迭代的方法"></a>基于迭代的方法</h2><p>创建一个模型，它能够一步步迭代地进行学习，并最终得出每个单词基于其上下文的条件概率。</p>
+<h3 id="n-gram"><a href="#n-gram" class="headerlink" title="n-gram"></a>n-gram</h3><p><strong>基本思想：</strong> 一个词出现的概率只与它前面固定数目的词相关。<br>主要工作是在预料中统计各种词串出现的次数以及平滑化处理，概率值计算号之后就存储起来，下次需要计算一个句子的概率时，只需找到相关的概率参数，将它们连乘起来就好了。<br>建立一个概率模型，它包含已知和未知参数。每增加一个训练样本，它就能从模型的输入、输出和期望输出（标签），多学到一点点未知参数的信息。<br>在每次迭代过程中，这个模型都能够评估其误差，并按照一定的更新规则，惩罚那些导致误差的参数。(误差“反向传播”法)。</p>
+<h3 id="CBOW"><a href="#CBOW" class="headerlink" title="CBOW"></a>CBOW</h3><p>以 {“The”, “cat”, “over”, “the”, “puddle”} 为上下文，能够预测或产生它们中心的词语”jumped”。模型输入为 x(c)，模型输出为 y，y 就是中心词 ‘jumped’。对于每个词语 wi 学习了两个向量。</p>
+<img src="http://images.shuang0420.cn/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/2.jpg" class="ful-image" alt="2.jpg">
+<p>连续词袋模型（CBOW）中的各个记号：</p>
+<ul>
+<li>$W_i$：单词表 V 中的第 i 个单词, one-hot 向量</li>
+<li>$v∈R^{n∗|V|}$：输入词矩阵</li>
+<li>$v_i$：V的第i列，n 维 $W_i$ 的输入向量</li>
+<li>$U∈R^{|V|∗n}$：输出词矩阵</li>
+<li>$U_i$：U 的第 i 行，n 维 $W_i$ 的输出向量</li>
+</ul>
+<p>把整个过程拆分成以下几步：</p>
+<ul>
+<li>对于 m 个词长度的输入上下文，我们产生它们的 one-hot 向量 $(x^{c−m},⋯,x^{c−1},x^{c+1},⋯,x^{c+m})$，作为模型输入。</li>
+<li>我们得到上下文的嵌入词向量 $(v_{c−m+1}=Vx^{c−m+1},⋯,v_{c+m}=Vx^{c+m})$</li>
+<li>将这些向量取平均 $\widehat{v}=\frac {V_{c−m} +V_{c−m+1} +⋯+V_{c+m}}{2m}$</li>
+<li>产生一个得分向量 $z=U\widehat{v}$</li>
+<li>将得分向量转换成概率分布形式 $\widehat{y}=softmax(z)$</li>
+<li>我们希望我们产生的概率分布 ,与真实概率分布 $\widehat{y}$ 相匹配。而 y 刚好也就是我们期望的真实词语的one-hot向量。</li>
+</ul>
+<p><strong> 怎样找到矩阵U、V？</strong><br>目标函数选交叉熵，用梯度下降法去更新每一个相关的词向量 $U_c$ 和 $V_j$.</p>
+<p>当我们试图从已知概率学习一个新的概率时，最常见的是从信息论的角度寻找方法来评估两个概率分布的差距。其中广受好评又广泛应用的一个评估差异/损失的函数是交叉熵：<br>$H(\widehat{y},y) = -\sum_{j=1}^{|V|}y_jlog(\widehat{y}_j)$</p>
+<p>结合我们当下的例子，y 只是一个one-hot向量，于是上面的损失函数就可以简化为：<br>$H(\widehat{y},y) = -y_jlog(\widehat{y}_j)$</p>
+<p>我们用 c 表示 y 这个 one-hot 向量取值为 1 的那个维度的下标。所以在我们预测为准确值的情况下 $\widehat{y}_c=1$。于是损失为 −1 log(1) = 0。所以对于一个理想的预测值，因为预测得到的概率分布和真实概率分布完全一样，因此损失为0。相反,当我们的预测结果非常不理想， $\widehat{y}_c=0.01$。计算得到的损失为−1 log(0.01) ≈ 4.605，损失非常大，原本这才是标准结果，可是你给了一个非常低的概率，因此会拿到一个非常大的loss。最终的优化函数为：</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/cnn%E4%BC%98%E5%8C%96%E5%87%BD%E6%95%B0.png" alt=""></p>
+<h3 id="Skip-Gram"><a href="#Skip-Gram" class="headerlink" title="Skip-Gram"></a>Skip-Gram</h3><p>与上面提到的模型对应的另一种思路，是以中心的词语 ”jumped” 为输入，能够预测或产生它周围的词语 ”The”, “cat”, “over”, “the”, “puddle” 等。这里我们叫 ”jumped” 为上下文。我们把它叫做Skip-Gram 模型。</p>
+<p>这个模型的建立与连续词袋模型（CBOW）非常相似，但本质上是交换了输入和输出的位置。我们令输入的 one-hot 向量（中心词）为 x（因为它只有一个），输出向量为 y(j)。U 和 V 的定义与连续词袋模型一样。看一下网络结构图：</p>
+<img src="http://images.shuang0420.cn/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/1.jpg" class="ful-image" alt="1.jpg">
+<p>举个例子，假设现在的数据集如下：</p>
+<pre>the quick brown fox jumped over the lazy dog</pre>
+
+<p>这个数据集中包含了词语及其上下文信息。上下文信息(Context)是一个比较宽泛的概念，有多种不同的理解：例如，词语周边的句法结构，词语的左边部分的若干个词语信息，对应的右半部分等。这里，我们使用最原始和基本的定义，即认为词语左右相邻的若干个词汇是该词对应的上下文信息。例如，取左右的词窗口为1，下面是数据集中的(上下文信息，对应的词)的pairs：</p>
+<pre>
+([the, brown], quick), ([quick, fox], brown), ([brown, jumped], fox), ...</pre>
+
+<p>Skip-Gram模型是通过输入的目标词来预测其对应的上下文信息，所以目标是通过[quick]来预测[the]和[brown]，通过[brown]来预测[quick]和[fox]… 将上面的pair转换为(inpUt, output)的形式如下：</p>
+<pre>
+(quick, the), (quick, brown), (brown, quick), (brown, fox), ...</pre>
+
+
+<p>对应到上面部分，我们可以把 Skip-Gram 模型的运作方式拆分成以下几步：</p>
+<ul>
+<li>生成 one-hot 输入向量 x。</li>
+<li>得到上下文的嵌入词向量 $V_c$=$V_x$。</li>
+<li>因为这里不需要取平均值的操作，所以直接是$\widehat{v}=v_c$。</li>
+<li>通过$U=UV_c$产生 2m 个得分向量 $U_{c−m},⋯,U_{c−1},U_{c+1},⋯,U_{c+m}$，如果上下文各取一个词，就是 $U_{c-1}$, $U_{c+1}$</li>
+<li>将得分向量转换成概率分布形式 $y=softmax(u)$。</li>
+<li>我们希望我们产生的概率分布与真实概率分布 $y^{c−m},⋯,y^{c−1},,y^{c+1}⋯,y^{c+m}$ 相匹配，也就是我们真实输出结果的 one-hot 向量。</li>
+</ul>
+<p>为模型设定一个目标/损失函数。不过不同的地方是我们这里需要引入朴素贝叶斯假设来将联合概率拆分成独立概率相乘。只要给出了中心词，所有的输出词是完全独立的。使用随机梯度下降算法(SGD)来进行最优化求解，并且使用mini-batch方法 (通常batch_size在16到512之间)。可以用随机梯度下降法去更新未知参数的梯度。<br>对应的优化函数是<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/skipgram.png" alt=""></p>
+<p>这里值得一提的是，skipgram 和 PMI 之间是有联系的，Levy and Goldberg(2014) 提到过，skip-gram 在矩阵成为 PMI 的一个 shifted version 时($WW^{‘T}=M^{PMI}-logk$)，得到最优解，也就是说，</p>
+<blockquote>
+<p>Skip-gram is implicitly factoring a shifted version of the PMI matrix into the two embedding matrices.</p>
+</blockquote>
+<p>我们再次观察一下目标函数，注意到对整个单词表|V|求和的计算量是非常巨大的，任何一个对目标函数的更新和求值操作都会有O(|V|)的时间复杂度。我们需要一个思路去简化一下，我们想办法去求它的近似，可以参照负面采样（Negative Sampling）</p>
+<h4 id="why-skip-gram"><a href="#why-skip-gram" class="headerlink" title="why skip-gram"></a>why skip-gram</h4><p>在NLP中，语料的选取是一个相当重要的问题。<br>首先，语料必须充分。一方面词典的词量要足够大，另一方面尽可能地包含反映词语之间关系的句子，如“鱼在水中游”这种句式在语料中尽可能地多，模型才能学习到该句中的语义和语法关系，这和人类学习自然语言是一个道理，重复次数多了，也就会模型了。<br>其次，语料必须准确。所选取的语料能够正确反映该语言的语义和语法关系。如中文的《人民日报》比较准确。但更多时候不是语料选取引发准确性问题，而是处理的方法。<br>由于窗口大小的限制，这会导致超出窗口的词语与当前词之间的关系不能正确地反映到模型中，如果单纯扩大窗口大小会增加训练的复杂度。Skip-gram模型的提出很好解决了这些问题。</p>
+<p>我们来看看 skip-gram 的定义。</p>
+<p>Skip-gram 实际上的定义很简单，就是允许跳几个字的意思。依照原论文里的定义，这个句子：</p>
+<pre>Insurgents killed in ongoing fighting.</pre>
+
+<p>在 bi-grams 的时候是拆成：</p>
+<pre>{ insurgents killed, killed in, in ongoing, ongoing fighting }</pre>
+
+<p>在 2-skip-bi-grams 的时候拆成：</p>
+<pre>{ insurgents killed, insurgents in, insurgents ongoing, killed in, killed ongoing, killed fighting, in ongoing, in fighting, ongoing fighting }</pre>
+
+<p>在 tri-grams 的时候是：</p>
+<pre>{ insurgents killed in, killed in ongoing, in ongoing fighting }</pre>
+
+<p>在 2-skip-tri-grams 的时候是：</p>
+<pre>{ insurgents killed in, insurgents killed ongoing, insurgents killed fighting, insurgentsin ongoing, insurgents in fighting, insurgents ongoing fighting, killed in ongoing, killed in fighting, killed ongoing fighting, in ongoing fighting }</pre>
+
+<p>这样就有办法在整篇文章都是用“台湾大学”的情况下以“台大”找到文章，解决一些“同义词”想要解决的问题。Skip-gram 一方面反映了句子的真实意思，另一方面还扩大了语料，2元词组由原来的4个扩展到了9个，3元词组由原来的3个扩展到了10个。</p>
+<h3 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h3><p>Word2Vec 是一个典型的预测模型，用于高效地学习Word Embedding，实现的模型就是上面提到的两种：连续词袋模型(CBOW)和Skip-Gram模型。算法上这两个模型是相似的</p>
+<ul>
+<li>CBOW 从输入的上下文信息来预测目标词</li>
+<li>Skip-gram 模型则是相反的，从目标词来预测上下文信息<br>一般而言，这种方式上的区别使得 CBOW 模型更适合应用在小规模的数据集上，能够对很多的分布式信息进行平滑处理；而 Skip-Gram 模型则比较适合用于大规模的数据集上。</li>
+</ul>
+<p>另外一点是，embeddings 可以来捕捉关系！<br><img src="http://images.shuang0420.cn/images/%E8%AF%8D%E5%90%91%E9%87%8F%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89/3.jpg" class="ful-image" alt="3.jpg"></p>
+<h2 id="向量空间模型-Vector-space-models-VSMs"><a href="#向量空间模型-Vector-space-models-VSMs" class="headerlink" title="向量空间模型(Vector space models, VSMs)"></a>向量空间模型(Vector space models, VSMs)</h2><p>将词语表示为一个连续的词向量，并且语义接近的词语对应的词向量在空间上也是接近的。<br><strong>分布式假说理论：</strong> 该假说的思想是如果两个词的上下文(context)相同，那么这两个词所表达的语义也是一样的；换言之，两个词的语义是否相同或相似，取决于两个词的上下文内容，上下文相同表示两个词是可以等价替换的。</p>
+<p>词向量生成方法主要分两大类：</p>
+<ul>
+<li>计数法(count-based methods, e.g. Latent Semantic Analysis)<br>在大型语料中统计词语及邻近的词的共现频率，然后将之为每个词都映射为一个稠密的向量表示；</li>
+<li>预测法(predictive methods, e.g. neural probabilistic language models)。<br>直接利用词语的邻近词信息来得到预测词的词向量（词向量通常作为模型的训练参数）。</li>
+</ul>
+<h1 id="词向量任务评价"><a href="#词向量任务评价" class="headerlink" title="词向量任务评价"></a>词向量任务评价</h1><h2 id="内部任务评价"><a href="#内部任务评价" class="headerlink" title="内部任务评价"></a>内部任务评价</h2><p>内部任务评价的特点如下：</p>
+<ul>
+<li>一般是在一个特定的子任务中进行评测</li>
+<li>计算很快</li>
+<li>有助于理解相关的系统</li>
+<li>在实际的NLP任务中表现好坏，可能需要外部关联实际应用</li>
+</ul>
+<h3 id="方法：词向量类比"><a href="#方法：词向量类比" class="headerlink" title="方法：词向量类比"></a>方法：词向量类比</h3><p>我们先输入一组不完整的类比 a:b::c:? 内部任务评价系统找出最大化余弦相似度的词向量<br>理想情况下，我们想得到xb−xa=xd−xc(例如，王后–国王 = 女演员 – 男演员)。于是xb−xa+xc=xd, 所以我们只需要找出一个与xb−xa+xc的标准化内积（比如余弦相似度）取最大值的词向量就可以了。</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E4%BB%BB%E5%8A%A1%E8%AF%84%E4%BB%B7.png" alt=""></p>
+<p>类比语料示例：</p>
+<pre>
+首都城市1 : 国家1 : : 首都城市2 : 国家2
+Beijing:China::Astana       Kazakhstan
+Beijing:China::Asmara       Eritrea
+...
+
+比较级
+bad:worst::big            biggest
+bad:worst::easy           easiest
+...
+
+时态
+dancing:danced::decreased         decreased
+dancing:danced::falling           fell
+...
+</pre>
+
+<p><a href="https://code.google.com/archive/p/word2vec/source" target="_blank" rel="external">评测语料</a></p>
+<h3 id="方法：相关性评价"><a href="#方法：相关性评价" class="headerlink" title="方法：相关性评价"></a>方法：相关性评价</h3><p>另外一个评测词向量质量的简单方法是人为对两个词的相似度在一个固定区间内打分(比如说 0-10)，再跟对应向量的余弦相适度进行对比。<br><a href="https://code.google.com/archive/p/word2vec/source/default/source" target="_blank" rel="external">评测语料</a></p>
+<h3 id="考虑参数"><a href="#考虑参数" class="headerlink" title="考虑参数"></a>考虑参数</h3><ul>
+<li>词向量的维度</li>
+<li>资料库的大小</li>
+<li>资料源/类型</li>
+<li>上下文窗口的大小</li>
+<li>上下文的对称性</li>
+</ul>
+<p>一般而言，</p>
+<ul>
+<li>精度和使用的模型高度相关，因为这些生成词向量的方法所依据的特性是完全不同的(如同时出现的次数，奇异向量等。)</li>
+<li>文集量越大，精度越高，因为例子越多，生成的系统学习到的经验就更丰富。比如在完成词汇类比的例子中，系统如果之前没有接触测试词，就可能会生成错误的结果。</li>
+<li>如果维度特别低或特别高，精度就会比较低。低维度词向量无法捕捉文集中不同词语的不同意义。这可以视为我们模型复杂度过低而导致的高偏差。比如 “king”, “queen”, “man”, “woman” 这几个词，我们需要至少2个维度像”gender” 如 “leadership” 来把它们编译成 2-字节 词向量。 过低的维度将无法捕捉四个词之间的语义差别，而过高的维度将捕捉到一些对泛化能力没有用的噪音– 即高方差的问题。</li>
+</ul>
+<h2 id="外部任务评价"><a href="#外部任务评价" class="headerlink" title="外部任务评价"></a>外部任务评价</h2><p>外部任务评价的特点如下：</p>
+<ul>
+<li>在一个实际任务中进行评测</li>
+<li>需要花很长的时间来计算精度</li>
+<li>不太清楚是否是某个子系统或者其他子系统，又或是几个子系统互相作用引起的问题</li>
+<li>如果替换原有的子系统后获得精度提升，则说明替换很可能是有效的</li>
+</ul>
+<blockquote>
+<p>参考链接：<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTQzNzU2NA==&amp;mid=2651641662&amp;idx=1&amp;sn=5cfba5999c1dd436af43523f53497094&amp;scene=21#wechat_redirect" target="_blank" rel="external">斯坦福大学课程：深度学习与自然语言处理</a><br><a href="http://www.52nlp.cn/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E7%AC%AC%E4%BA%8C%E8%AE%B2%E8%AF%8D%E5%90%91%E9%87%8F" target="_blank" rel="external">斯坦福大学深度学习与自然语言处理第二讲：词向量</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/word2vec/" rel="tag">#word2vec</a>
+          
+            <a href="/tags/Deep-learning/" rel="tag">#Deep learning</a>
+          
+            <a href="/tags/词向量/" rel="tag">#词向量</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/20/TensorFlow实战-MNIST/" rel="next" title="TensorFlow 实战 MINST">
+                <i class="fa fa-chevron-left"></i> TensorFlow 实战 MINST
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/22/句向量总结笔记（简洁版）/" rel="prev" title="论文笔记 - Distributed representations of sentences and documents">
+                论文笔记 - Distributed representations of sentences and documents <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#词向量模型"><span class="nav-number">1.</span> <span class="nav-text">词向量模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#one-hot-Vector"><span class="nav-number">1.1.</span> <span class="nav-text">one-hot Vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#one-hot-vector"><span class="nav-number">1.1.1.</span> <span class="nav-text">one-hot vector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.1.2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">1.1.3.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于-SVD-的方法"><span class="nav-number">1.2.</span> <span class="nav-text">基于 SVD 的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SVD"><span class="nav-number">1.2.1.</span> <span class="nav-text">SVD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对共现矩阵X进行奇异值分解"><span class="nav-number">1.2.2.</span> <span class="nav-text">对共现矩阵X进行奇异值分解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案：直接学习低维度的词向量"><span class="nav-number">1.2.4.</span> <span class="nav-text">解决方案：直接学习低维度的词向量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于迭代的方法"><span class="nav-number">1.3.</span> <span class="nav-text">基于迭代的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#n-gram"><span class="nav-number">1.3.1.</span> <span class="nav-text">n-gram</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CBOW"><span class="nav-number">1.3.2.</span> <span class="nav-text">CBOW</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Skip-Gram"><span class="nav-number">1.3.3.</span> <span class="nav-text">Skip-Gram</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#why-skip-gram"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">why skip-gram</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Word2Vec"><span class="nav-number">1.3.4.</span> <span class="nav-text">Word2Vec</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向量空间模型-Vector-space-models-VSMs"><span class="nav-number">1.4.</span> <span class="nav-text">向量空间模型(Vector space models, VSMs)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#词向量任务评价"><span class="nav-number">2.</span> <span class="nav-text">词向量任务评价</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内部任务评价"><span class="nav-number">2.1.</span> <span class="nav-text">内部任务评价</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法：词向量类比"><span class="nav-number">2.1.1.</span> <span class="nav-text">方法：词向量类比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法：相关性评价"><span class="nav-number">2.1.2.</span> <span class="nav-text">方法：相关性评价</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#考虑参数"><span class="nav-number">2.1.3.</span> <span class="nav-text">考虑参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外部任务评价"><span class="nav-number">2.2.</span> <span class="nav-text">外部任务评价</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/06/21/词向量总结笔记（简洁版）/';
+      var disqus_title = "词向量总结笔记（简洁版）";
+      var disqus_url = 'http://www.shuang0420.cn/2016/06/21/词向量总结笔记（简洁版）/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

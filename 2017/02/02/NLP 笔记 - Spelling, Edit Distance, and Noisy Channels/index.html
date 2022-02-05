@@ -1,0 +1,1084 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 11611 的课程笔记。这一篇介绍拼写的检查和更正，主要研究打字者键入的文本，同时这样的算法也可以应用于 OCR 和手写体识别。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 笔记 - Spelling, Edit Distance, and Noisy Channels">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/02/02/NLP 笔记 - Spelling, Edit Distance, and Noisy Channels/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 11611 的课程笔记。这一篇介绍拼写的检查和更正，主要研究打字者键入的文本，同时这样的算法也可以应用于 OCR 和手写体识别。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/ed.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/ld.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/ld2.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/alg.eg.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/noisyChannel.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/noisePro.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/acress.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/lm.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/ts.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/cm.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/pacress.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/acressF.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/realWord.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/rw.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/pem.jpg">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 笔记 - Spelling, Edit Distance, and Noisy Channels">
+<meta name="twitter:description" content="CMU 11611 的课程笔记。这一篇介绍拼写的检查和更正，主要研究打字者键入的文本，同时这样的算法也可以应用于 OCR 和手写体识别。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/ed.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/02/02/NLP 笔记 - Spelling, Edit Distance, and Noisy Channels/"/>
+
+
+  <title> NLP 笔记 - Spelling, Edit Distance, and Noisy Channels | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                NLP 笔记 - Spelling, Edit Distance, and Noisy Channels
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-02-02T19:02:27+08:00" content="2017-02-02">
+              2017-02-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/CMU-11611/" itemprop="url" rel="index">
+                    <span itemprop="name">CMU 11611</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/02/NLP 笔记 - Spelling, Edit Distance, and Noisy Channels/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/02/NLP 笔记 - Spelling, Edit Distance, and Noisy Channels/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 11611 的课程笔记。这一篇介绍拼写的检查和更正，主要研究打字者键入的文本，同时这样的算法也可以应用于 OCR 和手写体识别。<br><a id="more"></a></p>
+<p>这篇博客要解决的三个问题：</p>
+<ul>
+<li>Detecting isolated non-words(非词错误检查)<br>如 giraffe 拼写成 graffe</li>
+<li>Fixing isolated non-words(孤立词错误改正)<br>把 graffe 更正为 giraffe，但只在孤立的环境中寻找这个词</li>
+<li>Fixing errors in context(依赖于上下文的错误检查和更正)<br>真词错误，用上下文来检查和更正拼写错误。如把 I ate desert 改为 I ate dessert</li>
+</ul>
+<h1 id="拼写错误模式"><a href="#拼写错误模式" class="headerlink" title="拼写错误模式"></a>拼写错误模式</h1><p>Kukich(1992) 把人的打字错误分为两大类：<strong>打字操作错误(typographic error)</strong> 和 <strong>认知错误(cognitive error)</strong>。</p>
+<ol>
+<li><strong>打字操作错误(typographic error)</strong><br>一般与键盘有关，如 spell 拼成了 speel<br>包括 <strong>插入(insertion)</strong>，<strong>脱落(deletion)</strong>，<strong>替代(substitution)</strong>，<strong>换位(transposition)</strong><br>占所有错误类型的大多数</li>
+<li><strong>认知错误(cognitive error)</strong><br>由于写文章的人不知道如何拼写某个单词造成的<ul>
+<li><strong>语音错误:</strong> 用语音上等价的字母序列来替代，如 separate 拼成了 seperate</li>
+<li><strong>同音词错误:</strong> 如用 piece 来替代 peace</li>
+</ul>
+</li>
+</ol>
+<p>所以单词的拼写错误其实有两类，Non-word Errors 和 Real-word Errors。前者指那些拼写错误后的词本身就不合法，如错误的将“giraffe”写成“graffe”；后者指那些拼写错误后的词仍然是合法的情况，如将“there”错误拼写为“three”（形近），将“peace”错误拼写为“piece”（同音），这一篇主要讲 Non-word Errors。</p>
+<p><strong>补充：</strong> OCR 错误分为五类：替代、多重替代、空白脱落、空白插入和识别失败</p>
+<h1 id="非词错误的检查与更正"><a href="#非词错误的检查与更正" class="headerlink" title="非词错误的检查与更正"></a>非词错误的检查与更正</h1><h2 id="非词错误的检查"><a href="#非词错误的检查" class="headerlink" title="非词错误的检查"></a>非词错误的检查</h2><p>一般有两种方法，一是 <strong>使用词典</strong>，二是 <strong>检查序列</strong></p>
+<h3 id="使用词典"><a href="#使用词典" class="headerlink" title="使用词典"></a>使用词典</h3><p>看键入词是否出现在了词典中。用来做拼写错误检查的词典一般还要包括形态分析模式，来表示能产性的屈折变换和派生词。词典通常是哈希表，用 integer 代替 string，来提高 performance。</p>
+<h3 id="检查序列"><a href="#检查序列" class="headerlink" title="检查序列"></a>检查序列</h3><p>这个方法是自己概括的。类似于 “letter combination” 的思想。截取单词的部分字母，来检查这个字母序列在词典中出现的频率如何，是不是根本不会出现这种排列组合，如 “xy” 这个序列就基本不会出现在单词中，所以判断这个词是错误的。然而截取的长度很难定义，而且也需要使用词典。</p>
+<h2 id="非词错误改正"><a href="#非词错误改正" class="headerlink" title="非词错误改正"></a>非词错误改正</h2><p>查找词典中与 error 最近似的词，常见的方法有 Shortest weighted edit distance 和 Highest noisy channel probability。</p>
+<h3 id="编辑距离-edit-distance"><a href="#编辑距离-edit-distance" class="headerlink" title="编辑距离(edit distance)"></a>编辑距离(edit distance)</h3><p>编辑距离，顾名思义，把一个符号串转换为另一个符号串所需的最小编辑操作的次数(how many letter changes to map A to B)。Leetcode 上有相应的题目。</p>
+<p>编辑距离的 4 种转换方式</p>
+<ul>
+<li>插入(insertion)</li>
+<li>脱落(deletion)</li>
+<li>替代(substitution)</li>
+<li>换位(transposition)</li>
+</ul>
+<p>示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">• Substitutions</div><div class="line">– E X A M P E L</div><div class="line">– E X A M P L E 2 substitutions</div><div class="line">• Insertions</div><div class="line">– E X A P L E</div><div class="line">– E X A M P L E 1 insertion</div><div class="line">• Deletions</div><div class="line">– E X A M M P L E</div><div class="line">– E X A _ M P L E 1 deletion</div></pre></td></tr></table></figure></p>
+<p>下图表示如何从 intention 变换到 execution。<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/ed.jpg" class="ful-image" alt="ed.jpg"></p>
+<p>由上图可知 intention 变换到 execution 的 Levenshtein 距离是 5。</p>
+<h4 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h4><p>最小编辑距离的算法。用动态规划(dynamic programming)来解决。<br>只有插入(insertion)/脱落(deletion)/替代(substitution)三种操作的 Levenshtein 距离：<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/ld.jpg" class="ful-image" alt="ld.jpg"></p>
+<p>加上 transposition 的 Levenshtein 距离：<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/ld2.jpg" class="ful-image" alt="ld2.jpg"></p>
+<h5 id="Levenshtein-Distance"><a href="#Levenshtein-Distance" class="headerlink" title="Levenshtein Distance"></a>Levenshtein Distance</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">function LevenshteinDistance(char s[1..m], char t[1..n]):</div><div class="line">  // for all i and j, d[i,j] will hold the Levenshtein distance between</div><div class="line">  // the first i characters of s and the first j characters of t</div><div class="line">  // note that d has (m+1)*(n+1) values</div><div class="line">  declare int d[0..m, 0..n]</div><div class="line"></div><div class="line">  set each element in d to zero</div><div class="line"></div><div class="line">  // source prefixes can be transformed into empty string by</div><div class="line">  // dropping all characters</div><div class="line">  for i from 1 to m:</div><div class="line">      d[i, 0] := i</div><div class="line"></div><div class="line">  // target prefixes can be reached from empty source prefix</div><div class="line">  // by inserting every character</div><div class="line">  for j from 1 to n:</div><div class="line">      d[0, j] := j</div><div class="line"></div><div class="line">  for j from 1 to n:</div><div class="line">      for i from 1 to m:</div><div class="line">          if s[i] = t[j]:</div><div class="line">            substitutionCost := 0</div><div class="line">          else:</div><div class="line">            substitutionCost := 1</div><div class="line">          d[i, j] := minimum(d[i-1, j] + 1,                   // deletion</div><div class="line">                             d[i, j-1] + 1,                   // insertion</div><div class="line">                             d[i-1, j-1] + substitutionCost)  // substitution</div><div class="line"></div><div class="line">  return d[m, n]</div></pre></td></tr></table></figure>
+<p>intention 变换到 execution 的最小编辑距离。<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/alg.eg.jpg" class="ful-image" alt="alg.eg.jpg"></p>
+<h5 id="Damerau-Levenshtein-DL-distance"><a href="#Damerau-Levenshtein-DL-distance" class="headerlink" title="Damerau-Levenshtein(DL) distance"></a>Damerau-Levenshtein(DL) distance</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">algorithm DL-distance is</div><div class="line">    input: strings a[1..length(a)], b[1..length(b)]</div><div class="line">    output: distance, integer</div><div class="line"></div><div class="line">    da := new array of |Σ| integers</div><div class="line">    for i := 1 to |Σ| inclusive do</div><div class="line">        da[i] := 0</div><div class="line"></div><div class="line">    let d[−1..length(a), −1..length(b)] be a 2-d array of integers, dimensions length(a)+2, length(b)+2</div><div class="line">    // note that d has indices starting at −1, while a, b and da are one-indexed.</div><div class="line"></div><div class="line">    maxdist := length(a) + length(b)</div><div class="line">    d[−1, −1] := maxdist</div><div class="line">    for i := 0 to length(a) inclusive do</div><div class="line">        d[i, −1] := maxdist</div><div class="line">        d[i, 0] := i</div><div class="line">    for j := 0 to length(b) inclusive do</div><div class="line">        d[−1, j] := maxdist</div><div class="line">        d[0, j] := j</div><div class="line"></div><div class="line">    for i := 1 to length(a) inclusive do</div><div class="line">        db := 0</div><div class="line">        for j := 1 to length(b) inclusive do</div><div class="line">            k := da[b[j]]</div><div class="line">            ℓ := db</div><div class="line">            if a[i] = b[j] then</div><div class="line">                cost := 0</div><div class="line">                db := j</div><div class="line">            else</div><div class="line">                cost := 1</div><div class="line">            d[i, j] := minimum(d[i−1, j−1] + cost,  //substitution</div><div class="line">                               d[i,   j−1] + 1,     //insertion</div><div class="line">                               d[i−1, j  ] + 1,     //deletion</div><div class="line">                               d[k−1, ℓ−1] + (i−k−1) + 1 + (j-ℓ−1)) //transposition</div><div class="line">        da[a[i]] := i</div><div class="line">    return d[length(a), length(b)]</div></pre></td></tr></table></figure>
+<h5 id="Optimal-String-Alignment-OSA-distance"><a href="#Optimal-String-Alignment-OSA-distance" class="headerlink" title="Optimal String Alignment(OSA) distance"></a>Optimal String Alignment(OSA) distance</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">algorithm OSA-distance is</div><div class="line">    input: strings a[1..length(a)], b[1..length(b)]</div><div class="line">    output: distance, integer</div><div class="line"></div><div class="line">    let d[0..length(a), 0..length(b)] be a 2-d array of integers, dimensions length(a)+1, length(b)+1</div><div class="line">    // note that d is zero-indexed, while a and b are one-indexed.</div><div class="line"></div><div class="line">    for i := 0 to length(a) inclusive do</div><div class="line">        d[i, 0] := i</div><div class="line">    for j := 0 to length(b) inclusive do</div><div class="line">        d[0, j] := j</div><div class="line"></div><div class="line">    for i := 1 to length(a) inclusive do</div><div class="line">        for j := 1 to length(b) inclusive do</div><div class="line">            if a[i] = b[j] then</div><div class="line">                cost := 0</div><div class="line">            else</div><div class="line">                cost := 1</div><div class="line">            d[i, j] := minimum(d[i-1, j  ] + 1,     // deletion</div><div class="line">                               d[i, j-1] + 1,     // insertion</div><div class="line">                               d[i-1, j-1] + cost)  // substitution</div><div class="line">            if i &gt; 1 and j &gt; 1 and a[i] = b[j-1] and a[i-1] = b[j] then</div><div class="line">                d[i, j] := minimum(d[i, j],</div><div class="line">                                   d[i-2, j-2] + cost)  // transposition</div><div class="line">    return d[length(a), length(b)]</div></pre></td></tr></table></figure>
+<p>与 唯一的差别就是多了下面几行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if i &gt; 1 and j &gt; 1 and a[i] = b[j-1] and a[i-1] = b[j] then</div><div class="line">    d[i, j] := minimum(d[i, j],</div><div class="line">                       d[i-2, j-2] + cost)  // transposition</div></pre></td></tr></table></figure></p>
+<h3 id="噪声信道模型-Noisy-Channel-Model"><a href="#噪声信道模型-Noisy-Channel-Model" class="headerlink" title="噪声信道模型(Noisy Channel Model)"></a>噪声信道模型(Noisy Channel Model)</h3><p>Noisy Channel Model 即噪声信道模型，或称信源信道模型，这是一个普适性的模型，被用于 <strong>语音识别、拼写纠错、机器翻译、中文分词、词性标注、音字转换</strong> 等众多应用领域。噪声信道模型本身是一个贝叶斯推理的特殊情况。</p>
+<p>其形式很简单，如下图所示：<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/noisyChannel.jpg" class="ful-image" alt="noisyChannel.jpg"></p>
+<p>应用于拼写纠错任务的流程如下：<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/noisePro.jpg" class="ful-image" alt="noisePro.jpg"></p>
+<p>noisy word（即 spelling error）被看作 original word 通过 noisy channel 转换得到。由于在信道中有噪声，我们很难辨认词汇形式的真实单词的面目。我们的目的就是建立一个信道模型，使得能够计算出这个真实单词是如何被噪声改变面目的，从而恢复它的本来面目。噪声就是给正确的拼写戴上假面具的拼写错误，它有很多来源：发音变异、音子实现时的变异以及来自信道的声学方面的变异（扩音器、电话网络等）。</p>
+<p>无论单词 separate 是怎样错误拼写了，我们只想把它识别为 separate。也就是，给定 observation，我们的任务是确定这个 observation 属于哪个类别的集合。所以，我们考虑一切可能的类，也就是一切可能的单词，在这些单词中，我们只想选择那些最有可能给出已有的 observation 的单词。也就是，在词汇 V 的所有单词中，我们只想使得 P(Word|Observation)最大的那个单词，也就是我们对单词 W 的正确估计就是 argmaxP(W|O)</p>
+<p>现在已知 noisy word（用 O 表示）如何求得最大可能的 original word（用 W 表示），公式如下：</p>
+<p>$$<br>  \begin{aligned}<br>  argmax_{w \in V} P(W|O) &amp; = argmax {P(W)P(O|W) \over P(O)}  \ \ \ (Bayes \ Rule) \\<br>  &amp; = argmax P(W) * P(O|W) \ \ \ (denom \ is \ constant) \\<br>  \end{aligned}<br>$$</p>
+<p>看一下留下的两个 factor：</p>
+<ul>
+<li>P(W): prior, language model<br>how likely the word is going to be a word</li>
+<li>P(O|W): likelihood, channel model/error model<br>if it was that word, how likely is that generates this exact error, models the correct word into a misspelled word</li>
+</ul>
+<p>Bayes 方法应用于拼写的算法分两个步骤：</p>
+<ol>
+<li>提出候选更正表(proposing candidate correction)<br>怎么产生候选更正表？可以采用编辑距离产生下面两种 words set<ul>
+<li>相似拼写(words with similar spelling)</li>
+<li>相似发音(words with similar pronunciation)<br>事实上，80%的错误单词与正确单词的编辑距离是 1，而几乎所有的情况下编辑距离都小于 2</li>
+</ul>
+</li>
+<li>对候选进行打分(scoring the candidate)<br>用上面的 bayes 公式</li>
+</ol>
+<h4 id="Generate-candidate-words"><a href="#Generate-candidate-words" class="headerlink" title="Generate candidate words"></a>Generate candidate words</h4><p>举个例子，给定拼写错误“acress”，首先通过词典匹配容易确定为 “Non-word spelling error”；然后通过计算最小编辑距离获取最相似的 candidate correction。下面是通过 insertion, deletion, substitution, transposition 四种操作转化产生且编辑距离为 1 的 candidate words。<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/acress.jpg" class="ful-image" alt="acress.jpg"></p>
+<p>此时，我们希望选择概率最大的 W 作为最终的拼写建议，基于噪声信道模型思想，需要进一步计算 P(W) 和 P(O|W)。</p>
+<h4 id="Language-model-probability"><a href="#Language-model-probability" class="headerlink" title="Language model probability"></a>Language model probability</h4><p>通过对语料库计数、平滑等处理可以很容易建立语言模型，即可得到 P(w)，如下表所示，计算 Unigram Prior Probability（word 总数：404,253,213）<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/lm.jpg" class="ful-image" alt="lm.jpg"></p>
+<h4 id="Channel-model-probability"><a href="#Channel-model-probability" class="headerlink" title="Channel model probability"></a>Channel model probability</h4><p>$P(O|W)=probability \ of \ the \ edit$</p>
+<p>P(O|W)的精确计算至今还是一个没有解决的课题，我们可以进行简单的估算，用 confusion matrix，confusion matrix 是一个 26*26 的矩阵，表示一个字母被另一个字母错误替代的次数，有 4 种 confusion matrix(因为有四种错误)。</p>
+<p>基于大量<misspelled word="" x="x1" x2="" x3="" ...="" xm,="" correct="" w="w1" w2="" w3="" wn="">pair 计算 del、ins、sub 和 trans 四种转移矩阵，然后求得转移概率 P(O|W)，这里用 P(x|w) 表示:<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/ts.jpg" class="ful-image" alt="ts.jpg"></misspelled></p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/cm.jpg" class="ful-image" alt="cm.jpg">
+<h4 id="Calculation"><a href="#Calculation" class="headerlink" title="Calculation"></a>Calculation</h4><p>计算P(“acress”|w)如下：<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/pacress.jpg" class="ful-image" alt="pacress.jpg"></p>
+<p>计算P(w)P(“acress”|w)如下：<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/acressF.jpg" class="ful-image" alt="acressF.jpg"></p>
+<p>“across”相比其他 candidate 可能性更大。</p>
+<h4 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h4><p>一些测试集：<br>•  Wikipedia’s list of common English misspelling<br>•  Aspell filtered version of that list<br>•  Birkbeck spelling error corpus<br>•  Peter Norvig’s list of errors (includes Wikipedia and Birkbeck, for training<br>or tes/ng)</p>
+<h4 id="Other-application"><a href="#Other-application" class="headerlink" title="Other application"></a>Other application</h4><p>噪声信道模型：Y $\rightarrow$ Channel $\rightarrow$ X<br>看一下其他应用：<br>在 POS tag 里，Y 就是 POS tag 序列，X 就是单词序列。<br>在机器翻译里，如 L1 翻译成 L2，那么 Y 就是 L2， X 就是 L1，P(Y)就是 language model，P(X|Y) 就是 channel model。</p>
+<h1 id="真词错误的检查和更正"><a href="#真词错误的检查和更正" class="headerlink" title="真词错误的检查和更正"></a>真词错误的检查和更正</h1><p>25%-40% 的错误是真词(Real-word)，比如说 Can they <strong>lave</strong> him my messages? / The study was conducted mainly <strong>be</strong> John Black. 这类错误。真词错误的检查和更正往往依赖于上下文。</p>
+<p><strong>真词(Real-word)的检查和纠正:</strong><br><strong>Detection：</strong> 每个 word 都作为 spelling error candidate。<br><strong>Correction：</strong> 从发音和拼写等角度，查找与每个 word 最近似的 words 集合作为拼写建议，常见的方法有 Highest noisy channel probability 和 classifier</p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/realWord.jpg" class="ful-image" alt="realWord.jpg">
+<p>对一个句子中的每个单词，都选出与之编辑距离为 1 的所有单词作为候选单词(包括原单词本身)，也就是说一个句子 N 个单词，就有 N 个 candidate set，然后从每个单词 set 里各取出一个单词组成一个句子，求 P(W) 最大的单词序列<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/rw.jpg" class="ful-image" alt="rw.jpg"></p>
+<p>简化版，就是在所有 candidate words 里，每次只选出一个单词，与其它原词组成句子，然后同样求 P(W) 最大的单词序列。</p>
+<p>真词纠正和非词纠正的逻辑相同，都有 language model 概率和 channel model 概率，不同的是对真词纠正，channel model 的概率包含了 p(w|w) 也就是完全没有错误的概率。</p>
+<h1 id="拼写错误更正系统"><a href="#拼写错误更正系统" class="headerlink" title="拼写错误更正系统"></a>拼写错误更正系统</h1><p>为了使人机交互(HCI)的体验更加友好，我们可以根据拼写检查的 confidence 来决定对其进行哪种操作</p>
+<ul>
+<li>Very confident<br>直接改正(autocorrect)</li>
+<li>Less confident<br>给出最佳的更正单词(best correction)</li>
+<li>Less confident<br>给出更正列表(correction list)</li>
+<li>Unconfident<br>给出错误提示(flag)，就像 MS word 里错误单词下面的红线提示</li>
+</ul>
+<h2 id="Phone’c-error-model"><a href="#Phone’c-error-model" class="headerlink" title="Phone’c error model"></a>Phone’c error model</h2><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Spelling%2C%20Edit%20Distance%2C%20and%20Noisy%20Channels/pem.jpg" class="ful-image" alt="pem.jpg">
+<h2 id="噪声信道模型的改进"><a href="#噪声信道模型的改进" class="headerlink" title="噪声信道模型的改进"></a>噪声信道模型的改进</h2><p>可以改进/思考的方向：</p>
+<ul>
+<li><strong>language model:</strong> 上文用的是 unigram，实际应用中当然是 bigram/trigram 效果会更好</li>
+<li><strong>channel model:</strong> 是否要考虑编辑距离大于 1 的情况</li>
+<li><strong>unseen words:</strong> 关于未登录词，尤其是层出不穷的新动词/名词，我们怎么处理。一般还是检查单词序列/组合的概率分布</li>
+<li><strong>classifier:</strong> 考虑分类器，综合各种特征</li>
+</ul>
+<p>在实际应用中，我们并不会直接把 prior 和 error model probability 相乘，因为我们不能作出独立性假设，所以，我们会用权重来计算：<br>$$\hat w = argmax_{w \in V} P(o|w)P(w)^{\lambda}$$</p>
+<p>通常从训练集里学习 $\lambda$ 参数。</p>
+<p>有其他的方法对噪声信道模型进行改进，如允许更多的编辑(ph → f, le → al, etc.)，把发音特征加入信道等。另外，也可以把 channel model 和 language model 当做特征，并加入其他特征，来训练分类器来进行拼写错误的改正。</p>
+<p>根据可能影响 p(misspelling|word) 的因素来提取特征：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">• The source letter</div><div class="line">• The target letter</div><div class="line">• Surrounding letters</div><div class="line">• The position in the word</div><div class="line">• Nearby keys on the keyboard</div><div class="line">• Homology on the keyboard</div><div class="line">• Pronunciations</div><div class="line">• Likely morpheme transformations</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>参考链接<br><a href="http://52opencourse.com/138/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E7%AC%AC%E4%BA%94%E8%AF%BE-%E6%8B%BC%E5%86%99%E7%BA%A0%E9%94%99%EF%BC%88spelling-correction%EF%BC%89" target="_blank" rel="external">斯坦福大学自然语言处理第五课“拼写纠错（Spelling Correction）”</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/01/NLP 笔记 - Words, morphology, and lexicons/" rel="next" title="NLP 笔记 - Words, morphology, and lexicons">
+                <i class="fa fa-chevron-left"></i> NLP 笔记 - Words, morphology, and lexicons
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/03/OSX OpenCV for Python2.7:Python3.5 环境配置/" rel="prev" title="OSX OpenCV for Python2.7/Python3.5 环境配置">
+                OSX OpenCV for Python2.7/Python3.5 环境配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#拼写错误模式"><span class="nav-number">1.</span> <span class="nav-text">拼写错误模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#非词错误的检查与更正"><span class="nav-number">2.</span> <span class="nav-text">非词错误的检查与更正</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#非词错误的检查"><span class="nav-number">2.1.</span> <span class="nav-text">非词错误的检查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用词典"><span class="nav-number">2.1.1.</span> <span class="nav-text">使用词典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查序列"><span class="nav-number">2.1.2.</span> <span class="nav-text">检查序列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非词错误改正"><span class="nav-number">2.2.</span> <span class="nav-text">非词错误改正</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑距离-edit-distance"><span class="nav-number">2.2.1.</span> <span class="nav-text">编辑距离(edit distance)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Levenshtein-Distance"><span class="nav-number">2.2.1.1.1.</span> <span class="nav-text">Levenshtein Distance</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Damerau-Levenshtein-DL-distance"><span class="nav-number">2.2.1.1.2.</span> <span class="nav-text">Damerau-Levenshtein(DL) distance</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Optimal-String-Alignment-OSA-distance"><span class="nav-number">2.2.1.1.3.</span> <span class="nav-text">Optimal String Alignment(OSA) distance</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#噪声信道模型-Noisy-Channel-Model"><span class="nav-number">2.2.2.</span> <span class="nav-text">噪声信道模型(Noisy Channel Model)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Generate-candidate-words"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">Generate candidate words</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Language-model-probability"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">Language model probability</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Channel-model-probability"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">Channel model probability</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Calculation"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">Calculation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Evaluation"><span class="nav-number">2.2.2.5.</span> <span class="nav-text">Evaluation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Other-application"><span class="nav-number">2.2.2.6.</span> <span class="nav-text">Other application</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#真词错误的检查和更正"><span class="nav-number">3.</span> <span class="nav-text">真词错误的检查和更正</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拼写错误更正系统"><span class="nav-number">4.</span> <span class="nav-text">拼写错误更正系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Phone’c-error-model"><span class="nav-number">4.1.</span> <span class="nav-text">Phone’c error model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#噪声信道模型的改进"><span class="nav-number">4.2.</span> <span class="nav-text">噪声信道模型的改进</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/02/02/NLP 笔记 - Spelling, Edit Distance, and Noisy Channels/';
+      var disqus_title = "NLP 笔记 - Spelling, Edit Distance, and Noisy Channels";
+      var disqus_url = 'http://www.shuang0420.cn/2017/02/02/NLP 笔记 - Spelling, Edit Distance, and Noisy Channels/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

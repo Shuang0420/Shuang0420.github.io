@@ -1,0 +1,1099 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep learning,CNN," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="对应 深度学习知识框架，学习更先进的 CNN，包括 AlexNet, VGG, GooLeNet, ResNet, DeepFace, U-Net。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卷积神经网络 CNN 笔记(高级篇)">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/04/25/卷积神经网络 CNN 笔记(高级篇)/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="对应 深度学习知识框架，学习更先进的 CNN，包括 AlexNet, VGG, GooLeNet, ResNet, DeepFace, U-Net。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/1.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/2.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/11.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/3.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/6.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/4.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/5.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/8.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/7.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/9.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/10.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/14.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/15.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/12.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/13.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/16.jpg">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="卷积神经网络 CNN 笔记(高级篇)">
+<meta name="twitter:description" content="对应 深度学习知识框架，学习更先进的 CNN，包括 AlexNet, VGG, GooLeNet, ResNet, DeepFace, U-Net。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/04/25/卷积神经网络 CNN 笔记(高级篇)/"/>
+
+
+  <title> 卷积神经网络 CNN 笔记(高级篇) | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                卷积神经网络 CNN 笔记(高级篇)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-04-25T18:45:12+08:00" content="2017-04-25">
+              2017-04-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Deep-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Deep-learning/CNN/" itemprop="url" rel="index">
+                    <span itemprop="name">CNN</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/25/卷积神经网络 CNN 笔记(高级篇)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/25/卷积神经网络 CNN 笔记(高级篇)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>对应 <a href="http://www.shuang0420.com/2017/03/10/深度学习知识框架/" target="_blank" rel="external">深度学习知识框架</a>，学习更先进的 CNN，包括 AlexNet, VGG, GooLeNet, ResNet, DeepFace, U-Net。<br><a id="more"></a></p>
+<h1 id="AlexNet-现代深度卷积网络起源"><a href="#AlexNet-现代深度卷积网络起源" class="headerlink" title="AlexNet: 现代深度卷积网络起源"></a>AlexNet: 现代深度卷积网络起源</h1><p><a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks" target="_blank" rel="external">Krizhevsky, Alex, Ilya Sutskever, and Geoffrey E. Hinton. “Imagenet classification with deep convolutional neural networks.” Advances in neural information processing systems. 2012.</a></p>
+<p>AlexNet 在 2012 年提出，是 LeNet 更深更宽的版本。AlexNet 由 5 个卷积层，以及部分卷积层后跟着的 max-pooling 层，和 3 个全连接层，还有最后的 1000-way 的 softmax 层组成，共有 6000 万个参数(用全连接层的参数来估算)和 650,000 个神经元。为了加快训练速度，使用了线性修正单元 <strong>ReLU</strong> 和 <strong>多 GPU 加速并行</strong>；为了减少全连接层的过拟合，采用了 <strong>dropout, data augmentation 和 LRN</strong>。网上可能会看到两个版本的 AlexNet，因为在 ImageNet LSVRC-2010 大赛后，论文作者又输入了该模型的一个变体，参加了 ILSVRC-2012。AlexNet 确立了深度卷积网络在计算机视觉的统治地位。</p>
+<p>来看一下总体架构：</p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/1.jpg" class="ful-image" alt="1.jpg">
+<p>结构及参数计算：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">[227x227x3] INPUT</div><div class="line">[55x55x96] CONV1: 96 11x11 filters at stride 4, pad 0</div><div class="line">--- OUTPUT VOLUME SIZE = (227-11)/4+1 = 55 ---</div><div class="line">--- TOTAL NUMBER OF PARAMETERS = 11*11*3*96 = 35K ---</div><div class="line">[27x27x96] MAX POOL1: 3x3 filters at stride 2</div><div class="line">--- OUTPUT VOLUME SIZE = (55-3)/2+1 = 27 ---</div><div class="line">[27x27x96] NORM1: Normalization layer</div><div class="line">[27x27x256] CONV2: 256 5x5 filters at stride 1, pad 2</div><div class="line">[13x13x256] MAX POOL2: 3x3 filters at stride 2</div><div class="line">[13x13x256] NORM2: Normalization layer</div><div class="line">[13x13x384] CONV3: 384 3x3 filters at stride 1, pad 1</div><div class="line">[13x13x384] CONV4: 384 3x3 filters at stride 1, pad 1</div><div class="line">[13x13x256] CONV5: 256 3x3 filters at stride 1, pad 1</div><div class="line">[6x6x256] MAX POOL3: 3x3 filters at stride 2</div><div class="line">--- TOTAL NUMBER OF PARAMETERS = 6*6*256 ---</div><div class="line">[4096] FC6: 4096 neurons</div><div class="line">--- TOTAL NUMBER OF PARAMETERS = 4096*36*256=37,748,736 ---</div><div class="line">[4096] FC7: 4096 neurons</div><div class="line">--- TOTAL NUMBER OF PARAMETERS = 4096*4096=16,777,216 ---</div><div class="line">[1000] FC8: 1000 neurons (class scores)</div><div class="line">--- TOTAL NUMBER OF PARAMETERS = 1000*4096=4,096,000 ---</div><div class="line">=== TOTAL NUMBER OF PARAMETERS =&gt; 37,748,736 + 16,777,216 + 4,096,000 =&gt; 6000W ===</div></pre></td></tr></table></figure></p>
+<p>上图明确显示了两个GPU之间的职责划分。一个 GPU 运行图中顶部的层次部分，另一个 GPU 运行图中底部的层次部分。GPU 之间仅在某些层互相通信。</p>
+<p>为了防止过拟合，AlexNet 用了以下三种技术</p>
+<ul>
+<li>数据增强<br>a. 由生成图像转化和水平反射组成 如从 256×256 的图像中随机提取 224×224 的碎片(以及水平反射的镜像)，并在这些提取的碎片上训练网络，相当于增加了 ((256-224)^2)*2=2048 倍的数据量<br>b. 改变训练图像中RGB通道的强度 在整个 ImageNet 训练集的 RGB 像素值集合中执行PCA。对每个训练图像，成倍增加已有主成分，比例大小为对应特征值乘以一个从均值为 0，标准差为 0.1 的高斯分布中提取的随机变量</li>
+<li>Dropout<br>以一定的概率(如 0.5)将每个隐层神经元的输出设置为零。AlexNet 主要是最后几个全连接层使用了 dropout</li>
+<li>LRN 层<br>LRN (Local Response Normalization 局部响应归一化)，对局部神经元的活动创建竞争机制，使得其中响应比较大的值变得相对更大，并抑制其他反馈较小的神经元，增强了模型的泛化能力。</li>
+</ul>
+<p>一些细节：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Details/Retrospectives:</div><div class="line">- first use of ReLU</div><div class="line">- used Norm layers (not common anymore)</div><div class="line">- heavy data augmentation</div><div class="line">- dropout 0.5</div><div class="line">- batch size 128</div><div class="line">- SGD Momentum 0.9</div><div class="line">- Learning rate 1e-2, reduced by 10</div><div class="line">manually when val accuracy plateaus</div><div class="line">- L2 weight decay 5e-4</div><div class="line">- 7 CNN ensemble: 18.2% -&gt; 15.4%</div></pre></td></tr></table></figure></p>
+<p>AlexNet 的学习过程，用随机梯度下降法和一批大小为 128、动力为 0.9、权重衰减为 0.0005 的样例来训练网络。用一个均值为 0、标准差为 0.01 的高斯分布初始化每一层的权重，用常数 1 初始化第 2、第 4 和第 5 个卷积层以及全连接隐层的神经元偏差，在其余层用常数 0 初始化神经元偏差。对所有层都使用了相等的 learning rate，并在整个训练过程中手动调整。当 validation error 在当前 learning rate 下不再提高时，就将 learning rate 除以 10。learning rate 初始化为 0.01，在终止前降低三次。训练该网络时大致将这 120 万张图像的训练集循环了 90 次，在两个 NVIDIA GTX 580 3GB GPU 上花了五到六天。</p>
+<p>AlexNet 在 ILSVRC-2010 大赛上实现了top-1测试集误差率 <strong>37.5%</strong>，top-5测试集误差率 <strong>17.0%</strong> ，在 ILSVRC-2012大赛上实现了测试集误差率 top-5 <strong>15.3%</strong>。</p>
+<h1 id="VGG-AlexNet增强版"><a href="#VGG-AlexNet增强版" class="headerlink" title="VGG: AlexNet增强版"></a>VGG: AlexNet增强版</h1><p><a href="https://arxiv.org/pdf/1409.1556.pdf" target="_blank" rel="external">Simonyan, Karen, and Andrew Zisserman. “Very deep convolutional networks for large-scale image recognition.” arXiv preprint arXiv:1409.1556 (2014).</a></p>
+<p>VGG 相当于 AlexNet 的增强版，有着结构简单且深度、精度增强的优势。这里一个 tricky 的地方是，VGG 不是模型的缩写，而是 Visual Geomety Group，也就是牛津大学计算机视觉组(Department of Engineering Science, University of Oxford)的简称。</p>
+<p>VGG 与 AlexNet 最鲜明的对比是卷积层、卷积核设计的变化。VGGNet 探索了卷积神经网络的深度与其性能之间的关系，通过反复堆叠 3x3 的小型卷积核和 2x2 的最大池化层，成功构筑了 16~19 层深的卷积神经网络。</p>
+<ul>
+<li>结构变化: <strong>卷积层</strong>转化为<strong>卷积群</strong>(如下图)</li>
+<li>=&gt; 参数变化: 60m =&gt; 138m</li>
+<li>=&gt; 识别率变化(TOP5): 15.3% =&gt; 7.3%</li>
+</ul>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/2.jpg" class="ful-image" alt="2.jpg">
+<p>VGGNet 有 5 个卷积群，每一群内有 2~3 个卷积层，每个群连接一个 max-pooling 层来缩小图片尺寸。每个卷积群内的卷积核数量一样，越靠后的卷积群的卷积核数量越多：64 – 128 – 256 – 512 – 512。其中经常出现多个完全一样的 3x3 的卷积层堆叠在一起的情况，为什么呢？看下图，可以发现两个 3x3 的卷积层串联其实相当于 1 个 5x5 的卷积层，也就是说一个像素会跟周围 5x5 的像素产生关联。类似的，3 个 3x3 的卷积层串联的效果则相当于 1 个 7x7 的卷积层。<strong>为什么要堆叠卷积层而不直接用 7x7 的呢？</strong>一是因为 3 个串联的 3x3 的卷积层的参数比 1 个 7x7 的卷积层更少，二是因为 3 个 3x3 的卷积层比 1 个 7x7 的卷积层有更多的非线性变换（前者可以用三次 ReLU 激活函数，而后者只有一次），对特征的学习能力更强。</p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/11.jpg" class="ful-image" alt="11.jpg">
+<p><strong>网络结构及参数计算:</strong></p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/3.jpg" class="ful-image" alt="3.jpg">
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/6.jpg" class="ful-image" alt="6.jpg">
+<p><strong>VGG的作用：</strong></p>
+<ul>
+<li>结构简单：同 AlexNet 结构类似，都是卷积层、池化层、全连接层的组合</li>
+<li>性能优异：同 AlexNet 提升明显，同 GoogleNet, ResNet 相比，表现相近</li>
+<li>选择最多的基本模型，方便进行结构的优化、设计，SSD, RCNN，等其他任务的基本模型(base model)</li>
+</ul>
+<h1 id="GooLeNet-多维度识别"><a href="#GooLeNet-多维度识别" class="headerlink" title="GooLeNet: 多维度识别"></a>GooLeNet: 多维度识别</h1><p><a href="https://arxiv.org/pdf/1409.4842v1.pdf" target="_blank" rel="external">Szegedy, Christian, et al. “Going deeper with convolutions.” Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2015.</a></p>
+<p>GoogLeNet，ILSVRC 2014 winner，TOP5 的错误率为 <strong>6.7%</strong>。特点是结构复杂、多分辨率融合。GooLeNet 主要目标是找到最优的稀疏结构单元，也就是 Inception module。Inception 结构是将不同的卷积层通过并联的方式结合在一起，它主要改进了网络内部计算资源的利用率，让我们能在固定计算资源下增加神经网络深度和宽度，另外，Inception 结构还遵循了 Hebbian 原则并增加了多尺度处理。</p>
+<p>先看一下 GoogLeNet 的<strong>整体结构</strong>，其实是由 9 个相似的 Inception module 构成的。</p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/4.jpg" class="ful-image" alt="4.jpg">
+<p><strong>Inception 结构发展</strong></p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/5.jpg" class="ful-image" alt="5.jpg">
+<blockquote>
+<p> All we need is to find the optimal local construction and to repeat it spatially.</p>
+</blockquote>
+<p>GooLeNet 的 Inception 对特征图进行了三种不同的卷积(1x1, 3x3, 5x5)来提取多个尺度的信息，也就是提取更多的特征。举个例子，一张图片有两个人，近处一个远处一个，如果只用 5x5，可能对近处的人的学习比较好，而对远处那个人，由于尺寸的不匹配，达不到理想的学习效果，而采用不同卷积核来学习，相当于融合了不同的分辨率，可以较好的解决这个问题。把这些卷积核卷积后提取的 feature map (再加多一个 max pooling 的结果)进行聚合操作合并(在输出通道数这个维度上聚合)作为输出，也就是左图的结构，会发现这样结构下的参数暴增，耗费大量的计算资源。</p>
+<p>所以有了右图的改进方案，在 3x3，5x5 之前，以及 pooling 以后都跟上一个 1x1 的卷积用以降维，就可以在提取更多特征的同时，大量减少参数，降低计算量。1x1 的卷积核性价比很高，很小的计算量就能增加一层特征变换和非线性化(如果后面接 ReLU 等 activation layer)，另外，这也是一种降维(dimension reductionality)的方式，可以减少过拟合。具体的作用见<a href="http://www.notehub.cn/2016/10/15/algo/ml/OnebyOne_Convolution/" target="_blank" rel="external">1x1大小的卷积层的作用</a></p>
+<p>Inception v1 有 22 层，但只有 500w 的参数量，是 AlexNet 的 1/12。<strong>为什么要减少参数量？</strong>一是因为参数越多，需要喂给模型的数据量就越大，二是因为参数越多，耗费的计算资源就越大。<strong>InceptionNet 为什么参数少而且效果好？</strong>一是因为用平均池化层代替了最后的全连接层，二是因为上面解释的 Inception Module 的作用。</p>
+<p>Inception v2 学习了 VGG，用两个 3x3 的卷积替代了 5x5 的大卷积(降低参数&amp;减少过拟合)，并提出了 Batch Normalization 方法，另外根据 BN 对其他部分做了一些调整，比如增大 learning rate，加快学习衰减速度，去除 dropout 减轻L2 正则，去除 LRN，更彻底的对训练样本进行 shuffle 等等。</p>
+<p>Inception v3 优化了 Inception Module 的结构，同时引入了 Factorization into small convolutions 思想，把一个较大的二维卷积拆分成两个较小的一维卷积，如将 7x7 卷积拆成 1x7 卷积核 7x1 卷积，进一步节约参数减轻过拟合，此外，Inception v3 还增加了一层非线性扩展模型表达能力。</p>
+<p>Inception v4 则结合了微软的 ResNet，在 TOP5 error 上反超了 ResNet 3.1%。</p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/8.jpg" class="ful-image" alt="8.jpg">
+<p>Inception 网络就是由多个上面所说的 inception model 堆叠起来的，Inception model 之间可能再通过 max pulling 减小 feature map，论文作者提出，为了 memory efficiency，最好前几层按正常 CNN 套路来，在深层的时候使用 Inception model。</p>
+<p><strong>网络结构图:</strong></p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/7.jpg" class="ful-image" alt="7.jpg">
+<p>参数总数约为 5m，最后用 average pooling 层代替了全连接层。顺带讲一下<strong>全卷积结构(FCN)</strong>，一般的神经网络是<strong>卷积层(CNN)+全连接层(FC)</strong>，全卷积网络没有全连接层(全连接层一会需要大量的参数，二会引起过拟合)，这样的特点是:</p>
+<ul>
+<li>输入图片大小无限制</li>
+<li>空间信息有丢失</li>
+<li>参数更少，表达力更强</li>
+<li>不适合分类，适合做数据生成</li>
+</ul>
+<h1 id="ResNet-机器超越人类识别"><a href="#ResNet-机器超越人类识别" class="headerlink" title="ResNet: 机器超越人类识别"></a>ResNet: 机器超越人类识别</h1><p><a href="https://arxiv.org/abs/1512.03385" target="_blank" rel="external">Deep Residual Learning for Image Recognition Deep Residual Learning for Image Recognition Abstract: Deeper neural networks are more difficult to train. We present a residual learning framework to ease the…arxiv.org</a></p>
+<p>由微软提出，最初灵感出自神经网络层数不断加深导致的训练集上误差增大的问题(Degradation)，也就是随着网络层数增加，准确率会先上升然后达到饱和，再持续增加深度会导致准确率下降的现象。相比于 AlexNet 和 VGG，ResNet 层数更多，训练用了 8GPU，三周完成。</p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/9.jpg" class="ful-image" alt="9.jpg">
+<p>下图描述了 ResNet 的结构特性，ResNet 允许原始输入信息传输到后面的层中。特征图经过卷积层和非线性层后和之前的特征图进行数据融合，融合结果再往后面的网络推进。看最右边的部分，发现网络有很多“支线”来将输入直接连到后面的层，使得后面的层可以直接学习残差，这种结构也被称为 shortcut 或者 skip connections，它能够保护信息的完整性，整个网络只需要学习输入、输出差别的那一部分，简化了学习目标和难度。具体来说，假定某段神经网络的输入是 x，期望输出是 H(x)，如果直接把输入 x 传到输出作为初始结果，那么此时需要学习的目标就是 F(x)=H(x)-x，这就是一个 ResNet 的残差学习单元(Residual Unit)，ResNet 的学习目标不再是学习一个完整的输出，而是学习输出和输入的差别，也就是残差。</p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/10.jpg" class="ful-image" alt="10.jpg">
+<p><strong>为什么 ResNet 有效？</strong></p>
+<ol>
+<li>前向计算：低层卷积网络高层卷积网络信息融合；层数越深，模型的表现力越强</li>
+<li>反向计算：导数传递更直接，越过模型，直达各层</li>
+</ol>
+<p><a href="https://arxiv.org/abs/1602.04485" target="_blank" rel="external">Benefits of depth in neural networks by Matus Telgarsky</a></p>
+<h1 id="DeepFace-结构化图片的特殊处理"><a href="#DeepFace-结构化图片的特殊处理" class="headerlink" title="DeepFace: 结构化图片的特殊处理"></a>DeepFace: 结构化图片的特殊处理</h1><p><a href="https://www.cs.toronto.edu/~ranzato/publications/taigman_cvpr14.pdf" target="_blank" rel="external">Taigman Y, Yang M, Ranzato M A, et al. Deepface: Closing the gap to human-level performance in face verification</a></p>
+<p>由 Facebook 提出。广义的人脸识别是说看到这个人脸，确定它是谁，而落在应用/产品层面，更多的是 verification，先拿到别人的照片，做一个 model，再拿一张新的照片，来判断是不是这个人，也就是人脸身份确认。</p>
+<p>先来看一下人脸图片的数据特点：</p>
+<ul>
+<li>结构化：所有人脸的组成相似，理论上可以实现对齐</li>
+<li>差异化：相同的位置，形貌(appearance)不同</li>
+</ul>
+<p>DeepFace 在训练神经网络前，使用了<strong>对齐(frontalization)</strong>，论文认为神经网络能够 work 的原因在于一旦人脸经过对齐后，人脸区域的特征就固定在某些像素上了，所以就可以用卷积神经网络来学习特征。之后的 DeepID 和 FaceNet 并没有对齐这个步骤。</p>
+<p>传统 CNN 用同一个卷积核对整张图片进行卷积运算，卷积核参数共享，不同局部特性对参数影响相互削弱，达不到最优的效果，对应的解决方法是局部卷积，不同的区域用不同参数。</p>
+<p>人脸识别的<strong>基本流程</strong>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">detect -&gt; aligh -&gt; represent -&gt; classify</div></pre></td></tr></table></figure></p>
+<p><strong>结构:</strong></p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/14.jpg" class="ful-image" alt="14.jpg">
+<p>经过 3D 对齐后，形成的图像都是 152×152 的图像，输入到上述网络结构中，该结构的参数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- Conv：32 个 11×11×3 的卷积核</div><div class="line">- max-pooling: 3×3， stride=2</div><div class="line">- Conv: 16个9×9 的卷积核</div><div class="line">- Local-Conv: 16 个 9×9 的卷积核，参数不共享</div><div class="line">- Local-Conv: 16 个 7×7 的卷积核，参数不共享</div><div class="line">- Local-Conv: 16 个 5×5 的卷积核，参数不共享</div><div class="line">- Fully-connected: 4096 维</div><div class="line">- Softmax: 4030 维</div></pre></td></tr></table></figure></p>
+<p>前三层的目的在于提取低层次的特征，比如简单的边和纹理。其中 Max-pooling 层使得卷积的输出对微小的偏移情况更加鲁棒。但没有用太多的 Max-pooling 层，因为太多的 Max-pooling 层会使得网络损失图像信息。</p>
+<p>后面三层都是使用参数不共享的卷积核，之所以使用参数不共享，有如下原因：</p>
+<ul>
+<li>对齐的人脸图片中，不同的区域会有不同的统计特征，卷积的局部稳定性假设并不存在，所以使用相同的卷积核会导致信息的丢失</li>
+<li>不共享的卷积核并不增加抽取特征时的计算量，而会增加训练时的计算量</li>
+<li>使用不共享的卷积核，需要训练的参数量大大增加，因而需要很大的数据量，然而这个条件本文刚好满足。</li>
+</ul>
+<p>全连接层将上一层的每个单元和本层的所有单元相连，用来捕捉人脸图像不同位置的特征之间的相关性。其中，第7层（4096-d）被用来表示人脸。</p>
+<p>全连接层的输出可以用于Softmax的输入，Softmax层用于分类。</p>
+<p><strong>全局部卷积连接的缺陷：</strong></p>
+<ul>
+<li>预处理：大量对准，对对准要求高，原始信息可能丢失</li>
+<li>卷积参数数量很大，模型收敛难度大，需要大量数据</li>
+<li>模型可扩展性差，基本限于人脸计算</li>
+</ul>
+<h1 id="U-Net-图片生成网络"><a href="#U-Net-图片生成网络" class="headerlink" title="U-Net: 图片生成网络"></a>U-Net: 图片生成网络</h1><p><a href="http://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Noh_Learning_Deconvolution_Network_ICCV_2015_paper.pdf" target="_blank" rel="external">Noh, H., Hong, S. and Han, B., 2015. Learning deconvolution network for semantic segmentation. In Proceedings of the IEEE International Conference on Computer Vision (pp. 1520-1528).</a></p>
+<p>通过卷积神经网络生成特殊类型的图片，基本结构 <strong>CONV-FC-CONV</strong></p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/15.jpg" class="ful-image" alt="15.jpg">
+<p><strong>VGG U-Net:</strong></p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/12.jpg" class="ful-image" alt="12.jpg">
+<p>主要要理解的概念是<strong>池化-反池化(Pooling-Unpooling)</strong>,<strong>卷积-逆卷积(Convolution-Deconvolution)</strong>。</p>
+<p><strong>上采样/反池化</strong>实际是在池化的时候记住原本的位置，然后在上采样的时候对应回去放回原本的位置，前后空间位置保持一致，其他的地方可以直接补 0。而<strong>逆卷积</strong>实际上是有学习能力的上采样，它在生成图像有更好的连贯性，更好的空间表达能力。</p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/13.jpg" class="ful-image" alt="13.jpg">
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0%28%E9%AB%98%E7%BA%A7%E7%AF%87%29/16.jpg" class="ful-image" alt="16.jpg">
+<blockquote>
+<p>参考链接：<br> <a href="http://www.cnblogs.com/payton/articles/6732130.html" target="_blank" rel="external">CNN浅析和历年ImageNet冠军模型解析</a><br> <a href="http://blog.csdn.net/stdcoutzyx/article/details/46776415" target="_blank" rel="external">DeepFace–Facebook的人脸识别</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-learning/" rel="tag">#Deep learning</a>
+          
+            <a href="/tags/CNN/" rel="tag">#CNN</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/13/NLP-笔记---Compositional-Semantics/" rel="next" title="NLP 笔记 - Compositional Semantics">
+                <i class="fa fa-chevron-left"></i> NLP 笔记 - Compositional Semantics
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/27/NLP笔记 - NLU之意图分类/" rel="prev" title="NLP笔记 - NLU之意图分类">
+                NLP笔记 - NLU之意图分类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AlexNet-现代深度卷积网络起源"><span class="nav-number">1.</span> <span class="nav-text">AlexNet: 现代深度卷积网络起源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VGG-AlexNet增强版"><span class="nav-number">2.</span> <span class="nav-text">VGG: AlexNet增强版</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GooLeNet-多维度识别"><span class="nav-number">3.</span> <span class="nav-text">GooLeNet: 多维度识别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ResNet-机器超越人类识别"><span class="nav-number">4.</span> <span class="nav-text">ResNet: 机器超越人类识别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DeepFace-结构化图片的特殊处理"><span class="nav-number">5.</span> <span class="nav-text">DeepFace: 结构化图片的特殊处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#U-Net-图片生成网络"><span class="nav-number">6.</span> <span class="nav-text">U-Net: 图片生成网络</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/04/25/卷积神经网络 CNN 笔记(高级篇)/';
+      var disqus_title = "卷积神经网络 CNN 笔记(高级篇)";
+      var disqus_url = 'http://www.shuang0420.cn/2017/04/25/卷积神经网络 CNN 笔记(高级篇)/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

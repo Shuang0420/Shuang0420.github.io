@@ -1,0 +1,1037 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,Tensorflow,doc2vec,句向量," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="5-7月的实习，总的来说主要做了三件事情，一是语料的补充，具体表现是通过编写分布式爬虫从各种渠道爬取相关语料，二是特征提取，这一阶段测试了各种模型，doc2vec, lda, LSI, RNN, CNN 等等，试图在 word2vec 词向量基础上，产生质量更高的 sentence embedding,这也是本篇的重点所在。三是新问题发现，主要是通过聚类算法的实验实现。难点在于用什么语料聚类以及如">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实习总结之 sentence embedding">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/08/05/实习总结之 sentence embedding/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="5-7月的实习，总的来说主要做了三件事情，一是语料的补充，具体表现是通过编写分布式爬虫从各种渠道爬取相关语料，二是特征提取，这一阶段测试了各种模型，doc2vec, lda, LSI, RNN, CNN 等等，试图在 word2vec 词向量基础上，产生质量更高的 sentence embedding,这也是本篇的重点所在。三是新问题发现，主要是通过聚类算法的实验实现。难点在于用什么语料聚类以及如">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-20%20%E4%B8%8B%E5%8D%884.30.27.png">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="实习总结之 sentence embedding">
+<meta name="twitter:description" content="5-7月的实习，总的来说主要做了三件事情，一是语料的补充，具体表现是通过编写分布式爬虫从各种渠道爬取相关语料，二是特征提取，这一阶段测试了各种模型，doc2vec, lda, LSI, RNN, CNN 等等，试图在 word2vec 词向量基础上，产生质量更高的 sentence embedding,这也是本篇的重点所在。三是新问题发现，主要是通过聚类算法的实验实现。难点在于用什么语料聚类以及如">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-20%20%E4%B8%8B%E5%8D%884.30.27.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/08/05/实习总结之 sentence embedding/"/>
+
+
+  <title> 实习总结之 sentence embedding | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                实习总结之 sentence embedding
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-08-05T10:45:12+08:00" content="2016-08-05">
+              2016-08-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Meaning-Representation/" itemprop="url" rel="index">
+                    <span itemprop="name">Meaning Representation</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/05/实习总结之 sentence embedding/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/08/05/实习总结之 sentence embedding/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>5-7月的实习，总的来说主要做了三件事情，一是语料的补充，具体表现是通过编写分布式爬虫从各种渠道爬取相关语料，二是特征提取，这一阶段测试了各种模型，doc2vec, lda, LSI, RNN, CNN 等等，试图在 word2vec 词向量基础上，产生质量更高的 sentence embedding,这也是本篇的重点所在。三是新问题发现，主要是通过聚类算法的实验实现。难点在于用什么语料聚类以及如何产生自动化标签。其他的工作也就是打打杂，处理、过滤、验证各种数据，产生训练集、测试集，以及做各种 demo 界面，比较简单。</p>
+<p>最终还是发现 doc2vec, lda 产生的 sentence embedding 质量太低，在充足并相关的语料下，用 word2vec 得到的词向量效果还是很不错的，sentence embedding 最终的产生还是通过 RNN。这篇重点是 CNN，因为这是我自己负责的，之后会上一篇 RNN 的版本。</p>
+<h1 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h1><p>基本介绍见 <a href="http://www.shuang0420.com/2017/01/20/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/" target="_blank" rel="external">卷积神经网络 CNN 笔记</a></p>
+<p>来源：Kim Y. Convolutional neural networks for sentence classification[J]. arXiv preprint arXiv:1408.5882, 2014.(<a href="http://www.aclweb.org/anthology/D14-1181" target="_blank" rel="external">http://www.aclweb.org/anthology/D14-1181</a>)</p>
+<p>达到了 94.5% 的准确率，并不如 RNN，因为 CNN 模型的 focus 通常是长文本而不是短句，这里的情景是短句 FAQ，这也是效果不如 RNN 的一个原因。</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-20%20%E4%B8%8B%E5%8D%884.30.27.png" alt=""></p>
+<p>CNN 一些入门介绍见 <a href="http://www.shuang0420.com/2016/06/20/TensorFlow%E5%AE%9E%E6%88%98-MNIST/" target="_blank" rel="external">CNN 及 TensorFlow 实战 MINST</a></p>
+<h2 id="Why-CNN"><a href="#Why-CNN" class="headerlink" title="Why CNN"></a>Why CNN</h2><p>句子可以切分为很多词，词和词组合之后会产生局部语意，句子可以分成若干个有『局部语意』的小块。nlp 里面一个很重要的矛盾就是粒度和语意的矛盾。如果粒度过大，则太稀疏没法玩，粒度过小则意思就不对了。CNN 通过卷积，把每 k 个词组合之后的语意放在一起，得到更为准确的句向量。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="数据格式"><a href="#数据格式" class="headerlink" title="数据格式"></a>数据格式</h3><p>论文提出的输入类型有以下四种：</p>
+<ul>
+<li>CNN-rand: 所有的 word vector 都是随机初始化的，同时当做训练过程中优化的参数；</li>
+<li>CNN-static: 所有的 word vector 直接使用 Word2Vec 工具得到的结果，并且是固定不变的；</li>
+<li>CNN-non-static: 所有的 word vector 直接使用 Word2Vec 工具得到的结果，这些 word vector 也当做是可优化的参数，在训练过程中被 Fine tuned；</li>
+<li>CNN-multichannel: CNN-static 和 CNN-non-static 的混合版本，即两种类型的输入；</li>
+</ul>
+<p>一般来说 non-static vector 要优于 static vector。我们实验用的是随机初始化方法，数据 format：</p>
+<pre>用户问题\t标准问题id</pre>
+
+<h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2><h3 id="输入层"><a href="#输入层" class="headerlink" title="输入层"></a>输入层</h3><p>输入层是句子中的词语对应的 word vector 依次（从上到下）排列的矩阵，句子有 n 个词，vector的维数为 k ，矩阵就是 n×k。</p>
+<h3 id="第一层卷积层"><a href="#第一层卷积层" class="headerlink" title="第一层卷积层"></a>第一层卷积层</h3><p>输入层通过卷积操作得到若干个 Feature Map，卷积窗口的大小为 h×k ，其中 h 表示纵向词语的个数，而 k 表示 word vector 的维数。如果 h=2，就是相邻的两个word做一次卷积。通过这样一个大型的卷积窗口，得到若干个列数为 1 的Feature Map。</p>
+<p>卷积之后的结果经过激活函数 f 得到 feature，记为$c_i$。它是由$x_{i:i+h−1}$相邻的 h 个 words 卷积得到的值，再 activation 之后的值，也是当前层的输出。</p>
+<p>卷积之后的值：$w⋅x_{i:i+h−1}+b$<br>输出的 feature 值 $c_i=f(w⋅x_{i:i+h−1}+b)$,这就是我们的 sentence embedding<br>窗口大小：h<br>这样之后，一个 n 长度的sentence就有$[x_{1:h}， x_{2:h+1}，x_{3:h+2}，…，x_{n−h+1:n}]$这些 word windows，卷积后的结果就是 c = $[c1,c2,…,c_{n−h+1}]$，维度为(1，n-h+1)<br>然后进行池化 max pooling，选出最重要的 feature。pooling scheme可以根据句子的长度来选择。</p>
+<h3 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h3><p>接下来的池化层，才用 Max-over-time Pooling 的方法。从之前一维的 Feature Map 中提出最大的值，论文中解释最大值代表着最重要的信号。可以看出，这种Pooling方式可以解决可变长度的句子输入问题（因为不管Feature Map中有多少个值，只需要提取其中的最大值）。</p>
+<p>最终池化层的输出为各个Feature Map的最大值们，即一个一维的向量。</p>
+<h3 id="全连接-Softmax层"><a href="#全连接-Softmax层" class="headerlink" title="全连接 + Softmax层"></a>全连接 + Softmax层</h3><p>池化层的一维向量的输出通过全连接的方式，连接一个Softmax层，Softmax层可根据任务的需要设置（通常反映着最终类别上的概率分布）。</p>
+<h2 id="调参建议"><a href="#调参建议" class="headerlink" title="调参建议"></a>调参建议</h2><p>对 Ye Zhang 等人基于 Kim Y 的模型做了大量的调参实验之后的结论：</p>
+<ul>
+<li>由于模型训练过程中的随机性因素，如随机初始化的权重参数，mini-batch，随机梯度下降优化算法等，造成模型在数据集上的结果有一定的浮动，如准确率(accuracy)能达到 1.5% 的浮动，而AUC 则有 3.4% 的浮动；</li>
+<li>词向量是使用 word2vec 还是 GloVe，对实验结果有一定的影响，具体哪个更好依赖于任务本身；</li>
+<li>Filter的大小对模型性能有较大的影响，并且Filter的参数应该是可以更新的；</li>
+<li>Feature Map的数量也有一定影响，但是需要兼顾模型的训练效率；</li>
+<li>1-max pooling的方式已经足够好了，相比于其他的pooling方式而言；</li>
+<li>dropout 非常重要，能够带来 2-4% 的效果提升</li>
+<li>multichannel 的效果没有预期的好</li>
+</ul>
+<p>调参建议如下：</p>
+<ul>
+<li>使用non-static版本的 word2vec 或者 GloVe 要比单纯的 one-hot representation 取得的效果好得多；</li>
+<li>为了找到最优的过滤器(Filter)大小，可以使用线性搜索的方法。通常过滤器的大小范围在1-10之间，当然对于长句，使用更大的过滤器也是有必要的；</li>
+<li>Feature Map的数量在100-600之间；</li>
+<li>可以尽量多尝试激活函数，实验发现 ReLU 和 tanh 两种激活函数表现较佳；</li>
+<li>使用简单的 1-max pooling 就已经足够了，可以没必要设置太复杂的 pooling 方式；</li>
+<li>当发现增加 Feature Map 的数量使得模型的性能下降时，可以考虑增大正则的力度，如调高dropout的概率；</li>
+<li>为了检验模型的性能水平，多次反复的交叉验证是必要的，这可以确保模型的高性能并不是偶然。</li>
+</ul>
+<p>需要确定的参数：</p>
+<ul>
+<li>input word vector representations;</li>
+<li>filter region size(s);</li>
+<li>the number of feature maps;</li>
+<li>the activation function(s);</li>
+<li>the pooling strategy;</li>
+<li>regularization terms (dropout/l2).</li>
+</ul>
+<h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><p>tanh</p>
+<h2 id="目标函数"><a href="#目标函数" class="headerlink" title="目标函数"></a>目标函数</h2><p>交叉熵</p>
+<h2 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h2><p>还想着能不能用字向量取代词向量，一可以避免分词的麻烦，二可以解决未登录词的问题，这样在测试的时候就很少会遇到Unknown的字向量的问题。另外由于卷积的作用，字向量效果并不一定比词向量差。之后有时间做实验后会更新。</p>
+<h1 id="其他实验"><a href="#其他实验" class="headerlink" title="其他实验"></a>其他实验</h1><h2 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h2><p>LDA 最大的特点是需要大量的语料，否则数据维度远大于样本数，效果会很差。另外，LDA 适合比较高层次的主题，对稍微细一点的粒度，效果可能就没那么好了。</p>
+<h2 id="Doc2vec"><a href="#Doc2vec" class="headerlink" title="Doc2vec"></a>Doc2vec</h2><p>能产生很好的词向量，却不能产生很好的句向量。推测原因是句子太短。</p>
+<blockquote>
+<p>参考链接<br><a href="http://www.jeyzhang.com/cnn-apply-on-modelling-sentence.html#" target="_blank" rel="external">卷积神经网络(CNN)在句子建模上的应用</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/Tensorflow/" rel="tag">#Tensorflow</a>
+          
+            <a href="/tags/doc2vec/" rel="tag">#doc2vec</a>
+          
+            <a href="/tags/句向量/" rel="tag">#句向量</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/28/项目实战--云计算Twitter Analytics Web Service/" rel="next" title="项目实战--云计算Twitter Analytics Web Service">
+                <i class="fa fa-chevron-left"></i> 项目实战--云计算Twitter Analytics Web Service
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/20/聊天机器人和智能客服(笔记)/" rel="prev" title="聊天机器人和智能客服(笔记)">
+                聊天机器人和智能客服(笔记) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CNN"><span class="nav-number">1.</span> <span class="nav-text">CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-CNN"><span class="nav-number">1.1.</span> <span class="nav-text">Why CNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">1.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据格式"><span class="nav-number">1.2.1.</span> <span class="nav-text">数据格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型"><span class="nav-number">1.3.</span> <span class="nav-text">模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入层"><span class="nav-number">1.3.1.</span> <span class="nav-text">输入层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一层卷积层"><span class="nav-number">1.3.2.</span> <span class="nav-text">第一层卷积层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#池化层"><span class="nav-number">1.3.3.</span> <span class="nav-text">池化层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全连接-Softmax层"><span class="nav-number">1.3.4.</span> <span class="nav-text">全连接 + Softmax层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调参建议"><span class="nav-number">1.4.</span> <span class="nav-text">调参建议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活函数"><span class="nav-number">1.5.</span> <span class="nav-text">激活函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目标函数"><span class="nav-number">1.6.</span> <span class="nav-text">目标函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遗留问题"><span class="nav-number">1.7.</span> <span class="nav-text">遗留问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他实验"><span class="nav-number">2.</span> <span class="nav-text">其他实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA"><span class="nav-number">2.1.</span> <span class="nav-text">LDA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Doc2vec"><span class="nav-number">2.2.</span> <span class="nav-text">Doc2vec</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/08/05/实习总结之 sentence embedding/';
+      var disqus_title = "实习总结之 sentence embedding";
+      var disqus_url = 'http://www.shuang0420.cn/2016/08/05/实习总结之 sentence embedding/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

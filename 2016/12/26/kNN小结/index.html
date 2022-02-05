@@ -1,0 +1,1028 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="machine learning," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="回顾传统 kNN 算法以及优化方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kNN 小结">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/12/26/kNN小结/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="回顾传统 kNN 算法以及优化方法。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/1.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/2.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/4.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/5.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/6.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/7.jpg">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kNN 小结">
+<meta name="twitter:description" content="回顾传统 kNN 算法以及优化方法。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/12/26/kNN小结/"/>
+
+
+  <title> kNN 小结 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                kNN 小结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-12-26T23:13:47+08:00" content="2016-12-26">
+              2016-12-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/26/kNN小结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/12/26/kNN小结/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>回顾传统 kNN 算法以及优化方法。<br><a id="more"></a></p>
+<p>kNN 的基本思路，给定一个训练数据集，对新的输入 instance，在训练数据集中找到与之最邻近的 k 个 instance，然后看这 k 个 instance 的大多数属于哪个类，那么这个类就是输入 instance 的最终类别。</p>
+<h1 id="特征归一化"><a href="#特征归一化" class="headerlink" title="特征归一化"></a>特征归一化</h1><p>这算是常识性的知识啦，不过每次都会提醒一下。对于数值型的特征，我们一般都会进行归一化，如将数值范围处理到 0 到 1 之间，以此来保证每个特征是同等重要的。</p>
+<p>来看看下面的例子，如果不归一化，那么，第一列(数字差值最大)的属性对计算结果的影响最大(代入相似度距离计算公式)，然而我们不希望这样。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">40920	8.326976	0.953952	largeDoses</div><div class="line">14488	7.153469	1.673904	smallDoses</div><div class="line">26052	1.441871	0.805124	didntLike</div><div class="line">75136	13.147394	0.428964	didntLike</div><div class="line">38344	1.669788	0.134296	didntLike</div><div class="line">72993	10.141740	1.032955	didntLike</div><div class="line">35948	6.830792	1.213192	largeDoses</div><div class="line">42666	13.276369	0.543880	largeDoses</div><div class="line">......</div></pre></td></tr></table></figure></p>
+<p>最简单的归一化做法 newValue=(oldValue-min)/(max-min)</p>
+<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">def autoNorm(dataSet):</div><div class="line">    minVals = dataSet.min(0)  # select min value from columns</div><div class="line">    maxVals = dataSet.max(0) # select max value from columns</div><div class="line">    ranges = maxVals - minVals # max-min</div><div class="line">    m = dataSet.shape[0]</div><div class="line">    normDataSet = zeros(shape(dataSet))</div><div class="line">    normDataSet = dataSet - tile(minVals, (m, 1)) # oldValue-min</div><div class="line">    normDataSet = normDataSet / tile(ranges, (m, 1)) # division</div><div class="line">    return normDataSet, ranges, minVals</div></pre></td></tr></table></figure></p>
+<p>当然，要记住在做分类的时候，也要先对特征进行归一化。</p>
+<h1 id="相似度距离计算"><a href="#相似度距离计算" class="headerlink" title="相似度距离计算"></a>相似度距离计算</h1><p>怎么来判断邻近？如何来度量两个点之间的距离？距离选择很大程度上影响 kNN 的效果，因此它必须能足够的体现出样本间的相似和不同的程度，最常用的是欧式距离。</p>
+<p>$$d(x,y):=\sqrt {(x_1-y_1)^2+(x_2-y_2)^2+…+(x_n-y_n)^2}=\sqrt {\sum^n_{i=1}(x_i-y_i)^2}$$</p>
+<p>保存前 K 个点，可以用 <strong>最大堆(Max Heap)</strong> 实现。</p>
+<p>根据具体的问题，距离也可以采用 <strong>余弦距离、海明距离、编辑距离</strong> 等等。</p>
+<h1 id="k-值选取"><a href="#k-值选取" class="headerlink" title="k 值选取"></a>k 值选取</h1><img src="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/1.jpg" class="ful-image" alt="1.jpg">
+<p>k 的选取是很重要的，看上面一个例子，蓝色和红色分别代表两个不同的类 B 和 R，绿色是输入 instance，我们要对其进行分类，可以发现，k 取 3 和 5 得到的分类结果是完全不同的。</p>
+<ul>
+<li>k=3，新的 instance 属于 R 类别，因为离它最近的 3 个 instance 是有 2 个属于 R，1 个属于 B。</li>
+<li>k=5，新的 instance 属于 R 类别，因为离它最近的 5 个 instance 是有 2 个属于 R，3 个属于 B。</li>
+</ul>
+<p>所以，<strong>k 怎么选？</strong></p>
+<p>事实上，通常来说，我们在一开始会选取一个较小的 k 值(k=1)，然后采取交叉验证(cross-validation)的方法，直到 k=n，取使交叉验证得到最好的结果的那个 k，经验上，k 小于数据集大小的平方根。</p>
+<p><strong>k 值太小 or k 值太大</strong><br>k 值太小容易产生过拟合，因为它很容易学到噪声，比如说 k=1，那么就只用看和输入 instance 最邻近的一个 instance，举个例子吧<br><img src="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/2.jpg" class="ful-image" alt="2.jpg"></p>
+<p>而另一方面，k 值太大，那么意味着你的模型变得更加的简单，比如说 k=N(N为训练样本的个数)，那么无论输入的 instance 是什么类别，都会归到训练集中 instance 最多的那个类，也就是说，根本没有进行训练，只是简单的 count 而已，并没有利用训练集的其他大量的有用信息。</p>
+<h1 id="评价"><a href="#评价" class="headerlink" title="评价"></a>评价</h1><p>KNN 是一种 instance-based method，对于未知和非正态分布的数据可以取得较高的分类准确率，优缺点如下：</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>算法简单直观，易于实现</li>
+<li>免训练，参数少</li>
+<li>不需要产生额外的数据来描述规则，它的规则就是训练数据（样本）本身， 并不是要求数据的一致性问题，即可以存在噪音</li>
+<li>虽然从原理上也依赖于极限定理，但在类别决策时，只与极少量的相邻样本有关。因此，采用这种方法可以较好地避免样本数量的不平衡问题，当然，在 k 值很大而样本又极度不平衡的情况下，结果就不妙了</li>
+<li>最直接地利用了样本之间的关系，减少了类别特征选择不当对分类结果造成的不利影响，可以最大程度地减少分类过程中的误差项。对于一些类别特征不明显的类别而言，KNN法更能体现出其分类规则独立性的优势，使得分类自学习的实现成为可能</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>时空复杂度高，分类速度慢<br>  需要将所有训练样本首先存储起来，进行分类时实时进行计算处理，需要计算待分样本与训练样本库中每一个样本的相似度，才能求得与其最近的K个样本<br>  对于高维样本或样本集规模较大的情况，其时间和空间复杂度较高，时间代价为O(mn)，其中 m 为向量空间模型空间特征维数，n 为训练样本集大小   </li>
+<li>样本库容量依赖性较强<br>  有不少类别无法提供足够的训练样本，产生分类误差</li>
+<li>特征作用相同<br>  传统 KNN 认为每个属性的作用都是相同的(赋予相同权重)，而实际情况下，有些特征与分类是强相关的，有些特征与分类是弱相关的，还有一些特征(可能是大部分)与分类不相关。</li>
+<li>K值的确定 KNN 算法必须指定 K 值，K 值选择不当则分类精度不能保证。</li>
+</ul>
+<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="加快分类速度"><a href="#加快分类速度" class="headerlink" title="加快分类速度"></a>加快分类速度</h2><p><strong>解决思路：</strong> 一是减少样本量，二是加快搜索 k 近邻。</p>
+<h3 id="减少样本量"><a href="#减少样本量" class="headerlink" title="减少样本量"></a>减少样本量</h3><p>当训练样本集中样本数量太大时，可以从原始训练样本集中选择最优的子集进行 KNN 的寻找，这类方法主要包括 <strong>Condensing算法、WilSon 的 Editing 算法和 Devijver 的 MultiEdit 算法</strong>，Kuncheva 使用 <strong>遗传算法</strong> 在这方面也进行了一些研究。</p>
+<h3 id="加快搜索-k-近邻"><a href="#加快搜索-k-近邻" class="headerlink" title="加快搜索 k 近邻"></a>加快搜索 k 近邻</h3><p>主要通过快速的搜索算法来实现，采用一定的方法加快搜索速度或减小搜索范围，如可以构造交叉索引表，利用匹配成功与否的历史来修改样本库的结构，使用样本和概念来构造层次或网络来组织训练样本。</p>
+<p>常用的方法是先建立数据索引，然后再进行快速匹配。因为实际数据一般都会呈现出簇状的聚类形态，通过设计有效的索引结构可以大大加快检索的速度。索引树属于这一类，其基本思想就是对搜索空间进行层次划分。根据划分的空间是否有混叠可以分为 Clipping 和 Overlapping 两种。前者划分空间没有重叠，其代表就是 k-d 树；后者划分空间相互有交叠，其代表为 R 树。(这里只介绍k-d树)</p>
+<h4 id="KD-Tree"><a href="#KD-Tree" class="headerlink" title="KD Tree"></a>KD Tree</h4><h5 id="构建-k-d-tree"><a href="#构建-k-d-tree" class="headerlink" title="构建 k-d tree"></a>构建 k-d tree</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">1.If Data-set为空，则返回空的k-d tree</div><div class="line">2.调用节点生成程序：</div><div class="line">    - 确定split域</div><div class="line">    对于所有描述子数据（特征矢量），统计它们在每个维上的数据方差。以SURF特征为例，描述子为64维，可计算64个方差。挑选出最大值，对应的维就是split域的值。数据方差大表明沿该坐标轴方向上的数据分散得比较开，在这个方向上进行数据分割有较好的分辨率</div><div class="line">    - 确定Node-data域</div><div class="line">    数据点集Data-set按其第split域的值排序。位于正中间的那个数据点被选为Node-data。此时新的Data-set&apos; = Data-set\Node-data（除去其中Node-data这一点）。</div><div class="line">3.dataleft = &#123;d属于Data-set&apos; &amp;&amp; d[split] ≤ Node-data[split]&#125;</div><div class="line">  Left_Range = &#123;Range &amp;&amp; dataleft&#125;</div><div class="line">  dataright = &#123;d属于Data-set&apos; &amp;&amp; d[split] &gt; Node-data[split]&#125;</div><div class="line">  Right_Range = &#123;Range &amp;&amp; dataright&#125;</div><div class="line">4.left = 由（dataleft，Left_Range）建立的k-d tree，即递归调用 createKDTree（dataleft，Left_Range）并设置 left 的 parent 域为 Kd；</div><div class="line">  right = 由（dataright，Right_Range）建立的k-d tree，即调用createKDTree（dataleft，Left_Range）并设置 right 的 parent 域为 Kd。</div></pre></td></tr></table></figure>
+<img src="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/4.jpg" class="ful-image" alt="4.jpg">
+<p>如上图的 2 维数据，构建 KD Tree 过程：</p>
+<ul>
+<li>确定 split 域的首先该取的值。分别计算 x，y 方向上数据的方差得知x方向上的方差最大，所以 split 域值首先取0，也就是 x 轴方向；</li>
+<li>确定 Node-data 的域值。根据 x 轴方向的值 2,4,5,7,8,9 排序选出中值为7，所以 Node-data = (7,2)。这样，该节点的分割超平面就是通过(7,2)并垂直于 split = 0(x轴)的直线x = 7；</li>
+<li>确定左子空间和右子空间。分割超平面x = 7将整个空间分为两部分，如图2所示。x &lt; =  7的部分为左子空间，包含3个节点{(2,3)，(5,4)，(4,7)}；另一部分为右子空间，包含2个节点{(9,6)，(8,1)}。</li>
+</ul>
+<p>最后生成的 k-d 树。<br><img src="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/5.jpg" class="ful-image" alt="5.jpg"></p>
+<h5 id="k-d-tree-寻找"><a href="#k-d-tree-寻找" class="headerlink" title="k-d tree 寻找"></a>k-d tree 寻找</h5><p>星号表示要查询的点(2.1,3.1)。通过二叉搜索，顺着搜索路径很快就能找到最邻近的近似点，也就是叶子节点(2,3)。而找到的叶子节点并不一定就是最邻近的，最邻近肯定距离查询点更近，应该位于以查询点为圆心且通过叶子节点的圆域内。为了找到真正的最近邻，还需要进行’回溯’操作：算法沿搜索路径反向查找是否有距离查询点更近的数据点。此例中先从(7,2)点开始进行二叉查找，然后到达(5,4)，最后到达(2,3)，此时搜索路径中的节点为&lt;(7,2)，(5,4)，(2,3)&gt;，首先以(2,3)作为当前最近邻点，计算其到查询点(2.1,3.1)的距离为0.1414，然后回溯到其父节点(5,4)，并判断在该父节点的其他子节点空间中是否有距离查询点更近的数据点。以(2.1,3.1)为圆心，以0.1414为半径画圆，如图4所示。发现该圆并不和超平面y = 4交割，因此不用进入(5,4)节点右子空间中去搜索。</p>
+<img src="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/6.jpg" class="ful-image" alt="6.jpg">
+<p>再回溯到(7,2)，以(2.1,3.1)为圆心，以0.1414为半径的圆更不会与x = 7超平面交割，因此不用进入(7,2)右子空间进行查找。至此，搜索路径中的节点已经全部回溯完，结束整个搜索，返回最近邻点(2,3)，最近距离为0.1414。</p>
+<p>一个复杂点的例子如查找点为(2，4.5)。同样先进行二叉查找，先从(7,2)查找到(5,4)节点，在进行查找时是由y = 4为分割超平面的，由于查找点为y值为4.5，因此进入右子空间查找到(4,7)，形成搜索路径&lt;(7,2)，(5,4)，(4,7)&gt;，取(4,7)为当前最近邻点，计算其与目标查找点的距离为3.202。然后回溯到(5,4)，计算其与查找点之间的距离为3.041。以(2，4.5)为圆心，以3.041为半径作圆，如图5所示。可见该圆和y = 4超平面交割，所以需要进入(5,4)左子空间进行查找。此时需将(2,3)节点加入搜索路径中得&lt;(7,2)，(2,3)&gt;。回溯至(2,3)叶子节点，(2,3)距离(2,4.5)比(5,4)要近，所以最近邻点更新为(2，3)，最近距离更新为1.5。回溯至(7,2)，以(2,4.5)为圆心1.5为半径作圆，并不和x = 7分割超平面交割，如图6所示。至此，搜索路径回溯完。返回最近邻点(2,3)，最近距离1.5。k-d树查询算法的伪代码如表3所示。</p>
+<img src="http://images.shuang0420.cn/images/kNN%E5%B0%8F%E7%BB%93/7.jpg" class="ful-image" alt="7.jpg">
+<p>上述两次实例表明，当查询点的邻域与分割超平面两侧空间交割时，需要查找另一侧子空间，导致检索过程复杂，效率下降。研究表明 N 个节点的 K 维 k-d 树搜索过程时间复杂度为：$O_{worst}=O(kN^{1-1/k})$。</p>
+<p>关于 kd tree 的介绍来自于 <a href="http://www.cnblogs.com/eyeszjwang/articles/2429382.html" target="_blank" rel="external">k-d tree算法</a></p>
+<h2 id="训练样本的维护"><a href="#训练样本的维护" class="headerlink" title="训练样本的维护"></a>训练样本的维护</h2><p>对训练样本库进行维护以满足 KNN 算法的需要，包括对训练样本库中的样本进行添加或删除。对样本库的维护并不是简单的增加删除样本，而是可采用适当的办法来保证空间的大小，如符合某种条件的样本可以加入数据库中，同时可以对数据库库中已有符合某种条件的样本进行删除。从而保证训练样本库中的样本提供 KNN 算法所需要的相对均匀的特征空间。</p>
+<h2 id="相似度距离公式优化"><a href="#相似度距离公式优化" class="headerlink" title="相似度距离公式优化"></a>相似度距离公式优化</h2><p>为了改变传统 KNN 算法中特征作用相同的缺陷，可以对相似度的距离公式中给特征赋予不同权重，例如在欧氏距离公式中给不同特征赋予不同权重。特征的权重一般根据各个特征在分类中的作用设定，可根据特征在整个训练样本库中的所起的作用大小来确定权重，也可根据在训练样本的局部样本(靠近待测试样本的样本集合)中的分类作用确定权重。</p>
+<h2 id="K-值确定"><a href="#K-值确定" class="headerlink" title="K 值确定"></a>K 值确定</h2><ul>
+<li>K的选择往往通过大量独立的测试数据、多个模型来验证最佳的选择；</li>
+<li>K值一般事先确定，也可以使用动态的，例如采用固定的距离指标，只对小于该指标的样本进行分析</li>
+</ul>
+<blockquote>
+<p>参考链接：<br><a href="http://kesmlcv.blogspot.com/2013/08/knn.html" target="_blank" rel="external">KNN算法的优缺点和改进方法</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning/" rel="tag">#machine learning</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/20/新的开始/" rel="next" title="新的开始">
+                <i class="fa fa-chevron-left"></i> 新的开始
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/27/数据结构和算法 -- 堆/" rel="prev" title="数据结构和算法 -- 堆">
+                数据结构和算法 -- 堆 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#特征归一化"><span class="nav-number">1.</span> <span class="nav-text">特征归一化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相似度距离计算"><span class="nav-number">2.</span> <span class="nav-text">相似度距离计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#k-值选取"><span class="nav-number">3.</span> <span class="nav-text">k 值选取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#评价"><span class="nav-number">4.</span> <span class="nav-text">评价</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优化"><span class="nav-number">5.</span> <span class="nav-text">优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加快分类速度"><span class="nav-number">5.1.</span> <span class="nav-text">加快分类速度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#减少样本量"><span class="nav-number">5.1.1.</span> <span class="nav-text">减少样本量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加快搜索-k-近邻"><span class="nav-number">5.1.2.</span> <span class="nav-text">加快搜索 k 近邻</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#KD-Tree"><span class="nav-number">5.1.2.1.</span> <span class="nav-text">KD Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#构建-k-d-tree"><span class="nav-number">5.1.2.1.1.</span> <span class="nav-text">构建 k-d tree</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#k-d-tree-寻找"><span class="nav-number">5.1.2.1.2.</span> <span class="nav-text">k-d tree 寻找</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练样本的维护"><span class="nav-number">5.2.</span> <span class="nav-text">训练样本的维护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相似度距离公式优化"><span class="nav-number">5.3.</span> <span class="nav-text">相似度距离公式优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K-值确定"><span class="nav-number">5.4.</span> <span class="nav-text">K 值确定</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/12/26/kNN小结/';
+      var disqus_title = "kNN 小结";
+      var disqus_url = 'http://www.shuang0420.cn/2016/12/26/kNN小结/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

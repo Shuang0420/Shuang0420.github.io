@@ -1,0 +1,1032 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="django,前端,bootstrap," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="项目需要，快速上手 Django 的笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="django + bootstrap 使用网页模板">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/02/23/django + bootstrap 使用网页模板/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="项目需要，快速上手 Django 的笔记。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/process.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/pic.jpg">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="django + bootstrap 使用网页模板">
+<meta name="twitter:description" content="项目需要，快速上手 Django 的笔记。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/process.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/02/23/django + bootstrap 使用网页模板/"/>
+
+
+  <title> django + bootstrap 使用网页模板 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                django + bootstrap 使用网页模板
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-02-23T20:10:08+08:00" content="2017-02-23">
+              2017-02-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Web-Application/" itemprop="url" rel="index">
+                    <span itemprop="name">Web Application</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/23/django + bootstrap 使用网页模板/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/23/django + bootstrap 使用网页模板/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>项目需要，快速上手 Django 的笔记。<br><a id="more"></a></p>
+<h1 id="初识-Django"><a href="#初识-Django" class="headerlink" title="初识 Django"></a>初识 Django</h1><p>Django 使用了类似 MVC 的架构，只是在定义和解释上略为不同，称为 MTV ( Model–Template–View )。<br><img src="http://images.shuang0420.cn/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/process.jpg" class="ful-image" alt="process.jpg"></p>
+<p>Django 处理 request 的流程:</p>
+<ul>
+<li>浏览器送出 HTTP request</li>
+<li>Django 依据 URL configuration 分配至对应的 View</li>
+<li>View 进行资料库的操作或其他运算，并回传 HttpResponse</li>
+<li>浏览器依据 HTTP response 显示网页画面</li>
+</ul>
+<p>另外 Django 无需数据库就可以使用，它提供了对象关系映射器（ORM），可以使用 Python 代码来描述数据库结构。</p>
+<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pip install django</div></pre></td></tr></table></figure>
+<p>查看版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ python -m django --version</div><div class="line">1.10.5</div></pre></td></tr></table></figure></p>
+<h1 id="Simple-Example"><a href="#Simple-Example" class="headerlink" title="Simple Example"></a>Simple Example</h1><h2 id="Start-project"><a href="#Start-project" class="headerlink" title="Start project"></a>Start project</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ django-admin startproject mysite</div></pre></td></tr></table></figure>
+<p>目录结构:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysite/</div><div class="line">├── manage.py</div><div class="line">└── mysite</div><div class="line">    ├── __init__.py</div><div class="line">    ├── settings.py</div><div class="line">    ├── urls.py</div><div class="line">    └── wsgi.py</div></pre></td></tr></table></figure></p>
+<p>各个文件的作用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">The outer mysite/ root directory is just a container for your project. Its name doesn’t matter to Django; you can rename it to anything you like.</div><div class="line"></div><div class="line">manage.py: A command-line utility that lets you interact with this Django project in various ways. You can read all the details about manage.py in django-admin and manage.py.</div><div class="line">The inner mysite/ directory is the actual Python package for your project. Its name is the Python package name you’ll need to use to import anything inside it (e.g. mysite.urls).</div><div class="line"></div><div class="line">mysite/__init__.py: An empty file that tells Python that this directory should be considered a Python package. If you’re a Python beginner, read more about packages in the official Python docs.</div><div class="line"></div><div class="line">mysite/settings.py: Settings/configuration for this Django project. Django settings will tell you all about how settings work.</div><div class="line"></div><div class="line">mysite/urls.py: The URL declarations for this Django project; a “table of contents” of your Django-powered site. You can read more about URLs in URL dispatcher.</div><div class="line"></div><div class="line">mysite/wsgi.py: An entry-point for WSGI-compatible web servers to serve your project. See How to deploy with WSGI for more details.</div></pre></td></tr></table></figure></p>
+<p>现在就可以在 mysite 目录下运行了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ python manage.py runserver</div></pre></td></tr></table></figure></p>
+<p>浏览器打开 ‘<a href="http://127.0.0.1:8000/" target="_blank" rel="external">http://127.0.0.1:8000/</a>‘  能看到 “Welcome to Django” 的页面。</p>
+<p>如果有别的程序占用端口，可以修改 django 运行的端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ python manage.py runserver 8080</div></pre></td></tr></table></figure>
+<p>修改 server 的 IP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ python manage.py runserver 0.0.0.0:8000</div></pre></td></tr></table></figure></p>
+<p>修改 python 代码并保存时会自动加载 server，不用重新启动。然而，如果有添加文件等操作，就要重新启动了。</p>
+<h2 id="Create-app"><a href="#Create-app" class="headerlink" title="Create app"></a>Create app</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ python manage.py startapp mysample</div></pre></td></tr></table></figure>
+<p>目录结构:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">mysite/</div><div class="line">├── manage.py</div><div class="line">├── mysample</div><div class="line">│   ├── __init__.py</div><div class="line">│   ├── admin.py</div><div class="line">│   ├── apps.py</div><div class="line">│   ├── migrations</div><div class="line">│   │   └── __init__.py</div><div class="line">│   ├── models.py</div><div class="line">│   ├── tests.py</div><div class="line">│   └── views.py</div><div class="line">└── mysite</div><div class="line">    ├── __init__.py</div><div class="line">    ├── __pycache__</div><div class="line">    │   ├── __init__.cpython-36.pyc</div><div class="line">    │   └── settings.cpython-36.pyc</div><div class="line">    ├── settings.py</div><div class="line">    ├── urls.py</div><div class="line">    └── wsgi.py</div></pre></td></tr></table></figure></p>
+<p><strong>Projects vs apps</strong><br>所谓 app 是指完成一些功能的 web 应用，比如博客系统（weblog system），公共记录的数据库（a database of public records）或者是一个简单的投票系统（a simple poll app）。project 是指一个特定网站的一系列配置文件和应用的集合。一个项目（project）可以包含多个应用（app）,一个应用（app）可以被多个项目（project）使用。</p>
+<h2 id="Views"><a href="#Views" class="headerlink" title="Views"></a>Views</h2><p>Django view 其实是一个 function，处理 HttpRequest，并回传 HttpResponse</p>
+<ul>
+<li>收到 HttpRequest 参数<br>Django 从网页接收到 request 后，会将 request 中的信息封装产生一个 HttpRequest，并当成第一个参数，传入对应的 view function</li>
+<li>需要回传 HttpResponse<br>HttpResponse.content<br>HttpResponse.status_code …等</li>
+</ul>
+<p>编辑 mysample/views.py:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">from django.shortcuts import render</div><div class="line">from django.http import HttpResponse</div><div class="line">from django.template import loader</div><div class="line"></div><div class="line"># Create your views here.</div><div class="line">def index(request):</div><div class="line">    return HttpResponse(&quot;Hello, world.&quot;)</div></pre></td></tr></table></figure></p>
+<p>这段代码做的是：</p>
+<ul>
+<li>从 django.http 中引用 HttpResponse 类别</li>
+<li>宣告 hello_world 这个 view</li>
+<li>当 hello_world 被呼叫时，回传包含字串 Hello World! 的 HttpResponse</li>
+</ul>
+<h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><p>Django 需要知道 URL 与 view 的对应关系，这个对应关系就是 URL conf (URL configuration)，通常定义在 urls.py，包含了一连串的规则 (URL patterns)，Django 收到 request 时，会一一比对 URL conf 中的规则，决定要执行哪个 view function</p>
+<p>在 mysample 里新建一个 urls.py 文件来 map url，现在的目录结构:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">mysite/</div><div class="line">├── manage.py</div><div class="line">├── mysample</div><div class="line">│   ├── __init__.py</div><div class="line">│   ├── admin.py</div><div class="line">│   ├── apps.py</div><div class="line">│   ├── migrations</div><div class="line">│   │   └── __init__.py</div><div class="line">│   ├── models.py</div><div class="line">│   ├── tests.py</div><div class="line">│   ├── urls.py</div><div class="line">│   └── views.py</div><div class="line">└── mysite</div><div class="line">    ├── __init__.py</div><div class="line">    ├── __pycache__</div><div class="line">    │   ├── __init__.cpython-36.pyc</div><div class="line">    │   └── settings.cpython-36.pyc</div><div class="line">    ├── settings.py</div><div class="line">    ├── urls.py</div><div class="line">    └── wsgi.py</div></pre></td></tr></table></figure></p>
+<p>编辑 mysample/urls.py:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">from django.conf.urls import url</div><div class="line"></div><div class="line">from . import views</div><div class="line"></div><div class="line">app_name = &apos;mysample&apos;</div><div class="line">urlpatterns = [</div><div class="line">    # ex: /mysample/</div><div class="line">    url(r&apos;^$&apos;, views.index, name=&apos;index&apos;),</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>现在要把这个 urls.py 连到 mysite 上，编辑 mysite/urls.py:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">from django.conf.urls import include, url</div><div class="line">from django.contrib import admin</div><div class="line"></div><div class="line">urlpatterns = [</div><div class="line">    # point the root URLconf at the mysample.urls module</div><div class="line">    url(r&apos;^mysample/&apos;, include(&apos;mysample.urls&apos;)),</div><div class="line">    url(r&apos;^admin/&apos;, admin.site.urls),</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>url() 函数接收四个参数，两个是必需的： regex 和 view，还有两个是可选的：kwargs 和 name。</p>
+<ul>
+<li>regex – 定义的 URL 规则<pre><code>－ 规则以 regular expression（正规表示式）来表达
+－ r&apos;^mysample/&apos; 代表的是 mysample/ 这种 URL
+－ Django 从第一个开始，按顺序依次使用列表里的正则表达式来尝试匹配请求的 URL，直到遇到一个可以匹配的表达式
+－ 不尝试匹配 GET 或 POST 的参数，也不匹配域名部分
+</code></pre></li>
+<li>view – 对应的 view function<pre><code>－ 当 Django 找到匹配的正则表达式时，就会调用这个视图函数
+－ 调用时传递的第一个参数是一个 HttpRequest 对象，后续的参数是所有被正则表达数捕捉的部分
+－ 如果正则式使用简单捕获，捕获结果会作为位置参数传递；如果使用名字捕获，捕获结果会作为关键字参数传递
+</code></pre></li>
+<li>url() 参数之 kwargs<pre><code>－ 任意个关键字参数可以作为一个字典传递给目标视图函数
+</code></pre></li>
+<li>url() 参数之 name<pre><code>－ 给 URL 起个名字，以便在 Django 的模板里无二义性的引用到它
+－ 这个非常有用的特性允许你只用更改一个文件就能全局性的改变某个 URL
+</code></pre></li>
+</ul>
+<p>我们使用的 include() 函数只是简单的引用其他的 URLconf 文件，让 URLconf 也能轻松的「即插即用」。请注意 include() 函数的正则表达式不包含 $ 符号（匹配字符串结尾）但是结尾有斜线。当 Django 遇到一个 include()，它砍掉被正则表达式匹配上的部分，并把剩余的字符串发送个作为参数的 URLconf 做进一步处理。</p>
+<p>然后运行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ python manage.py runserver</div></pre></td></tr></table></figure></p>
+<p>打开 ‘<a href="http://localhost:8000/mysample/&#39;，就可以看到" target="_blank" rel="external">http://localhost:8000/mysample/&#39;，就可以看到</a> “Hello, world.” 主页。</p>
+<h1 id="Bootstrap"><a href="#Bootstrap" class="headerlink" title="Bootstrap"></a>Bootstrap</h1><p>这里使用的模板是<a href="https://startbootstrap.com/template-overviews/sb-admin/" target="_blank" rel="external">SB Admin</a></p>
+<h2 id="static-和-templates-文件"><a href="#static-和-templates-文件" class="headerlink" title="static 和 templates 文件"></a>static 和 templates 文件</h2><p>在 mysite 下新建文件夹 static，把 bootstrap 下载的模板复制到里面，然后在 mysite/mysite 下新建一个 templates 文件夹，把 html 文件复制到里面</p>
+<p>目录结构:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line">└── mysite</div><div class="line">    ├── manage.py</div><div class="line">    ├── mysample</div><div class="line">    │   ├── __init__.py</div><div class="line">    │   ├── __pycache__</div><div class="line">    │   │   ├── __init__.cpython-36.pyc</div><div class="line">    │   │   ├── urls.cpython-36.pyc</div><div class="line">    │   │   └── views.cpython-36.pyc</div><div class="line">    │   ├── admin.py</div><div class="line">    │   ├── apps.py</div><div class="line">    │   ├── migrations</div><div class="line">    │   │   └── __init__.py</div><div class="line">    │   ├── models.py</div><div class="line">    │   ├── tests.py</div><div class="line">    │   ├── urls.py</div><div class="line">    │   └── views.py</div><div class="line">    ├── mysite</div><div class="line">    │   ├── __init__.py</div><div class="line">    │   ├── __pycache__</div><div class="line">    │   │   ├── __init__.cpython-36.pyc</div><div class="line">    │   │   ├── settings.cpython-36.pyc</div><div class="line">    │   │   ├── urls.cpython-36.pyc</div><div class="line">    │   │   └── wsgi.cpython-36.pyc</div><div class="line">    │   ├── settings.py</div><div class="line">    │   ├── templates</div><div class="line">    │   │   └── mysample</div><div class="line">    │   │       └── dashboard.html</div><div class="line">    │   ├── urls.py</div><div class="line">    │   └── wsgi.py</div><div class="line">    └── static</div><div class="line">        ├── css</div><div class="line">        │   ├── bootstrap-rtl.css</div><div class="line">        │   ├── bootstrap-rtl.min.css</div><div class="line">        │   ├── bootstrap.css</div><div class="line">        │   ├── bootstrap.min.css</div><div class="line">        │   ├── plugins</div><div class="line">        │   │   └── morris.css</div><div class="line">        │   ├── sb-admin-rtl.css</div><div class="line">        │   └── sb-admin.css</div><div class="line">        ├── font-awesome</div><div class="line">        │   ├── css</div><div class="line">        │   │   ├── font-awesome.css</div><div class="line">        │   │   └── font-awesome.min.css</div><div class="line">        │   ├── fonts</div><div class="line">        │   │   ├── FontAwesome.otf</div><div class="line">        │   │   ├── fontawesome-webfont.eot</div><div class="line">        │   │   ├── fontawesome-webfont.svg</div><div class="line">        │   │   ├── fontawesome-webfont.ttf</div><div class="line">        │   │   └── fontawesome-webfont.woff</div><div class="line">        │   ├── less</div><div class="line">        │   │   ├── bordered-pulled.less</div><div class="line">        │   │   ├── core.less</div><div class="line">        │   │   ├── fixed-width.less</div><div class="line">        │   │   ├── font-awesome.less</div><div class="line">        │   │   ├── icons.less</div><div class="line">        │   │   ├── larger.less</div><div class="line">        │   │   ├── list.less</div><div class="line">        │   │   ├── mixins.less</div><div class="line">        │   │   ├── path.less</div><div class="line">        │   │   ├── rotated-flipped.less</div><div class="line">        │   │   ├── spinning.less</div><div class="line">        │   │   ├── stacked.less</div><div class="line">        │   │   └── variables.less</div><div class="line">        │   └── scss</div><div class="line">        │       ├── _bordered-pulled.scss</div><div class="line">        │       ├── _core.scss</div><div class="line">        │       ├── _fixed-width.scss</div><div class="line">        │       ├── _icons.scss</div><div class="line">        │       ├── _larger.scss</div><div class="line">        │       ├── _list.scss</div><div class="line">        │       ├── _mixins.scss</div><div class="line">        │       ├── _path.scss</div><div class="line">        │       ├── _rotated-flipped.scss</div><div class="line">        │       ├── _spinning.scss</div><div class="line">        │       ├── _stacked.scss</div><div class="line">        │       ├── _variables.scss</div><div class="line">        │       └── font-awesome.scss</div><div class="line">        ├── fonts</div><div class="line">        │   ├── glyphicons-halflings-regular.eot</div><div class="line">        │   ├── glyphicons-halflings-regular.svg</div><div class="line">        │   ├── glyphicons-halflings-regular.ttf</div><div class="line">        │   ├── glyphicons-halflings-regular.woff</div><div class="line">        │   └── glyphicons-halflings-regular.woff2</div><div class="line">        └── js</div><div class="line">            ├── bootstrap.js</div><div class="line">            ├── bootstrap.min.js</div><div class="line">            ├── jquery.js</div><div class="line">            └── plugins</div><div class="line">                ├── flot</div><div class="line">                │   ├── excanvas.min.js</div><div class="line">                │   ├── flot-data.js</div><div class="line">                │   ├── jquery.flot.js</div><div class="line">                │   ├── jqu</div><div class="line"></div><div class="line">                ery.flot.pie.js</div><div class="line">                │   ├── jquery.flot.resize.js</div><div class="line">                │   └── jquery.flot.tooltip.min.js</div><div class="line">                └── morris</div><div class="line">                    ├── morris-data.js</div><div class="line">                    ├── morris.js</div><div class="line">                    ├── morris.min.js</div><div class="line">                    └── raphael.min.js</div></pre></td></tr></table></figure></p>
+<p>注意要修改 html 里引用 css 和 js 的路径，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;link href=&quot;/static/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>修改 mysite 下的 settings.py，添加 templates 的目录路径以及 static files 的目录路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">TEMPLATES = [</div><div class="line">    &#123;</div><div class="line">        &apos;BACKEND&apos;: &apos;django.template.backends.django.DjangoTemplates&apos;,</div><div class="line">        &apos;DIRS&apos;: [&apos;your directory/mysite/mysite/templates&apos;],</div><div class="line">        &apos;APP_DIRS&apos;: True,</div><div class="line">        &apos;OPTIONS&apos;: &#123;</div><div class="line">            &apos;context_processors&apos;: [</div><div class="line">                &apos;django.template.context_processors.debug&apos;,</div><div class="line">                &apos;django.template.context_processors.request&apos;,</div><div class="line">                &apos;django.contrib.auth.context_processors.auth&apos;,</div><div class="line">                &apos;django.contrib.messages.context_processors.messages&apos;,</div><div class="line">            ],</div><div class="line">        &#125;,</div><div class="line">    &#125;,</div><div class="line">]</div><div class="line"></div><div class="line"></div><div class="line"># Static files (CSS, JavaScript, Images)</div><div class="line"># https://docs.djangoproject.com/en/1.10/howto/static-files/</div><div class="line"></div><div class="line">STATIC_URL = &apos;/static/&apos;</div><div class="line">STATICFILES_DIRS = (</div><div class="line">        &apos;your directory/mysite/static/&apos;,</div><div class="line">)</div></pre></td></tr></table></figure></p>
+<h2 id="渲染"><a href="#渲染" class="headerlink" title="渲染"></a>渲染</h2><p>修改 mysample/views.py，渲染 html 文件而不是仅仅输出一段文字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">from django.shortcuts import render</div><div class="line">from django.http import HttpResponse</div><div class="line">from django.template import loader</div><div class="line"></div><div class="line"># Create your views here.</div><div class="line">def index(request):</div><div class="line">    return render_to_response(&apos;index.html&apos;)</div></pre></td></tr></table></figure></p>
+<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><img src="http://images.shuang0420.cn/images/django%20%2B%20bootstrap%20%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5%E6%A8%A1%E6%9D%BF/pic.jpg" class="ful-image" alt="pic.jpg">
+<blockquote>
+<p>参考链接<br><a href="http://www.jianshu.com/p/9caff5c3ab49" target="_blank" rel="external">Django简易教程之一（models）</a><br><a href="https://docs.djangoproject.com/en/1.8/intro/" target="_blank" rel="external">Django document</a><br><a href="http://django-intro-zh.readthedocs.io/zh_CN/latest/" target="_blank" rel="external">Django-intro 中文版</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/django/" rel="tag">#django</a>
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+            <a href="/tags/bootstrap/" rel="tag">#bootstrap</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/17/推荐系统--隐语义模型LFM/" rel="next" title="推荐系统--隐语义模型LFM">
+                <i class="fa fa-chevron-left"></i> 推荐系统--隐语义模型LFM
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/24/NLP 笔记 - Language models and smoothing/" rel="prev" title="NLP 笔记 - Language models and smoothing">
+                NLP 笔记 - Language models and smoothing <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#初识-Django"><span class="nav-number">1.</span> <span class="nav-text">初识 Django</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install"><span class="nav-number">1.1.</span> <span class="nav-text">Install</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Simple-Example"><span class="nav-number">2.</span> <span class="nav-text">Simple Example</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Start-project"><span class="nav-number">2.1.</span> <span class="nav-text">Start project</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-app"><span class="nav-number">2.2.</span> <span class="nav-text">Create app</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Views"><span class="nav-number">2.3.</span> <span class="nav-text">Views</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URL"><span class="nav-number">2.4.</span> <span class="nav-text">URL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bootstrap"><span class="nav-number">3.</span> <span class="nav-text">Bootstrap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#static-和-templates-文件"><span class="nav-number">3.1.</span> <span class="nav-text">static 和 templates 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">3.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#渲染"><span class="nav-number">3.3.</span> <span class="nav-text">渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效果图"><span class="nav-number">3.4.</span> <span class="nav-text">效果图</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/02/23/django + bootstrap 使用网页模板/';
+      var disqus_title = "django + bootstrap 使用网页模板";
+      var disqus_url = 'http://www.shuang0420.cn/2017/02/23/django + bootstrap 使用网页模板/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

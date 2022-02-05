@@ -1,0 +1,1043 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="形态学(Morphology)
+语素(Morphemes)- 词根(Roots)
+- 词缀(Affixes)
+    § 前缀(Prefixes)
+    § 后缀(Suffixes) determin-ize, iterat-or
+    § 中缀(Infixes) Pennsyl-f\*\*kin-vanian
+    § 位缀(Circumfixes) ge-sammel-t
+- 毗邻性语素">
+<meta name="keywords">
+<meta property="og:type" content="website">
+<meta property="og:title" content="NLP 笔记 - notes">
+<meta property="og:url" content="http://www.shuang0420.cn/others/NLP 笔记 - notes.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="形态学(Morphology)
+语素(Morphemes)- 词根(Roots)
+- 词缀(Affixes)
+    § 前缀(Prefixes)
+    § 后缀(Suffixes) determin-ize, iterat-or
+    § 中缀(Infixes) Pennsyl-f\*\*kin-vanian
+    § 位缀(Circumfixes) ge-sammel-t
+- 毗邻性语素">
+<meta property="og:updated_time" content="2017-03-09T04:49:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 笔记 - notes">
+<meta name="twitter:description" content="形态学(Morphology)
+语素(Morphemes)- 词根(Roots)
+- 词缀(Affixes)
+    § 前缀(Prefixes)
+    § 后缀(Suffixes) determin-ize, iterat-or
+    § 中缀(Infixes) Pennsyl-f\*\*kin-vanian
+    § 位缀(Circumfixes) ge-sammel-t
+- 毗邻性语素">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/others/NLP 笔记 - notes.html"/>
+
+
+  <title>
+  
+
+  
+    NLP 笔记 - notes | 徐阿衡
+  
+</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left  ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+      <h1 id="形态学-Morphology"><a href="#形态学-Morphology" class="headerlink" title="形态学(Morphology)"></a>形态学(Morphology)</h1><ul>
+<li>语素(Morphemes)<pre><code>- 词根(Roots)
+- 词缀(Affixes)
+    § 前缀(Prefixes)
+    § 后缀(Suffixes) determin-ize, iterat-or
+    § 中缀(Infixes) Pennsyl-f\*\*kin-vanian
+    § 位缀(Circumfixes) ge-sammel-t
+- 毗邻性语素(concatenative morphology)
+    主要指前缀和后缀这一类语素，词是由一定数目的语素毗邻在一起而组成的
+- 非毗邻性语素(nonconcatenative morphology)
+    § Umlaut
+        foot::feet tooth : teeth
+    § Ablaut
+        sing, sang, sung
+    § 词根与模式语素(Root-and-pattern)/模板语素(templatic morphology)
+        通常在阿拉伯语和其它闪美特语系中(Eg. Arabic, Hebrew, Afroasiatic languages)
+        如在希伯来语中，动词通常由词根和模板组成，词根又通常由3个辅音组成。
+    § Infixation
+</code></pre></li>
+<li>单词(words)<pre><code>- 屈折形态学(Inflectional morphology)
+    屈折把词干(stem)和一个语法语素(grammatical morpheme)结合起来
+    形成的单词一般和原来的词干术语同一个词类(word class)
+    会产生诸如“一致关系”之类的句法功能
+    • Number (singular versus plural) automaton → automata
+    • Case (nomina:ve versus accusa:ve versus…) he, him, his, …
+- 派生形态学(Derivational morphology)
+    派生把词干(stem)和一个词缀(suffixes/affixes/infixes)结合起来
+    形成的单词一般属于不同的词类(word class)，具有不同的含义(meaning)
+    • parse → parser
+    • repulse → repulsive
+</code></pre></li>
+<li>有限状态自动机(Final-State Automaton)<pre><code>正则表达式 vs 有限状态自动机:
+    § 正则表达式是描述有限状态自动机的一种方法
+    § 任何正则表达式都可以用有限状态自动机来实现
+    § 任何有限状态自动机都可以用正则表达式来描述
+    § 两者彼此对称
+</code></pre></li>
+<li>形态剖析(Morphological Parsing)<pre><code>- 形态剖析器构成：
+    § 词表(lexicon)
+        词干和词缀表及其基本信息(如一个词干是名词词干还是动词词干等)
+    § 形态顺序规则(morphotactics)
+        关于形态顺序的模型，解释在一个词内什么样的语素跟在什么样的语素后面
+        如英语表示复数的语素要跟在名词后面而不是前面
+    § 正词法规则(orthographic rule)
+        当两个语素结合时在拼写上发生什么变换。如 y-&gt;ie
+- 剖析方法        
+    - Table
+    - Trie
+    - Final-state transducer(FST)
+      ○ 双层形态学(two-level morphology)把一个词表示为词汇层(lexical level)和表层(surface level)之间的对应
+        § 词汇层(lexical level)
+          表示组成该词的语素之间的简单毗邻关系
+        § 表层(surface level)
+          该层实际拼写的最终情况
+        § 映射规则
+          把在表层上的字幕序列(如 cats) 映射为词汇层上的语素和特征的序列(cat+N+PL)
+          =&gt; 有限状态转录机(Final State Transducers)
+      ○ FSA vs FST:    
+        § FST 通过 FSA 来实现转录，因此我们通常把 FST 看成具有两层的 FSA
+        § FSA 通过确定符号集合来定义/识别形式语言，而 FST 则定义符号串之间的关系
+        § FST 具有比 FSA 更多的功能
+            FSA 主要是来表达正则语言，主要作用是识别(recognize)语言；
+            FST 既能够识别(recognize)语言，也能够产生(generates)语言
+            FST 可以剖析(parse)输入，也可以把输入转化(transform)成另一种表达方式
+      ○ 作用：
+        § 作为识别器(recognizer)
+            符号串的偶对作为输入和输出，如果该符号串偶对也在语言的符号串偶对(pair)中就接收，否则拒绝
+        § 作为生成器(generator)
+            输出 yes 或 no 以及输出符号串的偶对
+        § 作为翻译器(translator)
+            读一个符号串，输出另一个符号串
+        § 作为关联器(relater)
+            计算两个集合之间的关系
+</code></pre></li>
+</ul>
+<h1 id="拼写错误和噪声信道模型"><a href="#拼写错误和噪声信道模型" class="headerlink" title="拼写错误和噪声信道模型"></a>拼写错误和噪声信道模型</h1><ul>
+<li>拼写错误分类：真词(Real-word Errors)，非词(Non-word Errors)</li>
+<li>拼写错误模式：<pre><code>- 打字操作错误(typographic error)
+    插入(insertion)，脱落(deletion)，替代(substitution)，换位(transposition)
+- 认知错误(cognitive error)
+    § 语音错误: 用语音上等价的字母序列来替代，如 separate 拼成了 seperate
+    § 同音词错误: 如用 piece 来替代 peace
+</code></pre></li>
+<li>错误检查<pre><code>- 使用词典
+- 检查序列(概率分布)
+</code></pre></li>
+<li>错误改正<pre><code>- 噪声信道模型(Noisy Channel Model)
+    应用：语音识别、拼写纠错、机器翻译、中文分词、词性标注、音字转换 等众多应用领域
+    过程：
+        1. 提出候选更正表(generate candidate words)
+        2. 用语言模型计算 P(W) (language model probability/prior)
+        3. 计算错误模型 P(O|W) (channel model probability)
+        4. 计算 argmaxw∈V P(W|O)=argmaxP(W)*P(O|W)
+- 分类器(Classifier)
+    可选特征 p(misspelling|word)
+    • The source letter
+    • The target letter
+    • Surrounding letters
+    • The position in the word
+    • Nearby keys on the keyboard
+    • Homology on the keyboard
+    • Pronunciations
+    • Likely morpheme transformations
+</code></pre><a href="http://www.shuang0420.com/2017/02/02/NLP%20笔记%20-%20Spelling,%20Edit%20Distance,%20and%20Noisy%20Channels/" target="_blank" rel="external">NLP 笔记 - Spelling, Edit Distance, and Noisy Channels</a></li>
+</ul>
+<h1 id="语言模型"><a href="#语言模型" class="headerlink" title="语言模型"></a>语言模型</h1><p><strong>应用：</strong> Machine Translation，Spell Correction，Speech Recognition，Summarization，QA system,etc.</p>
+<ul>
+<li>文本预处理问题<pre><code>标点/大小写/屈折形式/口语语料库
+</code></pre></li>
+<li>简单的(非平滑的) N 元语法<ul>
+<li>Full History Model<br>看单词对于给定历史的条件概率(conditioned on every history)<br>$p(W=w) = (\prod^L_{l=1}p(w_l|history_l))p(stop|history_L)$</li>
+<li>N-Gram Model<br>看单词对于固定长度历史的条件概率(conditioned on a fixed-length history(n-1)）<br>$p(W=w) = (\prod^L_{l=1}p(w_l|history_l))p(stop|history_{L+1})$<br>Bigram 为例，假设 &lt;s&gt; 为 START_SYMBOL，&lt;/s&gt; 为 STOP_SYMBOL<br>$p(w^1_L)=\prod^L_{l=1}P(w_l|w_{l-1})p(stop|w_{L+1})$<pre><code>&lt;s&gt; 为 START_SYMBOL，&lt;/s&gt; 为 STOP_SYMBOL
+&lt;s&gt; I am Sam &lt;/s&gt;
+P(I|&lt;s&gt;)*P(am|I)*P(Sam|am)*P(&lt;/s&gt;|Sam)
+</code></pre></li>
+<li>对数(Logprob)<br>  解决 underflow 问题；加速运算(加法比乘法快)</li>
+<li>归一化(Normalizing)</li>
+<li>Unknown word<br> 新建一个unknown word来表示未登录词</li>
+<li>N-gram 对语料库的敏感性<br>  训练模型的上下文越长，句子连贯性也就越好<br>  N-gram 性能强烈依赖于它们的语料库(特别是语料库的种类和单词的容量)</li>
+</ul>
+</li>
+<li><p>平滑(Smoothing)</p>
+<ul>
+<li>加 1 平滑(add-one smoothing)<br>$P_{Add-1}(w_i|w_{i-1})={c(w_{i-1}w_i)+1 \over c(w_{i-1})+V}$</li>
+<li>Good-Turing smoothing<br>$P^\star_{GT} (things \ with \ zero \ frequency)={N_1 \over N_2}$<br>$c^\star = {(c+1)N_{c+1} \over N_c}$<br>Nc 是出现过 c 次的单词的个数</li>
+<li>Backoff(回退)</li>
+<li>Linear Interpolation(线性差值)<br>$ p(w_n|w_{n-1}w_{n-2}) = \lambda_1 p(w_n|w_{n-1}w_{n-2}) + \lambda_2 p(w_n|w_{n-1}) + \lambda_3 p(w_n)$<br>$\sum_i \lambda_i=1$</li>
+</ul>
+</li>
+<li><p>模型评估<br>  $Perplexity = \sqrt[N] {\prod^N_{i=1} 1 \over {P(w_i|w_{i-1})}}$</p>
+</li>
+</ul>
+<p><a href="http://www.shuang0420.com/2017/02/24/NLP%20笔记%20-%20Language%20models%20and%20smoothing/" target="_blank" rel="external">NLP 笔记 - Language models and smoothing</a></p>
+<h1 id="词性标注-PoS-tagging"><a href="#词性标注-PoS-tagging" class="headerlink" title="词性标注(PoS tagging)"></a>词性标注(PoS tagging)</h1><ul>
+<li>特点<pre><code>- 分布特征(Distributional)
+    相似的环境/相似功能
+- 形态特征(Morphological)
+    相同词缀/句法结构中相似上下文
+- 无关于含义(meaning)，也无关于语法(可以是主语/宾语，等等)
+</code></pre></li>
+<li>分类<pre><code>- 封闭类(closed class)
+    介词(prepositions)/限定词(determiners)/代词(pronouns)/连接词(conjunctions)/助动词(auxiliary verbs)/小品词(particles)/数词(numerals)
+- 开放类(open class)
+    名词/动词/形容词/副词
+</code></pre></li>
+<li>应用<pre><code>§ POS 有助于模型的泛化，并帮助 reduce model size。
+§ 提供关于单词及其邻近成分的大量有用信息(区分名词、动词，推断近邻词)
+§ 提供单词发音的信息(语音合成系统)
+§ 分割词干(stemming)
+§ 用于信息检索/信息抽取
+§ 自动词义排歧算法/局部剖析(parital parsing)
+</code></pre></li>
+<li>算法<pre><code>- HMM
+    argmaxP(tag|word)=P(word|tag)∗P(tag|previous n tags)/P(word)
+- Brown Clustering
+    自底向上的层次聚类算法(hierarchical agglomeretive)，基于 n-gram 模型和马尔科夫链模型，容易 scale
+    输入：语料库  
+    输出：二叉树，叶子节点是一个个词，中间节点是我们想要的类（中间结点作为根节点的子树上的所有叶子为类中的词）
+    基本思想：
+        1. 初始的时候，将每一个词独立的分成一类
+        2. 然后，将两个类合并，使得合并之后 quality 函数最大
+            quality 函数，是对于n个连续的词（w）序列能否组成一句话的概率的对数的归一化结果
+        3. 不断重复上述过程，达到想要的类的数量的时候停止合并
+- Feature-based tagger
+    可用特征
+    • Word
+        the:    the → DT
+    • Lowercased word
+        Importantly:    importantly → RB
+    • Prefixes
+        unfathomable:    un- → JJ
+    • Suffixes
+        Importantly:    -ly → RB
+    • Capitalization
+        Meridian:    CAP → NNP
+    • Word shapes
+        35-year:    d-x → JJ
+    • Sliding window
+</code></pre></li>
+<li>未知词<pre><code>- 均等概率
+    假定每个未知词在所有可能的标记中都是有歧义的，给每个P(t|w)相同概率
+    根据上下文相关的 POS trigram 给未知词恰当的标签
+- Things-seen-once
+    在未知词上的标记的概率分布与在训练集中只出现一次的单词的标记的概率分布非常相似
+- 使用关于单词拼写的信息
+    4 类特殊的正词法特征，包括
+      § 3 个屈折词尾(-ed,-s,-ing)
+      § 32个派生后缀(-ion,-al,-ive,-ly)
+      § 4个大写(captial)值(首字母大写，非首字母大写等)以及连字符(hyph)规则
+    P(wi)=P(unknown−word|ti)P(captial|ti)P(endings|hyph/ti)
+</code></pre></li>
+</ul>
+<p><a href="http://www.shuang0420.com/2017/02/24/NLP%20%E7%AC%94%E8%AE%B0%20-%20Part%20of%20speech%20tags/" target="_blank" rel="external">NLP 笔记 - Part of speech tags</a>       </p>
+<h1 id="句法-syntax"><a href="#句法-syntax" class="headerlink" title="句法(syntax)"></a>句法(syntax)</h1><ul>
+<li>话题<pre><code>- 组成性(Constituency)
+- 语法关系(Grammatical relation)
+- 次范畴化和依存关系(Subcategorization and dependency)
+</code></pre></li>
+<li>Chomsky Hierarchy<pre><code>- 0型语法(type 0 grammar)
+- 上下文有关语法(context-sensitive grammar)
+- 上下文无关语法(context-free grammar)
+- 有限状态语法/正则语法(finite state grammar/regular grammar)
+</code></pre></li>
+<li>Chomsky Normal Form(CNF)<pre><code>• Grammar 是 ε-free(ε 表示空串)，且 rules 只有 X → Y Z; X → w 两种形式，且 X,Y,Z∈N, w∈T
+    =&gt; 该语法具有 CNF 范式
+• CNF 语法都是二分叉的。
+• 任何语法都可以转化成一个弱等价的 CNF 形式，只改变树的结构，且能识别相同的语言。
+    § 移除 empties 和 unaries
+    § 引入新的 non-terminal 来解决 n-ary 问题
+</code></pre></li>
+<li>语言结构<pre><code>- 组成结构(Constituency/phrase structure)
+    通常由上下文无关语法产生
+    主要构成部分：成分
+- 依存结构(Dependency structure)
+    应用：决定单复数/QA系统
+    主要构成部分：head 和 dependents     
+</code></pre></li>
+<li>剖析树 Parse tree<pre><code>- 可以得到的信息：
+    § 单词的词性(Part of speech)
+    § 词组(Phrases)
+    § 关系(Useful Relationships)
+- 两种思路
+    - 自顶向下(Top-down)
+    - 自底向上(Bottom-up)
+    - 比较
+        Top-down 不会浪费时间搜索一个不可能以 S 为根的树；但是会产生与输入不一致的根为 S 的树
+        Bottom-up 相反
+        两种方法都不能有效利用语法和输入单词中的约束条件
+- 歧义(Ambiguity)
+    来源：
+        词性标注歧义
+        介词短语歧义(Prepositional Phrase Attachment)
+    解决：
+        基于统计数据，在语料库中，看某个 PP 跟在特定名词/动词后面的概率，取概率大的那种 parse。
+        PCFG
+- 算法
+    - 上下文无关语法(Context-Free Grammar/CFGs)
+    - 概率上下文无关语法(Probabilistic Context-Free Grammar/PCFGs)
+        五元组 (N,Σ, P, S, D)
+        产生规则中每条规则都加了一个条件概率A→β[p]
+        D 的功能是给 R 中的每个规则指派一个概率 P(A→β|A)
+        一个 non-terminal 符号的所有展开，概率之和为1
+    - Cocke-Kasami-Younger(CKY)
+        Bottom-up，为一个句子建立一个三角形的表格，然后 bottom-up 一层一层向上填充 chart
+        输入必须是具有 Chomsky 范式(CNF)
+    - Earley
+        Top-down
+        无需将输入 grammar 转化成 CNF 范式
+        如果输入有 N 个单词，Earley 算法会创建一个 N+1 大小的 chart，对于句子中每一个单词的位置，chart 包含一个状态表来表示已经生成的部分剖析树，在句子结尾，chart 把对于给定输入的所有可能的剖析结果进行编码，每个可能的子树只表示一次，并且这个子树表示可以被需要它的所有的剖析共享。
+        关键操作：
+            § 预测(Predictor:for non-terminals)
+            § 扫描(Scanner: for words)
+            § 完成(Completer)
+    - 两个算法的不足：
+        § 一致性(agreement)问题
+            Number/Person/Tense/Case/Gender
+        § 次范畴化问题(Subcategorization Frames)
+            Direct object/Prepositional phrase/Predicative adjective...    
+        § CFG 假设：任何一个 non-terminal 符号的展开与任何其他 non-terminal 符号的展开是独立的，然而这个假设是不成立的
+            -&gt; 引入 Lexicalized grammars      
+    - 评估：
+        标注每一个成分的起始位置，然后比较两个 tree，看两个 tree 对应成分的起始位置是否相同，计算 precision，recall，F1，和 tagging accuracy。
+        不足：错误会被继承
+</code></pre></li>
+</ul>
+<p><a href="http://www.shuang0420.com/2017/02/27/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20Introduction/" target="_blank" rel="external">NLP 笔记 - Syntax Introduction
+</a><br><a href="http://www.shuang0420.com/2017/02/28/NLP%20%E7%AC%94%E8%AE%B0%20-%20Syntax%20and%20Parsing/" target="_blank" rel="external">NLP 笔记 - Constituency Parsing</a></p>
+
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = 'others/NLP 笔记 - notes.html';
+      var disqus_title = "NLP 笔记 - notes";
+      var disqus_url = 'http://www.shuang0420.cn/others/NLP 笔记 - notes.html';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

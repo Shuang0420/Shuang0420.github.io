@@ -1,0 +1,1131 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,semantic analysis,语义分析,FOL,FOPC," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 11611 的课程笔记。主要是关于意义表示的一些理论性知识，重点掌握一阶谓词演算(First Order Predicate Calculus)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 笔记 - Meaning Representation Languages">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/04/07/NLP 笔记 - Meaning Representation Languages/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 11611 的课程笔记。主要是关于意义表示的一些理论性知识，重点掌握一阶谓词演算(First Order Predicate Calculus)">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/1.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/2.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/3.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/4.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/13.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/12.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/14.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/15.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/5.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/6.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/9.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/10.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/11.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/7.jpg">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 笔记 - Meaning Representation Languages">
+<meta name="twitter:description" content="CMU 11611 的课程笔记。主要是关于意义表示的一些理论性知识，重点掌握一阶谓词演算(First Order Predicate Calculus)">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/04/07/NLP 笔记 - Meaning Representation Languages/"/>
+
+
+  <title> NLP 笔记 - Meaning Representation Languages | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                NLP 笔记 - Meaning Representation Languages
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-04-07T19:02:27+08:00" content="2017-04-07">
+              2017-04-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/CMU-11611/" itemprop="url" rel="index">
+                    <span itemprop="name">CMU 11611</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/07/NLP 笔记 - Meaning Representation Languages/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/07/NLP 笔记 - Meaning Representation Languages/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 11611 的课程笔记。主要是关于意义表示的一些理论性知识，重点掌握<strong>一阶谓词演算(First Order Predicate Calculus)</strong><br><a id="more"></a></p>
+<p><strong>Semantics Road Map</strong></p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/1.jpg" class="ful-image" alt="1.jpg">
+<ol>
+<li>Lexical semantics</li>
+<li>Vector semantics</li>
+<li><strong>Meaning representation languages and semantic roles</strong></li>
+<li>Compositional semantics, semantic parsing</li>
+<li>Discourse and pragmatics</li>
+</ol>
+<p><strong>语义分析常用的知识源</strong></p>
+<ul>
+<li>词本身的意义<br>• Word-sense identifier, like bass7<br>• Morphological info<br>• Grammatical info (POS, etc.)<br>• Phonetic info, if speech system<br>• Semantic info<br>• Comments, etc.</li>
+<li>语法结构所带的意义</li>
+<li>话语的结构知识</li>
+<li><p>发生话语的上下文知识以及与话题相关的常识</p>
+<p>​<br>这一篇讲 meaning representation，它常见的应用场景有：</p>
+</li>
+<li>在考试中回答文章问题<br>  具有背景知识，如关于问题主题的背景知识、关于学生知识水平的背景知识以及关于如何正常回答(answered normally)这些问题的背景知识</li>
+<li>在饭店里阅读菜单点菜<br>  阅读菜单、点什么菜、到哪里吃饭、根据菜谱做菜、编写新的菜谱等等这些都要求对食品有深入的知识，知道怎样做菜，知道人们喜欢吃什么以及喜欢到什么饭店等</li>
+<li>通过阅读说明书学习使用新软件<br>  要求对当前计算机、有关软件及使用有深入知识，对用户有一般知识</li>
+</ul>
+<p>注意的是这一篇的重点是表示句子的<strong>字面意义(literal meaning)</strong>，关注的是与单词的常规意义紧密联系的表示，而不反映它们出现的上下文环境，这种表示在涉及到<strong>俗语(idioms)</strong>和<strong>比喻(metaphor)</strong>时会显得不足。</p>
+<h1 id="Desirable-qualities"><a href="#Desirable-qualities" class="headerlink" title="Desirable qualities"></a>Desirable qualities</h1><p>探讨 Meaning representation 的最基本要求。</p>
+<h2 id="Verifiability"><a href="#Verifiability" class="headerlink" title="Verifiability"></a>Verifiability</h2><p>我们需要确定 meaning representation 的真实性，最直接的办法就是把 representation 和知识库(knowledge base)的表示相比较或匹配。<br>比如下面这个句子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Does Hello Bistro serve vegetarian food?</div></pre></td></tr></table></figure>
+<p>假定这个问题包含了 Maharani serves vegetarian food 的意义，将其简单注释为 Serves(Maharani, VegetarianFood)，那么我们就要看这个输入的 representation 是否能和关于饭店(restaurant)的事实知识库(knowledge base of facts)相匹配，返回结果如下</p>
+<ul>
+<li>If 在知识库中找到一个表示与之匹配 -&gt; 返回一个肯定回答</li>
+<li>Elif 知识库是完全的 -&gt; 返回否定</li>
+<li>Else -&gt; 返回不知道</li>
+</ul>
+<p>这个概念就是 <strong>可能性验证(verifiability)</strong>，也就是系统把意义表示所描述的情况与在知识库中所模拟的某个世界的情况进行比较的一种能力。</p>
+<h2 id="Unambiguous-Representation"><a href="#Unambiguous-Representation" class="headerlink" title="Unambiguous Representation"></a>Unambiguous Representation</h2><p><strong>无歧义表示(Unambiguous Representation)</strong> 要求最终的 meaning representation 只能有一个无歧义的表示，如下面的例子，我们只能准确的捕捉其中一种意义，而不能同时表示两种。有一些方法可以来决定某种解释比另外的解释更优先(或者更不优先)，这一篇暂且不讨论这类技术。</p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/2.jpg" class="ful-image" alt="2.jpg">
+<h2 id="Canonical-Form"><a href="#Canonical-Form" class="headerlink" title="Canonical Form"></a>Canonical Form</h2><p><strong>规范形式(Canonical Form)</strong>要求的是表达相同事情的输入必须有相同的意义表示(input that mean the same thing should have the same meaning representation)。</p>
+<p>比如下面四句话</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">• “Mad Mex has vegetarian dishes.”</div><div class="line">• “They have vegetarian food at Mad Mex.”</div><div class="line">• “Vegetarian dishes are served at Mad Mex.”</div><div class="line">• “Mad Mex serves vegetarian fare.”</div></pre></td></tr></table></figure>
+<p>系统必须把 vegetarian dishes, vegetarian food, vegetarian fare 归入在这种上下文环境中的同一个事物，同时，这里 have 和 serve 的用法也是等价的，我们希望 meaning representation 能做到这一点。有一种思路是，查下字典，会发现这些单词都具有许多不同词义(word sense)，同时也可以看出，至少有一个意义是这些单词都共享的(可能是同义词synonymous)，如果有能力从不同用法中筛选出这个共享的意义，就可以把同样的意义表示指派给不同的单词/短语。</p>
+<h2 id="Inference-Variables-and-Expressiveness"><a href="#Inference-Variables-and-Expressiveness" class="headerlink" title="Inference, Variables, and Expressiveness"></a>Inference, Variables, and Expressiveness</h2><p><strong>推论(Inference)</strong>说明了系统根据输入的意义表示以及存储的背景知识做出可靠结论的能力。</p>
+<p>看下面两个例子，对第一个问句而言，基于规范形式的方法和简单的匹配不能使系统对这个问题做出合适回答，我们需要把这个问题的意义表示和在知识库中表示的事实联系起来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">• “Can vegetarians eat at Mad Mex?”</div><div class="line">• “I’d like to find a restaurant where I can get vegetarian food.”</div></pre></td></tr></table></figure>
+<p>对于第二个句子而言，它并没有对任何特定的饭店进行推论，用户想要的是关于某个出售素食的饭店的信息，并没有提到特定的饭店，所以也不能进行简单匹配，需要引入 <strong>variable</strong> 来注释这句话，变成</p>
+<p>$$Serves(x, VegetarianFood)$$</p>
+<p>只有当 x 能够被知识库中某个已知的课题来替换，使整个命题得到匹配时，我们才可以说这个命题被成功匹配了，匹配完成后才可以用来实现用户的提问。</p>
+<p>最后，意义表示方法应该具有足够的<strong>表达能力(expressiveness)</strong>，最理想的情况当然是只用一个单独的意义表示语言(meaning representation language)就可以恰当表达任何自然语言的意义。当然这个期望可能太高了，下面会讲到一般的 <strong>一阶谓词演算(FOL)</strong>就具有足够的表达能力来处理多数问题。</p>
+<h1 id="Structure"><a href="#Structure" class="headerlink" title="Structure"></a>Structure</h1><p>下图说明了 I have a car 这个句子使用的四种常见的意义表示语言，第一行是 <strong>一阶谓词演算(First Order Predicate Calculus)</strong>，中间部分是一个<strong>语义网络(Semantic Network)</strong>，第三行包含一个<strong>概念依存(Conceptual Dependency)</strong>的图示和一个<strong>基于框架的表示(Frame-Based)</strong></p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/3.jpg" class="ful-image" alt="3.jpg">
+<p>尽管四种方式各有差别，但是都表达了下面三个特征：</p>
+<ul>
+<li>实体(Objects)<ul>
+<li>e.g., people, restaurants, cuisines</li>
+</ul>
+</li>
+<li>实体性质(Properties of objects)<ul>
+<li>e.g., pickiness, noisiness, spiciness</li>
+</ul>
+</li>
+<li>实体之间的关系(Relations between objects)<ul>
+<li>e.g., serves(Oishii Bento, Japanese)</li>
+</ul>
+</li>
+</ul>
+<h1 id="First-Order-Predicate-Calculus"><a href="#First-Order-Predicate-Calculus" class="headerlink" title="First Order Predicate Calculus"></a>First Order Predicate Calculus</h1><p>FOL(First Order Logic)可以用来表示 <strong>Objects, Relations, Functions</strong></p>
+<ul>
+<li>Objects<br>Martin the cat</li>
+<li>Relations<br>Martin and Moses are brothers</li>
+<li>Functions<br>Martin’s age</li>
+</ul>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/4.jpg" class="ful-image" alt="4.jpg">
+<p>上图是一个用于说明 EOPC 表示句法的一个上下文无关语法。逐个来看一下。</p>
+<h2 id="Term"><a href="#Term" class="headerlink" title="Term"></a>Term</h2><p>先来看一下<strong>项(term)</strong>这个概念，项是 EOPC 表示客体的一种设置，包含三个信息块，<strong>常量(constant)</strong>、<strong>函数(function)</strong>和<strong>变量(variable)</strong>，常量引用所描述的世界中的特定客体，函数在英语中经常表示为所属格(genitive)的概念，如 location of Maharani 或 Maharani’s location，翻译成 EOPC 可以表示为 LocationOf(Maharani)，函数在局上上相当于一个单独的 argument predicate，但尽管外表上它很像 predicate，而实际上只涉及一个单独客体的“项”，这样的好处是，用函数来引用客体时，不用与命名它的常量相联系，当存在像饭店这样的很多命名客体时，如果使用函数，只需要像一个 location 这样的函数就可以与各种名字的饭店联系起来。变量之前提到过，就是方便我们对客体做出判断，进行推论，而不必参照任何特定命名客体。</p>
+<h2 id="Quantifier"><a href="#Quantifier" class="headerlink" title="Quantifier"></a>Quantifier</h2><p>另外，引用特定的匿名客体，以及一般性的引用在一个集合中的全部客体，都可以通过 <strong>量词(quantifier)</strong>来实现，<strong>存在量词(existential quantifier, ∃)</strong>，读作 there exists，<strong>全称量词(universal quantifier, ∀)</strong>，读作 for all。看一下解释</p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/13.jpg" class="ful-image" alt="13.jpg">
+<h2 id="Predicates"><a href="#Predicates" class="headerlink" title="Predicates"></a>Predicates</h2><p>再看一下 predicates，predicates 是一种符号，用于引用名称以及在给定领域内的一定数量的客体之间的关系，如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Serves(UnionGrill, AmericanFood)</div><div class="line">Restaurant(UnionGrill)</div></pre></td></tr></table></figure>
+<p>第一个表示的意思是，serve 是具有两个位置的 predicate，由常量 Maharani 和 VegetarianFood 标出的客体之间的关系，第二个表示略有不同，原句是 Maharani is a restaurant，predicate 只有一个位置，不涉及多个客体，只是确认一个单独客体的某个性质，这种情况下，predicate 对 Maharani 的范畴所属关系进行编码。</p>
+<h2 id="Connectives"><a href="#Connectives" class="headerlink" title="Connectives"></a>Connectives</h2><p>Anyway，有了引用客体的能力(refer to objects)、确认关于客体事实的能力(assert facts about objects)、把一些客体与另外的客体相互联系的能力(relate objects to one another)，就能够构造出初步的组合表示。而更大的组合表示需要<strong>逻辑连词(logical connective)</strong>把不同的意义表示结合到一起。如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Have(Speaker, FiveDollars) ∧ ¬ Have(Speaker, LotOfTime)</div><div class="line">∀x Person(x) ⇒ Have(x, FiveDollars)</div><div class="line">∃x,y Person(x) ∧ Restaurant(y) ∧ ¬HasVisited(x,y)</div></pre></td></tr></table></figure>
+<p>常用的连接词和解释</p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/12.jpg" class="ful-image" alt="12.jpg">
+<p>常见的两个错误：</p>
+<ol>
+<li><p>=&gt; 是 ∀ 的主要连词，∧ 和 ∀ 搭配往往会出错，如我们要表达 All cats eat fish，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Wrong:</div><div class="line">∀x Cat(x) ∧ EatsFish(x)</div><div class="line">Everyone is a cat and everyone eats fish.</div><div class="line"></div><div class="line">Correct:</div><div class="line">∀x Cat(x) =&gt; EatsFish(x)</div></pre></td></tr></table></figure>
+<p>当然也有例外，如下面这句 ∧ 和 ∀ 搭配，就是对的<br>​    ∀x Person(x) ∧ Know(I, x) =&gt; Smartness(x) &lt; Smartness(Max)<br>​    Max is the smartest person I know.</p>
+</li>
+<li><p>∧ 是 ∃ 的主要连词，=&gt; 和 ∃ 搭配往往会出错，如我们要表达 There’s a cat that eats fish.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Wrong:</div><div class="line">∃x Cat(x) =&gt; EatsFish(x)</div><div class="line">is true if anyone who is not a cat (if leftside is False, then anything can go into right side)</div><div class="line"></div><div class="line">Correct:</div><div class="line">∃x Cat(x) ∧ EatsFish(x)</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ol>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>具体来个例子，下面这个句子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ay Caramba is near ICSI.</div></pre></td></tr></table></figure>
+<p>通过辨认与句子中的各种语法成分对应的 term 和 predicate，并构造逻辑公式，可以得到下面的结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Near(LocationOf(AyCaramba),LocationOf(ICSI))</div></pre></td></tr></table></figure>
+<p>这个公式的意义是根据 LocationOf(AyCaramba) 和 LocationOf(ICSI) 两项之间的关系、谓词 near 以及它们所模拟的世界中相应的客体和关系等而获得。这个句子可以根据在显示世界中 Ay Caramba 是不是真的和 ICSI 相近而被指派 True 或者 False 值。</p>
+<p>两道题</p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/14.jpg" class="ful-image" alt="14.jpg">
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/15.jpg" class="ful-image" alt="15.jpg">
+<p>第 1 题答案 DJBAE，第 2 题答案 ECDAH</p>
+<h2 id="Lambda-Expression"><a href="#Lambda-Expression" class="headerlink" title="Lambda Expression"></a>Lambda Expression</h2><p>lambda 符号(Church, 1940)提供了形式化参数的功能，对 FOPC 进行了扩充，它引入了下面的表达式：</p>
+<p>$$\lambda x P(x)$$</p>
+<p>$x$是变量，$P(x)$是使用这些变量的 FOPC 表达式。lambda表达式的意义在于可以生成新的 FOPC 表达式，在这些新的表达式中，形参变量由指定项来绑定，也就是 lambda 变量由指定的 FOPC 项来进行简单的字面替换，去掉 lambda，这个过程也就是 lambda 化简(<strong>$\lambda$ -reduction</strong>)，如下面将 lambda 表达式用于常量 A，对表达式进行化简</p>
+<p>$$\lambda x P(x)(A)$$</p>
+<p>$$P(A)$$</p>
+<p>lambda符号提供了动词语义中需要的两种能力：形参表使我们获得变量集，lambda化简实现用项来替换变量的处理。</p>
+<p>最简单的例子来理解：<br>if $inc(x) = \lambda x \ x+1$<br>then $inc(4) = (\lambda x \ x+1)(4)=5$</p>
+<p>if $add(x,y) = \lambda x, \lambda y(x+y)$<br>then $add(3,4) = (\lambda x,\lambda y(x+y))(3)(4)=(\lambda y 3+y)(4)=3+4=7$</p>
+<h2 id="Semantics-of-FOL"><a href="#Semantics-of-FOL" class="headerlink" title="Semantics of FOL"></a>Semantics of FOL</h2><p>FOL 句子可以被赋 true/false 值，如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Eg.</div><div class="line">Milo is younger than Martin</div><div class="line">&lt;(AgeOf(Milo),AgeOf(Martin))=true</div><div class="line">=(AgeOf(Milo),AgeOf(Martin))=false</div></pre></td></tr></table></figure></p>
+<p>一些补充见 <a href="">NLP 笔记 - Knowledge Representation</a></p>
+<h1 id="Inference"><a href="#Inference" class="headerlink" title="Inference"></a>Inference</h1><h2 id="Modus-Ponens"><a href="#Modus-Ponens" class="headerlink" title="Modus Ponens"></a>Modus Ponens</h2><p><strong>取式推理(Modus Ponens)</strong>相当于非形式化的 if-then 推理，比如说 $\alpha$ 和 $\beta$ 都是 EOPC 的公式，那么，可以把取式推理定义如下：</p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/5.jpg" class="ful-image" alt="5.jpg">
+<p>我们把 implication rule 的左边的项作为 <strong>前提(antecedent)</strong>，右边的项作为 <strong>结论(consequent)</strong>，如果前提在知识库中出现，那么就可以推论出结论。举个例子</p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/6.jpg" class="ful-image" alt="6.jpg">
+<p>公式 VegetarianRestaurant(Rudys) 与前提相匹配，就可以用取式推理，得出 Serves(Rudys, VegetarianFood) 这个结论。</p>
+<p>取式推理有两种应用方式，<strong>向前链接(Forward Chaining)</strong>和<strong>向后链接(Backward Chaining)</strong>，向前链接就是刚才所描述的方法，优点是有关事实必须在知识库中表现出来，因为在向前链接中所有的推论都必须实现进行，这样可以充分减少回答下一个问题所需时间，因为这时只需要进行简单查询，而缺点是，所引用或存储的事实可能是以后永远都用不上的。<strong>产生式系统(production system)</strong>大量使用认知模型的研究成果，通过增加控制知识的方法来决定所要激发的规则，从而提升了向前链接系统。</p>
+<blockquote>
+<p><strong>Forward chaining</strong> as individual facts are added to the database, all derived inferences are generated<br><strong>Backward chaining</strong> starts from queries, e.g., the Prolog programming language</p>
+</blockquote>
+<p>关于<strong>向后链接(Backward Chaining)</strong>，第一步是根据提问是否存储在知识库来判定提问公式是否为真，如果提问不在知识库中，下一步就搜索在知识库中有没有可以应用的 implication rule，如果一条规则的结果部分与提问公式相匹配，那么这条规则就是可应用的规则。如果存在任意这样的规则，并且规则的前提为真，那么提问就被证明了。然后把前提作为一个新的提问，就可以递归向后链接。还是以上面的例子为例，我们首先看 Serves(Rudys, VegetarianFood)在不在知识库中，发现它不在，就开始搜索一个可应用的规则可以让我们得到横线上面给定的规则。也就是用常量替换 x 后，证明 VegetarianRestaurant(Rudys)。Prolog就是一个向后链接的语言。如下面的例子，知识库中存在前 5 条知识，我们要证明最后一条 ?- father(M, bill) 是否为真，首先找到第一条，知道我们需要 parent(M, bill), male(M)，才能证明 father(M, bill)  为真，然后发现，parent(john, bill) + male(john)，即 M=john 时，father(M, bill) 为真，得证。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">father(X,Y):  -parent(X, Y), male(X).</div><div class="line">parent(john, bill)</div><div class="line">parent(jane, bill)</div><div class="line">female(jane)</div><div class="line">male(john)</div><div class="line">?- father(M, bill)</div></pre></td></tr></table></figure>
+<p>这里要注意的一个概念是<strong>向后链接(Backward Chaining) vs. 向后推理(Backward Inference)</strong></p>
+<ul>
+<li>向后链接是从提问到已知事实的推理<ul>
+<li>可靠的推理方法</li>
+</ul>
+</li>
+<li>向后推理是从已知结果到未知前提的推理<ul>
+<li>不可靠的推理方法</li>
+<li>如果一个规则的结果为真，就假定其前提也为真</li>
+<li>如果知道 Serves(Rudys, VegetarianFood) 为真，那么VegetarianRestaurant(Rudys)也为真</li>
+</ul>
+</li>
+</ul>
+<p>一些原则<br><strong>Universal Instantiation</strong><br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/9.jpg" class="ful-image" alt="9.jpg"></p>
+<p><strong>Existential Instantiation</strong><br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/10.jpg" class="ful-image" alt="10.jpg"></p>
+<p><strong>Unification</strong><br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/11.jpg" class="ful-image" alt="11.jpg"></p>
+<h1 id="Description-Logics"><a href="#Description-Logics" class="headerlink" title="Description Logics"></a>Description Logics</h1><p>除了 FOPC 外，常用的意义表示方法还有<strong>语义网络(Semantic network)</strong>、<strong>框架(frame)方法</strong>。其中框架方法又叫做<strong>槽填充(slot-filter)</strong>表示法，特征称为槽(slot)，而这些槽的值用填充者(filter)来表示。这种表示方法比FOL的限制性更强。</p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Meaning%20Representation%20Languages/7.jpg" class="ful-image" alt="7.jpg">
+<p>​</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/semantic-analysis/" rel="tag">#semantic analysis</a>
+          
+            <a href="/tags/语义分析/" rel="tag">#语义分析</a>
+          
+            <a href="/tags/FOL/" rel="tag">#FOL</a>
+          
+            <a href="/tags/FOPC/" rel="tag">#FOPC</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/06/QA system - Question Generation/" rel="next" title="QA system - Question Generation">
+                <i class="fa fa-chevron-left"></i> QA system - Question Generation
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/07/NLP 笔记 - Knowledge Representation/" rel="prev" title="NLP 笔记 - Knowledge Representation">
+                NLP 笔记 - Knowledge Representation <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Desirable-qualities"><span class="nav-number">1.</span> <span class="nav-text">Desirable qualities</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Verifiability"><span class="nav-number">1.1.</span> <span class="nav-text">Verifiability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unambiguous-Representation"><span class="nav-number">1.2.</span> <span class="nav-text">Unambiguous Representation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Canonical-Form"><span class="nav-number">1.3.</span> <span class="nav-text">Canonical Form</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inference-Variables-and-Expressiveness"><span class="nav-number">1.4.</span> <span class="nav-text">Inference, Variables, and Expressiveness</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Structure"><span class="nav-number">2.</span> <span class="nav-text">Structure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#First-Order-Predicate-Calculus"><span class="nav-number">3.</span> <span class="nav-text">First Order Predicate Calculus</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Term"><span class="nav-number">3.1.</span> <span class="nav-text">Term</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quantifier"><span class="nav-number">3.2.</span> <span class="nav-text">Quantifier</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Predicates"><span class="nav-number">3.3.</span> <span class="nav-text">Predicates</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connectives"><span class="nav-number">3.4.</span> <span class="nav-text">Connectives</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-number">3.5.</span> <span class="nav-text">Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lambda-Expression"><span class="nav-number">3.6.</span> <span class="nav-text">Lambda Expression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Semantics-of-FOL"><span class="nav-number">3.7.</span> <span class="nav-text">Semantics of FOL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inference"><span class="nav-number">4.</span> <span class="nav-text">Inference</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Modus-Ponens"><span class="nav-number">4.1.</span> <span class="nav-text">Modus Ponens</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Description-Logics"><span class="nav-number">5.</span> <span class="nav-text">Description Logics</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/04/07/NLP 笔记 - Meaning Representation Languages/';
+      var disqus_title = "NLP 笔记 - Meaning Representation Languages";
+      var disqus_url = 'http://www.shuang0420.cn/2017/04/07/NLP 笔记 - Meaning Representation Languages/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

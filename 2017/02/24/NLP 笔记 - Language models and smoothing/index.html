@@ -1,0 +1,1073 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 11611 的课程笔记。Language model 在别的课中不管是单机还是分布式都实现过好几次，然而却没有深入系统的研究过。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 笔记 - Language models and smoothing">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/02/24/NLP 笔记 - Language models and smoothing/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 11611 的课程笔记。Language model 在别的课中不管是单机还是分布式都实现过好几次，然而却没有深入系统的研究过。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Language%20models%20and%20smoothing/perplexity.jpg">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 笔记 - Language models and smoothing">
+<meta name="twitter:description" content="CMU 11611 的课程笔记。Language model 在别的课中不管是单机还是分布式都实现过好几次，然而却没有深入系统的研究过。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Language%20models%20and%20smoothing/perplexity.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/02/24/NLP 笔记 - Language models and smoothing/"/>
+
+
+  <title> NLP 笔记 - Language models and smoothing | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                NLP 笔记 - Language models and smoothing
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-02-24T19:02:27+08:00" content="2017-02-24">
+              2017-02-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/CMU-11611/" itemprop="url" rel="index">
+                    <span itemprop="name">CMU 11611</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/24/NLP 笔记 - Language models and smoothing/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/24/NLP 笔记 - Language models and smoothing/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 11611 的课程笔记。Language model 在别的课中不管是单机还是分布式都实现过好几次，然而却没有深入系统的研究过。<br><a id="more"></a></p>
+<h1 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h1><p>Language model 通常有两类目标，一个是 <strong>计算句子或一系列单词出现的概率</strong>，另一个是 <strong>单词预测(word prediction)</strong>，通常的应用场景有：</p>
+<ul>
+<li>Machine Translation<br>  P(high winds tonite)&gt;P(large winds tonite)</li>
+<li>Spell Correction<br>  The office is about fifteen minuets from my house<br>  P(about fifteen minutes from)&gt;P(about fifteen minuets from)</li>
+<li>Speech Recognition<br>  P(I saw a van) &gt;&gt; P(eyes awe of an)</li>
+<li>+Summarization,question,answering,etc.</li>
+</ul>
+<h1 id="文本预处理问题"><a href="#文本预处理问题" class="headerlink" title="文本预处理问题"></a>文本预处理问题</h1><h2 id="标点"><a href="#标点" class="headerlink" title="标点"></a>标点</h2><p>是否把标点算为单词，取决于不同的任务。对于诸如 <strong>语法检查、拼写错误检查、作者辨认</strong> 这样的任务，标点符号的位置是很重要的。因此这些应用中经常把标点符号看做单词。</p>
+<h2 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h2><p>大多数统计应用来说，是忽略大小写的，尽管有时候也把大写作为个别的单独特征来处理(在拼写错误更正或词类标注中)</p>
+<h2 id="屈折形式"><a href="#屈折形式" class="headerlink" title="屈折形式"></a>屈折形式</h2><ul>
+<li>词形(wordform): 在语料库中以屈折形式出现的单词形式</li>
+<li>词目(lemma): 具有同一词干、同一主要词类、同一词义的词汇形式的集合</li>
+<li>型(type): 语料库中不同单词的数目</li>
+<li>例(token): 使用中的单词数目</li>
+</ul>
+<p>当前大多数基于 N-gram 的系统都是以词形(wordform)为基础的。所以，cat 和 cats 要分别处理为两个单词。然而在很多领域中，我们想把 cat 和 cats 看成同一个抽象单词的实例，可以用词典，词典中不包含有屈折变化的形式。用词典来计算词目比计算词形更方便。</p>
+<h2 id="口语语料库"><a href="#口语语料库" class="headerlink" title="口语语料库"></a>口语语料库</h2><ul>
+<li>话段(fragment): 相当于句子</li>
+<li>片段(fragment): 一个单词在中间被拦腰切开而形成的，如 main-mainly</li>
+<li>有声停顿(filled pause): 如 um, uh</li>
+</ul>
+<p>取决于应用的具体情况，如果在自动语音识别的基础上建立一个自动听写系统，我们可能需要把片段剔除。而有声停顿，更倾向于被当成单词来处理，um 和 uh 的意思稍有不同，一般当说话人胸有成竹要说某个话段时，他就 um，而当说话人想说但还没找到恰当的单词来表达时，就用 uh，另外，uh 经常可以用来作为预测下一个单词的线索，所以很多系统都把它当做一个单词来处理。</p>
+<h1 id="简单的-非平滑的-N-元语法"><a href="#简单的-非平滑的-N-元语法" class="headerlink" title="简单的(非平滑的) N 元语法"></a>简单的(非平滑的) N 元语法</h1><h2 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h2><h3 id="Chain-Rule"><a href="#Chain-Rule" class="headerlink" title="Chain Rule"></a>Chain Rule</h3><p>$$P(x_1,x_2,x_3,…,x_n) = P(x_1)P(x_2|x_1)P(x_3|x_1,x_2)…P(x_n|x_1,…,x_n,1)$$</p>
+<h3 id="Markov-Assumption"><a href="#Markov-Assumption" class="headerlink" title="Markov Assumption"></a>Markov Assumption</h3><p>N-gram 的基本假设是 <strong>一个单词的概率只依赖于它前面单词的概率</strong>，这也就是 <strong>马尔可夫假设</strong>。举个例子：<br>P(the | its water is so transparent that) $\approx$ P(the | that)<br>P(the | its water is so transparent that) $\approx$ P(the | transparent that)</p>
+<p>事实上，马尔可夫链就是一种加权有限状态自动机，加权 FSA 的下一个状态总是依赖于他前面有限的历史(有限自动机的状态数目总是有限的)，bigram 可以看成是每个单词只有一个状态的马尔可夫链，也称为一阶马尔可夫模型，N-gram 称为 N-1 阶马尔可夫模型。</p>
+<p>$$P(w_1w_2…w_n) \approx \sum_iP(w_i|w_{i-k}…w_{i-1})$$</p>
+<p>再转换下<br>$$P(w_1|w_1w_2…w_n) \approx \sum_iP(w_i|w_{i-k}…w_{i-1})$$</p>
+<h3 id="Maximum-Likelihood-Estimate"><a href="#Maximum-Likelihood-Estimate" class="headerlink" title="Maximum Likelihood Estimate"></a>Maximum Likelihood Estimate</h3><p>很简单啦，以 Bigram 为例，就是 $P(w_i|w_{i-1})={count(w_{i-1},w_i) \over count(w_{i-1})}$</p>
+<h2 id="Models"><a href="#Models" class="headerlink" title="Models"></a>Models</h2><p>注意，在下面的模型中，我们用到了 padding，所有 N-gram 模型都用了一个特殊符号来标记句子的结束(STOP_SYMBOL)，N&gt;1 时，另外用一个特殊符号来标记句子的开始(START_SYMBOL)，来方便计算。</p>
+<h3 id="Uniform-Model"><a href="#Uniform-Model" class="headerlink" title="Uniform Model"></a>Uniform Model</h3><p>假定语言中的任何一个单词后面可以跟随该语言中的任何一个单词，且概率是相等的。如果英语中有 100,000个单词，那么任何一个单词后面跟随其他任何单词的概率将是 1/100,000，即 0.00001</p>
+<h3 id="Unigram-Model"><a href="#Unigram-Model" class="headerlink" title="Unigram Model"></a>Unigram Model</h3><p>任何一个单词后面可以跟随着其他任何单词，但后面一个单词按照它正常的频度来出现，所以可以根据相对频度对下面将要出现的单词指派一个概率分布的估值。</p>
+<p>$$<br>  \begin{aligned}<br>  p(W=w) &amp; = p(W_1=w_1, W_2=w_2,…,W_{L+1}=stop) \\<br>   &amp; = (\prod^L_{l=1}p(W_l=w_l))p(W_{L+1}=stop) \\<br>   &amp; = (\prod^L_{l=1}p(w_l))p(stop)<br>  \end{aligned}<br>$$</p>
+<h3 id="Full-History-Model"><a href="#Full-History-Model" class="headerlink" title="Full History Model"></a>Full History Model</h3><p>如果不是简单地看单词相对频度，而是要看单词对于给定历史的条件概率，那么就有了 full history model。</p>
+<blockquote>
+<p>Every word is assigned some probability, conditioned on every history.</p>
+</blockquote>
+<p>$$<br>\begin{aligned}<br>  p(W=w) &amp; = p(W_1=w_1, W_2=w_2,…,W_{L+1}=stop) \\<br>   &amp; = (\prod^L_{l=1}p(W_l=w_l|W_{1:l-1}=w_{1:l-1}))p(W_{L+1}=stop|W_{1:L}=w_{1:L}) \\<br>   &amp; = (\prod^L_{l=1}p(w_l|history_l))p(stop|history_L)<br>  \end{aligned}<br>$$</p>
+<h3 id="N-Gram-Model"><a href="#N-Gram-Model" class="headerlink" title="N-Gram Model"></a>N-Gram Model</h3><blockquote>
+<p>Every word is assigned some probability, conditioned on a fixed-length history(n-1)</p>
+</blockquote>
+<p>$$<br>  \begin{aligned}<br>  p(W=w) &amp; = p(W1=w1, W2=w2,…,W_{L+1}=stop) \\<br>   &amp; = (\prod^L_{l=1}p(W_l=w_l|W_{l-n+1:l-1}=w_{l-n+1:l-1}))p(W_{L+1}=stop|W_{L-n+1:L}=w_{L-n+1:L}) \\<br>   &amp; = (\prod^L_{l=1}p(w_l|history_l))p(stop|history_{L+1})<br>  \end{aligned}<br>$$</p>
+<p>以 Bigram 为例，假设 &lt;s&gt; 为 START_SYMBOL，&lt;/s&gt; 为 STOP_SYMBOL<br>$$p(w^1_L)=\prod^L_{l=1}P(w_l|w_{l-1})p(stop|w_{L+1})$$</p>
+<p>文本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;s&gt; I am Sam &lt;/s&gt;</div><div class="line">&lt;s&gt; Sam I am &lt;/s&gt;</div><div class="line">&lt;s&gt; I do not like green eggs and ham &lt;/s&gt;</div></pre></td></tr></table></figure></p>
+<p>那么有<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">P(I|&lt;s&gt;)=2/3</div><div class="line">P(Sam|&lt;s&gt;=1/3</div><div class="line">P(am|I)=2/3</div><div class="line">P(&lt;/s&gt;|Sam)=1/2</div><div class="line">P(Sam|am)=1/2</div><div class="line">P(do|I)=1/3</div></pre></td></tr></table></figure></p>
+<p>第一句话的概率就是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">P(I|&lt;s&gt;)*P(am|I)*P(Sam|am)*P(&lt;/s&gt;|Sam)</div></pre></td></tr></table></figure></p>
+<h3 id="对数-Logprob"><a href="#对数-Logprob" class="headerlink" title="对数(Logprob)"></a>对数(Logprob)</h3><p>由于概率都小于 1，相乘的概率越多，所有概率的乘积就越小，这样就会有数值下溢(underflow)的危险，所以习惯上会采用对数空间来进行计算(加法比乘法快)，给每个概率取对数再相加，最后再取结果的反对数。</p>
+<h3 id="归一化-Normalizing"><a href="#归一化-Normalizing" class="headerlink" title="归一化(Normalizing)"></a>归一化(Normalizing)</h3><p>归一化，就是用某个总数来除，使最后得到的概率的值处于 0 和 1 之间，以保持概率的合法性，也就是：<br>$$p(w_n|w_{n-1})={C(w_{n-1}w_n) \over \sum_wC(w_{n-1}w)}$$</p>
+<p>要注意的一个优化是，给定单词 $w_{n-1}$ 开头的所有二元语法的计数必定等于该单词 $w_{n-1}$ 的一元语法的计数，也就是说，对一般的 N-gram，参数估计为：</p>
+<p>$$p(w_n|w^{n-1}_{n-N+1})={C(w^{n-1}_{n-N+1}w_n) \over C(w^{n-1}_{n-N+1})}$$</p>
+<h3 id="Unknown-word"><a href="#Unknown-word" class="headerlink" title="Unknown word"></a>Unknown word</h3><p>对 unknown word 的处理，一般我们建一个固定大小的 lexicon(比如说语料库里 frequency&gt;5 的单词)，再新建一个 token &lt;UNK&gt;，不在 lexicon 里的 token (也就是 frequency&lt;5 的单词)都编译成 &lt;UNK&gt;，然后把 &lt;UNK&gt; 当做普通单词处理。</p>
+<h3 id="N-gram-对语料库的敏感性"><a href="#N-gram-对语料库的敏感性" class="headerlink" title="N-gram 对语料库的敏感性"></a>N-gram 对语料库的敏感性</h3><p>直观上的两个重要事实：</p>
+<ol>
+<li>N 越大 N-gram 的精度也应相应增加<br> 训练模型的上下文越长，句子连贯性也就越好</li>
+<li>N-gram 性能强烈依赖于它们的语料库(特别是语料库的种类和单词的容量)<br> 为了很好的在统计上逼近英语，需要一个规模很大、包含不同种类、覆盖不同领域的语料库</li>
+</ol>
+<h1 id="平滑-Smoothing"><a href="#平滑-Smoothing" class="headerlink" title="平滑(Smoothing)"></a>平滑(Smoothing)</h1><p>每个特定的语料库都是有限的，从任何训练语料库得到的 bigram 矩阵都是稀疏的(sparse)，存在着大量的零概率 bigram 的场合，当非零计数很小时，MLE 会产生很糟糕的估计值。平滑就是给某些零概率和低概率的 N-gram 重新赋值并给它们指派非零值。</p>
+<h2 id="加-1-平滑-add-one-smoothing"><a href="#加-1-平滑-add-one-smoothing" class="headerlink" title="加 1 平滑(add-one smoothing)"></a>加 1 平滑(add-one smoothing)</h2><p>也叫 Laplace smoothing，假设 we saw each word one more time than we did<br>MLE estimate:<br>$$P_{MLE}(w_i|w_{i-1})={c(w_{i-1}w_i) \over c(w_{i-1})}$$<br>Add-1 estimate:<br>$$P_{Add-1}(w_i|w_{i-1})={c(w_{i-1}w_i)+1 \over c(w_{i-1})+V}$$</p>
+<p>加 1 平滑是一种很糟糕的算法，与其他平滑方法相比显得非常差，然而我们可以把加 1 平滑用在其他任务中，如文本分类，或者非零计数没那么多的情况下。</p>
+<h2 id="Good-Turing-smoothing"><a href="#Good-Turing-smoothing" class="headerlink" title="Good-Turing smoothing"></a>Good-Turing smoothing</h2><p><strong>基本思想:</strong> 用观察计数较高的 N-gram 数量来重新估计概率量大小，并把它指派给那些具有零计数或较低计数的 N-gram</p>
+<p>首先理解一个概念<br><strong>Things seen once</strong>: 使用刚才已经看过一次的事物的数量来帮助估计从来没有见过的事物的数量。举个例子，假设你在钓鱼，然后抓到了 18 条鱼，种类如下：10 carp, 3 perch, 2 whitefish, 1 trout, 1 salmon, 1 eel，那么<br><strong>下一条鱼是 trout 的概率是多少？</strong><br>很简单，我们认为是 1/18</p>
+<p><strong>那么，下一条鱼是新品种的概率是多少？</strong><br>不考虑其他，那么概率是 0，然而根据 Things seen once 来估计新事物，概率是 3/18</p>
+<p><strong>在此基础上，下一条鱼是 trout 的概率是多少？</strong><br>肯定就小于 1/18，那么怎么估计呢？<br>在 Good Turing 下，<br>$$P^*_{GT} (things \ with \ zero \ frequency)={N_1 \over N_2}$$<br>$$c^* = {(c+1)N_{c+1} \over N_c}$$<br>Nc = the count of things we’ve seen c times</p>
+<p>所以，c=1时，<br>$C^* (trout)=2*{N2 \over N1} = 2*1/3 = 2/3$<br>$P^* (trout)={2/3 \over 18}={1 \over 27}$</p>
+<h2 id="Backoff-回退"><a href="#Backoff-回退" class="headerlink" title="Backoff(回退)"></a>Backoff(回退)</h2><p>直观的理解，如果没有 3gram，就用 bigram，如果没有 bigram，就用 unigram。</p>
+<h2 id="Linear-Interpolation-线性差值"><a href="#Linear-Interpolation-线性差值" class="headerlink" title="Linear Interpolation(线性差值)"></a>Linear Interpolation(线性差值)</h2><p>我们看这样一种情况，如果 c(BURNISH THE) 和 c(BURNISH THOU) 都是 0，那么在前面的平滑方法 additive smoothing 和 Good-Turing 里，p(THE|BURNISH)=p(THOU|BURNISH)，而这个概率我们直观上来看是错误的，因为 THE 要比 THOU 常见的多，$p(THE|BURNISH) \ ge p(THOU|BURNISH)$ 应该是大概率事件。要实现这个，我们就希望把 bigram 和 unigram 结合起来，interpolate 就是这样一种方法。</p>
+<p>用线性差值把不同阶的 N-gram 结合起来，这里结合了 trigram，bigram 和 unigram。用 lambda 进行加权<br>$$<br>  \begin{aligned}<br>  p(w_n|w_{n-1}w_{n-2}) &amp; = \lambda_1 p(w_n|w_{n-1}w_{n-2}) \\<br>   &amp; + \lambda_2 p(w_n|w_{n-1})  \\<br>   &amp; + \lambda_3 p(w_n)<br>  \end{aligned}<br>$$</p>
+<p>$$\sum_i \lambda_i=1$$</p>
+<p><strong>怎样设置 lambdas?</strong><br>把语料库分为 training data, held-out data, test data 三部分，然后</p>
+<ul>
+<li>Fix the N-gram probabilities(on the training data)</li>
+<li>Search for lambdas that give the largest probabilities to held-out set:<br>$logP(w_1…w_n|M(\lambda_1…\lambda_k))=\sum_ilogP_M(\lambda_1…\lambda_k)(w_i|w_{i-1})$</li>
+</ul>
+<p>这其实是一个递归的形式，我们可以把每个 lambda 看成上下文的函数，如果对于一个特定的 bigram 有特定的计数，假定 trigram 的计数是基于 bigram 的，那么这样的办法将更可靠，因此，可以使 trigram 的 lambda 值更高，给 trigram 更高权重。</p>
+<p>$$<br>  \begin{aligned}<br>  p(w_n|w_{n-1}w_{n-2}) &amp; = \lambda_1 (w^{n-1}_{n-2})p(w_n|w_{n-1}w_{n-2}) \\<br>   &amp; + \lambda_2 (w^{n-1}_{n-2})p(w_n|w_{n-1})  \\<br>   &amp; + \lambda_3 (w^{n-1}_{n-2})p(w_n)<br>  \end{aligned}<br>$$</p>
+<p>通常 $\lambda w^{n-1}_{n-2}$ 是用 EM 算法，在 held-out data 上训练得到(held-out interpolation) 或者在 cross-validation 下训练得到(deleted interpolation)。$\lambda w^{n-1}_{n-2}$ 的值依赖于上下文，高频的上下文通常会有高的 lambdas。</p>
+<p>更多平滑见 <a href="https://web.stanford.edu/class/cs124/lec/languagemodeling.pdf" target="_blank" rel="external">Stanford Language Modeling</a></p>
+<h1 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h1><p>在训练集上训练参数，在测试集上测试 performance，那么之后怎么来评估模型呢？最好的办法当然是 <strong>外部评价方法</strong> 是把两个模型放到具体的任务环境中(spelling corrector/speech recognizer/MT system)，然后测试模型，比较两个模型的准确率。然而这种方法比较麻烦，所以一般还是用 <strong>内部评价方法</strong>，perplexity 来评估模型，尽管它不是一个很好的估计(除非真实情况就是 test data 和 training data 是非常相似的)，但好歹也是有用的，一般用于 pilot experiments 中。</p>
+<h2 id="Perplexity"><a href="#Perplexity" class="headerlink" title="Perplexity"></a>Perplexity</h2><blockquote>
+<p>Perplexity is the inverse probability of test set normalized by the number of words</p>
+</blockquote>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Language%20models%20and%20smoothing/perplexity.jpg" class="ful-image" alt="perplexity.jpg">
+<p>第二个式子用了 chain rule，第三个式子是 bigram 的情况。举个例子来理解 perplexity，如果一个句子由 0-9 位数字随机生成，那么这个句子的 perplexity 是多少？假定每个 digit 出现的概率都是 1/10。=&gt; PP(W)=(1/10)^-1=10</p>
+<p>我们的目标是最小化 perplexity，lower perplexity=better model。</p>
+<p>理论基础是 <strong>熵(entropy)</strong>，熵在 NLP 中是非常有价值的，可以用来度量一个特定语法中的信息量是多少，度量给定语法和给定语言的匹配程度有多高，预测一个给定的 N-gram 中的下一个单词是什么，如果给定两个语法和一个语料库，我们还可以使用熵来估计哪个语法和语料库匹配的更好…</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><ul>
+<li>Relative frequencies (count &amp; normalize)</li>
+<li>Transform the counts:<br>  Laplace/“add one”/“add λ”<br>  Good-Turing discounting</li>
+<li>Interpolate or “backoff”:<br>  With Good-Turing discounting: Katz backoff – “Stupid” backoff<br>  Absolute discounting: Kneser-Ney</li>
+</ul>
+<p>更复杂的一些 N-gram 方法</p>
+<ul>
+<li>cache LM(Kuhn and de Mori 1990)</li>
+<li>用 long-distance trigger 来替代局部 N-gram(Rosenfeld, 1996; Niesler and Woodland, 1999; Zhou and Lua, 1998)</li>
+<li>可变长 N-gram(variable-length N-gram)(Ney et al., 1994; Kneser, 1996; Niesler and Woodland, 1996)</li>
+<li>用语义信息来丰富 N-gram<br>  基于潜在语义索引(latent semantic indexing)的语义词联想方法(Coccaro and Jurafsk, 1988; Bellegarda, 1999)<br>  从联机词典和类属词典中提取语义信息的方法(Demetriou et al., 1997)</li>
+<li>基于类的 N-gram</li>
+<li>基于更结构化的语言知识的语言模型(如概率剖析)</li>
+<li>使用当前话题的知识来提升 N-gram(Chen et al., 1998; Seymore and Rosenfeld 1997; Seymore et al., 1998; Florian and Yarowsky 1999; Khudanpur and Wu, 1999）</li>
+<li>使用言语行为和对话知识来提升 N-gram</li>
+</ul>
+<blockquote>
+<p>参考链接：<br><a href="https://web.stanford.edu/class/cs124/lec/languagemodeling.pdf" target="_blank" rel="external">Stanford Language Modeling</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/23/django + bootstrap 使用网页模板/" rel="next" title="django + bootstrap 使用网页模板">
+                <i class="fa fa-chevron-left"></i> django + bootstrap 使用网页模板
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/24/NLP 笔记 - Part of speech tags/" rel="prev" title="NLP 笔记 - Part of speech tags">
+                NLP 笔记 - Part of speech tags <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#应用场景"><span class="nav-number">1.</span> <span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文本预处理问题"><span class="nav-number">2.</span> <span class="nav-text">文本预处理问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标点"><span class="nav-number">2.1.</span> <span class="nav-text">标点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大小写"><span class="nav-number">2.2.</span> <span class="nav-text">大小写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#屈折形式"><span class="nav-number">2.3.</span> <span class="nav-text">屈折形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#口语语料库"><span class="nav-number">2.4.</span> <span class="nav-text">口语语料库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单的-非平滑的-N-元语法"><span class="nav-number">3.</span> <span class="nav-text">简单的(非平滑的) N 元语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数学基础"><span class="nav-number">3.1.</span> <span class="nav-text">数学基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Chain-Rule"><span class="nav-number">3.1.1.</span> <span class="nav-text">Chain Rule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Markov-Assumption"><span class="nav-number">3.1.2.</span> <span class="nav-text">Markov Assumption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Maximum-Likelihood-Estimate"><span class="nav-number">3.1.3.</span> <span class="nav-text">Maximum Likelihood Estimate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Models"><span class="nav-number">3.2.</span> <span class="nav-text">Models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Uniform-Model"><span class="nav-number">3.2.1.</span> <span class="nav-text">Uniform Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unigram-Model"><span class="nav-number">3.2.2.</span> <span class="nav-text">Unigram Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Full-History-Model"><span class="nav-number">3.2.3.</span> <span class="nav-text">Full History Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#N-Gram-Model"><span class="nav-number">3.2.4.</span> <span class="nav-text">N-Gram Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对数-Logprob"><span class="nav-number">3.2.5.</span> <span class="nav-text">对数(Logprob)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归一化-Normalizing"><span class="nav-number">3.2.6.</span> <span class="nav-text">归一化(Normalizing)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unknown-word"><span class="nav-number">3.2.7.</span> <span class="nav-text">Unknown word</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#N-gram-对语料库的敏感性"><span class="nav-number">3.2.8.</span> <span class="nav-text">N-gram 对语料库的敏感性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#平滑-Smoothing"><span class="nav-number">4.</span> <span class="nav-text">平滑(Smoothing)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加-1-平滑-add-one-smoothing"><span class="nav-number">4.1.</span> <span class="nav-text">加 1 平滑(add-one smoothing)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Good-Turing-smoothing"><span class="nav-number">4.2.</span> <span class="nav-text">Good-Turing smoothing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Backoff-回退"><span class="nav-number">4.3.</span> <span class="nav-text">Backoff(回退)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear-Interpolation-线性差值"><span class="nav-number">4.4.</span> <span class="nav-text">Linear Interpolation(线性差值)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Evaluation"><span class="nav-number">5.</span> <span class="nav-text">Evaluation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Perplexity"><span class="nav-number">5.1.</span> <span class="nav-text">Perplexity</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/02/24/NLP 笔记 - Language models and smoothing/';
+      var disqus_title = "NLP 笔记 - Language models and smoothing";
+      var disqus_url = 'http://www.shuang0420.cn/2017/02/24/NLP 笔记 - Language models and smoothing/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

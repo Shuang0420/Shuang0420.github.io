@@ -1,0 +1,1125 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Crawler," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="该项目从华为应用市场爬取 app 数据，存到 MongoDB 中，再经过推荐算法更新数据，展示到前端。项目综合了之前讲到的所有爬虫技巧，来源自 BitTiger 的组织。项目共分为 爬虫模块、推荐模块、网站模块 三部分。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目实战--App Recommender System">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/07/22/项目实战--App Recommender System/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="该项目从华为应用市场爬取 app 数据，存到 MongoDB 中，再经过推荐算法更新数据，展示到前端。项目综合了之前讲到的所有爬虫技巧，来源自 BitTiger 的组织。项目共分为 爬虫模块、推荐模块、网站模块 三部分。">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-01%20%E4%B8%8B%E5%8D%887.31.02.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-01%20%E4%B8%8B%E5%8D%887.31.21.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-06%20%E4%B8%8B%E5%8D%888.00.56.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-06%20%E4%B8%8B%E5%8D%888.05.07.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-06%20%E4%B8%8B%E5%8D%888.05.56.png">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="项目实战--App Recommender System">
+<meta name="twitter:description" content="该项目从华为应用市场爬取 app 数据，存到 MongoDB 中，再经过推荐算法更新数据，展示到前端。项目综合了之前讲到的所有爬虫技巧，来源自 BitTiger 的组织。项目共分为 爬虫模块、推荐模块、网站模块 三部分。">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-01%20%E4%B8%8B%E5%8D%887.31.02.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/07/22/项目实战--App Recommender System/"/>
+
+
+  <title> 项目实战--App Recommender System | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                项目实战--App Recommender System
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-22T10:45:12+08:00" content="2016-07-22">
+              2016-07-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Projects/" itemprop="url" rel="index">
+                    <span itemprop="name">Projects</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/22/项目实战--App Recommender System/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/22/项目实战--App Recommender System/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>该项目从华为应用市场爬取 app 数据，存到 MongoDB 中，再经过推荐算法更新数据，展示到前端。项目综合了之前讲到的所有爬虫技巧，来源自 BitTiger 的组织。项目共分为 <strong>爬虫模块、推荐模块、网站模块</strong> 三部分。<br><a id="more"></a></p>
+<h1 id="技术需求文档"><a href="#技术需求文档" class="headerlink" title="技术需求文档"></a>技术需求文档</h1><h2 id="爬虫模块"><a href="#爬虫模块" class="headerlink" title="爬虫模块"></a>爬虫模块</h2><p>从 <a href="http://appstore.huawei.com/more/all" target="_blank" rel="external">http://appstore.huawei.com/more/all</a> 爬取总排行榜所有APP数据</p>
+<ul>
+<li>Title</li>
+<li>AppId</li>
+<li>缩略图</li>
+<li>介绍</li>
+</ul>
+<p>从 <a href="http://appstore.huawei.com/topics/" target="_blank" rel="external">http://appstore.huawei.com/topics/</a> 爬取所有专题<br>每个专题包括</p>
+<ul>
+<li>Title</li>
+<li>AppId List</li>
+</ul>
+<p>每个包含在专题中的APP，都爬取</p>
+<ul>
+<li>Title</li>
+<li>AppId</li>
+<li>缩略图</li>
+<li>介绍</li>
+</ul>
+<p>从<a href="http://appstore.huawei.com/" target="_blank" rel="external">http://appstore.huawei.com/</a> 做为种子，抓取所有App信息</p>
+<ul>
+<li>App List的信息</li>
+<li>App 的信息</li>
+</ul>
+<h2 id="推荐模块"><a href="#推荐模块" class="headerlink" title="推荐模块"></a>推荐模块</h2><p>根据输入的App List，输出与这个List最相关的App List</p>
+<ul>
+<li>基础数据：AppId List的集合</li>
+<li>输入AppId List</li>
+<li>输出AppId List</li>
+</ul>
+<h2 id="网站模块"><a href="#网站模块" class="headerlink" title="网站模块"></a>网站模块</h2><p>首页 - A List of most popular Apps（类似于AppStore的Top Charts）</p>
+<ul>
+<li>Title</li>
+<li>缩略图</li>
+<li>介绍的前20个字符</li>
+</ul>
+<p>详情页</p>
+<ul>
+<li>Title</li>
+<li>缩略图</li>
+<li>完整介绍</li>
+<li>相关推荐的App List</li>
+</ul>
+<h1 id="爬虫模块-1"><a href="#爬虫模块-1" class="headerlink" title="爬虫模块"></a>爬虫模块</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Skill</p>
+<ul>
+<li>Python</li>
+<li>scrapy</li>
+<li>mongodb</li>
+<li>proxy</li>
+<li>scrapyjs</li>
+</ul>
+<p>Performance</p>
+<ul>
+<li>100 pages/second(vs 30k/second)</li>
+</ul>
+<h2 id="爬取"><a href="#爬取" class="headerlink" title="爬取"></a>爬取</h2><p>要点：</p>
+<ol>
+<li><p>利用 Proxy 更换 user-agent<br>srcapy 发出请求的 user agent 的默认值为Scrapy／version，和普通浏览器的不同，所以网站就会识别出这不是真的用户而是爬虫，就会屏蔽这些请求。所以我们就使用 proxy 随机模拟了不同的 user agent 来“欺骗”网站，才能成功地爬取页面。这一部分是使用 Scrapy middleware 实现的。<br><a href="http://www.shuang0420.com/2016/06/12/爬虫总结-二-scrapy/" target="_blank" rel="external">博客</a></p>
+</li>
+<li><p>利用 scrapy-redis 分布式架构加快爬取速度<br><a href="http://www.shuang0420.com/2016/06/17/爬虫总结-四-分布式爬虫/" target="_blank" rel="external">博客</a></p>
+</li>
+<li><p>怎样获取更多数据</p>
+<ul>
+<li>通过相似 app</li>
+<li>通过搜索</li>
+<li>扩展链接</li>
+</ul>
+</li>
+</ol>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>涉及到 ‘下一页’ 的爬取，见<a href="http://www.shuang0420.com/2016/06/20/爬虫总结-五-其他技巧/" target="_blank" rel="external">爬虫总结-五-其他技巧</a> 使用 scrapy-splash 部分的实例。</p>
+<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><h3 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h3><p>appstore.dat 存储基本信息，格式</p>
+<pre>id \t title \t intro</pre>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">C5683	微信	华为手机服务:激活华为会员，立享精彩权益！ 更新到手机服务最新版本、免费激活会员，立享高级专属售后服务特权、VIP客服热线，还有160G免费空间、海量衣食住行礼包、华为商城优惠券等你抢！ “手机服务”为华为终端用户提供一站式售后服务，集成华为会员、在线寄修、预约维修、在线客服等十多项丰富的在线服务，旨在为亿万华为终端用户提供优质、省心、快捷的服务。 主要</div><div class="line">C262	去哪儿旅行	旅游 旅游，去哪儿 去哪儿，酒店 酒店，机票 机票、火车票火车票，门票门票，度假度假，线路线路，快到碗里来！ 去哪儿旅行—总有你要的低价！  作为中国领先的无线和在线旅游平台，去哪儿旅行支持用户低价购买近60万条国内国际航线，42万家国内酒店、16万家国际酒店；超100万条国内外度假线路和2万种景点门票；享受国内160座城市，以及国外86座城市的</div><div class="line">C10059090	华为游戏中心	华为游戏中心是华为公司提供的安卓游戏下载平台，所有游戏都经过专业的测评团队层层检测，为您推荐最安全质量最高的游戏内容， 目前我们有20万游戏聚众平台，个性化专题定制，和丰富多元的游戏礼包，还有游戏论坛供大家互动，华为游戏中心不单服务所有华为用户，还支持国内主流安卓机型。 新版本特性： 1、新增   资讯频道，最新热点、最强攻略、最全视频，完</div><div class="line">C57236	今日头条	今天，看今日头条 今日头条，超过 4 亿用户选择的新闻资讯 App ！ 单用户每日使用时长超过60分钟 每天社交平台分享量达550万次 颠覆传统阅读——人“搜索”资讯的模式，运用大数据算法，精准推荐你感兴趣的内容，从此不受冗杂信息困扰，畅游个性化信息海洋，让你的阅读更加有用高效。   【海量内容源】 聚合超过5000</div><div class="line">C10217244	华为钱包	华为钱包:1.“红酒”频道，精选莫塞尔多款进口红酒，享受华为特惠价格，让你足不出户品尝世界各地的葡萄佳酿！  2. “钱包”有生活服务、花币中心、红酒等频道，聚合优质服务，提供超值体验。  3. NFC线下支付，集手机支付和线下刷卡为一体，享受安全快捷的支付体验，省去了随身携带钱包、现金和银行卡的麻烦。（NFC支付功能当前支持荣耀V8全网通版、Mate S</div></pre></td></tr></table></figure>
+<p>appstore_re.dat 存储推荐信息，格式</p>
+<pre>id \t url \t title \t recommended_appid</pre>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">C5683	http://appstore.huawei.com:80/app/C5683	微信	C2543:QQ同步助手,C9319:QQ,C5373:支付宝,C2682:搜狗输入法,C3466:酷狗音乐,C54626:铃声多多,C2861:同花顺炒股,C36902:WiFi万能钥匙,C104688:腾讯新闻,C21976:UC浏览器,C5683:微信,C9319:QQ,C7166:微博,C10085602:花粉俱乐部,C23563:陌陌,C10154337:易信,C37549:189邮箱,C2543:QQ同步助手,C10405418:QQ邮箱,C19185:百度贴吧,</div><div class="line">C262	http://appstore.huawei.com:80/app/C262	去哪儿旅行	C6006:蚂蜂窝自由行,C5157:携程旅行,C30591:途牛旅游,C10770:阿里旅行,C69056:驴妈妈旅游,C10027123:航旅纵横,C12192:同程旅游,C10141560:飞常准,C10017070:高铁管家,C10226376:神州专车,C3382:百度地图,C20911:高德地图,C262:去哪儿旅行,C5157:携程旅行,C10047107:滴滴出行,C5745:天翼导航,C3403:高德导航,C10239309:优步 - Uber,C39196:艺龙旅行,C10043914:和地图,</div><div class="line">C10059090	http://appstore.huawei.com:80/app/C10059090	华为游戏中心	C10217244:华为钱包,C10085602:花粉俱乐部,C10173884:天龙八部3D,C10055832:华为文件管理,C10207207:华为云服务,C10049053:华为商城,C10242764:梦幻西游,C27162:华为应用市场,C10126869:刀塔传奇,C66323:华为备份,C36902:WiFi万能钥匙,C27162:华为应用市场,C10055832:华为文件管理,C66323:华为备份,C21976:UC浏览器,C10067631:华为手机服务,C20679:QQ浏览器,C10207207:华为云服务,C10059090:华为游戏中心,C10132067:华为帐号,</div><div class="line">C57236	http://appstore.huawei.com:80/app/C57236	今日头条	C19168:凤凰新闻,C9147:网易新闻,C2022:搜狐新闻,C104688:腾讯新闻,C31975:墨迹天气,C40238:内涵段子,C3386:汽车之家,C20960:搜狐视频,C3382:百度地图,C2217:我查查,C57236:今日头条,C9147:网易新闻,C2022:搜狐新闻,C104688:腾讯新闻,C179773:爱读掌阅,C149006:塔读文学,C28837:ZAKER,C86189:爱动漫,C2034:天翼阅读,C10084466:咪咕阅读,</div></pre></td></tr></table></figure>
+<p>app_info.json 存储 app 所有信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&#123;&quot;title&quot;: &quot;华为商城&quot;, &quot;url&quot;: &quot;http://appstore.huawei.com:80/app/C10049053&quot;, &quot;app_id&quot;: &quot;C10049053&quot;, &quot;recommended&quot;: &quot;C10085602:花粉俱乐部,C10217244:华为钱包,C10168550:亲情关怀,C10055832:华为文件管理,C10060708:华为支付,C10067631:华为手机服务,C10132067:华为帐号,C10465316:华为众测,C10207207:华为云服务,C66323:华为备份,C34075:手机淘宝,C10049053:华为商城,C5206:美团团购,C10608:大众点评,C57804:天猫,C20252:手机京东,C9136:唯品会,C10116109:百度糯米,C41277:苏宁易购,C10284106:美丽说,&quot;, &quot;score&quot;: &quot;8&quot;, &quot;thumbnail_url&quot;: &quot;http://appimg.hicloud.com/hwmarket/files/application/icon144/ea05c760d27f4b58bd6e8b8e88fdc127.png&quot;, &quot;intro&quot;: &quot;【华为商城客户端 我的掌上购机神器】  预约抢购华为、荣耀新品，华为官方商城，值得信赖！HUAWEI P9、荣耀V8、荣耀畅玩5X、HUAWEI Mate8、荣耀7等众多热门手机及丰富的配件，每月促销活动不断，红包疯狂送，抽奖玩不停！  1、掌上购机神器 每周三移动端专场，手机抢购更便捷； 闹钟提醒，手机抢购不再错过；&lt;b&quot;, &quot;developer&quot;: &quot;华为终端有限公司&quot;&#125;</div><div class="line">&#123;&quot;title&quot;: &quot;微博&quot;, &quot;url&quot;: &quot;http://appstore.huawei.com:80/app/C7166&quot;, &quot;app_id&quot;: &quot;C7166&quot;, &quot;recommended&quot;: &quot;C10084137:新浪微博(G3版…,C6056298:VSCO Cam™,C19185:百度贴吧,C10159988:in,C10047082:知乎,C10204517:MIX,C10125085:哔哩哔哩动画,C10318669:PicsArt,C10231827:快看漫画,C10168892:网易云音乐,C5683:微信,C9319:QQ,C7166:微博,C10085602:花粉俱乐部,C23563:陌陌,C10154337:易信,C37549:189邮箱,C2543:QQ同步助手,C10405418:QQ邮箱,C19185:百度贴吧,&quot;, &quot;score&quot;: &quot;10&quot;, &quot;thumbnail_url&quot;: &quot;http://appimg.hicloud.com/hwmarket/files/application/icon144/a885314b6da5496084f009a43226dabf.png&quot;, &quot;intro&quot;: &quot;关于百果园： 百果园，深耕水果行业15年水果连锁品牌，首创水果分级标准。  从2001年百果园创立之日起，信守“一生只做一件事，一心一意做水果”的承诺，15年辛勤耕耘，只为让全天下人享受水果好生活。  目前已经在云南、四川、陕西、山西、山东、江苏、海南等省份以及美国、新西兰等国家建立了100多个水果生产基地，同时配有从果园到门店&quot;, &quot;developer&quot;: &quot;新浪网技术（中国）有限公司&quot;&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h3><p>MongoDB 中新建 database appstore，新建 collections user_download_history 和 app_info，导入相应文件。<br>将文件导入 MongoDB。</p>
+<pre>
+$ mongoimport --db appstore --collection user_download_history --drop --file user_download_history.json
+$ mongoimport --db appstore --collection app_info --drop --file app_info.json
+</pre>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; db.app_info.find()</div><div class="line">&#123; &quot;_id&quot; : ObjectId(&quot;577cbfade677be6b09d8dc2c&quot;), &quot;score&quot; : &quot;8&quot;, &quot;title&quot; : &quot;果汁四溅&quot;, &quot;url&quot; : &quot;http://appstore.huawei.com:80/app/C10204319&quot;, &quot;app_id&quot; : &quot;C10204319&quot;, &quot;thumbnail_url&quot; : &quot;http://appimg.hicloud.com/hwmarket/files/application/icon144/f986a241d80d46fcb4fecc1e85121a60.png&quot;, &quot;intro&quot; : &quot;【果汁四溅】年度最“溅”的消除游戏！首发大奖10台iphone6溅到你手！  ★全球50多个国家APP商店推荐★ ★30个国家桌面游戏排名第一★ ★5000万玩家五星好评★  游戏特色： 【七大新玩法，酷炫拽！叼咋天！】  【250关挑战极限！救救水果君】  【果汁爆溅，萌翻全场！】   首发&quot;, &quot;developer&quot; : &quot;深圳市唯变科技开发有限公司&quot; &#125;</div><div class="line">&#123; &quot;_id&quot; : ObjectId(&quot;577cbfade677be6b09d8dc2d&quot;), &quot;score&quot; : &quot;9&quot;, &quot;title&quot; : &quot;泡泡龙亚特兰蒂斯&quot;, &quot;url&quot; : &quot;http://appstore.huawei.com:80/app/C10145675&quot;, &quot;app_id&quot; : &quot;C10145675&quot;, &quot;thumbnail_url&quot; : &quot;http://appimg.hicloud.com/hwmarket/files/application/icon144/cb3c6ce12b73424990921097fe20a7b1.png&quot;, &quot;intro&quot; : &quot;泡泡龙亚特兰蒂斯:一款令人着迷的泡泡龙游戏。在经典的游戏模式中增加了独有的BOSS战，每个场景都 有独特的守护者等待你的挑战。多种多样的奇趣道具供你使用。打BOSS，秀操作，耍道具让你爱不释手。欢乐之旅由一段美丽的故事带你进入。前所未有的体验，带给你神奇的亚特兰蒂斯之旅。&quot;, &quot;developer&quot; : &quot;深圳市灵游科技有限公司&quot; &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; db.user_download_history.find()</div><div class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5691f793f0fe47e651ba1a52&quot;), &quot;user_id&quot; : 3, &quot;download_history&quot; : [ &quot;C10249215&quot;, &quot;C10221865&quot;, &quot;C10269239&quot;, &quot;C10157957&quot;, &quot;C10148546&quot;, &quot;C10241662&quot;, &quot;C10203747&quot;, &quot;C10144080&quot;, &quot;C10136202&quot;, &quot;C10271994&quot; ] &#125;</div><div class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5691f793f0fe47e651ba1a53&quot;), &quot;user_id&quot; : 4, &quot;download_history&quot; : [ &quot;C10026769&quot;, &quot;C10053551&quot;, &quot;C10237091&quot;, &quot;C10141383&quot;, &quot;C10162014&quot;, &quot;C10148546&quot; ] &#125;</div></pre></td></tr></table></figure>
+<h1 id="推荐模块-1"><a href="#推荐模块-1" class="headerlink" title="推荐模块"></a>推荐模块</h1><h2 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h2><p>Skill</p>
+<ul>
+<li>Python</li>
+<li>collaborative-filtering algorithm</li>
+<li>cosine_similarity</li>
+</ul>
+<p>Performance</p>
+<ul>
+<li>1 second/app(vs with 10ms/app)</li>
+</ul>
+<h2 id="推荐算法"><a href="#推荐算法" class="headerlink" title="推荐算法"></a>推荐算法</h2><h3 id="协同过滤算法简述"><a href="#协同过滤算法简述" class="headerlink" title="协同过滤算法简述"></a>协同过滤算法简述</h3><h4 id="基于用户的协同过滤算法（User-CF）"><a href="#基于用户的协同过滤算法（User-CF）" class="headerlink" title="基于用户的协同过滤算法（User CF）"></a>基于用户的协同过滤算法（User CF）</h4><p>强调 <strong>把和你有相似爱好的其他的用户的物品推荐给你</strong><br>基于用户对物品的偏好找到相邻邻居用户，然后将邻居用户喜欢的推荐给当前用户。</p>
+<p><strong>过程：</strong></p>
+<ol>
+<li>将一个用户对所有物品的偏好作为一个向量来计算用户之间的相似度，找到和目标用户兴趣相似的用户集合；</li>
+<li>找到这个集合中的用户喜欢的，且目标用户没有访问过的物品，计算得到一个排序的物品列表作为推荐。</li>
+</ol>
+<p><strong>优点和适用场景：</strong></p>
+<ul>
+<li>可以发现用户感兴趣的热门物品</li>
+<li>用户有新行为，不一定造成推荐结果的立即变化</li>
+<li>适用于用户较少的场合，否则用户相似度矩阵计算代价很大</li>
+<li>适合时效性较强，用户个性化兴趣不太明显的领域</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>数据稀疏性。一个大型的电子商务推荐系统一般有非常多的物品，用户可能买的其中不到1%的物品，不同用户之间买的物品重叠性较低，导致算法无法找到一个用户的邻居，即偏好相似的用户。</li>
+<li>算法扩展性。最近邻居算法的计算量随着用户和物品数量的增加而增加，不适合数据量大的情况使用。</li>
+<li>对新用户不友好，对新物品友好，因为用户相似度矩阵不能实时计算</li>
+<li>很难提供令用户信服的推荐解释</li>
+</ul>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-01%20%E4%B8%8B%E5%8D%887.31.02.png" alt=""></p>
+<h4 id="基于物品的协同过滤算法"><a href="#基于物品的协同过滤算法" class="headerlink" title="基于物品的协同过滤算法"></a>基于物品的协同过滤算法</h4><p>强调 <strong>把和你喜欢的物品相似的物品推荐给你</strong><br>基于物品的 CF 的原理和基于用户的 CF 类似，只是在计算邻居时采用物品本身，而不是从用户的角度。在京东、天猫上看到「购买了该商品的用户也经常购买的其他商品」，就是主要基于 ItemBasedCF。</p>
+<p><strong>过程：</strong></p>
+<ol>
+<li>基于用户对物品的偏好计算相似度，找到相似的物品；</li>
+<li>根据物品的相似度和用户的历史行为预测当前用户还没有表示偏好的物品，计算得到一个排序的物品列表作为推荐。</li>
+</ol>
+<p>因为物品直接的相似性相对比较固定，所以可以预先在线下计算好不同物品之间的相似度，把结果存在表中，当推荐时进行查表，计算用户可能的打分值。</p>
+<p><strong>优点和适用场景：</strong></p>
+<ul>
+<li>可以发现用户潜在的但自己尚未发现的兴趣爱好</li>
+<li>有效的进行长尾挖掘</li>
+<li>利用用户的历史行为给用户做推荐解释，使用户比较信服</li>
+<li>适用于物品数明显小于用户数的场合，否则物品相似度矩阵计算代价很大</li>
+<li>适合长尾物品丰富，用户个性化需求强的领域</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>对新用户友好，对新物品不友好，因为物品相似度矩阵不需要很强的实时性</li>
+</ul>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-01%20%E4%B8%8B%E5%8D%887.31.21.png" alt=""></p>
+<p>Item CF 和 User CF 是基于协同过滤推荐的两个最基本的算法，大家都觉得 Item CF 从性能和复杂度上比 User CF 更优，其中的一个主要原因就是对于一个在线网站，用户的数量往往大大超过物品的数量，同时物品的数据相对稳定，因此计算物品的相似度不但计算量较小，但这种情况只适应于提供商品的电子商务网站，对于新闻，博客或者微内容的推荐系统，情况往往是相反的，物品的数量是海量的，同时也是更新频繁的，所以单从复杂度的角度，这两个算法在不同的系统中各有优势，推荐引擎的设计者需要根据自己应用的特点选择更加合适的算法。</p>
+<p>两个例子：</p>
+<p>非社交网络：在非社交网络的网站中，内容内在的联系是很重要的推荐原则，它比基于相似用户的推荐原则更加有效。比如在购书网站上，当你看一本书的时候，推荐引擎会给你推荐相关的书籍，这个推荐的重要性远远超过了网站首页对该用户的综合推荐。可以看到，在这种情况下，Item CF 的推荐成为了引导用户浏览的重要手段。同时 Item CF 便于为推荐做出解释，在一个非社交网络的网站中，给某个用户推荐一本书，因为这本书和你以前看的某本书相似，用户可能就觉得合理而采纳了此推荐。</p>
+<p>社交网络：在现今很流行的社交网络站点中，User CF 是一个更不错的选择，User CF 加上社会网络信息，可以增加用户对推荐解释的信服程度。</p>
+<p>更多见<a href="http://blog.csdn.net/ygrx/article/details/15501679" target="_blank" rel="external">[推荐算法]基于用户的协同过滤算法</a></p>
+<h3 id="项目算法"><a href="#项目算法" class="headerlink" title="项目算法"></a>项目算法</h3><p>采用的是基于物品的协同过滤算法，相似度算法用的是 cosine similarity。通过计算 similarity between a1 and all user download history 来推导 similarity between a1 and all other apps，前提是假定每个 user download history list 里的 app 是相互关联的。看下面的具体例子。</p>
+<p>cosine similarity<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-06%20%E4%B8%8B%E5%8D%888.00.56.png" alt=""></p>
+<p>similarity between a3 and a5<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-06%20%E4%B8%8B%E5%8D%888.05.07.png" alt=""></p>
+<p>a3’s top-5 related apps<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-06%20%E4%B8%8B%E5%8D%888.05.56.png" alt=""></p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>首先读取 MongoDB 的数据，过程略。这里主要展示算法实现。<br>cosine similarity<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@classmethod</div><div class="line">def cosine_similarity(cls, app_list1, app_list2):</div><div class="line">    match_count = cls.__count_match(app_list1, app_list2)</div><div class="line">    return float(match_count) / math.sqrt( len(app_list1) * len(app_list2))</div><div class="line"></div><div class="line">@classmethod</div><div class="line">def __count_match(cls, list1, list2):</div><div class="line">    count = 0</div><div class="line">    for element in list1:</div><div class="line">        if element in list2:</div><div class="line">            count += 1</div><div class="line">    return count</div></pre></td></tr></table></figure></p>
+<p>top-5 related app_list1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">def calculate_top_5(app, user_download_history):</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    cosine_similarity between an App and user&apos;s history</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    #create a dict to store each other app and its similarity to this app</div><div class="line">    app_similarity = collections.defaultdict(float) #&#123;app_id: similarity&#125;</div><div class="line">    for apps in user_download_history:</div><div class="line">        #calculate the similarity</div><div class="line">        similarity = Helper.cosine_similarity([app], apps)</div><div class="line">        # accumluate similarity</div><div class="line">        for other_app in apps:</div><div class="line">            app_similarity[other_app] += similarity</div><div class="line"></div><div class="line">    # There could be app without related apps (not in any download history)</div><div class="line">    if not app in app_similarity:</div><div class="line">        return</div><div class="line"></div><div class="line">    #sort app_similarity dict by value and get the top 5 as recommendation</div><div class="line">    app_similarity.pop(app)</div><div class="line">    sorted_tups = sorted(app_similarity.items(), key=operator.itemgetter(1), reverse=True)#sort by similarity</div><div class="line">    top_5_app = [sorted_tups[0][0], sorted_tups[1][0], sorted_tups[2][0], sorted_tups[3][0], sorted_tups[4][0]]</div><div class="line">    #print(&quot;top_5_app for &quot; + str(app) + &quot;:\t&quot; + str(top_5_app))</div></pre></td></tr></table></figure></p>
+<p>最后要更新 MongoDB 中的数据。更新后的数据如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&#123; &quot;_id&quot; : ObjectId(&quot;577cbfade677be6b09d8dc2c&quot;), &quot;score&quot; : &quot;8&quot;, &quot;title&quot; : &quot;果汁四溅&quot;, &quot;url&quot; : &quot;http://appstore.huawei.com:80/app/C10204319&quot;, &quot;app_id&quot; : &quot;C10204319&quot;, &quot;thumbnail_url&quot; : &quot;http://appimg.hicloud.com/hwmarket/files/application/icon144/f986a241d80d46fcb4fecc1e85121a60.png&quot;, &quot;intro&quot; : &quot;【果汁四溅】年度最“溅”的消除游戏！首发大奖10台iphone6溅到你手！  ★全球50多个国家APP商店推荐★ ★30个国家桌面游戏排名第一★ ★5000万玩家五星好评★  游戏特色： 【七大新玩法，酷炫拽！叼咋天！】  【250关挑战极限！救救水果君】  【果汁爆溅，萌翻全场！】   首发&quot;, &quot;developer&quot; : &quot;深圳市唯变科技开发有限公司&quot;, &quot;top_5_app&quot; : [ &quot;C10053551&quot;, &quot;C10148546&quot;, &quot;C10141383&quot;, &quot;C10189589&quot;, &quot;C10026769&quot; ] &#125;</div><div class="line">&#123; &quot;_id&quot; : ObjectId(&quot;577cbfade677be6b09d8dc2d&quot;), &quot;score&quot; : &quot;9&quot;, &quot;title&quot; : &quot;泡泡龙亚特兰蒂斯&quot;, &quot;url&quot; : &quot;http://appstore.huawei.com:80/app/C10145675&quot;, &quot;app_id&quot; : &quot;C10145675&quot;, &quot;thumbnail_url&quot; : &quot;http://appimg.hicloud.com/hwmarket/files/application/icon144/cb3c6ce12b73424990921097fe20a7b1.png&quot;, &quot;intro&quot; : &quot;泡泡龙亚特兰蒂斯:一款令人着迷的泡泡龙游戏。在经典的游戏模式中增加了独有的BOSS战，每个场景都 有独特的守护者等待你的挑战。多种多样的奇趣道具供你使用。打BOSS，秀操作，耍道具让你爱不释手。欢乐之旅由一段美丽的故事带你进入。前所未有的体验，带给你神奇的亚特兰蒂斯之旅。&quot;, &quot;developer&quot; : &quot;深圳市灵游科技有限公司&quot;, &quot;top_5_app&quot; : [ &quot;C2217&quot;, &quot;C40224&quot;, &quot;C10196888&quot;, &quot;C10197446&quot;, &quot;C10047107&quot; ] &#125;</div></pre></td></tr></table></figure></p>
+<h1 id="网站模块-1"><a href="#网站模块-1" class="headerlink" title="网站模块"></a>网站模块</h1><p>Skill</p>
+<ul>
+<li>javascript</li>
+<li>node.js</li>
+<li>meteor</li>
+<li>mongodb</li>
+</ul>
+<p>Performance</p>
+<ul>
+<li>1k QPS (vs 10k QPS)</li>
+</ul>
+<p>具体实现见 <a href="http://www.shuang0420.com/2016/07/07/Meteor-App-Recommender-System/" target="_blank" rel="external">Meteor – App Recommender System</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Crawler/" rel="tag">#Crawler</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/18/socket + python-cgi + ajax 实现异步响应表单/" rel="next" title="python-cgi + ajax 实现异步响应表单">
+                <i class="fa fa-chevron-left"></i> python-cgi + ajax 实现异步响应表单
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/28/项目实战--云计算Twitter Analytics Web Service/" rel="prev" title="项目实战--云计算Twitter Analytics Web Service">
+                项目实战--云计算Twitter Analytics Web Service <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#技术需求文档"><span class="nav-number">1.</span> <span class="nav-text">技术需求文档</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#爬虫模块"><span class="nav-number">1.1.</span> <span class="nav-text">爬虫模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐模块"><span class="nav-number">1.2.</span> <span class="nav-text">推荐模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网站模块"><span class="nav-number">1.3.</span> <span class="nav-text">网站模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#爬虫模块-1"><span class="nav-number">2.</span> <span class="nav-text">爬虫模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爬取"><span class="nav-number">2.2.</span> <span class="nav-text">爬取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析"><span class="nav-number">2.3.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储"><span class="nav-number">2.4.</span> <span class="nav-text">存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件"><span class="nav-number">2.4.1.</span> <span class="nav-text">文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB"><span class="nav-number">2.4.2.</span> <span class="nav-text">MongoDB</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐模块-1"><span class="nav-number">3.</span> <span class="nav-text">推荐模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介-1"><span class="nav-number">3.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐算法"><span class="nav-number">3.2.</span> <span class="nav-text">推荐算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#协同过滤算法简述"><span class="nav-number">3.2.1.</span> <span class="nav-text">协同过滤算法简述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基于用户的协同过滤算法（User-CF）"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">基于用户的协同过滤算法（User CF）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于物品的协同过滤算法"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">基于物品的协同过滤算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目算法"><span class="nav-number">3.2.2.</span> <span class="nav-text">项目算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">3.3.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网站模块-1"><span class="nav-number">4.</span> <span class="nav-text">网站模块</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/07/22/项目实战--App Recommender System/';
+      var disqus_title = "项目实战--App Recommender System";
+      var disqus_url = 'http://www.shuang0420.cn/2016/07/22/项目实战--App Recommender System/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

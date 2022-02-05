@@ -1,0 +1,1183 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,Recommender Systems,推荐系统," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="主要介绍推荐系统分析框架、应用场景以及评测方法等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="推荐系统--开坑">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/01/23/推荐系统--开坑/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="主要介绍推荐系统分析框架、应用场景以及评测方法等。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/AB%E6%B5%8B%E8%AF%95%E7%B3%BB%E7%BB%9F.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/precisionRecall.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/RMSE.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/MAE.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/coverage.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/diversity.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/diversity2.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/ways.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/comb.jpg">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="推荐系统--开坑">
+<meta name="twitter:description" content="主要介绍推荐系统分析框架、应用场景以及评测方法等。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/AB%E6%B5%8B%E8%AF%95%E7%B3%BB%E7%BB%9F.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/01/23/推荐系统--开坑/"/>
+
+
+  <title> 推荐系统--开坑 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                推荐系统--开坑
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-01-23T07:58:12+08:00" content="2017-01-23">
+              2017-01-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Recommender-Systems/" itemprop="url" rel="index">
+                    <span itemprop="name">Recommender Systems</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/23/推荐系统--开坑/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/23/推荐系统--开坑/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>主要介绍推荐系统分析框架、应用场景以及评测方法等。<br><a id="more"></a><br>之前做了个项目 App Recommender System，以为对推荐系统也了解了不少，结果在面试的时候第一次被问到时才发现之前做的并没能没有考虑到商业场景，委实太过于小打小闹。所谓知耻而后勇，就开了这个坑，打算系统学习下 Recommender System 这门课。</p>
+<p>以一本通俗入门的书《推荐系统实践》by 项亮开始，以 University of Minnesota 的专项系列课程 Master Recommender Systems 为辅，来学习这个 topic。这一系列笔记仅供学习使用，文字/理念/图片均有可能来自以上两个来源。</p>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>需要区分的是 <strong>信息检索(Information Retrieval)</strong> 和 <strong>信息过滤(Information Filtering)</strong> 两个概念。</p>
+<p><strong>信息检索</strong> 针对的是 static content base + dynamic information need，通常使用的方法是 tfidf。<strong>信息过滤</strong> 则相反，针对的是 static information need + dynamic content base，主要的方法是对用户需求建模。推荐系统其实就是信息过滤的应用。搜索引擎需要用户主动提供准确的关键词来寻找信息，而推荐系统不需要这种明确需求，直接通过用户的历史行为给用户的兴趣建模，从而主动给用户推荐能满足用户兴趣和需求的信息，提高网站的点击率和转化率。</p>
+<p>另外，推荐系统可以帮助发现物品的“长尾”。事实上，主流商品代表大多数用户的需求，而长尾商品则代表着小部分用户的个性化需求，后者才是更为重要的。以电商为例，如果只推荐主流产品，那么会产生大量长尾商品的库存积压，用户也不会感到惊喜或者满意。</p>
+<p><strong>推荐系统的三个主要组成部分：</strong></p>
+<ul>
+<li>前台展示页面</li>
+<li>后台日志系统</li>
+<li>推荐算法</li>
+</ul>
+<p><strong>推荐系统的三个参与方：</strong></p>
+<ul>
+<li>用户</li>
+<li>物品提供者</li>
+<li>提供推荐系统的网站</li>
+</ul>
+<h1 id="推荐系统分析框架-Analytical-Framework-of-Recommend-System"><a href="#推荐系统分析框架-Analytical-Framework-of-Recommend-System" class="headerlink" title="推荐系统分析框架 Analytical Framework of Recommend System"></a>推荐系统分析框架 Analytical Framework of Recommend System</h1><p>看一下推荐系统分析框架的 8 要素。</p>
+<ul>
+<li>domain(推荐领域）<br>如已经购买过的东西</li>
+<li>purpose（推荐目的）<br>如让用户再次购买；add-on sales</li>
+<li>context（推荐背景）<br>推荐活动发生的一些情况和限制。如随意浏览或者是为了购买某件商品而浏览</li>
+<li>whose opinions（推荐者）<br>如用户的购买记录；其它购物者</li>
+<li>personalization level（个性化或定制化层次）<ol>
+<li>Non-personalized recommend，像微博里列出的最热门的新闻、事件。它并不关注你是否对此感兴趣。</li>
+<li>基于统计的有目标群体的推荐 Demographic，就好像买尿布的外国奶爸们顺手买的酒。</li>
+<li>只针对你当前活动而作出的推荐 Ephemeral，标准格式“喜欢这个X的人们也喜欢……”。</li>
+<li>分析长期记录得到的推荐 Consistent，如根据你的以往的消费记录，给你推荐一些物品。</li>
+</ol>
+</li>
+<li>privacy and trustworthiness（隐私性和可信度）<ol>
+<li>隐私性。这是不是我们希望网站拥有的数据</li>
+<li>可信度。考虑会不会有内在的偏见，会不会有恶意的、非真实的操作等。</li>
+</ol>
+</li>
+<li>interface（接口）<br>考虑输入输出。<ol>
+<li>输入分为 Explicit（Rating， Review， Vote， etc.）和 Implicit (Click， Purchase， Follow， etc.)</li>
+<li>输出分为预测和推荐两种，预测是得到一个特定的评分结果，推荐是得到一堆推荐的事物。</li>
+</ol>
+</li>
+<li>algorithms（推荐算法）<br>如 profitable products；product association</li>
+</ul>
+<h1 id="推荐系统的应用"><a href="#推荐系统的应用" class="headerlink" title="推荐系统的应用"></a>推荐系统的应用</h1><h2 id="电子商务"><a href="#电子商务" class="headerlink" title="电子商务"></a>电子商务</h2><p><strong>代表：</strong> 亚马逊。Amazon 被 RWW 称为“推荐系统之王”，主要的应用有个性化商品推荐列表和相关商品的推荐列表。</p>
+<p><strong>个性化推荐列表：</strong> 主要采用基于物品的推荐算法(item-based method)，给用户推荐和他们之前喜欢的物品相似的物品。另外还有一种是基于好友的个性化推荐，按照用户在 Facebook 的好友关系，给用户推荐他们的好友在亚马逊上喜欢的物品。感觉后者可能会带来更为严重的隐私争议，不过当然你可以选择禁用。</p>
+<p><strong>相关推荐列表：</strong> 亚马逊有两种相关商品列表，一种是包含购买了这个商品的用户也经常购买的其它商品，另一种是包含浏览过这个商品的用户经常购买的其它商品。相关推荐列表最重要的应用是打包销售，可能商品之间是互补的，当你下订单的时候，亚马逊会问你是否要同时购买这些商品，同时，会给出打包的折扣。</p>
+<p>亚马逊有 20%-30% 的销售来自于推荐系统。</p>
+<h2 id="电影和视频网站"><a href="#电影和视频网站" class="headerlink" title="电影和视频网站"></a>电影和视频网站</h2><p><strong>代表：</strong> Netflix，YouTube，也都是基于物品的推荐算法。YouTube曾经做个一个实验，比较了个性化推荐的点击率和热门视频列表的点击率，实验结果表明个性化推荐的点击率是热门视频点击率的两倍。</p>
+<h2 id="个性化音乐网络电台"><a href="#个性化音乐网络电台" class="headerlink" title="个性化音乐网络电台"></a>个性化音乐网络电台</h2><p><strong>代表：</strong> Pandora，Last.fm，豆瓣。Pandora 的算法主要基于内容，其音乐家和研究人员亲自听了上万首来自不同歌手的歌，然后对歌曲的不同特性(比如旋律、节 奏、编曲和歌词等)进行标注，这些标注被称为音乐的基因。然后，Pandora会根据专家标注的基因计算歌曲的相似度，并给用户推荐和他之前喜欢的音乐在基因上相似的其他音乐。Last.fm 并没有使用专家标注，而是利用用户行为计算歌曲的相似度。给用户推荐和他有相似听歌爱好的其他用户喜欢的歌曲。</p>
+<p><strong>音乐作为推荐物品的特点：</strong></p>
+<ul>
+<li>物品空间大</li>
+<li>消费每首歌的代价很小</li>
+<li>物品种类丰富<br>音乐种类丰富，有很多的流派。</li>
+<li>听一首歌耗时很少</li>
+<li>物品重用率很高</li>
+<li>用户充满激情<br>用户很有激情，一个用户会听很多首歌。</li>
+<li>上下文相关<br>用户的口味很受当时上下文的影响，这里的上下文主要包括用户当时的心情(比如沮丧的时候喜欢听励志的歌曲)和所处情境(比如睡觉前喜欢听轻音乐)。</li>
+<li>次序很重要<br>用户听音乐一般是按照一定的次序一首一首地听。</li>
+<li>很多播放列表资源<br>很多用户都会创建很多个人播放列表。</li>
+<li>不需要用户全神贯注</li>
+<li>高度社会化<br>用户听音乐的行为具有很强的社会化特性，比如我们会和好友分享自己喜欢的音乐。</li>
+</ul>
+<p>上面这些特点决定了音乐是一种非常适合用来推荐的物品。因此，尽管现在很多推荐系统都是作为一个应用存在于网站中，比如亚马逊的商品推荐和Netflix的电影推荐，唯有音乐推荐可以支持独立的个性化推荐网站，比如Pandora、Last.fm和豆瓣网络电台。</p>
+<h2 id="社交网络"><a href="#社交网络" class="headerlink" title="社交网络"></a>社交网络</h2><p><strong>代表：</strong> Facebook，Twitter<br>主要应用在：</p>
+<ul>
+<li>利用用户的社交网络信息对用户进行个性化的物品推荐</li>
+<li>信息流的会话推荐</li>
+<li>给用户推荐好友</li>
+</ul>
+<p>Facebook 有个推荐 API，Instant Personalization，根据用户好友喜欢的信息，给用户推荐他们的好友最喜欢的物品。很多网站都用了这个 API 来实现网站的个性化，如 Yelp。</p>
+<h2 id="个性化阅读"><a href="#个性化阅读" class="headerlink" title="个性化阅读"></a>个性化阅读</h2><p><strong>代表：</strong> Google Reader，鲜果网，Zite，Flipboard。</p>
+<h2 id="基于位置的服务"><a href="#基于位置的服务" class="headerlink" title="基于位置的服务"></a>基于位置的服务</h2><p><strong>代表：</strong> Foursquare<br>往往和社交网络结合在一起。基于位置给用户推荐他近的且感兴趣的服务，用户就更有可能去消费。</p>
+<h2 id="个性化邮件"><a href="#个性化邮件" class="headerlink" title="个性化邮件"></a>个性化邮件</h2><p><strong>代表：</strong> Tapestry， Google</p>
+<p>谷歌于2010年推出了优先级收件箱功能。通过分析用户对邮件的历史行为，找到用户感兴趣的邮件，展示在一个专门的收件箱里。用户每天可以先浏览这个邮箱里的邮件，再浏览其他邮件。Google 的研究表明，该产品可以帮助用户节约 6% 的时间。</p>
+<h2 id="个性化广告"><a href="#个性化广告" class="headerlink" title="个性化广告"></a>个性化广告</h2><p><strong>代表：</strong> Facebook</p>
+<p>广告定向投放目前已经成为了一门独立学科 – 计算广告学。个性化广告投放技术主要分为 3 种：</p>
+<ul>
+<li>上下文广告 通过分析用户正在浏览的网页内容，投放和网页内容相关的广告。代表系统是谷歌的Adsense。</li>
+<li>搜索广告 通过分析用户在当前会话中的搜索记录，判断用户的搜索目的，投放和用户目的相关的广告。</li>
+<li>个性化展示广告 我们经常在很多网站看到大量展示广告(就是那些大的横幅图片)，它们是根据用户的兴趣，对不同用户投放不同的展示广告。雅虎是这方面研究的代表。</li>
+</ul>
+<h1 id="推荐系统评测"><a href="#推荐系统评测" class="headerlink" title="推荐系统评测"></a>推荐系统评测</h1><p>一个完整的推荐系统一般存在 3 个参与方：用户、物品提供者和提供推荐系统的网站。</p>
+<p>因此在评测一个推荐算法时，需要同时考虑三方的利益，一个好的推荐系统是能够令三方共赢的系统。以图书推荐为例，好的推荐系统需要：</p>
+<ul>
+<li>需要满足用户的需求，给用户推荐那些令他们感兴趣的图书。</li>
+<li>要让各出版社的书都能够被推荐给对其感兴趣的用户，而不是只推荐几个大型出版社的书。</li>
+<li>能够让推荐系统本身收集到高质量的用户反馈，不断完善推荐的质量，增加用户和网站的交互，提高网站的收入。</li>
+</ul>
+<h2 id="推荐系统实验方法"><a href="#推荐系统实验方法" class="headerlink" title="推荐系统实验方法"></a>推荐系统实验方法</h2><h3 id="离线实验（offline-experiment）"><a href="#离线实验（offline-experiment）" class="headerlink" title="离线实验（offline experiment）"></a>离线实验（offline experiment）</h3><p><strong>步骤：</strong><br>(1) 通过日志系统获得用户行为数据，并按照一定格式生成一个标准的数据集;<br>(2) 将数据集按照一定的规则分成训练集和测试集;<br>(3) 在训练集上训练用户兴趣模型，在测试集上进行预测;<br>(4) 通过事先定义的离线指标评测算法在测试集上的预测结果。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>不需要对实际系统的控制权</li>
+<li>不需要真是用户参与</li>
+<li>速度快，能快速测试大量不同的算法</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>无法获得更多商业上关注的指标，如点击率、转化率等。</li>
+<li>离线实验的指标和商业指标存在差距。高预测率不等于高用户满意度。</li>
+</ul>
+<h3 id="用户调查（user-study）"><a href="#用户调查（user-study）" class="headerlink" title="用户调查（user study）"></a>用户调查（user study）</h3><p>像是一个过渡，离线实验的指标和实际的商业指标存在差距，算法直接上线测试又具有较高的风险，所以在上线测试前一般需要做一次用户调查。</p>
+<p>用户调查需要有一些真实用户，让他们在需要测试的推荐系统上完成一些任务。在他们完成任务时，我们需要观察和记录他们的行为，并让他们回答一些问题。最后，我们需要通过分析他们的行为和答案了解测试系统的性能。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>获得很多体现用户主观感受的指标</li>
+<li>相对在线实验风险低，出错后容易弥补</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>招募测试用户代价较大</li>
+<li>很难组织大规模的测试用户，因此会使测试结果的统计意义不足</li>
+<li>设计双盲实验非常困难，而且用户在测试环境下的行为和真实环境下的行为可能有所不同</li>
+</ul>
+<h3 id="在线实验（online-experiment）"><a href="#在线实验（online-experiment）" class="headerlink" title="在线实验（online experiment）"></a>在线实验（online experiment）</h3><p>也就是传说中的 AB 测试。AB 测试是一种常用的在线评测算法的实验方法，通过一定的规则将用户随机分成几组，并对不同组的用户采取不同的算法，然后通过统计不同组用户的各种不同评测指标比较不同算法，比如统计不同组用户的点击率，通过点击率比较不同算法的性能。详见 <a href="http://www.abtests.com/" target="_blank" rel="external">AB test</a></p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>可以公平获得不同算法实际在线时的性能指标，包括商业上关注的指标</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>周期长，必须进行长期的实验才能得到可靠的结果</li>
+</ul>
+<p>简单的AB测试系统。</p>
+<ul>
+<li>用户进入网站后，流量分配系统决定用户是否需要被进行AB测试，如果需要的话，流量分配系统会给用户打上在测试中属于什么分组的标签。</li>
+<li>用户浏览网页，而用户在浏览网页时的行为都会被通过日志系统发回后台的日志数据库。此时，如果用户有测试分组的标签，那么该标签也会被发回后台数据库。</li>
+<li>在后台，实验人员的工作首先是配置流量分配系统，决定满足什么条件的用户参加什么样的测试。其次，实验人员需要统计日志数据库中的数据，通过评测系统生成不同分组用户的实验报告，并比较和评测实验结果。</li>
+</ul>
+<img src="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/AB%E6%B5%8B%E8%AF%95%E7%B3%BB%E7%BB%9F.jpg" class="ful-image" alt="AB%E6%B5%8B%E8%AF%95%E7%B3%BB%E7%BB%9F.jpg">
+<p> 一般来说，一个新的推荐算法最终上线，需要完成上面所说的3个实验。</p>
+<ol>
+<li>首先，需要通过离线实验证明它在很多离线指标上优于现有的算法。</li>
+<li>然后，需要通过用户调查确定它的用户满意度不低于现有的算法。</li>
+<li>最后，通过在线的 AB 测试确定它在我们关心的指标上优于现有的算法。  </li>
+</ol>
+<h2 id="评测指标"><a href="#评测指标" class="headerlink" title="评测指标"></a>评测指标</h2><h3 id="用户满意度"><a href="#用户满意度" class="headerlink" title="用户满意度"></a>用户满意度</h3><p>只能通过用户调查或者在线实验获得。</p>
+<h4 id="用户调查"><a href="#用户调查" class="headerlink" title="用户调查"></a>用户调查</h4><p>GroupLens 曾经做过一个论文推荐系统的调查问卷，该问卷的调查问题是请问下面哪句话最能描述你看到推荐结果后的感受</p>
+<ul>
+<li>推荐的论文都是我非常想看的。</li>
+<li>推荐的论文很多我都看过了，确实是符合我兴趣的不错论文。</li>
+<li>推荐的论文和我的研究兴趣是相关的，但我并不喜欢。</li>
+<li>不知道为什么会推荐这些论文，它们和我的兴趣丝毫没有关系。</li>
+</ul>
+<h4 id="在线实验"><a href="#在线实验" class="headerlink" title="在线实验"></a>在线实验</h4><p>主要通过一些对用户行为的统计得到。如利用购买率、点击率、用户停留时间和转化率等指标度量用户的满意度。</p>
+<h3 id="预测准确度"><a href="#预测准确度" class="headerlink" title="预测准确度"></a>预测准确度</h3><p>最重要的离线评测指标。在计算该指标时需要有一个离线的数据集，该数据集包含用户的历史行为记录。然后，将该数据集通过时间分成训练集和测试集。最后，通过在训练集上建立用户的行为和兴趣模型预测用户在测试集上的行为，并计算预测行为和测试集上实际行为的重合度作为预测准确度。<br><img src="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/precisionRecall.jpg" class="ful-image" alt="precisionRecall.jpg"></p>
+<h4 id="评分预测"><a href="#评分预测" class="headerlink" title="评分预测"></a>评分预测</h4><p>很多提供推荐服务的网站都有一个让用户给物品打分的功能(如知道了用户对物品的历史评分，就可以从中习得用户的兴趣模型，并预测该用户在将来看到一个所示)。那么，如果他没有评过分的物品时，会给这个物品评多少分。预测用户对物品评分的行为称为评分预测。</p>
+<p>评分预测的预测准确度一般通过均方根误差(RMSE)和平均绝对误差(MAE)计算。对于测试集中的一个用户 u 和物品 i，令 $r_{ui}$ 是用户 u 对 u 物品 i 的实际评分，而 $\hat r_{ui}$ 是推荐算法给出的预测评分，那么 RMSE 为<br><img src="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/RMSE.jpg" class="ful-image" alt="RMSE.jpg"></p>
+<p>MAE 采用绝对值计算预测误差：<br><img src="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/MAE.jpg" class="ful-image" alt="MAE.jpg"></p>
+<p>代码也非常简单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def RMSE(records):</div><div class="line">    return math.sqrt(sum[(rui=pui)**2 for u, i, rui, pui in records]) / float(len(records))</div><div class="line"></div><div class="line"></div><div class="line">def MAE(records):</div><div class="line">    return sum([abs(rui - pui) for u, i, rui, pui in records]) / float(len(records))</div></pre></td></tr></table></figure></p>
+<p>Netflix认为RMSE加大了对预测不准的用户物品评分的惩罚(平方项的惩罚)，因而对系统的评测更加苛刻。研究表明，如果评分系统是基于整数建立的(即用户给的评分都是整数)，那么对预测结果取整会降低MAE的误差。</p>
+<h4 id="TopN-推荐"><a href="#TopN-推荐" class="headerlink" title="TopN 推荐"></a>TopN 推荐</h4><p>TopN 推荐其实更符合实际需求。以电影为例，评分预测预测的其实是用户看了电影后会给什么样的评分，而电影推荐的目的是找到用户最可能感兴趣的电影，这两者当然不是一个概念。也许有一部历史片／文艺片非常好，用户看了会给非常高的分数，但是用户看的可能性非常小，可能用户就喜欢爱情片／脑残片呢。</p>
+<h3 id="覆盖率"><a href="#覆盖率" class="headerlink" title="覆盖率"></a>覆盖率</h3><p>覆盖率(coverage)描述一个推荐系统对物品长尾的发掘能力。覆盖率有不同的定义方法，最简单的定义为推荐系统能够推荐出来的物品占总物品集合的比例。假设系统的用户集合为 U， 推荐系统给每个用户推荐一个长度为 N 的物品列表 R(u)，那么推荐系统的覆盖率就是<br><img src="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/coverage.jpg" class="ful-image" alt="coverage.jpg"></p>
+<p>覆盖率是一个内容提供商会关心的指标。以图书推荐为例，出版社可能会很关心他们的书有没有被推荐给用户。覆盖率为100%的推荐系统可以将每个物品都推荐给至少一个用户。此外，从上面的定义也可以看到，热门排行榜的推荐覆盖率是很低的，它只会推荐那些热门的物品，这些物品在总物品中占的比例很小。一个好的推荐系统不仅需要有比较高的用户满意度，也要有较高的覆盖率。</p>
+<p>考虑研究物品在推荐列表中出现次数的分布描述推荐系统挖掘长尾的能力，可以用信息熵或者基尼系数。<br><strong>信息熵:</strong></p>
+<p>$H=-\sum_{i=1}^np(i) \ logp(i)$</p>
+<p>(p(i) 是物品 i 的流行度除以所有物品流行度之和。)</p>
+<p><strong>是基尼系数（Gini Index）:</strong></p>
+<p>$G={1 \over n-1}\sum_{j=1}^n(2j-n-1)p(i_j)$</p>
+<p>($i_j$ 是按照物品流行度p()从小到大排序的物品列表中第j个物品。)</p>
+<p>下面的代码可以用来计算给定物品流行度分布后的基尼系数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">def GiniIndex(p):</div><div class="line">    j = 1</div><div class="line">    n = len(p)</div><div class="line">    G = 0</div><div class="line">    for item, weight in sorted(p.items(), key=itemgetter(1)):</div><div class="line">        G += (2 * j - n - 1) * weight</div><div class="line"></div><div class="line">    return G / float(n - 1)</div></pre></td></tr></table></figure></p>
+<p>如果这个分布比较平，那么说明推荐系统的覆盖率较高，推荐系统发掘长尾的能力就很好。而如果这个分布较陡峭，说明推荐系统的覆盖率较低。</p>
+<p><strong>推荐系统是否有马太效应呢?</strong><br>推荐系统的初衷是希望消除马太效应，使得各种物品都能被展示给对它们感兴趣的某一类人群。但是，很多研究表明现在主流的推荐算法(比如协同过 滤算法)是具有马太效应的。评测推荐系统是否具有马太效应的简单办法就是使用基尼系数。如果 G1 是从初始用户行为中计算出的物品流行度的基尼系数，G2 是从推荐列表中计算出的物品流行度的基尼系数，那么如果G2 &gt; G1，就说明推荐算法具有马太效应。</p>
+<h3 id="多样性"><a href="#多样性" class="headerlink" title="多样性"></a>多样性</h3><p>用户的兴趣是广泛的，为了满足用户广泛的兴趣，推荐列表需要能够覆盖用户不同的兴趣领域，即推荐结果需要具有多样性。多样性描述的是推荐列表中物品两两之间的不相似性。因此，多样性和相似性是对应的。假设 s(i， j)定义了物品 i 和 j 之间的相似度，那么用户 u 的推荐列表 R(u) 的多样性定义如下:<br><img src="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/diversity.jpg" class="ful-image" alt="diversity.jpg"><br><img src="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/diversity2.jpg" class="ful-image" alt="diversity2.jpg"></p>
+<h3 id="新颖性"><a href="#新颖性" class="headerlink" title="新颖性"></a>新颖性</h3><p>新颖的推荐是指给用户推荐那些他们以前没有听说过的物品。在一个网站中实现新颖性的最简单办法是，把那些用户之前在网站中对其有过行为的物品从推荐列表中过滤掉。比如在一个视频网站中，新颖的推荐不应该给用户推荐那些他们已经看过、打过分或者浏览过的视频。</p>
+<p>评测新颖度的最简单方法是利用推荐结果的平均流行度，因为越不热门的物品越可能让用户觉得新颖。因此，如果推荐结果中物品的平均热门程度较低，那么推荐结果就可能有比较高的新颖性。但是，用推荐结果的平均流行度度量新颖性比较粗略，因为不同用户不知道的东西是不同的。因此，要准确地统计新颖性需要做用户调查。</p>
+<h3 id="惊喜度"><a href="#惊喜度" class="headerlink" title="惊喜度"></a>惊喜度</h3><p>惊喜度(serendipity)是最近这几年推荐系统领域最热门的话题。如果推荐结果和用户的历史兴趣不相似，但却让用户觉得满意，那么就可以说推荐结果的惊喜度很高，而推荐的新颖性仅仅取决于用户是否听说过这个推荐结果。</p>
+<p>目前并没有什么公认的惊喜度指标定义方式，这里只给出一种定性的度量方式。上面提到，令用户惊喜的推荐结果是和用户历史上喜欢的物品不相似，但用户却觉得满意的推荐。那么，定义惊喜度需要首先定义推荐结果和用户历史上喜欢的物品的相似度，其次需要定义用户对推荐结果的满意度。</p>
+<h3 id="信任度"><a href="#信任度" class="headerlink" title="信任度"></a>信任度</h3><p>如果你有两个朋友，一个人你很信任，一个人经常满嘴跑火车，那么如果你信任的朋友推荐 你去某个地方旅游，你很有可能听从他的推荐，但如果是那位满嘴跑火车的朋友推荐你去同样的 地方旅游，你很有可能不去。这两个人可以看做两个推荐系统，尽管他们的推荐结果相同，但用户却可能产生不同的反应，这就是因为用户对他们有不同的信任度。</p>
+<p>度量推荐系统的信任度只能通过问卷调查的方式，询问用户是否信任推荐系统的推荐结果。</p>
+<p>提高推荐系统的信任度主要有两种方法。</p>
+<ol>
+<li>增加推荐系统的透明度(transparency)<br>增加推荐系统透明度的主要办法是提供推荐解释。只有让用户了解推荐系统的运行机制，让用户认同推荐系统的运行机制，才会提高用户对推荐系统的信任度。</li>
+<li>考虑用户的社交网络信息<br>利用用户的好友信息给用户做推荐，并且用好友进行推荐解释。因为用户对他们的好友一般都比较信任，因此如果推荐的商品是好友购买过的，那么他们对推荐结果就会相对比较信任。</li>
+</ol>
+<h3 id="实时性"><a href="#实时性" class="headerlink" title="实时性"></a>实时性</h3><p>在很多网站中，因为物品(新闻、微博等)具有很强的时效性，所以需要在物品还具有时效性时就将它们推荐给用户。</p>
+<p>推荐系统的实时性包括两个方面。</p>
+<ol>
+<li>推荐系统需要实时地更新推荐列表来满足用户新的行为变化。比如，当一个用户购买了iPhone，如果推荐系统能够立即给他推荐相关配件，那么肯定比第二天再给用户推荐相关配件更有价值。很多推荐系统都会在离线状态每天计算一次用户推荐列表，然后于在线期间将推荐列表展示给用户。这种设计显然是无法满足实时性的。与用户行 为相应的实时性，可以通过推荐列表的变化速率来评测。如果推荐列表在用户有行为后变化不大，或者没有变化，说明推荐系统的实时性不高。</li>
+<li>推荐系统需要能够将新加入系统的物品推荐给用户。这主要考验了推荐系统处理物品冷启动的能力。对于新物品推荐能力，我们可以利用用户推荐列表中有多大比例的物品是当天新加 的来评测。</li>
+</ol>
+<h3 id="健壮性"><a href="#健壮性" class="headerlink" title="健壮性"></a>健壮性</h3><p>健壮性(即robust，鲁棒性)指标衡量了一个推荐系统抗击作弊的能力。</p>
+<p>算法健壮性的评测主要利用模拟攻击。</p>
+<ul>
+<li>给定一个数据集和一个算法，用这个算法给这个数据集中的用户生成推荐列表。</li>
+<li>用常用的攻击方法向数据集中注入噪声数据，然后利用算法在注入噪声后的数据集上再次给用户生成推荐列表。</li>
+<li>通过比较攻击前后推荐列表的相似度评测算法的健壮性。<br>如果攻击后的推荐列表相对于攻击前没有发生大的变化，就说明算法比较健壮。</li>
+</ul>
+<p>在实际系统中，提高系统的健壮性，除了选择健壮性高的算法，还有以下方法。</p>
+<ul>
+<li>设计推荐系统时尽量使用代价比较高的用户行为。比如，如果有用户购买行为和用户浏览行为，那么主要应该使用用户购买行为，因为购买需要付费，所以攻击购买行为的代价远远大于攻击浏览行为。</li>
+<li>在使用数据前，进行攻击检测，从而对数据进行清理。</li>
+</ul>
+<img src="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/ways.jpg" class="ful-image" alt="ways.jpg">
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>离线实验的优化 <strong>目标</strong> 是:<br>最大化预测准确度 使得 覆盖率 &gt; A，多样性 &gt; B， 新颖性 &gt; C，其中，A、B、C的取值应该视不同的应用而定。</p>
+<p>这些指标本身就是相互矛盾的，还有一种统一的方法可能是 AUC(area under curve):</p>
+<img src="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%BC%80%E5%9D%91/comb.jpg" class="ful-image" alt="comb.jpg">
+<h2 id="评测维度"><a href="#评测维度" class="headerlink" title="评测维度"></a>评测维度</h2><p>一般来说，评测维度分为如下3种。</p>
+<ul>
+<li>用户维度<br>主要包括用户的人口统计学信息、活跃度以及是不是新用户等。</li>
+<li>物品维度<br>包括物品的属性信息、流行度、平均分以及是不是新加入的物品等。</li>
+<li>时间维度<br>包括季节，是工作日还是周末，是白天还是晚上等。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/Recommender-Systems/" rel="tag">#Recommender Systems</a>
+          
+            <a href="/tags/推荐系统/" rel="tag">#推荐系统</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/21/神经网络-从线性到非线性/" rel="next" title="深度学习-从线性到非线性">
+                <i class="fa fa-chevron-left"></i> 深度学习-从线性到非线性
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/01/NLP 笔记 - Words, morphology, and lexicons/" rel="prev" title="NLP 笔记 - Words, morphology, and lexicons">
+                NLP 笔记 - Words, morphology, and lexicons <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐系统分析框架-Analytical-Framework-of-Recommend-System"><span class="nav-number">2.</span> <span class="nav-text">推荐系统分析框架 Analytical Framework of Recommend System</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐系统的应用"><span class="nav-number">3.</span> <span class="nav-text">推荐系统的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#电子商务"><span class="nav-number">3.1.</span> <span class="nav-text">电子商务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#电影和视频网站"><span class="nav-number">3.2.</span> <span class="nav-text">电影和视频网站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个性化音乐网络电台"><span class="nav-number">3.3.</span> <span class="nav-text">个性化音乐网络电台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#社交网络"><span class="nav-number">3.4.</span> <span class="nav-text">社交网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个性化阅读"><span class="nav-number">3.5.</span> <span class="nav-text">个性化阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于位置的服务"><span class="nav-number">3.6.</span> <span class="nav-text">基于位置的服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个性化邮件"><span class="nav-number">3.7.</span> <span class="nav-text">个性化邮件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个性化广告"><span class="nav-number">3.8.</span> <span class="nav-text">个性化广告</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐系统评测"><span class="nav-number">4.</span> <span class="nav-text">推荐系统评测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐系统实验方法"><span class="nav-number">4.1.</span> <span class="nav-text">推荐系统实验方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#离线实验（offline-experiment）"><span class="nav-number">4.1.1.</span> <span class="nav-text">离线实验（offline experiment）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户调查（user-study）"><span class="nav-number">4.1.2.</span> <span class="nav-text">用户调查（user study）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在线实验（online-experiment）"><span class="nav-number">4.1.3.</span> <span class="nav-text">在线实验（online experiment）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评测指标"><span class="nav-number">4.2.</span> <span class="nav-text">评测指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户满意度"><span class="nav-number">4.2.1.</span> <span class="nav-text">用户满意度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用户调查"><span class="nav-number">4.2.1.1.</span> <span class="nav-text">用户调查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在线实验"><span class="nav-number">4.2.1.2.</span> <span class="nav-text">在线实验</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预测准确度"><span class="nav-number">4.2.2.</span> <span class="nav-text">预测准确度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#评分预测"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">评分预测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TopN-推荐"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">TopN 推荐</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#覆盖率"><span class="nav-number">4.2.3.</span> <span class="nav-text">覆盖率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多样性"><span class="nav-number">4.2.4.</span> <span class="nav-text">多样性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新颖性"><span class="nav-number">4.2.5.</span> <span class="nav-text">新颖性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#惊喜度"><span class="nav-number">4.2.6.</span> <span class="nav-text">惊喜度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信任度"><span class="nav-number">4.2.7.</span> <span class="nav-text">信任度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实时性"><span class="nav-number">4.2.8.</span> <span class="nav-text">实时性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#健壮性"><span class="nav-number">4.2.9.</span> <span class="nav-text">健壮性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">4.2.10.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评测维度"><span class="nav-number">4.3.</span> <span class="nav-text">评测维度</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/01/23/推荐系统--开坑/';
+      var disqus_title = "推荐系统--开坑";
+      var disqus_url = 'http://www.shuang0420.cn/2017/01/23/推荐系统--开坑/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

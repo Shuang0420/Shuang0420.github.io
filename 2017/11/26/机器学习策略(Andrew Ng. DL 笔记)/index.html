@@ -1,0 +1,1065 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep learning,过拟合,overfitting," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="Andrew Ng. Deep Learning Course 3 Structuring Machine Learning Projects 的重点笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习策略(Andrew Ng. DL 笔记)">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="Andrew Ng. Deep Learning Course 3 Structuring Machine Learning Projects 的重点笔记。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_metric0.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_metric1.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/bayes_bias.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/improve_model.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_analysis.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_analysis2.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/mismatch.png">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习策略(Andrew Ng. DL 笔记)">
+<meta name="twitter:description" content="Andrew Ng. Deep Learning Course 3 Structuring Machine Learning Projects 的重点笔记。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_metric0.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/"/>
+
+
+  <title> 机器学习策略(Andrew Ng. DL 笔记) | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                机器学习策略(Andrew Ng. DL 笔记)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-11-26T12:20:02+08:00" content="2017-11-26">
+              2017-11-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Deep-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep learning</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Andrew Ng. Deep Learning Course 3 Structuring Machine Learning Projects 的重点笔记。<br><a id="more"></a></p>
+<h1 id="常用策略及考虑问题"><a href="#常用策略及考虑问题" class="headerlink" title="常用策略及考虑问题"></a>常用策略及考虑问题</h1><p><strong>常用的 ML 策略：</strong></p>
+<ul>
+<li>收集更多数据（collect more data）</li>
+<li>收集更多样化的训练集（collect more diverse training set）</li>
+<li>梯度下降训练更长时间（train algorithm longer with gradient descent）</li>
+<li>尝试 Adam 算法（try Adam instead of gradient descent）</li>
+<li>尝试更大的网路（try bigger network）</li>
+<li>尝试小一点的网络（try smaller network）</li>
+<li>尝试 dropout（try dropout）</li>
+<li>加 L2 正则（add L2 regularization）</li>
+<li>改善网络结构（network architecture）<ul>
+<li>激活函数（activation functions）</li>
+<li>隐藏单元数量（number of hidden units）</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+<p><strong>要考虑的几个问题：</strong></p>
+<ul>
+<li>训练集上拟合良好 fit training set well on cost function</li>
+<li>训练开发集上拟合良好 fit training-dev set well on cost function<br>在训练集和开发/测试集来自不同分布时考虑</li>
+<li>开发集上拟合良好 fit dev set well on cost function</li>
+<li>测试集上拟合良好 fit test set well on cost function</li>
+<li>现实世界中表现良好 performs well in real world</li>
+</ul>
+<p>另外，调优要注意的是，尽量用 <strong>正交化（Orthogonalization）</strong> 的手段，比如说 <strong>early stopping</strong> 其实不是一个优先的选择，因为它不那么正交化，会同时影响模型对训练集的拟合以及开发集的表现，同时影响了两件事情，对误差分析造成干扰。</p>
+<h1 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h1><p><strong>单实数评价指标</strong>（Using a single number evaluation metric）<br>用单实数评价指标，能够提高比较各种模型的效率，便于优化模型。 一个简单的例子是用 precision 和 recall，我们知道二者不可兼得，也就是比较哪个模型好的时候我们会发现 A 的 precision 高，B 的 recall 高，选哪个呢？这时候不妨引入 F1 来综合 precision 和 recall。</p>
+<p><strong>满足和优化指标</strong><br>如果有多个评价指标，可以选择线性组合，如 cost = accuracy - β*time，也可以选其中一个为 optimizing metric，其他为 satisfying metrics。</p>
+<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">分类器	| 准确率 | 耗时</div><div class="line">  A     |  90%  | 80ms</div><div class="line">  B	|  92% |	95ms</div><div class="line">  C	|  95% |	1500ms</div></pre></td></tr></table></figure></p>
+<p>我们更关心准确率，所以准确率是优化目标，同时希望耗时不要太长，所以运行时间是满足指标，最后整体指标就是在 100ms 运行时间的条件下准确率的大小。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">maximize accuracy</div><div class="line">subject to running time &lt;= 100ms</div></pre></td></tr></table></figure></p>
+<p><strong>什么时候改变评价指标？</strong><br>模型在 metric + dev/test 上表现很好，但是在实际应用中表现不好的时候，就应该考虑改变 metric 了。</p>
+<p>假设现在有两个算法:</p>
+<ul>
+<li>算法 A:  喵咪图片识别误差是 3%，但是会把少儿不宜的图片分类为猫</li>
+<li>算法 B：误差是 5%，但是不会给用户推送不健康的图片</li>
+</ul>
+<p>我们的 dev + metric 偏好 A，但我们的用户偏好 B，两者存在分歧，这时我们就需要改变评价指标了。根据上面的例子，假设原来的评价指标是：<br><img src="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_metric0.png" class="ful-image" alt="error_metric0.png"></p>
+<p>那么现在可以给“把少儿不宜的图片分类为猫”这个错误一个大的惩罚权重，当然前提是先把这些少儿不宜的图片标注好。<br><img src="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_metric1.png" class="ful-image" alt="error_metric1.png"></p>
+<h1 id="训练-开发-测试集"><a href="#训练-开发-测试集" class="headerlink" title="训练/开发/测试集"></a>训练/开发/测试集</h1><p>机器学习通常会把数据集分为<strong>训练/开发/测试集</strong>，这一篇讲一讲这三个子集扮演的角色。</p>
+<p>最重要的一点是：<br><strong>dev set + single metric =&gt; target（瞄准的目标）</strong></p>
+<p>开发集和测试集的选择通常是现实中希望去处理的数据，很重要的一点是 <strong>开发集和测试集必须服从同一分布</strong>。举个例子，复习考试，训练集是复习资料，开发集像是考试前的模拟试卷，测试集则是真实考卷，我们最终目标是在真实考卷（测试集）中取得好成绩，准备过程中优化的是模拟试题（开发集）上的成绩，而复习资料（训练集）的选择会影响我们逼近这个目标有多快。而如果开发集和测试集来自不同分布，比如说在英语模拟试卷上考了 99 分，但最后你去参加了语文考试，这不是白复习白训练了么~</p>
+<p><strong>训练/开发/测试集的大小</strong><br>之前传统 ML 时代数据集比较小， 一般 &lt; 10,000，所以 train/dev/test 的划分通常是 60%/20%/20%，而现在的数据量很大，动辄百万级，划分 40% 的数据处理做开发/测试集显然是浪费，所以比例可以是 98%/1%/1%。</p>
+<p>可避免偏差 <strong>available bias</strong> 和<strong>Human-level performance</strong><br><img src="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/bayes_bias.png" class="ful-image" alt="bayes_bias.png"></p>
+<p>Humans error 与 Training Error之间的差距是 <strong>Avoidable bias</strong>，Training Error 与 Dev Error之间的差距是  <strong>Variance</strong>，提到过好多次啦，具体见 <a href="http://www.shuang0420.com/2017/03/17/会议笔记%20-%20Nuts%20and%20Bolts%20of%20Applying%20Deep%20Learning/" target="_blank" rel="external">会议笔记 - Nuts and Bolts of Applying Deep Learning</a>，这里简单附个图吧。<br><img src="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/improve_model.png" class="ful-image" alt="improve_model.png"></p>
+<h1 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h1><p><strong>误差分析</strong> 的作用在于弄清楚误差最主要来自哪个部分，然后给未来的工作指明优化方向，便于解决主要矛盾，节省时间。</p>
+<p>还是猫分类器的例子，假设我们分析模型的预测结果后发现，预测错误的数据中有一部分狗的图片被错误标成了猫。这时可能会想着设计一些处理狗的特征/分类的算法功能来提高猫分类器。然而，假如 100 个错误标记的开发集样本中，只有 5 个是狗，那么这意味着你针对狗的算法提高最终也只能优化误差的 5%，比如原来误差是 10%，最好的情况也只是优化到 9.5%，这是优化上限。</p>
+<p>把误差的来源以及在总误差的占比列个表统计，就能清楚的发现解决哪类误差对模型优化帮助最大。这个过程中可能会发现新的错误类型，比如滤镜导致的误差。<br><img src="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_analysis.png" class="ful-image" alt="error_analysis.png"></p>
+<p>统计完成后根据误差占比、问题难度、团队的时间精力，来选择其中优先级高的几个进行优化。</p>
+<p><strong>如果训练数据中有一些标记错误的例子怎么办？</strong></p>
+<p>如果这种误差是 <strong>随机误差</strong>，人没有注意而随机产生的，那么不用花太多时间修复它们，只要数据集足够大，对最后的结果不会有太大影响，因为<strong>深度学习算法对随机误差有一定健壮性（robustness）。</strong></p>
+<p>但如果这种误差是 <strong>系统性误差</strong>，比如把把所有白色的狗都标注成了猫，那么问题就大了，学习之后所有白色的狗都会被分类成猫，这就需要重新标记了。</p>
+<p><strong>如果开发/测试集中有一些标记错误的例子怎么办？</strong><br>在误差分析中加一列 incorrectly labeled，然后看是否值得修正这些标记错误的例子</p>
+<img src="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/error_analysis2.png" class="ful-image" alt="error_analysis2.png">
+<p>如果人工错误标记引起的错误样本比例是 0.6%，而总体开发集误差是 10%，那么应该集中精力解决剩下的 9.4%，而如果总体开发集误差是 2%，那么就应该考虑去纠正这些人为错误了。</p>
+<p>但要注意的是，不管要不要纠正人为误差，都要同时作用在开发集和测试集上，确保两者服从同一分布。同时，也可以考虑再次检查那些分类正确的例子，因为本来 no 的例子可能被标记成了 yes，不过正常情况下判断错的次数比判断对的次数要少的多，所以检查这部分数据花的时间也长的多。</p>
+<h1 id="训练-测试集来自不同分布"><a href="#训练-测试集来自不同分布" class="headerlink" title="训练/测试集来自不同分布"></a>训练/测试集来自不同分布</h1><p><strong>如果训练集的分布和开发/测试集不一样怎么办？</strong> 这种情况并不少见。比如说，我们有网上爬取的猫的图片 20w，但只有用户在手机 APP 上传的图片 1w。</p>
+<p>这时候，可能会想到把这 21w 条数据 shuffle 然后来划分，这样的好处是训练/开发/测试集来自同一分布，但是！你会发现开发/测试集上的很多图片都来自网页下载，这并不是我们真心关心的数据分布，也就是说，只有一小部分的数据是我们的模型真心要瞄准、要优化的目标，而实际上我们大部分精力都在优化网页下载的图片！</p>
+<p>再回顾一下核心思想，<strong>开发集/测试集是真正关心的要优化的目标数据</strong>。所以更恰当的做法是，<strong><em>把手机上传的一半图片 5k 条划给训练集，剩下的 5k 条全部划分为开发/测试集</em></strong>。</p>
+<p>要注意的是，训练/测试集来自不同分布会对 <strong>方差/偏差分析</strong> 造成影响，因为这不再是正交化的分析了。比如说</p>
+<ul>
+<li>training error 1%</li>
+<li>dev error 10%</li>
+</ul>
+<p>如果训练集和开发集来自同一分布，很简单，这是出现了高方差的问题。但如果训练集和开发集来自不同的分布，那么可能这里就不是高方差的问题了，造成这种情况的原因有两种：</p>
+<ol>
+<li>算法看不到开发集数据，难以泛化</li>
+<li>训练集和开发集来自不同的分布</li>
+</ol>
+<p>我们需要知道哪个因素影响更大，才能判断是不是高方差的原因。这时需要定义一个新的数据集 <strong>training-dev set</strong>，通过随机打散训练集，分出一部分训练集和开发集一起作为训练-开发集，这样的话，training-dev set 和 training set 来自同一分布，同时 trainging-dev set 和 dev/test set 也来自同一分布。</p>
+<p>现在只在训练集上训练模型</p>
+<ul>
+<li>training error    1%    </li>
+<li>training-dev error  9%    </li>
+<li>dev error                10%</li>
+</ul>
+<p>这就是方差问题，模型泛化能力差。</p>
+<ul>
+<li>training error    1%    </li>
+<li>training-dev error1.5%</li>
+<li>dev error10%</li>
+</ul>
+<p>这时候就是 <strong>数据不匹配问题（data mismatch problem ）</strong>了。</p>
+<p>也就是说，当训练集和开发/测试集来自不同分布的时候，我们需要考虑下面 5 种 error：</p>
+<ul>
+<li>human error: 0%</li>
+<li>training error: 10%</li>
+<li>training-dev error: 11%</li>
+<li>dev error: 20%</li>
+<li>test error: 20%</li>
+</ul>
+<p>这个例子就是 <strong>高方差+数据不匹配</strong> 问题。</p>
+<img src="http://images.shuang0420.cn/images/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%28Andrew%20Ng.%20DL%20%E7%AC%94%E8%AE%B0%29/mismatch.png" class="ful-image" alt="mismatch.png">
+<p><strong>如果误差分析显示有数据不匹配的问题该怎么办</strong></p>
+<ul>
+<li>可以人工做误差分析，了解训练集和开发测试集的差异</li>
+<li>收集更多与开发集、测试集相似的训练数据，人工数据合成<br>比如 clear audio + car noise =&gt; synthesized in-car audio</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-learning/" rel="tag">#Deep learning</a>
+          
+            <a href="/tags/过拟合/" rel="tag">#过拟合</a>
+          
+            <a href="/tags/overfitting/" rel="tag">#overfitting</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/17/论文笔记 - HRED 与 VHRED/" rel="next" title="论文笔记 - HRED 与 VHRED">
+                <i class="fa fa-chevron-left"></i> 论文笔记 - HRED 与 VHRED
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/04/论文笔记 - Memory Networks/" rel="prev" title="论文笔记 - Memory Networks">
+                论文笔记 - Memory Networks <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用策略及考虑问题"><span class="nav-number">1.</span> <span class="nav-text">常用策略及考虑问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#评价指标"><span class="nav-number">2.</span> <span class="nav-text">评价指标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练-开发-测试集"><span class="nav-number">3.</span> <span class="nav-text">训练/开发/测试集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#误差分析"><span class="nav-number">4.</span> <span class="nav-text">误差分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练-测试集来自不同分布"><span class="nav-number">5.</span> <span class="nav-text">训练/测试集来自不同分布</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/';
+      var disqus_title = "机器学习策略(Andrew Ng. DL 笔记)";
+      var disqus_url = 'http://www.shuang0420.cn/2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

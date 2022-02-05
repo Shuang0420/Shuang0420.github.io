@@ -1,0 +1,1079 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端,cgi,ajax,socket," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="简单的界面用于个人 or 公司内部 demo。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python-cgi + ajax 实现异步响应表单">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/07/18/socket + python-cgi + ajax 实现异步响应表单/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="简单的界面用于个人 or 公司内部 demo。">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-30%20%E4%B8%8B%E5%8D%888.23.12.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-30%20%E4%B8%8B%E5%8D%889.01.17.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-30%20%E4%B8%8B%E5%8D%889.01.24.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-30%20%E4%B8%8B%E5%8D%889.44.45.png">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python-cgi + ajax 实现异步响应表单">
+<meta name="twitter:description" content="简单的界面用于个人 or 公司内部 demo。">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-30%20%E4%B8%8B%E5%8D%888.23.12.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/07/18/socket + python-cgi + ajax 实现异步响应表单/"/>
+
+
+  <title> python-cgi + ajax 实现异步响应表单 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                python-cgi + ajax 实现异步响应表单
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-18T20:10:08+08:00" content="2016-07-18">
+              2016-07-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Web-Application/" itemprop="url" rel="index">
+                    <span itemprop="name">Web Application</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/18/socket + python-cgi + ajax 实现异步响应表单/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/18/socket + python-cgi + ajax 实现异步响应表单/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>简单的界面用于个人 or 公司内部 demo。<br><a id="more"></a></p>
+<h1 id="cgi"><a href="#cgi" class="headerlink" title="cgi"></a>cgi</h1><p>CGI 目前由NCSA维护，NCSA定义CGI如下：<br>CGI(Common Gateway Interface),通用网关接口,它是一段程序,运行在服务器上如：HTTP服务器，提供同客户端HTML页面的接口。</p>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-30%20%E4%B8%8B%E5%8D%888.23.12.png" alt=""></p>
+<h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><p>cgi 实在是…… 太！简！单！太！方！便了！不废话，上个教程。<br><a href="http://www.runoob.com/python/python-cgi.html" target="_blank" rel="external">Python CGI编程</a></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p><a href="http://www.runoob.com/python/python-cgi.html" target="_blank" rel="external">apache cgi 配置教程</a>网上都有，上面的教程也有介绍，值得一提的是，我遵照了若干教程，然而并没能用 mac 自带的 apache 配置 cgi 成功，最后是用 xampp 配置好的，推测是原有的 xampp 对本机的 apache 有改动。</p>
+<p>下面记录下 xampp 配置 cgi 过程。<br>在 /Application/XAMPP/etc/httpd.conf 改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;Directory &quot;/Applications/XAMPP/xamppfiles/cgi-bin/&quot;&gt;</div><div class="line">    AllowOverride None</div><div class="line">    Options Indexes FollowSymLinks MultiViews ExecCGI</div><div class="line">    Order allow,deny</div><div class="line">    Allow from all</div><div class="line">&lt;/Directory&gt;</div></pre></td></tr></table></figure></p>
+<p>在 /Applications/XAMPP/xamppfiles/apache2/conf/httpd.conf 改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;Directory &quot;/Applications/XAMPP/xamppfiles/apache2/htdocs&quot;&gt;</div><div class="line">    Options Indexes FollowSymLinks MultiViews ExecCGI</div><div class="line">    AllowOverride All</div><div class="line">    Order allow,deny</div><div class="line">    Allow from all</div><div class="line">&lt;/Directory&gt;</div></pre></td></tr></table></figure></p>
+<p>重启，把 cgi 代码放到 /Applications/XAMPP/xamppfiles/cgi-bin/ 目录下运行，如果无法运行，改权限</p>
+<pre>chmod 755 test.py</pre>
+
+<p>附测试代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/python</div><div class="line"># -*- coding: UTF-8 -*-</div><div class="line"></div><div class="line">print &quot;Content-type:text/html&quot;</div><div class="line">print                               # 空行，告诉服务器结束头部</div><div class="line">print &apos;&lt;html&gt;&apos;</div><div class="line">print &apos;&lt;head&gt;&apos;</div><div class="line">print &apos;&lt;meta charset=&quot;utf-8&quot;&gt;&apos;</div><div class="line">print &apos;&lt;title&gt;Hello Word - 我的第一个 CGI 程序！&lt;/title&gt;&apos;</div><div class="line">print &apos;&lt;/head&gt;&apos;</div><div class="line">print &apos;&lt;body&gt;&apos;</div><div class="line">print &apos;&lt;h2&gt;Hello Word! 我是来自菜鸟教程的第一CGI程序&lt;/h2&gt;&apos;</div><div class="line">print &apos;&lt;/body&gt;&apos;</div><div class="line">print &apos;&lt;/html&gt;&apos;</div></pre></td></tr></table></figure></p>
+<p>浏览器打开 <a href="http://localhost/cgi-bin/test.py，" target="_blank" rel="external">http://localhost/cgi-bin/test.py，</a> 测试成功。</p>
+<h2 id="cgi-调试"><a href="#cgi-调试" class="headerlink" title="cgi 调试"></a>cgi 调试</h2><p>为了浏览器调试，在 cgi 文件中加上下面的代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import cgitb</div><div class="line">cgitb.enable()</div></pre></td></tr></table></figure></p>
+<p>这时，debug信息会显示在浏览器上面，方便调试。生产环境中出于安全的考虑，一般会关掉debug的功能。</p>
+<h1 id="ajax"><a href="#ajax" class="headerlink" title="ajax"></a>ajax</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>AJAX 全称 Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。它并非一种新的技术，而是以下几种原有技术的结合体。</p>
+<ol>
+<li>使用 CSS 和 XHTML 来表示。</li>
+<li>使用 DOM 模型来交互和动态显示。</li>
+<li>使用 XMLHttpRequest 来和服务器进行异步通信。</li>
+<li>使用 javascript 来绑定和调用。</li>
+</ol>
+<p>通过 AJAX 异步技术，可以在客户端脚本与 web 服务器交互数据的过程中使用 XMLHttpRequest 对象来完成 HTTP 请求(Request)/应答(Response)模型：</p>
+<ol>
+<li>不需要用户等待服务端响应。在异步派发 XMLHttpRequest 请求后控制权马上就被返回到浏览器。界面不会出现白板，在得到服务器响应之前还可以友好的给出一个加载提示。</li>
+<li>不需要重新加载整个页面。为 XMLHttpRequest 注册一个回调函数，待服务器响应到达时，触发回调函数，并且传递所需的少量数据。“按需取数据”也降低了服务器的压力。</li>
+<li>不需要使用隐藏或内嵌的框架。在 XHR 对象之前，模拟 Ajax 通信通常使用 hack 手段，如使用隐藏的或内嵌的框架(iframe标签)。</li>
+</ol>
+<h2 id="重要对象：XMLHttpRequest"><a href="#重要对象：XMLHttpRequest" class="headerlink" title="重要对象：XMLHttpRequest"></a>重要对象：XMLHttpRequest</h2><p>XMLHttpRequest 是一套可以在 Javascript、VbScript、Jscript 等脚本语言中通过http协议传送或接收 XML 及其他数据的一套API。</p>
+<h3 id="主要函数-客户端"><a href="#主要函数-客户端" class="headerlink" title="主要函数(客户端)"></a>主要函数(客户端)</h3><ul>
+<li><p>open(method,url,async, bstrUser, bstrPassword)<br>规定请求的类型、URL 以及是否异步处理请求。</p>
+</li>
+<li><p>setRequestHeader(name,value)<br>自定义HTTP头部信息。需在open()方法之后和send()之前调用，才能成功发送请求头部信息。<br>onreadystatchange,</p>
+</li>
+<li><p>send(string)<br>将请求发送到服务器。参数string仅用于POST请求；对于GET请求的参数写在url后面，所以string参数传递null。</p>
+</li>
+</ul>
+<h2 id="简单实例"><a href="#简单实例" class="headerlink" title="简单实例"></a>简单实例</h2><h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">var myAjax = &#123;</div><div class="line">    // XMLHttpRequest IE7+, Firefox, Chrome, Opera, Safari ；  ActiveXObject IE6, IE5</div><div class="line">    xhr: window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject(&apos;Microsoft.XMLHTTP&apos;),</div><div class="line">    get: function (url, callback) &#123;</div><div class="line">        this.xhr.open(&apos;get&apos;, url);</div><div class="line">        this.onreadystatechange(callback, this.xhr);</div><div class="line">        this.xhr.send(null);        </div><div class="line">    &#125;,</div><div class="line">    post: function (url, data, callback) &#123;</div><div class="line">        this.xhr.open(&apos;post&apos;, url);</div><div class="line">        this.xhr.setRequestHeader(&apos;Content-Type&apos;, &apos;application/x-www-form-urlencoded&apos;);</div><div class="line">        this.onreadystatechange(callback, this.xhr);</div><div class="line">        this.xhr.send(data);</div><div class="line">    &#125;,</div><div class="line">    onreadystatechange: function (func, _xhr) &#123;</div><div class="line">        _xhr.onreadystatechange = function () &#123;</div><div class="line">            if (_xhr.readyState == 4) &#123;</div><div class="line">                if (_xhr.status == 200) &#123;</div><div class="line">                    func(_xhr.responseText);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$(&apos;#btn_nowTime1&apos;).bind(&apos;click&apos;, null</div><div class="line">    , function () &#123;</div><div class="line">        myAjax.post(&apos;AjaxHandler.ashx&apos;, &apos;func=GetServerTime&apos;</div><div class="line">            , function (data) &#123;</div><div class="line">                if (data)</div><div class="line">                    alert(data);</div><div class="line">            &#125;</div><div class="line">        );</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<h1 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h1><p>Socket 是任何一种计算机网络通讯中最基础的内容。例如当你在浏览器地址栏中输入 www.oschina.net 时，你会打开一个套接字，然后连接到 www.oschina.net 并读取响应的页面然后然后显示出来。而其他一些聊天客户端如 gtalk 和 skype 也是类似。任何网络通讯都是通过 Socket 来完成的。<br>下面简单介绍下 python 的 socket 编程。</p>
+<h2 id="server"><a href="#server" class="headerlink" title="server"></a>server</h2><h3 id="主要函数"><a href="#主要函数" class="headerlink" title="主要函数"></a>主要函数</h3><ul>
+<li><p>s.bind(address)<br>将 socket 绑定到地址, 在 AF_INET 下,以元组（host,port）的形式表示地址.</p>
+</li>
+<li><p>s.listen(backlog)<br>开始监听 TCP 传入连接。backlog 指定在拒绝连接之前，操作系统可以挂起的最大连接数量。该值至少为1，大部分应用程序设为5就可以了。</p>
+</li>
+<li><p>s.accept()<br>接受TCP连接并返回（conn,address）,其中 conn 是新的 socket 对象，可以用来接收和发送数据。address是连接客户端的地址。</p>
+</li>
+</ul>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><ol>
+<li><p>创建 socket</p>
+<pre>socket.socket(socket.AF_INET,socket.SOCK_STREAM) </pre>
+</li>
+<li><p>绑定到本地IP与端口</p>
+<pre>s.bind()</pre>
+</li>
+<li><p>开始监听连接</p>
+<pre>s.listen()</pre>
+</li>
+<li><p>进入循环，不断接受客户端的连接请求              </p>
+<pre>s.accept()</pre>
+</li>
+<li><p>然后接收传来的数据，并发送给对方数据         </p>
+<pre>
+# 接收数据
+s.recv()
+# 发送数据
+s.sendall()</pre>
+</li>
+<li><p>传输完毕后，关闭socket                     </p>
+<pre>s.close()</pre>
+
+
+</li>
+</ol>
+<h2 id="client"><a href="#client" class="headerlink" title="client"></a>client</h2><h3 id="主要函数-1"><a href="#主要函数-1" class="headerlink" title="主要函数"></a>主要函数</h3><ul>
+<li><p>s.connect(address)<br>连接到 address 处的 socket。一般 address 的格式为元组（hostname,port），如果连接出错，返回 socket.error 错误。</p>
+</li>
+<li><p>s.connect_ex(adddress)<br>功能与 connect(address) 相同，但是成功返回0，失败返回errno的值。</p>
+</li>
+</ul>
+<h3 id="过程-1"><a href="#过程-1" class="headerlink" title="过程"></a>过程</h3><ol>
+<li><p>创建 socket，连接远端地址</p>
+<pre>socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
+s.connect()</pre>
+</li>
+<li><p>连接后发送数据和接收数据          </p>
+<pre>s.sendall()
+s.recv()</pre>
+</li>
+<li><p>传输完毕后，关闭 socket         </p>
+<pre>s.close()</pre>
+
+</li>
+</ol>
+<h2 id="server-client-主要公共函数"><a href="#server-client-主要公共函数" class="headerlink" title="server, client 主要公共函数"></a>server, client 主要公共函数</h2><ul>
+<li><p>s.recv(bufsize[,flag])<br>接受 TCP socket 的数据。数据以字符串形式返回，bufsize 指定要接收的最大数据量。flag提供有关消息的其他信息，通常可以忽略。</p>
+</li>
+<li><p>s.send(string[,flag])<br>发送TCP数据。将string中的数据发送到连接的 socket 。返回值是要发送的字节数量，该数量可能小于 string 的字节大小。</p>
+</li>
+<li><p>s.sendall(string[,flag])<br>完整发送TCP数据。将string中的数据发送到连接的 socket ，但在返回之前会尝试发送所有数据。成功返回 None，失败则抛出异常。</p>
+</li>
+<li><p>s.close()<br>关闭 socket。</p>
+</li>
+</ul>
+<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><p>实现一个简单的 socket，用户输入问题，刷新页面响应。</p>
+<h2 id="server-完整代码"><a href="#server-完整代码" class="headerlink" title="server 完整代码"></a>server 完整代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/python</div><div class="line"># -*- coding: UTF-8 -*-</div><div class="line">import socket</div><div class="line">import sys</div><div class="line"></div><div class="line">HOST = &apos;localhost&apos;   # Symbolic name meaning all available interfaces</div><div class="line">PORT = 9000 # Arbitrary non-privileged port</div><div class="line"></div><div class="line"># create tcp socket</div><div class="line">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</div><div class="line">print &apos;Socket created&apos;</div><div class="line"></div><div class="line">try:</div><div class="line">    s.bind((HOST, PORT))</div><div class="line">except socket.error , msg:</div><div class="line">    print &apos;Bind failed. Error Code : &apos; + str(msg[0]) + &apos; Message &apos; + msg[1]</div><div class="line">    sys.exit()</div><div class="line"></div><div class="line">print &apos;Socket bind complete&apos;</div><div class="line"></div><div class="line"></div><div class="line">s.listen(10)</div><div class="line">print &apos;Socket now listening&apos;</div><div class="line"></div><div class="line"></div><div class="line">while 1:</div><div class="line">    #wait to accept a connection - blocking call</div><div class="line">    conn, addr = s.accept()</div><div class="line">    print &apos;Connected with &apos; + addr[0] + &apos;:&apos; + str(addr[1])</div><div class="line">    data = conn.recv(1024)</div><div class="line">    reply = &apos;&#123;&quot;search&quot;:&#123;&quot;cost&quot;:0.01,&quot;data&quot;:[&#123;&quot;ask&quot;:&quot;在哪里&quot;,&quot;answer&quot;:[&quot;不是在这里&quot;,&quot;你在这里&quot;,&quot;好久不见&quot;],&quot;score&quot;:99&#125;]&#125;,&quot;model&quot;:&#123;&quot;cost&quot;:0.02,&quot;answer&quot;:&quot;在这里哈哈哈&quot;&#125;&#125;&apos;</div><div class="line">    print reply</div><div class="line">    if not data:</div><div class="line">        break</div><div class="line">    conn.sendall(reply)</div><div class="line"></div><div class="line">conn.close()</div><div class="line">s.close()</div></pre></td></tr></table></figure>
+<h2 id="client-完整代码"><a href="#client-完整代码" class="headerlink" title="client 完整代码"></a>client 完整代码</h2><h3 id="client-响应表单"><a href="#client-响应表单" class="headerlink" title="client 响应表单"></a>client 响应表单</h3><p>mysocket.py<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/python</div><div class="line"># -*- coding: UTF-8 -*-</div><div class="line">import json</div><div class="line">import socket</div><div class="line">import cgitb</div><div class="line">import cgi</div><div class="line"></div><div class="line">cgitb.enable()</div><div class="line">form = cgi.FieldStorage()</div><div class="line">question = form.getvalue(&apos;question&apos;)</div><div class="line"></div><div class="line"></div><div class="line">sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</div><div class="line">sock.connect((&apos;localhost&apos;, 9000))</div><div class="line">message = question</div><div class="line">try:</div><div class="line">    # Set the whole string</div><div class="line">    sock.sendall(message)</div><div class="line">except socket.error:</div><div class="line">    # Send failed</div><div class="line">    print &apos;Send failed&apos;</div><div class="line">    sys.exit()</div><div class="line"></div><div class="line"># sock.send(data)</div><div class="line">result = json.loads(sock.recv(10240))</div><div class="line"></div><div class="line"># 以下代码处理 json 并显示表单</div><div class="line">search_cost = result[&apos;search&apos;][&apos;cost&apos;]</div><div class="line">answers = result[&apos;search&apos;][&apos;data&apos;][0][&apos;answer&apos;]</div><div class="line">ans = answers[0]</div><div class="line">search_score = result[&apos;search&apos;][&apos;data&apos;][0][&apos;score&apos;]</div><div class="line">rnnAns = result[&apos;model&apos;]</div><div class="line"></div><div class="line">print &quot;Content-type:text/html&quot;</div><div class="line">print</div><div class="line">print &apos;&lt;html&gt;&apos;</div><div class="line">print &apos;&lt;head&gt;&apos;</div><div class="line">print &apos;&lt;meta charset=&quot;utf-8&quot;&gt;&apos;</div><div class="line">print &apos;&lt;title&gt;TEST&lt;/title&gt;&apos;</div><div class="line">print &apos;&lt;/head&gt;&apos;</div><div class="line"></div><div class="line"></div><div class="line">print &apos;&lt;body align=&quot;center&quot;&gt;&lt;div width=&quot;980&quot; align=&quot;center&quot;&gt;&apos;</div><div class="line">print &quot;&lt;h2&gt;Question: &quot; + question + &quot;&lt;/h2&gt;&quot;</div><div class="line">print &quot;&lt;hr &gt;&lt;h2&gt; Top 3&lt;/h2&gt;&quot;</div><div class="line">print &quot;Cost: &quot;</div><div class="line">print search_cost</div><div class="line">print &quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;</div><div class="line">print &quot;Score: &quot;</div><div class="line">print search_score</div><div class="line">print &quot;&lt;br &gt;&quot;</div><div class="line"></div><div class="line"></div><div class="line">for i in range(1, len(answers) + 1):</div><div class="line">    print &quot;&lt;p&gt;&quot;</div><div class="line">    print i</div><div class="line">    print &quot;:&amp;nbsp;&quot;</div><div class="line">    print answers[i - 1].encode(&apos;utf8&apos;)</div><div class="line">    print &quot;&lt;br&gt;&quot;</div><div class="line"></div><div class="line"></div><div class="line">print &quot;&lt;hr /&gt;&lt;h2&gt; RNN &amp;nbsp; Model &lt;/h2&gt;&quot;</div><div class="line">print &quot;Cost: &quot;</div><div class="line">print rnnAns[&apos;cost&apos;]</div><div class="line">print &quot;&lt;br&gt;&lt;p&gt;&quot;</div><div class="line">print rnnAns[&apos;answer&apos;].encode(&apos;utf8&apos;)</div><div class="line">print &quot;&lt;/p&gt;&quot;</div><div class="line">print &quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;</div><div class="line">print &apos;&lt;/div&gt;&lt;/body&gt;&apos;</div><div class="line">print &apos;&lt;/html&gt;&apos;</div></pre></td></tr></table></figure></p>
+<h3 id="client-主页面"><a href="#client-主页面" class="headerlink" title="client 主页面"></a>client 主页面</h3><p>index.html<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line"></div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;</div><div class="line">    &lt;style&gt;</div><div class="line">    body &#123;</div><div class="line">            font-family: &quot;arial&quot;;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        table,</div><div class="line">        td,</div><div class="line">        th &#123;</div><div class="line">            border: 1px solid #ddd;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        th,</div><div class="line">        td &#123;</div><div class="line">            border-bottom: 1px solid #ddd;</div><div class="line">            height: 50px;</div><div class="line">            text-align: left;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        table &#123;</div><div class="line">            border-collapse: collapse;</div><div class="line">            width: 80%;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    &lt;/style&gt;</div><div class="line">    &lt;title&gt;Simple Evaluation Check&lt;/title&gt;</div><div class="line">    &lt;script language=&quot;Javascript&quot;&gt;</div><div class="line">        function xmlhttpPost(strURL) &#123;</div><div class="line">            var xmlHttpReq = false;</div><div class="line">            var self = this;</div><div class="line">            // Mozilla/Safari</div><div class="line">            if (window.XMLHttpRequest) &#123;</div><div class="line">                self.xmlHttpReq = new XMLHttpRequest();</div><div class="line">            &#125;</div><div class="line">            // IE</div><div class="line">            else if (window.ActiveXObject) &#123;</div><div class="line">                self.xmlHttpReq = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);</div><div class="line">            &#125;</div><div class="line">            self.xmlHttpReq.open(&apos;POST&apos;, strURL, true);</div><div class="line">            # 设置 content-type</div><div class="line">            self.xmlHttpReq.setRequestHeader(&apos;Content-Type&apos;, &apos;application/x-www-form-urlencoded&apos;);</div><div class="line">            self.xmlHttpReq.onreadystatechange = function() &#123;</div><div class="line">                if (self.xmlHttpReq.readyState == 4) &#123;</div><div class="line">                    updatepage(self.xmlHttpReq.responseText);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            self.xmlHttpReq.send(getquerystring());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        function getquerystring() &#123;</div><div class="line">            var form = document.forms[&apos;f1&apos;];</div><div class="line">            var question = form.question.value;</div><div class="line">            qstr = &apos;question=&apos; + question; // NOTE: no &apos;?&apos; before querystring</div><div class="line">            return qstr;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        function updatepage(str) &#123;</div><div class="line">            document.getElementById(&quot;result&quot;).innerHTML = str;</div><div class="line">        &#125;</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">&lt;body&gt;</div><div class="line">    &lt;form name=&quot;f1&quot;&gt;</div><div class="line">        &lt;p&gt;Question:</div><div class="line">            &lt;input name=&quot;question&quot; type=&quot;text&quot;&gt;</div><div class="line">            &lt;input value=&quot;Go&quot; type=&quot;button&quot; onclick=&apos;JavaScript:xmlhttpPost(&quot;cgi-bin/mysocket.py&quot;)&apos;&gt;</div><div class="line">        &lt;/p&gt;</div><div class="line">        &lt;div id=&quot;result&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;/form&gt;</div><div class="line">&lt;/body&gt;</div><div class="line"></div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>运行 server.py，浏览器输入 <a href="http://localhost/index.html" target="_blank" rel="external">http://localhost/index.html</a> 查看效果<br>主页<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-30%20%E4%B8%8B%E5%8D%889.01.17.png" alt=""></p>
+<p>异步响应<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-30%20%E4%B8%8B%E5%8D%889.01.24.png" alt=""></p>
+<p>server<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-30%20%E4%B8%8B%E5%8D%889.44.45.png" alt=""></p>
+<blockquote>
+<p>参考链接<br><a href="http://www.runoob.com/python/python-cgi.html" target="_blank" rel="external">Python CGI编程</a><br><a href="http://ssiddique.info/writing-your-first-python-cgi-ajax-script.html" target="_blank" rel="external">Writing Your First Python CGI – Ajax Script</a><br><a href="http://www.cnblogs.com/heyuquan/archive/2013/05/13/js-jquery-ajax.html" target="_blank" rel="external">触碰jQuery：AJAX异步详解</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+            <a href="/tags/cgi/" rel="tag">#cgi</a>
+          
+            <a href="/tags/ajax/" rel="tag">#ajax</a>
+          
+            <a href="/tags/socket/" rel="tag">#socket</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/10/Tfidf总结笔记/" rel="next" title="Tf-idf 总结笔记">
+                <i class="fa fa-chevron-left"></i> Tf-idf 总结笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/22/项目实战--App Recommender System/" rel="prev" title="项目实战--App Recommender System">
+                项目实战--App Recommender System <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cgi"><span class="nav-number">1.</span> <span class="nav-text">cgi</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">1.1.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#教程"><span class="nav-number">1.2.</span> <span class="nav-text">教程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">1.3.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cgi-调试"><span class="nav-number">1.4.</span> <span class="nav-text">cgi 调试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ajax"><span class="nav-number">2.</span> <span class="nav-text">ajax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要对象：XMLHttpRequest"><span class="nav-number">2.2.</span> <span class="nav-text">重要对象：XMLHttpRequest</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要函数-客户端"><span class="nav-number">2.2.1.</span> <span class="nav-text">主要函数(客户端)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单实例"><span class="nav-number">2.3.</span> <span class="nav-text">简单实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#封装"><span class="nav-number">2.3.1.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">2.3.2.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#socket"><span class="nav-number">3.</span> <span class="nav-text">socket</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#server"><span class="nav-number">3.1.</span> <span class="nav-text">server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要函数"><span class="nav-number">3.1.1.</span> <span class="nav-text">主要函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过程"><span class="nav-number">3.1.2.</span> <span class="nav-text">过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#client"><span class="nav-number">3.2.</span> <span class="nav-text">client</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要函数-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">主要函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过程-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#server-client-主要公共函数"><span class="nav-number">3.3.</span> <span class="nav-text">server, client 主要公共函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例"><span class="nav-number">4.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#server-完整代码"><span class="nav-number">4.1.</span> <span class="nav-text">server 完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#client-完整代码"><span class="nav-number">4.2.</span> <span class="nav-text">client 完整代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#client-响应表单"><span class="nav-number">4.2.1.</span> <span class="nav-text">client 响应表单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#client-主页面"><span class="nav-number">4.2.2.</span> <span class="nav-text">client 主页面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行"><span class="nav-number">4.3.</span> <span class="nav-text">运行</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/07/18/socket + python-cgi + ajax 实现异步响应表单/';
+      var disqus_title = "python-cgi + ajax 实现异步响应表单";
+      var disqus_url = 'http://www.shuang0420.cn/2016/07/18/socket + python-cgi + ajax 实现异步响应表单/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

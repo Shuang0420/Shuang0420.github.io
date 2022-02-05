@@ -1,0 +1,1173 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="排序," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="往往排序是作为其他算法的预处理算法，其重要性却不容小觑。本篇讲冒泡排序／选择排序／插入排序／希尔排序／归并排序／快速排序／桶排序／计数排序。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构和算法 -- 排序算法">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/09/07/数据结构和算法 -- 排序算法/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="往往排序是作为其他算法的预处理算法，其重要性却不容小觑。本篇讲冒泡排序／选择排序／插入排序／希尔排序／归并排序／快速排序／桶排序／计数排序。">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构和算法 -- 排序算法">
+<meta name="twitter:description" content="往往排序是作为其他算法的预处理算法，其重要性却不容小觑。本篇讲冒泡排序／选择排序／插入排序／希尔排序／归并排序／快速排序／桶排序／计数排序。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/09/07/数据结构和算法 -- 排序算法/"/>
+
+
+  <title> 数据结构和算法 -- 排序算法 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构和算法 -- 排序算法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-09-07T09:55:12+08:00" content="2016-09-07">
+              2016-09-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Data-Structure/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Structure</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/07/数据结构和算法 -- 排序算法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/09/07/数据结构和算法 -- 排序算法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>往往排序是作为其他算法的预处理算法，其重要性却不容小觑。本篇讲冒泡排序／选择排序／插入排序／希尔排序／归并排序／快速排序／桶排序／计数排序。<br><a id="more"></a></p>
+<h1 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h1><table>
+<thead>
+<tr>
+<th>algorithm</th>
+<th>in-place</th>
+<th>worst</th>
+<th>average</th>
+<th>best</th>
+<th>space complexity</th>
+<th>remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bubble</td>
+<td>yes</td>
+<td>$N^2$</td>
+<td>$N^2$</td>
+<td>N</td>
+<td>$O(1)$</td>
+<td>——</td>
+</tr>
+<tr>
+<td>selection</td>
+<td>yes</td>
+<td>$N^2$</td>
+<td>$N^2$</td>
+<td>$N^2$</td>
+<td>$O(1)$</td>
+<td>——</td>
+</tr>
+<tr>
+<td>insertion</td>
+<td>yes</td>
+<td>$N^2$</td>
+<td>$N^2$</td>
+<td>N</td>
+<td>$O(1)$</td>
+<td>——</td>
+</tr>
+<tr>
+<td>shell</td>
+<td>yes</td>
+<td>—–</td>
+<td>——-</td>
+<td>N</td>
+<td>$O(1)$</td>
+<td>——</td>
+</tr>
+<tr>
+<td>merge</td>
+<td></td>
+<td>$NlogN$</td>
+<td>$NlogN$</td>
+<td>$NlogN$</td>
+<td>$O(N)$</td>
+<td>——</td>
+</tr>
+<tr>
+<td>quick</td>
+<td>yes</td>
+<td>$N^2$</td>
+<td>$NlogN$</td>
+<td>$NlogN$</td>
+<td>$O(logN)$</td>
+<td>——</td>
+</tr>
+<tr>
+<td>heap</td>
+<td>yes</td>
+<td>$NlogN$</td>
+<td>$NlogN$</td>
+<td>$NlogN$</td>
+<td>$O(1)$</td>
+<td>——</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Bubble-sort-冒泡排序"><a href="#Bubble-sort-冒泡排序" class="headerlink" title="Bubble sort 冒泡排序"></a>Bubble sort 冒泡排序</h1><p>冒泡排序的原理非常简单，重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。<br>内部稳定排序，时间复杂度 $O(N^2)$，空间复杂度 $O(1)$</p>
+<p>步骤：</p>
+<ol>
+<li>比较相邻的元素。如果前一个比后一个大，就交换他们两个。</li>
+<li>对第 0 个到第 n-1 个数据做同样的工作。这时，最大的数就“浮”到了数组最后的位置上。</li>
+<li>持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。</li>
+</ol>
+<p>每轮操作都将一个最大的数“浮”到最后的位置，也就是每轮都有最后 N-i 个数已经排序，所以内循环是从 1 到 N-i。</p>
+<h2 id="基本款"><a href="#基本款" class="headerlink" title="基本款"></a>基本款</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#=======================================================================</div><div class="line"># Time Complexity of Solution:</div><div class="line">#  Best O(n^2); Average O(n^2); Worst O(n^2).</div><div class="line">#</div><div class="line">#  Approach:</div><div class="line">#   Bubblesort is an elementarray sorting algorithm. The idea is to</div><div class="line">#   imagine bubbling the smallest elements of a (vertical) array to the</div><div class="line">#   top; then bubble the next smallest; then so on until the entire</div><div class="line">#   array is sorted. Bubble sort is worse than both insertion sort and</div><div class="line">#   selection sort. It moves elements as many times as insertion sort</div><div class="line">#   (bad) and it takes as long as selection sort (bad). On the positive</div><div class="line">#   side, bubble sort is easy to understand. Also there are highly</div><div class="line">#   improved variants of bubble sort.</div><div class="line">#=======================================================================</div><div class="line"></div><div class="line"></div><div class="line">def bubble_sort(array):</div><div class="line">    n = len(array)</div><div class="line">    for i in range(n):</div><div class="line">        for j in range(1, n - i):</div><div class="line">            if array[j - 1] &gt; array[j]:</div><div class="line">                array[j - 1], array[j] = array[j], array[j - 1]</div><div class="line">    return array</div></pre></td></tr></table></figure>
+<h2 id="优化一"><a href="#优化一" class="headerlink" title="优化一"></a>优化一</h2><p>优化1：某一趟遍历如果没有数据交换，则说明已经排好序了，因此不用再进行迭代了。用一个标记记录这个状态即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">def bubble_sort2(array):</div><div class="line">    n = len(array)</div><div class="line">    for i in range(n):</div><div class="line">        sorted = True</div><div class="line">        for j in range(1, n - i):</div><div class="line">            if array[j - 1] &gt; array[j]:</div><div class="line">                flag = False</div><div class="line">                array[j - 1], array[j] = array[j], array[j - 1]</div><div class="line">        if sorted:</div><div class="line">            return array  # or break</div><div class="line">    return array</div></pre></td></tr></table></figure></p>
+<h2 id="优化二"><a href="#优化二" class="headerlink" title="优化二"></a>优化二</h2><p>优化2：记录某次遍历时最后发生数据交换的位置，这个位置之后的数据显然已经有序，不用再排序了。因此通过记录最后发生数据交换的位置就可以确定下次循环的范围了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">def bubble_sort3(array):</div><div class="line">    n = len(array)</div><div class="line">    k = n</div><div class="line">    for i in range(n):</div><div class="line">        flag = False  # 有没有交换</div><div class="line">        for j in range(1, k):  # 只遍历到最后交换的位置</div><div class="line">            if array[j - 1] &gt; array[j]:</div><div class="line">                flag = True</div><div class="line">                k = j  # 记录最后的交换位置</div><div class="line">                array[j - 1], array[j] = array[j], array[j - 1]</div><div class="line">        if not flag:</div><div class="line">            return array  # or break</div><div class="line">    return array</div></pre></td></tr></table></figure></p>
+<h1 id="Selection-sort-选择排序"><a href="#Selection-sort-选择排序" class="headerlink" title="Selection sort 选择排序"></a>Selection sort 选择排序</h1><p>选择排序无疑是最简单直观的排序。<br>内部不稳定排序，时间复杂度 $O(N^2)$，空间复杂度 $O(1)$</p>
+<p>步骤：</p>
+<ol>
+<li>在未排序序列中找到最小（大）元素，存放到排序序列的起始位置。</li>
+<li>再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。<br>以此类推，直到所有元素均排序完毕。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">#=======================================================================</div><div class="line">#  Time Complexity of Solution:</div><div class="line">#  Best O(n^2); Average O(n^2); Worst O(n^2).</div><div class="line">#</div><div class="line">#  Approach:</div><div class="line">#  Selection sort is a step up from insertion sort from a memory</div><div class="line">#  viewpoint. It only swaps elements that need to be swapped. In terms</div><div class="line">#  of time complexity, however, insertion sort is better.</div><div class="line">#=======================================================================</div><div class="line"></div><div class="line"></div><div class="line">def select_sort(array):</div><div class="line">    n = len(array)</div><div class="line">    for i in range(n):</div><div class="line">        min = i</div><div class="line">        for j in range(i + 1, n):</div><div class="line">            if array[j] &lt; array[min]:</div><div class="line">                min = j</div><div class="line">        array[i], array[min] = array[min], array[i]</div><div class="line">    return array</div></pre></td></tr></table></figure>
+<h1 id="Insertion-sort-插入排序"><a href="#Insertion-sort-插入排序" class="headerlink" title="Insertion sort 插入排序"></a>Insertion sort 插入排序</h1><p>每轮在已经排好的序列中插入一个新的数字。插入排序的工作原理是，对于每个未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。<br>内部稳定排序，时间复杂度 $O(N^2)$，空间复杂度 $O(1)$<br>步骤：</p>
+<ol>
+<li>从第一个元素开始，该元素可以认为已经被排序</li>
+<li>取出下一个元素，在已经排序的元素序列中从后向前扫描</li>
+<li>如果被扫描的元素（已排序）大于新元素，将该元素后移一位</li>
+<li>重复步骤3，直到找到已排序的元素小于或者等于新元素的位置</li>
+<li>将新元素插入到该位置后</li>
+<li>重复步骤2~5</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">#=======================================================================</div><div class="line">#  Time Complexity of Solution:</div><div class="line">#  Best O(n); Average O(n^2); Worst O(n^2).</div><div class="line">#</div><div class="line">#  Approach:</div><div class="line">#  Insertion sort is good for collections that are very small</div><div class="line">#  or nearly sorted. Otherwise it&apos;s not a good sorting algorithm:</div><div class="line">#  it moves data around too much. Each time an insertion is made,</div><div class="line">#  all elements in a greater position are shifted.</div><div class="line">#=======================================================================</div><div class="line"></div><div class="line"></div><div class="line">def insertion_sort(array):</div><div class="line">    n = len(array)</div><div class="line">    for i in range(1, n):</div><div class="line">        val = array[i]</div><div class="line">        position = i</div><div class="line">        while position &gt; 0 and array[position - 1] &gt; val:</div><div class="line">            array[position] = array[position - 1]</div><div class="line">            position -= 1</div><div class="line">        array[position] = val</div><div class="line">    return array</div></pre></td></tr></table></figure>
+<h1 id="Shell-Sort-希尔排序"><a href="#Shell-Sort-希尔排序" class="headerlink" title="Shell Sort 希尔排序"></a>Shell Sort 希尔排序</h1><p>希尔排序，也称递减增量排序算法，实质是分组插入排序。<br>内部非稳定排序算法。时间复杂度不定，空间复杂度$O(1)$</p>
+<p>希尔排序的基本思想是：将数组列在一个表中并对列分别进行插入排序，重复这过程，不过每次用更长的列（步长更长了，列数更少了）来进行。最后整个表就只有一列了。将数组转换至表是为了更好地理解这算法，算法本身还是使用数组进行排序。</p>
+<p>例如，假设有这样一组数[ 13 14 94 33 82 25 59 94 65 23 45 27 73 25 39 10 ]，如果我们以步长为5开始进行排序，我们可以通过将这列表放在有5列的表中来更好地描述算法，这样他们就应该看起来是这样：</p>
+<pre>
+13 14 94 33 82
+25 59 94 65 23
+45 27 73 25 39
+10
+</pre>
+
+<p>然后我们对每列进行排序：</p>
+<pre>
+10 14 73 25 23
+13 27 94 33 39
+25 59 94 65 82
+45
+</pre>
+
+<p>将上述四行数字，依序接在一起时我们得到：[ 10 14 73 25 23 13 27 94 33 39 25 59 94 65 82 45 ]。这时10已经移至正确位置了，然后再以3为步长进行排序：</p>
+<pre>
+10 14 73
+25 23 13
+27 94 33
+39 25 59
+94 65 82
+45
+</pre>
+
+<p>排序之后变为：</p>
+<pre>
+10 14 13
+25 23 33
+27 25 59
+39 65 73
+45 94 82
+94
+</pre>
+
+<p>最后以1步长进行排序（此时就是简单的插入排序了）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">def shell_sort(array):</div><div class="line">    n = len(array)</div><div class="line">    gap = n / 2 # 初始步长</div><div class="line">    while gap &gt; 0:</div><div class="line">        for i in range(gap, n):# 每一列进行插入排序 , 从gap 到 n-1</div><div class="line">            position = i</div><div class="line">            val = array[i]</div><div class="line">            while position &gt; 0 and array[position - 1] &gt; val:</div><div class="line">                array[position] = array[position - 1]</div><div class="line">                position -= 1</div><div class="line">            array[position] = val</div><div class="line">        gap = gap / 2 # 重新设置步长</div><div class="line">    return array</div></pre></td></tr></table></figure>
+<p>上面源码的步长的选择是从n/2开始，每次再减半，直至为0。步长的选择直接决定了希尔排序的复杂度</p>
+<h1 id="Merge-Sort-归并排序"><a href="#Merge-Sort-归并排序" class="headerlink" title="Merge Sort 归并排序"></a>Merge Sort 归并排序</h1><p>归并排序是采用分治法的一个非常典型的应用。归并排序的思想就是先递归分解数组，解决子集的排序问题，再合并两个有序数组。由于基本的逻辑思维结构是二叉树，也叫二路归并排序。</p>
+<p>先考虑合并两个有序数组，基本思路是比较两个数组的最前面的数，谁小就先取谁，取了后相应的指针就往后移一位。然后再比较，直至一个数组为空，最后把另一个数组的剩余部分复制过来即可。</p>
+<p>再考虑递归分解，基本思路是将数组分解成 left 和 right，如果这两个数组内部数据是有序的，那么就可以用上面合并数组的方法将这两个数组合并排序。如何让这两个数组内部是有序的？可以再二分，直至分解出的小组只含有一个元素时为止，此时认为该小组内部已有序。然后合并排序相邻二个小组即可。</p>
+<p>外部稳定排序。时间复杂度 $O(nlog(n))$，空间复杂度 $O(n)$。堆排序和快速排序的复杂度也都是 $O(nlog(n))$，但它们是不稳定的。在排序算法中，时间复杂度是 $O(nlog(n))$ 的排序算法只有归并排序。</p>
+<h2 id="基本款-1"><a href="#基本款-1" class="headerlink" title="基本款"></a>基本款</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">#=======================================================================</div><div class="line">#  Time Complexity of Solution:</div><div class="line">#  Best = Average = Worst = O(nlog(n)).</div><div class="line">#</div><div class="line">#  Approach:</div><div class="line">#   Merge sort is a divide and conquer algorithm. In the divide and</div><div class="line">#   conquer paradigm, a problem is broken into pieces where each piece</div><div class="line">#   still retains all the properties of the larger problem -- except</div><div class="line">#   its size. To solve the original problem, each piece is solved</div><div class="line">#   individually; then the pieces are merged back together.</div><div class="line">#</div><div class="line">#   For illustration, imagine needing to sort an array of 200 elements</div><div class="line">#   using selection sort. Since selection sort takes O(n^2), it would</div><div class="line">#   take about 40,000 time units to sort the array. Now imagine</div><div class="line">#   splitting the array into ten equal pieces and sorting each piece</div><div class="line">#   individually still using selection sort. Now it would take 400</div><div class="line">#   time units to sort each piece; for a grand total of 4000.</div><div class="line">#   Once each piece is sorted, merging them back together would take</div><div class="line">#   about 200 time units; for a grand total of 200+4000 = 4,200.</div><div class="line">#   Clearly 4,200 is an impressive improvement over 40,000. Now</div><div class="line">#   imagine greater. Imagine splitting the original array into</div><div class="line">#   groups of two and then sorting them. In the end, it would take about</div><div class="line">#   1,000 time units to sort the array. That&apos;s how merge sort works.</div><div class="line">#</div><div class="line">#  NOTE to the Python experts:</div><div class="line">#     While it might seem more &quot;Pythonic&quot; to take such approach as</div><div class="line">#</div><div class="line">#         mid = len(aList) / 2</div><div class="line">#         left = mergesort(aList[:mid])</div><div class="line">#         right = mergesort(aList[mid:])</div><div class="line">#</div><div class="line">#     That approach take too much memory for creating sublists.</div><div class="line">#=======================================================================</div><div class="line"></div><div class="line"></div><div class="line">def merge_sort(array):</div><div class="line">    if len(array) &lt;= 1:</div><div class="line">        return array</div><div class="line">    mid = len(array) / 2</div><div class="line">    left = merge_sort(array[:mid])</div><div class="line">    right = merge_sort(array[mid:])</div><div class="line">    return merge(left, right)</div><div class="line"></div><div class="line"></div><div class="line">def merge(left, right):</div><div class="line">    l, r = 0, 0</div><div class="line">    result = []</div><div class="line">    while l &lt; len(left) and r &lt; len(right):</div><div class="line">        if left[l] &lt; right[r]:</div><div class="line">            result.append(left[l])</div><div class="line">            l += 1</div><div class="line">        else:</div><div class="line">            result.append(right[r])</div><div class="line">            r += 1</div><div class="line">    # 如果有遗留没有比较的</div><div class="line">    result += left[l:]</div><div class="line">    result += right[r:]</div><div class="line">    return result</div></pre></td></tr></table></figure>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><h3 id="结合其他排序"><a href="#结合其他排序" class="headerlink" title="结合其他排序"></a>结合其他排序</h3><p>在数组长度比较短的情况下，不进行递归，而是采用其他排序方案，如 high - low &lt; 50 时，可以用快速／插入排序，适合整体时间最优</p>
+<h3 id="建立索引"><a href="#建立索引" class="headerlink" title="建立索引"></a>建立索引</h3><p>实际过程中，可能排序的不是 int, 而是一个结构体，在此情况下，可以通过记录数组下标(index)来代替申请新内存空间，从而避免 A 和辅助数组间的频繁数据移动。</p>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>归并排序非常适合做外排序(external sorting)。</p>
+<h3 id="例1-9-路归并排序"><a href="#例1-9-路归并排序" class="headerlink" title="例1: 9 路归并排序"></a>例1: 9 路归并排序</h3><p>用 100M 内存对 900M 数据进行排序</p>
+<ul>
+<li>读入 100M 数据至内存，用常规方式（堆排序）排序</li>
+<li>将排序后的数据写入磁盘</li>
+<li>重复前两个步骤，得到 9 个 100M 的文件块。</li>
+<li>将 100M 内存划分为 10 块，前 9 份为输入缓冲区，最后一个为输出缓冲区。如将 9 个 100M 的文件块每个分前 10M 放到输入缓冲区，然后同时指向第一个元素，把最小的那个放到输出缓冲区，然后指针后移一位。</li>
+<li>执行 9 路归并算法，将结果输出到输出缓冲区。<ul>
+<li>输出缓冲区满，写入目标文件，清空缓冲区</li>
+<li>输入缓冲区空，读入相应文件的下一份数据。</li>
+</ul>
+</li>
+</ul>
+<h3 id="例2-逆序数问题"><a href="#例2-逆序数问题" class="headerlink" title="例2: 逆序数问题"></a>例2: 逆序数问题</h3><p>给定一个数组 A[0..N-1]，如果对于两个元素 a[i],a[j]，有 i<j 且="" a[j]="">a[i]，那么称 a[i],a[j] 为逆序对，一个数组中包含的逆序对的数目为逆序数。如 3,10,2,6 的逆序数为 3。如何求数组的逆序数？</j></p>
+<p>当然可以选择暴力求解，两个循环，对每个数都要扫描它前面的所有数，时间复杂度为 $O(N^2)$<br>i -&gt; [0,N-1]<br>j -&gt; [i+1,N-1]</p>
+<p>这里也可以用归并排序的思想。比如观察归并排序——合并数列(1，3，5)与(2，4)：</p>
+<ol>
+<li>先取出前面数列中的1。</li>
+<li>然后取出后面数列中的2，明显这个2和前面的3，5都可以组成逆序数对即3和2，5和2都是逆序数对。</li>
+<li>然后取出前面数列中的3。</li>
+<li>然后取出后面数列中的4，同理，可知这个4和前面数列中的5可以组成一个逆序数对。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">def merge_sort(array):</div><div class="line">    if len(array) &lt;= 1:</div><div class="line">        return array</div><div class="line">    mid = len(array) / 2</div><div class="line">    left = merge_sort(array[:mid])</div><div class="line">    right = merge_sort(array[mid:])</div><div class="line">    count = 0</div><div class="line">    return merge(left, right)</div><div class="line"></div><div class="line">count = 0</div><div class="line"></div><div class="line"></div><div class="line">def merge(left, right):</div><div class="line">    global count</div><div class="line">    l, r = 0, 0</div><div class="line">    result = []</div><div class="line">    while l &lt; len(left) and r &lt; len(right):</div><div class="line">        if left[l] &lt;= right[r]:</div><div class="line">            result.append(left[l])</div><div class="line">            l += 1</div><div class="line">        else:</div><div class="line">            result.append(right[r])</div><div class="line">            r += 1</div><div class="line">            count += len(left) - l</div><div class="line">    result += left[l:]</div><div class="line">    result += right[r:]</div><div class="line">    return result</div><div class="line"></div><div class="line">print count # count 即为逆序数</div></pre></td></tr></table></figure>
+<h2 id="其他思考"><a href="#其他思考" class="headerlink" title="其他思考"></a>其他思考</h2><p>思考：原地排序？让空间复杂度为 $O(1)$</p>
+<h1 id="Quick-sort-快速排序"><a href="#Quick-sort-快速排序" class="headerlink" title="Quick sort 快速排序"></a>Quick sort 快速排序</h1><p>快速排序通常明显比同为Ο(nlogn)的其他算法更快，因此常被采用，而且快排采用了分治法的思想，所以在很多笔试面试中能经常看到快排的影子。可见掌握快排的重要性。<br>内部不稳定排序，最差时间复杂度 $O(N^2)$，平均时间复杂度 $O(nlogn)$<br>步骤：</p>
+<ol>
+<li>从数列中挑出一个元素作为基准数。</li>
+<li>分区过程，将比基准数大的放到右边，小于或等于它的数都放到左边。</li>
+<li>再对左右区间递归执行第二步，直至各区间只有一个数。</li>
+</ol>
+<h2 id="基本款-2"><a href="#基本款-2" class="headerlink" title="基本款"></a>基本款</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">#=======================================================================</div><div class="line">#  Time Complexity of Solution:</div><div class="line">#  Best = Average = O(nlog(n)); Worst = O(n^2).</div><div class="line"></div><div class="line">#</div><div class="line">#  Approach:</div><div class="line">#  Quicksort is admirably known as the algorithm that sorts an array</div><div class="line">#  while preparing to sort it. For contrast, recall that merge sort</div><div class="line">#  start partitions an array into smaller pieces, then sorts each piece,</div><div class="line">#  then merge the pieces back. Quicksort actually sorts the array</div><div class="line">#  during the partition phase.</div><div class="line">#</div><div class="line">#  Quicksort works by selecting an element called a pivot and splitting</div><div class="line">#  the array around that pivot such that all the elements in, say, the</div><div class="line">#  left sub-array are less than pivot and all the elements in the right</div><div class="line">#  sub-array are greater than pivot. The splitting continues until the</div><div class="line">#  array can no longer be broken into pieces. That&apos;s it. Quicksort is</div><div class="line">#  done.</div><div class="line">#</div><div class="line">#  All this fussing about quicksort sorting while preparing to sort</div><div class="line">#  may give the impression that it is better than mergesort, but its</div><div class="line">#  not. In practice their time complexity is about the same -- with</div><div class="line">#  one funny exception. Because quicksort picks its pivot randomly,</div><div class="line">#  there is a practically impossible possibility that the algorithm</div><div class="line">#    may take O(n^2) to compute.</div><div class="line">#</div><div class="line">#  The aforementioned notwithstanding, quicksort is better than</div><div class="line">#    mergesort if you consider memory usage. Quicksort is an in-place</div><div class="line">#    algorithm, requiring no additional storage to work.</div><div class="line">#=======================================================================</div><div class="line">def quick_sort(array):</div><div class="line">    if len(array) &lt; 2: return array</div><div class="line">    lesser = quick_sort([x for x in array[1:] if x &lt;= array[0]])</div><div class="line">    bigger = quick_sort([x for x in array[1:] if x &gt;  array[0]])</div><div class="line">    return sum([lesser, [array[0]], bigger], [])</div></pre></td></tr></table></figure>
+<p>上面的代码选择第一个数作为基准数。</p>
+<h2 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h2><p>正整数数字序列，求最大 K 个数。<br>输入项：一个无序的数字序列，和一个数字 K<br>输出项：K 个数字，代表最大的 K 个数字是什么<br>逻辑：将无序数列插入到二叉排序数中，采用中序遍历的方式输出前 K 个数字。</p>
+<h1 id="Heap-sort-堆排序"><a href="#Heap-sort-堆排序" class="headerlink" title="Heap sort 堆排序"></a>Heap sort 堆排序</h1><p>堆排序在 top K 问题中使用比较频繁。堆排序是采用二叉堆的数据结构来实现的，虽然实质上还是一维数组。二叉堆是一个近似完全二叉树 。<br>内部不稳定排序，时间复杂度 $O(nlogn)$，空间复杂度 $O(1)$</p>
+<p>步骤：</p>
+<ol>
+<li>构造最大堆（Build_Max_Heap）：若数组下标范围为0~n，考虑到单独一个元素是最大堆，则从下标n/2开始的元素均为最大堆。于是只要从n/2-1开始，向前依次构造最大堆，这样就能保证，构造到某个节点时，它的左右子树都已经是最大堆。</li>
+<li>堆排序（HeapSort）：由于堆是用数组模拟的。得到一个最大堆后，数组内部并不是有序的。因此需要将堆化数组有序化。思想是移除根节点，并做最大堆调整的递归运算。第一次将heap[0]与heap[n-1]交换，再对heap[0…n-2]做最大堆调整。第二次将heap[0]与heap[n-2]交换，再对heap[0…n-3]做最大堆调整。重复该操作直至heap[0]和heap[1]交换。由于每次都是将最大的数并入到后面的有序区间，故操作完后整个数组就是有序的了。</li>
+<li>最大堆调整（Max_Heapify）：该方法是提供给上述两个过程调用的。目的是将堆的末端子节点作调整，使得子节点永远小于父节点。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">#=======================================================================</div><div class="line">#  Time Complexity of Solution:</div><div class="line">#  Best O(nlog(n)); Average O(nlog(n)); Worst O(nlog(n)).</div><div class="line">#</div><div class="line">#  Approach:</div><div class="line">#  Heap sort happens in two phases. In the start phase, the array</div><div class="line">#  is transformed into a heap. A heap is a binary tree where</div><div class="line">#  1) each node is greater than each of its children</div><div class="line">#  2) the tree is perfectly balanced</div><div class="line">#  3) all leaves are in the leftmost position available.</div><div class="line">#  In phase two the heap is continuously reduced to a sorted array:</div><div class="line">#  1) while the heap is not empty</div><div class="line">#  - remove the top of the head into an array</div><div class="line">#  - fix the heap.</div><div class="line">#  Heap sort was invented by John Williams not by B. R. Heap.</div><div class="line">#</div><div class="line">#  MoveDown:</div><div class="line">#  The movedown method checks and verifies that the structure is a heap.</div><div class="line">#</div><div class="line">#  Technical Details:</div><div class="line">#  A heap is based on an array just as a hashmap is based on an</div><div class="line">#  array. For a heap, the children of an element n are at index</div><div class="line">#  2n+1 for the left child and 2n+2 for the right child.</div><div class="line">#</div><div class="line">#  The movedown function checks that an element is greater than its</div><div class="line">#  children. If not the values of element and child are swapped. The</div><div class="line">#  function continues to check and swap until the element is at a</div><div class="line">#  position where it is greater than its children.</div><div class="line">#=======================================================================</div><div class="line"></div><div class="line"></div><div class="line">def heap_sort(array):</div><div class="line">    # convert aList to heap 构造最大堆</div><div class="line">    n = len(array)</div><div class="line">    leastParent = n / 2 - 1  # n的父节点下标</div><div class="line">    for i in range(leastParent, -1, -1):</div><div class="line">        max_heapify(array, i, n - 1)  # 小堆转化为最大堆</div><div class="line"></div><div class="line">    # flatten heap into sorted array 将最大堆转化为有序数组</div><div class="line">    for i in range(n - 1, 0, -1):</div><div class="line">        if array[0] &gt; array[i]:</div><div class="line">            array[i], array[0] = array[0], array[i]</div><div class="line">            max_heapify(array, 0, i - 1)  # 调整最大堆</div><div class="line">    return array</div><div class="line"></div><div class="line"></div><div class="line"># 最大堆调整：将堆的末端子节点作调整，使得子节点永远小于父节点</div><div class="line"># start 为当前需要调整最大堆的位置，end为调整边界</div><div class="line"></div><div class="line"></div><div class="line">def max_heapify(array, start, end):</div><div class="line">    largest = 2 * start + 1  # consider left child is larger than right</div><div class="line">    while largest &lt;= end:</div><div class="line">        # right child exists and is larger than left child</div><div class="line">        if largest &lt; end and array[largest] &lt; array[largest + 1]:</div><div class="line">            largest += 1</div><div class="line"></div><div class="line">        # right child is larger than parent</div><div class="line">        if array[largest] &gt; array[start]:</div><div class="line">            array[largest], array[start] = array[start], array[largest]</div><div class="line">            # move down to largest child</div><div class="line">            start = largest</div><div class="line">            largest = 2 * start + 1</div><div class="line">        else:</div><div class="line">            return</div></pre></td></tr></table></figure>
+<h1 id="Bucket-Sort-桶排序"><a href="#Bucket-Sort-桶排序" class="headerlink" title="Bucket Sort 桶排序"></a>Bucket Sort 桶排序</h1><p>桶排序和归并排序非常类似，也使用了归并的思想。大致步骤如下：<br>外部排序，稳定性取决于桶内排序算法。时间复杂度与分桶数量 K 有关<br>步骤：</p>
+<ol>
+<li>设置一个定量的数组当作空桶。桶排序的特点就是数据要有范围（桶不能无限多）。</li>
+<li>Divide - 从待排序数组中取出元素，将元素按照一定的规则塞进对应的桶子去。</li>
+<li>对每个非空桶进行排序，通常可在塞元素入桶时进行插入排序。</li>
+<li>Conquer - 从非空桶把元素再放回原来的数组中。”</li>
+</ol>
+<p>假设输入数据服从均匀分布，然后将输入数据均匀地分配到有限数量的桶中，然后对每个桶再分别排序，对每个桶再使用插入排序算法，最后将每个桶中的数据有序的组合起来。前面了解到基数排序假设输入数据属于一个小区间内的整数，而桶排序则是假设输入是由一个随机过程生成，该过程将元素均匀的分布在一个区间[a,b]上。由于桶排序和计数排序一样均对输入的数据进行了某些假设限制，因此比一般的基于比较的排序算法复杂度低。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line">#=======================================================================</div><div class="line">#  Time Complexity of Solution:</div><div class="line">#  Best Case O(n); Average Case O(n); Worst Case O(n).</div><div class="line">#</div><div class="line"># Approach:</div><div class="line"># If it sounds too good to be true, then most likely it&apos;s not true.</div><div class="line"># Bucketsort is not an exception to this adage. For bucketsort to</div><div class="line">#   work at its blazing efficiency, there are multiple prerequisites.</div><div class="line">#   First the hash function that is used to partition the elements need</div><div class="line">#   to be very good and must produce ordered hash: if i &lt; k then</div><div class="line">#   hash(i) &lt; hash(k). Second, the elements to be sorted must be</div><div class="line">#   uniformly distributed.</div><div class="line">#</div><div class="line"># The aforementioned aside, bucket sort is actually very good</div><div class="line">#   considering that counting sort is reasonably speaking its upper</div><div class="line">#   bound. And counting sort is very fast. The particular distinction</div><div class="line">#   for bucket sort is that it uses a hash function to partition the</div><div class="line">#   keys of the input array, so that multiple keys may hash to the same</div><div class="line">#   bucket. Hence each bucket must effectively be a growable list;</div><div class="line">#   similar to radix sort.</div><div class="line">#</div><div class="line"># Numerous Internet sites, including university pages, have</div><div class="line">#   erroneously written counting sort code and call them bucket sort.</div><div class="line">#   Bucket sort uses a hash function to distribute keys; counting sort</div><div class="line">#   creates a bucket for each key. Indeed there are perhaps greater</div><div class="line">#   similarities between radix sort and bucket sort, than there are</div><div class="line">#   between counting sort and bucket sort.</div><div class="line">#</div><div class="line"># In the presented program insertionsort is used to sort</div><div class="line">#   each bucket. This is to inculcate that the bucket sort algorithm</div><div class="line">#   does not specify which sorting technique to use on the buckets.</div><div class="line">#   A programmer may choose to continuously use bucket sort on each</div><div class="line">#   bucket until the collection is sorted (in the manner of the radix</div><div class="line">#   sort program below). Whichever sorting method is used on the</div><div class="line">#   buckets, bucket sort still tends toward O(n).</div><div class="line">#=======================================================================</div><div class="line"></div><div class="line"></div><div class="line">def bucket_sort(array):</div><div class="line">    # get hash codes</div><div class="line">    code = hashing(array)</div><div class="line">    # number of buckets: math.sqrt(len(array))</div><div class="line">    buckets = [list() for _ in range(code[1])]</div><div class="line">    # distribute data into buckets: O(n)</div><div class="line">    for i in array:</div><div class="line">        x = re_hashing(i, code)</div><div class="line">        buck = buckets[x]</div><div class="line">        buck.append(i)</div><div class="line"></div><div class="line">  # Sort each bucket: O(n).</div><div class="line">  # I mentioned above that the worst case for bucket sort is counting</div><div class="line">  # sort. That&apos;s because in the worst case, bucket sort may end up</div><div class="line">  # with one bucket per key. In such case, sorting each bucket would</div><div class="line">  # take 1^2 = O(1). Even after allowing for some probabilistic</div><div class="line">  # variance, to sort each bucket would still take 2-1/n, which is</div><div class="line">  # still a constant. Hence, sorting all the buckets takes O(n).</div><div class="line">    for bucket in buckets:</div><div class="line">        insertion_sort(bucket)</div><div class="line">    ndx = 0</div><div class="line">    # merge the buckets: O(n)</div><div class="line">    for i in range(len(buckets)):</div><div class="line">        print buckets[i]</div><div class="line">        for v in buckets[i]:</div><div class="line">            array[ndx] = v</div><div class="line">            ndx += 1</div><div class="line">    return array</div><div class="line"></div><div class="line"></div><div class="line">import math</div><div class="line"></div><div class="line"></div><div class="line">def hashing(array):</div><div class="line">    m = array[0]</div><div class="line">    for i in range(1, len(array)):</div><div class="line">        if(m &lt; array[i]):</div><div class="line">            m = array[i]</div><div class="line">    result = [m, int(math.sqrt(len(array)))]</div><div class="line">    print result</div><div class="line">    return result</div><div class="line"></div><div class="line"></div><div class="line">def re_hashing(i, code):</div><div class="line">    # 桶是从小到大排的</div><div class="line">    return int(i / code[0] * (code[1] - 1))</div></pre></td></tr></table></figure>
+<h1 id="Counting-Sort-计数排序"><a href="#Counting-Sort-计数排序" class="headerlink" title="Counting Sort 计数排序"></a>Counting Sort 计数排序</h1><p>桶的个数＝待排序个数，就是计数排序，是桶排序的特例。<br>计数排序，顾名思义，就是对待排序数组按元素进行计数。使用前提是需要先知道待排序数组的元素范围，将这些一定范围的元素置于新数组中，新数组的大小为待排序数组中最大元素与最小元素的差值。</p>
+<p>本质是空间换时间，空间复杂度 O(max-min)。本质是哈希过程<br>前提：数据是 int 值</p>
+<p>步骤：</p>
+<ol>
+<li>定新数组大小——找出待排序的数组中最大和最小的元素</li>
+<li>统计次数——统计数组中每个值为i的元素出现的次数，存入新数组C的第i项</li>
+<li>对统计次数逐个累加——对所有的计数累加（从C中的第一个元素开始，每一项和前一项相加）</li>
+<li>反向填充目标数组——将每个元素i放在新数组的第C(i)项，每放一个元素就将C(i)减去1</li>
+<li>其中反向填充主要是为了避免重复元素落入新数组的同一索引处。</li>
+</ol>
+<blockquote>
+<p>参考链接：<br><a href="https://www.bittiger.io/blog/post/4Q4iNNbRYXkWkrAM3#quicksort" target="_blank" rel="external">https://www.bittiger.io/blog/post/4Q4iNNbRYXkWkrAM3#quicksort</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/排序/" rel="tag">#排序</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/06/Search Engines笔记 - Exact-match retrieval/" rel="next" title="Search Engines笔记 - Exact-match retrieval">
+                <i class="fa fa-chevron-left"></i> Search Engines笔记 - Exact-match retrieval
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/08/数据结构和算法 -- 栈和队列/" rel="prev" title="数据结构和算法 -- 栈和队列">
+                数据结构和算法 -- 栈和队列 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概览"><span class="nav-number">1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bubble-sort-冒泡排序"><span class="nav-number">2.</span> <span class="nav-text">Bubble sort 冒泡排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本款"><span class="nav-number">2.1.</span> <span class="nav-text">基本款</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化一"><span class="nav-number">2.2.</span> <span class="nav-text">优化一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化二"><span class="nav-number">2.3.</span> <span class="nav-text">优化二</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Selection-sort-选择排序"><span class="nav-number">3.</span> <span class="nav-text">Selection sort 选择排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Insertion-sort-插入排序"><span class="nav-number">4.</span> <span class="nav-text">Insertion sort 插入排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-Sort-希尔排序"><span class="nav-number">5.</span> <span class="nav-text">Shell Sort 希尔排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Merge-Sort-归并排序"><span class="nav-number">6.</span> <span class="nav-text">Merge Sort 归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本款-1"><span class="nav-number">6.1.</span> <span class="nav-text">基本款</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">6.2.</span> <span class="nav-text">优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结合其他排序"><span class="nav-number">6.2.1.</span> <span class="nav-text">结合其他排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立索引"><span class="nav-number">6.2.2.</span> <span class="nav-text">建立索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用"><span class="nav-number">6.3.</span> <span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#例1-9-路归并排序"><span class="nav-number">6.3.1.</span> <span class="nav-text">例1: 9 路归并排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例2-逆序数问题"><span class="nav-number">6.3.2.</span> <span class="nav-text">例2: 逆序数问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他思考"><span class="nav-number">6.4.</span> <span class="nav-text">其他思考</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Quick-sort-快速排序"><span class="nav-number">7.</span> <span class="nav-text">Quick sort 快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本款-2"><span class="nav-number">7.1.</span> <span class="nav-text">基本款</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用-1"><span class="nav-number">7.2.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Heap-sort-堆排序"><span class="nav-number">8.</span> <span class="nav-text">Heap sort 堆排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bucket-Sort-桶排序"><span class="nav-number">9.</span> <span class="nav-text">Bucket Sort 桶排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Counting-Sort-计数排序"><span class="nav-number">10.</span> <span class="nav-text">Counting Sort 计数排序</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/09/07/数据结构和算法 -- 排序算法/';
+      var disqus_title = "数据结构和算法 -- 排序算法";
+      var disqus_url = 'http://www.shuang0420.cn/2016/09/07/数据结构和算法 -- 排序算法/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

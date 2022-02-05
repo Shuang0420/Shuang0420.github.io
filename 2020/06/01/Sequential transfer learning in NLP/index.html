@@ -1,0 +1,1163 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,Transfer Learning," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="NAACL 2019 tutorial on “Transfer Learning in Natural Language Processing” 的部分笔记，资料链接见文末。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sequential transfer learning in NLP">
+<meta property="og:url" content="http://www.shuang0420.cn/2020/06/01/Sequential transfer learning in NLP/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="NAACL 2019 tutorial on “Transfer Learning in Natural Language Processing” 的部分笔记，资料链接见文末。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/types.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/feature_extraction.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/elmo.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/downstream.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/adapters.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/regularization.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/EWC.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/distill.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/sts.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/perturbed.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/ensemble.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/distillation.png">
+<meta property="og:updated_time" content="2020-09-10T12:55:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sequential transfer learning in NLP">
+<meta name="twitter:description" content="NAACL 2019 tutorial on “Transfer Learning in Natural Language Processing” 的部分笔记，资料链接见文末。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/types.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2020/06/01/Sequential transfer learning in NLP/"/>
+
+
+  <title> Sequential transfer learning in NLP | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Sequential transfer learning in NLP
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2020-06-01T10:02:27+08:00" content="2020-06-01">
+              2020-06-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Chatbot/" itemprop="url" rel="index">
+                    <span itemprop="name">Chatbot</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2020/06/01/Sequential transfer learning in NLP/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/06/01/Sequential transfer learning in NLP/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>NAACL 2019 tutorial on “Transfer Learning in Natural Language Processing” 的部分笔记，资料链接见文末。<br><a id="more"></a></p>
+<img src="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/types.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/types.png">
+<p>迁移学习的概念就不多描述了，可以参考<a href="https://github.com/jindongwang/transferlearning-tutorial" target="_blank" rel="external">迁移学习小册子</a>，讲的非常好。总的来说迁移学习有两大类（应该是 Sebastian Ruder 博士论文提出的分类？）：</p>
+<ul>
+<li><strong>Inductive transfer learning</strong><ul>
+<li>任务不同，但在目标领域有标注数据</li>
+<li>同时学习不同任务就是 multi-task learning，顺序学习不同任务就是 sequential transfer learning</li>
+<li>具体方法有<strong>基于样本（instance based transfer）</strong>、<strong>基于特征（feature representation transfer）</strong>、<strong>基于参数（parameter transfer）</strong>、<strong>基于关系（relational knowledge transfer）</strong>的迁移，其中最为常见的就是基于特征的迁移，如把预训练模型当做特征提取器，后加分类层等应用，以及基于参数的迁移，如我们常用的 fine-tuning </li>
+</ul>
+</li>
+<li><strong>Transductive transfer learning</strong><ul>
+<li>任务相同但是领域不同，源领域有标注数据，但是目标领域没有标注数据</li>
+<li>不同领域就是<strong>领域适应（domain adaptation）</strong>，不同语言就是<strong>跨语言学习（cross-lingual learning）</strong>。领域适应问题一般假设源领域和目标领域有相同的样本空间，但数据分布不一致，迁移学习小册子重点介绍了这一热门研究方向</li>
+<li>通常是<strong>基于样本</strong>和<strong>基于特征</strong>的学习</li>
+</ul>
+</li>
+</ul>
+<p>这一篇关注的是 <strong>Sequential inductive transfer learning</strong>，通常来说第一阶段在源领域上预训练，学习 general 的一些表征，然后做 adaption，迁移到新的任务。由于源领域的训练数据非常大，预训练模型通常有很好的泛化能力（参考大力出奇迹的 GPT3）。预训练之前讨论的比较多，而这次要解决的问题是 <strong>How to adapt the pretrained model in NLP</strong>，主要从下面三个方面进行讨论：</p>
+<ol>
+<li><strong>Architectural modifications?</strong><br> 怎么改模型结构</li>
+<li><strong>Optimization schemes</strong><br> 去训练哪些权重，以什么顺序来训练</li>
+<li><strong>More signal: Weak supervision, Multi-tasking &amp; Ensembling</strong><br> 获取更多监督信号</li>
+</ol>
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p>有两种选择，大多数情况下第一种选择就可以解决问题：</p>
+<ul>
+<li><strong>模型内部结构不变</strong>，可以在最上层加分类器，在最下层补充 embdding，也可以把模型输出当做特征<ul>
+<li>一方面，删除一些对目标任务无效的 pretraining task head，像是预训练 LM 的 softmax 分类器，当然也可以留着做 multi-task</li>
+<li>另一方面，在顶层或者底层加上目标任务需要的层，简单来讲可以加个 linear 层，复杂一点也可以把模型输出当做目标模型的输入</li>
+</ul>
+</li>
+<li><strong>修改模型内部结构</strong>，如改成 encoder-decoder 模式，或者为目标任务加一些 adapters（像加在 transformer 上的 multi-head attention，layer norm）等<ul>
+<li><a href="https://arxiv.org/pdf/1902.02671.pdf" target="_blank" rel="external">BERT and PALs: Projected Attention Layers for Efficient Adaptation in Multi-Task Learning</a></li>
+<li><a href="https://arxiv.org/abs/1902.00751" target="_blank" rel="external">Parameter-Efficient Transfer Learning for NLP</a></li>
+<li>Adaptation layer 在 CV 领域有更广泛的研究，这里提到的 adapters 是为了优化目标任务，而 CV 领域提到的自适应模块是为了 domain adaption 提出的，通常用来完成 source 和 target 数据的自适应，拉近两者的数据分布，使得网络效果更好，常见的有在分类器的前一层/几层加入适配层（如 MK-MMD），用来计算 source 和 target 的距离，加入损失进行训练</li>
+</ul>
+</li>
+</ul>
+<h1 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h1><p>几个需要考虑的问题：</p>
+<ul>
+<li><strong>选择更新哪些权重（Which weights）</strong><ul>
+<li>不更新权重：feature extraction</li>
+<li>更新权重：fine-tuning</li>
+<li>Adapters</li>
+<li><strong>feature extraction 还是 fine-tuning 取决于目标任务和预训练任务之间的相似性</strong></li>
+</ul>
+</li>
+<li><strong>选择什么时候更新，以及怎样更新（What schedule）</strong><ul>
+<li>top-bottom</li>
+<li>gradual unfreezing</li>
+<li>discriminative fine-tuning</li>
+</ul>
+</li>
+<li><strong>考虑一些 trade-offs</strong><br>  时间/空间复杂度，性能要求</li>
+</ul>
+<h2 id="Which-weights"><a href="#Which-weights" class="headerlink" title="Which weights"></a>Which weights</h2><h3 id="Freeze-pretrained-weights"><a href="#Freeze-pretrained-weights" class="headerlink" title="Freeze pretrained weights"></a>Freeze pretrained weights</h3><p>来看图说话：</p>
+<ol>
+<li><strong>不更新预训练的权重，只训练目标任务相关的权重（比如新加的分类层）</strong><img src="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/feature_extraction.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/feature_extraction.png"></li>
+<li><strong>特征提取要注意的是不要傻傻的只用 top layer 的特征，可以学习各层特征的线性组合</strong><br><a href="https://arxiv.org/pdf/1802.05365.pdf" target="_blank" rel="external">Deep contextualized word representations 2018</a><br><a href="https://arxiv.org/abs/1705.08142" target="_blank" rel="external">Latent Multi-task Architecture Learning 2019</a><img src="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/elmo.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/elmo.png"></li>
+<li><strong>预训练特征当做下游任务的特征</strong><img src="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/downstream.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/downstream.png"></li>
+<li><strong>Adapters，在预训练模型结构已有的 layers 之间加入目标任务的适配器</strong>，如下图，只训练红色部分的权重<img src="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/adapters.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/adapters.png">
+</li>
+</ol>
+<h3 id="Change-pretrained-weights"><a href="#Change-pretrained-weights" class="headerlink" title="Change pretrained weights"></a>Change pretrained weights</h3><p>另外一种就是 fine-tuning 啦，用预训练的权重来初始化下游模型的参数，在迁移阶段训练所有参数</p>
+<h2 id="What-schedule"><a href="#What-schedule" class="headerlink" title="What schedule"></a>What schedule</h2><p>决定好更新什么权重，下一步就要看用什么顺序，以及怎样的方式来更新了，记住我们的目标：</p>
+<p><strong><em>We want to avoid overwriting useful pretrained information and maximize positive transfer.</em></strong></p>
+<p>在一个完全不同的领域/任务上直接对所有层进行更新可能会带来不稳定的结果，所以更明智的选择是分层训练，给不同的 layer 一点时间来适应新的任务和数据，这感觉就像是回到了 DL 初期的 layer-wise 训练方法（<a href="https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf" target="_blank" rel="external">Hinton et al., 2006</a>，<a href="https://papers.nips.cc/paper/3048-greedy-layer-wise-training-of-deep-networks.pdf" target="_blank" rel="external">Bengio et al., 2007</a>）。</p>
+<p>Anyway，一个重要的指导原则是<strong>自顶向下（top-to-bottom）</strong>的更新，也就是先 freeze 住低层的参数，去更新高层的参数，因为高层的参数更加的 task-specific。这里要考虑的是 time 和 intensity，每一层更新的时间可以通过 freeze 其他层来控制，更新的强度可以通过学习率的变化来控制。另外，可以通过正则化来平衡更新与保留之间的关系。</p>
+<h3 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h3><p>自底向上，从 embedding 到中间层到 top layer 再到 target layer 各层表示为：E -&gt; L1 -&gt; … Ln -&gt; T。</p>
+<ul>
+<li><strong>Freezing all but the top layer</strong> 只训练 top layer Ln<br>  <a href="https://arxiv.org/abs/1502.02791" target="_blank" rel="external">Long et al.,ICML 2015</a></li>
+<li><strong>Chain-thaw</strong><br>  <a href="https://www.aclweb.org/anthology/D17-1169" target="_blank" rel="external">Felbo et al., EMNLP 2017</a><ol>
+<li>只训练 T 层参数</li>
+<li>自底向上，每次只训练一层的参数，E -&gt; L1 -&gt; … -&gt; Ln</li>
+<li>训练所有层</li>
+</ol>
+</li>
+<li><strong>Gradually unfreezing</strong><br>  <a href="https://arxiv.org/abs/1801.06146" target="_blank" rel="external">Howard &amp; Ruder, ACL 2018</a><br>  逐层解冻，先训练 T，训练 T + Ln，训练 T + Ln + Ln-1，直到全部放开训练所有层</li>
+<li><strong>Sequential unfreezing</strong><br>  <a href="https://arxiv.org/abs/1902.10547" target="_blank" rel="external">Chronopoulou et al., NAACL 2019</a><br>  用超参来决定 fine-tuning 的过程<ol>
+<li>先训练新增参数，训练 n epochs</li>
+<li>训练除 embedding 层外的所有层，训练 k epochs</li>
+<li>训练所有层直到收敛</li>
+</ol>
+</li>
+</ul>
+<p>这里多数的方法到最后都会一起训练所有的参数</p>
+<h3 id="Intensity"><a href="#Intensity" class="headerlink" title="Intensity"></a>Intensity</h3><p>降低学习率来防止重写有用信息，问题是什么时候降低学习率？</p>
+<ul>
+<li>Lower layers，捕捉底层信息的时候 </li>
+<li>Early in training，模型还需要去适应目标分布</li>
+<li>Late in training，模型快收敛的时候</li>
+</ul>
+<p>如 <a href="https://arxiv.org/abs/1801.06146" target="_blank" rel="external">ULMFiT</a> 一文提到了一些技巧，一个是 <strong>discriminative fine-tuning</strong>，每层设置一个学习率，越底层学习率越小，另一个是 <strong>slanted triangular learning rates</strong>，学习率先逐渐增加后逐渐下降，相当于 warm up。</p>
+<h3 id="Regularization"><a href="#Regularization" class="headerlink" title="Regularization"></a>Regularization</h3><p>用来减小灾难性遗忘，通过一个正则项来让目标模型参数接近预训练参数，让模型不要忘记预训练时学到的东西。</p>
+<ul>
+<li>最简单的方法 <a href="https://www.aclweb.org/anthology/K17-1029/" target="_blank" rel="external">Wiese et al., CoNLL 2017</a><img src="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/regularization.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/regularization.png"></li>
+<li>高级一点的方法（elastic weight consolidation; EWC）<a href="https://arxiv.org/abs/1612.00796" target="_blank" rel="external">Overcoming catastrophic forgetting in neural networks</a><img src="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/EWC.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/EWC.png"></li>
+<li>如果任务之间很相似，可以用交叉熵来鼓励 source 和 target 的预测相近，类似蒸馏的做法<img src="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/distill.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/distill.png">
+</li>
+</ul>
+<h3 id="Trade-offs"><a href="#Trade-offs" class="headerlink" title="Trade-offs"></a>Trade-offs</h3><p>选择权重更新时，不可避免的要考虑空间、时间复杂度、性能等问题。在时间、空间复杂度的要求上，都是 feature extraction &gt; adapters &gt; fine-tuning。</p>
+<p>考虑 performance 的话，有一条经验法则：</p>
+<p><strong><em>If task source and target tasks are dissimilar, use feature extraction</em></strong>  – <a href="https://arxiv.org/abs/1903.05987" target="_blank" rel="external">To Tune or Not to Tune? Adapting Pretrained Representations to Diverse Tasks</a></p>
+<p>事实上，大部分情况下 feature extraction 和 fine-tuning 的效果都差不多，除非任务非常相似，那么 fine-tune 强，或者非常不相似，那么 feature extraction 更胜一筹。一个例子是，在文本相似度任务上，BERT 上进行 fine-tune 的效果比 feature extraction 显著要好很多，这大概是因为 BERT 的 NSP 任务和 STS 任务非常相似；同样的，skip-thoughts 和 quick-thoughts 同样也用了 NSP 任务，在 STS 这类相似度任务上表现的也很好；而相反，ELMo 这种纯 LM 预训练目标的模型在 sentence pair tasks 上 fine-tune 的表现就不如人意了。另外，对于文本相似度这类 sentence pair 的任务，通过实验也可以发现，它依赖的并不是顶层的预训练特征（如下图，用 4-5 层之后的特征效果提升就显得非常平缓了），这也解释了为什么 fine-tune 的方法会更好一些。</p>
+<img src="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/sts.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/sts.png">
+<p>另外，Adapters 的效果和 fine-tuning 有的一拼，Transformers 结构相比于 LSTMs 要更容易 fine-tune，对超参更不敏感。</p>
+<h1 id="More-signal"><a href="#More-signal" class="headerlink" title="More signal"></a>More signal</h1><p>目标任务的数据量/标签一般都比较少，所以我们通常会通过组合一些信号来提高效果，从最基础的在单目标任务上 fine-tune 单模型，可以延伸到从其他数据集/相关任务中收集信号（Weak Supervision, Multi-tasking and Sequential Adaptation），再到集成模型，结合多个 fine-tune 模型的预测。</p>
+<h2 id="Basic-fine-tuning"><a href="#Basic-fine-tuning" class="headerlink" title="Basic fine-tuning"></a>Basic fine-tuning</h2><p>以一个分类任务为例，简单来说就是下面几步：</p>
+<ul>
+<li>从模型提取一个 fixed-length vector，可以是 CLS 的 hidden state，也可以是所有 hidden-states 的平均/最大池化</li>
+<li>额外的分类层投射到分类空间</li>
+<li>训练分类目标</li>
+</ul>
+<h2 id="Related-datasets-tasks"><a href="#Related-datasets-tasks" class="headerlink" title="Related datasets/tasks"></a>Related datasets/tasks</h2><p>从其他数据集和相关任务中收集更多监督信号。</p>
+<ul>
+<li><strong>Sequential adaptation</strong><ul>
+<li>在相关数据集/任务上先做一次微调</li>
+<li>适用于数据有限但有一些相似任务的情景，先在有更多数据的相关任务上进行 fine-tune，然后再在目标任务上 fine-tune</li>
+<li>也可以在没有标注数据的领域数据上用 LM 等任务进行 fine-tune，然后在目标任务上 fine-tune</li>
+<li><a href="https://arxiv.org/abs/1811.01088v2" target="_blank" rel="external">2018 Sentence Encoders on STILTs: Supplementary Training on Intermediate Labeled-data Tasks</a></li>
+<li><a href="https://arxiv.org/abs/1901.11373" target="_blank" rel="external">2019 Learning and Evaluating General Linguistic Intelligence</a> 在目标任务上提高样本的复杂度</li>
+</ul>
+</li>
+<li><strong>Multi-task fine-tuning with related tasks</strong><ul>
+<li>如 NLI tasks in GLUE</li>
+<li>每个 step 采样一个任务和一个 batch 来训练，多任务训练的方式训练几个 epochs，最后在目标任务上 fine-tune 几个 epochs</li>
+<li>LM 很有用<ul>
+<li>即使没有预训练也有用 <a href="https://arxiv.org/abs/1704.07156" target="_blank" rel="external">Semi-supervised Multitask Learning for Sequence Labeling</a></li>
+<li>引入 lambda 比率 <a href="https://arxiv.org/abs/1902.10547" target="_blank" rel="external">An Embarrassingly Simple Approach for Transfer Learning from Pretrained Language Models</a>  $L = L1 + \lambda L2$</li>
+<li>这在 ULMFiT 里作为一个单独的步骤</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Dataset Slicing</strong><ul>
+<li>when the model consistently underperforms on particular slices of the data<ul>
+<li>用 error analysis 挑选子集</li>
+<li>用经验自动选择一些挑战性的数据子集</li>
+<li>auxiliary head 和 main head 一起训练</li>
+</ul>
+</li>
+<li>只在特定的数据子集上训练额外的 head</li>
+<li><a href="https://dawn.cs.stanford.edu/2019/03/22/glue/" target="_blank" rel="external">Massive Multi-Task Learning with Snorkel MeTaL</a></li>
+</ul>
+</li>
+<li><strong>Semi-supervised learning</strong><ul>
+<li>可以使模型预测结果和未标注的数据更加一致</li>
+<li>基本思路是最小化在原始输入 x 上的预测与引入扰动后的输入 x’ 的预测之间的距离<img src="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/perturbed.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/perturbed.png"></li>
+<li>扰动可以是<ul>
+<li>noise, masking <ul>
+<li><a href="https://arxiv.org/abs/1809.08370" target="_blank" rel="external">2018 Semi-Supervised Sequence Modeling with Cross-View Training</a></li>
+</ul>
+</li>
+<li>data augmentation, e.g. back-translation <ul>
+<li><a href="https://arxiv.org/abs/1904.12848" target="_blank" rel="external">2019 Unsupervised Data Augmentation for Consistency Training</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ensembling"><a href="#Ensembling" class="headerlink" title="Ensembling"></a>Ensembling</h2><ul>
+<li><strong>Ensembling models</strong><ul>
+<li>on different tasks</li>
+<li>on different dataset-splits</li>
+<li>with different parameters (dropout, initializations…)</li>
+<li>from variant of pre-trained models (e.g. cased/uncased)<img src="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/ensemble.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/ensemble.png"></li>
+</ul>
+</li>
+<li><strong>Knowledge distillation</strong><ul>
+<li>把集成的大模型蒸馏到一个小模型 </li>
+<li>利用 teacher (the ensemble) 模型的 soft targets 来训练一个 student model<ul>
+<li>$-\sum_c Q(c|X)log(P_r(c|X))$</li>
+</ul>
+</li>
+<li>teacher label 的相对概率包含了 teacher 模型怎样泛化的信息<img src="http://images.shuang0420.cn/images/Sequential%20transfer%20learning%20in%20NLP/distillation.png" class="ful-image" alt="Sequential%20transfer%20learning%20in%20NLP/distillation.png">
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>相关资料：</strong><br>Video: <a href="https://vimeo.com/359399507" target="_blank" rel="external">https://vimeo.com/359399507</a><br>Slides: <a href="https://tinyurl.com/NAACLTransfer" target="_blank" rel="external">https://tinyurl.com/NAACLTransfer</a><br>Colab: <a href="https://tinyurl.com/NAACLTransferColab" target="_blank" rel="external">https://tinyurl.com/NAACLTransferColab</a><br>Code: <a href="https://tinyurl.com/NAACLTransferCode" target="_blank" rel="external">https://tinyurl.com/NAACLTransferCode</a><br><a href="https://ruder.io/thesis/neural_transfer_learning_for_nlp.pdf" target="_blank" rel="external">Neural Transfer Learning for Natural Language Processing</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/Transfer-Learning/" rel="tag">#Transfer Learning</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/07/论文笔记 - Pre-trained Models for Natural Language Processing/" rel="next" title="论文笔记 - Pre-trained Models for Natural Language Processing">
+                <i class="fa fa-chevron-left"></i> 论文笔记 - Pre-trained Models for Natural Language Processing
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/16/Slice-based learning - 基于数据切片的学习/" rel="prev" title="Slice-based learning - 基于数据切片的学习">
+                Slice-based learning - 基于数据切片的学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Architecture"><span class="nav-number">1.</span> <span class="nav-text">Architecture</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Optimization"><span class="nav-number">2.</span> <span class="nav-text">Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Which-weights"><span class="nav-number">2.1.</span> <span class="nav-text">Which weights</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Freeze-pretrained-weights"><span class="nav-number">2.1.1.</span> <span class="nav-text">Freeze pretrained weights</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Change-pretrained-weights"><span class="nav-number">2.1.2.</span> <span class="nav-text">Change pretrained weights</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-schedule"><span class="nav-number">2.2.</span> <span class="nav-text">What schedule</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Time"><span class="nav-number">2.2.1.</span> <span class="nav-text">Time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intensity"><span class="nav-number">2.2.2.</span> <span class="nav-text">Intensity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Regularization"><span class="nav-number">2.2.3.</span> <span class="nav-text">Regularization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trade-offs"><span class="nav-number">2.2.4.</span> <span class="nav-text">Trade-offs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#More-signal"><span class="nav-number">3.</span> <span class="nav-text">More signal</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-fine-tuning"><span class="nav-number">3.1.</span> <span class="nav-text">Basic fine-tuning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Related-datasets-tasks"><span class="nav-number">3.2.</span> <span class="nav-text">Related datasets/tasks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ensembling"><span class="nav-number">3.3.</span> <span class="nav-text">Ensembling</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2020/06/01/Sequential transfer learning in NLP/';
+      var disqus_title = "Sequential transfer learning in NLP";
+      var disqus_url = 'http://www.shuang0420.cn/2020/06/01/Sequential transfer learning in NLP/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

@@ -1,0 +1,1049 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep learning,RNN,LSTM," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="介绍 RNN 及其变种。Stanford cs231n Lecture 10: Recurrent Neural Networks 的部分笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="递归神经网络 RNN 笔记">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/07/21/递归神经网络 RNN 笔记/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="介绍 RNN 及其变种。Stanford cs231n Lecture 10: Recurrent Neural Networks 的部分笔记。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/one_to_many.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/one_to_one.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/bptt.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/many_to_many.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/birnn.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/many_to_one.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/one_to_many_.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/sequence_to_sequence.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/ch_lm_s.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/ch_lm_s2.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/btt1.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/tbtt2.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/CNN%26RNN.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/%E5%B1%80%E9%99%901.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/1.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/LSTMgate2.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/LSTMgate.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/LSTMbp.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/GRU.png">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="递归神经网络 RNN 笔记">
+<meta name="twitter:description" content="介绍 RNN 及其变种。Stanford cs231n Lecture 10: Recurrent Neural Networks 的部分笔记。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/one_to_many.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/07/21/递归神经网络 RNN 笔记/"/>
+
+
+  <title> 递归神经网络 RNN 笔记 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                递归神经网络 RNN 笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-07-21T18:45:12+08:00" content="2017-07-21">
+              2017-07-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Deep-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep learning</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/07/21/递归神经网络 RNN 笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/07/21/递归神经网络 RNN 笔记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>介绍 RNN 及其变种。Stanford cs231n Lecture 10: Recurrent Neural Networks 的部分笔记。<br><a id="more"></a></p>
+<h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><p>传统的神经网络中间层每一个神经元和输入的每一个数据进行运算得到一个激励然后产生一个中间层的输出，并没有记忆能力，在输入为序列的情况下的效果有限。而很多东西是受到时域信息影响的，某一时刻产生的激励对下一时刻是有用的，递归神经网络就具备这样的记忆能力，它可以把这一刻的特征与上一刻保存的激励信息相结合(并不只是上一刻 s2 是由 s1、s2 产生的，$s_n$ 不仅有 $s_{n-1}$ 的信息，还包括 $s_{n-2}$、$s_{n-3}$…$s_1$ 的信息。</p>
+<p> <strong>CNN vs RNN:</strong></p>
+<ol>
+<li>CNN 需要固定长度的输入、输出，RNN 的输入可以是不定长的</li>
+<li>CNN 只有 one-to-one 一种结构，而 RNN 有多种结构，如下图具体在下一部分再做介绍。</li>
+</ol>
+<img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/one_to_many.png" class="ful-image" alt="one_to_many.png">
+<p>   <strong>One-to-one:</strong> Vanilla Neural Networks<br>    最简单的结构，然而效果不怎么好<br>   <strong>One-to-many:</strong> Image Captioning, image -&gt; sequence of works<br>   ​输入一个图片，输出一句描述图片的话<br>   <strong>Many-to-one:</strong> Sentiment Classification, sequence of words -&gt; sentiment<br>   ​输入一句话，判断是正面还是负面情绪<br>   <strong>Many-to-many:</strong> Machine Translation, seq of words -&gt; seq of words<br>   ​有个延时的，譬如<a href="http://lib.csdn.net/base/machinetranslation" target="_blank" rel="external">机器翻译</a>。<br>   <strong>Many-to-many:</strong> Video classification on frame level<br>   ​输入一个视频，判断每帧分类。</p>
+<p><strong>Applications:</strong></p>
+<ul>
+<li>language models</li>
+<li>translation</li>
+<li>caption generation</li>
+<li>program execution</li>
+</ul>
+<h1 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>以 (Vanilla) Recurrent Neural Network 为例<br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/one_to_one.png" class="ful-image" alt="one_to_one.png"></p>
+<p><strong>Forward(前向传播)</strong></p>
+<p>$$h_t=f_W(h_{t-1},x_t)$$</p>
+<p><strong>Notice: the same function and the same set of parameters are used at every time step.</strong></p>
+<p>$$h_t=tanh(W_{hh}h_{t-1}+W_{xh}x_t+b)$$<br>$$y_t=Softmax(W_{hy}h_t+c)$$</p>
+<p>就是多加上 $h_{t-1}$，activation function 用的是 tanh</p>
+<p><strong>Backwards: </strong>Backpropagation Through Time(BPTT)<br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/bptt.png" class="ful-image" alt="bptt.png"><br>(请原谅我的字～) U 最大特征值(Largest singular value)大于 1 的时候，梯度爆炸，小于 1 的时候，则可能发生梯度消失。&gt; 1 的时候还比较容易察觉，&lt; 1 的时候往往难以发现了。<br>梯度爆炸可以采用<strong>Gradient clipping</strong>的方式(设个天花板)避免，如梯度大于 5 的时候就强制梯度等于5。梯度消散可以通过改变 RNN 结构如采用LSTM的方式抑制。</p>
+<p><strong>Loss function(损失函数)</strong><br><strong>Cross-entropy</strong><br>$$E_t(y_t,\hat y_t)=-y_tlog \hat y_t$$<br>$$E(y_t,\hat y_t)=-\sum_t y_tlog \hat y_t$$</p>
+<h2 id="其他结构"><a href="#其他结构" class="headerlink" title="其他结构"></a>其他结构</h2><p>经典 RNN 结构，输入和输出序列等长，适用范围比较小，比如 Char RNN，视频每一帧的分类任务等。<br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/many_to_many.png" class="ful-image" alt="many_to_many.png"></p>
+<p>双向 RNN：输入信息一个正向，一个反向，原因是信息等依赖关系顺序不定。<br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/birnn.png" class="ful-image" alt="birnn.png"></p>
+<p>输入是序列，输出是单个值，通常处理序列分类问题，比如句子分类任务。<br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/many_to_one.png" class="ful-image" alt="many_to_one.png"></p>
+<p>输入是值，输出是序列，decoder 时，可以把原始输入信息 X 作为序列输出开始的输入 ，也可以把 X 作为每个阶段的输入，可以处理 <strong>从图像/类别生成文字/语音/音乐</strong> 的问题，输入可以是 CNN 的 FC 层特征。<br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/one_to_many_.png" class="ful-image" alt="one_to_many_.png"></p>
+<p>经典的 Encoder-Decoder 或者说 Seq2Seq 模型，先用一个 Many-to-one 将输入编码成一个上下文向量 c，这个 c 可以是 Encoder 最后一个隐状态，也可以是这个隐状态的变换，还可以是所有隐状态的一个变换。有了 c，另一个 One-to-many 会对其进行解码，把 c 作为初始状态 $h_0$ 输入到 Decoder 中。这一部分也有各种变换，比如说把 c 当做 decoder 时每一步的输入。<br>Seq2Seq 结构应用非常广泛，在机器翻译、文本摘要、问答系统中都很常见。<br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/sequence_to_sequence.png" class="ful-image" alt="sequence_to_sequence.png"></p>
+<h2 id="Example-Character-level-Language-Model-Sampling"><a href="#Example-Character-level-Language-Model-Sampling" class="headerlink" title="Example: Character-level Language Model Sampling"></a>Example: Character-level Language Model Sampling</h2><p><strong>Vocabulary:</strong> [h, e, l, o]<br><strong>Exaple training sequence:</strong> “hello”</p>
+<img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/ch_lm_s.png" class="ful-image" alt="ch_lm_s.png">
+<p>At test-time sample characters one at a time, feed back to model<br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/ch_lm_s2.png" class="ful-image" alt="ch_lm_s2.png"></p>
+<p><strong>Backpropagation through time:</strong><br>Foward through entire sequence to compute loss, then backward through entire sequence to compute gradient.<br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/btt1.png" class="ful-image" alt="btt1.png"></p>
+<p><strong>Truncated Backpropagation through time:</strong><br>Run forward and backward through chunks of the sequence instead of whole sequence.<br>Carry hidden states forward in time forever, but only backpropagate for some smaller number of steps.<br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/tbtt2.png" class="ful-image" alt="tbtt2.png"></p>
+<h2 id="Image-Captioning"><a href="#Image-Captioning" class="headerlink" title="Image Captioning"></a>Image Captioning</h2><blockquote>
+<p>可参考的 paper:<br>xplain Images with Multimodal Recurrent Neural Networks, Mao et al.<br>Deep Visual-Semantic Alignments for Generating Image Descriptions, Karpathy and Fei-Fei<br>Show and Tell: A Neural Image Caption Generator, Vinyals et al.<br>Long-term Recurrent Convolutional Networks for Visual Recognition and Description, Donahue et al.<br>Learning a Recurrent Visual Representation for Image Caption Generation, Chen and Zitnick</p>
+</blockquote>
+<img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/CNN%26RNN.png" class="ful-image" alt="CNN%26RNN.png">
+<p>下一篇重点解释。</p>
+<h2 id="RNN-局限"><a href="#RNN-局限" class="headerlink" title="RNN 局限"></a>RNN 局限</h2><p>RNN 前后依赖的特性导致两个输入距离比较远的时候作用会非常弱，比如说下面的例子， China 对 Chinese 起决定作用，然而距离太远难以产生关联。<br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/%E5%B1%80%E9%99%901.png" class="ful-image" alt="%E5%B1%80%E9%99%901.png"></p>
+<p>一个解决方案就是设计 Gate，保存重要记忆，也就是下面要讲的 LSTM，LSTM 网络模型解决了 RNN 梯度消散问题，同时保留了长时序列的相关性。</p>
+<h1 id="RNN-变种-LSTM"><a href="#RNN-变种-LSTM" class="headerlink" title="RNN 变种: LSTM"></a>RNN 变种: LSTM</h1><p>RNN 中重复的模块只有一个非常既简单的结构 tanh 层，而 LSTM 将重复模块改成了一个相对复杂的结构，这样可以有效避免梯度消失的问题。LSTM 要理解的核心是 GATE，它就是靠这些 gate 的结构让信息有选择性的影响 RNN 中每个时刻的状态。所谓 gate 的结构就是一个使用 sigmoid 神经网络和一个 elementwise multiplication 的操作，这两个操作合在一起就是一个门的结构，sigmoid 作为激活函数的全连接神经网络层会输出一个 0-1 之间的数值，描述当前输入有多少信息量可以通过这个结构，类似于门，门打开时(sigmoid 输出为1时)，全部信息都可以通过；当门关上时(sigmoid 输出为0)，任何信息都无法通过。</p>
+<p><strong>Vanilla RNN</strong><br>$$<br>\begin{aligned}<br>  h_t &amp; = tanh(W_{hh}h_{t-1}+W_{xh}x_t) \\<br>  &amp; =  tanh((W_{hh} W_{hx})\binom{h_{t-1}}{x_t}) \\<br>   &amp; = tanh(W \binom{h_{t-1}}{x_t}) \\<br>  \end{aligned}<br>$$</p>
+<p>看一下 Vanilla RNN 到 LSTM 前向传播的变化<br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/1.png" class="ful-image" alt="1.png"></p>
+<p><strong>LSTM 网络结构图</strong><br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/LSTMgate2.png" class="ful-image" alt="LSTMgate2.png"></p>
+<p><strong>分步：</strong><br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/LSTMgate.png" class="ful-image" alt="LSTMgate.png"><br><strong>f</strong>: Forget gate, Whether to erase cell<br><strong>i</strong>: Input gate, whether to write to cell<br><strong>g</strong>: Gate gate (?), How much to write to cell<br><strong>o</strong>: Output gate, How much to reveal cell</p>
+<p><strong>Step 1:</strong><br>decide what information we’re going to throw away from the cell state<br>新输入 $x_t$ 和前状态 $h_{t-1}$ 通过 sigmoid 变换决定 $c_{t-1}$ 的哪些信息可以舍弃，$f_t$ 与 $C_{t-1}$ 做 elementwise multiplication 运算，对部分信息进行去除</p>
+<p><strong>Step 2:</strong><br>decide what new information we’re going to store in the cell state<br>新输入 $x_t$ 前状态 $h_{t-1}$ 通过 sigmoid 变换告诉 $c_t$ 哪些新信息想要保存，通过 tanh 变换建一个新的侯选值向量。<br>$i_t:$ 新信息添加时的系数(对比 $f_t$)，$g_t$ 单独新数据形成的控制参数，用于对 $C_t$ 进行更新。</p>
+<p><strong>Step 3:</strong><br>update the old cell state<br>根据旧的控制参数 $C_{t-1}, f_t, i_t, g_t$ 组合生成最终生成该时刻最终控制参数</p>
+<p><strong>Step 4:</strong><br>decide what we’re going to output<br>新输入 $x_t$ 和前状态 $h_{t-1}$ 通过 sigmoid 变换决定 cell state 的哪些信息需要输出，与 cell state 通过 tanh 变换后的值相乘，产生此刻的新的 LSTM 输出</p>
+<p>核心内容 $C_t$，信息流控制的关键，参数决定了 $h_t$ 传递过程中，哪些被保存或舍弃，参数被 Gate 影响。<strong>怎样实现 Gate 对 C 影响？</strong> Sigmoid 函数系数据定 $C_t$ 参数的变化，而 Sigmoid 函数决定于输入。<br>整个过程：$C_t$ 信息舍弃 =&gt; $C_t$ 局部生成 =&gt; $C_t$ 更新 =&gt; $C_t$ 运算</p>
+<p><a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="external"></a></p>
+<p><strong>Backpropagation:</strong><br><img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/LSTMbp.png" class="ful-image" alt="LSTMbp.png"></p>
+<h1 id="LSTM-变种-Peephole-connection"><a href="#LSTM-变种-Peephole-connection" class="headerlink" title="LSTM 变种: Peephole connection"></a>LSTM 变种: Peephole connection</h1><p>$C_t$ 受到 Gate 参数影响 =&gt; 二者相互影响<br>$f_t=\sigma(W_f[C_{t-1},h_{t-1},x_t]+b_f)$<br>$f_t=\sigma(W_i[C_{t-1},h_{t-1},x_t]+b_i)$<br>$f_t=\sigma(W_o[C_{t-1},h_{t-1},x_t]+b_o)$</p>
+<h1 id="LSTM-变种-遗忘-更新互为补充"><a href="#LSTM-变种-遗忘-更新互为补充" class="headerlink" title="LSTM 变种: 遗忘/更新互为补充"></a>LSTM 变种: 遗忘/更新互为补充</h1><p>Gate 的 <strong>遗忘/更新</strong> 不再独立，而是互为补充。</p>
+<p>$C_t = f_t * C_{t-1} + i_t * g_t$ =&gt; $C_t = f_t * C_{t-1} + (1-f_t) * g_t$</p>
+<h1 id="LSTM-变种-GRU-Gated-Recurrent-Unit"><a href="#LSTM-变种-GRU-Gated-Recurrent-Unit" class="headerlink" title="LSTM 变种: GRU(Gated Recurrent Unit)"></a>LSTM 变种: GRU(Gated Recurrent Unit)</h1><ol>
+<li>遗忘，更新 Gate 结合(不是独立，也不是互补)形成更新门</li>
+<li>控制参数 $C_t$ 与输出 $h_t$ 结合，直接产生带有长短记忆能力的输出 link<img src="http://images.shuang0420.cn/images/%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20RNN%20%E7%AC%94%E8%AE%B0/GRU.png" class="ful-image" alt="GRU.png">
+</li>
+</ol>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><ul>
+<li>RNN 应用在 language model 中，学习的实质是 P(下个词|前面多个词)</li>
+<li>Vanilla RNNs 非常简单，但效果不好，通常会使用 LSTM 和 GRU，这两种结构能提高 gradient flow</li>
+<li>在一层 RNN 中不同时间序列中激励函数和权值参数都一致</li>
+<li>RNN 也可以是多层 RNN，其网络是整个一模型一起训练的</li>
+<li>RNN 存在着梯度爆炸和梯度消散的问题。梯度爆炸可以采用<strong>Gradient clipping</strong>的方式避免，梯度消散可以采用 LSTM 的网络结构抑制</li>
+<li>中间层的特征带有前后时间特征，对一些任务很有用</li>
+<li>额外参数：单双向/梯度上限/梯度计算范围</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-learning/" rel="tag">#Deep learning</a>
+          
+            <a href="/tags/RNN/" rel="tag">#RNN</a>
+          
+            <a href="/tags/LSTM/" rel="tag">#LSTM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/15/CCF-GAIR 参会笔记/" rel="next" title="CCF-GAIR 参会笔记">
+                <i class="fa fa-chevron-left"></i> CCF-GAIR 参会笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/08/论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization/" rel="prev" title="论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization">
+                论文笔记 - A Neural Attention Model for Abstractive Sentence Summarization <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引入"><span class="nav-number">1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RNN"><span class="nav-number">2.</span> <span class="nav-text">RNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">2.1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他结构"><span class="nav-number">2.2.</span> <span class="nav-text">其他结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-Character-level-Language-Model-Sampling"><span class="nav-number">2.3.</span> <span class="nav-text">Example: Character-level Language Model Sampling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Image-Captioning"><span class="nav-number">2.4.</span> <span class="nav-text">Image Captioning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN-局限"><span class="nav-number">2.5.</span> <span class="nav-text">RNN 局限</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RNN-变种-LSTM"><span class="nav-number">3.</span> <span class="nav-text">RNN 变种: LSTM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSTM-变种-Peephole-connection"><span class="nav-number">4.</span> <span class="nav-text">LSTM 变种: Peephole connection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSTM-变种-遗忘-更新互为补充"><span class="nav-number">5.</span> <span class="nav-text">LSTM 变种: 遗忘/更新互为补充</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSTM-变种-GRU-Gated-Recurrent-Unit"><span class="nav-number">6.</span> <span class="nav-text">LSTM 变种: GRU(Gated Recurrent Unit)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">7.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/07/21/递归神经网络 RNN 笔记/';
+      var disqus_title = "递归神经网络 RNN 笔记";
+      var disqus_url = 'http://www.shuang0420.cn/2017/07/21/递归神经网络 RNN 笔记/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

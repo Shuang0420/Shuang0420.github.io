@@ -1,0 +1,1108 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="关于如何建立一个 QA 系统。整理自 Stanford NLP 公开课及 Jurafsky &amp;amp; Chris Manning 的 NLP book draft。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP 笔记 - Question Answering System">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/03/02/NLP 笔记 - Question Answering System/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="关于如何建立一个 QA 系统。整理自 Stanford NLP 公开课及 Jurafsky &amp;amp; Chris Manning 的 NLP book draft。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/1.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/2.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/17.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/3.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/4.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/18.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/5.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/6.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/7.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/8.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/10.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/11.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/12.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/13.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/14.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/15.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/16.jpg">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP 笔记 - Question Answering System">
+<meta name="twitter:description" content="关于如何建立一个 QA 系统。整理自 Stanford NLP 公开课及 Jurafsky &amp;amp; Chris Manning 的 NLP book draft。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/03/02/NLP 笔记 - Question Answering System/"/>
+
+
+  <title> NLP 笔记 - Question Answering System | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                NLP 笔记 - Question Answering System
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-03-02T10:00:00+08:00" content="2017-03-02">
+              2017-03-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Chatbot/" itemprop="url" rel="index">
+                    <span itemprop="name">Chatbot</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/02/NLP 笔记 - Question Answering System/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/02/NLP 笔记 - Question Answering System/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关于如何建立一个 QA 系统。整理自 Stanford NLP 公开课及 Jurafsky &amp; Chris Manning 的 NLP book draft。<br><a id="more"></a></p>
+<h1 id="Single-Document-QA"><a href="#Single-Document-QA" class="headerlink" title="Single Document QA"></a>Single Document QA</h1><p>基于某个 document 的 QA 系统，一般来说假定问题答案出现在了文档中。这是我们要做的项目，之后再具体介绍。<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/1.jpg" class="ful-image" alt="1.jpg"></p>
+<h1 id="Question-Types"><a href="#Question-Types" class="headerlink" title="Question Types"></a>Question Types</h1><ul>
+<li><strong>Simple (factoid) questions</strong> (most commercial systems)<br>  简单的问题，可以用简单的事实回答，答案简短通常是一个 named entity<br>  Who wrote the Declaration of Independence?<br>  What is the average age of the onset of autism?<br>  Where is Apple Computer based?</li>
+<li><strong>Complex (narrative) questions</strong><br>  稍微复杂的叙述问题，答案略长<br>  What do scholars think about Jefferson’s position on dealing with pirates?<br>  What is a Hajj?<br>  In children with an acute febrile illness, what is the efficacy of single medication therapy with acetaminophen or ibuprofen in reducing fever?</li>
+<li><strong>Complex (opinion) questions</strong><br>  复杂的问题，通常是关于观点／意见<br>  Was the Gore/Bush election fair?</li>
+</ul>
+<h1 id="IR-Based-Corpus-based-Approaches"><a href="#IR-Based-Corpus-based-Approaches" class="headerlink" title="IR-Based(Corpus-based) Approaches"></a>IR-Based(Corpus-based) Approaches</h1><p>简言之，就是用信息检索的方法来找最佳 answer，下面是 IR-based factoid AQ 的流程图，包括三个阶段，<strong>问题处理(question processing)</strong>，<strong>篇章检索(passage retrieval)</strong>和<strong>答案处理(answering processing)</strong></p>
+<ul>
+<li><strong>Question Processing</strong><br>  Answer Type Detection: 分析 question，决定 answer type<br>  Query Formulation: 形成合适的查询语句进行检索</li>
+<li><strong>Passagge Retrieval</strong><br>  通过检索得到 top N documents<br>  把 documents 拆分称合适的单位(unit/passage)</li>
+<li><strong>Answer Processing</strong><br>  得到候选的 answer<br>  进行排序，选出最佳 answer</li>
+</ul>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/2.jpg" class="ful-image" alt="2.jpg">
+<h2 id="Question-Processing"><a href="#Question-Processing" class="headerlink" title="Question Processing"></a>Question Processing</h2><p>两个任务，确定 answer type，形成 query。有些系统还会从 question 里提取出 focus。</p>
+<blockquote>
+<p><strong>Answer type: </strong> the kind of entity the answer consists of (person, location, time, etc.)<br><strong>Query: </strong> the keywords that should be used for the IR system to use in searching for documents<br><strong>Focus: </strong> the string of words in the question that are likely to be replaced by the answer in any answer string found</p>
+</blockquote>
+<p>这一阶段需要做的事：<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/17.jpg" class="ful-image" alt="17.jpg"></p>
+<p>E.g.<br><strong>Question: </strong> Which US state capital has the largest population?<br><strong>Answer type: </strong> city<br><strong>Query: </strong> US state capital, largest, population<br><strong>Focus: </strong> state capital</p>
+<h3 id="Answer-Type-Detection"><a href="#Answer-Type-Detection" class="headerlink" title="Answer Type Detection"></a>Answer Type Detection</h3><p>通常而言，我们把它当作一个机器学习的分类问题</p>
+<ul>
+<li><strong>定义</strong>类别</li>
+<li><strong>注释</strong>训练数据，给数据打上分类标签</li>
+<li><strong>训练</strong>分类器，所用特征可以包括 hand‐written rules</li>
+</ul>
+<h4 id="Define-answer-types"><a href="#Define-answer-types" class="headerlink" title="Define answer types"></a>Define answer types</h4><p>前人已经提供了一些 answer type 的层次型分类结构，如 Answer Type Taxonomy(from Li &amp; Roth)</p>
+<ul>
+<li>Two‐layered taxonomy</li>
+<li>6 coarse classes<br>  ABBEVIATION, ENTITY, DESCRIPTION, HUMAN, LOCATION, NUMERIC_VALUE</li>
+<li>50 fine classes<br>  HUMAN: group, individual, title, description<br>  ENTITY: animal, body, color, currency…<br>  LOCATION: city, country, mountain…</li>
+</ul>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/3.jpg" class="ful-image" alt="3.jpg">
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/4.jpg" class="ful-image" alt="4.jpg">
+<h4 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h4><p><strong>Features:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- words in the questions</div><div class="line">- part-of-speech of each word</div><div class="line">- named entities in the questions</div><div class="line">- question headword</div><div class="line">- semantic information about the words in the questions</div><div class="line">    WordNet synset ID of the word</div></pre></td></tr></table></figure></p>
+<h4 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h4><p>一些分类方法:</p>
+<ul>
+<li>Hand-written rules</li>
+<li>Machine Learning</li>
+<li>Hybrid</li>
+<li>Regular expression‐based rules can get some cases:<br>  Who {is|was|are|were} PERSON<br>  PERSON (YEAR – YEAR)</li>
+<li>Other rules use the question headword<br>  = headword of first noun phrase after wh‐word:<br>  Which city in China has the largest number of foreign financial companies?<br>  What is the state flower of California?</li>
+</ul>
+<p>当然也可以把上述某些分类方法当作特征一起进行训练。就分类效果而言，PERSON, LOCATION, TIME 这类的问题类型有更高的准确率，REASON，DESCRIPTION 这类的问题更难识别。</p>
+<h3 id="Query-Formulation"><a href="#Query-Formulation" class="headerlink" title="Query Formulation"></a>Query Formulation</h3><p>根据 question 产生一个 keyword list，作为 IR 系统的输入 query。可能的流程是去除 stopwords，丢掉 question word(where, when, etc.)，找 noun phrases，根据 tfidf 判断 keywords 的去留等等。<br>如果 keywords 太少，还可以通过 <a href="http://www.shuang0420.com/2016/10/10/Search%20Engines笔记%20-%20Pseudo%20Relevance%20Feedback/" target="_blank" rel="external">query expansion</a> 来增加 query terms。</p>
+<p>Keyword selection algorithm：<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/18.jpg" class="ful-image" alt="18.jpg"></p>
+<p>Results:<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/5.jpg" class="ful-image" alt="5.jpg"></p>
+<p><a href="https://www.youtube.com/watch?v=K7VwMBRArgw" target="_blank" rel="external">21 - 2 - Answer Types and Query Formulation-NLP-Dan Jurafsky &amp; Chris Manning</a></p>
+<h2 id="Passage-Retrieval"><a href="#Passage-Retrieval" class="headerlink" title="Passage Retrieval"></a>Passage Retrieval</h2><p>有了 query，我们进行检索，会得到 top N 的文档，然而文档并不是得到 answer 的最好的单位，下一步我们需要从文档抽取 potential answer passages，来方便后面的 answer processing。passage 可以是 sections, paragraphs, sentence，具体情况具体分析。</p>
+<p>两个步骤：</p>
+<ol>
+<li>过滤掉那些不可能包含 answer 信息的 passage<br> 可以运行 named entity 或者 answer type 的分类器</li>
+<li>对剩下的 passage 进行排序<br> 监督机器学习方法<br> 特征:<pre><code>• The number of named entities of the right type in the passage
+• The number of question keywords in the passage
+• The longest exact sequence of question keywords that occurs in the passage
+• The rank of the document from which the passage was extracted
+• The proximity of the keywords from the original query to each other
+    For each passage identify the shortest span that covers the keywords contained in that passage. Prefer smaller spans that include more keywords (Pasca 2003, Monz 2004).
+• The N-gram overlap between the passage and the question
+    Count the N-grams in the question and the N-grams in the answer passages. Prefer the passages with higher N-gram overlap with the question (Brill et al., 2002).
+</code></pre></li>
+</ol>
+<p>对于基于 web 的 QA 系统，我们可以依靠网页搜索来做 passage extraction，简单来说，可以把网页搜索产生的 snippets 作为 passages。</p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/6.jpg" class="ful-image" alt="6.jpg">
+<h2 id="Answer-Processing"><a href="#Answer-Processing" class="headerlink" title="Answer Processing"></a>Answer Processing</h2><p>现在，我们已经有了 question type，也给文本打了 Named Entities 的标签，就可以进一步缩小 candidate answer 的范围。</p>
+<h3 id="Answer-Identification"><a href="#Answer-Identification" class="headerlink" title="Answer Identification"></a>Answer Identification</h3><p>Answer Identification 模块复杂找到问题的最佳 answer，对于具有 named entity 的问题，这个模块必须确定有正确 answer 的句子，对于没有 named entity 类型的问题，这个模块基本上得从头开始。</p>
+<p>经常使用的方法是 <strong>word overlap</strong></p>
+<ul>
+<li><strong>Basic Word Overlap:</strong> 对每个候选答案计算分数，依据是答案中/附近的 question words 的数量</li>
+<li><strong>Stop Words:</strong> 有时 closed class words（通常称为IR中的停止词）不包括在 word overlap 中。</li>
+<li><strong>Stemming:</strong> 有时要用到 morphological analysis，仅仅比较词根(e.g. “walk” and “walked” would match).</li>
+<li><strong>Weights:</strong> 一些 word 可能比其他 word 的权重更重（例如，动词可能被赋予比名词更多的权重）</li>
+</ul>
+<h3 id="Answer-Extraction"><a href="#Answer-Extraction" class="headerlink" title="Answer Extraction"></a>Answer Extraction</h3><h4 id="Pattern‐extraction-methods"><a href="#Pattern‐extraction-methods" class="headerlink" title="Pattern‐extraction methods"></a>Pattern‐extraction methods</h4><p>在 passage 上运行 answer‐type tagger，返回包含了正确的 answer-type 的文本。</p>
+<p>E.g.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Who is the prime minister of India” (PERSON)</div><div class="line">    Manmohan Singh, Prime Minister of India, had told left leaders that the deal would not be renegotiated.</div><div class="line"></div><div class="line">“How tall is Mt. Everest? (LENGTH)</div><div class="line">    The official height of Mount Everest is 29035 feet</div></pre></td></tr></table></figure></p>
+<p>有时候光用 pattern-extraction 方法是不够的，一方面我们不能创造规则，另一方面 passage 里也可能有多个 potential answer。另外，对于没有特定定命名实体类型的答案，我们可以使用正则表达式(人工编写或自动学习)。</p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/7.jpg" class="ful-image" alt="7.jpg">
+<h4 id="N-gram-tiling-methods"><a href="#N-gram-tiling-methods" class="headerlink" title="N-gram tiling methods"></a>N-gram tiling methods</h4><p><strong>N-gram tiling</strong> 又被称为 <strong>redundancy-based approach</strong>(Brill et al. 2002, Lin 2007)，基于网页搜索产生的 snippet，进行 ngram 的挖掘，具体步骤如下：</p>
+<ol>
+<li><strong>N-gram mining</strong><br> 提取每个片段中出现的 unigram, bigram, and trigram，并赋予权重</li>
+<li><strong>N-gram filtering</strong><br> 根据 ngram 和预测的 answer type 间的匹配程度给 ngram 计算分数<br> 可以通过为每个 answer type 人工编写的过滤规则来计算具体分数</li>
+<li><strong>N-gram tiling</strong><br> 将重叠的 ngram 连接称更长的答案<br> <strong>standard greedy method:</strong><pre><code>1. start with the highest-scoring candidate and try to tile each other candidate with this candidate
+2. add the best-scoring concatenation to the set of candidates
+3. remove the lower-scoring candidate
+4. continue until a single answer is built
+</code></pre></li>
+</ol>
+<h3 id="Rank-Candidate-Answers"><a href="#Rank-Candidate-Answers" class="headerlink" title="Rank Candidate Answers"></a>Rank Candidate Answers</h3><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/8.jpg" class="ful-image" alt="8.jpg">
+<p>可能用到的 feature<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">• Answer type match: True if the candidate answer contains a phrase with the cor- rect answer type.</div><div class="line">• Pattern match: The identity of a pattern that matches the candidate answer. Number of matched question keywords: How many question keywords are contained in the candidate answer.</div><div class="line">• Keyword distance: The distance between the candidate answer and query key- words (measured in average number of words or as the number of keywords that occur in the same syntactic phrase as the candidate answer).</div><div class="line">• Novelty factor: True if at least one word in the candidate answer is novel, that is, not in the query.</div><div class="line">• Apposition features: True if the candidate answer is an appositive to a phrase con- taining many question terms. Can be approximated by the number of question terms separated from the candidate answer through at most three words and one comma (Pasca, 2003).</div><div class="line">• Punctuation location: True if the candidate answer is immediately followed by a comma, period, quotation marks, semicolon, or exclamation mark.</div><div class="line">• Sequences of question terms: The length of the longest sequence of question terms that occurs in the candidate answer.</div></pre></td></tr></table></figure></p>
+<h1 id="Knowledge-based-Approaches-Siri"><a href="#Knowledge-based-Approaches-Siri" class="headerlink" title="Knowledge-based Approaches(Siri)"></a>Knowledge-based Approaches(Siri)</h1><p>对 query 建立语义模型，然后做一个 mapping 来找 answer。</p>
+<blockquote>
+<p><strong>semantic parsers: </strong> map from a text string to any logical form<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/10.jpg" class="ful-image" alt="10.jpg"></p>
+</blockquote>
+<ul>
+<li><strong>Build a semantic representation of the query</strong><br>  Times, dates, locations, entities, numeric quantities</li>
+<li><strong>Map from this semantics to query structured data or resources</strong><br>  Geospatial databases<br>  Ontologies (Wikipedia infoboxes, dbPedia, WordNet, Yago)<br>  Restaurant review sources and reservation services<br>  Scientific databases</li>
+</ul>
+<p>流行的本体库(ontologies)有 Freebase (Bollacker et al., 2008) 和 DBpedia (Bizer et al., 2009)，它们从 Wikipedia 的 infoboxes 提取了大量的三元组，可以用来回答问题。如下面这个三元组就可以回答 factoid questions，像是 ‘When was Ada Lovelace born?’ 或者 ‘Who was born in 1815?’的问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">subject         predicate     object</div><div class="line">AdaLovelace     birth-year     1815</div></pre></td></tr></table></figure></p>
+<p>Mapping<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">“When was Ada Lovelace born?” → birth-year (Ada Lovelace, ?x)</div><div class="line">“What is the capital of England?” → capital-city(?x, England)</div></pre></td></tr></table></figure></p>
+<h2 id="Rule-based-Methods"><a href="#Rule-based-Methods" class="headerlink" title="Rule-based Methods"></a>Rule-based Methods</h2><p>对于一些非常常见的问题，我们可以用人工编写规则来从 question 里抽取关系，比如说 birth-year 的关系，我们可以用 question word <strong><em>When</em></strong>，动词 <strong><em>born</em></strong>，来抽取 named entity。</p>
+<h2 id="Supervised-Methods"><a href="#Supervised-Methods" class="headerlink" title="Supervised Methods"></a>Supervised Methods</h2><p>一般来说，系统会有一个初始的 lexicon(每个命名实体对应着一些实例)，也会有一些默认的匹配规则，这些规则能够把 question parse tree 的某些部分映射为特定关系。<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/11.jpg" class="ful-image" alt="11.jpg"></p>
+<p>下面是一个二元组例子，用于训练分类器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">“When was Ada Lovelace born?” → birth-year (Ada Lovelace, ?x)</div></pre></td></tr></table></figure></p>
+<img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/12.jpg" class="ful-image" alt="12.jpg">
+<p>有很多这样的 pair，更多的规则将被引入，然后我们就可以预测 unseen data。<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/13.jpg" class="ful-image" alt="13.jpg"></p>
+<h2 id="Semi-Supervised-Methods"><a href="#Semi-Supervised-Methods" class="headerlink" title="Semi-Supervised Methods"></a>Semi-Supervised Methods</h2><p>有监督的学习当然很棒，可是我们很难得到庞大的训练数据，所以一个办法就是利用<strong>textual redundancy</strong>。最常见的 redundancy 的例子当然就是 web 了，网络中存在着大量的能够表达关系的 textual variants，所以很多方法都利用了网络文本，如半监督学习算法 distant supervision，或者是无监督学习算法 open information extraction。把网络数据与规范的知识来源(canonical knowledge source)如 wikipedia 对齐，我们能创建/学习新的映射规则。<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/14.jpg" class="ful-image" alt="14.jpg"></p>
+<p>另一个 redundancy 的来源是 paraphrase databases，如 wikianswers.com<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/15.jpg" class="ful-image" alt="15.jpg"></p>
+<p>这些 question paraphrases 的 pair 可以通过 MT alignment 方法建立 MT-style phrase table 来将原始问题翻译成同义的问题，这种方法在现代的 QA 系统中经常用到。</p>
+<h1 id="Hybrid-DeepQA-System-IBM-Watson"><a href="#Hybrid-DeepQA-System-IBM-Watson" class="headerlink" title="Hybrid/DeepQA System(IBM Watson)"></a>Hybrid/DeepQA System(IBM Watson)</h1><ul>
+<li>构建问题的浅层语义表达(shallow semantic representation)</li>
+<li>用信息检索方法来产生候选答案<br>  利用本体和半结构化数据</li>
+<li>用更多的 knowledge source 来为候选答案计算分数<br>  Geospatial databases<br>  Temporal reasoning<br>  Taxonomical classification</li>
+</ul>
+<p>一些基本事实：</p>
+<blockquote>
+<p>“The operative goal for primary search eventually stabilized at about 85 percent binary recall for the top 250 candidates; that is, the system generates the correct answer as a candidate answer for 85 percent of the questions somewhere within the top 250 ranked candidates.”</p>
+<p>“If the correct answer(s) are not generated at this stage as a candidate, the system has no hope of answering the question. This step therefore significantly favors recall over precision, with the expectation that the rest of the processing pipeline will tease out the correct answer, even if the set of candidates is quite large.”</p>
+</blockquote>
+<p>IBM 的 Watson 系统架构：<br><img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Question%20Answering%20System/16.jpg" class="ful-image" alt="16.jpg"></p>
+<p>后面补充。</p>
+<h1 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h1><p>如果只返回一个 answer，就用 Accuracy，如果有多个，就用 <a href="http://www.shuang0420.com/2016/09/20/Search%20Engines笔记%20-%20Evaluating%20Search%20Effectiveness/" target="_blank" rel="external">MRR</a>，MRR 对所有的 RR 值求平均，RR(Reciprocal rank) 指的是 1/rank of first right answer。</p>
+<blockquote>
+<p>参考链接：<br><a href="https://web.stanford.edu/~jurafsky/slp3/28.pdf" target="_blank" rel="external">Chapter 28: Question Answering</a><br><a href="http://people.cs.pitt.edu/~litman/courses/cs2731/lec/slp23-handout.pdf" target="_blank" rel="external">Chapter23.2: Question Answering</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/28/NLP 笔记 - Syntax and Parsing/" rel="next" title="NLP 笔记 - Constituency Parsing">
+                <i class="fa fa-chevron-left"></i> NLP 笔记 - Constituency Parsing
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/09/NLP 笔记 - Dependency Parsing and Treebank/" rel="prev" title="NLP 笔记 - Dependency Parsing and Treebank">
+                NLP 笔记 - Dependency Parsing and Treebank <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Single-Document-QA"><span class="nav-number">1.</span> <span class="nav-text">Single Document QA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Question-Types"><span class="nav-number">2.</span> <span class="nav-text">Question Types</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IR-Based-Corpus-based-Approaches"><span class="nav-number">3.</span> <span class="nav-text">IR-Based(Corpus-based) Approaches</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-Processing"><span class="nav-number">3.1.</span> <span class="nav-text">Question Processing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Answer-Type-Detection"><span class="nav-number">3.1.1.</span> <span class="nav-text">Answer Type Detection</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Define-answer-types"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">Define answer types</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Features"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">Features</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Classification"><span class="nav-number">3.1.1.3.</span> <span class="nav-text">Classification</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Query-Formulation"><span class="nav-number">3.1.2.</span> <span class="nav-text">Query Formulation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Passage-Retrieval"><span class="nav-number">3.2.</span> <span class="nav-text">Passage Retrieval</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Answer-Processing"><span class="nav-number">3.3.</span> <span class="nav-text">Answer Processing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Answer-Identification"><span class="nav-number">3.3.1.</span> <span class="nav-text">Answer Identification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Answer-Extraction"><span class="nav-number">3.3.2.</span> <span class="nav-text">Answer Extraction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pattern‐extraction-methods"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">Pattern‐extraction methods</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#N-gram-tiling-methods"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">N-gram tiling methods</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rank-Candidate-Answers"><span class="nav-number">3.3.3.</span> <span class="nav-text">Rank Candidate Answers</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Knowledge-based-Approaches-Siri"><span class="nav-number">4.</span> <span class="nav-text">Knowledge-based Approaches(Siri)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rule-based-Methods"><span class="nav-number">4.1.</span> <span class="nav-text">Rule-based Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Supervised-Methods"><span class="nav-number">4.2.</span> <span class="nav-text">Supervised Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Semi-Supervised-Methods"><span class="nav-number">4.3.</span> <span class="nav-text">Semi-Supervised Methods</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hybrid-DeepQA-System-IBM-Watson"><span class="nav-number">5.</span> <span class="nav-text">Hybrid/DeepQA System(IBM Watson)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Evaluation"><span class="nav-number">6.</span> <span class="nav-text">Evaluation</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/03/02/NLP 笔记 - Question Answering System/';
+      var disqus_title = "NLP 笔记 - Question Answering System";
+      var disqus_url = 'http://www.shuang0420.cn/2017/03/02/NLP 笔记 - Question Answering System/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

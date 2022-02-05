@@ -1,0 +1,991 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="动态规划," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="我们再次强调：动态编程的核心在于，如果在一个问题的解决方案中，子问题被重复计算，那么就可以利用记录中间结果，达到用空间换取时间的目的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构和算法 -- 动态规划">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/11/12/动态规划/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="我们再次强调：动态编程的核心在于，如果在一个问题的解决方案中，子问题被重复计算，那么就可以利用记录中间结果，达到用空间换取时间的目的。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92//leetcode95.jpg">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构和算法 -- 动态规划">
+<meta name="twitter:description" content="我们再次强调：动态编程的核心在于，如果在一个问题的解决方案中，子问题被重复计算，那么就可以利用记录中间结果，达到用空间换取时间的目的。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92//leetcode95.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/11/12/动态规划/"/>
+
+
+  <title> 数据结构和算法 -- 动态规划 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构和算法 -- 动态规划
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-11-12T09:55:12+08:00" content="2016-11-12">
+              2016-11-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Data-Structure/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Structure</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/12/动态规划/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/12/动态规划/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我们再次强调：动态编程的核心在于，如果在一个问题的解决方案中，子问题被重复计算，那么就可以利用记录中间结果，达到用空间换取时间的目的。<br><a id="more"></a></p>
+<h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line"></div><div class="line">    def __init__(self):</div><div class="line">        self.cache = dict()</div><div class="line"></div><div class="line">    def f(self, n):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if n in self.cache:</div><div class="line">            return self.cache[n]</div><div class="line">        if n == 0 or n == 1:</div><div class="line">            return n</div><div class="line">        self.cache[n] = self.f(n - 1) + self.f(n - 2)</div><div class="line">        return self.cache[n]</div></pre></td></tr></table></figure>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="70-Climbing-Stairs"><a href="#70-Climbing-Stairs" class="headerlink" title="70. Climbing Stairs"></a>70. Climbing Stairs</h2><h3 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h3><p>You are climbing a stair case. It takes n steps to reach to the top.</p>
+<p>Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?</p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Dynamic programming.</div><div class="line"></div><div class="line">Induction Rule:</div><div class="line">T(n)=T(n-1)+T(n-2)</div><div class="line"></div><div class="line">Base cases:</div><div class="line">if n &lt;= 0, then the number of ways should be zero.</div><div class="line">if n == 1, then there is only way to climb the stair.</div><div class="line">if n == 2, then there are two ways to climb the stairs. One solution is one step by another; the other one is two steps at one time.</div><div class="line"></div><div class="line">The key intuition to solve the problem is that given a number of stairs n, if we know the number ways to get to the points [n-1] and [n-2] respectively, denoted as n1 and n2 , then the total ways to get to the point [n] is n1 + n2. Because from the [n-1] point, we can take one single step to reach [n]. And from the [n-2] point, we could take two steps to get there. There is NO overlapping between these two solution sets, because we differ in the final step.</div><div class="line"></div><div class="line">Now given the above intuition, one can construct an array where each node stores the solution for each number n. Or if we look at it closer, it is clear that this is basically a fibonacci number, with the starting numbers as 1 and 2, instead of 1 and 1.</div><div class="line"></div><div class="line">Recursive method:</div><div class="line">- cache, time complexity: O(n), space complexity: O(n)</div><div class="line"></div><div class="line">Follow up:</div><div class="line">- space complexity: O(1)</div><div class="line">    use two pointers</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    def __init__(self):</div><div class="line">        self.cache = dict()</div><div class="line"></div><div class="line">    # Recursive method</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    def climbStairs(self, n):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if n &lt;= 0: return 0</div><div class="line">        if n in self.cache:</div><div class="line">            return self.cache[n]</div><div class="line">        if n==1 or n==2: return n</div><div class="line">        self.cache[n] = self.climbStairs(n-1) + self.climbStairs(n-2)</div><div class="line">        return self.cache[n]</div><div class="line">        &apos;&apos;&apos;</div><div class="line"></div><div class="line">    # two pointers</div><div class="line">    def climbStairs(self, n):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if n &lt;= 0: return 0</div><div class="line">        if n == 1 or n == 2: return n</div><div class="line">        pre,cur = 1, 2</div><div class="line">        for i in range(2,n):</div><div class="line">            pre, cur = cur, pre+cur</div><div class="line">        return cur</div></pre></td></tr></table></figure>
+<p>##</p>
+<h3 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem"></a>Problem</h3><p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.</p>
+<p>For example, given the array [-2,1,-3,4,-1,2,1,-5,4],<br>the contiguous subarray [4,-1,2,1] has the largest sum = 6.</p>
+<h3 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">- subarray: 2 pointers: head,tail</div><div class="line">- any repeated work? no   any meaningless work? yes    check the sum-array and we can find that the non-max-sum either subtract one more number or miss one more addition</div><div class="line">    that is, for each element in the array, we have two options, either start from this element, or continue to sum up, no other options, and we choose maximum value of these two numbers.</div><div class="line">    --&gt;</div><div class="line">    cur_sum=max(cur_sum,nums[start]+cur_sum),</div><div class="line">    max_sum=(cur_sum,max_sum)</div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def maxSubArray(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        cur_sum,max_sum=nums[0],nums[0]</div><div class="line">        for start in range(1,len(nums)):</div><div class="line">            cur_sum=max(nums[start],nums[start]+cur_sum)</div><div class="line">            max_sum=max(cur_sum,max_sum)</div><div class="line">        return max_sum</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    # brute-force, time limit exceeded</div><div class="line">    def maxSubArray(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if len(nums)==0:</div><div class="line">            return 0</div><div class="line">        global_sum=nums[0]</div><div class="line">        for i in range(0,len(nums)-1):</div><div class="line">            part_sum=nums[i]</div><div class="line">            if part_sum&gt;global_sum:</div><div class="line">                global_sum=part_sum</div><div class="line">            for j in range(i+1,len(nums)):</div><div class="line">                part_sum+=nums[j]</div><div class="line">                if part_sum&gt;global_sum:</div><div class="line">                    global_sum=part_sum</div><div class="line">        part_sum=nums[-1]</div><div class="line">        if part_sum&gt;global_sum:</div><div class="line">            global_sum=part_sum</div><div class="line">        return global_sum</div><div class="line">    &apos;&apos;&apos;</div></pre></td></tr></table></figure>
+<h2 id="204-Count-Primes"><a href="#204-Count-Primes" class="headerlink" title="204. Count Primes"></a>204. Count Primes</h2><h3 id="Problem-2"><a href="#Problem-2" class="headerlink" title="Problem"></a>Problem</h3><p>Description:</p>
+<p>Count the number of prime numbers less than a non-negative number, n.</p>
+<h3 id="Solution-2"><a href="#Solution-2" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Primitive idea:</div><div class="line">- for each number i from 2-n, exclusive, check if i can be divided by a natural number that is from 2-(i-1), inclusive</div><div class="line">- Time complexity: O(n^2)</div><div class="line"></div><div class="line">Followup:</div><div class="line">- repeated work? yes, for each number larger than 2, we divided it by 2, for each number larger than 3, we divided it by 3....</div><div class="line">- think of it in a reverse way, we can enumerate the multiples of p by counting to n from 2p in increments of p, and mark them in the list as non-prime;</div><div class="line"></div><div class="line">- Time complexity: O(nlog(logn))  </div><div class="line">The inner loop does n/i steps, where i is prime =&gt; the whole complexity is sum(n/i) = n * sum(1/i). According to prime harmonic series, the sum (1/i) where i is prime is log (log n). In total, O(n*log(log n)).</div><div class="line">- Space complexity: O(n)</div><div class="line"></div><div class="line">[Divergence of the sum of the reciprocals of the primes</div><div class="line">](https://en.wikipedia.org/wiki/Divergence_of_the_sum_of_the_reciprocals_of_the_primes)</div><div class="line">&apos;&apos;&apos;</div><div class="line">class Solution(object):</div><div class="line">    def countPrimes(self, n):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if n&lt;2: return 0</div><div class="line">        isPrime=[True]*n</div><div class="line">        isPrime[0:2]=[False]*2</div><div class="line">        for i in range(2,int(n**0.5)+1):</div><div class="line">            if isPrime[i]:</div><div class="line">                isPrime[i*2:n:i]=[False]*((n-1-i*2)/i+1)</div><div class="line">        return sum(isPrime)</div><div class="line"></div><div class="line">    &apos;&apos;&apos;</div><div class="line">    def countPrimes(self, n):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if n&lt;2: return 0</div><div class="line">        count = 0</div><div class="line">        for i in range(2, n):</div><div class="line">            if self.isPrime(i):</div><div class="line">                count+=1</div><div class="line">        return count</div><div class="line"></div><div class="line"></div><div class="line">    def isPrime(self,n):</div><div class="line">        for i in range(2,n):</div><div class="line">            if n % i == 0:</div><div class="line">                return False</div><div class="line">        return True</div><div class="line">        &apos;&apos;&apos;</div></pre></td></tr></table></figure>
+<h2 id="96-Unique-Binary-Search-Trees"><a href="#96-Unique-Binary-Search-Trees" class="headerlink" title="96. Unique Binary Search Trees"></a>96. Unique Binary Search Trees</h2><h3 id="Problem-3"><a href="#Problem-3" class="headerlink" title="Problem"></a>Problem</h3><p>Given n, how many structurally unique BST’s (binary search trees) that store values 1…n?</p>
+<p>For example,<br>Given n = 3, there are a total of 5 unique BST’s.</p>
+<h3 id="Solution-3"><a href="#Solution-3" class="headerlink" title="Solution"></a>Solution</h3><img src="http://images.shuang0420.cn/images/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92//leetcode95.jpg" class="ful-image" alt="/leetcode95.jpg">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Taking 1~n as root respectively:</div><div class="line">1 as root: # of trees = F(0) * F(n-1)  // F(0) == 1</div><div class="line">2 as root: # of trees = F(1) * F(n-2)</div><div class="line">3 as root: # of trees = F(2) * F(n-3)</div><div class="line">...</div><div class="line">n-1 as root: # of trees = F(n-2) * F(1)</div><div class="line">n as root:   # of trees = F(n-1) * F(0)</div><div class="line"></div><div class="line">So, the formulation is:</div><div class="line">F(n) = F(0) * F(n-1) + F(1) * F(n-2) + F(2) * F(n-3) + ... + F(n-2) * F(1) + F(n-1) * F(0)</div><div class="line"></div><div class="line"># Recursive method</div><div class="line">    - count(n)=sum(count(i)*count(n-i-1))</div><div class="line">    - use cache</div><div class="line">    - time complexity: O(n!)-&gt;O(n)</div><div class="line"></div><div class="line"># No need to use recursive. Memorized Search -&gt; Dynamic Programming</div><div class="line">    Inductive rule:</div><div class="line">        count[n]=sum(count[i]*count[n-i-1])</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    # Recursive method</div><div class="line">    def numTrees(self, n):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if n&lt;=0: return 0</div><div class="line">        return self.count(n,dict())</div><div class="line"></div><div class="line"></div><div class="line">    def count(self,n,cache):</div><div class="line">        if n==0 or n==1: return 1</div><div class="line">        if n in cache:</div><div class="line">            return cache[n]</div><div class="line">        cache[n] = sum([self.count(i,cache)*self.count(n-i-1,cache) for i in range(0,n)])</div><div class="line">        return cache[n]</div><div class="line">        &apos;&apos;&apos;</div><div class="line"></div><div class="line">    def numTrees(self, n):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if n &lt;= 0:</div><div class="line">            return 0</div><div class="line">        count = [0] * (n + 1)</div><div class="line">        count[0] = 1</div><div class="line">        for i in range(1, n + 1):</div><div class="line">            for j in range(0, i):</div><div class="line">                count[i] += count[j] * count[i - j - 1]</div><div class="line">        return count[n]</div></pre></td></tr></table></figure>
+<h2 id="95-Unique-Binary-Search-Trees-II"><a href="#95-Unique-Binary-Search-Trees-II" class="headerlink" title="95. Unique Binary Search Trees II"></a>95. Unique Binary Search Trees II</h2><h3 id="Problem-4"><a href="#Problem-4" class="headerlink" title="Problem"></a>Problem</h3><p>Given an integer n, generate all structurally unique BST’s (binary search trees) that store values 1…n.</p>
+<p>For example,<br>Given n = 3, your program should return all 5 unique BST’s shown below.</p>
+<p>   1         3     3      2      1<br>    \       /     /      / \      \<br>     3     2     1      1   3      2<br>    /     /       \                 \<br>   2     1         2                 3</p>
+<h3 id="Solution-4"><a href="#Solution-4" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">recursive down</div><div class="line">    pass all the nodes that can be selected as a new root down</div><div class="line">        leftTree = self.helper(start, rootVal - 1)</div><div class="line">        rightTree = self.helper(rootVal + 1, end)</div><div class="line"></div><div class="line">return up</div><div class="line">    all possible trees under current root</div><div class="line"></div><div class="line">current level</div><div class="line">    build all the possible trees (different combination of left and right treelist )</div><div class="line">    - for root i in leftTree and for root j in right tree, build a new root and connect with left and right subtree.</div><div class="line">&apos;&apos;&apos;</div><div class="line"># Definition for a binary tree node.</div><div class="line"># class TreeNode(object):</div><div class="line">#     def __init__(self, x):</div><div class="line">#         self.val = x</div><div class="line">#         self.left = None</div><div class="line">#         self.right = None</div><div class="line">class Solution(object):</div><div class="line"></div><div class="line">    def generateTrees(self, n):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type n: int</div><div class="line">        :rtype: List[TreeNode]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if n &lt;= 0:</div><div class="line">            return []</div><div class="line">        return self.helper(1, n)</div><div class="line"></div><div class="line">    def helper(self, start, end):</div><div class="line">        # base case</div><div class="line">        if start &gt; end:</div><div class="line">            return [None]</div><div class="line">        res = []</div><div class="line">        for rootVal in range(start, end + 1):</div><div class="line">            leftTree = self.helper(start, rootVal - 1)</div><div class="line">            rightTree = self.helper(rootVal + 1, end)</div><div class="line">            for i in leftTree:</div><div class="line">                for j in rightTree:</div><div class="line">                    root = TreeNode(rootVal)</div><div class="line">                    root.left = i</div><div class="line">                    root.right = j</div><div class="line">                    res.append(root)</div><div class="line">        return res</div></pre></td></tr></table></figure>
+<h2 id="72-Edit-Distance"><a href="#72-Edit-Distance" class="headerlink" title="72. Edit Distance"></a>72. Edit Distance</h2><h3 id="Problem-5"><a href="#Problem-5" class="headerlink" title="Problem"></a>Problem</h3><p>Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)</p>
+<p>You have the following 3 operations permitted on a word:</p>
+<p>a) Insert a character<br>b) Delete a character<br>c) Replace a character</p>
+<h3 id="Solution-5"><a href="#Solution-5" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Recursion Rule -&gt; Memorized Search -&gt; DP</div><div class="line">Time complexity: O(len1*len2)</div><div class="line">Space complexity: O(len1*len2)</div><div class="line">&apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    &apos;&apos;&apos;</div><div class="line">    # Memorized Search</div><div class="line">    def minDistance(self, word1, word2):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type word1: str</div><div class="line">        :type word2: str</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not word1 and not word2: return 0</div><div class="line">        if len(word1)==0: return len(word2)</div><div class="line">        if len(word2)==0: return len(word1)</div><div class="line">        return self.match(word1,word2,0,0,[[0 for col in range(len(word2))] for row in range(len(word1))])</div><div class="line"></div><div class="line"></div><div class="line">    def match(self,word1,word2,i,j,count):</div><div class="line">        # base case</div><div class="line">        if i==len(word1):</div><div class="line">            return len(word2)-j</div><div class="line">        if j==len(word2):</div><div class="line">            return len(word1)-i</div><div class="line">        # base case end</div><div class="line">        if count[i][j]!=0:</div><div class="line">            return count[i][j]</div><div class="line">        if word1[i]==word2[j]:</div><div class="line">            res=self.match(word1,word2,i+1,j+1,count)</div><div class="line">        else:</div><div class="line">            # insert</div><div class="line">            insert=self.match(word1,word2,i,j+1,count)</div><div class="line">            # delete</div><div class="line">            delete=self.match(word1,word2,i+1,j,count)</div><div class="line">            # replace</div><div class="line">            replace=self.match(word1,word2,i+1,j+1,count)</div><div class="line">            res=min(insert,delete,replace)+1</div><div class="line">        count[i][j]=res</div><div class="line">        return res</div><div class="line">        &apos;&apos;&apos;</div><div class="line"></div><div class="line">    def minDistance(self, word1, word2):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type word1: str</div><div class="line">        :type word2: str</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not word1 and not word2:</div><div class="line">            return 0</div><div class="line">        if len(word1) == 0:</div><div class="line">            return len(word2)</div><div class="line">        if len(word2) == 0:</div><div class="line">            return len(word1)</div><div class="line">        count = [[0 for col in range(len(word2) + 1)]</div><div class="line">                 for row in range(len(word1) + 1)]</div><div class="line">        # initialize</div><div class="line">        for i in range(len(word1) + 1):</div><div class="line">            count[i][0] = i</div><div class="line">        for j in range(len(word2) + 1):</div><div class="line">            count[0][j] = j</div><div class="line">        for i in range(len(word1)):</div><div class="line">            for j in range(len(word2)):</div><div class="line">                if word1[i] == word2[j]:</div><div class="line">                    count[i + 1][j + 1] = count[i][j]</div><div class="line">                else:</div><div class="line">                    count[i + 1][j + 1] = min(count[i + 1][j], count[i][j + 1], count[i][j]) + 1</div><div class="line">        return count[-1][-1]</div></pre></td></tr></table></figure>
+<h2 id="303-Range-Sum-Query-Immutable"><a href="#303-Range-Sum-Query-Immutable" class="headerlink" title="303. Range Sum Query - Immutable"></a>303. Range Sum Query - Immutable</h2><h3 id="Problem-6"><a href="#Problem-6" class="headerlink" title="Problem"></a>Problem</h3><p>Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Given nums = [-2, 0, 3, -5, 2, -1]</div><div class="line"></div><div class="line">sumRange(0, 2) -&gt; 1</div><div class="line">sumRange(2, 5) -&gt; -1</div><div class="line">sumRange(0, 5) -&gt; -3</div></pre></td></tr></table></figure></p>
+<p>Note:<br>You may assume that the array does not change.<br>There are many calls to sumRange function.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">class NumArray(object):</div><div class="line">    def __init__(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        initialize your data structure here.</div><div class="line">        :type nums: List[int]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.sumArray=[0]</div><div class="line">        cur=0</div><div class="line">        for i in nums:</div><div class="line">            cur+=i</div><div class="line">            self.sumArray.append(cur)</div><div class="line"></div><div class="line">    def sumRange(self, i, j):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        sum of elements nums[i..j], inclusive.</div><div class="line">        :type i: int</div><div class="line">        :type j: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        return self.sumArray[j+1]-self.sumArray[i]</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"># Your NumArray object will be instantiated and called as such:</div><div class="line"># numArray = NumArray(nums)</div><div class="line"># numArray.sumRange(0, 1)</div><div class="line"># numArray.sumRange(1, 2)</div></pre></td></tr></table></figure>
+<h3 id="Solution-6"><a href="#Solution-6" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<h2 id="304-Range-Sum-Query-2D-Immutable"><a href="#304-Range-Sum-Query-2D-Immutable" class="headerlink" title="304. Range Sum Query 2D - Immutable"></a>304. Range Sum Query 2D - Immutable</h2><h3 id="Problem-7"><a href="#Problem-7" class="headerlink" title="Problem"></a>Problem</h3><p>Given a 2D matrix matrix, find the sum of the elements inside the rectangle defined by its upper left corner (row1, col1) and lower right corner (row2, col2).</p>
+<p>Range Sum Query 2D<br>The above rectangle (with the red border) is defined by (row1, col1) = (2, 1) and (row2, col2) = (4, 3), which contains sum = 8.</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Given matrix = [</div><div class="line">  [3, 0, 1, 4, 2],</div><div class="line">  [5, 6, 3, 2, 1],</div><div class="line">  [1, 2, 0, 1, 5],</div><div class="line">  [4, 1, 0, 1, 7],</div><div class="line">  [1, 0, 3, 0, 5]</div><div class="line">]</div><div class="line"></div><div class="line"></div><div class="line">sumRegion(2, 1, 4, 3) -&gt; 8</div><div class="line">sumRegion(1, 1, 2, 2) -&gt; 11</div><div class="line">sumRegion(1, 2, 2, 4) -&gt; 12</div></pre></td></tr></table></figure></p>
+<p>Note:<br>You may assume that the matrix does not change.<br>There are many calls to sumRegion function.<br>You may assume that row1 ≤ row2 and col1 ≤ col2.</p>
+<h3 id="Solution-7"><a href="#Solution-7" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div></pre></td><td class="code"><pre><div class="line">&apos;&apos;&apos;</div><div class="line">Solution:</div><div class="line">    brute-force: O(n^2) time</div><div class="line">    use idea from Range Sum Query - Immutable, for each row, store current sum value of all column value, takes O(n) time to set up, and for sumRange, loop the row and calculate the sum of rows result, also takes O(n) time</div><div class="line">    improve: store current sum value of all values on the left and above of current value, takes O(n^2) to setup and O(1) time to get sumRange</div><div class="line">&apos;&apos;&apos;</div><div class="line">&apos;&apos;&apos;</div><div class="line">O(n^2) setup and O(1) sumRegion</div><div class="line">&apos;&apos;&apos;</div><div class="line">class NumMatrix(object):</div><div class="line">    def __init__(self, matrix):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        initialize your data structure here.</div><div class="line">        :type matrix: List[List[int]]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not matrix: return</div><div class="line">        self.m=len(matrix)</div><div class="line">        self.n=len(matrix[0])</div><div class="line">        self.matrix=[[0]*(self.n+1) for i in range(self.m+1)]</div><div class="line">        for row in range(self.m):</div><div class="line">            cur=0</div><div class="line">            for col in range(self.n):</div><div class="line">                cur+=matrix[row][col]</div><div class="line">                self.matrix[row+1][col+1]=cur</div><div class="line">        for col in range(self.n+1):</div><div class="line">            cur=0</div><div class="line">            for row in range(self.m+1):</div><div class="line">                cur+=self.matrix[row][col]</div><div class="line">                self.matrix[row][col]=cur</div><div class="line"></div><div class="line">    def sumRegion(self, row1, col1, row2, col2):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        sum of elements matrix[(row1,col1)..(row2,col2)], inclusive.</div><div class="line">        :type row1: int</div><div class="line">        :type col1: int</div><div class="line">        :type row2: int</div><div class="line">        :type col2: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        if not self.matrix: return 0</div><div class="line">        return self.matrix[row2+1][col2+1]-self.matrix[row1][col2+1]-(self.matrix[row2+1][col1]-self.matrix[row1][col1])</div><div class="line"></div><div class="line">&apos;&apos;&apos;</div><div class="line">O(n) setup and O(n) sumRegion</div><div class="line"></div><div class="line">class NumMatrix(object):</div><div class="line">    def __init__(self, matrix):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        initialize your data structure here.</div><div class="line">        :type matrix: List[List[int]]</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.matrix=[[0] for i in range(len(matrix))]</div><div class="line">        for row in range(len(matrix)):</div><div class="line">            cur=0</div><div class="line">            for col in matrix[row]:</div><div class="line">                cur+=col</div><div class="line">                self.matrix[row].append(cur)</div><div class="line"></div><div class="line">    def sumRegion(self, row1, col1, row2, col2):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        sum of elements matrix[(row1,col1)..(row2,col2)], inclusive.</div><div class="line">        :type row1: int</div><div class="line">        :type col1: int</div><div class="line">        :type row2: int</div><div class="line">        :type col2: int</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        cur=0</div><div class="line">        for row in xrange(row1,row2+1):</div><div class="line">            cur+=self.matrix[row][col2+1]-self.matrix[row][col1]</div><div class="line">        return cur</div><div class="line">        &apos;&apos;&apos;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"># Your NumMatrix object will be instantiated and called as such:</div><div class="line"># numMatrix = NumMatrix(matrix)</div><div class="line"># numMatrix.sumRegion(0, 1, 2, 3)</div><div class="line"># numMatrix.sumRegion(1, 2, 3, 4)</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/动态规划/" rel="tag">#动态规划</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/07/Search Engines笔记 - Personalization/" rel="next" title="Search Engines笔记 - Personalization">
+                <i class="fa fa-chevron-left"></i> Search Engines笔记 - Personalization
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/23/神经网络-链式反向梯度传导/" rel="prev" title="深度学习-链式反向梯度传导">
+                深度学习-链式反向梯度传导 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模板"><span class="nav-number">1.</span> <span class="nav-text">模板</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题"><span class="nav-number">2.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#70-Climbing-Stairs"><span class="nav-number">2.1.</span> <span class="nav-text">70. Climbing Stairs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem"><span class="nav-number">2.1.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">2.1.2.</span> <span class="nav-text">Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-1"><span class="nav-number">2.1.3.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-1"><span class="nav-number">2.1.4.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#204-Count-Primes"><span class="nav-number">2.2.</span> <span class="nav-text">204. Count Primes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-2"><span class="nav-number">2.2.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-2"><span class="nav-number">2.2.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#96-Unique-Binary-Search-Trees"><span class="nav-number">2.3.</span> <span class="nav-text">96. Unique Binary Search Trees</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-3"><span class="nav-number">2.3.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-3"><span class="nav-number">2.3.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#95-Unique-Binary-Search-Trees-II"><span class="nav-number">2.4.</span> <span class="nav-text">95. Unique Binary Search Trees II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-4"><span class="nav-number">2.4.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-4"><span class="nav-number">2.4.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#72-Edit-Distance"><span class="nav-number">2.5.</span> <span class="nav-text">72. Edit Distance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-5"><span class="nav-number">2.5.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-5"><span class="nav-number">2.5.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#303-Range-Sum-Query-Immutable"><span class="nav-number">2.6.</span> <span class="nav-text">303. Range Sum Query - Immutable</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-6"><span class="nav-number">2.6.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-6"><span class="nav-number">2.6.2.</span> <span class="nav-text">Solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#304-Range-Sum-Query-2D-Immutable"><span class="nav-number">2.7.</span> <span class="nav-text">304. Range Sum Query 2D - Immutable</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-7"><span class="nav-number">2.7.1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution-7"><span class="nav-number">2.7.2.</span> <span class="nav-text">Solution</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/11/12/动态规划/';
+      var disqus_title = "数据结构和算法 -- 动态规划";
+      var disqus_url = 'http://www.shuang0420.cn/2016/11/12/动态规划/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

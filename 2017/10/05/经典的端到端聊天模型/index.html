@@ -1,0 +1,1118 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,Chatbot,多轮对话," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="介绍一下经典的 End-to-end 聊天模型及应用，包括检索式模型、生成式模型，以及 Google 邮件自动回复的应用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="经典的端到端聊天模型">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/10/05/经典的端到端聊天模型/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="介绍一下经典的 End-to-end 聊天模型及应用，包括检索式模型、生成式模型，以及 Google 邮件自动回复的应用。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/end-to-end.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/dual_lstm.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/matrix.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/recall_k.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/seq2seq.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/seq2seq_eval.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/eva_eg1.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/eva_formula.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/email.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/graph.png">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="经典的端到端聊天模型">
+<meta name="twitter:description" content="介绍一下经典的 End-to-end 聊天模型及应用，包括检索式模型、生成式模型，以及 Google 邮件自动回复的应用。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/end-to-end.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/10/05/经典的端到端聊天模型/"/>
+
+
+  <title> 经典的端到端聊天模型 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                经典的端到端聊天模型
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-10-05T09:02:27+08:00" content="2017-10-05">
+              2017-10-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Chatbot/" itemprop="url" rel="index">
+                    <span itemprop="name">Chatbot</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/10/05/经典的端到端聊天模型/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/10/05/经典的端到端聊天模型/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>介绍一下经典的 End-to-end 聊天模型及应用，包括检索式模型、生成式模型，以及 Google 邮件自动回复的应用。<br><a id="more"></a></p>
+<p>主要涉及到下面几篇论文</p>
+<ul>
+<li><a href="https://arxiv.org/pdf/1506.08909.pdf" target="_blank" rel="external">The Ubuntu Dialogue Corpus: A Large Dataset for Research in Unstructured Multi-Turn Dialogue Systems</a></li>
+<li><a href="https://arxiv.org/abs/1506.05869" target="_blank" rel="external">A Neural Conversational Model</a></li>
+<li><a href="http://www.kdd.org/kdd2016/papers/files/Paper_1069.pdf" target="_blank" rel="external">Smart reply, automated response suggestion in email</a></li>
+<li><a href="https://arxiv.org/abs/1603.08023" target="_blank" rel="external">How NOT To Evaluate Your Dialogue System</a></li>
+<li><a href="https://papers.nips.cc/paper/5019-a-deep-architecture-for-matching-short-texts" target="_blank" rel="external">Zhengdong Lu &amp; Hang Li, 2013, A Deep Architecture for Matching Short Texts</a></li>
+<li><a href="https://arxiv.org/abs/1408.6988" target="_blank" rel="external">Zongcheng Ji, et al., 2014, An Information Retrieval Approach to Short Text Conversation</a></li>
+<li><a href="http://www.hangli-hl.com/uploads/3/1/6/8/3168008/hu-etal-nips2014.pdf" target="_blank" rel="external">Baotian Hu, et al., 2015, Convolutional Neural Network Architectures for Matching Natural Language Sentences</a></li>
+<li><a href="https://pdfs.semanticscholar.org/73d8/26d4c2363701b88e3e234fe3b8756c0f9671.pdf" target="_blank" rel="external">Aliaksei Severyn, et al., 2015, Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks</a></li>
+<li><a href="https://arxiv.org/abs/1507.04808" target="_blank" rel="external">Building end-to-end dialogue systems using generative hierarchical neural network models</a></li>
+</ul>
+<h1 id="Modular-system-vs-end-to-end-system"><a href="#Modular-system-vs-end-to-end-system" class="headerlink" title="Modular system vs end-to-end system"></a>Modular system vs end-to-end system</h1><p>第一部分先简单比较一下对话系统中 modular system 和 end-to-end 的不同。</p>
+<img src="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/end-to-end.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/end-to-end.png">
+<p>如上图，传统的一个对话系统由 <strong>Speech Recognizer, Language Interpreter, State Tracker, Response Generator, Natural Language Generator, Speech Synthesizer</strong> 这么多个子模块拼接而成，这种系统称为 Modular system，在系统中每个组件单独训练，来优化一个单独的中间目标(如 slot-filling)。而 end-to-end system 相当于用一个系统替代了上图中框起来的四个组件，来比较一下</p>
+<p><strong>Modular system vs end-to-end system</strong></p>
+<ul>
+<li><strong>目标函数</strong><br>modular system 有两个及以上的目标函数<br>end-to-end 通常只有一个目标函数</li>
+<li><strong>所需数据</strong><br>modular system 更容易训练，需要的数据少<br>end-to-end 需要大量数据</li>
+<li><strong>人工标注</strong><br>modular system 需要大量的人工的特征工程，需要预先定义 state, action spaces 等等<br>end-to-end 不需要预先定义的 state/action spaces</li>
+<li><strong>效果</strong><br>modular system 在 highly structured tasks/narrow domain 上的效果更出色，但泛化能力有限<br>end-to-end 在 general purpose 的效果上比较好</li>
+</ul>
+<h1 id="Retrieval-based-models-vs-Generative-models"><a href="#Retrieval-based-models-vs-Generative-models" class="headerlink" title="Retrieval-based models vs Generative models"></a>Retrieval-based models vs Generative models</h1><p>对话模型分 <strong>检索式(Retrieval-based models )</strong> 和 <strong>生成式(Generative models)</strong> 两种，检索式的聊天模型有一个预先定义好的模板库，给定一个 query，来从模板库里选择最好的 response。回复的产生依赖于模板库，不可能产生模板库没有的句子。而生成式模型不依赖于模板库，而是直接产生的，生成式模型的方法大多依赖于机器翻译的技术，但不是从一个语言翻译到另一个语言，而是从一个输入映射到回复。</p>
+<p>两种方法都有利有弊，检索式模型得到的回复不会产生语法错误，但没法处理在模板库里不存在回复的用户输入，另外，检索式模型也很难结合上下文信息。而生成式模型更加的“聪明”，可以结合语境，然而更难训练，也更容易犯语法错误(尤其是长句)，需要的训练数据也很大。</p>
+<h1 id="Retrieval-Based-Models"><a href="#Retrieval-Based-Models" class="headerlink" title="Retrieval-Based Models"></a>Retrieval-Based Models</h1><p>可以看做是一个 <strong>检索/排序/匹配</strong> 问题，有一个预先定义好的模板库(看做是检索系统的文档集)，给定一个 query，来从模板库里选择最好的 response，这里需要计算一个 score(query, response) 来衡量 query 和 response 的匹配程度，score 越高，response 越可能是一个合适的回复。response 也可以替换成标准 query，这就把问题转换为用户 query 和标准 query 的一个相似度计算问题，这里的 score 就是相似度分数。</p>
+<p>需要学习的一个是语义表达，一个是 score 的计算。score 可以单独用传统方法做，也可以在神经网络的 MLP 层做，还可以在语义表达产生的过程中做。</p>
+<p>有下面一些经典的论文，(Q, Q’)，(Q, A) 或 (Q, D) 的匹配在这里统一表示为 (Q, D)，D 可以是标准 query，可以是 answer，也可以是标准 query + answer</p>
+<ol>
+<li><a href="https://papers.nips.cc/paper/5019-a-deep-architecture-for-matching-short-texts" target="_blank" rel="external">Zhengdong Lu &amp; Hang Li, 2013, A Deep Architecture for Matching Short Texts</a><br>DeepMatch，先用 (Q, D) 语料训练 LDA 主题模型，得到其 topic words，这些主题词被用来检测两个文本是否存在语义相关性(Localness)；每次指定不同的 topic 个数分别训练 LDA 模型，得到几个不同分辨率的主题模型(Hierarchy)，高分辨率的 topic words 更具体，低分辨率的更抽象，这可以避免短文本词稀疏带来的问题，并得到不同的抽象层级</li>
+<li><a href="https://arxiv.org/abs/1408.6988" target="_blank" rel="external">Zongcheng Ji, et al., 2014, An Information Retrieval Approach to Short Text Conversation</a><br>从不同角度构造匹配特征，作为 ranking 模型的特征输入，构造的特征包括：1）Query-ResponseSimilarity；2）Query-Post Similarity；3）Query-Response Matching in Latent Space；4）Translation-based Language Model；5）Deep MatchingModel；6）Topic-Word Model；7）其它匹配特征</li>
+<li><a href="http://www.hangli-hl.com/uploads/3/1/6/8/3168008/hu-etal-nips2014.pdf" target="_blank" rel="external">Baotian Hu, et al., 2015, Convolutional Neural Network Architectures for Matching Natural Language Sentences</a><br>基于 CNN，Q 和 D 分别经过多次一维卷积和池化，得到的固定维度的两个 sentence embedding，然后输入到 Siamese 结构的 MLP 层，得到文本的相似度分数。这种方法的监督信号在最后的输出层才出现，在这之前，Q 和 D 的 embedding 相互独立生成，可能会丢失语义相关信息，所以有第二种结构，在第 1 层卷积后就把 Q 和 D 做融合，融合方式是分别对 Q 和 D 做 1D 卷积，然后针对两者卷积得到的 feature map，构造其所有可能的组合(在两个方向上拼接对应的 feature map)，这样就构造出一个 2D 的 feature map，然后对其做 2D MAX POOLING，多次 2D 卷积和池化操作后，输出固定维度的向量，接着输入 MLP 层，最终得到文本相似度分数。实验表明优于 DeepMatch</li>
+<li><a href="https://pdfs.semanticscholar.org/73d8/26d4c2363701b88e3e234fe3b8756c0f9671.pdf" target="_blank" rel="external">Aliaksei Severyn, et al., 2015, Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks</a><br>分别对 Q 和 D 做 wide 1D 卷积和 MAX 池化，得到文本的语义向量，接着通过 M 矩阵变换得到语义向量的相似度，然后把 Q 语义向量、Q&amp;D 的语义相似度、D 语义向量、外部特征拼接成 n 维向量，输入一个非线性变换隐层，最终用 softmax 做概率归一化。用 softmax 的输出作为监督信号，采用 cross-entropy 作为损失函数进行模型训练</li>
+</ol>
+<p>这里介绍的是 <strong>Dual-Encoder</strong> 模型(Ryan Lowe, et al., 2016, The Ubuntu Dialogue Corpus: A Large Dataset for Research in Unstructured Multi-Turn Dialogue Systems)，通过对偶的 RNN 模型分别把 context 和 response 编码成语义向量，然后通过 M 矩阵变换计算语义相似度，相似度得分作为监督信号在标注数据集上训练模型。</p>
+<h2 id="句子表达"><a href="#句子表达" class="headerlink" title="句子表达"></a>句子表达</h2><p>先来看一下怎么表达 query 和 response。语义特征方面很容易想到 TFIDF，然而它忽略了词序，表达效果没那么强，所以考虑用 sentence embedding。sentence embedding 可以用 RNN/LSTM 来获取。还是 Encoder-decoder 的思想，不过这里把 decoder 给替换了成了另一个 encoder，也就成了 Dual-RNN 的结构。两个独立的 RNN 分别对 context/ query和 response 进行编码，每个 RNN 最后一个 hidden state 相当于是对整个 input(context/response) 的一个总结。</p>
+<img src="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/dual_lstm.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/dual_lstm.png">
+<h2 id="分数计算"><a href="#分数计算" class="headerlink" title="分数计算"></a>分数计算</h2><p>模型的学习目标其实是一个 binary 分类器<br>$\sigma (score(Query, Response_true)) -&gt; 1$<br>$\sigma (score(Query, Response_false)) -&gt; 0$</p>
+<p>先来看下<strong>如何计算分数</strong>。<br>$$p(flag=1|c,r,M)=\sigma(c^TMr+b)$$</p>
+<p>这个过程可以看做是一个产生模型，给定 input response，用 $c’=Mr$ 产生一个 context (M 是 dxd 的参数矩阵)，然后利用点乘来及计算这个产生的 context 和真实 context 的相似度分数，再用 sigmoid 将这个分数转化为概率，最小化交叉熵损失函数来将进行训练。</p>
+<p>简单一个例子来理解这个过程，假设下图 5x5 的表格，i 行 j 列代表 $(query_i, response_j)$，我们希望对角线的 probability 最大，因为对角线对应着正确的 (query, response)，真实的 label 是一个 identity matrix，我们的 prediction 是 5x5 的 score，现在对每一行进行  softmax cross-entropy 损失函数的计算，其实就相当于直接优化 retrieval metrics (Recall@k)，即 (query, response) 在所有 pair 里的排名。</p>
+<img src="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/matrix.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/matrix.png">
+<p>从代码角度理解一下，下面是训练阶段的一个 minibatch 过程，假设 minibatch 大小为 5</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">if self.is_training:</div><div class="line">    # 训练阶段, 使用 minibatch 内其他样本的 response 作为 negative response</div><div class="line">    # 用 LSTM 做 encoding，query/response 都是 5x128 的表达</div><div class="line">    # W: 128x128</div><div class="line">    response_final_state = tf.matmul(response_final_state[-1].h, W)</div><div class="line">    # 得到 5x5 的 score matrix</div><div class="line">    logits = tf.matmul(</div><div class="line">        a = query_final_state[-1].h, b = response_final_state,</div><div class="line">        transpose_b = True)</div><div class="line">    self.losses = tf.losses.softmax_cross_entropy(</div><div class="line">        onehot_labels = self.labels,</div><div class="line">        logits = logits)</div><div class="line">    self.mean_loss = tf.reduce_mean(self.losses, name=&quot;mean_loss&quot;)</div><div class="line">    train_loss_summary = tf.summary.scalar(&apos;loss&apos;, self.mean_loss)</div><div class="line">    self.training_summaries = tf.summary.merge(</div><div class="line">                             inputs = [train_loss_summary], name=&apos;train_monitor&apos;)</div><div class="line"></div><div class="line">    opt = tf.train.AdamOptimizer(</div><div class="line">        learning_rate=self.args.learningRate,</div><div class="line">        beta1=0.9,</div><div class="line">        beta2=0.999,</div><div class="line">        epsilon=1e-08</div><div class="line">    )</div><div class="line">    self.optOp = opt.minimize(self.mean_loss)</div></pre></td></tr></table></figure>
+<p><strong>测试阶段</strong>，计算的是 Recall@k (给定一个 query，选择 k 个最有可能的 response，看正确的 response 在不在这 k 个里)。举个例子，从整个 test data/validation data 随机抽取 19 个错误答案，对每一个样本，计算 20 个 response 的 score，看真实回复的 score 是否排名前 k。response 矩阵连续的 20 行对应一个 query，第 1 行、21行、41行…对应真实的 response，其他是错误 response。将 query 复制 20 次，就得到 100x128 的 query 和 100x128 的 response (假设 rnn_dim=128)，点乘得到每个 (query, response) 的 score，也就是 100x100 的矩阵，然后再 reshape 成 5x20 的矩阵，再计算 Recall@k</p>
+<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">else:</div><div class="line">   # 测试阶段，每一个样本的response是固定的</div><div class="line">   # query: [batch_size, rnn_dim]</div><div class="line"># respones: [batch_size x 20, rnn_dim]</div><div class="line">   # [batch_size x 20, rnn_dim]</div><div class="line">   response_final_state = tf.matmul(response_final_state[-1].h, W)</div><div class="line">   query_final_state = tf.reshape(</div><div class="line">           tf.tile(query_final_state[-1].h, [1, 20]),</div><div class="line">           [-1, self.args.hiddenSize])</div><div class="line">   # [batch_size, batch_size x 20]</div><div class="line">   logits = tf.reduce_sum(</div><div class="line">           tf.multiply(</div><div class="line">               x = query_final_state,</div><div class="line">               y = response_final_state),</div><div class="line">           axis = 1,</div><div class="line">           keep_dims = True)</div><div class="line">   logits = tf.reshape(logits, [-1, 20])</div><div class="line">   # top_k percentage</div><div class="line">   self.response_top_1 = tf.reduce_mean(</div><div class="line">           tf.cast(tf.nn.in_top_k(</div><div class="line">               predictions = logits,</div><div class="line">               targets = self.targets,</div><div class="line">               k = 1,</div><div class="line">               name = &apos;prediction_in_top_1&apos;),</div><div class="line">           dtype = tf.float32))</div><div class="line">   self.response_top_3 = tf.reduce_mean(</div><div class="line">           tf.cast(tf.nn.in_top_k(</div><div class="line">               predictions = logits,</div><div class="line">               targets = self.targets,</div><div class="line">               k = 3,</div><div class="line">               name = &apos;prediction_in_top_3&apos;),</div><div class="line">           dtype = tf.float32))</div><div class="line">   self.response_top_5 = tf.reduce_mean(</div><div class="line">           tf.cast(tf.nn.in_top_k(</div><div class="line">               predictions = logits,</div><div class="line">               targets = self.targets,</div><div class="line">               k = 5,</div><div class="line">               name = &apos;prediction_in_top_5&apos;),</div><div class="line">           dtype = tf.float32))</div></pre></td></tr></table></figure></p>
+<img src="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/recall_k.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/recall_k.png">
+<h1 id="Generative-Models"><a href="#Generative-Models" class="headerlink" title="Generative Models"></a>Generative Models</h1><p>产生模型并不是从模板库里选一个分数最高的 response 出来，而是去自动生成这样一个 response。<br><img src="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/seq2seq.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/seq2seq.png"></p>
+<p>将 MT 问题中引入的 seq2seq 模型应用到对话任务上。给出 (query, response) 以后，seq2seq 对 query 进行编码，最后一个 hidden state 包含 query 的所有信息，结合开始标记 EOS 进行解码，得到 response。不过这种方法对上下文依赖考虑有限，<strong>HRED(Hierarchical Recurrent Encoder-Decoder)</strong> 为解决这个问题做了改进。</p>
+<img src="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png">
+<p>HRED 在传统 encoder-decoder 模型上，额外增加了一个 encoder，相比于普通的 RNN-LM 来说，考虑了 turn-taking nature，能够对上下文进行建模，有助于信息/梯度的传播，从而实现多轮对话。有下面三个阶段：</p>
+<ol>
+<li><strong>encoder RNN</strong><br>第一个 encoder 和标准的 seq2seq 相同，将一句话编码到固定长度的 utterance vector，也就是 RNN 的 last hidden state</li>
+<li><strong>context RNN</strong><br>n 个句子的 utterance vector 作为第二个 encoder 也就是 <strong>context-level encoder</strong> 各个时间上的的输入，对应长度为 n 的 sequence，产生一个 context vector 实现对语境的编码，也就是 RNN 的 output (注意这里不是 last hidden state)</li>
+<li><strong>decoder RNN</strong><br>上一个句子的 utterance vector 作为 response 的初始状态，目前为止产生的 context vector 和上一个单词的 word embedding 拼接作为 decoder 的输入</li>
+</ol>
+<p>然而 HRED 相对于传统的 Seq2Seq 模型的提高并不明显，bootstrapping 的作用更加明显。一方面可以用 pre-trained word embedding，另一方面可以使用其他 NLP 任务的数据预训练我们的模型，使得模型的参数预先学到一些对自然语言的理解，再来学习聊天任务。</p>
+<img src="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/seq2seq_eval.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/seq2seq_eval.png">
+<p>看上面的例子，可以发现 seq2seq 模型可以在一定程度上记住知识，理解语境，进行简单的推理(图左)，然而并不能保留记忆和性格，对相同语义的不同表达会返回不同的答复(图右)。另外要注意的是，这个场景下 seq2seq 的训练目标和真实目标实际是不一样的，尤其在闲聊场景中。训练阶段关注的是真实 response 出现的概率和怎么最大化这个概率，而测试阶段或者说真实场景下，对话侧重于交流信息，以及长时间的连贯性，考虑到回复的灵活性(如一个 query 可以有多种合适的回复)，以及经产生模型的自由度(并不需要在模板库里面选择回复，可以是全新的句子)，因此使用合适的 Metric 来衡量产生的句子实际是非常困难的问题。</p>
+<blockquote>
+<p><strong>objective function</strong> being optimized does not capture the <strong>actual objective achieved through human communication</strong>, which is typically <strong>longer term</strong> and based on <strong>exchange of information</strong> rather than <strong>next step prediction</strong></p>
+</blockquote>
+<h1 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</h1><p>Metrics 的设计目标是<strong>使得 metric 的判断和人为判断尽量相似</strong>。</p>
+<h2 id="Retrieval-Metrics-Recall-k"><a href="#Retrieval-Metrics-Recall-k" class="headerlink" title="Retrieval Metrics: Recall@k"></a>Retrieval Metrics: Recall@k</h2><p>Recall@k 是信息检索里的评估方法，给定一个 query，选择 k 个最有可能的 response，看正确的 response 在不在这 k 个里。</p>
+<h2 id="Generative-Metrics"><a href="#Generative-Metrics" class="headerlink" title="Generative Metrics"></a>Generative Metrics</h2><ol>
+<li>相对于机器翻译，对话中回复的选择空间大很多； 看起来完全无关的两句话都可以是合适的回复</li>
+<li>而这两个正确的回复如果不看context的话，无论是从词频 还是语义来看都是不相关不想似的句子</li>
+</ol>
+<img src="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/eva_eg1.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/eva_eg1.png">
+<h3 id="Word-Overlap-based-Metrics"><a href="#Word-Overlap-based-Metrics" class="headerlink" title="Word Overlap-based Metrics"></a>Word Overlap-based Metrics</h3><p>主要有 <strong>BLEU</strong>，<strong>ROUGE</strong> 和 <strong>METEOR</strong>，最初用于衡量机器翻译的效果。<strong>BLEU</strong> 主要看人为/测试的句子里的单词的 overlap (机器产生的待评测句子中的 ngram 正确匹配人工产生的参考句子中 ngram 与机器产生的句子中所有 ngram 出现次数的比值)，加入 BP(Brevity Penalty) 惩罚因子可以评价句子的完整性。然而 BLEU 不关心语法，只关心内容分布，适用于衡量数据集量级的表现，在句子级别的表现不佳。</p>
+<blockquote>
+<p>“BLEU is designed to approximate human judgement at a corpus level, and performs badly if used to evaluate the quality of individual sentences.”——wikipedia</p>
+</blockquote>
+<p><strong>ROUGE</strong> 是一种基于召回率的相似性度量方法，与 BLEU 类似，但计算的是 ngram 在参考句子和待评测句子的共现概率，包含 ROUGE-N, ROUGE-L(最长公共子句, Fmeasure), ROUGE-W(带权重的最长公共子句, Fmeasure), ROUGE-S(不连续二元组, Fmeasure) 四种，具体不多说。</p>
+<p><strong>METEOR</strong> 改进了 BLEU，考虑了参考句子和待评测句子的对齐关系，和人工判断的结果有更高的相关性。</p>
+<h3 id="Embedding-based-Metrics"><a href="#Embedding-based-Metrics" class="headerlink" title="Embedding-based Metrics"></a>Embedding-based Metrics</h3><p>侧重比较生成的句子和真实样本的语义相似度。</p>
+<ul>
+<li><strong>Embedding average score</strong><br>将句中每个单词的词向量作平均来作为句子的特征，计算生成的句子和真实句子的特征的 cosine similarity</li>
+<li><strong>Greedy matching score</strong><br>寻找生成的句子和真实句子中最相似的一对单词，把这对单词的相似度近似为句子的距离</li>
+<li><strong>Vector extrema score</strong><br>对句中单词词向量的每一个维度提取最大(小)值作为句子向量对应维度的数值，然后计算cosine similarity</li>
+</ul>
+<h2 id="Human-judgement"><a href="#Human-judgement" class="headerlink" title="Human judgement"></a>Human judgement</h2><blockquote>
+<p> “We ﬁnd that all metrics show either weak or no correlation with human judgements, despite the fact that word overlap metrics have been used extensively in the literature for evaluating dialogue response models”</p>
+</blockquote>
+<p>在 <a href="https://arxiv.org/abs/1603.08023" target="_blank" rel="external">How NOT To Evaluate Your Dialogue System</a> 这篇论文中，宣称和人工判断相比，上述的所有 metric 都是垃圾</p>
+<ul>
+<li>在闲聊性质的数据集上，上述 metric 和人工判断有一定微弱的关联 (only a small positive correlation on chitchat oriented Twitter dataset)</li>
+<li>在技术类的数据集上，上述 metric 和人工判断完全没有关联(no correlation at all on the technical UDC)</li>
+<li>当局限于一个特别具体的领域时，BLEU会有不错的表现</li>
+</ul>
+<h2 id="Learning-to-Evaluate-Dialogue-Responses"><a href="#Learning-to-Evaluate-Dialogue-Responses" class="headerlink" title="Learning to Evaluate Dialogue Responses"></a>Learning to Evaluate Dialogue Responses</h2><p>可以尝试使用机器学习的方法来学习一个好的 metric，用语境 c，真实回复 r，机器回复 $\hat r$，训练一个 regression 模型，使得 score 和人工打分的 score 接近。</p>
+<img src="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/eva_formula.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/eva_formula.png">
+<h1 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h1><p>讲一个生成式模型的具体应用，然而用预先定义好的模板库对生成的 response 做了一个限制。具体任务是如何对邮件进行自动回复。来自 <a href="http://www.kdd.org/kdd2016/papers/files/Paper_1069.pdf" target="_blank" rel="external">Smart reply, automated response suggestion in email</a></p>
+<img src="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/email.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/email.png">
+<p>达到的目标是收到一封邮件，系统发现这个邮件适合 Smart Reply，就会自动推荐 3 个回复语句给用户选择。</p>
+<p>框架面临的几个挑战是</p>
+<ul>
+<li><strong>Response quality</strong><br>怎么保证生成的回复的质量，如果质量不高，根本没有推荐的必要</li>
+<li><strong>Utility</strong><br>怎样选择推荐的回复，能最大化用户选中的概率</li>
+<li><strong>Scalability</strong><br>怎样提高效率，大规模处理</li>
+<li><strong>Privacy</strong><br>在开发系统的过程中怎么保护隐私，加密</li>
+</ul>
+<p>如何应对上面的挑战，也是文章的亮点</p>
+<ul>
+<li><strong>Response selection</strong><br>对应 Scalability 问题<br>将模板库里的句子组织成一个 trie，从左到右用 beam search 的方法进行每次遍历，只保留在 trie 中出现的 hypothese，这样对每个 response candidate 评分的复杂度就由 O(Rl) 降到了 O(bl)，R 是模板库的大小，l 是最长回复的长度，b 是 beam size</li>
+<li><strong>Response set generation</strong><br>对应 Response quality, Scalability, 以及 Utility 问题<br>生成一个带 intent 标记的模板库，回复只从这个模板库里产生</li>
+<li><strong>Diversity</strong><br>对应 Utility 问题<br>去掉 generic 的回复，兼顾正面、负面回复，在得分最高的回复中，每个 intent 只选择一个回复</li>
+<li><strong>Triggering model</strong><br>对应 Utility 问题<br>Binary 分类器判断是否要 trigger 自动回复，不需要回复的，不适合短回复的</li>
+</ul>
+<p>具体过程是，来一封邮件，首先看是否 trigger Smart Reply(采用一个 feedforward neural network)，如果是，就跑一遍 LSTM，生成候选的 n 个 response。</p>
+<p>特征方面，预处理后的邮件采取的特征有 unigram, bigram，发件方是否在收件方的地址簿里，是否在收件方的社交网络里，收件方是否在过去回复过发件方等等。稀疏特征类型(如 unigram, bigram)的 embedding 是单独训练的，然后每个稀疏类型特征下的 embedding 进行加总，再和 dense feature(如数值、布尔类型的特征)拼接作为输入。</p>
+<p>重点看一下模板库的生成。</p>
+<h2 id="Response-set-generation"><a href="#Response-set-generation" class="headerlink" title="Response set generation"></a>Response set generation</h2><p>模板库的存在可以限制产生的 response 的范围，提高 response 的质量以及选择回复的速度。另外，这里模板库里的句子都有一个 intent 标记，而标记了 intent 类别的回复模板库可以增加回复的 diversity。</p>
+<p>产生模板库用了 <strong>Expander graph learning approach</strong>，是一种半监督的方法。<br>搜集邮件数据后用传统 nlp 方法进行预处理，包括</p>
+<ul>
+<li>去掉非英语的样本</li>
+<li>Tokenization</li>
+<li>将内容分割成句子为单位</li>
+<li>使用特殊符号替换不常用的单词(e.g. 人名，url，邮件地址）</li>
+<li>去掉引用和转发的邮件部分</li>
+<li>去掉问候和致敬部分</li>
+</ul>
+<p>处理好的数据中只选择<strong>短的、最常出现的、匿名的</strong>回复。</p>
+<p>首先利用 dependency parser 将类似的句子如 “Thanks for your kind update”,“Thank you for updating!”, , “Thanks for the status update” 等转换为 canonical 形式，即 “Thanks for the update.”<br>然后进行做语义聚类，每个 cluster 对应一个意图（intent）.<br><img src="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/graph.png" class="ful-image" alt="%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/graph.png"></p>
+<p><strong>过程：</strong></p>
+<ol>
+<li><strong>初始化:</strong> 标记～100个类别(cluster)，每个类别～3个人工选择的样本</li>
+<li>使用 (original, response), (response1, response2, feature) 对模板库里的样本建立关系</li>
+<li>使用 Expander 算法给未标记的句子打标记</li>
+<li>对于新的类别的发现，<strong>Iteration：</strong><br><strong>Inference:</strong> 用 label propagation 算法迭代 5 次推测未标记样本的 cluster 类别<br><strong>Update:</strong> 从图中剩下的未标记的样本中随机 sample 100 个作为潜在的新类别，用 canonicalized representation 来标记<br>​ 重新运行 label propagation 直到收敛(不再发现新的类别，或者每个类的成员不再变化)</li>
+<li>最后进行 <strong>Validation:</strong> 提取每个 cluster 的 top-k 个回复样本，人工验证</li>
+</ol>
+<blockquote>
+<p>参考链接<br><a href="https://zhuanlan.zhihu.com/p/26879507" target="_blank" rel="external">PaperWeekly 第37期 | 论文盘点：检索式问答系统的语义匹配模型（神经网络篇）</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/Chatbot/" rel="tag">#Chatbot</a>
+          
+            <a href="/tags/多轮对话/" rel="tag">#多轮对话</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/20/NLP 笔记 - Discourse Analysis/" rel="next" title="NLP 笔记 - Discourse Analysis">
+                <i class="fa fa-chevron-left"></i> NLP 笔记 - Discourse Analysis
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/25/论文笔记 - CopyNet or Generate/" rel="prev" title="论文笔记 - Copy or Generate">
+                论文笔记 - Copy or Generate <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Modular-system-vs-end-to-end-system"><span class="nav-number">1.</span> <span class="nav-text">Modular system vs end-to-end system</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Retrieval-based-models-vs-Generative-models"><span class="nav-number">2.</span> <span class="nav-text">Retrieval-based models vs Generative models</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Retrieval-Based-Models"><span class="nav-number">3.</span> <span class="nav-text">Retrieval-Based Models</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#句子表达"><span class="nav-number">3.1.</span> <span class="nav-text">句子表达</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分数计算"><span class="nav-number">3.2.</span> <span class="nav-text">分数计算</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Generative-Models"><span class="nav-number">4.</span> <span class="nav-text">Generative Models</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Metrics"><span class="nav-number">5.</span> <span class="nav-text">Metrics</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Retrieval-Metrics-Recall-k"><span class="nav-number">5.1.</span> <span class="nav-text">Retrieval Metrics: Recall@k</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generative-Metrics"><span class="nav-number">5.2.</span> <span class="nav-text">Generative Metrics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Word-Overlap-based-Metrics"><span class="nav-number">5.2.1.</span> <span class="nav-text">Word Overlap-based Metrics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Embedding-based-Metrics"><span class="nav-number">5.2.2.</span> <span class="nav-text">Embedding-based Metrics</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Human-judgement"><span class="nav-number">5.3.</span> <span class="nav-text">Human judgement</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-to-Evaluate-Dialogue-Responses"><span class="nav-number">5.4.</span> <span class="nav-text">Learning to Evaluate Dialogue Responses</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Application"><span class="nav-number">6.</span> <span class="nav-text">Application</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Response-set-generation"><span class="nav-number">6.1.</span> <span class="nav-text">Response set generation</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/10/05/经典的端到端聊天模型/';
+      var disqus_title = "经典的端到端聊天模型";
+      var disqus_url = 'http://www.shuang0420.cn/2017/10/05/经典的端到端聊天模型/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

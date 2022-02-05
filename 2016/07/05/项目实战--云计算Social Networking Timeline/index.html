@@ -1,0 +1,1036 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Back-ends," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CMU 15619 Cloud Computing 的 individual project，项目全名是 Social Networking Timeline with Heterogeneous Back-ends，通过 MySQL/HBase/MongoDB 实现简化版 twitter 的后端。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目实战--云计算Social Networking Timeline">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/07/05/项目实战--云计算Social Networking Timeline/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CMU 15619 Cloud Computing 的 individual project，项目全名是 Social Networking Timeline with Heterogeneous Back-ends，通过 MySQL/HBase/MongoDB 实现简化版 twitter 的后端。">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-11%20%E4%B8%8B%E5%8D%887.40.29.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-11%20%E4%B8%8B%E5%8D%888.01.42.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-11%20%E4%B8%8B%E5%8D%888.54.32.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-11%20%E4%B8%8B%E5%8D%888.28.48.png">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="项目实战--云计算Social Networking Timeline">
+<meta name="twitter:description" content="CMU 15619 Cloud Computing 的 individual project，项目全名是 Social Networking Timeline with Heterogeneous Back-ends，通过 MySQL/HBase/MongoDB 实现简化版 twitter 的后端。">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-11%20%E4%B8%8B%E5%8D%887.40.29.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/07/05/项目实战--云计算Social Networking Timeline/"/>
+
+
+  <title> 项目实战--云计算Social Networking Timeline | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                项目实战--云计算Social Networking Timeline
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-07-05T09:40:10+08:00" content="2016-07-05">
+              2016-07-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Projects/" itemprop="url" rel="index">
+                    <span itemprop="name">Projects</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/05/项目实战--云计算Social Networking Timeline/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/05/项目实战--云计算Social Networking Timeline/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMU 15619 Cloud Computing 的 individual project，项目全名是 Social Networking Timeline with Heterogeneous Back-ends，通过 MySQL/HBase/MongoDB 实现简化版 twitter 的后端。<br><a id="more"></a></p>
+<h1 id="Implementing-Basic-Login-with-MySQL-on-RDS"><a href="#Implementing-Basic-Login-with-MySQL-on-RDS" class="headerlink" title="Implementing Basic Login with MySQL on RDS"></a>Implementing Basic Login with MySQL on RDS</h1><p>AWS RDS 配置 MySQL 并导入 users.csv and userinfo.csv 数据集，</p>
+<p>数据集：</p>
+<ul>
+<li>users.csv [UserID, Password]</li>
+<li>userinfo.csv  [UserID, Name, Profile Image URL]</li>
+</ul>
+<p>如果用户名密码正确，返回 user name and Profile Image Url，<br>如果不正确，name 返回 “Unauthorized”，Profile Image URL 返回 “#”.</p>
+<p>Request:</p>
+<pre>GET /task1?id=[UserID]&pwd=[Password]</pre>
+
+<p>Response:</p>
+<pre>returnRes({"name":"my_name", "profile":"profile_image_url"})</pre>
+
+
+
+<p>效果：<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-11%20%E4%B8%8B%E5%8D%887.40.29.png" alt=""></p>
+<h1 id="Storing-Social-Graph-using-HBase"><a href="#Storing-Social-Graph-using-HBase" class="headerlink" title="Storing Social Graph using HBase"></a>Storing Social Graph using HBase</h1><p>数据集：</p>
+<ul>
+<li>links.csv [Followee, Follower]</li>
+</ul>
+<p>对 followers 进行排序。<strong>排序规则：</strong></p>
+<ol>
+<li>按姓名进行升序排序</li>
+<li>按 Profile Image URL 进行升序排序</li>
+</ol>
+<p>实现：<br>从 HBase 中根据 userid 找出 followers，再从 MySQL 中根据 follower userid 找出 name 和 profile url 并进行排序。</p>
+<p>这里的问题是 HBase 的表如何设计能最大化性能。可以采用的方式为：<br>对数据集进行处理，按 followee 排序然后按 followers 排序，并进行合并，得到 [Followee, FollowerList]，followee 作为 rowkey。</p>
+<p>Request:</p>
+<pre>GET /task2?id=[UserID]</pre>
+
+<p>Response:</p>
+<pre>{"followers":[{"name":"follower_name_1", "profile":"profile_image_url_1"}, {"name":"follower_name_2", "profile":"profile_image_url_2"}, ...]}</pre>
+
+
+<h1 id="Build-Homepage-using-MongoDB"><a href="#Build-Homepage-using-MongoDB" class="headerlink" title="Build Homepage using MongoDB"></a>Build Homepage using MongoDB</h1><p>同样是对 HBase 表的设计。这里要求的是根据 userid 找到 followees，然后再找到 followees 的 posts。为了提高性能，可以做的是：<br>对数据集进行处理，按 follower 排序然后按 followees 排序，并进行合并，得到 [Follower, FolloweeList]</p>
+<p>数据集：<br>posts.csv<br>{<br>    “pid”:xxx,                                      // PostID<br>    “uid”:xxx,                                      // UserID of poster<br>    “name”:”xxx”,                                   // User name of poster<br>    “profile”:”xxx”,                                // Poster profile image URL<br>    “timestamp”:”YYYY-MM-DD HH:MM:SS”,              // When post is posted<br>    “image”:”xxx”,                                  // Post image<br>    “content”:”xxx”,                                // Post text content<br>    “comments”:[                                    // comments json array<br>        {<br>            “uid”:xxx,                              // UserID of commenter<br>            “name”:”xxx”,                           // User name of commenter<br>            “profile”:”xxx”,                        // Commenter profile image URL<br>            “timestamp”:”YYYY-MM-DD HH:MM:SS”,      // When comment is made<br>            “content”:”xxx”                         // Comment text content<br>        },<br>        {<br>            “uid”:xxx,<br>            …….<br>        },<br>        ……<br>    ]<br>}</p>
+<p>Request:</p>
+<pre>GET /task3?id=[UserID]</pre>
+
+<p>Response:</p>
+<pre>{"posts":[{post1_json}, {post2_json}, ...]}</pre>
+
+
+<h1 id="Put-Everything-Together"><a href="#Put-Everything-Together" class="headerlink" title="Put Everything Together"></a>Put Everything Together</h1><p>显示 user 关注的人的最新 30 篇 posts<br><strong>排序规则：</strong><br>对 followers 进行排序。排序规则：</p>
+<ol>
+<li>按姓名进行升序排序</li>
+<li>按 Profile Image URL 进行升序排序</li>
+</ol>
+<p>对最新 30 篇 posts 排序：</p>
+<ol>
+<li>按 timestamp 升序排序</li>
+<li>按 pid (PostID) 升序排序</li>
+</ol>
+<p>不满 30 篇 posts 返回全部。</p>
+<p>Sample Request:</p>
+<pre>http://backend-public-dns:8080/MiniSite/task4?id=99</pre>
+
+<p>Sample Response:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div></pre></td><td class="code"><pre><div class="line">   &quot;followers&quot;: [</div><div class="line">      &#123;</div><div class="line">         &quot;name&quot;: &quot;Alastair Moock&quot;,</div><div class="line">         &quot;profile&quot;: &quot;https://cmucloudsocial.s3.amazonaws.com/profiles/61ed34b1f6bcd5498d888e3c2a1768.png&quot;</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">         &quot;name&quot;: &quot;Amr Diab&quot;,</div><div class="line">         &quot;profile&quot;: &quot;https://cmucloudsocial.s3.amazonaws.com/profiles/507e08e097e49ffaa584b988748180.png&quot;</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">         &quot;name&quot;: &quot;CJ Bolland&quot;,</div><div class="line">         &quot;profile&quot;: &quot;https://cmucloudsocial.s3.amazonaws.com/profiles/699bb8d37e61d66750e58fd1513637.png&quot;</div><div class="line">      &#125;,</div><div class="line">	... (more followers ommitted)</div><div class="line">   ],</div><div class="line">   &quot;name&quot;: &quot;Accent&quot;,</div><div class="line">   &quot;posts&quot;: [</div><div class="line">      &#123;</div><div class="line">         &quot;content&quot;: &quot;Wow, just experienced Screamers (2006)&quot;,</div><div class="line">         &quot;timestamp&quot;: &quot;2015-08-07 19:06:57&quot;,</div><div class="line">         &quot;uid&quot;: 2587,</div><div class="line">         &quot;_id&quot;: &#123;</div><div class="line">            &quot;$oid&quot;: &quot;56b06bde2fa550d2061f30c2&quot;</div><div class="line">         &#125;,</div><div class="line">         &quot;name&quot;: &quot;Beggars Opera&quot;,</div><div class="line">         &quot;image&quot;: &quot;http://cmucloudsocial.s3.amazonaws.com/posts/Screamers_2006_.png&quot;,</div><div class="line">         &quot;pid&quot;: 156154,</div><div class="line">         &quot;comments&quot;: [</div><div class="line">            &#123;</div><div class="line">               &quot;uid&quot;: 34190,</div><div class="line">               &quot;timestamp&quot;: &quot;2015-10-21 13:57:59&quot;,</div><div class="line">               &quot;content&quot;: &quot;I have seen this movie on starz, I regret to say that I was not lucky enough to have watched it while the screening took place. This documentary follows the one and only System Of A Down, throughout several locations from LA to Europe, while diggin deep in history and showing the truth about the forgotten genocide. This movie includes interviews with experts and some of the survivors of the genocide. This sad story of human history also follows the massacre that took place in africa during 2004 while the whole world stood watching, idle in the face of massive death. To conclude this, several SOAD fans won&apos;t be dissapointed by the extensive repertoire of songs played throughout the film. I&apos;m glad I&apos;m finally getting the DVD after a long wait, I hope you feel the same way.&quot;,</div><div class="line">               &quot;name&quot;: &quot;Youngster&quot;,</div><div class="line">               &quot;profile&quot;: &quot;https://cmucloudsocial.s3.amazonaws.com/profiles/6a75f0eea78b8cd2c0ae4da2f85f34.png&quot;</div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">               &quot;uid&quot;: 27184,</div><div class="line">               &quot;timestamp&quot;: &quot;2015-10-21 21:36:12&quot;,</div><div class="line">               &quot;content&quot;: &quot;Great movie for fans of System of a Down. Better yet, this is a great movie documenting genocide in general, and the Armenian genocide in particular. I highly recommend this movie. It is a must see. Share the movie with friends, family, and members of your local community. Everyone will thank you for it. Very eye-opening experience.&quot;,</div><div class="line">               &quot;name&quot;: &quot;Shirobon&quot;,</div><div class="line">               &quot;profile&quot;: &quot;https://cmucloudsocial.s3.amazonaws.com/profiles/539869e8b863511771c3b0b5e13d94.png&quot;</div><div class="line">            &#125;,</div><div class="line">			... (more comments omitted)</div><div class="line">         ],</div><div class="line">         &quot;profile&quot;: &quot;https://cmucloudsocial.s3.amazonaws.com/profiles/8f64d02d77cf734ddde87b7832ca76.png&quot;</div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">         &quot;content&quot;: &quot;Wow, just experienced The Tube (2004)&quot;,</div><div class="line">         &quot;timestamp&quot;: &quot;2015-08-11 02:42:40&quot;,</div><div class="line">         &quot;uid&quot;: 357,</div><div class="line">         &quot;_id&quot;: &#123;</div><div class="line">            &quot;$oid&quot;: &quot;56b06be12fa550d2061f706a&quot;</div><div class="line">         &#125;,</div><div class="line">         &quot;name&quot;: &quot;Agoria&quot;,</div><div class="line">         &quot;image&quot;: &quot;http://cmucloudsocial.s3.amazonaws.com/posts/The_Tube_2004_.png&quot;,</div><div class="line">         &quot;pid&quot;: 175927,</div><div class="line">         &quot;comments&quot;: [</div><div class="line">            &#123;</div><div class="line">               &quot;uid&quot;: 29700,</div><div class="line">               &quot;timestamp&quot;: &quot;2015-09-15 10:20:44&quot;,</div><div class="line">               &quot;content&quot;: &quot;A FORMER GOVERNMENT AGENT HOLDS A TRAIN HOSTAGE WITH A BOMB THAT&apos;LL BLOW UP IF THE TRAIN STOPS AND IT&apos;S UP TO A DETECTIVE TO STOP HIM AND FIND A WAY TO SAVE THE LIVES OF THE PASSENGERS. WHAT WE HAVE HERE IS BASICALLY ANOTHER IMITATION OF &apos;&apos;SPEED&apos;&apos;. THE DIALOGUE IS LAUGHABLE AND THE ACTION [WHICH THERE IS PLENTY OF] IS NOT REALLY THAT ENTERTAINING. THE ACTING IS ALSO PRETTY BAD, BUT THE MOVIE TENDS TO SHOW A FEW SIGNS OF LIFE IN THE LAST 30 MINUTES. IF YOU&apos;RE AN ACTION FAN [LIKE ME] AND YOU&apos;RE CURIOUS ABOUT THIS MOVIE, RENT IT. BUT DON&apos;T BUY IT. ON THIS DVD, YOU HAVE THE CHOICE OF WATCHING THIS MOVIE DUBBED IN EITHER ENGLISH OR FRENCH OR YOU CAN WATCH THIS MOVIE IN ITS ORIGINAL LANGUAGE, WHICH IS KOREAN.&quot;,</div><div class="line">               &quot;name&quot;: &quot;Teimoso&quot;,</div><div class="line">               &quot;profile&quot;: &quot;https://cmucloudsocial.s3.amazonaws.com/profiles/a3a08f80ee44be2438293a04d2f9f2.png&quot;</div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">               &quot;uid&quot;: 31346,</div><div class="line">               &quot;timestamp&quot;: &quot;2015-10-12 06:16:52&quot;,</div><div class="line">               &quot;content&quot;: &quot;A Hollywood movie went out into the world, traveled to Korea, got assimilated and regurgitated, and now it returns to our shores as this. The studios know it and advertise it using reviews that cast it as the Korean version of Speed. It also &quot;borrows&quot; a score straight from Hans Zimmer&apos;s work for The Rock, and the main actor looks and acts like Chow Yun Fat light. It&apos;s discouraging to see Korean cinema paying homage to American action flicks when it has so many more interesting stories to tell. At least Woon-Hak Baek&apos;s first feature, Shiri, spoke in a unique voice and told a story personal to the Korean experience. This is a step backwards for him.On the other hand, this movie composite of so many action movies we&apos;ve seen before is fascinating in its skewed familiarity. It&apos;s not terrible; the production values are high, the acting occasionally thrilling, the one-liners sometimes amusing. It&apos;s no more or less diverting than the average Hollywood Die Hard knockoff. I think of it as top notch karaoke, like American Idol. In the proper context, it&apos;s impressive.In the grand scheme of things, though, it&apos;s depressing, especially when Korean directors like Chan-wook Park are producing such unique and energetic work.&quot;,</div><div class="line">               &quot;name&quot;: &quot;The Veronicas&quot;,</div><div class="line">               &quot;profile&quot;: &quot;https://cmucloudsocial.s3.amazonaws.com/profiles/1bd4dc1a4ca7a49daf53ca9a03735e.png&quot;</div><div class="line">            &#125;,</div><div class="line">			... (more comments omitted)</div><div class="line">         ],</div><div class="line">         &quot;profile&quot;: &quot;https://cmucloudsocial.s3.amazonaws.com/profiles/329125b52f0db7d04ed8828b5eccac.png&quot;</div><div class="line">      &#125;,</div><div class="line">	... (more posts ommitted)</div><div class="line">   ],</div><div class="line">   &quot;profile&quot;: &quot;https://cmucloudsocial.s3.amazonaws.com/profiles/8e8a1b156037ed1ecfba40b917084e.png&quot;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-11%20%E4%B8%8B%E5%8D%888.01.42.png" alt=""></p>
+<h1 id="Basic-Recommendation"><a href="#Basic-Recommendation" class="headerlink" title="Basic Recommendation"></a>Basic Recommendation</h1><p>根据 userid 推荐 10 个 user。<br><strong>算法：</strong> 基于用户的协同过滤算法。<br>Eg.<br>assume A follows {B, C, D}.<br>Followee B follows {C, E, A},<br>followee C follows {F, G} and<br>followee D follows {G, H}.</p>
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-11%20%E4%B8%8B%E5%8D%888.54.32.png" alt=""></p>
+<p>得分：{G: 2, E: 1, F: 1, H: 1}</p>
+<p>排序规则：</p>
+<ol>
+<li>按得分降序排序</li>
+<li>按 user id 升序排序</li>
+</ol>
+<p>少于 10 个用户返回全部。</p>
+<p>Request:</p>
+<pre>GET /task2?id=[UserID]</pre>
+
+<p>Response:</p>
+<pre>returnRes({"recommendation":[{name:<name1>, profile:<profile1>},{name:<name2>, profile:<profile2>},...,{name:<name10>, profile:<profile10>]})</profile10></name10></profile2></name2></profile1></name1></pre>
+
+<p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-11%20%E4%B8%8B%E5%8D%888.28.48.png" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Back-ends/" rel="tag">#Back-ends</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/27/爬虫总结--汇总贴/" rel="next" title="爬虫总结--汇总贴">
+                <i class="fa fa-chevron-left"></i> 爬虫总结--汇总贴
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/07/Meteor-App-Recommender-System/" rel="prev" title="Meteor--App_Recommender_System">
+                Meteor--App_Recommender_System <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Implementing-Basic-Login-with-MySQL-on-RDS"><span class="nav-number">1.</span> <span class="nav-text">Implementing Basic Login with MySQL on RDS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Storing-Social-Graph-using-HBase"><span class="nav-number">2.</span> <span class="nav-text">Storing Social Graph using HBase</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Build-Homepage-using-MongoDB"><span class="nav-number">3.</span> <span class="nav-text">Build Homepage using MongoDB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Put-Everything-Together"><span class="nav-number">4.</span> <span class="nav-text">Put Everything Together</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Recommendation"><span class="nav-number">5.</span> <span class="nav-text">Basic Recommendation</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/07/05/项目实战--云计算Social Networking Timeline/';
+      var disqus_title = "项目实战--云计算Social Networking Timeline";
+      var disqus_url = 'http://www.shuang0420.cn/2016/07/05/项目实战--云计算Social Networking Timeline/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

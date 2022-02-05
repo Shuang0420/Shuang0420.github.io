@@ -1,0 +1,1018 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="github 封了百度爬虫，因此百度索引不到我们在 github 上搭的博客（想知道自己的博客是否被索引可以这样查询，在搜索引擎中输入：site: 博客域名）解决github屏蔽百度爬虫的思路就是“迁出”我们的博客，让百度爬虫不直接访问github就行了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="让百度、google收录博客">
+<meta property="og:url" content="http://www.shuang0420.cn/2016/05/13/让百度、google收录博客/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="github 封了百度爬虫，因此百度索引不到我们在 github 上搭的博客（想知道自己的博客是否被索引可以这样查询，在搜索引擎中输入：site: 博客域名）解决github屏蔽百度爬虫的思路就是“迁出”我们的博客，让百度爬虫不直接访问github就行了。">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-23%20%E4%B8%8B%E5%8D%888.51.31.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-23%20%E4%B8%8B%E5%8D%889.46.38.png">
+<meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-08%20%E4%B8%8A%E5%8D%889.53.06.png">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="让百度、google收录博客">
+<meta name="twitter:description" content="github 封了百度爬虫，因此百度索引不到我们在 github 上搭的博客（想知道自己的博客是否被索引可以这样查询，在搜索引擎中输入：site: 博客域名）解决github屏蔽百度爬虫的思路就是“迁出”我们的博客，让百度爬虫不直接访问github就行了。">
+<meta name="twitter:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-23%20%E4%B8%8B%E5%8D%888.51.31.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2016/05/13/让百度、google收录博客/"/>
+
+
+  <title> 让百度、google收录博客 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                让百度、google收录博客
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-05-13T20:26:12+08:00" content="2016-05-13">
+              2016-05-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Others/" itemprop="url" rel="index">
+                    <span itemprop="name">Others</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/13/让百度、google收录博客/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/05/13/让百度、google收录博客/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>github 封了百度爬虫，因此百度索引不到我们在 github 上搭的博客（想知道自己的博客是否被索引可以这样查询，在搜索引擎中输入：site: 博客域名）解决github屏蔽百度爬虫的思路就是“迁出”我们的博客，让百度爬虫不直接访问github就行了。<br><a id="more"></a><br>建议看<a href="http://michael-j.net/2016/06/23/%E8%AE%A9%E7%99%BE%E5%BA%A6%E7%B4%A2%E5%BC%95%E4%BD%A0%E7%9A%84github%E7%9A%84%E5%8D%9A%E5%AE%A2/" target="_blank" rel="external">这篇文章</a>先进行尝试，若不行，尝试本文所用方法。</p>
+<h1 id="百度收录"><a href="#百度收录" class="headerlink" title="百度收录"></a>百度收录</h1><p>让百度收录的第一问题是解决封禁，方案是迁出博客，让百度爬虫不直接访问 github.</p>
+<h2 id="注册域名"><a href="#注册域名" class="headerlink" title="注册域名"></a>注册域名</h2><p>在<a href="https://sg.godaddy.com/zh/" target="_blank" rel="external">godaddy</a>注册并申请一个域名。55元／年。</p>
+<h3 id="域名备案？no"><a href="#域名备案？no" class="headerlink" title="域名备案？no!"></a>域名备案？no!</h3><p>以下情况需要备案</p>
+<ul>
+<li>在国内申请的域名，如万网等服务商</li>
+<li>凡是在中国大陆境内购买服务器的用户需备案，即你的网站空间在国内。</li>
+</ul>
+<p>但是！如果申请自国外服务商，如 Godaddy ，网站内容托管在国外服务商，如github或者买的国外的虚拟主机，那么你不需要备案！！这也就意味着，如果你想搭建个博客站点，还不想捣鼓这麻烦的备案流程，那么你唯一的做法就是，在国外服务商申请域名+购买国外的空间（或者使用国外免费的空间如github托管静态站点）</p>
+<h2 id="将博客托管至Coding平台"><a href="#将博客托管至Coding平台" class="headerlink" title="将博客托管至Coding平台"></a>将博客托管至Coding平台</h2><h3 id="注册Coding账户并建立项目"><a href="#注册Coding账户并建立项目" class="headerlink" title="注册Coding账户并建立项目"></a>注册Coding账户并建立项目</h3><p>去<a href="https://coding.net/user" target="_blank" rel="external">Coding 官网</a>注册，并新建一个和账户名相同的账户。</p>
+<h3 id="设置ssh"><a href="#设置ssh" class="headerlink" title="设置ssh"></a>设置ssh</h3><p>在Coding的个人主页的账户中，进入SSH公钥，添加你的公钥。（在本机 .ssh 目录下找到 id_rsa.pub，复制里面的内容在SSH-RSA公钥内容中即可。）</p>
+<p>输入</p>
+<pre>ssh -T git@git.coding.net</pre>
+
+<p>进行测试，如果显示如下则SSH配置成功：</p>
+<pre>Hello ...! You've conected to Coding.net by SSH successfully!</pre>
+
+<h3 id="修改网站配置文件"><a href="#修改网站配置文件" class="headerlink" title="修改网站配置文件"></a>修改网站配置文件</h3><p>在你的 blog 根目录下的配置文件_config.yml，找到deploy的设置处，改为如下：</p>
+<pre>
+deploy:
+  type: git
+  repo:
+    github: git@github.com:XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    coding: git@git.coding.net:XXXXXXXXXXXXXXXXXXXXXXXXX,master</pre>
+注意要改成你的项目地址。
+
+### 将网站文件部署至Coding
+在你的 github page 根目录下运行
+<pre>hexo g -d</pre>
+
+<p>成功之后，进入你的Coding对应的项目中应该能看到网站文件。</p>
+<h3 id="配置Coding的Page服务"><a href="#配置Coding的Page服务" class="headerlink" title="配置Coding的Page服务"></a>配置Coding的Page服务</h3><p>进入你在Coding上的项目，点击左侧的代码可以看到Coding Pages服务。输入分支为master，点击开启服务。在自定义域名处填上你的网站域名。<br>如图<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-23%20%E4%B8%8B%E5%8D%888.51.31.png" alt=""><br>&lt;–&gt;</p>
+<h2 id="配置DNS"><a href="#配置DNS" class="headerlink" title="配置DNS"></a>配置DNS</h2><p>在<a href="https://support.dnspod.cn/Kb/showarticle/?qtype=%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B&amp;tsid=42" target="_blank" rel="external">Godaddy注册商域名修改DNS地址</a>。登录<a href="https://sg.godaddy.com/zh/" target="_blank" rel="external">godaddy</a> 按 dnspod 要求更改 nameserver。</p>
+<p>在<a href="https://www.dnspod.cn" target="_blank" rel="external">dnspod</a>进行网站的 dns 设置。将国内线路设置为CNAME的 pages.coding.me。之后就可以打开自己的域名啦～</p>
+<p>github 也可以绑定域名。在本地网站根目录下的source文件夹下，新建一个文件名为CNAME的文件（无后缀名），填写你所绑定的域名地址，如 www.shuang0420.com，然后 generate &amp; deploy，就成功绑定域名啦。</p>
+<p>如图<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-23%20%E4%B8%8B%E5%8D%889.46.38.png" alt=""></p>
+<h2 id="让百度收录"><a href="#让百度收录" class="headerlink" title="让百度收录"></a>让百度收录</h2><p>用 <a href="http://zhanzhang.baidu.com" target="_blank" rel="external">百度站长工具</a> 的抓取诊断功能看是能进行抓取。<br>百度输入 site:www.shuang0420.com 检验。<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-08%20%E4%B8%8A%E5%8D%889.53.06.png" alt=""></p>
+<h1 id="google-收录"><a href="#google-收录" class="headerlink" title="google 收录"></a>google 收录</h1><p>google 收录就比较简单。</p>
+<h2 id="添加站点并验证"><a href="#添加站点并验证" class="headerlink" title="添加站点并验证"></a>添加站点并验证</h2><p>用自己的google帐号登陆 <a href="https://www.google.com/webmasters/verification/home?hl=en" target="_blank" rel="external">Webmaster Central</a>，添加站点并验证。</p>
+<p>将验证文件放到 source 文件下，在站点配置文件中加入</p>
+<pre>skip_render: googled6054e120f1a1419.html</pre>
+
+
+<h2 id="产生-sitemap"><a href="#产生-sitemap" class="headerlink" title="产生 sitemap"></a>产生 sitemap</h2><p>使用插件 hexo-generator-sitemap 能生成站点地图, 方法如下</p>
+<pre>$ npm install hexo-generator-sitemap --save</pre>
+
+<p>然后在 Hexo 根目录下的 config.yml 里配置一下</p>
+<pre>
+sitemap:
+    path: sitemap.xml</pre>
+
+<p>path 表示 Sitemap 的路径. 默认为 sitemap.xml.</p>
+<p>然后重新生成</p>
+<pre>hexo g</pre>
+
+<h2 id="添加-sitemap"><a href="#添加-sitemap" class="headerlink" title="添加 sitemap"></a>添加 sitemap</h2><p>用 <a href="https://www.google.com/webmasters/tools" target="_blank" rel="external">google 站长工具</a>，在 <strong>抓取——站点地图</strong> 中就能看到 <strong>添加/测试站点地图</strong>，添加 sitemap.xml 即可。</p>
+<blockquote>
+<p>参考链接<br><a href="http://www.jeyzhang.com/blog-on-gitcafe-with-dns-settings.html" target="_blank" rel="external">如何将博客托管至Coding及相应的DNS设置</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag">#Hexo</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/13/gollum:-github上搭建个人wiki/" rel="next" title="gollum/-github上搭建个人wiki">
+                <i class="fa fa-chevron-left"></i> gollum/-github上搭建个人wiki
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/16/JGibbLDA实战/" rel="prev" title="JGibbLDA实战">
+                JGibbLDA实战 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#百度收录"><span class="nav-number">1.</span> <span class="nav-text">百度收录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注册域名"><span class="nav-number">1.1.</span> <span class="nav-text">注册域名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#域名备案？no"><span class="nav-number">1.1.1.</span> <span class="nav-text">域名备案？no!</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将博客托管至Coding平台"><span class="nav-number">1.2.</span> <span class="nav-text">将博客托管至Coding平台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注册Coding账户并建立项目"><span class="nav-number">1.2.1.</span> <span class="nav-text">注册Coding账户并建立项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置ssh"><span class="nav-number">1.2.2.</span> <span class="nav-text">设置ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改网站配置文件"><span class="nav-number">1.2.3.</span> <span class="nav-text">修改网站配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Coding的Page服务"><span class="nav-number">1.2.4.</span> <span class="nav-text">配置Coding的Page服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置DNS"><span class="nav-number">1.3.</span> <span class="nav-text">配置DNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#让百度收录"><span class="nav-number">1.4.</span> <span class="nav-text">让百度收录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#google-收录"><span class="nav-number">2.</span> <span class="nav-text">google 收录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加站点并验证"><span class="nav-number">2.1.</span> <span class="nav-text">添加站点并验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#产生-sitemap"><span class="nav-number">2.2.</span> <span class="nav-text">产生 sitemap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加-sitemap"><span class="nav-number">2.3.</span> <span class="nav-text">添加 sitemap</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2016/05/13/让百度、google收录博客/';
+      var disqus_title = "让百度、google收录博客";
+      var disqus_url = 'http://www.shuang0420.cn/2016/05/13/让百度、google收录博客/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

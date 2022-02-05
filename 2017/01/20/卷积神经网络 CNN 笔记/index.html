@@ -1,0 +1,1054 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep learning,CNN," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="CNN 对模式分类非常适合，其最初是为识别二维形状而特殊设计的，这种二维形状对平移、比例缩放、倾斜或其他形式对变形有高度不变性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卷积神经网络 CNN 笔记">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/01/20/卷积神经网络 CNN 笔记/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="CNN 对模式分类非常适合，其最初是为识别二维形状而特殊设计的，这种二维形状对平移、比例缩放、倾斜或其他形式对变形有高度不变性。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/struc.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/%E5%8D%B7%E7%A7%AF.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/padding.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/1.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/pooling.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/2.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/3.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/4.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/5.jpg">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/wrap.jpg">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="卷积神经网络 CNN 笔记">
+<meta name="twitter:description" content="CNN 对模式分类非常适合，其最初是为识别二维形状而特殊设计的，这种二维形状对平移、比例缩放、倾斜或其他形式对变形有高度不变性。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/struc.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/01/20/卷积神经网络 CNN 笔记/"/>
+
+
+  <title> 卷积神经网络 CNN 笔记 | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                卷积神经网络 CNN 笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-01-20T10:45:12+08:00" content="2017-01-20">
+              2017-01-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Deep-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep learning</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/20/卷积神经网络 CNN 笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/20/卷积神经网络 CNN 笔记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CNN 对模式分类非常适合，其最初是为识别二维形状而特殊设计的，这种二维形状对平移、比例缩放、倾斜或其他形式对变形有高度不变性。<br><a id="more"></a></p>
+<h1 id="图像识别-分类"><a href="#图像识别-分类" class="headerlink" title="图像识别/分类"></a>图像识别/分类</h1><p>图片识别／分类的一般过程：detect -&gt; align -&gt; represent -&gt; classify。具体到 CNN 就是检测到图片的位置，剪出来对齐，表达特征，对若干层进行不同的卷积、pooling，最后全连接网络做分类。</p>
+<p><strong>传统模型:</strong></p>
+<pre>Fixed features + unsupervised mid-level features + simple classifier</pre>
+
+<p><strong>神经网络：</strong></p>
+<pre>Low-level features －> Mid-level features -> High-level features -> trainable classifier</pre>
+
+<p>李飞飞的 ImageNet 比赛，在 2012 年之前，经典做法是人工选一些原始特征出来(SIFT, Hog, Harr, etc.)，再稍加变换，可能用到一些聚类的算法，做一些中等级别的特征，然后给某个分类器做识别，一般就是 SVM。这种方法每一步都会损失数据，到最后可能就达不到很好的分类效果。</p>
+<p><strong>注：</strong> 把图像像素看成 words of bags，不同的原始图像可能分别是 M1*N, M2*N, M3*N 等等的 vectors，通过 K-means 的聚类聚比如说 1000 个类，就能把原来的 vectors 转化成长度为 1000 的直方图，也就形成中等级别的特征，维度就一样了，然后再选一个分类器。</p>
+<p>2012 年第一次用了 CNN，正确率提高了 10%，人们意识到深度学习可能是图像识别非常有效的方式。与传统模型不同的是特征是自动选择的。</p>
+<p>深度学习现在看来还可能是过冗余的，可以很多改进空间，如果能把 100M -&gt; 100K 的参数，就可以不用离线训练，也可以放到 App 中了。</p>
+<h1 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h1><p>传统的神经网络都是采用全连接的方式，即输入层到隐藏层的神经元都是全部连接的，这样做将导致参数量巨大，使得网络训练耗时甚至难以训练，而 CNN 则通过局部连接、权值共享等方法避免了这一困难。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>通过局部连接和权值共享减少了神经网络需要训练的参数的个数。</p>
+<ul>
+<li>局部连接</li>
+<li>权值共享(每个 feature map 共享参数)</li>
+<li>池化</li>
+</ul>
+<h2 id="一般架构"><a href="#一般架构" class="headerlink" title="一般架构"></a>一般架构</h2><img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/struc.jpg" class="ful-image" alt="struc.jpg">
+<p>可能有多个卷积层或多个输出层，某些卷积层不跟着 pooling 也是可以的。</p>
+<h2 id="卷积层-Convolutional-Layer"><a href="#卷积层-Convolutional-Layer" class="headerlink" title="卷积层(Convolutional Layer)"></a>卷积层(Convolutional Layer)</h2><p>卷积层是卷积神经网络基本结构，它由多个卷积核组合形成，每个卷积核同输入数据做卷积运算，形成新的特征图(feature map)，也就是，有几个卷积核，就有几个特征图。</p>
+<p>比如说一张 32*32 的 RGB 图片，做卷积，一张图片就能理解。<br><img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/%E5%8D%B7%E7%A7%AF.jpg" class="ful-image" alt="%E5%8D%B7%E7%A7%AF.jpg"></p>
+<pre>
+Input volume: 32*32*3
+Receptive fields: 5*5, stride 3
+Number of neurons: 5
+
+Output volume: (32-5)/3+1=10, -> 10*10*5
+Weights for each of 10*10*5 neurons: 5*5*3=75
+</pre>
+
+<p>这其中，卷积核的 <strong>大小(size)</strong> 是由用户定义的，而 <strong>深度(或者说厚度)</strong>，是由输入数据定义的，一维数据就用一维卷积核，RGB 图片就是三维卷积核。</p>
+<p>卷积核的 <strong>数目(kernel number)</strong>，常见参数有 64，128，256，为了使 GPU 并行更加高效。</p>
+<p>每一个神经元从上一层的局部接受域得到输入，提取局部特征，每个局部特征相对于其他特征的位置被近似保留下来，原本的精确位置就没那么重要了。每一个计算层都由多个 feature map 组成，每个 feature map 都是平面形式的，平面中单独的神经元在约束下共享相同的权值集。这种结构约束具有平移不变性（强迫 feature map 的执行使用具有小尺度核的卷积，再接着使用一个 sigmoid 函数），另外，权值共享也可以实现自由参数数量的缩减。</p>
+<p>卷积核的“矩阵”值，就是卷积神经网络的参数，卷积核的初值，通常随机生成，然后通过反向传播更新。随机生成可以通过高斯分布生成。一个问题：</p>
+<p><strong>卷积核初值完全一样好不好？</strong><br>不好！如果初值完全一样，那么反向梯度改变的量也差不多，整体就没有变化性，没有多样性。</p>
+<p><strong>padding &amp; stride</strong><br><img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/padding.jpg" class="ful-image" alt="padding.jpg"></p>
+<p>padding 也就是边界扩充，在卷积计算过程中，为了允许边界上的数据也能作为中心参与卷积计算，将边界假装延伸，目的是为了确保卷积后特征图尺度一致。卷积核的宽度为 2i+1，添加 pad 的宽度就为 i。如上图，5*5 的图，卷积核 3*3，取 padding=1，对原始数据上下左右各补 1，可能会有偏移量，就相乘相加再加上偏移值。</p>
+<p>步长(stride)是对输入特征图的扫描间隔，因为相邻的卷积窗口传达的信息可能会差不多，所以跳着取，提高效率。</p>
+<p><strong>权值设置：</strong><br>可以对所有权值做先验处理，按高斯分布做随机处理，然后梯度下降调整权值。</p>
+<h2 id="功能层"><a href="#功能层" class="headerlink" title="功能层"></a>功能层</h2><p>卷积神经网络还需要一些额外功能：</p>
+<ul>
+<li><strong>非线性激励：</strong> 卷积是线性运算，需要增加非线性描述能力</li>
+<li><strong>降维：</strong> 特征图稀疏，需要减少数据运算量，保持精度，如做一个 pooling</li>
+<li><strong>归一化：</strong> 特征的 scale 保持一致，比如说映射到 [0,1] 之间</li>
+<li><strong>区域分割：</strong> 不同区域进行独立学习</li>
+<li><strong>区域融合：</strong> 对分开的区域合并，方便信息融合</li>
+<li><strong>增维：</strong> 增加图片生成或探测任务中的空间信息</li>
+</ul>
+<h3 id="非线性激励层-None-linear-activation-layer"><a href="#非线性激励层-None-linear-activation-layer" class="headerlink" title="非线性激励层(None-linear activation layer)"></a>非线性激励层(None-linear activation layer)</h3><p>如 ReLU 函数<br><img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/1.jpg" class="ful-image" alt="1.jpg"></p>
+<p>更多见 <a href="http://www.shuang0420.com/2017/01/21/神经网络-从线性到非线性/" target="_blank" rel="external">神经网络-从线性到非线性</a></p>
+<h3 id="池化层-Pooling-layer"><a href="#池化层-Pooling-layer" class="headerlink" title="池化层(Pooling layer)"></a>池化层(Pooling layer)</h3><p>每个卷积层跟着一个实现局部平均和子抽样的计算层，能达到降维的目的，由此 feature map 的分辨率降低。这种操作可以使 feature map 的输出对平移和其他形式的变形的敏感度下降。一张图解释下 2*2 的 max-pooling。<br><img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/pooling.jpg" class="ful-image" alt="pooling.jpg"></p>
+<p>这样 M*M 的图像就成了 M/2 * M/2 的图像。当然还有 min-pooling 和 avg-pooling。<br><strong>作用:</strong></p>
+<ul>
+<li>降低输出规模</li>
+<li>增加可解释性</li>
+<li>避免丢失过多信息</li>
+</ul>
+<h3 id="归一化层-Normalization-layer"><a href="#归一化层-Normalization-layer" class="headerlink" title="归一化层(Normalization layer)"></a>归一化层(Normalization layer)</h3><p>如 <strong>批量归一化(Batch Normalization, BN)</strong>，原因是特征数的 scale 不一致，好处是可以加速训练，提高精度。<br><img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/2.jpg" class="ful-image" alt="2.jpg"></p>
+<p>还有 <strong>近邻归一化(Local Response Normalization)</strong>，与 BN 不同的是，BN 依据 mini batch 的数据，而 LRN 仅需要自身，BN 训练中有学习参数，而 LRN 并没有。</p>
+<p>$$x_i={x_i \over (k+(\alpha \sum_jx^2_j))^\beta}$$</p>
+<h3 id="切分层-Slice-layer"><a href="#切分层-Slice-layer" class="headerlink" title="切分层(Slice layer)"></a>切分层(Slice layer)</h3><p>在某些应用中，希望独立对某些区域单独学习，比如说人脸识别，可以眼睛一套参数，耳朵一套参数。。好处是可以学习多套参数，得到更强的特征描述能力。</p>
+<h3 id="融合层-Merge-layer"><a href="#融合层-Merge-layer" class="headerlink" title="融合层(Merge layer)"></a>融合层(Merge layer)</h3><p>对独立进行特征学习的分支进行融合，来构建高效而精简的特征组合。</p>
+<img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/3.jpg" class="ful-image" alt="3.jpg">
+<p>可以用 <strong>级连(concatenation)</strong> 的方法，其实也就是不同输入网络特征的简单叠加，比如说首尾相接。<br><img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/4.jpg" class="ful-image" alt="4.jpg"></p>
+<p>也可以是合并，或者说运算的融合，对形状一致的特征曾，通过 +, -, x, max, conv 等原酸，形成形状相同的输出，如微软的残差网络。<br><img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/5.jpg" class="ful-image" alt="5.jpg"></p>
+<h2 id="全连接层及全卷积网络"><a href="#全连接层及全卷积网络" class="headerlink" title="全连接层及全卷积网络"></a>全连接层及全卷积网络</h2><p>最后的输出一般是连一层全连接层(fully connected layer)，相当于 softmax 回归。当然其实也可以不连，像 <a href="https://arxiv.org/pdf/1411.4038v2.pdf" target="_blank" rel="external">FCN(全卷积网络)</a>。</p>
+<p><strong>卷积层</strong> 的操作可以把 kernel 作用于输入的不同区域然后产生对应的特征图，也因此给定一个卷积层，并不要求输入是固定大小的。而 <strong>全连接层</strong> 的操作实际上是把输入拉成一个一维的向量，然后对这个一维向量进行点乘，这要求输入是固定大小的。这有的时候是很不合理的，如下图，如果要把红框的塔输入网络，就会产生图片变形。<br><img src="http://images.shuang0420.cn/images/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/wrap.jpg" class="ful-image" alt="wrap.jpg"></p>
+<p><strong>如何网络接受任意的输入？</strong><br>把全连接层变成卷积层，这就是所谓的卷积化。这里需要证明卷积化的等价性。直观上理解，卷积跟全连接都是一个点乘的操作，区别在于卷积是作用在一个局部的区域，而全连接是对于整个输入而言，那么只要把卷积作用的区域扩大为整个输入，那就变成全连接了。所以我们只需要把卷积核变成跟输入的一个map的大小一样就可以了，这样的话就相当于使得卷积跟全连接层的参数一样多。举个例子，比如 AlexNet，fc6 的输入是 256x6x6，那么这时候只需要把 fc6 变成是卷积核为6x6的卷积层就好了。</p>
+<p><strong>与传统神经网络相比，CNN 参数和计算量更多还是更少了？</strong><br>参数变少了，因为都使用一套参数，而计算量却是变大了，因为卷积窗口要滑到不同的地方，进行计算、合并等操作。</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p><strong>提高泛化能力（减少 overfit）</strong></p>
+<ol>
+<li>增加神经网络层数。使用卷积层极大地减小了全连接层中的参数的数目，使学习的问题更容易</li>
+<li>使用更多强有力的规范化技术（尤其是 dropout 和 regularization）来减小过度拟合</li>
+<li>使用修正线性单元而不是 S 型神经元，来加速训练-依据经验，通常是3-5倍</li>
+<li>使用 GPU 来计算</li>
+<li>利用充分大的数据集，避免过拟合</li>
+<li>使用正确的代价函数，避免学习减速</li>
+<li>使用好的权重初始化，避免因为神经元饱和引起的学习减速</li>
+</ol>
+<h1 id="TensorFlow-实战"><a href="#TensorFlow-实战" class="headerlink" title="TensorFlow 实战"></a>TensorFlow 实战</h1><p><a href="http://www.shuang0420.com/2016/06/20/TensorFlow%E5%AE%9E%E6%88%98-MNIST/" target="_blank" rel="external">TensorFlow 实战 MINST</a></p>
+<h1 id="CNN-用于-NLP"><a href="#CNN-用于-NLP" class="headerlink" title="CNN 用于 NLP"></a>CNN 用于 NLP</h1><p><a href="http://www.shuang0420.com/2016/08/05/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93%E4%B9%8B%20sentence%20embedding/" target="_blank" rel="external">实习总结之 sentence embedding</a></p>
+<blockquote>
+<p>参考链接<br><a href="http://blog.cvmarcher.com/posts/2015/05/17/cnn-trick/" target="_blank" rel="external">Concepts and Tricks In CNN(长期更新)</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-learning/" rel="tag">#Deep learning</a>
+          
+            <a href="/tags/CNN/" rel="tag">#CNN</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/27/数据结构和算法 -- 堆/" rel="next" title="数据结构和算法 -- 堆">
+                <i class="fa fa-chevron-left"></i> 数据结构和算法 -- 堆
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/21/神经网络-从线性到非线性/" rel="prev" title="深度学习-从线性到非线性">
+                深度学习-从线性到非线性 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图像识别-分类"><span class="nav-number">1.</span> <span class="nav-text">图像识别/分类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卷积神经网络"><span class="nav-number">2.</span> <span class="nav-text">卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">2.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般架构"><span class="nav-number">2.2.</span> <span class="nav-text">一般架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积层-Convolutional-Layer"><span class="nav-number">2.3.</span> <span class="nav-text">卷积层(Convolutional Layer)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能层"><span class="nav-number">2.4.</span> <span class="nav-text">功能层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非线性激励层-None-linear-activation-layer"><span class="nav-number">2.4.1.</span> <span class="nav-text">非线性激励层(None-linear activation layer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#池化层-Pooling-layer"><span class="nav-number">2.4.2.</span> <span class="nav-text">池化层(Pooling layer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归一化层-Normalization-layer"><span class="nav-number">2.4.3.</span> <span class="nav-text">归一化层(Normalization layer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切分层-Slice-layer"><span class="nav-number">2.4.4.</span> <span class="nav-text">切分层(Slice layer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#融合层-Merge-layer"><span class="nav-number">2.4.5.</span> <span class="nav-text">融合层(Merge layer)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全连接层及全卷积网络"><span class="nav-number">2.5.</span> <span class="nav-text">全连接层及全卷积网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">2.6.</span> <span class="nav-text">优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TensorFlow-实战"><span class="nav-number">3.</span> <span class="nav-text">TensorFlow 实战</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CNN-用于-NLP"><span class="nav-number">4.</span> <span class="nav-text">CNN 用于 NLP</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/01/20/卷积神经网络 CNN 笔记/';
+      var disqus_title = "卷积神经网络 CNN 笔记";
+      var disqus_url = 'http://www.shuang0420.cn/2017/01/20/卷积神经网络 CNN 笔记/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>

@@ -1,0 +1,1123 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Memory Networks," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="徐阿衡" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.3" />
+
+
+
+
+
+
+<meta name="description" content="Memory Networks 相关笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记 - Memory Networks">
+<meta property="og:url" content="http://www.shuang0420.cn/2017/12/04/论文笔记 - Memory Networks/index.html">
+<meta property="og:site_name" content="徐阿衡">
+<meta property="og:description" content="Memory Networks 相关笔记。">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks1.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks_loss.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks_performance.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks_performance1.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks_drawback.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_struc.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_struc2.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_multi_hop.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN_struc1.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN_process.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_textual_input.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_image_input.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2BMemoryUpdate.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_gate.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/AttnGRU.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/AttnGRU2.png">
+<meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/final_performance.png">
+<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="论文笔记 - Memory Networks">
+<meta name="twitter:description" content="Memory Networks 相关笔记。">
+<meta name="twitter:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6294135991397516000',
+      author: '阿衡'
+    }
+  };
+</script>
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6146435155426457",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.shuang0420.cn/2017/12/04/论文笔记 - Memory Networks/"/>
+
+
+  <title> 论文笔记 - Memory Networks | 徐阿衡 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">徐阿衡</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Shuang</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Works
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input" placeholder="search my blog...">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+         
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                论文笔记 - Memory Networks
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-12-04T13:02:27+08:00" content="2017-12-04">
+              2017-12-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NLP/Chatbot/" itemprop="url" rel="index">
+                    <span itemprop="name">Chatbot</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/12/04/论文笔记 - Memory Networks/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/12/04/论文笔记 - Memory Networks/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Memory Networks 相关笔记。<br><a id="more"></a></p>
+<p>这一篇会覆盖下面三个版本的 Memory Networks</p>
+<ul>
+<li>Memory Network with strong supervision</li>
+<li>End-to-End Memory Network</li>
+<li>Dynamic Memory Network</li>
+</ul>
+<p>涉及下面一些论文：</p>
+<ul>
+<li>Memory Networks (2015)</li>
+<li>End-To-End Memory Networks (2015)   </li>
+<li>Ask Me Anything: Dynamic Memory Networks for Natural Language Processing (2016)</li>
+<li>Dynamic Memory Networks for Visual and Textual Question Answering (2016)</li>
+</ul>
+<p>首先要明确的是，Memory Networks 只是一种思想或者说一个框架，像一个 base class，里面的各个 module 都可以自己定制。其中基本的一些思路：</p>
+<ul>
+<li><strong>分层 RNN 的 context RNN</strong><br>与 context RNN 类似，Memory Network 同样以句子为单位来提取、保存语境信息</li>
+<li><strong>Attention 原理</strong><br>使用多个 state vector 来保存信息，并从中寻找有用的记忆，而不是寄希望于 final state 存储的信息</li>
+<li><strong>Incorporate reasoning with attention over memory(RAM): Memory Network</strong><br>使用记忆以及记忆上的 attention 来做推理</li>
+</ul>
+<h1 id="Memory-Networks-2015"><a href="#Memory-Networks-2015" class="headerlink" title="Memory Networks (2015)"></a>Memory Networks (2015)</h1><p>对应论文：Memory Networks (2015)</p>
+<p>Memory Networks 提出的基本动机是我们需要 <strong>长期记忆（long-term memory）</strong>来保存问答的知识或者聊天的语境信息，而现有的 RNN 在长期记忆中表现并没有那么好。</p>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><p>4 个重要组件：</p>
+<ul>
+<li><strong>I: input feature map</strong><br>把输入映射为特征向量（input -&gt; feature representation）<br>通常以句子为单位，一个句子对应一个向量</li>
+<li><strong>G: generalization</strong><br>使用新的输入数据更新 memories</li>
+<li><strong>O: output</strong><br>给定新的输入和现有的 memory state，在特征空间里产生输出<br>类比 attention RNN decoder 产生 outputs/logits</li>
+<li><strong>R: response</strong><br>将输出转化为自然语言</li>
+</ul>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks1.png" class="ful-image" alt="Memory%20Networks/memory_networks1.png">
+<p>上面的 4 个 component 就对应了整个工作流程：</p>
+<ol>
+<li><strong>把输入 x 映射为特征向量 I(x)</strong><br>可以选择多种特征，如 bag of words, RNN encoder states, etc.<br>如果用 embedding model 来表达文本的话，一个郁闷的地方是 embdding 的参数在不断变化，所以训练时保存的 vector 也要变化……当然这在测试时就成了优势，因为测试时 embedding 参数就固定啦</li>
+<li><strong>更新 memory mi</strong>，$m_i = G(m_i, I(x), m), \forall i.$<br>将输入句子的特征 x 保存到下一个合适的地址 $m_n$，可以简单的寻找下一个空闲地址，也可以使用新的信息更新之前的记忆<br>简单的函数如 $m_{H(x)}=I(x)$，H(x) 是一个寻址函数（slot choosing function），G 更新的是 m 的 index，可以直接把新的输入 I(x) 保存到下一个空闲的地址 $m_n$，并不更新原有的 memory，当然更复杂的 G 函数可以去更新更早的 memory 甚至是所有的 memory</li>
+<li><strong>给定新的输入和 memory，计算 output feature o: o=O(I(x),m)</strong><br>Addressing，寻址，给定 query Q，在 memory 里寻找相关的包含答案的记忆<br>$qUU^Tm$： 问题 q 和事实 m 的相关程度，当然这里的 q，m 都是特征向量，可以用同一套参数也可以用不同的参数<br>U：bilinear regression 参数，相关事实的 $qUU^Tm_{true}$ 分数高于不相关事实的分数 $qUU^Tm_{random}$<br>n 条记忆就有 n 条 bilinear regression score<br>回答一个问题可能需要寻找多个相关事实，先根据 query 定位到第一条最相关的记忆，再用第一条 fact 和 query 通过加总或拼接等方式得到 u1 然后一起定位第二条<br>$o_1 = O_1(q,m) = argmax_{i=1,…N} \ s_o(q, m_i)$<br>$o_2 = O_2(q,m) = argmax_{i=1,…N} \ s_o([q, o_1], m_i)$</li>
+<li><strong>对 output feature o 进行解码，得到最后的 response: r=R(o)</strong><br>将 output 转化为自然语言的 response<br>$r = argmax_{w \in W} \ s_R([q, o_1, o_2], w)$<br>$s_R(x,y)=xUU^Ty$<br>可以挑选并返回一个单词比如说 playground<br>在词汇表上做一个 softmax 然后选最有可能出现的单词做 response，也可以使用 RNNLM 产生一个包含回复信息的句子，不过要求训练数据的答案就是完整的句子，比如说 football is on the playground</li>
+</ol>
+<h2 id="Huge-Memory-问题"><a href="#Huge-Memory-问题" class="headerlink" title="Huge Memory 问题"></a>Huge Memory 问题</h2><p><strong>如果 memory 太大怎么办？</strong></p>
+<ol>
+<li>可以按 entity 或者 topic 来存储 memory，这样 G 就不用在整个 memories 上操作了</li>
+<li>如果 memory 满了，可以引入 forgetting 机制，替换掉没那么有用的 memory，H 函数可以计算每个 memory 的分数，然后重写</li>
+<li>还可以对单词进行 hashing，或者对 word embedding 进行聚类，总之是把输入 I(x) 放到一个或多个 bucket 里面，然后只对相同 bucket 里的 memory 计算分数</li>
+</ol>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>损失函数如下，选定 2 条 supporting fact (k=2)，response 是单词的情况：<br><img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks_loss.png" class="ful-image" alt="Memory%20Networks/memory_networks_loss.png"></p>
+<p>(6) 有没有挑选出正确的第一句话<br>(7) 正确挑选出了第一句话后能不能正确挑出第二句话<br>(6)+(7) 合起来就是能不能挑选出正确的语境，用来训练 attention 参数<br>(8) 把正确的 supporting fact 作为输入，能不能挑选出正确的答案，来训练 response 参数</p>
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>在 bAbI QA 部分数据集上的结果<br><img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks_performance.png" class="ful-image" alt="memory_networks_performance.png"></p>
+<p>部分 QA 实例：<br><img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks_performance1.png" class="ful-image" alt="memory_networks_performance1.png"></p>
+<h2 id="局限"><a href="#局限" class="headerlink" title="局限"></a>局限</h2><ol>
+<li><strong>需要很强的标记信息</strong><br>bAbI 提供了 supporting fact 的 ID，但对大多数 QA 数据而言，并不存在明确的 supporting fact 标记</li>
+<li><strong>Loss2 无法 backpropagate 到模型的左边部分，BP 过程到 m 就停了，并不能 end-to-end 进行训练</strong><br>这相当于一个链状的贝叶斯网络，考虑 A-&gt;B-&gt;C 的有向图，B 对应 m，B 不确定的时候，C 依赖于 A，但是当 B 确定的时候，C 就不依赖于 A 了。 也就是说，在给定 m 的情况下，loss2 和前面的参数是独立的，所以优化 loss2 并不能优化左边的参数</li>
+</ol>
+<img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/memory_networks_drawback.png" class="ful-image" alt="Memory%20Networks/memory_networks_drawback.png">
+<h1 id="End-to-End-learning"><a href="#End-to-End-learning" class="headerlink" title="End-to-End learning"></a>End-to-End learning</h1><p>对应论文：End-To-End Memory Networks (2015)   </p>
+<p>End-to-End learning 用了 soft attention 来估计每一个 supporting fact 的相关程度，实现了端到端的 BP 过程。</p>
+<h2 id="Single-Layer"><a href="#Single-Layer" class="headerlink" title="Single Layer"></a>Single Layer</h2><p>一张图就解决了：<br><img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_struc.png" class="ful-image" alt="%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_struc.png"></p>
+<p>模型输入:</p>
+<ul>
+<li><strong>Input:</strong> $x_1, …, x_n$，会被存储到 memory 中</li>
+<li><strong>Query:</strong> q</li>
+<li><strong>Answer:</strong> a</li>
+</ul>
+<p>具体过程（以单层为例）：</p>
+<ol>
+<li><strong>映射到特征空间</strong><br>{$x_i$} $\xrightarrow{A}$ {$m_i$}<br>$q \xrightarrow{B} u$</li>
+<li><strong>计算 attention，得到 query 和 memory 的匹配度，有多少个 memory 就有多少个 $p_i$</strong><br>$p_i = Softmax(u^Tm_i)$</li>
+<li><strong>得到 context vector</strong><br>$o = \sum_ip_ic_i$<br>和 Memory Networks with Strong Supervision 版本不同，这里的 output 是加权平均而不是一个 argmax</li>
+<li><strong>context vector 和 query 一起，预测最后答案，通常是一个单词</strong><br>$\hat a=Softmax(W(o+u))$</li>
+<li><strong>对 $\hat a$ 进行解码，得到自然语言的 response</strong><br>$\hat a \xrightarrow{C} a$</li>
+</ol>
+<p>其中，<br>A: intput embedding matrix<br>C: output embedding matrix<br>W: answer prediction matrix<br>B: question embedding matrix</p>
+<p>损失函数是交叉熵，用 SGD 训练。<br><img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_struc2.png" class="ful-image" alt="%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_struc2.png"></p>
+<h2 id="Multi-hop-Architecture"><a href="#Multi-hop-Architecture" class="headerlink" title="Multi-hop Architecture"></a>Multi-hop Architecture</h2><p>多层结构（K hops）也很简单，相当于做多次 addressing/多次 attention，每次 focus 在不同的 memory 上，不过在第 k+1 次 attention 时 query 的表示需要把之前的 context vector 和 query 拼起来，其他过程几乎不变。<br>$u^{k+1}=u^k + o^k$</p>
+<img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_multi_hop.png" class="ful-image" alt="%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/end_to_end_multi_hop.png">
+<h3 id="一些技术细节"><a href="#一些技术细节" class="headerlink" title="一些技术细节"></a>一些技术细节</h3><p>通常来说 encoding 和 decoding 的词向量参数是不一样的，因为一个是单词-词向量，一个是 隐状态-词向量。</p>
+<ul>
+<li><strong>Adjacent</strong><br>前一层的输出是这一层的输入<br>$A^{k+1}=C^k$<br>$W^T=C^L$<br>$B=A^1$</li>
+<li><strong>Layer-wise(RNN-like)</strong><br>不同层之间用同样的 embedding<br>$A^1=A^2=…=A^K$<br>$C^1=C^2=…=C^K$<br>可以在 hop 之间加一层线性变换 H 来更新 $\mu$<br>$u^{k+1}=Hu^k+o^k$</li>
+</ul>
+<h1 id="Dynamic-Memory-Networks"><a href="#Dynamic-Memory-Networks" class="headerlink" title="Dynamic Memory Networks"></a>Dynamic Memory Networks</h1><p>对应论文：Ask Me Anything: Dynamic Memory Networks for Natural Language Processing (2016)</p>
+<img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN_struc1.png" class="ful-image" alt="DMN_struc1.png">
+<h2 id="Input-Module"><a href="#Input-Module" class="headerlink" title="Input Module"></a>Input Module</h2><p>这一部分像是一个 semantic memory。<strong>输入</strong>可以是一个/多个句子，一篇/几篇文章，包含语境信息和知识库等，使用 RNN 进行 encoding，每一个句子编码成固定维度的 state vector。<br>具体做法是把句子拼到一起（每个句子结尾加标记符 EOS），用 GRU-RNN 进行编码，如果是单个句子，就<strong>输出</strong>每个词的 hidden state；如果是多个句子，就<strong>输出</strong>每个句子 EOS 标记对应的 hidden state，其实相当于分层 RNN 的下面一层。</p>
+<p>$$h_t=GRU(L[w_t], h_{t-1})$$</p>
+<p>$L[w_t] $ 是 word embedding。</p>
+<h2 id="Question-Module"><a href="#Question-Module" class="headerlink" title="Question Module"></a>Question Module</h2><p><strong>输入</strong>是 question 对应的词序列，同样用 GRU-RNN 进行编码。</p>
+<p>$$q_t=GRU([L[w_t^Q], q_{t-1})$$</p>
+<p>同样的，L 是词向量参数，和 input module 的 L 相同。<strong>输出</strong>是 final hidden state</p>
+<h2 id="Episodic-Memory-Module"><a href="#Episodic-Memory-Module" class="headerlink" title="Episodic Memory Module"></a>Episodic Memory Module</h2><p>由 internal memory, attention mechansim, memory update mechanism 组成。 <strong>输入</strong>是 input module 和 question module 的输出。</p>
+<p>把 input module 中每个句子的表达（fact representation c）放到 episodic memory module 里做推理，使用 attention 原理从 input module 中提取相关信息，同样有 multi-hop architecture。</p>
+<img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN_process.png" class="ful-image" alt="DMN_process.png">
+<h3 id="Attention-Mechanism"><a href="#Attention-Mechanism" class="headerlink" title="Attention Mechanism"></a>Attention Mechanism</h3><p>觉得论文里的 attention mechanism 和 memory update mechanism 描述的有点问题，个人以为 attention mechanism 的目的还是生成 context vector，memory update mechanism 的目的是更新 memory，所以把部分公式按自己的理解移动了下，便于理解。</p>
+<p>计算 query 和 fact 的分数，query 和上一个 memory $m^{i-1}$ 作为<strong>输入</strong>产生<strong>输出</strong> episode $e^i$。要注意的是，End-to-End MemNN 的 attention 用的是 linear regression，DMN 用的是  gating function，一个两层的前向神经网络。</p>
+<p>在每一轮迭代中，都有<strong>输入</strong>：</p>
+<ol>
+<li>$c_t$（input module 中第 t 个位置的 fact vector)</li>
+<li>上一轮迭代得到的 memory $m_{i-1}$</li>
+<li>question q  </li>
+</ol>
+<p>利用 gating function 计算第 t 个位置的得分  $g^i_t=G(c_t, m_{i-1}, q)$。G 是一个两层的前向神经网络的 score function，不过描述 input, memory, question 相似度的 feature vector z(c,m,p) 是人工定义的，这也成为了之后 DMN+ 的一个优化点。</p>
+<p>计算完每一次迭代每一个位置的分数后，来更新 episode $e^i$，或者说产生 context vector。<strong>输入</strong>是 $c_1, …, c_{T_C}$，和它们的 gate score $g^i_t$。</p>
+<p>$$ h^i_t=g^i_tGRU(c_t, h^i_{t-1})+(1-g^i_t)h^i_{t-1}$$</p>
+<p>$$e^i=h^i_{T_C}$$</p>
+<p>总结一下，这部分 attention mechanism 的目的是生成 episode $e^i$，$e^i$ 是第 t 轮迭代的所有相关 input 信息的 summary。与 End-to-End MemNN 不同的是，End-to-End 用了 soft attention，也就是加权和来计算 context，而这里用了 GRU。</p>
+<h3 id="Memory-Update-Mechanism"><a href="#Memory-Update-Mechanism" class="headerlink" title="Memory Update Mechanism"></a>Memory Update Mechanism</h3><p>上一步算的 episode $e^i$ 以及上一轮迭代的 memory $m^{i-1}$ 作为<strong>输入</strong> 来更新 episodic memory $m^i$。</p>
+<p>$$m^i=GRU(e^i, m^{i-1})$$</p>
+<p><strong>输出</strong>是最后一次迭代的 $m=m^{T_M}$</p>
+<p>End-to-End MemNN 的 memory update 过程里，第 k+1 次 query vector 直接是上一个 context vector 和 query 的拼接，$u^{k+1}=u^k + o^k$。而 DMN 里，采用了 RNN 做非线性映射，用 episode $e^i$ 和上一个 memory $m^{i-1}$ 来更新 episodic memory，其 GRU 的初始状态包含了 question 信息，$m^0=q$。</p>
+<p>Episodic Memory Module 需要一个停止迭代的信号。一般可以在输入中加入一个特殊的 end-of-passes 的信号，如果 gate 选中了该特殊信号，就停止迭代。对于没有显性监督的数据集，可以设一个迭代的最大值。</p>
+<p>总结一下，这部分 memory update mechanism 的目的是生成 t 时刻的 episode memory $m^t$，最后一个 pass 的$m^T$ 将包含用于回答问题 q 的所有信息。</p>
+<h3 id="Example-Understanding"><a href="#Example-Understanding" class="headerlink" title="Example Understanding"></a>Example Understanding</h3><p>来用例子解释下 Episodic Memory Module 上面那张图，question 是 where is the football? 第一次迭代找到的是第 7 个句子，John put down the football，第二次找到第 6 个句子 John went to the hallway，第三次找到第 2 个句子 John moved to the bedroom。</p>
+<p>多次迭代第一次找到的是字面上最相关的 context，然后一步步迭代会逐渐定位到真正语义相关的 context，这感觉上就是一个推理的过程。</p>
+<h3 id="Answer-Module"><a href="#Answer-Module" class="headerlink" title="Answer Module"></a>Answer Module</h3><p>使用了 GRU-RNN 作为 decoder。<strong>输入</strong>是 question module 的输出 q 和上一时刻的 hidden state $a_{t-1}$，初始状态是episode memory module 的输出 $a_0=m^{T_M}$</p>
+<p>$$<br>  \begin{aligned}<br>  y_t=Softmax(W^{(a)}a_t) \\<br>  a_t=GRU([y_{t-1}, q], a_{t-1}) \\<br>  \end{aligned}<br>$$</p>
+<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><p>使用 cross-entroy 作为目标函数。如果数据集有 gate 的监督数据，还可以将 gate 的 cross-entroy 加到总的 cost上去，一起训练。训练直接使用 backpropagation 和 gradient descent 就可以。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>总的来说，DMN 在 addressing，memory 提取，query/memory update 部分都用了 DL 手段，相比于 End-to-End MemNN 更为复杂。</p>
+<h1 id="DMN"><a href="#DMN" class="headerlink" title="DMN+"></a>DMN+</h1><p>对应论文：Dynamic Memory Networks for Visual and Textual Question Answering (2016)</p>
+<p>DMN 存在的两个问题：</p>
+<ol>
+<li>输入模块只考虑了过去信息，没考虑到将来信息</li>
+<li>只用 word level 的 GRU，很难记忆远距离 supporting sentences 之间的信息</li>
+</ol>
+<p>这一部分重点讲与 DMN 不同的地方。</p>
+<h2 id="Input-Module-1"><a href="#Input-Module-1" class="headerlink" title="Input Module"></a>Input Module</h2><p>DMN+ 把 single GRU 替换成了类似 hierarchical RNN 结构，一个 sentence reader 得到每个句子的 embedding，一个 input infusion layer 把每个句子的 embedding 放入另一个 GRU 中，得到 context 信息，来解决句子远距离依赖的问题。HRED 相关思路见 <a href="http://www.shuang0420.com/2017/11/17/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20HRED%20%E4%B8%8E%20VHRED/" target="_blank" rel="external">论文笔记 - HRED 与 VHRED</a>。这里还做了一些微调，sentence reader 用的是 positional encoding，input fusion layer 用了双向 GRU，兼顾了过去和未来的信息。</p>
+<p>用 positional encoding 的原因是在这里用 GRU/LSTM 编码句子计算量大而且容易过拟合（毕竟 bAbI 的单词量很小就几十个单词。。），这种方法反而更好。<br><img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_textual_input.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_textual_input.png"></p>
+<p>除了处理文本信息，作者也提出了图像信息的方案，CNN+RNN，把局部位置的图像信息当做 sentence 处理，在这不多介绍。<br><img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_image_input.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_image_input.png"></p>
+<h2 id="Episodic-Memory-Module-1"><a href="#Episodic-Memory-Module-1" class="headerlink" title="Episodic Memory Module"></a>Episodic Memory Module</h2><img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2BMemoryUpdate.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2BMemoryUpdate.png">
+<h3 id="Attention-Mechanism-1"><a href="#Attention-Mechanism-1" class="headerlink" title="Attention Mechanism"></a>Attention Mechanism</h3><p>仍然是人工构造特征向量来计算 attention，但与之前版本的 DMN 相比更为简化，省去了两项含有参数的部分，减少了计算量。另外与 DMN 不同的是，gate 值不是简单的二层前馈网络的结果，而是接着计算了一个 sofmax 评分向量。</p>
+<img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_gate.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/DMN%2B_gate.png">
+<p>也就是说，从公式上看，相对于 DMN，式 8 更为简洁，式 9 不变（结果就是 DMN 的 gate 值），增加了式 10。 </p>
+<p>进行到下一步关于 context vector 的计算，两种方案，一种是 soft attention，简单的加权求和，另一种是 attention based GRU。</p>
+<img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/AttnGRU.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/AttnGRU.png">
+<p>AttnGRU 考虑了输入 facts 的位置和顺序信息（position and ordering），或者说是时序信息。在得到 attenion 后，把 attention 作为 gate，如上图，把传统 GRU 中的 update gate $u_i$ 替换成了 attention 的输出 $g^t_i$，这样 gate 就包含了 question 和前一个 episode memory 的知识，更好的决定了把多少 state 信息传递给下一个 RNN cell。同时这也大大简化了 DMN 版本的 context 计算。</p>
+<img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/AttnGRU2.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/AttnGRU2.png">
+<p>$\hat h$ 是更新的 state，$h_{i-1}$ 是传入的上一时刻的 state，$g^t_i$ 是 attention value，是一个由 softmax 产生的标量（scalar）而不是 sigmoid 激活产生的 vector $u_i \in R^{n_H}$，context vector 是 GRU 的 final hidden state。</p>
+<p>AttnGRU 要优于 weighted sum，因为使用了一些时间上的关系，比如小明在操场，小明回了家，小明进了卧室，这些事实实际上有先后关系，而 weighted sum 不一定能反映这种时序关系。</p>
+<h3 id="Memory-Update-Mechanism-1"><a href="#Memory-Update-Mechanism-1" class="headerlink" title="Memory Update Mechanism"></a>Memory Update Mechanism</h3><p>DMN 中 memory 更新采用以 q 向量为初始隐层状态的 GRU 进行更新，用同一套权重，这里替换成了一层 ReLU 层，实际上简化了模型。</p>
+<p>$$m^t = ReLU(W^t[m^{t-1};c^t;q]+b)$$</p>
+<p>其中 ; 表示拼接，这能进一步提高近 0.5% 的准确率。</p>
+<h2 id="Performance-1"><a href="#Performance-1" class="headerlink" title="Performance"></a>Performance</h2><p>最后上一个不同模型的 performance 比较图。<br><img src="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/final_performance.png" class="ful-image" alt="../../static/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/final_performance.png"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat.jpg" alt="徐阿衡 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注：徐阿衡的微信公众号</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>客官，打个赏呗~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xu83c.com1.z0.glb.clouddn.com/1.pic.jpg" alt="徐阿衡 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Memory-Networks/" rel="tag">#Memory Networks</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/26/机器学习策略(Andrew Ng. DL 笔记)/" rel="next" title="机器学习策略(Andrew Ng. DL 笔记)">
+                <i class="fa fa-chevron-left"></i> 机器学习策略(Andrew Ng. DL 笔记)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/20/论文笔记 - Learning to Remember Translation History with a Continuous Cache/" rel="prev" title="论文笔记 - Learning to Remember Translation History with a Continuous Cache">
+                论文笔记 - Learning to Remember Translation History with a Continuous Cache <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+     
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu83c.com1.z0.glb.clouddn.com/2.pic.jpg"
+               alt="徐阿衡" />
+          <p class="site-author-name" itemprop="name">徐阿衡</p>
+          <p class="site-description motion-element" itemprop="description">读万卷书，行万里路 @SYSU @CMU</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">126</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Shuang0420" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/shuang-xu-7008b894?trk=nav_responsive_tab_profile_pic" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/c_136690664" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://starllap.space" title="Star" target="_blank">Star</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://liam0205.me" title="Liam Huang" target="_blank">Liam Huang</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.libinx.com" title="Li Bin" target="_blank">Li Bin</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Memory-Networks-2015"><span class="nav-number">1.</span> <span class="nav-text">Memory Networks (2015)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#组件"><span class="nav-number">1.1.</span> <span class="nav-text">组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程"><span class="nav-number">1.2.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Huge-Memory-问题"><span class="nav-number">1.3.</span> <span class="nav-text">Huge Memory 问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数"><span class="nav-number">1.4.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Performance"><span class="nav-number">1.5.</span> <span class="nav-text">Performance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#局限"><span class="nav-number">1.6.</span> <span class="nav-text">局限</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#End-to-End-learning"><span class="nav-number">2.</span> <span class="nav-text">End-to-End learning</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Single-Layer"><span class="nav-number">2.1.</span> <span class="nav-text">Single Layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-hop-Architecture"><span class="nav-number">2.2.</span> <span class="nav-text">Multi-hop Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些技术细节"><span class="nav-number">2.2.1.</span> <span class="nav-text">一些技术细节</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dynamic-Memory-Networks"><span class="nav-number">3.</span> <span class="nav-text">Dynamic Memory Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Input-Module"><span class="nav-number">3.1.</span> <span class="nav-text">Input Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question-Module"><span class="nav-number">3.2.</span> <span class="nav-text">Question Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Episodic-Memory-Module"><span class="nav-number">3.3.</span> <span class="nav-text">Episodic Memory Module</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Attention-Mechanism"><span class="nav-number">3.3.1.</span> <span class="nav-text">Attention Mechanism</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Memory-Update-Mechanism"><span class="nav-number">3.3.2.</span> <span class="nav-text">Memory Update Mechanism</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-Understanding"><span class="nav-number">3.3.3.</span> <span class="nav-text">Example Understanding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Answer-Module"><span class="nav-number">3.3.4.</span> <span class="nav-text">Answer Module</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练"><span class="nav-number">3.4.</span> <span class="nav-text">训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.5.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DMN"><span class="nav-number">4.</span> <span class="nav-text">DMN+</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Input-Module-1"><span class="nav-number">4.1.</span> <span class="nav-text">Input Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Episodic-Memory-Module-1"><span class="nav-number">4.2.</span> <span class="nav-text">Episodic Memory Module</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Attention-Mechanism-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">Attention Mechanism</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Memory-Update-Mechanism-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">Memory Update Mechanism</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Performance-1"><span class="nav-number">4.3.</span> <span class="nav-text">Performance</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- Other code may be here -->
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">徐阿衡</span>
+  <a href="http://www.miitbeian.gov.cn/">粤ICP备17129486号</a>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'httpshuang0420githubio';
+      var disqus_identifier = '2017/12/04/论文笔记 - Memory Networks/';
+      var disqus_title = "论文笔记 - Memory Networks";
+      var disqus_url = 'http://www.shuang0420.cn/2017/12/04/论文笔记 - Memory Networks/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+</body>
+</html>
