@@ -104,7 +104,7 @@
 <meta property="og:image" content="http://images.shuang0420.cn/images/QA%20system%20-%20Question%20Generation/8.jpg">
 <meta property="og:image" content="http://images.shuang0420.cn/images/QA%20system%20-%20Question%20Generation/9.jpg">
 <meta property="og:image" content="http://images.shuang0420.cn/images/QA%20system%20-%20Question%20Generation/10.jpg">
-<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta property="og:updated_time" content="2022-03-13T08:21:40.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="QA system - Question Generation">
 <meta name="twitter:description" content="关于如何从给定文本中产生合适的问句。–持续更新中–">
@@ -422,7 +422,7 @@
 <img src="http://images.shuang0420.cn/images/QA%20system%20-%20Question%20Generation/2.jpg" class="ful-image" alt="2.jpg">
 <h3 id="Practice"><a href="#Practice" class="headerlink" title="Practice"></a>Practice</h3><p>实际项目中为了得到更快的速度，我们大大简化了这一流程，首先，忽略所有过长的句子(&gt;=50个单词)，其次，只选择 <strong>同位语(APPOSITION)、动词修饰短语(VERB_MODIFIER)、名词动词结构的短语(NP_VP)</strong> 三种类型的句子成分作为产生问句的 candidate。</p>
 <p>规则<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NP_VP = &quot;S &lt; (NP=np ?$PP=pp1 $.. (VP=vp &lt; (/VB.?/=tensed ?$.. SBAR=reason)))&quot;</div><div class="line">APPOSITION = &quot;NP !&lt; CC !&lt; CONJP &lt; (NP=np1 $.. (/,/ $.. (NP=app $.. /,/)))&quot;</div><div class="line">VERB_MODIFIER = &quot;NP=noun &gt; NP $.. VP=modifier&quot;</div></pre></td></tr></table></figure></p>
-<p>操作这些规则还是用 tregex，由于是 python，选择 Stanford coreNLP，具体见 <a href="http://www.shuang0420.com/2017/03/24/ParseTree操作若干-Tregex%20and%20Stanford%20CoreNLP/" target="_blank" rel="external">ParseTree操作若干-Tregex and Stanford CoreNLP</a>。</p>
+<p>操作这些规则还是用 tregex，由于是 python，选择 Stanford coreNLP，具体见 <a href="http://www.shuang0420.cn/2017/03/24/ParseTree操作若干-Tregex%20and%20Stanford%20CoreNLP/">ParseTree操作若干-Tregex and Stanford CoreNLP</a>。</p>
 <p>对标注好的部分进行重组，形成规范化的简单句子。以 NP_VP 规则为例，就是形成 NP + VP + PP1的句子。</p>
 <h2 id="Stage-2"><a href="#Stage-2" class="headerlink" title="Stage 2"></a>Stage 2</h2><p><strong>输入：</strong> 上一步产生的陈述句<br><strong>输出：</strong> 一个问句集合</p>
 <p>先来看一下流程图，下图描述了如何从给定文本产生一个问句，带*的表示特殊疑问句必须的步骤，一般疑问句不需要。<br><img src="http://images.shuang0420.cn/images/QA%20system%20-%20Question%20Generation/0.jpg" class="ful-image" alt="0.jpg"></p>

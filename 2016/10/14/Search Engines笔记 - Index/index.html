@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/Indri_term_diction.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/Indri_inverted.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/indri_compress.png">
-<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta property="og:updated_time" content="2022-03-13T08:21:40.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Search Engines笔记 - Index Construction">
 <meta name="twitter:description" content="CMU 11642 的课程笔记。这篇讲了搜索引擎中创建索引的主要原则、方法以及优化方案。">
@@ -533,7 +533,7 @@
 <li>Order by doc id</li>
 <li>Order by tf</li>
 </ul>
-<p><strong>How many terms are frequent enough to have a top-docs list?</strong><br>根据 <a href="http://www.shuang0420.com/2016/07/10/Tfidf总结笔记/" target="_blank" rel="external">Zipf’s Law</a><br>$$Rank * Frequency = A * N$$</p>
+<p><strong>How many terms are frequent enough to have a top-docs list?</strong><br>根据 <a href="http://www.shuang0420.cn/2016/07/10/Tfidf总结笔记/">Zipf’s Law</a><br>$$Rank * Frequency = A * N$$</p>
 <p>所以 ctf&gt;=800 的 term 大概占比 ${A*N/800 \over A * N}=1/800=0.125%$</p>
 <p><strong>why 800?</strong><br>假设一个 inverted list 有5个 integer，没压缩就有 16 bytes，30%压缩比，压缩了有 5 bytes，linux filesystem page size是 4096 bytes, 所以有4096/5=819条 inverted list 能 fit in one page</p>
 <p>假设 vocabulary 有 1,000,000 个 term，那么大概只有 1,250 个 top-docs lists，每个 list 大概 4-8KB，一共占 5-10 MB。</p>

@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="BiDAF，相对复杂 attention 机制。">
 <meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Bi-Directional%20Attention%20Flow%20for%20Machine%20Comprehension/bidaf.png">
-<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta property="og:updated_time" content="2022-03-13T08:21:40.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记 - Bi-Directional Attention Flow for Machine Comprehension">
 <meta name="twitter:description" content="BiDAF，相对复杂 attention 机制。">
@@ -383,7 +383,7 @@
 <ol>
 <li><strong>Attention Reader。</strong>通过动态 attention 机制从文本中<strong>提取相关信息（context vector）</strong>，再依据该信息给出预测结果。<br>代表论文：Bahdanau et al. 2015, Hermann et al. 2015, Chen et al. 2016, Wang &amp; Jiang 2016</li>
 <li><strong>Attention-Sum Reader。</strong>只计算一次 attention weights，然后直接喂给输出层做最后的预测，也就是利用 attention 机制直接获取文本中各位置作为答案的概率，和 pointer network 类似的思想，效果很依赖对 query 的表示<br>代表论文：Kadlec et al. 2016, Cui et al. 2016</li>
-<li><strong>Multi-hop Attention</strong>。计算多次 attention<br>代表论文：<a href="http://www.shuang0420.com/2017/12/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/" target="_blank" rel="external">Memory Network(Weston et al., 2015)</a>，Sordoni et al., 2016; Dhingra et al., 2016., Shen et al. 2016.</li>
+<li><strong>Multi-hop Attention</strong>。计算多次 attention<br>代表论文：<a href="http://www.shuang0420.cn/2017/12/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Memory%20Networks/">Memory Network(Weston et al., 2015)</a>，Sordoni et al., 2016; Dhingra et al., 2016., Shen et al. 2016.</li>
 </ol>
 <p>在此基础上，作者对注意力机制做出了改进，具体 BiDAF attention 的特点如下：</p>
 <ol>

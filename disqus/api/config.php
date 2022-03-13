@@ -30,7 +30,7 @@ define('DISQUS_PUBKEY', 'E8Uh5l5fHZ6gD8U3KycjAIAk46f68Zw7C6eW8WSjZvCLXebZ7p0r1yr
 define('DISQUS_USERNAME', 'Shuang0420');
 define('DISQUS_EMAIL', '252618408@qq.com');
 define('DISQUS_PASSWORD', 'zhuxianlian1');
-define('DISQUS_WEBSITE', 'http://www.shuang0420.com');
+define('DISQUS_WEBSITE', 'http://www.shuang0420.cn');
 define('DISQUS_SHORTNAME', 'httpshuang0420githubio');
 define('DISQUS_APPROVED', true);
 

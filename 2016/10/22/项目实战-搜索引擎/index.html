@@ -95,7 +95,7 @@
 <meta property="og:description" content="CMU 11642 的 project。">
 <meta property="og:image" content="http://images.shuang0420.cn/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg">
 <meta property="og:image" content="http://images.shuang0420.cn/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/indri_operator.jpg">
-<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta property="og:updated_time" content="2022-03-13T08:21:40.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目实战--搜索引擎">
 <meta name="twitter:description" content="CMU 11642 的 project。">
@@ -394,7 +394,7 @@
 <li>对 query term 进行 stemming 和 stopwords 处理</li>
 </ul>
 </li>
-<li>评估 query，用 <a href="http://www.shuang0420.com/2016/09/11/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Query%20Processing/" target="_blank" rel="external">DAAT 策略</a>，对 leaf node 的 evaluation 就是如果这个 term 的 inverted list 存在，就获取它，注意有些 query term 是没有 inverted list 的。</li>
+<li>评估 query，用 <a href="http://www.shuang0420.cn/2016/09/11/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Query%20Processing/">DAAT 策略</a>，对 leaf node 的 evaluation 就是如果这个 term 的 inverted list 存在，就获取它，注意有些 query term 是没有 inverted list 的。</li>
 <li>对所有文档按文档分数降序排序，如果分数相同，按 external document id 升序排序。</li>
 </ul>
 <img src="http://images.shuang0420.cn/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg" class="ful-image" alt="%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/query_tree.jpg">
@@ -408,10 +408,10 @@
 <li>#NEAR/n 如果每对相邻两个 query term 之间的距离小于 n，才算 match，在 ranked boolean retrieval 中分数为 match 的次数。（For example, #NEAR/2(a b c) matches “a b c”, “a x b c”, “a b x c”, and “a x b x c”, but not “a x x b c”）。</li>
 <li>#WINDOW/n 和 #NEAR/n 类似，但是不要求顺序。</li>
 </ul>
-<p><a href="http://www.shuang0420.com/2016/09/06/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Exact-match%20retrieval/" target="_blank" rel="external">Search Engines笔记 - Exact-match retrieval</a></p>
+<p><a href="http://www.shuang0420.cn/2016/09/06/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Exact-match%20retrieval/">Search Engines笔记 - Exact-match retrieval</a></p>
 <h3 id="Unranked-boolean-retrieval"><a href="#Unranked-boolean-retrieval" class="headerlink" title="Unranked boolean retrieval"></a>Unranked boolean retrieval</h3><p>对每个文档来说，如果 match，分数为 1，不 match 就为 0。</p>
 <h3 id="Ranked-boolean-retrieval"><a href="#Ranked-boolean-retrieval" class="headerlink" title="Ranked boolean retrieval"></a>Ranked boolean retrieval</h3><p>每个文档的分数是 query term 在该文档中的 term frequency。</p>
-<h2 id="Best-match"><a href="#Best-match" class="headerlink" title="Best-match"></a>Best-match</h2><p><a href="http://www.shuang0420.com/2016/09/30/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Best-Match/" target="_blank" rel="external">Search Engines笔记 - Best-Match</a></p>
+<h2 id="Best-match"><a href="#Best-match" class="headerlink" title="Best-match"></a>Best-match</h2><p><a href="http://www.shuang0420.cn/2016/09/30/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Best-Match/">Search Engines笔记 - Best-Match</a></p>
 <h3 id="BM25"><a href="#BM25" class="headerlink" title="BM25"></a>BM25</h3><p>需要支持的 Operator 有 #SYN, #NEAR/n, #SUM</p>
 <h3 id="Indri"><a href="#Indri" class="headerlink" title="Indri"></a>Indri</h3><p>需要支持的 Operator 有 #AND(Indri #and), #WAND, #WSUM, #WINDOW。默认的 operator 是 #AND，注意这里的 #AND 和 boolean retrieval 中的算法不一样。<br><img src="http://images.shuang0420.cn/images/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/indri_operator.jpg" class="ful-image" alt="%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/indri_operator.jpg"></p>
 <h1 id="Query-expansion"><a href="#Query-expansion" class="headerlink" title="Query expansion"></a>Query expansion</h1><p>基本逻辑是把 initial query 当做 classifier，用它来 label 部分 data，得到 top-ranked documents，然后用 labeled data 来产生更优的 classifier。基本过程：</p>
@@ -421,10 +421,10 @@
 <li>应用 relevance feedback algorithm 选取 term 和 term weight</li>
 <li>组成新的 query 来检索文档</li>
 </ul>
-<p>见 <a href="http://www.shuang0420.com/2016/10/10/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Pseudo%20Relevance%20Feedback/" target="_blank" rel="external">Search Engines笔记 - Pseudo Relevance Feedback</a></p>
-<h1 id="Diversification"><a href="#Diversification" class="headerlink" title="Diversification"></a>Diversification</h1><p>具体见 <a href="http://www.shuang0420.com/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/" target="_blank" rel="external">Search Engines笔记 - Diversity
+<p>见 <a href="http://www.shuang0420.cn/2016/10/10/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Pseudo%20Relevance%20Feedback/">Search Engines笔记 - Pseudo Relevance Feedback</a></p>
+<h1 id="Diversification"><a href="#Diversification" class="headerlink" title="Diversification"></a>Diversification</h1><p>具体见 <a href="http://www.shuang0420.cn/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/">Search Engines笔记 - Diversity
 </a></p>
-<p><a href="http://www.shuang0420.com/2016/10/10/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Pseudo%20Relevance%20Feedback/" target="_blank" rel="external">Search Engines笔记 - Pseudo Relevance Feedback</a></p>
+<p><a href="http://www.shuang0420.cn/2016/10/10/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Pseudo%20Relevance%20Feedback/">Search Engines笔记 - Pseudo Relevance Feedback</a></p>
 
       
     </div>

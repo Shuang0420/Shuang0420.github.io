@@ -95,7 +95,7 @@
 <meta property="og:description" content="介绍一下经典的 HRED 和 VHRED。">
 <meta property="og:image" content="http://images.shuang0420.cn/images/%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%9E%8B/HRED.png">
 <meta property="og:image" content="http://images.shuang0420.cn/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20HRED%20%E4%B8%8E%20VHRED/VHRED.png">
-<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta property="og:updated_time" content="2022-03-13T08:21:40.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文笔记 - HRED 与 VHRED">
 <meta name="twitter:description" content="介绍一下经典的 HRED 和 VHRED。">
@@ -385,7 +385,7 @@
 <li><a href="https://arxiv.org/abs/1605.06069" target="_blank" rel="external">A Hierarchical Latent Variable Encoder-Decoder Model for Generating Dialogues</a></li>
 <li><a href="https://arxiv.org/abs/1511.06349" target="_blank" rel="external">Generating Sentences From a Continuous Spaces motivation</a></li>
 </ul>
-<h1 id="HRED"><a href="#HRED" class="headerlink" title="HRED"></a>HRED</h1><p>HRED 在之前<a href="http://www.shuang0420.com/2017/10/05/经典的端到端聊天模型/" target="_blank" rel="external">经典的端到端聊天模型</a> 提到过，这里拎出来再具体分析一下。</p>
+<h1 id="HRED"><a href="#HRED" class="headerlink" title="HRED"></a>HRED</h1><p>HRED 在之前<a href="http://www.shuang0420.cn/2017/10/05/经典的端到端聊天模型/">经典的端到端聊天模型</a> 提到过，这里拎出来再具体分析一下。</p>
 <p>传统 Seq2Seq 在对话任务上对上下文依赖考虑有限，<a href="https://arxiv.org/abs/1507.04808" target="_blank" rel="external">Building end-to-end dialogue systems using generative hierarchical neural network models</a> 论文提出了一种 <strong>分层 RNN 结构 -  HRED（Hierarchical Recurrent Encoder-Decoder）</strong>，能同时对句子和对话语境（上下文）进行建模，来实现多轮对话。</p>
 <p>先来看一下如果不使用分层 RNN，在传统 Seq2Seq 模型基础上，如果我们想得到 context 信息应该怎么做。 </p>
 <p>第一个想法是将上一个句子的 final state 作为下一个句子的 initial state，然后将句子信息不断传递下去，这样的话 context vector 里的信息会在 propagation 的过程中会被新句子的词语逐步稀释，对信息/梯度的传播极不友好。</p>

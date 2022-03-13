@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-23%20%E4%B8%8B%E5%8D%888.51.31.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-23%20%E4%B8%8B%E5%8D%889.46.38.png">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-08%20%E4%B8%8A%E5%8D%889.53.06.png">
-<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta property="og:updated_time" content="2022-03-13T08:21:40.693Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="让百度、google收录博客">
 <meta name="twitter:description" content="github 封了百度爬虫，因此百度索引不到我们在 github 上搭的博客（想知道自己的博客是否被索引可以这样查询，在搜索引擎中输入：site: 博客域名）解决github屏蔽百度爬虫的思路就是“迁出”我们的博客，让百度爬虫不直接访问github就行了。">
@@ -401,9 +401,9 @@ deploy:
 <h3 id="配置Coding的Page服务"><a href="#配置Coding的Page服务" class="headerlink" title="配置Coding的Page服务"></a>配置Coding的Page服务</h3><p>进入你在Coding上的项目，点击左侧的代码可以看到Coding Pages服务。输入分支为master，点击开启服务。在自定义域名处填上你的网站域名。<br>如图<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-23%20%E4%B8%8B%E5%8D%888.51.31.png" alt=""><br>&lt;–&gt;</p>
 <h2 id="配置DNS"><a href="#配置DNS" class="headerlink" title="配置DNS"></a>配置DNS</h2><p>在<a href="https://support.dnspod.cn/Kb/showarticle/?qtype=%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B&amp;tsid=42" target="_blank" rel="external">Godaddy注册商域名修改DNS地址</a>。登录<a href="https://sg.godaddy.com/zh/" target="_blank" rel="external">godaddy</a> 按 dnspod 要求更改 nameserver。</p>
 <p>在<a href="https://www.dnspod.cn" target="_blank" rel="external">dnspod</a>进行网站的 dns 设置。将国内线路设置为CNAME的 pages.coding.me。之后就可以打开自己的域名啦～</p>
-<p>github 也可以绑定域名。在本地网站根目录下的source文件夹下，新建一个文件名为CNAME的文件（无后缀名），填写你所绑定的域名地址，如 www.shuang0420.com，然后 generate &amp; deploy，就成功绑定域名啦。</p>
+<p>github 也可以绑定域名。在本地网站根目录下的source文件夹下，新建一个文件名为CNAME的文件（无后缀名），填写你所绑定的域名地址，如 www.shuang0420.cn，然后 generate &amp; deploy，就成功绑定域名啦。</p>
 <p>如图<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-06-23%20%E4%B8%8B%E5%8D%889.46.38.png" alt=""></p>
-<h2 id="让百度收录"><a href="#让百度收录" class="headerlink" title="让百度收录"></a>让百度收录</h2><p>用 <a href="http://zhanzhang.baidu.com" target="_blank" rel="external">百度站长工具</a> 的抓取诊断功能看是能进行抓取。<br>百度输入 site:www.shuang0420.com 检验。<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-08%20%E4%B8%8A%E5%8D%889.53.06.png" alt=""></p>
+<h2 id="让百度收录"><a href="#让百度收录" class="headerlink" title="让百度收录"></a>让百度收录</h2><p>用 <a href="http://zhanzhang.baidu.com" target="_blank" rel="external">百度站长工具</a> 的抓取诊断功能看是能进行抓取。<br>百度输入 site:www.shuang0420.cn 检验。<br><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-08%20%E4%B8%8A%E5%8D%889.53.06.png" alt=""></p>
 <h1 id="google-收录"><a href="#google-收录" class="headerlink" title="google 收录"></a>google 收录</h1><p>google 收录就比较简单。</p>
 <h2 id="添加站点并验证"><a href="#添加站点并验证" class="headerlink" title="添加站点并验证"></a>添加站点并验证</h2><p>用自己的google帐号登陆 <a href="https://www.google.com/webmasters/verification/home?hl=en" target="_blank" rel="external">Webmaster Central</a>，添加站点并验证。</p>
 <p>将验证文件放到 source 文件下，在站点配置文件中加入</p>

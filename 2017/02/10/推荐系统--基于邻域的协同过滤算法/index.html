@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%9F%BA%E4%BA%8E%E9%82%BB%E5%9F%9F%E7%9A%84%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4%E7%AE%97%E6%B3%95/t29.jpg">
 <meta property="og:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%9F%BA%E4%BA%8E%E9%82%BB%E5%9F%9F%E7%9A%84%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4%E7%AE%97%E6%B3%95/t210.jpg">
 <meta property="og:image" content="http://images.shuang0420.cn/images/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E5%9F%BA%E4%BA%8E%E9%82%BB%E5%9F%9F%E7%9A%84%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4%E7%AE%97%E6%B3%95/cfsummary.jpg">
-<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta property="og:updated_time" content="2022-03-13T08:21:40.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="推荐系统--基于邻域(neighborhood-based)的协同过滤算法">
 <meta name="twitter:description" content="主要介绍 基于用户的协同过滤算法(UserCF) 和 基于物品的协同过滤算法(ItemCF)。">
@@ -392,7 +392,7 @@
 
       
         <p>主要介绍 <strong>基于用户的协同过滤算法(UserCF)</strong> 和 <strong>基于物品的协同过滤算法(ItemCF)</strong>。<br><a id="more"></a></p>
-<p>基于邻域的算法是推荐系统中最基本的算法，主要分两大类，一类是基于用户的协同过滤算法，另一类是基于物品的协同过滤算法。协同过滤的本质其实是 KNN，我们要定义的是 <strong>什么是“最匹配”</strong>。下述的实验设计见 <a href="http://www.shuang0420.com/2017/02/08/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/" target="_blank" rel="external">推荐系统–用户行为和实验设计</a></p>
+<p>基于邻域的算法是推荐系统中最基本的算法，主要分两大类，一类是基于用户的协同过滤算法，另一类是基于物品的协同过滤算法。协同过滤的本质其实是 KNN，我们要定义的是 <strong>什么是“最匹配”</strong>。下述的实验设计见 <a href="http://www.shuang0420.cn/2017/02/08/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F--%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1/">推荐系统–用户行为和实验设计</a></p>
 <h1 id="基于用户的协同过滤算法-User-CF"><a href="#基于用户的协同过滤算法-User-CF" class="headerlink" title="基于用户的协同过滤算法(User CF)"></a>基于用户的协同过滤算法(User CF)</h1><p>当一个用户 A 需要个性化推荐时，先找到和他有相似兴趣的其它用户，然后把那些用户喜欢的、而用户 A 没有听说过的物品推荐给 A。强调 <strong>把和你有相似爱好的其他的用户的物品推荐给你</strong></p>
 <p><strong>过程：</strong></p>
 <ol>

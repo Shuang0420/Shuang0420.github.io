@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="徐阿衡">
 <meta property="og:description" content="5-7月的实习，总的来说主要做了三件事情，一是语料的补充，具体表现是通过编写分布式爬虫从各种渠道爬取相关语料，二是特征提取，这一阶段测试了各种模型，doc2vec, lda, LSI, RNN, CNN 等等，试图在 word2vec 词向量基础上，产生质量更高的 sentence embedding,这也是本篇的重点所在。三是新问题发现，主要是通过聚类算法的实验实现。难点在于用什么语料聚类以及如">
 <meta property="og:image" content="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-20%20%E4%B8%8B%E5%8D%884.30.27.png">
-<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta property="og:updated_time" content="2022-03-13T08:21:40.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实习总结之 sentence embedding">
 <meta name="twitter:description" content="5-7月的实习，总的来说主要做了三件事情，一是语料的补充，具体表现是通过编写分布式爬虫从各种渠道爬取相关语料，二是特征提取，这一阶段测试了各种模型，doc2vec, lda, LSI, RNN, CNN 等等，试图在 word2vec 词向量基础上，产生质量更高的 sentence embedding,这也是本篇的重点所在。三是新问题发现，主要是通过聚类算法的实验实现。难点在于用什么语料聚类以及如">
@@ -379,11 +379,11 @@
       
         <p>5-7月的实习，总的来说主要做了三件事情，一是语料的补充，具体表现是通过编写分布式爬虫从各种渠道爬取相关语料，二是特征提取，这一阶段测试了各种模型，doc2vec, lda, LSI, RNN, CNN 等等，试图在 word2vec 词向量基础上，产生质量更高的 sentence embedding,这也是本篇的重点所在。三是新问题发现，主要是通过聚类算法的实验实现。难点在于用什么语料聚类以及如何产生自动化标签。其他的工作也就是打打杂，处理、过滤、验证各种数据，产生训练集、测试集，以及做各种 demo 界面，比较简单。</p>
 <p>最终还是发现 doc2vec, lda 产生的 sentence embedding 质量太低，在充足并相关的语料下，用 word2vec 得到的词向量效果还是很不错的，sentence embedding 最终的产生还是通过 RNN。这篇重点是 CNN，因为这是我自己负责的，之后会上一篇 RNN 的版本。</p>
-<h1 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h1><p>基本介绍见 <a href="http://www.shuang0420.com/2017/01/20/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/" target="_blank" rel="external">卷积神经网络 CNN 笔记</a></p>
+<h1 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h1><p>基本介绍见 <a href="http://www.shuang0420.cn/2017/01/20/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%20CNN%20%E7%AC%94%E8%AE%B0/">卷积神经网络 CNN 笔记</a></p>
 <p>来源：Kim Y. Convolutional neural networks for sentence classification[J]. arXiv preprint arXiv:1408.5882, 2014.(<a href="http://www.aclweb.org/anthology/D14-1181" target="_blank" rel="external">http://www.aclweb.org/anthology/D14-1181</a>)</p>
 <p>达到了 94.5% 的准确率，并不如 RNN，因为 CNN 模型的 focus 通常是长文本而不是短句，这里的情景是短句 FAQ，这也是效果不如 RNN 的一个原因。</p>
 <p><img src="http://7xu83c.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-20%20%E4%B8%8B%E5%8D%884.30.27.png" alt=""></p>
-<p>CNN 一些入门介绍见 <a href="http://www.shuang0420.com/2016/06/20/TensorFlow%E5%AE%9E%E6%88%98-MNIST/" target="_blank" rel="external">CNN 及 TensorFlow 实战 MINST</a></p>
+<p>CNN 一些入门介绍见 <a href="http://www.shuang0420.cn/2016/06/20/TensorFlow%E5%AE%9E%E6%88%98-MNIST/">CNN 及 TensorFlow 实战 MINST</a></p>
 <h2 id="Why-CNN"><a href="#Why-CNN" class="headerlink" title="Why CNN"></a>Why CNN</h2><p>句子可以切分为很多词，词和词组合之后会产生局部语意，句子可以分成若干个有『局部语意』的小块。nlp 里面一个很重要的矛盾就是粒度和语意的矛盾。如果粒度过大，则太稀疏没法玩，粒度过小则意思就不对了。CNN 通过卷积，把每 k 个词组合之后的语意放在一起，得到更为准确的句向量。</p>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="数据格式"><a href="#数据格式" class="headerlink" title="数据格式"></a>数据格式</h3><p>论文提出的输入类型有以下四种：</p>
 <ul>

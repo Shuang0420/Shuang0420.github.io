@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/dIE%20METHOD.png">
 <meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE-2.png">
 <meta property="og:image" content="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/ROUGE%20EXAMPLE.png">
-<meta property="og:updated_time" content="2020-09-10T12:26:31.000Z">
+<meta property="og:updated_time" content="2022-03-13T08:21:21.279Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP 笔记 - Text Summarization">
 <meta name="twitter:description" content="Stanford Dan Jurafsky &amp;amp; Chris Manning: Natural Language Processing 课程笔记。文档/会议/邮件摘要，QA 系统回答 what/how 等复杂问题，都需要自动摘要技术。本篇主要讲基于查询的摘要。">
@@ -467,7 +467,7 @@
 <img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/query-focused%20multi-document%20summarization.png" class="ful-image" alt="query-focused%20multi-document%20summarization.png">
 <h3 id="Sentence-Simplification"><a href="#Sentence-Simplification" class="headerlink" title="Sentence Simplification"></a>Sentence Simplification</h3><p>首先简化句子，可以删除 <strong>同位语/定语从句/没有命名实体的介词短语/句子开头的状语</strong> 等</p>
 <img src="http://images.shuang0420.cn/images/NLP%20%E7%AC%94%E8%AE%B0%20-%20Text%20Summarization/Simplifying%20sentences.png" class="ful-image" alt="Simplifying%20sentences.png">
-<h3 id="Sentence-Extraction"><a href="#Sentence-Extraction" class="headerlink" title="Sentence Extraction"></a>Sentence Extraction</h3><h4 id="Maximal-Marginal-Relevance-MMR"><a href="#Maximal-Marginal-Relevance-MMR" class="headerlink" title="Maximal Marginal Relevance(MMR)"></a>Maximal Marginal Relevance(MMR)</h4><p>MMR 是一种从多个文档中进行选择的递归(iterative)方法，递归的从文档中选取最合适的句子插入到 summary/answer 中，两个指标是<strong>相关性(relevant)</strong>，以及 <strong>新颖度(novel)</strong>。这在<a href="http://www.shuang0420.com/2016/12/07/Search%20Engines笔记%20-%20Diversity/" target="_blank" rel="external">Search Engines笔记 - Diversity</a>也提到过。</p>
+<h3 id="Sentence-Extraction"><a href="#Sentence-Extraction" class="headerlink" title="Sentence Extraction"></a>Sentence Extraction</h3><h4 id="Maximal-Marginal-Relevance-MMR"><a href="#Maximal-Marginal-Relevance-MMR" class="headerlink" title="Maximal Marginal Relevance(MMR)"></a>Maximal Marginal Relevance(MMR)</h4><p>MMR 是一种从多个文档中进行选择的递归(iterative)方法，递归的从文档中选取最合适的句子插入到 summary/answer 中，两个指标是<strong>相关性(relevant)</strong>，以及 <strong>新颖度(novel)</strong>。这在<a href="http://www.shuang0420.cn/2016/12/07/Search%20Engines笔记%20-%20Diversity/">Search Engines笔记 - Diversity</a>也提到过。</p>
 <ul>
 <li><strong>Relevant</strong><br>与 query 最相关的句子，high cosine similarity to the query</li>
 <li><strong>Novel</strong><br>减少 summary/answer 的冗余程度，low cosine similariy to the summary<br>$\hat S_{MMR}=max s \in D \lambda sim(s,Q) - (1-\lambda)max s \in S sim(s,S)$</li>
