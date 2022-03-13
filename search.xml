@@ -1288,7 +1288,7 @@
     <entry>
       <title><![CDATA[99/100 天纪念日 - 第 1 期]]></title>
       <url>http://www.shuang0420.cn/2018/08/06/love99/</url>
-      <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
+      <content type="html"><![CDATA[<script src="/crypto-js.js"></script><script src="/mcommon.js"></script><h3 id="encrypt-message">Please enter the password to read the blog.</h3><link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <div id="security"> <div> <div class="input-group"> <input type="text" class="form-control" aria-label="Enter the password." id="pass"/> <div class="input-group-btn"> <button type="button" class="btn btn-default" onclick="decryptAES()">Decrypt</button> </div> </div> </div> </div> <div id="encrypt-blog" style="display:none"> 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 </div>]]></content>
       
         
         <tags>
@@ -10167,284 +10167,6 @@ Weights for each of 10*10*5 neurons: 5*5*3=75
     </entry>
     
     <entry>
-      <title><![CDATA[Search Engines笔记 - Federated Search]]></title>
-      <url>http://www.shuang0420.cn/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/</url>
-      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。垂直数据库能获得更准确的搜索结果。那么对一个 query，我们可以放到合适的多个垂直数据库里检索，然后合并结果呈现给用户。<br><a id="more"></a><br>简单解释就是结果来自多个数据库。用图片表示<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs1.jpg" class="ful-image" alt="fs1.jpg"></p>
-<p>当然，大多数数据库与我们的需求并不相关，所以可以略过。<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs2.jpg" class="ful-image" alt="fs2.jpg"></p>
-<p>Search portals 可以有不同的策略来处理不同类型的请求</p>
-<ul>
-<li>搜索非结构化数据<ul>
-<li>将初始查询映射为对应的结构化查询</li>
-<li>将查询定向到特定的搜索引擎<br>» 汽车，音乐，图片，视频…</li>
-</ul>
-</li>
-<li>搜索结构化数据（数据库） - 例如，邮政编码，股票代码…<ul>
-<li>调用服务或进程<ul>
-<li>如，计算器，股票价格，航班跟踪…</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs3.jpg" class="ful-image" alt="fs3.jpg">
-<h1 id="Constrains"><a href="#Constrains" class="headerlink" title="Constrains"></a>Constrains</h1><p><strong>不合作环境</strong></p>
-<ul>
-<li>没有特别的 federated search 的支持</li>
-<li>资源不受信任</li>
-</ul>
-<p><strong>合作环境</strong></p>
-<ul>
-<li>资源支持公共协议/ API</li>
-<li>资源是受信任的，能够提供准确的信息</li>
-</ul>
-<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
-<li>Resource representation(资源表达)。即获取每个数据库的信息</li>
-<li>Resource selection(资源选择)。即对 resource/databases 进行排序，对每个查询选择少量资源进行检索。</li>
-<li>Result-merging(结果合并)。即对来自不同搜索引擎／数据库对结果进行 merge，产生最终展现给用户的 ranking list。</li>
-</ol>
-<p>其中 1 是在线下完成的(offline)，2、3 是在查询时完成的。</p>
-<h1 id="Resource-representation"><a href="#Resource-representation" class="headerlink" title="Resource representation"></a>Resource representation</h1><p><strong>如何表达资源的内容？</strong></p>
-<ol>
-<li>Bag of words: terms and frequencies</li>
-<li>Sample queries: Queries that this resource is good for</li>
-<li>Sample documents: Typical documents from this resource</li>
-</ol>
-<p>一个例子解释<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/rr1.jpg" class="ful-image" alt="rr1.jpg"></p>
-<p><strong>资源的内容信息如何获取</strong></p>
-<ul>
-<li>通过 protocol 向资源发出请求</li>
-<li>对 query log 请求相关性评价 (relevance assessments)</li>
-<li>Query-based sampling: 提交查询，查看返回的内容</li>
-</ul>
-<p>下面主要介绍第三种 <strong>query-based sampling</strong></p>
-<h2 id="Query-based-sampling"><a href="#Query-based-sampling" class="headerlink" title="Query-based sampling"></a>Query-based sampling</h2><p>过程</p>
-<ol>
-<li>选择一个初始查询</li>
-<li>重复 N 次（例如，N = 100）<ul>
-<li>向搜索引擎提交查询</li>
-<li>下载一些结果（例如，2-4 条）</li>
-<li>得到并更新 representation (words and frequencies)</li>
-<li>从新的 representation 中随机选择 query term(s)形成新的查询</li>
-</ul>
-</li>
-</ol>
-<p><strong>为什么可行?</strong><br>因为词汇分布服从 Heaps’ Law</p>
-<p><strong>如果第一条查询非常糟糕怎么办？</strong><br>如在一个医学领域的语料库里找 car，可能并没有结果(如果是 boolean ranking 的话)，那么就重新选择一个查询？</p>
-<p><strong>抽样的大小有什么影响</strong><br>一条 query 取多少文档呢？实验决定吧，2-4 篇应该就够了</p>
-<p><strong>在合作环境下随机采样</strong><br>只比 query-based sampling 好一点点</p>
-<h1 id="Resource-selection"><a href="#Resource-selection" class="headerlink" title="Resource selection"></a>Resource selection</h1><p>两大类方法，无监督学习通常是通过对 P(ri|q) 排序来解决，监督算法通常通过分类解决。</p>
-<h2 id="Unsupervised-Resource-Selection"><a href="#Unsupervised-Resource-Selection" class="headerlink" title="Unsupervised Resource Selection"></a>Unsupervised Resource Selection</h2><p><strong>Task:</strong> 给定查询 q，决定要搜索的资源(resources)</p>
-<p>无监督方法将这个问题看作 resource ranking 的问题。</p>
-<ol>
-<li>估计 p(ri|q)</li>
-<li>选择前 k 个资源<br>– 通常 k 是给出的<br>– 动态设置 k 是一个开放的研究问题</li>
-</ol>
-<p>两种具体方法，content-based methods 和 query-based methods</p>
-<ul>
-<li>Content-based methods(基于内容的方法)<br>– 对各个资源下 query 和 content 的相似度 $S(q,c)$ 来对资源进行排序<br>– 有不同的方法来实现，区分点在于：<br>» Representation type: bag of words vs. sampled documents<br>» Ranking algorithm: e.g., CORI</li>
-<li>Query-based methods(基于查询的方法)<br>– 对 query，搜索各个资源下的 query log，找出 match 的 query，然后求当前 query 和历史 query 的相似度 $S(q,q_{past})$，对资源进行排序<br>– 之前用的并不多，因为缺少好的 query log</li>
-</ul>
-<h3 id="Content-based-methods"><a href="#Content-based-methods" class="headerlink" title="Content-based methods"></a>Content-based methods</h3><h4 id="Bag-of-words-method"><a href="#Bag-of-words-method" class="headerlink" title="Bag-of-words method"></a>Bag-of-words method</h4><p>基本思想是 <strong>将每个资源视为一个（非常大的）词袋(bag of words)</strong>，排序算法可以用 KL divergence 或者 query likelihood 等方法。<br>eg. CORI<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/cori.jpg" class="ful-image" alt="cori.jpg"></p>
-<p>然而，Bag of words methods (e.g., CORI)是根据 resources 和 query 的相似度进行的排序，这并不是我们的初衷。这种方法 <strong>偏好具有较高 p(qi|Rj) 的资源</strong>，通常意义上也就是 homogeneous (通常很小)的资源。这并不是我们需要的，我们想要的是，选择能够返回更多相关文档的资源，sampled document method 更能达到这个目标。</p>
-<p><strong>Bag of words (“large documents”) 方法的特点</strong></p>
-<ul>
-<li>大文档更好的代表了 resource representation</li>
-<li>偏好具有较大比例相关内容的资源<br>– i.e., small or homogeneous resources</li>
-<li>非常有效，很有竞争力</li>
-</ul>
-<h4 id="Sample-documents-method"><a href="#Sample-documents-method" class="headerlink" title="Sample documents method"></a>Sample documents method</h4><p><strong>基本思想：</strong> 对每个资源采样然后合并得到一个 centralized index，记录每个文档来自哪个 resource。<br>eg. ReDDE<br>给定一个查询</p>
-<ol>
-<li>搜索 centralized sample index 得到相关文档</li>
-<li>取前 T 的文档</li>
-<li>检查哪些资源提供了这些相关文档</li>
-<li>估计每个资源中相关文档的数量<br>• 计算资源 i 中高于阈值 T 的文档数量 n<br>• n * resource_size / sample_size</li>
-</ol>
-<p>ReDDE 可以看作是 sample-based voting method，每个 top-ranked document 可以看作是对它属于的那个资源的一个投票。</p>
-<p><strong>特点：</strong></p>
-<ul>
-<li>高召回率: 选择包含更多相关文档的资源</li>
-<li>高准确率: 选择能够返回更多的出现在合并结果集 top T 的文档的资源</li>
-<li>有很多算法的变种<br>– 来自更可靠/权威的资源的 sample 获得更多的投票<br>– 更相关的 sample 获得更多的投票</li>
-</ul>
-<h4 id="CORI-vs-ReDDE"><a href="#CORI-vs-ReDDE" class="headerlink" title="CORI vs ReDDE"></a>CORI vs ReDDE</h4><ul>
-<li>ReDDE 相对而言更加准确<br>– 通常效果更好，几乎不会有更糟的情况</li>
-<li>当各个 collection size 的分布是 skewed 时，ReDDE 的性能优于 CORI<br>– CORI 偏向小集合。他们更可能是同质的，它错过了大型，异质的 collections<br>– ReDDE 对大型 collection 的偏见没那么强</li>
-<li>CORI 比 ReDDE 更有效<br>– 一个资源一个文档 vs. 一个资源多个文档</li>
-</ul>
-<h2 id="Supervised-Resource-Selection"><a href="#Supervised-Resource-Selection" class="headerlink" title="Supervised Resource Selection"></a>Supervised Resource Selection</h2><p>当我们有可用的训练数据时，就可以进行有监督的资源选择</p>
-<ul>
-<li>利用广泛的特征</li>
-<li>将任务框架化为分类问题</li>
-<li>让机器学习算法学习如何给不同的特征分配权重</li>
-</ul>
-<p><strong>Main issues</strong></p>
-<ul>
-<li>特征工程</li>
-<li>获取训练数据</li>
-<li>确定要选择的资源数</li>
-</ul>
-<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p><strong>Task:</strong> 给定一个查询，选择一个或更多的 verticals</p>
-<p>将问题定义为一个 “one-vs-all” 的分类任务</p>
-<ul>
-<li>对每个 vertical 都训练一个分类器</li>
-<li>对 “no vertical” (web only) 也训练一个分类器</li>
-<li>E.g., Arguello, et al (2009) 用了逻辑回归模型</li>
-</ul>
-<p><strong>典型的选择策略</strong></p>
-<ul>
-<li>选择一个具有最高置信度(confidence score)的分类器</li>
-<li>选择 n 个最好的分类器</li>
-<li>选择所有置信度分数高于 threshold 的分类器</li>
-</ul>
-<h3 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h3><p><strong>Query features</strong></p>
-<ul>
-<li>Boolean: keywords and regular expressions<br>– E.g., “weather”, “news”, “videos”, …</li>
-<li>Geographic: Probabilities associated with geographic entities<br>– E.g., “Pittsburgh pizza”</li>
-<li>Category: query’s affinity to a set of topic categories<pre><code>– E.g., “Cancun vacations”
-</code></pre></li>
-</ul>
-<p><strong>Corpus Features</strong><br>ReDDE 是非常流行的资源排序算法</p>
-<p><strong>Clarity (Cronen-Townsend, et al., 2002)</strong><br>Clarity 用来预测给定语料库上的查询的有效性，本质上是 top-ranked 文档和完整集合之间的 KL divergence，如果排名靠前的文档看起来像是 collection 的 random sample，搜索结果将会很差</p>
-<p><strong>Query Log Features</strong></p>
-<ul>
-<li>人工评估/点击率</li>
-</ul>
-<p><strong>qlog feature</strong></p>
-<ul>
-<li>用查询日志中的 query 来构建语言模型 v</li>
-<li>用 query likelihood 来建模 $P(q|v)=\prod_t^q P(t|v)$</li>
-<li>p(t | v) is a smoothed MLE</li>
-</ul>
-<p><strong>Soft.ReDDE feature:</strong></p>
-<ul>
-<li>用查询日志中的 query 来构建语言模型 v</li>
-<li>用 query 对外部的 collection 检索<br>– E.g., wikipedia</li>
-<li>选择前 n 个文档</li>
-<li>文档 di 的投票是 KLD (di || v)<br>– 与查询日志相似的文档具有更高的投票</li>
-</ul>
-<h1 id="Result-merging"><a href="#Result-merging" class="headerlink" title="Result merging"></a>Result merging</h1><p><strong>主要问题：</strong><br><strong>idf</strong><br>同一个 term，在不同数据库的 idf 不同怎么办？</p>
-<p><strong>scores</strong><br>不同数据库的 doc score 不是可比的怎么办？</p>
-<p><strong>＝&gt; Map resource-specific scores to resource-neutral scores</strong></p>
-<p><strong>Result merging</strong></p>
-<ul>
-<li>用所有的 sampled documents 创建一个 index (offline)</li>
-<li>从选定的资源里检索文档<br>– 因为资源并不提供文档分数，所以对每个文档计算 sim (q, d)<br>– 利用 index 的 corpus statistics 来计算每个文档的 authority score</li>
-<li>score(d) = f ( sim (q, d), authority (d) )</li>
-</ul>
-<h2 id="Semi-Supervised-Learning"><a href="#Semi-Supervised-Learning" class="headerlink" title="Semi-Supervised Learning"></a>Semi-Supervised Learning</h2><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss.jpg" class="ful-image" alt="ss.jpg">
-<p>由资源 i 返回的一些文档可能同时出现在 sample index 里<br>对这些文档我们有两个分数</p>
-<ul>
-<li>Sample index (resource neutral) score</li>
-<li>Resource i (resource-specific) score<br>这就是我们用来学习 f (resource-specific) = resource-neutral 的训练数据</li>
-</ul>
-<p>对这个所需的 “normalization” 用线性函数进行建模，因为线性模型可以利用少量的数据进行训练，而且 Ad-hoc CORI 的合并就是线性的<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss2.jpg" class="ful-image" alt="ss2.jpg"></p>
-<p>使用线性回归(linear regression)推导出权重</p>
-<ul>
-<li>f（resource-specific score）= a×dRi，j + b = resource-neutral score</li>
-<li>每个(query, resource) pair 对应不同的函数</li>
-</ul>
-<p><strong>它有效么?</strong><br>目前为止是最好的选择，因为 mapping 是 query-specific 和 resource-specific 的。</p>
-<p><strong>有没有足够的训练数据?</strong><br>通常有，因为 resource selection 和 sample index 可以用相同的文档。如果没有，下载 1-3 篇文档来产生训练数据。</p>
-<h1 id="Large-Scale-Search-Architecture"><a href="#Large-Scale-Search-Architecture" class="headerlink" title="Large-Scale Search Architecture"></a>Large-Scale Search Architecture</h1><p>之前讲过 large-scale search architecture 的相关内容。我们可以把数据集分为两层 <strong>高价值</strong> 和 <strong>低价值</strong>，然后将每一层进行分区(shards)，再将分区分配给计算机。</p>
-<p>事实上我们并不需要对每个查询都检索每一个分区，这样做成本很高，为什么不直接搜索最好/最合适的分区呢？</p>
-<p>通常带来的结果是：</p>
-<ul>
-<li>高准确率 (尤其是 top ranks)</li>
-<li>低召回率 (可能会错过许多有用的文档)<br>– 只搜索了少量资源，这也是广泛应用的障碍</li>
-</ul>
-<p><strong>所以分为两步:</strong></p>
-<ol>
-<li>资源定义(Resource definition)<ul>
-<li>对文档分区</li>
-</ul>
-</li>
-<li>资源选择(Resource selection)<ul>
-<li>对特定 query 选择要搜索的分区</li>
-</ul>
-</li>
-</ol>
-<p>下面进行详细的介绍。</p>
-<h2 id="Resource-definition"><a href="#Resource-definition" class="headerlink" title="Resource definition"></a>Resource definition</h2><p><strong>Goal:</strong> 搜索更少的分区得到更高的 recall</p>
-<p><strong>Requirement:</strong><br>对于可能提交的任何 query，大多数的相关文档必须出现在同一个分区中</p>
-<p><strong>How:</strong><br>把 closely-associated documents 也就是相似（相同主题）的文档归到同一个分区。</p>
-<p><strong>Hypothesis:</strong> Closely-associated ≈ topically-related &amp; Each shard covers one topic/subject</p>
-<p><strong>对给定的语料库，应该使用哪些 topics/subjects?</strong></p>
-<ul>
-<li>人工开发类别? – LCSH, DMOZ, Reuters, …</li>
-<li>自动学习 corpus-specific topics? – Clustering, LDA, PLSA, …</li>
-</ul>
-<p>我们想要一个可以应用于任何语料库的解决方案，因此，需要能自动学习基于语料库的特定的主题。许多算法能产生语料库特定的“主题”：</p>
-<ul>
-<li>聚类: E.g., k-means clustering</li>
-<li>主题模型: E.g., Latent Dirichlet Allocation (LDA)</li>
-</ul>
-<p>当然我们也要保证解决方案必须对 large collections 是有效的：</p>
-<ul>
-<li>从 collection 的一个随机样本里创建主题</li>
-<li>将其余文档分配给最相似的主题</li>
-</ul>
-<h2 id="Resource-selection-1"><a href="#Resource-selection-1" class="headerlink" title="Resource selection"></a>Resource selection</h2><p><strong>Goal:</strong> 给定查询，选择最好的分区</p>
-<p><strong>两类重要的资源选择算法:</strong></p>
-<ul>
-<li>Model-based: CORI, CRCS, Taily, …</li>
-<li>Sample-based: ReDDE, SUSHI, Rank-S, …</li>
-</ul>
-<p>有很多好的算法</p>
-<ul>
-<li>Sample-based 的算法被认为是最有效的</li>
-<li>在初始工作中常常使用 ReDDE 变种</li>
-<li>Taily 和 Rank-S 也经常被研究/考虑</li>
-</ul>
-<p><strong>对每个分区采样:</strong><br>将样本存储到 sample index 里 =&gt; offline</p>
-<p><strong>给定查询</strong></p>
-<ul>
-<li>搜索 sample index，得到 top documents</li>
-<li>Top documents 对它们所在的分区投票</li>
-<li>将 query 发送到得到最多投票的分区<br>=&gt; online</li>
-</ul>
-<h2 id="Cost"><a href="#Cost" class="headerlink" title="Cost"></a>Cost</h2><p>$C_{Total}$:</p>
-<ul>
-<li>处理 inverted list 的数量</li>
-<li>用于资源选择</li>
-<li>用于分区选择</li>
-<li>I/O 和计算成本</li>
-</ul>
-<p>Selective search 分为两步：</p>
-<ul>
-<li>选择要搜索的分区（resource selection）</li>
-<li>搜索所选的分区</li>
-</ul>
-<p>ReDDE 具有更高的计算成本</p>
-<p><strong>Key techniques</strong></p>
-<ol>
-<li>Resource definition for selective search<br>– How to partition a large corpus effectively</li>
-<li>Resource representation<br>– How to represent the contents of each resource<br>– Vocabulary-based, sample-documents-based, feature-based</li>
-<li>Resource selection<br>– How to select the right resources for a particular query</li>
-</ol>
-]]></content>
-      
-        <categories>
-            
-            <category> NLP </category>
-            
-            <category> Search Engines </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> NLP </tag>
-            
-            <tag> Search Engines </tag>
-            
-            <tag> 信息检索 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Search Engines笔记 - Diversity]]></title>
       <url>http://www.shuang0420.cn/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Diversity/</url>
       <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。一个 query 可能表现了不同的信息需求，之前的相关性模型可能带来的结果是大多文档只能满足同一个信息需求，所以有些用户满意了，有些 user 抓狂了。我们希望检索到的 document 是能够 diverse 的，这样的话可以尽可能的满足不同用户的需求。这一章就讲了怎么实现 diversity。<br><a id="more"></a></p>
@@ -10734,6 +10456,284 @@ Weights for each of 10*10*5 neurons: 5*5*3=75
             <tag> 信息检索 </tag>
             
             <tag> 多样化 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Search Engines笔记 - Federated Search]]></title>
+      <url>http://www.shuang0420.cn/2016/12/07/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/</url>
+      <content type="html"><![CDATA[<p>CMU 11642 的课程笔记。垂直数据库能获得更准确的搜索结果。那么对一个 query，我们可以放到合适的多个垂直数据库里检索，然后合并结果呈现给用户。<br><a id="more"></a><br>简单解释就是结果来自多个数据库。用图片表示<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs1.jpg" class="ful-image" alt="fs1.jpg"></p>
+<p>当然，大多数数据库与我们的需求并不相关，所以可以略过。<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs2.jpg" class="ful-image" alt="fs2.jpg"></p>
+<p>Search portals 可以有不同的策略来处理不同类型的请求</p>
+<ul>
+<li>搜索非结构化数据<ul>
+<li>将初始查询映射为对应的结构化查询</li>
+<li>将查询定向到特定的搜索引擎<br>» 汽车，音乐，图片，视频…</li>
+</ul>
+</li>
+<li>搜索结构化数据（数据库） - 例如，邮政编码，股票代码…<ul>
+<li>调用服务或进程<ul>
+<li>如，计算器，股票价格，航班跟踪…</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/fs3.jpg" class="ful-image" alt="fs3.jpg">
+<h1 id="Constrains"><a href="#Constrains" class="headerlink" title="Constrains"></a>Constrains</h1><p><strong>不合作环境</strong></p>
+<ul>
+<li>没有特别的 federated search 的支持</li>
+<li>资源不受信任</li>
+</ul>
+<p><strong>合作环境</strong></p>
+<ul>
+<li>资源支持公共协议/ API</li>
+<li>资源是受信任的，能够提供准确的信息</li>
+</ul>
+<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
+<li>Resource representation(资源表达)。即获取每个数据库的信息</li>
+<li>Resource selection(资源选择)。即对 resource/databases 进行排序，对每个查询选择少量资源进行检索。</li>
+<li>Result-merging(结果合并)。即对来自不同搜索引擎／数据库对结果进行 merge，产生最终展现给用户的 ranking list。</li>
+</ol>
+<p>其中 1 是在线下完成的(offline)，2、3 是在查询时完成的。</p>
+<h1 id="Resource-representation"><a href="#Resource-representation" class="headerlink" title="Resource representation"></a>Resource representation</h1><p><strong>如何表达资源的内容？</strong></p>
+<ol>
+<li>Bag of words: terms and frequencies</li>
+<li>Sample queries: Queries that this resource is good for</li>
+<li>Sample documents: Typical documents from this resource</li>
+</ol>
+<p>一个例子解释<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/rr1.jpg" class="ful-image" alt="rr1.jpg"></p>
+<p><strong>资源的内容信息如何获取</strong></p>
+<ul>
+<li>通过 protocol 向资源发出请求</li>
+<li>对 query log 请求相关性评价 (relevance assessments)</li>
+<li>Query-based sampling: 提交查询，查看返回的内容</li>
+</ul>
+<p>下面主要介绍第三种 <strong>query-based sampling</strong></p>
+<h2 id="Query-based-sampling"><a href="#Query-based-sampling" class="headerlink" title="Query-based sampling"></a>Query-based sampling</h2><p>过程</p>
+<ol>
+<li>选择一个初始查询</li>
+<li>重复 N 次（例如，N = 100）<ul>
+<li>向搜索引擎提交查询</li>
+<li>下载一些结果（例如，2-4 条）</li>
+<li>得到并更新 representation (words and frequencies)</li>
+<li>从新的 representation 中随机选择 query term(s)形成新的查询</li>
+</ul>
+</li>
+</ol>
+<p><strong>为什么可行?</strong><br>因为词汇分布服从 Heaps’ Law</p>
+<p><strong>如果第一条查询非常糟糕怎么办？</strong><br>如在一个医学领域的语料库里找 car，可能并没有结果(如果是 boolean ranking 的话)，那么就重新选择一个查询？</p>
+<p><strong>抽样的大小有什么影响</strong><br>一条 query 取多少文档呢？实验决定吧，2-4 篇应该就够了</p>
+<p><strong>在合作环境下随机采样</strong><br>只比 query-based sampling 好一点点</p>
+<h1 id="Resource-selection"><a href="#Resource-selection" class="headerlink" title="Resource selection"></a>Resource selection</h1><p>两大类方法，无监督学习通常是通过对 P(ri|q) 排序来解决，监督算法通常通过分类解决。</p>
+<h2 id="Unsupervised-Resource-Selection"><a href="#Unsupervised-Resource-Selection" class="headerlink" title="Unsupervised Resource Selection"></a>Unsupervised Resource Selection</h2><p><strong>Task:</strong> 给定查询 q，决定要搜索的资源(resources)</p>
+<p>无监督方法将这个问题看作 resource ranking 的问题。</p>
+<ol>
+<li>估计 p(ri|q)</li>
+<li>选择前 k 个资源<br>– 通常 k 是给出的<br>– 动态设置 k 是一个开放的研究问题</li>
+</ol>
+<p>两种具体方法，content-based methods 和 query-based methods</p>
+<ul>
+<li>Content-based methods(基于内容的方法)<br>– 对各个资源下 query 和 content 的相似度 $S(q,c)$ 来对资源进行排序<br>– 有不同的方法来实现，区分点在于：<br>» Representation type: bag of words vs. sampled documents<br>» Ranking algorithm: e.g., CORI</li>
+<li>Query-based methods(基于查询的方法)<br>– 对 query，搜索各个资源下的 query log，找出 match 的 query，然后求当前 query 和历史 query 的相似度 $S(q,q_{past})$，对资源进行排序<br>– 之前用的并不多，因为缺少好的 query log</li>
+</ul>
+<h3 id="Content-based-methods"><a href="#Content-based-methods" class="headerlink" title="Content-based methods"></a>Content-based methods</h3><h4 id="Bag-of-words-method"><a href="#Bag-of-words-method" class="headerlink" title="Bag-of-words method"></a>Bag-of-words method</h4><p>基本思想是 <strong>将每个资源视为一个（非常大的）词袋(bag of words)</strong>，排序算法可以用 KL divergence 或者 query likelihood 等方法。<br>eg. CORI<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/cori.jpg" class="ful-image" alt="cori.jpg"></p>
+<p>然而，Bag of words methods (e.g., CORI)是根据 resources 和 query 的相似度进行的排序，这并不是我们的初衷。这种方法 <strong>偏好具有较高 p(qi|Rj) 的资源</strong>，通常意义上也就是 homogeneous (通常很小)的资源。这并不是我们需要的，我们想要的是，选择能够返回更多相关文档的资源，sampled document method 更能达到这个目标。</p>
+<p><strong>Bag of words (“large documents”) 方法的特点</strong></p>
+<ul>
+<li>大文档更好的代表了 resource representation</li>
+<li>偏好具有较大比例相关内容的资源<br>– i.e., small or homogeneous resources</li>
+<li>非常有效，很有竞争力</li>
+</ul>
+<h4 id="Sample-documents-method"><a href="#Sample-documents-method" class="headerlink" title="Sample documents method"></a>Sample documents method</h4><p><strong>基本思想：</strong> 对每个资源采样然后合并得到一个 centralized index，记录每个文档来自哪个 resource。<br>eg. ReDDE<br>给定一个查询</p>
+<ol>
+<li>搜索 centralized sample index 得到相关文档</li>
+<li>取前 T 的文档</li>
+<li>检查哪些资源提供了这些相关文档</li>
+<li>估计每个资源中相关文档的数量<br>• 计算资源 i 中高于阈值 T 的文档数量 n<br>• n * resource_size / sample_size</li>
+</ol>
+<p>ReDDE 可以看作是 sample-based voting method，每个 top-ranked document 可以看作是对它属于的那个资源的一个投票。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>高召回率: 选择包含更多相关文档的资源</li>
+<li>高准确率: 选择能够返回更多的出现在合并结果集 top T 的文档的资源</li>
+<li>有很多算法的变种<br>– 来自更可靠/权威的资源的 sample 获得更多的投票<br>– 更相关的 sample 获得更多的投票</li>
+</ul>
+<h4 id="CORI-vs-ReDDE"><a href="#CORI-vs-ReDDE" class="headerlink" title="CORI vs ReDDE"></a>CORI vs ReDDE</h4><ul>
+<li>ReDDE 相对而言更加准确<br>– 通常效果更好，几乎不会有更糟的情况</li>
+<li>当各个 collection size 的分布是 skewed 时，ReDDE 的性能优于 CORI<br>– CORI 偏向小集合。他们更可能是同质的，它错过了大型，异质的 collections<br>– ReDDE 对大型 collection 的偏见没那么强</li>
+<li>CORI 比 ReDDE 更有效<br>– 一个资源一个文档 vs. 一个资源多个文档</li>
+</ul>
+<h2 id="Supervised-Resource-Selection"><a href="#Supervised-Resource-Selection" class="headerlink" title="Supervised Resource Selection"></a>Supervised Resource Selection</h2><p>当我们有可用的训练数据时，就可以进行有监督的资源选择</p>
+<ul>
+<li>利用广泛的特征</li>
+<li>将任务框架化为分类问题</li>
+<li>让机器学习算法学习如何给不同的特征分配权重</li>
+</ul>
+<p><strong>Main issues</strong></p>
+<ul>
+<li>特征工程</li>
+<li>获取训练数据</li>
+<li>确定要选择的资源数</li>
+</ul>
+<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p><strong>Task:</strong> 给定一个查询，选择一个或更多的 verticals</p>
+<p>将问题定义为一个 “one-vs-all” 的分类任务</p>
+<ul>
+<li>对每个 vertical 都训练一个分类器</li>
+<li>对 “no vertical” (web only) 也训练一个分类器</li>
+<li>E.g., Arguello, et al (2009) 用了逻辑回归模型</li>
+</ul>
+<p><strong>典型的选择策略</strong></p>
+<ul>
+<li>选择一个具有最高置信度(confidence score)的分类器</li>
+<li>选择 n 个最好的分类器</li>
+<li>选择所有置信度分数高于 threshold 的分类器</li>
+</ul>
+<h3 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h3><p><strong>Query features</strong></p>
+<ul>
+<li>Boolean: keywords and regular expressions<br>– E.g., “weather”, “news”, “videos”, …</li>
+<li>Geographic: Probabilities associated with geographic entities<br>– E.g., “Pittsburgh pizza”</li>
+<li>Category: query’s affinity to a set of topic categories<pre><code>– E.g., “Cancun vacations”
+</code></pre></li>
+</ul>
+<p><strong>Corpus Features</strong><br>ReDDE 是非常流行的资源排序算法</p>
+<p><strong>Clarity (Cronen-Townsend, et al., 2002)</strong><br>Clarity 用来预测给定语料库上的查询的有效性，本质上是 top-ranked 文档和完整集合之间的 KL divergence，如果排名靠前的文档看起来像是 collection 的 random sample，搜索结果将会很差</p>
+<p><strong>Query Log Features</strong></p>
+<ul>
+<li>人工评估/点击率</li>
+</ul>
+<p><strong>qlog feature</strong></p>
+<ul>
+<li>用查询日志中的 query 来构建语言模型 v</li>
+<li>用 query likelihood 来建模 $P(q|v)=\prod_t^q P(t|v)$</li>
+<li>p(t | v) is a smoothed MLE</li>
+</ul>
+<p><strong>Soft.ReDDE feature:</strong></p>
+<ul>
+<li>用查询日志中的 query 来构建语言模型 v</li>
+<li>用 query 对外部的 collection 检索<br>– E.g., wikipedia</li>
+<li>选择前 n 个文档</li>
+<li>文档 di 的投票是 KLD (di || v)<br>– 与查询日志相似的文档具有更高的投票</li>
+</ul>
+<h1 id="Result-merging"><a href="#Result-merging" class="headerlink" title="Result merging"></a>Result merging</h1><p><strong>主要问题：</strong><br><strong>idf</strong><br>同一个 term，在不同数据库的 idf 不同怎么办？</p>
+<p><strong>scores</strong><br>不同数据库的 doc score 不是可比的怎么办？</p>
+<p><strong>＝&gt; Map resource-specific scores to resource-neutral scores</strong></p>
+<p><strong>Result merging</strong></p>
+<ul>
+<li>用所有的 sampled documents 创建一个 index (offline)</li>
+<li>从选定的资源里检索文档<br>– 因为资源并不提供文档分数，所以对每个文档计算 sim (q, d)<br>– 利用 index 的 corpus statistics 来计算每个文档的 authority score</li>
+<li>score(d) = f ( sim (q, d), authority (d) )</li>
+</ul>
+<h2 id="Semi-Supervised-Learning"><a href="#Semi-Supervised-Learning" class="headerlink" title="Semi-Supervised Learning"></a>Semi-Supervised Learning</h2><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss.jpg" class="ful-image" alt="ss.jpg">
+<p>由资源 i 返回的一些文档可能同时出现在 sample index 里<br>对这些文档我们有两个分数</p>
+<ul>
+<li>Sample index (resource neutral) score</li>
+<li>Resource i (resource-specific) score<br>这就是我们用来学习 f (resource-specific) = resource-neutral 的训练数据</li>
+</ul>
+<p>对这个所需的 “normalization” 用线性函数进行建模，因为线性模型可以利用少量的数据进行训练，而且 Ad-hoc CORI 的合并就是线性的<br><img src="http://images.shuang0420.cn/images/Search%20Engines%E7%AC%94%E8%AE%B0%20-%20Federated%20Search/ss2.jpg" class="ful-image" alt="ss2.jpg"></p>
+<p>使用线性回归(linear regression)推导出权重</p>
+<ul>
+<li>f（resource-specific score）= a×dRi，j + b = resource-neutral score</li>
+<li>每个(query, resource) pair 对应不同的函数</li>
+</ul>
+<p><strong>它有效么?</strong><br>目前为止是最好的选择，因为 mapping 是 query-specific 和 resource-specific 的。</p>
+<p><strong>有没有足够的训练数据?</strong><br>通常有，因为 resource selection 和 sample index 可以用相同的文档。如果没有，下载 1-3 篇文档来产生训练数据。</p>
+<h1 id="Large-Scale-Search-Architecture"><a href="#Large-Scale-Search-Architecture" class="headerlink" title="Large-Scale Search Architecture"></a>Large-Scale Search Architecture</h1><p>之前讲过 large-scale search architecture 的相关内容。我们可以把数据集分为两层 <strong>高价值</strong> 和 <strong>低价值</strong>，然后将每一层进行分区(shards)，再将分区分配给计算机。</p>
+<p>事实上我们并不需要对每个查询都检索每一个分区，这样做成本很高，为什么不直接搜索最好/最合适的分区呢？</p>
+<p>通常带来的结果是：</p>
+<ul>
+<li>高准确率 (尤其是 top ranks)</li>
+<li>低召回率 (可能会错过许多有用的文档)<br>– 只搜索了少量资源，这也是广泛应用的障碍</li>
+</ul>
+<p><strong>所以分为两步:</strong></p>
+<ol>
+<li>资源定义(Resource definition)<ul>
+<li>对文档分区</li>
+</ul>
+</li>
+<li>资源选择(Resource selection)<ul>
+<li>对特定 query 选择要搜索的分区</li>
+</ul>
+</li>
+</ol>
+<p>下面进行详细的介绍。</p>
+<h2 id="Resource-definition"><a href="#Resource-definition" class="headerlink" title="Resource definition"></a>Resource definition</h2><p><strong>Goal:</strong> 搜索更少的分区得到更高的 recall</p>
+<p><strong>Requirement:</strong><br>对于可能提交的任何 query，大多数的相关文档必须出现在同一个分区中</p>
+<p><strong>How:</strong><br>把 closely-associated documents 也就是相似（相同主题）的文档归到同一个分区。</p>
+<p><strong>Hypothesis:</strong> Closely-associated ≈ topically-related &amp; Each shard covers one topic/subject</p>
+<p><strong>对给定的语料库，应该使用哪些 topics/subjects?</strong></p>
+<ul>
+<li>人工开发类别? – LCSH, DMOZ, Reuters, …</li>
+<li>自动学习 corpus-specific topics? – Clustering, LDA, PLSA, …</li>
+</ul>
+<p>我们想要一个可以应用于任何语料库的解决方案，因此，需要能自动学习基于语料库的特定的主题。许多算法能产生语料库特定的“主题”：</p>
+<ul>
+<li>聚类: E.g., k-means clustering</li>
+<li>主题模型: E.g., Latent Dirichlet Allocation (LDA)</li>
+</ul>
+<p>当然我们也要保证解决方案必须对 large collections 是有效的：</p>
+<ul>
+<li>从 collection 的一个随机样本里创建主题</li>
+<li>将其余文档分配给最相似的主题</li>
+</ul>
+<h2 id="Resource-selection-1"><a href="#Resource-selection-1" class="headerlink" title="Resource selection"></a>Resource selection</h2><p><strong>Goal:</strong> 给定查询，选择最好的分区</p>
+<p><strong>两类重要的资源选择算法:</strong></p>
+<ul>
+<li>Model-based: CORI, CRCS, Taily, …</li>
+<li>Sample-based: ReDDE, SUSHI, Rank-S, …</li>
+</ul>
+<p>有很多好的算法</p>
+<ul>
+<li>Sample-based 的算法被认为是最有效的</li>
+<li>在初始工作中常常使用 ReDDE 变种</li>
+<li>Taily 和 Rank-S 也经常被研究/考虑</li>
+</ul>
+<p><strong>对每个分区采样:</strong><br>将样本存储到 sample index 里 =&gt; offline</p>
+<p><strong>给定查询</strong></p>
+<ul>
+<li>搜索 sample index，得到 top documents</li>
+<li>Top documents 对它们所在的分区投票</li>
+<li>将 query 发送到得到最多投票的分区<br>=&gt; online</li>
+</ul>
+<h2 id="Cost"><a href="#Cost" class="headerlink" title="Cost"></a>Cost</h2><p>$C_{Total}$:</p>
+<ul>
+<li>处理 inverted list 的数量</li>
+<li>用于资源选择</li>
+<li>用于分区选择</li>
+<li>I/O 和计算成本</li>
+</ul>
+<p>Selective search 分为两步：</p>
+<ul>
+<li>选择要搜索的分区（resource selection）</li>
+<li>搜索所选的分区</li>
+</ul>
+<p>ReDDE 具有更高的计算成本</p>
+<p><strong>Key techniques</strong></p>
+<ol>
+<li>Resource definition for selective search<br>– How to partition a large corpus effectively</li>
+<li>Resource representation<br>– How to represent the contents of each resource<br>– Vocabulary-based, sample-documents-based, feature-based</li>
+<li>Resource selection<br>– How to select the right resources for a particular query</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> NLP </category>
+            
+            <category> Search Engines </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> NLP </tag>
+            
+            <tag> Search Engines </tag>
+            
+            <tag> 信息检索 </tag>
             
         </tags>
         
